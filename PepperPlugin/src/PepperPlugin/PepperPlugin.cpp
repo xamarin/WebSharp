@@ -82,6 +82,32 @@ namespace {
 		return mono_domain_get();
 	}
 
+	/*
+		Recursively lookup a method signature on a class using the method description
+		The signature format is 
+			":methodname(argtype1,argtype2,...)" 
+
+		http://mono.1490590.n4.nabble.com/Invoking-method-from-base-class-in-embedded-environment-td1525339.html
+	*/
+	MonoMethod *
+		mono_class_get_method_from_desc_recursive(
+			MonoClass *clazz, char *signature)
+	{
+		MonoMethodDesc *desc;
+		MonoMethod *method = NULL;
+
+		desc = mono_method_desc_new(signature, TRUE);
+
+		while (clazz != NULL && method == NULL) {
+			method = mono_method_desc_search_in_class(desc, clazz);
+			if (method == NULL)
+				clazz = mono_class_get_parent(clazz);
+		}
+		mono_method_desc_free(desc);
+
+		return method;
+	}
+
 	void InitMono() {
 
 		if (initialised)
@@ -178,12 +204,9 @@ public:
 		}
 
 		// We will search for a constructor that takes an IntPtr as a parameter
-		auto methSig = ":.ctor(intptr)";
-		MonoMethodDesc* mdesc = mono_method_desc_new(methSig, true);
+		char *methSig = ":.ctor(intptr)";
 
-		auto method = mono_method_desc_search_in_class(mdesc, instanceClass);
-
-		mono_method_desc_free(mdesc);
+		auto method = mono_class_get_method_from_desc_recursive(instanceClass, methSig);
 
 		if (!method)
 		{
@@ -210,11 +233,8 @@ public:
 		}
 
 		methSig = ":Init(int,string[],string[])";
-		mdesc = mono_method_desc_new(methSig, true);
 
-		method = mono_method_desc_search_in_class(mdesc, instanceClass);
-
-		mono_method_desc_free(mdesc);
+		method = mono_class_get_method_from_desc_recursive(instanceClass, methSig);
 
 		if (!method)
 		{
