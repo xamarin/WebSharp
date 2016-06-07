@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello PPApiMono!</title>
+      <script>
+          window.onload = function () {
+              //window.setTimeout(function () {
+              //},
+              //5000);
+          }
+
+          function insertPlugin() {
+              var pluginTarget = document.getElementById('pluginTarget');
+              var embed = document.createElement('embed');
+              embed.id = 'plugin';
+              embed.type = 'application/x-ppapi-PepperPlugin';
+              embed.width = 300;
+              embed.height = 200;
+              var att = document.createAttribute("assembly");       // Create a "assembly" attribute
+              att.value = __dirname + "\\bin\\HelloWorld.dll";                           // Set the value of the assembly attribute
+              embed.setAttributeNode(att);                          // Add the class attribute to <h1>
+              pluginTarget.appendChild(embed);
+          }
+      </script>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+      We are using node
+      <script>document.write(process.versions.node)</script>,
+      Chrome
+      <script>document.write(process.versions.chrome)</script>,
+      and Electron
+      <script>document.write(process.versions.electron)</script>,
+      Platform
+      <script>document.write(process.platform)</script>,
+      Architecture
+      <script>document.write(process.arch)</script>.
+      <!--<button onclick="insertPlugin()">Insert plugin</button>-->
+      <button onclick="insertPlugin()">Insert plugin</button>
+      <div id="pluginTarget">
+          <!--<embed id="hello" type="application/x-ppapi-helloworld" width="300" height="200" />-->
+          <!--<embed id="hello" type="application/x-ppapi-helloworld" width="300" height="200" />-->
+          <!--<embed id="plugin" type="application/x-ppapi-PPApiMono" assembly="helloworld.dll">-->
+      </div>
+      <!--<p>
+          This appears below the plugin.
+      </p>-->
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>
