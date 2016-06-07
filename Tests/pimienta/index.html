@@ -17,9 +17,12 @@
               embed.type = 'application/x-ppapi-PepperPlugin';
               embed.width = 300;
               embed.height = 200;
-              var att = document.createAttribute("assembly");       // Create a "assembly" attribute
-              att.value = __dirname + "\\bin\\HelloWorld.dll";                           // Set the value of the assembly attribute
-              embed.setAttributeNode(att);                          // Add the class attribute to <h1>
+              var assembly = document.createAttribute("assembly");       // Create a "assembly" attribute
+              assembly.value = __dirname + "\\bin\\HelloWorld.dll";                           // Set the value of the assembly attribute
+              embed.setAttributeNode(assembly);                          // Add the class attribute to <h1>
+              var klass = document.createAttribute("class");       // Create a "assembly" attribute
+              klass.value = "HelloWorld.HelloWorld";                           // Set the value of the assembly attribute
+              embed.setAttributeNode(klass);                          // Add the class attribute to <h1>
               pluginTarget.appendChild(embed);
           }
       </script>

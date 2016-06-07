@@ -16,12 +16,13 @@ namespace Pepper {
 
 	public class PepperBase : INativeObject, IDisposable {
 		internal IntPtr handle;
-		public IntPtr Handle { get { return handle; } }
+        public IntPtr Handle => handle;
 		
 		public PepperBase (IntPtr handle)
 		{
 			this.handle = handle;
-		}
+            Console.WriteLine($"PepperBase initialized {handle}");
+        }
 		
 		protected PepperBase() {}
 
