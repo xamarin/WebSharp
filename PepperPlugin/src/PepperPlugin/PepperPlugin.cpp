@@ -126,7 +126,6 @@ namespace pepper {
 		if (initialised)
 			return;
 
-		printf("Initialising Mono!\n");
 		// point to the relevant directories of the Mono installation
 		auto mono_root = string(getEnvVar("MONO_ROOT"));
 		auto mono_lib = mono_root + "/lib";
@@ -143,15 +142,40 @@ namespace pepper {
 		MonoDomain* domain = mono_jit_init_version("PepperPlugin Domain", "v4.0.30319");
 
 		pepper::mono_register_icalls();
-		//mono_register_icalls();
 
 		initialised = true;
 
 		if (!monoDomain)
 		{
-			printf("load_domain\n");
 			monoDomain = load_domain();
 		}
+	}
+
+	bool mono_invoke_with_desc(char* desc, void *args[], MonoClass* klass, 
+		MonoObject* instance, MonoObject **result)
+	{
+		auto method = mono_class_get_method_from_desc_recursive(klass, desc);
+
+		if (!method)
+		{
+			fprintf(stderr, "Method description not found: `%s` \n", desc);
+			return false;
+		}
+
+		// finally, invoke the constructor
+		MonoObject* exception = NULL;
+		*result = mono_runtime_invoke(method, instance, args, &exception);
+		if (exception != nullptr)
+		{
+			MonoObject *other_exc = NULL;
+			auto str = mono_object_to_string(exception, &other_exc);
+			const char *mess = mono_string_to_utf8(str);
+			printf("Exception has been thrown calling: `%s` - exception is: %s \n", desc, mess);
+			return false;
+		}
+
+		return true;
+
 	}
 
 }  // namespace
@@ -220,16 +244,7 @@ public:
 			return false;
 		}
 
-		// We will search for a constructor that takes an IntPtr as a parameter
-		char *methSig = ":.ctor(intptr)";
-
-		auto method = mono_class_get_method_from_desc_recursive(instanceClass, methSig);
-
-		if (!method)
-		{
-			printf("PPInstance constructor not found: `%s.%s%s`\n", nameSpace.c_str(), className.c_str(), methSig);
-			return false;
-		}
+		MonoObject *result = NULL;
 
 		printf("Constructing an instance of: %s\n", className.c_str());
 		auto instance = pp_instance();
@@ -237,49 +252,21 @@ public:
 		void *args[10] = { 0 };
 		args[0] = &instance;
 
-		// finally, invoke the constructor
-		MonoObject* exception = NULL;
-		mono_runtime_invoke(method, pluginInstance, args, &exception);
-		if (exception != nullptr)
+		if (!mono_invoke_with_desc(":.ctor(intptr)", args, instanceClass, pluginInstance, &result))
 		{
-			MonoObject *other_exc = NULL;
-			auto str = mono_object_to_string(exception, &other_exc);
-			const char *mess = mono_string_to_utf8(str);
-			printf("Exception has been thrown from constructor: `%s`", mess);
+			fprintf(stderr, "Error calling constructure on class: %s\n ", className.c_str());
 			return false;
 		}
 
-		methSig = ":Init(int,string[],string[])";
-
-		method = mono_class_get_method_from_desc_recursive(instanceClass, methSig);
-
-		if (!method)
-		{
-			printf("PPInstance Init not found: `%s.%s%s`\n", nameSpace.c_str(), className.c_str(), methSig);
-			return false;
-		}
-
+		// Call Init method
 		printf("Calling Init on instance of: %s\n", className.c_str());
 
 		args[0] = &argc;
 		args[1] = parmsArgN;
 		args[2] = parmsArgV;
 		
-		// finally, invoke the init
-		
-		MonoObject *result = mono_runtime_invoke(method, pluginInstance, args, &exception);
-		if (exception != nullptr)
-		{
-			MonoObject *other_exc = NULL;
-			auto str = mono_object_to_string(exception, &other_exc);
-			const char *mess = mono_string_to_utf8(str);
-			printf("Exception has been thrown from Init: `%s`", mess);
-			return false;
-		}
-		else
-		{
+		if (mono_invoke_with_desc(":Init(int,string[],string[])", args, instanceClass, pluginInstance, &result))
 			return *(bool *)mono_object_unbox(result);
-		}
 
 		return true;
 	}
