@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Pepper {
 
 	public partial class PPInstance : PepperBase {
-		public PPInstance (IntPtr handle) : base (handle) {}
+		internal PPInstance (IntPtr handle) : base (handle) {}
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         extern static void _LogToConsole(IntPtr handle, int logLevel, string msg);
