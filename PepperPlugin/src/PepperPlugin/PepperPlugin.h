@@ -4,7 +4,6 @@
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/exception.h>
 
-namespace PepperPlugin {
-
-
+namespace pepper {
+	extern void mono_register_icalls();
 }

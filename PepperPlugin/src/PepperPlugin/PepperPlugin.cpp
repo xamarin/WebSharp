@@ -1,8 +1,12 @@
 // PepperPlugin.cpp : Defines the exported functions for the DLL application.
 //
-#include "PepperPlugin.h"
 
 #include "stdafx.h"
+
+#include "api.h"
+#include "PepperPlugin.h"
+
+
 
 // Copyright (c) 2013 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -36,23 +40,32 @@
 #pragma warning(disable : 4355)
 #endif
 
-namespace {
+using namespace std;
+using namespace pepper;
+
+namespace pepper {
+
+
 	bool initialised = false;
 	MonoDomain* monoDomain = NULL;
 
 	const char* getEnvVar(const char *key)
 	{
 
-		char * val = getenv(key);
+		char* val = 0;
+		size_t sz = 0;
+		if (_dupenv_s(&val, &sz, key) == 0)
+		{
+		}
 		return val == NULL ? "" : val;
 	}
 
-	void split_namespace_class(const char* strc, std::string &nameSpace, std::string &className)
+	void split_namespace_class(const char* strc, string &nameSpace, string &className)
 	{
 		if (!strc)
 			return;
 
-		auto str = std::string(strc);
+		auto str = string(strc);
 		int found = str.find_last_of(".");
 		
 		if (found == -1)
@@ -115,9 +128,10 @@ namespace {
 
 		printf("Initialising Mono!\n");
 		// point to the relevant directories of the Mono installation
-		auto mono_root = std::string(getEnvVar("MONO_ROOT"));
+		auto mono_root = string(getEnvVar("MONO_ROOT"));
 		auto mono_lib = mono_root + "/lib";
 		auto mono_etc = mono_root + "/etc";
+		
 		mono_set_dirs(mono_lib.c_str(), mono_etc.c_str());
 
 		//mono_set_dirs("C:\\Program Files (x86)\\Mono\\lib",
@@ -127,6 +141,9 @@ namespace {
 		mono_config_parse(nullptr);
 
 		MonoDomain* domain = mono_jit_init_version("PepperPlugin Domain", "v4.0.30319");
+
+		pepper::mono_register_icalls();
+		//mono_register_icalls();
 
 		initialised = true;
 
@@ -151,8 +168,8 @@ public:
 
 	virtual bool Init(uint32_t argc, const char* argn[], const char* argv[]) {
 
-		auto className = std::string();
-		auto nameSpace = std::string();
+		auto className = string();
+		auto nameSpace = string();
 
 		MonoArray *parmsArgN = mono_array_new(monoDomain, mono_get_string_class(), argc);
 		MonoArray *parmsArgV = mono_array_new(monoDomain, mono_get_string_class(), argc);
@@ -163,7 +180,7 @@ public:
 			mono_array_set(parmsArgV, MonoString*, x, mono_string_new(monoDomain, argv[x]));
 
 			//printf("argn = %s argv = %s\n", argn[x], argv[x]);
-			auto property = std::string(argn[x]);
+			auto property = string(argn[x]);
 			if (property == "assembly")
 			{
 				printf("loading assembly: %s \n", argv[x]);

@@ -16,10 +16,8 @@ namespace HelloWorld
         public override bool Init(int argc, string[] argn, string[] argv)
         {
 
-            for (int x = 0; x < argc; x++)
-            {
-                Console.WriteLine($"property \"{argn[x]}\" = {argv[x]}");
-            }
+            LogToConsole(2, "HelloWorld from PepperSharp using C#");
+
             return true;
         }
 

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="binding\PPInstance.cs" />
     <Compile Include="binding\runtime.cs" />
+    <Compile Include="glue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
