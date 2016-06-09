@@ -12,7 +12,6 @@
  */
 #include "api.h"
 
-#include "ppapi/c/ppb_image_data.h"
 #include "ppapi/cpp/graphics_2d.h"
 #include "ppapi/cpp/image_data.h"
 #include "ppapi/cpp/input_event.h"
@@ -27,16 +26,22 @@ NAMESPACE(Pepper)
 //MonoDomain*		domain()		{ return mono_environment->domain(); }
 
 CLASS(PPInstance)
-FUNC void Info(MonoString *system, MonoString *message) //Flags:STATIC
+
+FUNC void LogToConsole(intptr_t handle, PP_LogLevel level, MonoString* value)
 {
+	((pp::Instance)handle).LogToConsole(level, MonoToUtf8(value).to_pp_var());
+	
 }
 
-FUNC void LogToConsole(intptr_t handle, int level, MonoString* string)
+FUNC void LogToConsoleWithSource(intptr_t handle, PP_LogLevel level, MonoString* source, MonoString* value)
 {
-	auto instance = pp::Instance(handle);
-	auto msg = mono_string_to_utf8(string);
-	instance.LogToConsole(PP_LOGLEVEL_LOG, pp::Var(msg));
-	mono_free(msg);
+	((pp::Instance)handle).LogToConsoleWithSource(level, MonoToUtf8(source).to_pp_var(), MonoToUtf8(value).to_pp_var());
+}
+
+FUNC void RequestInputEvents(intptr_t handle, PP_InputEvent_Class event_classes)
+{
+	printf("events: %d\n", event_classes);
+	((pp::Instance)handle).RequestInputEvents(event_classes);
 }
 
 END_CLASS

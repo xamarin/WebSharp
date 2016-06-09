@@ -121,6 +121,14 @@ namespace pepper {
 		return method;
 	}
 
+	MonoClass* find_class(const char* nameSpace, const char* className, MonoImage* image)
+	{
+		MonoClass *klass = NULL;
+		klass = mono_class_from_name(image, nameSpace, className);
+		return klass;
+	}
+
+
 	void InitMono() {
 
 		if (initialised)
@@ -178,6 +186,54 @@ namespace pepper {
 
 	}
 
+	bool mono_invoke_with_method(MonoMethod* method, void *args[], MonoObject* instance, MonoObject **result)
+	{
+
+		// finally, invoke the constructor
+		MonoObject* exception = NULL;
+		*result = mono_runtime_invoke(method, instance, args, &exception);
+		if (exception != nullptr)
+		{
+			MonoObject *other_exc = NULL;
+			auto str = mono_object_to_string(exception, &other_exc);
+			const char *mess = mono_string_to_utf8(str);
+			printf("Exception invoking method - exception is: %s \n", mess);
+			return false;
+		}
+
+		return true;
+
+	}
+
+	MonoObject* create_managed_wrapper(void* ptr, const char* nameSpace, const char* className, MonoImage* image)
+	{
+
+		MonoClass * wrapper = find_class(nameSpace, className, image);
+		if (wrapper == nullptr) {
+			return nullptr;
+		}
+
+		// create the class (doesn't run constructors)
+		MonoObject* obj = mono_object_new(monoDomain, wrapper);
+		if (obj == nullptr) {
+			return nullptr;
+		}
+
+		void *args[1] = { 0 };
+		args[0] = ptr;
+		//printf("arg: %d\n",args[0]);
+
+		MonoObject* result;
+		if (!mono_invoke_with_desc(":.ctor(intptr)", args, wrapper, obj, &result))
+		{
+			fprintf(stderr, "Error creating managed wrapper for : %s.%s\n ", nameSpace, className);
+			return false;
+		}
+
+
+		return obj;
+	}
+
 }  // namespace
 
 class PluginInstance : public pp::Instance {
@@ -205,8 +261,10 @@ public:
 
 			//printf("argn = %s argv = %s\n", argn[x], argv[x]);
 			auto property = string(argn[x]);
+			
 			if (property == "assembly")
 			{
+
 				printf("loading assembly: %s \n", argv[x]);
 				//// open our assembly
 				MonoAssembly* assembly = mono_domain_assembly_open(monoDomain,
@@ -215,6 +273,22 @@ public:
 					monoImage = mono_assembly_get_image(assembly);
 				else
 					fprintf(stderr, "Error loading assembly: %s\n", argv[x]);
+
+				// TODO: Clean this up.
+				auto str = string(argv[x]);
+				auto found = str.find_last_of("/\\");
+				str = str.substr(0, found) + "\\Xamarin.PepperSharp.dll";
+				
+				// open our PepperSharp assembly so we can find those classes.
+				assembly = mono_domain_assembly_open(monoDomain,
+					str.c_str());
+
+				peppersharpImage = NULL;
+				if (assembly)
+					peppersharpImage = mono_assembly_get_image(assembly);
+				else
+					fprintf(stderr, "Error loading assembly: %s\n", "Xamarin.PepperSharp.dll");
+				
 			}
 
 			// If we have an error loading assembly then return false
@@ -236,31 +310,22 @@ public:
 		if (!instanceClass)
 			return false;
 
-		printf("Creating Instance: %s\n", className.c_str());
-		pluginInstance = mono_object_new(monoDomain, instanceClass);
-		if (!pluginInstance)
-		{
-			fprintf(stderr, "Error allocating: namespace %s / class %s\n", nameSpace.c_str(), className.c_str());
-			return false;
-		}
+		// Load up our methods to be called so we do not have look them up each time.
+		did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(Pepper.PPView)");
+		did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeFocus(bool)");
+		handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(Pepper.PPInputEvent)");
+		handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(Pepper.PPURLLoader)");
 
 		MonoObject *result = NULL;
 
 		printf("Constructing an instance of: %s\n", className.c_str());
 		auto instance = pp_instance();
-
-		void *args[10] = { 0 };
-		args[0] = &instance;
-
-		if (!mono_invoke_with_desc(":.ctor(intptr)", args, instanceClass, pluginInstance, &result))
-		{
-			fprintf(stderr, "Error calling constructure on class: %s\n ", className.c_str());
-			return false;
-		}
+		pluginInstance = create_managed_wrapper((void *)&instance, nameSpace.c_str(), className.c_str(), monoImage);
 
 		// Call Init method
 		printf("Calling Init on instance of: %s\n", className.c_str());
 
+		void *args[3] = { 0 };
 		args[0] = &argc;
 		args[1] = parmsArgN;
 		args[2] = parmsArgV;
@@ -271,10 +336,74 @@ public:
 		return true;
 	}
 
+	virtual void DidChangeView(const pp::View& view) {
+		
+		if (!did_change_view)
+			return;
+
+		void *args[1] = { 0 };
+		auto native = create_managed_wrapper((void *)&view, "Pepper", "PPView", peppersharpImage);
+		args[0] = native;
+		MonoObject *result = NULL;
+		mono_invoke_with_method(did_change_view, args, pluginInstance, &result);
+	}
+
+	virtual void DidChangeFocus(bool has_focus)
+	{
+		if (!did_change_focus)
+			return;
+
+		void *args[1] = { 0 };
+		args[0] = &has_focus;
+		MonoObject *result = NULL;
+		mono_invoke_with_method(did_change_focus, args, pluginInstance, &result);
+
+	}
+
+	virtual bool HandleDocumentLoad(const pp::URLLoader &url_loader)
+	{
+		if (!handle_document_load)
+			return false;
+
+		void *args[1] = { 0 };
+		auto native = create_managed_wrapper((void *)&url_loader, "Pepper", "PPURLLoader", peppersharpImage);
+		args[0] = native;
+		MonoObject *result = NULL;
+		mono_invoke_with_method(handle_document_load, args, pluginInstance, &result);
+		if (result)
+			return *(bool *)mono_object_unbox(result);
+		
+		return false;
+	}
+
+	virtual bool HandleInputEvent(const pp::InputEvent& event) {
+		
+		if (!handle_input_event)
+			return false;
+
+		void *args[1] = { 0 };
+		auto native = create_managed_wrapper((void *)&event, "Pepper", "PPInputEvent", peppersharpImage);
+		args[0] = native;
+		MonoObject *result = NULL;
+		mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+		if (result)
+			return *(bool *)mono_object_unbox(result);
+		//printf("HandleInputEvent: \n");
+		return false;
+	}
 private:
 	MonoImage *monoImage;
+	MonoImage *peppersharpImage;
 	MonoClass *instanceClass;
 	MonoObject *pluginInstance;
+
+	// methods to be called on our instance
+	MonoMethod* did_change_view = NULL;
+	MonoMethod* did_change_focus = NULL; 
+	MonoMethod* handle_input_event = NULL;
+	MonoMethod* handle_document_load = NULL;
+
+
 };
 
 class PluginModule : public pp::Module {

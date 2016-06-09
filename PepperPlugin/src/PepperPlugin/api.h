@@ -8,6 +8,8 @@
 #include <mono/metadata/mono-gc.h>
 #include <stdint.h>
 
+#include "ppapi/cpp/var.h"
+
 #define GETTER   /* nothing, just a marker */
 #define SETTER void
 #define FUNC
@@ -42,5 +44,20 @@ END_SIMPLE_PROPERTY
 #define END_CLASS } 
 #define NULLALLOWED /* nothing, just a marker */
 
-
+//
+// This is a convenience class that can be used to easily convert an incoming
+// MonoString* parameter (what is used for Internal Calls) into a C string
+//
+// You can use this to ensure that the returned string is properly deallocated
+// after it was used
+//
+class MonoToUtf8 {
+public:
+	MonoToUtf8(MonoString *monostring) { strptr = mono_string_to_utf8(monostring); }
+	~MonoToUtf8() { mono_free(strptr); }
+	const char *str() { return strptr; }
+	pp::Var to_pp_var() { return pp::Var(strptr); }
+private:
+	char *strptr;
+};
 

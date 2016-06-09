@@ -13,11 +13,8 @@ namespace HelloWorld
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-
-            LogToConsole(2, "HelloWorld from PepperSharp using C#");
-
+            LogToConsoleWithSource(PP_LogLevel.PP_LOGLEVEL_LOG, "HellowWorld.dll", "HelloWorld from PepperSharp using C#");
             return true;
         }
-
     }
 }
