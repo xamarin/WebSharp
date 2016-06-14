@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Pepper
 {
-    public partial class PPInstance : PepperBase
+    public partial class PPInstance : PPResource
     {
         protected PPInstance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
 
@@ -17,7 +17,7 @@ namespace Pepper
             return true;
         }
 
-        public virtual void DidChangeView(PPView view)
+        public virtual void DidChangeView(PPBView view)
         {
             Console.WriteLine("PPInstance DidChangeView: ");
         }

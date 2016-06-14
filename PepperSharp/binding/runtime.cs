@@ -14,17 +14,17 @@ namespace Pepper {
 		IntPtr Handle { get; }
 	}
 
-	public class PepperBase : INativeObject, IDisposable {
+	public class PPResource : INativeObject, IDisposable {
 		internal IntPtr handle;
         public IntPtr Handle => handle;
 		
-		public PepperBase (IntPtr handle)
+		public PPResource (IntPtr handle)
 		{
 			this.handle = handle;
-            Console.WriteLine($"PepperBase initialized {handle}");
+            Console.WriteLine($"PPResource constructed {handle}");
         }
 		
-		protected PepperBase() {}
+		protected PPResource() {}
 
 		public void Dispose ()
 		{
@@ -37,10 +37,22 @@ namespace Pepper {
 			// TODO: do something here
 		}
 
-		~PepperBase ()
+		~PPResource ()
 		{
 			Dispose (false);
 		}
 
 	}
+
+    public partial struct PPSize
+    {
+        public int Width { get { return width; } set { width = value; } }
+        public int Height { get { return height; } set { height = value; } }
+
+        public PPSize (int width, int height )
+        {
+            this.width = width;
+            this.height = height;
+        }
+    }
 }
