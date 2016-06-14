@@ -19,6 +19,7 @@
 #include "ppapi/cpp/graphics_2d.h"
 #include "ppapi/cpp/image_data.h"
 #include "ppapi/cpp/input_event.h"
+#include "ppapi/cpp/url_loader.h"
 #include "ppapi/cpp/instance.h"
 #include "ppapi/cpp/module.h"
 #include "ppapi/cpp/point.h"
@@ -44,7 +45,6 @@ using namespace std;
 using namespace pepper;
 
 namespace pepper {
-
 
 	bool initialised = false;
 	MonoDomain* monoDomain = NULL;
@@ -205,7 +205,7 @@ namespace pepper {
 
 	}
 
-	MonoObject* create_managed_wrapper(void* ptr, const char* nameSpace, const char* className, MonoImage* image)
+	MonoObject* create_managed_wrapper(intptr_t ptr, const char* nameSpace, const char* className, MonoImage* image)
 	{
 
 		MonoClass * wrapper = find_class(nameSpace, className, image);
@@ -220,8 +220,7 @@ namespace pepper {
 		}
 
 		void *args[1] = { 0 };
-		args[0] = ptr;
-		//printf("arg: %d\n",args[0]);
+		args[0] = &ptr;
 
 		MonoObject* result;
 		if (!mono_invoke_with_desc(":.ctor(intptr)", args, wrapper, obj, &result))
@@ -311,7 +310,7 @@ public:
 			return false;
 
 		// Load up our methods to be called so we do not have look them up each time.
-		did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(Pepper.PPView)");
+		did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(Pepper.PPBView)");
 		did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeFocus(bool)");
 		handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(Pepper.PPInputEvent)");
 		handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(Pepper.PPURLLoader)");
@@ -320,7 +319,7 @@ public:
 
 		printf("Constructing an instance of: %s\n", className.c_str());
 		auto instance = pp_instance();
-		pluginInstance = create_managed_wrapper((void *)&instance, nameSpace.c_str(), className.c_str(), monoImage);
+		pluginInstance = create_managed_wrapper(instance, nameSpace.c_str(), className.c_str(), monoImage);
 
 		// Call Init method
 		printf("Calling Init on instance of: %s\n", className.c_str());
@@ -342,7 +341,7 @@ public:
 			return;
 
 		void *args[1] = { 0 };
-		auto native = create_managed_wrapper((void *)&view, "Pepper", "PPView", peppersharpImage);
+		auto native = create_managed_wrapper(view.pp_resource(), "Pepper", "PPBView", peppersharpImage);
 		args[0] = native;
 		MonoObject *result = NULL;
 		mono_invoke_with_method(did_change_view, args, pluginInstance, &result);
@@ -366,7 +365,7 @@ public:
 			return false;
 
 		void *args[1] = { 0 };
-		auto native = create_managed_wrapper((void *)&url_loader, "Pepper", "PPURLLoader", peppersharpImage);
+		auto native = create_managed_wrapper(url_loader.pp_resource(), "Pepper", "PPURLLoader", peppersharpImage);
 		args[0] = native;
 		MonoObject *result = NULL;
 		mono_invoke_with_method(handle_document_load, args, pluginInstance, &result);
@@ -382,7 +381,7 @@ public:
 			return false;
 
 		void *args[1] = { 0 };
-		auto native = create_managed_wrapper((void *)&event, "Pepper", "PPInputEvent", peppersharpImage);
+		auto native = create_managed_wrapper(event.pp_resource(), "Pepper", "PPInputEvent", peppersharpImage);
 		args[0] = native;
 		MonoObject *result = NULL;
 		mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
