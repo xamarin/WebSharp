@@ -19,33 +19,76 @@
 #include "ppapi/cpp/module.h"
 #include "ppapi/cpp/point.h"
 #include "ppapi/utility/completion_callback_factory.h"
-//using namespace pepper;
+#include "ppapi/c/ppb_view.h"
 
-NAMESPACE(Pepper)
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-//MonoDomain*		domain()		{ return mono_environment->domain(); }
+	namespace Pepper
+	{
 
-CLASS(PPInstance)
+		namespace PPInstance
+		{
 
-FUNC void LogToConsole(intptr_t handle, PP_LogLevel level, MonoString* value)
-{
-	((pp::Instance)handle).LogToConsole(level, MonoToUtf8(value).to_pp_var());
-	
+			PEPPER_EXPORT void PPInstance_LogToConsole(intptr_t handle, PP_LogLevel level, char* value)
+			{
+				((pp::Instance)handle).LogToConsole(level, pp::Var(value));
+
+			}
+
+			PEPPER_EXPORT void PPInstance_LogToConsoleWithSource(intptr_t handle, PP_LogLevel level, char* source, char* value)
+			{
+				((pp::Instance)handle).LogToConsoleWithSource(level, pp::Var(source), pp::Var(value));
+			}
+
+			PEPPER_EXPORT void PPInstance_RequestInputEvents(intptr_t handle, PP_InputEvent_Class event_classes)
+			{
+				printf("events: %d\n", event_classes);
+				((pp::Instance)handle).RequestInputEvents(event_classes);
+			}
+
+		}
+
+
+		namespace PPBView {
+
+
+			PEPPER_EXPORT bool PPBView_IsVisible(intptr_t handle)
+			{
+				return ((pp::View)handle).IsVisible();
+
+			}
+
+			PEPPER_EXPORT bool PPBView_IsPageVisible(intptr_t handle)
+			{
+				return ((pp::View)handle).IsPageVisible();
+
+			}
+
+			PEPPER_EXPORT bool PPBView_IsFullscreen(intptr_t handle)
+			{
+				return ((pp::View)handle).IsFullscreen();
+
+			}
+
+
+			PEPPER_EXPORT pp::Rect PPBView_GetRect(intptr_t handle)
+			{
+				return ((pp::View)handle).GetRect();
+
+			}
+
+			PEPPER_EXPORT float PPBView_GetDeviceScale(intptr_t handle)
+			{
+				return ((pp::View)handle).GetDeviceScale();
+
+			}
+
+		}
+
+	}
+
+#ifdef __cplusplus
 }
-
-FUNC void LogToConsoleWithSource(intptr_t handle, PP_LogLevel level, MonoString* source, MonoString* value)
-{
-	((pp::Instance)handle).LogToConsoleWithSource(level, MonoToUtf8(source).to_pp_var(), MonoToUtf8(value).to_pp_var());
-}
-
-FUNC void RequestInputEvents(intptr_t handle, PP_InputEvent_Class event_classes)
-{
-	printf("events: %d\n", event_classes);
-	((pp::Instance)handle).RequestInputEvents(event_classes);
-}
-
-END_CLASS
-
-END_NAMESPACE
-
-#include "glue.inc"
+#endif

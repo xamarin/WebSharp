@@ -149,8 +149,6 @@ namespace pepper {
 
 		MonoDomain* domain = mono_jit_init_version("PepperPlugin Domain", "v4.0.30319");
 
-		pepper::mono_register_icalls();
-
 		initialised = true;
 
 		if (!monoDomain)
