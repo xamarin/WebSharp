@@ -9,12 +9,13 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Pepper {
+namespace PepperSharp {
 	public interface INativeObject {
 		IntPtr Handle { get; }
 	}
 
-	public class PPResource : INativeObject, IDisposable {
+    [StructLayout(LayoutKind.Sequential)]
+    public class PPResource : INativeObject, IDisposable {
 		internal IntPtr handle;
         public IntPtr Handle => handle;
 		
@@ -43,16 +44,5 @@ namespace Pepper {
 		}
 
 	}
-
-    public partial struct PPSize
-    {
-        public int Width { get { return width; } set { width = value; } }
-        public int Height { get { return height; } set { height = value; } }
-
-        public PPSize (int width, int height )
-        {
-            this.width = width;
-            this.height = height;
-        }
-    }
+ 
 }

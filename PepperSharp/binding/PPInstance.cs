@@ -1,40 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-using System.Runtime.CompilerServices;
 
-namespace Pepper
+namespace PepperSharp
 {
     public partial class PPInstance : PPResource
     {
         protected PPInstance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
+        protected PPInstance(IntPtr handle) : base(handle) { }
 
         public virtual bool Init(int argc, string[] argn, string[] argv)
         {
             return true;
         }
 
-        public virtual void DidChangeView(PPBView view)
-        {
-            Console.WriteLine("PPInstance DidChangeView: ");
-        }
+        public virtual void DidChangeView(PP_Resource view)
+        { }
 
         public virtual void DidChangeFocus(bool hasFocus)
         { }
 
-        public virtual bool HandleInputEvent(PPInputEvent inputEvent)
+        public virtual bool HandleInputEvent(PP_Resource inputEvent)
         {
-            Console.WriteLine("PPInstance HandleInputEvent: ");
             return false;
         }
 
-        public virtual bool HandleDocumentLoad(PPUrlLoader urlLoader)
+        public virtual bool HandleDocumentLoad(PP_Resource urlLoader)
         {
-            Console.WriteLine("PPInstance HandleURLLoader: ");
             return false;
+        }
+
+        public bool BindGraphics(PP_Resource graphics2d)
+        {
+            if (PPB_Instance.BindGraphics(Instance, graphics2d) == PP_Bool.PP_TRUE)
+                return true;
+            else
+                return false;
+        }
+
+        PP_Instance instance = new PP_Instance();
+        public PP_Instance Instance
+        {
+            get
+            {
+                if (instance.pp_instance == 0)
+                {
+                    instance.pp_instance = this.Handle.ToInt32();
+                }
+                return instance;
+            }
         }
 
     }

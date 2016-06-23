@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,12 +43,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="binding\enums.cs" />
+    <Compile Include="binding\ppb_console.cs" />
+    <Compile Include="binding\ppb_graphics_2d.cs" />
+    <Compile Include="binding\ppb_image_data.cs" />
+    <Compile Include="binding\ppb_input_event.cs" />
+    <Compile Include="binding\ppb_instance.cs" />
+    <Compile Include="binding\ppb_message_loop.cs" />
+    <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\PPInstance.cs" />
+    <Compile Include="binding\ppp_input_event.cs" />
+    <Compile Include="binding\pp_bool.cs" />
+    <Compile Include="binding\pp_completion_callback.cs" />
+    <Compile Include="binding\pp_errors.cs" />
+    <Compile Include="binding\pp_input_event.cs" />
+    <Compile Include="binding\pp_instance.cs" />
+    <Compile Include="binding\pp_point.cs" />
+    <Compile Include="binding\pp_rect.cs" />
+    <Compile Include="binding\pp_resource.cs" />
+    <Compile Include="binding\pp_size.cs" />
+    <Compile Include="binding\pp_stdint.cs" />
+    <Compile Include="binding\pp_time.cs" />
+    <Compile Include="binding\pp_touch_point.cs" />
     <Compile Include="binding\runtime.cs" />
-    <Compile Include="glue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="binding\structs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
