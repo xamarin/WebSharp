@@ -7,27 +7,11 @@
 #include "PepperPlugin.h"
 
 
-
-// Copyright (c) 2013 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "all_ppapi_c_includes.h"
 #include "all_ppapi_cpp_includes.h"
-//#include "ppapi/c/ppb_image_data.h"
-//#include "ppapi/cpp/graphics_2d.h"
-//#include "ppapi/cpp/image_data.h"
-//#include "ppapi/cpp/input_event.h"
-//#include "ppapi/cpp/url_loader.h"
-//#include "ppapi/cpp/instance.h"
-//#include "ppapi/cpp/module_impl.h"
-//#include "ppapi/cpp/module.h"
-//#include "ppapi/cpp/point.h"
-//#include "ppapi/utility/completion_callback_factory.h"
-//#include "ppapi/cpp/resource.h"
 
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/threads.h>
@@ -140,6 +124,12 @@ namespace pepper {
 
 		// point to the relevant directories of the Mono installation
 		auto mono_root = string(getEnvVar("MONO_ROOT"));
+		if (mono_root.length() == 0)
+		{
+#ifdef WIN32
+			mono_root = "C:\\Program Files (x86)\\Mono"; // default install location on windows
+#endif
+		}
 		auto mono_lib = mono_root + "/lib";
 		auto mono_etc = mono_root + "/etc";
 		
