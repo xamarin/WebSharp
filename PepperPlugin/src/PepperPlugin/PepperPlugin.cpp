@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-#include "api.h"
+#include "pepper.h"
 #include "PepperPlugin.h"
 
 
@@ -15,15 +15,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ppapi/c/ppb_image_data.h"
-#include "ppapi/cpp/graphics_2d.h"
-#include "ppapi/cpp/image_data.h"
-#include "ppapi/cpp/input_event.h"
-#include "ppapi/cpp/url_loader.h"
-#include "ppapi/cpp/instance.h"
-#include "ppapi/cpp/module.h"
-#include "ppapi/cpp/point.h"
-#include "ppapi/utility/completion_callback_factory.h"
+#include "all_ppapi_c_includes.h"
+#include "all_ppapi_cpp_includes.h"
+//#include "ppapi/c/ppb_image_data.h"
+//#include "ppapi/cpp/graphics_2d.h"
+//#include "ppapi/cpp/image_data.h"
+//#include "ppapi/cpp/input_event.h"
+//#include "ppapi/cpp/url_loader.h"
+//#include "ppapi/cpp/instance.h"
+//#include "ppapi/cpp/module_impl.h"
+//#include "ppapi/cpp/module.h"
+//#include "ppapi/cpp/point.h"
+//#include "ppapi/utility/completion_callback_factory.h"
+//#include "ppapi/cpp/resource.h"
 
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/threads.h>
@@ -43,7 +47,7 @@
 
 using namespace std;
 using namespace pepper;
-
+using namespace pp;
 namespace pepper {
 
 	bool initialised = false;
@@ -236,7 +240,7 @@ namespace pepper {
 class PluginInstance : public pp::Instance {
 public:
 	explicit PluginInstance(PP_Instance instance)
-		: pp::Instance(instance) 
+		: pp::Instance(instance)
 	{
 		InitMono();
 	}
@@ -247,7 +251,7 @@ public:
 
 		auto className = string();
 		auto nameSpace = string();
-
+		
 		MonoArray *parmsArgN = mono_array_new(monoDomain, mono_get_string_class(), argc);
 		MonoArray *parmsArgV = mono_array_new(monoDomain, mono_get_string_class(), argc);
 
@@ -308,10 +312,10 @@ public:
 			return false;
 
 		// Load up our methods to be called so we do not have look them up each time.
-		did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(Pepper.PPBView)");
+		did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(PepperSharp.PP_Resource)");
 		did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeFocus(bool)");
-		handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(Pepper.PPInputEvent)");
-		handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(Pepper.PPURLLoader)");
+		handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(PepperSharp.PP_Resource)");
+		handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(PepperSharp.PP_Resource)");
 
 		MonoObject *result = NULL;
 
@@ -330,6 +334,8 @@ public:
 		if (mono_invoke_with_desc(":Init(int,string[],string[])", args, instanceClass, pluginInstance, &result))
 			return *(bool *)mono_object_unbox(result);
 
+
+
 		return true;
 	}
 
@@ -339,8 +345,8 @@ public:
 			return;
 
 		void *args[1] = { 0 };
-		auto native = create_managed_wrapper(view.pp_resource(), "Pepper", "PPBView", peppersharpImage);
-		args[0] = native;
+		intptr_t res = view.pp_resource();
+		args[0] = &res;
 		MonoObject *result = NULL;
 		mono_invoke_with_method(did_change_view, args, pluginInstance, &result);
 	}
@@ -363,8 +369,8 @@ public:
 			return false;
 
 		void *args[1] = { 0 };
-		auto native = create_managed_wrapper(url_loader.pp_resource(), "Pepper", "PPURLLoader", peppersharpImage);
-		args[0] = native;
+		intptr_t res = url_loader.pp_resource();
+		args[0] = &res;
 		MonoObject *result = NULL;
 		mono_invoke_with_method(handle_document_load, args, pluginInstance, &result);
 		if (result)
@@ -377,10 +383,10 @@ public:
 		
 		if (!handle_input_event)
 			return false;
-
+		
 		void *args[1] = { 0 };
-		auto native = create_managed_wrapper(event.pp_resource(), "Pepper", "PPInputEvent", peppersharpImage);
-		args[0] = native;
+		intptr_t res = event.pp_resource();
+		args[0] = &res;
 		MonoObject *result = NULL;
 		mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
 		if (result)
@@ -399,7 +405,6 @@ private:
 	MonoMethod* did_change_focus = NULL; 
 	MonoMethod* handle_input_event = NULL;
 	MonoMethod* handle_document_load = NULL;
-
 
 };
 
