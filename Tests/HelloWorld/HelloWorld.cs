@@ -1,5 +1,5 @@
 ﻿using System;
-using Pepper;
+using PepperSharp;
 
 namespace HelloWorld
 {
@@ -13,7 +13,7 @@ namespace HelloWorld
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            LogToConsoleWithSource(PP_LogLevel.PP_LOGLEVEL_LOG, "HellowWorld.dll", "HelloWorld from PepperSharp using C#");
+            //LogToConsoleWithSource(PPLogLevel.Log, "HellowWorld.dll", "HelloWorld from PepperSharp using C#");
             return true;
         }
     }

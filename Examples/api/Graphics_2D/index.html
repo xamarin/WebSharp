@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello PPApiMono!</title>
+    <title>Example Graphics_2D</title>
       <script>
           window.onload = function () {
               //window.setTimeout(function () {
@@ -18,7 +18,7 @@
               embed.width = 300;
               embed.height = 200;
               var assembly = document.createAttribute("assembly");       // Create a "assembly" attribute
-              assembly.value = __dirname + "\\bin\\Debug\\Graphics_2D.dll";                           // Set the value of the assembly attribute
+              assembly.value = ".\\bin\\Debug\\Graphics_2D.dll";                           // Set the value of the assembly attribute
               embed.setAttributeNode(assembly);                          // Add the class attribute to <h1>
               var klass = document.createAttribute("class");       // Create a "assembly" attribute
               klass.value = "Graphics_2D.Graphics_2D";                           // Set the value of the assembly attribute
