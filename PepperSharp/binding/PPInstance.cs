@@ -29,6 +29,8 @@ namespace PepperSharp
             return false;
         }
 
+        public virtual void HandleMessage (object message)
+        { }
         public bool BindGraphics(PP_Resource graphics2d)
         {
             if (PPB_Instance.BindGraphics(Instance, graphics2d) == PP_Bool.PP_TRUE)

@@ -10,6 +10,7 @@
 #include "ppapi/c/ppb_input_event.h"
 #include "ppapi/c/ppb_instance.h"
 #include "ppapi/c/ppb_message_loop.h"
+#include "ppapi/c/ppb_mouse_cursor.h"
 #include "ppapi/c/ppb_view.h"
 #include "ppapi/c/ppp_input_event.h"
 
@@ -88,6 +89,9 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_MessageLoop_1_0>() {
 			return PPB_MESSAGELOOP_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_MouseCursor_1_0>() {
+			return PPB_MOUSECURSOR_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_View_1_0>() {
 			return PPB_VIEW_INTERFACE_1_0;
@@ -676,6 +680,17 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_MessageLoop */
+
+		#pragma region /* Begin entry point methods for PPB_MouseCursor */
+
+		PEPPER_EXPORT PP_Bool PPB_MouseCursor_SetCursor(PP_Instance instance, enum PP_MouseCursor_Type type, PP_Resource image, const struct PP_Point* hot_spot) {
+			if (has_interface<PPB_MouseCursor_1_0>()) {
+				return get_interface<PPB_MouseCursor_1_0>()->SetCursor(instance, type, image, hot_spot);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_MouseCursor */
 
 		#pragma region /* Begin entry point methods for PPB_View */
 

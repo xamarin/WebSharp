@@ -49,6 +49,7 @@
     <Compile Include="binding\ppb_input_event.cs" />
     <Compile Include="binding\ppb_instance.cs" />
     <Compile Include="binding\ppb_message_loop.cs" />
+    <Compile Include="binding\ppb_mouse_cursor.cs" />
     <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\PPInstance.cs" />
     <Compile Include="binding\ppp_input_event.cs" />
