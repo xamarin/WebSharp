@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics_2D", "..\..\Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseCursor", "..\..\Examples\api\MouseCursor\MouseCursor.csproj", "{26C3DFDF-C026-4ACA-B9EB-2703BEEA9711}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseLock", "..\..\Examples\api\MouseLock\MouseLock.csproj", "{9442253A-A06F-433D-B417-45DD1C3D8EAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,18 @@ Global
 		{26C3DFDF-C026-4ACA-B9EB-2703BEEA9711}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{26C3DFDF-C026-4ACA-B9EB-2703BEEA9711}.Release|x86.ActiveCfg = Release|Any CPU
 		{26C3DFDF-C026-4ACA-B9EB-2703BEEA9711}.Release|x86.Build.0 = Release|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Debug|x86.Build.0 = Debug|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|x86.ActiveCfg = Release|Any CPU
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,5 +122,6 @@ Global
 		{3A3FAECE-EBCE-407A-B7D6-7666FC15181B} = {3BAE48D4-5F20-421D-B53C-29C6E9A8072A}
 		{BA109B7A-B9D1-4CC8-B23C-BEECB0358630} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{26C3DFDF-C026-4ACA-B9EB-2703BEEA9711} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
+		{9442253A-A06F-433D-B417-45DD1C3D8EAA} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 	EndGlobalSection
 EndGlobal

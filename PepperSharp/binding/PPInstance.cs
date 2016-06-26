@@ -40,6 +40,10 @@ namespace PepperSharp
                 return false;
         }
 
+        // Called by the browser when mouselock is lost.  This happens when the NaCl
+        // module exits fullscreen mode.
+        public virtual void MouseLockLost() { }
+
         PP_Instance instance = new PP_Instance();
         public PP_Instance Instance
         {

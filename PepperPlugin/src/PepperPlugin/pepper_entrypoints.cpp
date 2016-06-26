@@ -5,14 +5,17 @@
 
 #include "ppapi/c/ppb.h"
 #include "ppapi/c/ppb_console.h"
+#include "ppapi/c/ppb_fullscreen.h"
 #include "ppapi/c/ppb_graphics_2d.h"
 #include "ppapi/c/ppb_image_data.h"
 #include "ppapi/c/ppb_input_event.h"
 #include "ppapi/c/ppb_instance.h"
 #include "ppapi/c/ppb_message_loop.h"
 #include "ppapi/c/ppb_mouse_cursor.h"
+#include "ppapi/c/ppb_mouse_lock.h"
 #include "ppapi/c/ppb_view.h"
 #include "ppapi/c/ppp_input_event.h"
+#include "ppapi/c/ppp_mouse_lock.h"
 
 #ifndef PEPPER_EXPORT
 #define PEPPER_EXPORT __declspec(dllexport)
@@ -47,6 +50,9 @@ namespace Pepper {
 	namespace {
 		template <> const char*	interface_name<PPB_Console_1_0>() {
 			return PPB_CONSOLE_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_Fullscreen_1_0>() {
+			return PPB_FULLSCREEN_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_Graphics2D_1_0>() {
 			return PPB_GRAPHICS_2D_INTERFACE_1_0;
@@ -93,6 +99,9 @@ namespace Pepper {
 		template <> const char*	interface_name<PPB_MouseCursor_1_0>() {
 			return PPB_MOUSECURSOR_INTERFACE_1_0;
 		}
+		template <> const char*	interface_name<PPB_MouseLock_1_0>() {
+			return PPB_MOUSELOCK_INTERFACE_1_0;
+		}
 		template <> const char*	interface_name<PPB_View_1_0>() {
 			return PPB_VIEW_INTERFACE_1_0;
 		}
@@ -104,6 +113,9 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPP_InputEvent_0_1>() {
 			return PPP_INPUT_EVENT_INTERFACE_0_1;
+		}
+		template <> const char*	interface_name<PPP_MouseLock_1_0>() {
+			return PPP_MOUSELOCK_INTERFACE_1_0;
 		}
 	}
 }
@@ -137,6 +149,31 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Console */
+
+		#pragma region /* Begin entry point methods for PPB_Fullscreen */
+
+		PEPPER_EXPORT PP_Bool PPB_Fullscreen_IsFullscreen(PP_Instance instance) {
+			if (has_interface<PPB_Fullscreen_1_0>()) {
+				return get_interface<PPB_Fullscreen_1_0>()->IsFullscreen(instance);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_Fullscreen_SetFullscreen(PP_Instance instance, PP_Bool fullscreen) {
+			if (has_interface<PPB_Fullscreen_1_0>()) {
+				return get_interface<PPB_Fullscreen_1_0>()->SetFullscreen(instance, fullscreen);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_Fullscreen_GetScreenSize(PP_Instance instance, struct PP_Size* size) {
+			if (has_interface<PPB_Fullscreen_1_0>()) {
+				return get_interface<PPB_Fullscreen_1_0>()->GetScreenSize(instance, size);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_Fullscreen */
 
 		#pragma region /* Begin entry point methods for PPB_Graphics2D */
 
@@ -692,6 +729,24 @@ namespace Pepper {
 
 		#pragma endregion /* End entry point generation for PPB_MouseCursor */
 
+		#pragma region /* Begin entry point methods for PPB_MouseLock */
+
+		PEPPER_EXPORT int32_t PPB_MouseLock_LockMouse(PP_Instance instance, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_MouseLock_1_0>()) {
+				return get_interface<PPB_MouseLock_1_0>()->LockMouse(instance, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_MouseLock_UnlockMouse(PP_Instance instance) {
+			if (has_interface<PPB_MouseLock_1_0>()) {
+				get_interface<PPB_MouseLock_1_0>()->UnlockMouse(instance);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_MouseLock */
+
 		#pragma region /* Begin entry point methods for PPB_View */
 
 		PEPPER_EXPORT PP_Bool PPB_View_IsView(PP_Resource resource) {
@@ -811,6 +866,17 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPP_InputEvent */
+
+		#pragma region /* Begin entry point methods for PPP_MouseLock */
+
+		PEPPER_EXPORT void PPP_MouseLock_MouseLockLost(PP_Instance instance) {
+			if (has_interface<PPP_MouseLock_1_0>()) {
+				get_interface<PPP_MouseLock_1_0>()->MouseLockLost(instance);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPP_MouseLock */
 
 	}
 #ifdef __cplusplus

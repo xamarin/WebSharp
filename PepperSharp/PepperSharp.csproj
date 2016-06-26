@@ -44,15 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="binding\ppb_console.cs" />
+    <Compile Include="binding\ppb_fullscreen.cs" />
     <Compile Include="binding\ppb_graphics_2d.cs" />
     <Compile Include="binding\ppb_image_data.cs" />
     <Compile Include="binding\ppb_input_event.cs" />
     <Compile Include="binding\ppb_instance.cs" />
     <Compile Include="binding\ppb_message_loop.cs" />
     <Compile Include="binding\ppb_mouse_cursor.cs" />
+    <Compile Include="binding\ppb_mouse_lock.cs" />
     <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\PPInstance.cs" />
     <Compile Include="binding\ppp_input_event.cs" />
+    <Compile Include="binding\ppp_mouse_lock.cs" />
     <Compile Include="binding\pp_bool.cs" />
     <Compile Include="binding\pp_completion_callback.cs" />
     <Compile Include="binding\pp_errors.cs" />

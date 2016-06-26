@@ -229,10 +229,11 @@ namespace pepper {
 
 }  // namespace
 
-class PluginInstance : public pp::Instance {
+class PluginInstance : public pp::Instance, public pp::MouseLock {
 public:
 	explicit PluginInstance(PP_Instance instance)
-		: pp::Instance(instance)
+		: pp::Instance(instance),
+		pp::MouseLock(this)
 	{
 		InitMono();
 	}
@@ -446,13 +447,22 @@ public:
 			buf[0] = '\0';
 			args[0] = mono_string_new(monoDomain, buf);
 		}
-		////args[0] = (void *)message.DebugString().c_str();
-		//auto ms = mono_string_new(monoDomain, message.DebugString().c_str());
-		//args[0] = ms;
+
 		MonoObject *result = NULL;
 		mono_invoke_with_method(handle_message, args, pluginInstance, &result);
 
 	}
+
+	void MouseLockLost()
+	{
+		auto mouseLockLost = mono_class_get_method_from_desc_recursive(instanceClass, ":MouseLockLost()");
+		if (!mouseLockLost)
+			return;
+		void *args[1] = { 0 };
+		MonoObject *result = NULL;
+		mono_invoke_with_method(mouseLockLost, NULL, pluginInstance, &result);
+	}
+
 private:
 	MonoImage *monoImage;
 	MonoImage *peppersharpImage;
