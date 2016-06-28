@@ -140,7 +140,7 @@ public static partial class PPB_ImageData {
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_ImageDataFormat format,
-                                      ref PP_Size size,
+                                      PP_Size size,
                                       PP_Bool init_to_zero);
 
   /**
@@ -167,10 +167,10 @@ public static partial class PPB_ImageData {
    */
   public static PP_Resource Create ( PP_Instance instance,
                                      PP_ImageDataFormat format,
-                                     ref PP_Size size,
+                                     PP_Size size,
                                      PP_Bool init_to_zero)
   {
-  	return _Create (instance, format,  ref size, init_to_zero);
+  	return _Create (instance, format, size, init_to_zero);
   }
 
 

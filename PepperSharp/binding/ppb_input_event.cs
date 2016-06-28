@@ -512,9 +512,9 @@ public static partial class PPB_MouseInputEvent {
                                       PP_TimeTicks time_stamp,
                                       uint modifiers,
                                       PP_InputEvent_MouseButton mouse_button,
-                                      ref PP_Point mouse_position,
+                                      PP_Point mouse_position,
                                       int click_count,
-                                      ref PP_Point mouse_movement);
+                                      PP_Point mouse_movement);
 
   /**
    * Create() creates a mouse input event with the given parameters. Normally
@@ -550,18 +550,18 @@ public static partial class PPB_MouseInputEvent {
                                      PP_TimeTicks time_stamp,
                                      uint modifiers,
                                      PP_InputEvent_MouseButton mouse_button,
-                                     ref PP_Point mouse_position,
+                                     PP_Point mouse_position,
                                      int click_count,
-                                     ref PP_Point mouse_movement)
+                                     PP_Point mouse_movement)
   {
   	return _Create (instance,
                    type,
                    time_stamp,
                    modifiers,
                    mouse_button,
-                    ref mouse_position,
+                   mouse_position,
                    click_count,
-                    ref mouse_movement);
+                   mouse_movement);
   }
 
 
@@ -668,8 +668,8 @@ public static partial class PPB_WheelInputEvent {
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_TimeTicks time_stamp,
                                       uint modifiers,
-                                      ref PP_FloatPoint wheel_delta,
-                                      ref PP_FloatPoint wheel_ticks,
+                                      PP_FloatPoint wheel_delta,
+                                      PP_FloatPoint wheel_ticks,
                                       PP_Bool scroll_by_page);
 
   /**
@@ -700,15 +700,15 @@ public static partial class PPB_WheelInputEvent {
   public static PP_Resource Create ( PP_Instance instance,
                                      PP_TimeTicks time_stamp,
                                      uint modifiers,
-                                     ref PP_FloatPoint wheel_delta,
-                                     ref PP_FloatPoint wheel_ticks,
+                                     PP_FloatPoint wheel_delta,
+                                     PP_FloatPoint wheel_ticks,
                                      PP_Bool scroll_by_page)
   {
   	return _Create (instance,
                    time_stamp,
                    modifiers,
-                    ref wheel_delta,
-                    ref wheel_ticks,
+                   wheel_delta,
+                   wheel_ticks,
                    scroll_by_page);
   }
 
@@ -1033,7 +1033,7 @@ public static partial class PPB_TouchInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_TouchInputEvent_AddTouchPoint")]
   extern static void _AddTouchPoint ( PP_Resource touch_event,
                                       PP_TouchListType list,
-                                      ref PP_TouchPoint point);
+                                      PP_TouchPoint point);
 
   /**
    * Adds a touch point to the touch event in the specified touch-list.
@@ -1047,9 +1047,9 @@ public static partial class PPB_TouchInputEvent {
    */
   public static void AddTouchPoint ( PP_Resource touch_event,
                                      PP_TouchListType list,
-                                     ref PP_TouchPoint point)
+                                     PP_TouchPoint point)
   {
-  	_AddTouchPoint (touch_event, list,  ref point);
+  	_AddTouchPoint (touch_event, list, point);
   }
 
 

@@ -86,7 +86,7 @@ public static partial class PPB_MouseCursor {
   extern static PP_Bool _SetCursor ( PP_Instance instance,
                                      PP_MouseCursor_Type type,
                                      PP_Resource image,
-                                     ref PP_Point hot_spot);
+                                     PP_Point hot_spot);
 
   /**
    * Sets the given mouse cursor. The mouse cursor will be in effect whenever
@@ -122,9 +122,9 @@ public static partial class PPB_MouseCursor {
   public static PP_Bool SetCursor ( PP_Instance instance,
                                     PP_MouseCursor_Type type,
                                     PP_Resource image,
-                                    ref PP_Point hot_spot)
+                                    PP_Point hot_spot)
   {
-  	return _SetCursor (instance, type, image,  ref hot_spot);
+  	return _SetCursor (instance, type, image, hot_spot);
   }
 
 

@@ -26,7 +26,7 @@ namespace PepperSharp {
 public static partial class PPB_Graphics2D {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
-                                      ref PP_Size size,
+                                      PP_Size size,
                                       PP_Bool is_always_opaque);
 
   /**
@@ -52,10 +52,10 @@ public static partial class PPB_Graphics2D {
    * successful or 0 if unsuccessful.
    */
   public static PP_Resource Create ( PP_Instance instance,
-                                     ref PP_Size size,
+                                     PP_Size size,
                                      PP_Bool is_always_opaque)
   {
-  	return _Create (instance,  ref size, is_always_opaque);
+  	return _Create (instance, size, is_always_opaque);
   }
 
 
@@ -107,8 +107,8 @@ public static partial class PPB_Graphics2D {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_PaintImageData")]
   extern static void _PaintImageData ( PP_Resource graphics_2d,
                                        PP_Resource image_data,
-                                       ref PP_Point top_left,
-                                       ref PP_Rect src_rect);
+                                       PP_Point top_left,
+                                       PP_Rect src_rect);
 
   /**
    * PaintImageData() enqueues a paint of the given image into the context.
@@ -151,17 +151,17 @@ public static partial class PPB_Graphics2D {
    */
   public static void PaintImageData ( PP_Resource graphics_2d,
                                       PP_Resource image_data,
-                                      ref PP_Point top_left,
-                                      ref PP_Rect src_rect)
+                                      PP_Point top_left,
+                                      PP_Rect src_rect)
   {
-  	_PaintImageData (graphics_2d, image_data,  ref top_left,  ref src_rect);
+  	_PaintImageData (graphics_2d, image_data, top_left, src_rect);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Scroll")]
   extern static void _Scroll ( PP_Resource graphics_2d,
-                               ref PP_Rect clip_rect,
-                               ref PP_Point amount);
+                               PP_Rect clip_rect,
+                               PP_Point amount);
 
   /**
    * Scroll() enqueues a scroll of the context's backing store. This
@@ -182,10 +182,10 @@ public static partial class PPB_Graphics2D {
    * shifted.
    */
   public static void Scroll ( PP_Resource graphics_2d,
-                              ref PP_Rect clip_rect,
-                              ref PP_Point amount)
+                              PP_Rect clip_rect,
+                              PP_Point amount)
   {
-  	_Scroll (graphics_2d,  ref clip_rect,  ref amount);
+  	_Scroll (graphics_2d, clip_rect, amount);
   }
 
 
@@ -350,8 +350,8 @@ public static partial class PPB_Graphics2D {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_SetLayerTransform")]
   extern static PP_Bool _SetLayerTransform ( PP_Resource resource,
                                              float scale,
-                                             ref PP_Point origin,
-                                             ref PP_Point translate);
+                                             PP_Point origin,
+                                             PP_Point translate);
 
   /**
    * SetLayerTransform() sets a transformation factor that will be applied for
@@ -370,10 +370,10 @@ public static partial class PPB_Graphics2D {
    */
   public static PP_Bool SetLayerTransform ( PP_Resource resource,
                                             float scale,
-                                            ref PP_Point origin,
-                                            ref PP_Point translate)
+                                            PP_Point origin,
+                                            PP_Point translate)
   {
-  	return _SetLayerTransform (resource, scale,  ref origin,  ref translate);
+  	return _SetLayerTransform (resource, scale, origin, translate);
   }
 
 

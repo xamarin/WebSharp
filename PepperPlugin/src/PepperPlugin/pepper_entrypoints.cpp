@@ -177,15 +177,15 @@ namespace Pepper {
 
 		#pragma region /* Begin entry point methods for PPB_Graphics2D */
 
-		PEPPER_EXPORT PP_Resource PPB_Graphics2D_Create(PP_Instance instance, const struct PP_Size* size, PP_Bool is_always_opaque) {
+		PEPPER_EXPORT PP_Resource PPB_Graphics2D_Create(PP_Instance instance, struct PP_Size size, PP_Bool is_always_opaque) {
 			if (has_interface<PPB_Graphics2D_1_2>()) {
-				return get_interface<PPB_Graphics2D_1_2>()->Create(instance, size, is_always_opaque);
+				return get_interface<PPB_Graphics2D_1_2>()->Create(instance, &size, is_always_opaque);
 			}
 			else if (has_interface<PPB_Graphics2D_1_1>()) {
-				return get_interface<PPB_Graphics2D_1_1>()->Create(instance, size, is_always_opaque);
+				return get_interface<PPB_Graphics2D_1_1>()->Create(instance, &size, is_always_opaque);
 			}
 			else if (has_interface<PPB_Graphics2D_1_0>()) {
-				return get_interface<PPB_Graphics2D_1_0>()->Create(instance, size, is_always_opaque);
+				return get_interface<PPB_Graphics2D_1_0>()->Create(instance, &size, is_always_opaque);
 			}
 			return NULL;
 		}
@@ -216,28 +216,28 @@ namespace Pepper {
 			return PP_FromBool(FALSE);
 		}
 
-		PEPPER_EXPORT void PPB_Graphics2D_PaintImageData(PP_Resource graphics_2d, PP_Resource image_data, const struct PP_Point* top_left, const struct PP_Rect* src_rect) {
+		PEPPER_EXPORT void PPB_Graphics2D_PaintImageData(PP_Resource graphics_2d, PP_Resource image_data, struct PP_Point top_left, struct PP_Rect src_rect) {
 			if (has_interface<PPB_Graphics2D_1_2>()) {
-				get_interface<PPB_Graphics2D_1_2>()->PaintImageData(graphics_2d, image_data, top_left, src_rect);
+				get_interface<PPB_Graphics2D_1_2>()->PaintImageData(graphics_2d, image_data, &top_left, &src_rect);
 			}
 			else if (has_interface<PPB_Graphics2D_1_1>()) {
-				get_interface<PPB_Graphics2D_1_1>()->PaintImageData(graphics_2d, image_data, top_left, src_rect);
+				get_interface<PPB_Graphics2D_1_1>()->PaintImageData(graphics_2d, image_data, &top_left, &src_rect);
 			}
 			else if (has_interface<PPB_Graphics2D_1_0>()) {
-				get_interface<PPB_Graphics2D_1_0>()->PaintImageData(graphics_2d, image_data, top_left, src_rect);
+				get_interface<PPB_Graphics2D_1_0>()->PaintImageData(graphics_2d, image_data, &top_left, &src_rect);
 			}
 			return ;
 		}
 
-		PEPPER_EXPORT void PPB_Graphics2D_Scroll(PP_Resource graphics_2d, const struct PP_Rect* clip_rect, const struct PP_Point* amount) {
+		PEPPER_EXPORT void PPB_Graphics2D_Scroll(PP_Resource graphics_2d, struct PP_Rect clip_rect, struct PP_Point amount) {
 			if (has_interface<PPB_Graphics2D_1_2>()) {
-				get_interface<PPB_Graphics2D_1_2>()->Scroll(graphics_2d, clip_rect, amount);
+				get_interface<PPB_Graphics2D_1_2>()->Scroll(graphics_2d, &clip_rect, &amount);
 			}
 			else if (has_interface<PPB_Graphics2D_1_1>()) {
-				get_interface<PPB_Graphics2D_1_1>()->Scroll(graphics_2d, clip_rect, amount);
+				get_interface<PPB_Graphics2D_1_1>()->Scroll(graphics_2d, &clip_rect, &amount);
 			}
 			else if (has_interface<PPB_Graphics2D_1_0>()) {
-				get_interface<PPB_Graphics2D_1_0>()->Scroll(graphics_2d, clip_rect, amount);
+				get_interface<PPB_Graphics2D_1_0>()->Scroll(graphics_2d, &clip_rect, &amount);
 			}
 			return ;
 		}
@@ -288,9 +288,9 @@ namespace Pepper {
 			return NULL;
 		}
 
-		PEPPER_EXPORT PP_Bool PPB_Graphics2D_SetLayerTransform(PP_Resource resource, float scale, const struct PP_Point* origin, const struct PP_Point* translate) {
+		PEPPER_EXPORT PP_Bool PPB_Graphics2D_SetLayerTransform(PP_Resource resource, float scale, struct PP_Point origin, struct PP_Point translate) {
 			if (has_interface<PPB_Graphics2D_1_2>()) {
-				return get_interface<PPB_Graphics2D_1_2>()->SetLayerTransform(resource, scale, origin, translate);
+				return get_interface<PPB_Graphics2D_1_2>()->SetLayerTransform(resource, scale, &origin, &translate);
 			}
 			return PP_FromBool(FALSE);
 		}
@@ -313,9 +313,9 @@ namespace Pepper {
 			return PP_FromBool(FALSE);
 		}
 
-		PEPPER_EXPORT PP_Resource PPB_ImageData_Create(PP_Instance instance, PP_ImageDataFormat format, const struct PP_Size* size, PP_Bool init_to_zero) {
+		PEPPER_EXPORT PP_Resource PPB_ImageData_Create(PP_Instance instance, PP_ImageDataFormat format, struct PP_Size size, PP_Bool init_to_zero) {
 			if (has_interface<PPB_ImageData_1_0>()) {
-				return get_interface<PPB_ImageData_1_0>()->Create(instance, format, size, init_to_zero);
+				return get_interface<PPB_ImageData_1_0>()->Create(instance, format, &size, init_to_zero);
 			}
 			return NULL;
 		}
@@ -405,9 +405,9 @@ namespace Pepper {
 
 		#pragma region /* Begin entry point methods for PPB_MouseInputEvent */
 
-		PEPPER_EXPORT PP_Resource PPB_MouseInputEvent_Create(PP_Instance instance, PP_InputEvent_Type type, PP_TimeTicks time_stamp, uint32_t modifiers, PP_InputEvent_MouseButton mouse_button, const struct PP_Point* mouse_position, int32_t click_count, const struct PP_Point* mouse_movement) {
+		PEPPER_EXPORT PP_Resource PPB_MouseInputEvent_Create(PP_Instance instance, PP_InputEvent_Type type, PP_TimeTicks time_stamp, uint32_t modifiers, PP_InputEvent_MouseButton mouse_button, struct PP_Point mouse_position, int32_t click_count, struct PP_Point mouse_movement) {
 			if (has_interface<PPB_MouseInputEvent_1_1>()) {
-				return get_interface<PPB_MouseInputEvent_1_1>()->Create(instance, type, time_stamp, modifiers, mouse_button, mouse_position, click_count, mouse_movement);
+				return get_interface<PPB_MouseInputEvent_1_1>()->Create(instance, type, time_stamp, modifiers, mouse_button, &mouse_position, click_count, &mouse_movement);
 			}
 			return NULL;
 		}
@@ -463,9 +463,9 @@ namespace Pepper {
 
 		#pragma region /* Begin entry point methods for PPB_WheelInputEvent */
 
-		PEPPER_EXPORT PP_Resource PPB_WheelInputEvent_Create(PP_Instance instance, PP_TimeTicks time_stamp, uint32_t modifiers, const struct PP_FloatPoint* wheel_delta, const struct PP_FloatPoint* wheel_ticks, PP_Bool scroll_by_page) {
+		PEPPER_EXPORT PP_Resource PPB_WheelInputEvent_Create(PP_Instance instance, PP_TimeTicks time_stamp, uint32_t modifiers, struct PP_FloatPoint wheel_delta, struct PP_FloatPoint wheel_ticks, PP_Bool scroll_by_page) {
 			if (has_interface<PPB_WheelInputEvent_1_0>()) {
-				return get_interface<PPB_WheelInputEvent_1_0>()->Create(instance, time_stamp, modifiers, wheel_delta, wheel_ticks, scroll_by_page);
+				return get_interface<PPB_WheelInputEvent_1_0>()->Create(instance, time_stamp, modifiers, &wheel_delta, &wheel_ticks, scroll_by_page);
 			}
 			return NULL;
 		}
@@ -557,9 +557,9 @@ namespace Pepper {
 			return NULL;
 		}
 
-		PEPPER_EXPORT void PPB_TouchInputEvent_AddTouchPoint(PP_Resource touch_event, PP_TouchListType list, const struct PP_TouchPoint* point) {
+		PEPPER_EXPORT void PPB_TouchInputEvent_AddTouchPoint(PP_Resource touch_event, PP_TouchListType list, struct PP_TouchPoint point) {
 			if (has_interface<PPB_TouchInputEvent_1_0>()) {
-				get_interface<PPB_TouchInputEvent_1_0>()->AddTouchPoint(touch_event, list, point);
+				get_interface<PPB_TouchInputEvent_1_0>()->AddTouchPoint(touch_event, list, &point);
 			}
 			return ;
 		}
@@ -720,9 +720,9 @@ namespace Pepper {
 
 		#pragma region /* Begin entry point methods for PPB_MouseCursor */
 
-		PEPPER_EXPORT PP_Bool PPB_MouseCursor_SetCursor(PP_Instance instance, enum PP_MouseCursor_Type type, PP_Resource image, const struct PP_Point* hot_spot) {
+		PEPPER_EXPORT PP_Bool PPB_MouseCursor_SetCursor(PP_Instance instance, enum PP_MouseCursor_Type type, PP_Resource image, struct PP_Point hot_spot) {
 			if (has_interface<PPB_MouseCursor_1_0>()) {
-				return get_interface<PPB_MouseCursor_1_0>()->SetCursor(instance, type, image, hot_spot);
+				return get_interface<PPB_MouseCursor_1_0>()->SetCursor(instance, type, image, &hot_spot);
 			}
 			return PP_FromBool(FALSE);
 		}
