@@ -27,13 +27,13 @@
     <ClInclude Include="PepperPlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pepper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="all_ppapi_c_includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="all_ppapi_cpp_includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pepper_entrypoints.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseCursor", "..\..\Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseLock", "..\..\Examples\api\MouseLock\MouseLock.csproj", "{9442253A-A06F-433D-B417-45DD1C3D8EAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputEvent", "..\..\Examples\api\InputEvent\InputEvent.csproj", "{3F43F788-5F72-4D20-9B88-74381F057DB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,6 +116,18 @@ Global
 		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|x86.ActiveCfg = Release|Any CPU
 		{9442253A-A06F-433D-B417-45DD1C3D8EAA}.Release|x86.Build.0 = Release|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Debug|x86.Build.0 = Debug|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Release|x86.ActiveCfg = Release|Any CPU
+		{3F43F788-5F72-4D20-9B88-74381F057DB3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,5 +137,6 @@ Global
 		{BA109B7A-B9D1-4CC8-B23C-BEECB0358630} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{26C3DFDF-C026-4ACA-B9EB-2703BEEA9711} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{9442253A-A06F-433D-B417-45DD1C3D8EAA} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
+		{3F43F788-5F72-4D20-9B88-74381F057DB3} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 	EndGlobalSection
 EndGlobal

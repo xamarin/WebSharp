@@ -1,7 +1,7 @@
 /* Copyright (c) 2016 Xamarin. */
 #include "stdafx.h"
 /* NOTE: this is auto-generated from IDL */
-#include "pepper.h"
+#include "pepper_entrypoints.h"
 
 #include "ppapi/c/ppb.h"
 #include "ppapi/c/ppb_console.h"

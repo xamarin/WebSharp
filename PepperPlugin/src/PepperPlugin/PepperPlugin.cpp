@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 
-#include "pepper.h"
 #include "PepperPlugin.h"
 
 
