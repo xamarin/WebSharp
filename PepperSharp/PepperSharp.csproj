@@ -7,7 +7,7 @@
     <ProjectGuid>{8BAD5F6C-1700-4D33-AA82-708184D560EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pepper</RootNamespace>
+    <RootNamespace>PepperSharp</RootNamespace>
     <AssemblyName>Xamarin.PepperSharp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -70,6 +70,9 @@
     <Compile Include="binding\pp_touch_point.cs" />
     <Compile Include="binding\runtime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\PPPoint.cs" />
+    <Compile Include="src\PPRect.cs" />
+    <Compile Include="src\PPSize.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

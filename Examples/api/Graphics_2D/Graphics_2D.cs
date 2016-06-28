@@ -10,7 +10,7 @@ namespace Graphics_2D
 
         PP_Resource context;
         PP_Resource flushContext;
-        PP_Size size;
+        PPSize size;
         PP_Point mouse;
         bool mouseDown;
         byte[] buffer;
@@ -41,9 +41,8 @@ namespace Graphics_2D
             var result = PPB_View.GetRect(view, out viewRect);
 
             deviceScale = PPB_View.GetDeviceScale(view);
-            PP_Size newSize = new PP_Size();
-            newSize.width = (int)(viewRect.size.width * deviceScale);
-            newSize.height = (int)(viewRect.size.height * deviceScale);
+            var newSize = new PPSize((int)(viewRect.size.width * deviceScale),
+                                    (int)(viewRect.size.height * deviceScale));
 
             if (!CreateContext(newSize))
                 return;
@@ -77,10 +76,10 @@ namespace Graphics_2D
                 if (PPB_MouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
                 {
                     
-                    var pos = PPB_MouseInputEvent.GetPosition(inputEvent);
+                    PPPoint pos = PPB_MouseInputEvent.GetPosition(inputEvent);
                     //Console.WriteLine($"yes it is {pos.x}");
-                    mouse.x = (int)(pos.x * deviceScale);
-                    mouse.y = (int)(pos.y * deviceScale);
+                    mouse.x = (int)(pos.X * deviceScale);
+                    mouse.y = (int)(pos.Y * deviceScale);
 
                     mouseDown = true;
                 }
@@ -92,12 +91,12 @@ namespace Graphics_2D
             return true;
         }
 
-        bool CreateContext(PP_Size new_size)
+        bool CreateContext(PPSize new_size)
         {
             bool kIsAlwaysOpaque = true;
             var isAlwaysOpaque = new PP_Bool();
             isAlwaysOpaque = kIsAlwaysOpaque ? PP_Bool.PP_TRUE : PP_Bool.PP_FALSE;
-            context = PPB_Graphics2D.Create(instance, ref new_size, isAlwaysOpaque);
+            context = PPB_Graphics2D.Create(instance, new_size, isAlwaysOpaque);
 
             // Call SetScale before BindGraphics so the image is scaled correctly on
             // HiDPI displays.
@@ -115,7 +114,7 @@ namespace Graphics_2D
             }
 
             // Allocate a buffer of palette entries of the same size as the new context.
-            buffer = new byte[new_size.width * new_size.height];
+            buffer = new byte[new_size.Width * new_size.Height];
             size = new_size;
 
             return true;
@@ -171,8 +170,8 @@ namespace Graphics_2D
 
         void UpdateCoals()
         {
-            int width = size.width;
-            int height = size.height;
+            int width = size.Width;
+            int height = size.Height;
             uint span = 0;
 
             // Draw two rows of random values at the bottom.
@@ -199,8 +198,8 @@ namespace Graphics_2D
 
         void UpdateFlames()
         {
-            int width = size.width;
-            int height = size.height;
+            int width = size.Width;
+            int height = size.Height;
             for (int y = 1; y < height - 1; ++y)
             {
                 uint offset = (uint)(y * width);
@@ -224,8 +223,8 @@ namespace Graphics_2D
             if (!mouseDown)
                 return;
 
-            int width = size.width;
-            int height = size.height;
+            int width = size.Width;
+            int height = size.Height;
 
             // Draw a circle at the mouse position.
             int radius = (int)(mouseRadius * deviceScale);
@@ -251,7 +250,7 @@ namespace Graphics_2D
             var format = PPB_ImageData.GetNativeImageDataFormat();
             bool kDontInitToZero = false;
             var dontInitToZero = kDontInitToZero ? PP_Bool.PP_TRUE : PP_Bool.PP_FALSE;
-            var image_data = PPB_ImageData.Create(instance, format, ref size, dontInitToZero);
+            var image_data = PPB_ImageData.Create(instance, format, size, dontInitToZero);
             var desc = new PP_ImageDataDesc();
 
             int[] data = null;
@@ -268,7 +267,7 @@ namespace Graphics_2D
             }
 
 
-            var num_pixels = (size.width * size.height);
+            var num_pixels = (size.Width * size.Height);
             uint offset = 0;
 
             for (uint i = 0; i < num_pixels; ++i)

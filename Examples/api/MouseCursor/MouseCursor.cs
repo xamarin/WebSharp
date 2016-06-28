@@ -29,15 +29,13 @@ namespace MouseCursor
             PP_MouseCursor_Type cursor = (PP_MouseCursor_Type)message;
             if (cursor == PP_MouseCursor_Type.Custom)
             {
-                var hotSpot = new PP_Point();
-                hotSpot.x = 16;
-                hotSpot.y = 16;
-                PPB_MouseCursor.SetCursor(Instance, cursor, custom_cursor_, ref hotSpot);
+                var hotSpot = new PPPoint(16,16);
+                PPB_MouseCursor.SetCursor(Instance, cursor, custom_cursor_, hotSpot);
             }
             else
             {
-                var refPoint = new PP_Point();
-                PPB_MouseCursor.SetCursor(Instance, cursor, new PP_Resource(), ref refPoint);
+                var refPoint = new PPPoint();
+                PPB_MouseCursor.SetCursor(Instance, cursor, new PP_Resource(), refPoint);
             }
 
         }
@@ -45,11 +43,9 @@ namespace MouseCursor
         PP_Resource custom_cursor_;
         void MakeCustomCursor()
         {
-            var size = new PP_Size();
-            size.width = 32;
-            size.height = 32;
+            var size = new PPSize(32,32);
 
-            custom_cursor_ = PPB_ImageData.Create(Instance, PP_ImageDataFormat.Bgra_premul, ref size, PP_Bool.PP_TRUE);
+            custom_cursor_ = PPB_ImageData.Create(Instance, PP_ImageDataFormat.Bgra_premul, size, PP_Bool.PP_TRUE);
 
             DrawCircle(16, 16, 9, 14, 0.8f, 0.8f, 0);
             DrawCircle(11, 12, 2, 3, 0, 0, 0);
