@@ -113,37 +113,7 @@ public enum PP_VarType {
  * The PP_VarValue union stores the data for any one of the types listed
  * in the PP_VarType enum.
  */
-union PP_VarValue {
-  /**
-   * If <code>type</code> is <code>PP_VARTYPE_BOOL</code>,
-   * <code>as_bool</code> represents the value of this <code>PP_Var</code> as
-   * <code>PP_Bool</code>.
-   */
-  public PP_Bool as_bool;
-  /**
-   * If <code>type</code> is <code>PP_VARTYPE_INT32</code>,
-   * <code>as_int</code> represents the value of this <code>PP_Var</code> as
-   * <code>int32_t</code>.
-   */
-  public int as_int;
-  /**
-   * If <code>type</code> is <code>PP_VARTYPE_DOUBLE</code>,
-   * <code>as_double</code> represents the value of this <code>PP_Var</code>
-   * as <code>double</code>.
-   */
-  public double as_double;
-  /**
-   * If <code>type</code> is <code>PP_VARTYPE_STRING</code>,
-   * <code>PP_VARTYPE_OBJECT</code>, <code>PP_VARTYPE_ARRAY</code>,
-   * <code>PP_VARTYPE_DICTIONARY</code>, <code>PP_VARTYPE_ARRAY_BUFFER</code>,
-   * or <code>PP_VARTYPE_RESOURCE</code>, <code>as_id</code> represents the
-   * value of this <code>PP_Var</code> as an opaque handle assigned by the
-   * browser. This handle is guaranteed never to be 0, so a module can
-   * initialize this ID to 0 to indicate a "NULL handle."
-   */
-  public long as_id;
-};
-
+/* Skipping generation of << union PP_VarValue >>. */
 /**
  * The <code>PP_VAR</code> struct is a variant data type and can contain any
  * value of one of the types named in the <code>PP_VarType</code> enum. This

@@ -308,7 +308,7 @@ public:
 		did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeFocus(bool)");
 		handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(PepperSharp.PP_Resource)");
 		handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(PepperSharp.PP_Resource)");
-		handle_message = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleMessage(object)");
+		handle_message = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleMessage(PepperSharp.PP_Var)");
 
 		MonoObject *result = NULL;
 
@@ -393,60 +393,63 @@ public:
 		if (!handle_message)
 			return;
 
-		char buf[256];
+//		char buf[256];
 		
-		void *args[1] = { 0 };
-		if (message.is_undefined()) {
-			snprintf(buf, sizeof(buf), "Var(UNDEFINED)");
-			args[0] = mono_string_new(monoDomain, buf);
-		}
-		else if (message.is_null()) {
-			snprintf(buf, sizeof(buf), "null");
-			args[0] = mono_string_new(monoDomain, buf);
-		}
-		else if (message.is_bool()) {
-			auto asBool = message.AsBool();
-			args[0] = mono_value_box(monoDomain, mono_get_boolean_class(), &asBool);
-		}
-		else if (message.is_int()) {
-			auto asInt = static_cast<int>(message.AsInt());
-			args[0] = mono_value_box(monoDomain, mono_get_int32_class(), &asInt);
-		}
-		else if (message.is_double()) {
-			auto asDouble = static_cast<int>(message.AsDouble());
-			args[0] = args[0] = mono_value_box(monoDomain, mono_get_double_class(), &asDouble);
-		}
-		else if (message.is_string()) {
-			auto ms = mono_string_new(monoDomain, message.AsString().c_str());
-			args[0] = ms;
-		}
-		else if (message.is_object()) {
-			snprintf(buf, sizeof(buf), "Var(OBJECT) not supported");
-			args[0] = mono_string_new(monoDomain, buf);
-		}
-		else if (message.is_array()) {
-			snprintf(buf, sizeof(buf), "Var(ARRAY) not supported");
-			args[0] = mono_string_new(monoDomain, buf);
-		}
-		else if (message.is_dictionary()) {
-			snprintf(buf, sizeof(buf), "Var(DICTIONARY) not supported");
-			args[0] = mono_string_new(monoDomain, buf);
-		}
-		else if (message.is_array_buffer()) {
-			snprintf(buf, sizeof(buf), "Var(ARRAY_BUFFER) not supported");
-			args[0] = mono_string_new(monoDomain, buf);
-		}
-		else if (message.is_resource()) {
-			PP_Resource asResource = message.AsResource().pp_resource();
-			auto klass = find_class("PepperSharp", "PP_Resource", peppersharpImage);
-			args[0] = mono_value_box(monoDomain, klass, &asResource);
-			
-		}
-		else {
-			buf[0] = '\0';
-			args[0] = mono_string_new(monoDomain, buf);
-		}
+		//void *args[1] = { 0 };
+		//if (message.is_undefined()) {
+		//	snprintf(buf, sizeof(buf), "Var(UNDEFINED)");
+		//	args[0] = mono_string_new(monoDomain, buf);
+		//}
+		//else if (message.is_null()) {
+		//	snprintf(buf, sizeof(buf), "null");
+		//	args[0] = mono_string_new(monoDomain, buf);
+		//}
+		//else if (message.is_bool()) {
+		//	auto asBool = message.AsBool();
+		//	args[0] = mono_value_box(monoDomain, mono_get_boolean_class(), &asBool);
+		//}
+		//else if (message.is_int()) {
+		//	auto asInt = static_cast<int>(message.AsInt());
+		//	args[0] = mono_value_box(monoDomain, mono_get_int32_class(), &asInt);
+		//}
+		//else if (message.is_double()) {
+		//	auto asDouble = static_cast<int>(message.AsDouble());
+		//	args[0] = args[0] = mono_value_box(monoDomain, mono_get_double_class(), &asDouble);
+		//}
+		//else if (message.is_string()) {
+		//	auto ms = mono_string_new(monoDomain, message.AsString().c_str());
+		//	args[0] = ms;
+		//}
+		//else if (message.is_object()) {
+		//	snprintf(buf, sizeof(buf), "Var(OBJECT) not supported");
+		//	args[0] = mono_string_new(monoDomain, buf);
+		//}
+		//else if (message.is_array()) {
+		//	snprintf(buf, sizeof(buf), "Var(ARRAY) not supported");
+		//	args[0] = mono_string_new(monoDomain, buf);
+		//}
+		//else if (message.is_dictionary()) {
+		//	snprintf(buf, sizeof(buf), "Var(DICTIONARY) not supported");
+		//	args[0] = mono_string_new(monoDomain, buf);
+		//}
+		//else if (message.is_array_buffer()) {
+		//	snprintf(buf, sizeof(buf), "Var(ARRAY_BUFFER) not supported");
+		//	args[0] = mono_string_new(monoDomain, buf);
+		//}
+		//else if (message.is_resource()) {
+		//	PP_Resource asResource = message.AsResource().pp_resource();
+		//	auto klass = find_class("PepperSharp", "PP_Resource", peppersharpImage);
+		//	args[0] = mono_value_box(monoDomain, klass, &asResource);
+		//	
+		//}
+		//else {
+		//	buf[0] = '\0';
+		//	args[0] = mono_string_new(monoDomain, buf);
+		//}
 
+		void *args[1] = { 0 };
+		auto var = message.pp_var();
+		args[0] = &var;
 		MonoObject *result = NULL;
 		mono_invoke_with_method(handle_message, args, pluginInstance, &result);
 

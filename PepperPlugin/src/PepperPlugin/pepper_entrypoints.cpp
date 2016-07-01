@@ -11,10 +11,13 @@
 #include "ppapi/c/ppb_input_event.h"
 #include "ppapi/c/ppb_instance.h"
 #include "ppapi/c/ppb_message_loop.h"
+#include "ppapi/c/ppb_messaging.h"
 #include "ppapi/c/ppb_mouse_cursor.h"
 #include "ppapi/c/ppb_mouse_lock.h"
+#include "ppapi/c/ppb_var.h"
 #include "ppapi/c/ppb_view.h"
 #include "ppapi/c/ppp_input_event.h"
+#include "ppapi/c/ppp_messaging.h"
 #include "ppapi/c/ppp_mouse_lock.h"
 
 #ifndef PEPPER_EXPORT
@@ -96,11 +99,26 @@ namespace Pepper {
 		template <> const char*	interface_name<PPB_MessageLoop_1_0>() {
 			return PPB_MESSAGELOOP_INTERFACE_1_0;
 		}
+		template <> const char*	interface_name<PPB_Messaging_1_0>() {
+			return PPB_MESSAGING_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_Messaging_1_2>() {
+			return PPB_MESSAGING_INTERFACE_1_2;
+		}
 		template <> const char*	interface_name<PPB_MouseCursor_1_0>() {
 			return PPB_MOUSECURSOR_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_MouseLock_1_0>() {
 			return PPB_MOUSELOCK_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_Var_1_0>() {
+			return PPB_VAR_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_Var_1_1>() {
+			return PPB_VAR_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_Var_1_2>() {
+			return PPB_VAR_INTERFACE_1_2;
 		}
 		template <> const char*	interface_name<PPB_View_1_0>() {
 			return PPB_VIEW_INTERFACE_1_0;
@@ -113,6 +131,9 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPP_InputEvent_0_1>() {
 			return PPP_INPUT_EVENT_INTERFACE_0_1;
+		}
+		template <> const char*	interface_name<PPP_Messaging_1_0>() {
+			return PPP_MESSAGING_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPP_MouseLock_1_0>() {
 			return PPP_MOUSELOCK_INTERFACE_1_0;
@@ -134,16 +155,16 @@ namespace Pepper {
 
 		#pragma region /* Begin entry point methods for PPB_Console */
 
-		PEPPER_EXPORT void PPB_Console_Log(PP_Instance instance, PP_LogLevel level, const char* value) {
+		PEPPER_EXPORT void PPB_Console_Log(PP_Instance instance, PP_LogLevel level, struct PP_Var value) {
 			if (has_interface<PPB_Console_1_0>()) {
-				get_interface<PPB_Console_1_0>()->Log(instance, level, Var(value).pp_var());
+				get_interface<PPB_Console_1_0>()->Log(instance, level, value);
 			}
 			return ;
 		}
 
-		PEPPER_EXPORT void PPB_Console_LogWithSource(PP_Instance instance, PP_LogLevel level, const char* source, const char* value) {
+		PEPPER_EXPORT void PPB_Console_LogWithSource(PP_Instance instance, PP_LogLevel level, struct PP_Var source, struct PP_Var value) {
 			if (has_interface<PPB_Console_1_0>()) {
-				get_interface<PPB_Console_1_0>()->LogWithSource(instance, level, Var(source).pp_var(), Var(value).pp_var());
+				get_interface<PPB_Console_1_0>()->LogWithSource(instance, level, source, value);
 			}
 			return ;
 		}
@@ -502,9 +523,9 @@ namespace Pepper {
 
 		#pragma region /* Begin entry point methods for PPB_KeyboardInputEvent */
 
-		PEPPER_EXPORT PP_Resource PPB_KeyboardInputEvent_Create(PP_Instance instance, PP_InputEvent_Type type, PP_TimeTicks time_stamp, uint32_t modifiers, uint32_t key_code, const char* character_text, const char* code) {
+		PEPPER_EXPORT PP_Resource PPB_KeyboardInputEvent_Create(PP_Instance instance, PP_InputEvent_Type type, PP_TimeTicks time_stamp, uint32_t modifiers, uint32_t key_code, struct PP_Var character_text, struct PP_Var code) {
 			if (has_interface<PPB_KeyboardInputEvent_1_2>()) {
-				return get_interface<PPB_KeyboardInputEvent_1_2>()->Create(instance, type, time_stamp, modifiers, key_code, Var(character_text).pp_var(), Var(code).pp_var());
+				return get_interface<PPB_KeyboardInputEvent_1_2>()->Create(instance, type, time_stamp, modifiers, key_code, character_text, code);
 			}
 			return NULL;
 		}
@@ -529,21 +550,21 @@ namespace Pepper {
 			return NULL;
 		}
 
-		PEPPER_EXPORT const char* PPB_KeyboardInputEvent_GetCharacterText(PP_Resource character_event) {
+		PEPPER_EXPORT struct PP_Var PPB_KeyboardInputEvent_GetCharacterText(PP_Resource character_event) {
 			if (has_interface<PPB_KeyboardInputEvent_1_2>()) {
-				return  Var(get_interface<PPB_KeyboardInputEvent_1_2>()->GetCharacterText(character_event)).AsString().c_str();
+				return get_interface<PPB_KeyboardInputEvent_1_2>()->GetCharacterText(character_event);
 			}
 			else if (has_interface<PPB_KeyboardInputEvent_1_0>()) {
-				return  Var(get_interface<PPB_KeyboardInputEvent_1_0>()->GetCharacterText(character_event)).AsString().c_str();
+				return get_interface<PPB_KeyboardInputEvent_1_0>()->GetCharacterText(character_event);
 			}
-			return NULL;
+			return PP_MakeNull();
 		}
 
-		PEPPER_EXPORT const char* PPB_KeyboardInputEvent_GetCode(PP_Resource key_event) {
+		PEPPER_EXPORT struct PP_Var PPB_KeyboardInputEvent_GetCode(PP_Resource key_event) {
 			if (has_interface<PPB_KeyboardInputEvent_1_2>()) {
-				return  Var(get_interface<PPB_KeyboardInputEvent_1_2>()->GetCode(key_event)).AsString().c_str();
+				return get_interface<PPB_KeyboardInputEvent_1_2>()->GetCode(key_event);
 			}
-			return NULL;
+			return PP_MakeNull();
 		}
 
 		#pragma endregion /* End entry point generation for PPB_KeyboardInputEvent */
@@ -596,9 +617,9 @@ namespace Pepper {
 
 		#pragma region /* Begin entry point methods for PPB_IMEInputEvent */
 
-		PEPPER_EXPORT PP_Resource PPB_IMEInputEvent_Create(PP_Instance instance, PP_InputEvent_Type type, PP_TimeTicks time_stamp, const char* text, uint32_t segment_number, const uint32_t segment_offsets[], int32_t target_segment, uint32_t selection_start, uint32_t selection_end) {
+		PEPPER_EXPORT PP_Resource PPB_IMEInputEvent_Create(PP_Instance instance, PP_InputEvent_Type type, PP_TimeTicks time_stamp, struct PP_Var text, uint32_t segment_number, const uint32_t segment_offsets[], int32_t target_segment, uint32_t selection_start, uint32_t selection_end) {
 			if (has_interface<PPB_IMEInputEvent_1_0>()) {
-				return get_interface<PPB_IMEInputEvent_1_0>()->Create(instance, type, time_stamp, Var(text).pp_var(), segment_number, segment_offsets, target_segment, selection_start, selection_end);
+				return get_interface<PPB_IMEInputEvent_1_0>()->Create(instance, type, time_stamp, text, segment_number, segment_offsets, target_segment, selection_start, selection_end);
 			}
 			return NULL;
 		}
@@ -610,11 +631,11 @@ namespace Pepper {
 			return PP_FromBool(FALSE);
 		}
 
-		PEPPER_EXPORT const char* PPB_IMEInputEvent_GetText(PP_Resource ime_event) {
+		PEPPER_EXPORT struct PP_Var PPB_IMEInputEvent_GetText(PP_Resource ime_event) {
 			if (has_interface<PPB_IMEInputEvent_1_0>()) {
-				return  Var(get_interface<PPB_IMEInputEvent_1_0>()->GetText(ime_event)).AsString().c_str();
+				return get_interface<PPB_IMEInputEvent_1_0>()->GetText(ime_event);
 			}
-			return NULL;
+			return PP_MakeNull();
 		}
 
 		PEPPER_EXPORT uint32_t PPB_IMEInputEvent_GetSegmentNumber(PP_Resource ime_event) {
@@ -718,6 +739,34 @@ namespace Pepper {
 
 		#pragma endregion /* End entry point generation for PPB_MessageLoop */
 
+		#pragma region /* Begin entry point methods for PPB_Messaging */
+
+		PEPPER_EXPORT void PPB_Messaging_PostMessage(PP_Instance instance, struct PP_Var message) {
+			if (has_interface<PPB_Messaging_1_2>()) {
+				get_interface<PPB_Messaging_1_2>()->PostMessage(instance, message);
+			}
+			else if (has_interface<PPB_Messaging_1_0>()) {
+				get_interface<PPB_Messaging_1_0>()->PostMessage(instance, message);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT int32_t PPB_Messaging_RegisterMessageHandler(PP_Instance instance, void* user_data, const struct PPP_MessageHandler_0_2* handler, PP_Resource message_loop) {
+			if (has_interface<PPB_Messaging_1_2>()) {
+				return get_interface<PPB_Messaging_1_2>()->RegisterMessageHandler(instance, user_data, handler, message_loop);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_Messaging_UnregisterMessageHandler(PP_Instance instance) {
+			if (has_interface<PPB_Messaging_1_2>()) {
+				get_interface<PPB_Messaging_1_2>()->UnregisterMessageHandler(instance);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_Messaging */
+
 		#pragma region /* Begin entry point methods for PPB_MouseCursor */
 
 		PEPPER_EXPORT PP_Bool PPB_MouseCursor_SetCursor(PP_Instance instance, enum PP_MouseCursor_Type type, PP_Resource image, struct PP_Point hot_spot) {
@@ -746,6 +795,73 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_MouseLock */
+
+		#pragma region /* Begin entry point methods for PPB_Var */
+
+		PEPPER_EXPORT void PPB_Var_AddRef(struct PP_Var var) {
+			if (has_interface<PPB_Var_1_2>()) {
+				get_interface<PPB_Var_1_2>()->AddRef(var);
+			}
+			else if (has_interface<PPB_Var_1_1>()) {
+				get_interface<PPB_Var_1_1>()->AddRef(var);
+			}
+			else if (has_interface<PPB_Var_1_0>()) {
+				get_interface<PPB_Var_1_0>()->AddRef(var);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_Var_Release(struct PP_Var var) {
+			if (has_interface<PPB_Var_1_2>()) {
+				get_interface<PPB_Var_1_2>()->Release(var);
+			}
+			else if (has_interface<PPB_Var_1_1>()) {
+				get_interface<PPB_Var_1_1>()->Release(var);
+			}
+			else if (has_interface<PPB_Var_1_0>()) {
+				get_interface<PPB_Var_1_0>()->Release(var);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_Var_VarFromUtf8(const char* data, uint32_t len) {
+			if (has_interface<PPB_Var_1_2>()) {
+				return get_interface<PPB_Var_1_2>()->VarFromUtf8(data, len);
+			}
+			else if (has_interface<PPB_Var_1_1>()) {
+				return get_interface<PPB_Var_1_1>()->VarFromUtf8(data, len);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT const char* PPB_Var_VarToUtf8(struct PP_Var var, uint32_t* len) {
+			if (has_interface<PPB_Var_1_2>()) {
+				return get_interface<PPB_Var_1_2>()->VarToUtf8(var, len);
+			}
+			else if (has_interface<PPB_Var_1_1>()) {
+				return get_interface<PPB_Var_1_1>()->VarToUtf8(var, len);
+			}
+			else if (has_interface<PPB_Var_1_0>()) {
+				return get_interface<PPB_Var_1_0>()->VarToUtf8(var, len);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_Var_VarToResource(struct PP_Var var) {
+			if (has_interface<PPB_Var_1_2>()) {
+				return get_interface<PPB_Var_1_2>()->VarToResource(var);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_Var_VarFromResource(PP_Resource resource) {
+			if (has_interface<PPB_Var_1_2>()) {
+				return get_interface<PPB_Var_1_2>()->VarFromResource(resource);
+			}
+			return PP_MakeNull();
+		}
+
+		#pragma endregion /* End entry point generation for PPB_Var */
 
 		#pragma region /* Begin entry point methods for PPB_View */
 
@@ -866,6 +982,19 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPP_InputEvent */
+
+/* Not generating entry point methods for PPP_MessageHandler_0_2 */
+
+		#pragma region /* Begin entry point methods for PPP_Messaging */
+
+		PEPPER_EXPORT void PPP_Messaging_HandleMessage(PP_Instance instance, struct PP_Var message) {
+			if (has_interface<PPP_Messaging_1_0>()) {
+				get_interface<PPP_Messaging_1_0>()->HandleMessage(instance, message);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPP_Messaging */
 
 		#pragma region /* Begin entry point methods for PPP_MouseLock */
 

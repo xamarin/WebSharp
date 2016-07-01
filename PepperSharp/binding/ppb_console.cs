@@ -37,7 +37,7 @@ public static partial class PPB_Console {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Console_Log")]
   extern static void _Log ( PP_Instance instance,
                             PP_LogLevel level,
-                            string value);
+                            PP_Var value);
 
   /**
    * Logs the given message to the JavaScript console associated with the
@@ -47,7 +47,7 @@ public static partial class PPB_Console {
    */
   public static void Log ( PP_Instance instance,
                            PP_LogLevel level,
-                           string value)
+                           PP_Var value)
   {
   	_Log (instance, level, value);
   }
@@ -56,8 +56,8 @@ public static partial class PPB_Console {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Console_LogWithSource")]
   extern static void _LogWithSource ( PP_Instance instance,
                                       PP_LogLevel level,
-                                      string source,
-                                      string value);
+                                      PP_Var source,
+                                      PP_Var value);
 
   /**
    * Logs a message to the console with the given source information rather
@@ -71,8 +71,8 @@ public static partial class PPB_Console {
    */
   public static void LogWithSource ( PP_Instance instance,
                                      PP_LogLevel level,
-                                     string source,
-                                     string value)
+                                     PP_Var source,
+                                     PP_Var value)
   {
   	_LogWithSource (instance, level, source, value);
   }

@@ -29,7 +29,7 @@ namespace PepperSharp
             return false;
         }
 
-        public virtual void HandleMessage (object message)
+        public virtual void HandleMessage (PP_Var message)
         { }
 
         public bool BindGraphics(PP_Resource graphics2d)
@@ -43,6 +43,16 @@ namespace PepperSharp
         // Called by the browser when mouselock is lost.  This happens when the NaCl
         // module exits fullscreen mode.
         public virtual void MouseLockLost() { }
+
+        /// <summary>
+        /// asynchronously invokes any listeners for message events on the DOM element for the given instance.
+        /// </summary>
+        /// <param name="message"></param>
+        public void PostMessage(object message)
+        {
+            // We convert this to string for now
+            PPB_Messaging.PostMessage(Instance, new PPVar(message).AsPP_Var());
+        }
 
         PP_Instance instance = new PP_Instance();
         public PP_Instance Instance

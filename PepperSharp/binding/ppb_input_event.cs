@@ -457,7 +457,7 @@ public static partial class PPB_InputEvent {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_InputEvent_GetTimeStamp")]
-  extern static PP_TimeTicks _GetTimeStamp ( PP_Resource eventArg);
+  extern static double _GetTimeStamp ( PP_Resource eventArg);
 
   /**
    * GetTimeStamp() Returns the time that the event was generated. This will be
@@ -473,7 +473,7 @@ public static partial class PPB_InputEvent {
    * be reliably used to compare events. This means, however, that you can't
    * correlate event times to a particular time of day on the system clock.
    */
-  public static PP_TimeTicks GetTimeStamp ( PP_Resource eventArg)
+  public static double GetTimeStamp ( PP_Resource eventArg)
   {
   	return _GetTimeStamp (eventArg);
   }
@@ -509,7 +509,7 @@ public static partial class PPB_MouseInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
-                                      PP_TimeTicks time_stamp,
+                                      double time_stamp,
                                       uint modifiers,
                                       PP_InputEvent_MouseButton mouse_button,
                                       PP_Point mouse_position,
@@ -547,7 +547,7 @@ public static partial class PPB_MouseInputEvent {
    */
   public static PP_Resource Create ( PP_Instance instance,
                                      PP_InputEvent_Type type,
-                                     PP_TimeTicks time_stamp,
+                                     double time_stamp,
                                      uint modifiers,
                                      PP_InputEvent_MouseButton mouse_button,
                                      PP_Point mouse_position,
@@ -666,7 +666,7 @@ public static partial class PPB_MouseInputEvent {
 public static partial class PPB_WheelInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_WheelInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
-                                      PP_TimeTicks time_stamp,
+                                      double time_stamp,
                                       uint modifiers,
                                       PP_FloatPoint wheel_delta,
                                       PP_FloatPoint wheel_ticks,
@@ -698,7 +698,7 @@ public static partial class PPB_WheelInputEvent {
    * @return A <code>PP_Resource</code> containing the new wheel input event.
    */
   public static PP_Resource Create ( PP_Instance instance,
-                                     PP_TimeTicks time_stamp,
+                                     double time_stamp,
                                      uint modifiers,
                                      PP_FloatPoint wheel_delta,
                                      PP_FloatPoint wheel_ticks,
@@ -827,11 +827,11 @@ public static partial class PPB_KeyboardInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_KeyboardInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
-                                      PP_TimeTicks time_stamp,
+                                      double time_stamp,
                                       uint modifiers,
                                       uint key_code,
-                                      string character_text,
-                                      string code);
+                                      PP_Var character_text,
+                                      PP_Var code);
 
   /**
    * Creates a keyboard input event with the given parameters. Normally you
@@ -865,11 +865,11 @@ public static partial class PPB_KeyboardInputEvent {
    */
   public static PP_Resource Create ( PP_Instance instance,
                                      PP_InputEvent_Type type,
-                                     PP_TimeTicks time_stamp,
+                                     double time_stamp,
                                      uint modifiers,
                                      uint key_code,
-                                     string character_text,
-                                     string code)
+                                     PP_Var character_text,
+                                     PP_Var code)
   {
   	return _Create (instance,
                    type,
@@ -918,7 +918,7 @@ public static partial class PPB_KeyboardInputEvent {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_KeyboardInputEvent_GetCharacterText")]
-  extern static string _GetCharacterText ( PP_Resource character_event);
+  extern static PP_Var _GetCharacterText ( PP_Resource character_event);
 
   /**
    * GetCharacterText() returns the typed character as a UTF-8 string for the
@@ -931,14 +931,14 @@ public static partial class PPB_KeyboardInputEvent {
    * input events. For non-character input events the return value will be an
    * undefined var.
    */
-  public static string GetCharacterText ( PP_Resource character_event)
+  public static PP_Var GetCharacterText ( PP_Resource character_event)
   {
   	return _GetCharacterText (character_event);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_KeyboardInputEvent_GetCode")]
-  extern static string _GetCode ( PP_Resource key_event);
+  extern static PP_Var _GetCode ( PP_Resource key_event);
 
   /**
    * GetCode() returns the DOM |code| field for this keyboard event, as
@@ -949,7 +949,7 @@ public static partial class PPB_KeyboardInputEvent {
    *
    * @return The string that contains the DOM |code| for the keyboard event.
    */
-  public static string GetCode ( PP_Resource key_event)
+  public static PP_Var GetCode ( PP_Resource key_event)
   {
   	return _GetCode (key_event);
   }
@@ -996,7 +996,7 @@ public static partial class PPB_TouchInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_TouchInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
-                                      PP_TimeTicks time_stamp,
+                                      double time_stamp,
                                       uint modifiers);
 
   /**
@@ -1023,7 +1023,7 @@ public static partial class PPB_TouchInputEvent {
    */
   public static PP_Resource Create ( PP_Instance instance,
                                      PP_InputEvent_Type type,
-                                     PP_TimeTicks time_stamp,
+                                     double time_stamp,
                                      uint modifiers)
   {
   	return _Create (instance, type, time_stamp, modifiers);
@@ -1149,8 +1149,8 @@ public static partial class PPB_IMEInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_IMEInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
-                                      PP_TimeTicks time_stamp,
-                                      string text,
+                                      double time_stamp,
+                                      PP_Var text,
                                       uint segment_number,
                                       uint[] segment_offsets,
                                       int target_segment,
@@ -1195,8 +1195,8 @@ public static partial class PPB_IMEInputEvent {
    */
   public static PP_Resource Create ( PP_Instance instance,
                                      PP_InputEvent_Type type,
-                                     PP_TimeTicks time_stamp,
-                                     string text,
+                                     double time_stamp,
+                                     PP_Var text,
                                      uint segment_number,
                                      uint[] segment_offsets,
                                      int target_segment,
@@ -1232,7 +1232,7 @@ public static partial class PPB_IMEInputEvent {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_IMEInputEvent_GetText")]
-  extern static string _GetText ( PP_Resource ime_event);
+  extern static PP_Var _GetText ( PP_Resource ime_event);
 
   /**
    * GetText() returns the composition text as a UTF-8 string for the given IME
@@ -1244,7 +1244,7 @@ public static partial class PPB_IMEInputEvent {
    * @return A string var representing the composition text. For non-IME input
    * events the return value will be an undefined var.
    */
-  public static string GetText ( PP_Resource ime_event)
+  public static PP_Var GetText ( PP_Resource ime_event)
   {
   	return _GetText (ime_event);
   }
