@@ -13,20 +13,21 @@ namespace MouseCursor
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPB_Console.Log(Instance, PP_LogLevel.Log, "Hello from MouseCursor using C#");
+            PPB_Console.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from MouseCursor using C#").AsPP_Var());
             MakeCustomCursor();
 
             return true;
         }
 
-        public override void HandleMessage(object message)
+        public override void HandleMessage(PP_Var message)
         {
-            if (!(message is Int32))
+            var varMessage = new PPVar(message);
+            if (!varMessage.IsInt)
             {
                 Console.WriteLine("Unexpected message.");
             }
 
-            PP_MouseCursor_Type cursor = (PP_MouseCursor_Type)message;
+            PP_MouseCursor_Type cursor = (PP_MouseCursor_Type)varMessage.AsInt();
             if (cursor == PP_MouseCursor_Type.Custom)
             {
                 var hotSpot = new PPPoint(16,16);

@@ -26,7 +26,7 @@ namespace Graphics_2D
         public override bool Init(int argc, string[] argn, string[] argv)
         {
             instance.pp_instance = Handle.ToInt32();
-            PPB_Console.Log(instance, PP_LogLevel.Log, "Hello from PepperSharp using C#");
+            PPB_Console.Log(instance, PP_LogLevel.Log, new PPVar("Hello from PepperSharp using C#").AsPP_Var());
             PPB_InputEvent.RequestInputEvents(instance, (int)PP_InputEvent_Class.Mouse);
             int seed = 1;
             random = new Random(seed);

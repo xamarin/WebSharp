@@ -7,13 +7,39 @@ namespace MouseLock
     public class MouseLock : PPInstance
     {
 
+        PPSize size_ = PPSize.Zero;
+        bool mouse_locked_;
+        PPPoint mouse_movement_ = PPPoint.Zero;
+        const int kCentralSpotRadius = 5;
+        const uint kReturnKeyCode = 13;
+        const uint kBackgroundColor = 0xff606060;
+        const uint kForegroundColor = 0xfff08080;
+        bool is_context_bound_;
+        bool was_fullscreen_;
+        int[] background_scanline_ = null;
+        bool waiting_for_flush_completion_;
+
+        // Indicate the direction of the mouse location relative to the center of the
+        // view.  These values are used to determine which 2D quadrant the needle lies
+        // in.
+        enum MouseDirection
+        {
+            Left = 0,
+            Right = 1,
+            Up = 2,
+            Down = 3
+        }
+
+        PP_Resource device_context_;
+
+
         public MouseLock(IntPtr handle) : base(handle) { }
 
         ~MouseLock() { System.Console.WriteLine("MouseLock destructed"); }
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPB_Console.Log(Instance, PP_LogLevel.Log, "Hello from MouseLock using C#");
+            PPB_Console.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from MouseLock using C#").AsPP_Var());
             PPB_InputEvent.RequestInputEvents(Instance, (int)(PP_InputEvent_Class.Mouse | PP_InputEvent_Class.Keyboard));
 
             return true;
@@ -395,33 +421,8 @@ namespace MouseLock
         void Log(string format, params object[] args)
         {
             string message = string.Format(format, args);
-            PPB_Console.Log(Instance, PP_LogLevel.Error, message);
+            PPB_Console.Log(Instance, PP_LogLevel.Error, new PPVar(message).AsPP_Var());
         }
-
-        PPSize size_ = PPSize.Zero;
-        bool mouse_locked_;
-        PPPoint mouse_movement_ = PPPoint.Zero;
-        const int kCentralSpotRadius = 5;
-        const uint kReturnKeyCode = 13;
-        const uint kBackgroundColor = 0xff606060;
-        const uint kForegroundColor = 0xfff08080;
-        bool is_context_bound_;
-        bool was_fullscreen_;
-        int[] background_scanline_ = null;
-        bool waiting_for_flush_completion_;
-
-        // Indicate the direction of the mouse location relative to the center of the
-        // view.  These values are used to determine which 2D quadrant the needle lies
-        // in.
-        enum MouseDirection {
-            Left = 0,
-            Right = 1,
-            Up = 2,
-            Down = 3
-        }
-
-        PP_Resource device_context_;
-
 
         public override bool HandleInputEvent(PP_Resource inputEvent)
         {
