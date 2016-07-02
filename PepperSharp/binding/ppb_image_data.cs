@@ -52,9 +52,9 @@ namespace PepperSharp {
  * <strong>Note:</strong> The resulting pre-multiplied red, green and blue
  * components should not be greater than the alpha value.
  */
-public enum PP_ImageDataFormat {
-  Bgra_premul,
-  Rgba_premul
+public enum PPImageDataFormat {
+  BgraPremul,
+  RgbaPremul
 }
 /**
  * @}
@@ -74,7 +74,7 @@ public struct PP_ImageDataDesc {
    * This value represents one of the image data types in the
    * <code>PP_ImageDataFormat</code> enum.
    */
-  public PP_ImageDataFormat format;
+  public PPImageDataFormat format;
   /** This value represents the size of the bitmap in pixels. */
   public PP_Size size;
   /**
@@ -98,7 +98,7 @@ public struct PP_ImageDataDesc {
 public static partial class PPBImageData {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_ImageData_GetNativeImageDataFormat")]
-  extern static PP_ImageDataFormat _GetNativeImageDataFormat ();
+  extern static PPImageDataFormat _GetNativeImageDataFormat ();
 
   /**
    * GetNativeImageDataFormat() returns the browser's preferred format for
@@ -108,7 +108,7 @@ public static partial class PPBImageData {
    *
    * @return A <code>PP_ImageDataFormat</code> containing the preferred format.
    */
-  public static PP_ImageDataFormat GetNativeImageDataFormat ()
+  public static PPImageDataFormat GetNativeImageDataFormat ()
   {
   	return _GetNativeImageDataFormat ();
   }
@@ -116,8 +116,7 @@ public static partial class PPBImageData {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_ImageData_IsImageDataFormatSupported")]
-  extern static PP_Bool _IsImageDataFormatSupported (
-      PP_ImageDataFormat format);
+  extern static PPBool _IsImageDataFormatSupported ( PPImageDataFormat format);
 
   /**
    * IsImageDataFormatSupported() determines if the given image data format is
@@ -131,7 +130,7 @@ public static partial class PPBImageData {
    * @return A <code>PP_Bool</code> with <code>PP_TRUE</code> if the given
    * image data format is supported by the browser.
    */
-  public static PP_Bool IsImageDataFormatSupported ( PP_ImageDataFormat format)
+  public static PPBool IsImageDataFormatSupported ( PPImageDataFormat format)
   {
   	return _IsImageDataFormatSupported (format);
   }
@@ -139,9 +138,9 @@ public static partial class PPBImageData {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
-                                      PP_ImageDataFormat format,
+                                      PPImageDataFormat format,
                                       PP_Size size,
-                                      PP_Bool init_to_zero);
+                                      PPBool init_to_zero);
 
   /**
    * Create() allocates an image data resource with the given format and size.
@@ -166,16 +165,16 @@ public static partial class PPBImageData {
    * failure. Failure means the instance, image size, or format was invalid.
    */
   public static PP_Resource Create ( PP_Instance instance,
-                                     PP_ImageDataFormat format,
+                                     PPImageDataFormat format,
                                      PP_Size size,
-                                     PP_Bool init_to_zero)
+                                     PPBool init_to_zero)
   {
   	return _Create (instance, format, size, init_to_zero);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_IsImageData")]
-  extern static PP_Bool _IsImageData ( PP_Resource image_data);
+  extern static PPBool _IsImageData ( PP_Resource image_data);
 
   /**
    * IsImageData() determines if a given resource is image data.
@@ -187,15 +186,15 @@ public static partial class PPBImageData {
    * resource is an image data or <code>PP_FALSE</code> if the resource is
    * invalid or some type other than image data.
    */
-  public static PP_Bool IsImageData ( PP_Resource image_data)
+  public static PPBool IsImageData ( PP_Resource image_data)
   {
   	return _IsImageData (image_data);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_Describe")]
-  extern static PP_Bool _Describe ( PP_Resource image_data,
-                                   out PP_ImageDataDesc desc);
+  extern static PPBool _Describe ( PP_Resource image_data,
+                                  out PP_ImageDataDesc desc);
 
   /**
    * Describe() computes the description of the
@@ -211,8 +210,8 @@ public static partial class PPBImageData {
    * <code>PP_FALSE</code>, the <code>desc</code> structure will be filled
    * with 0.
    */
-  public static PP_Bool Describe ( PP_Resource image_data,
-                                  out PP_ImageDataDesc desc)
+  public static PPBool Describe ( PP_Resource image_data,
+                                 out PP_ImageDataDesc desc)
   {
   	return _Describe (image_data, out desc);
   }

@@ -96,7 +96,7 @@ public struct PP_InputEvent_Mouse {
    * This value will be <code>PP_EVENT_MOUSEBUTTON_NONE</code> for mouse move,
    * enter, and leave events.
    */
-  public PP_InputEvent_MouseButton button;
+  public PPInputEventMouseButton button;
   /**
    * This values represents the x coordinate of the mouse when the event
    * occurred.
@@ -199,7 +199,7 @@ public struct PP_InputEvent_Wheel {
    * indicates pages or lines to scroll by. When true, the user is requesting
    * to scroll by pages.
    */
-  public PP_Bool scroll_by_page;
+  public PPBool scroll_by_page;
 };
 /**
  * @}

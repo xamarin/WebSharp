@@ -23,7 +23,7 @@ namespace PepperSharp {
  * The <code>PP_VarType</code> is an enumeration of the different types that
  * can be contained within a <code>PP_Var</code> structure.
  */
-public enum PP_VarType {
+public enum PPVarType {
   /**
    * An undefined value.
    */
@@ -83,7 +83,7 @@ public enum PP_VarType {
    * ArrayBuffer vars. These objects are reference counted, so AddRef() and
    * Release() must be used properly to avoid memory leaks.
    */
-  Array_buffer = 9,
+  ArrayBuffer = 9,
   /**
    * This type allows the <code>PP_Var</code> to wrap a <code>PP_Resource
    * </code>. This can be useful for sending or receiving some types of
@@ -130,7 +130,7 @@ public enum PP_VarType {
  */
 [StructLayout(LayoutKind.Sequential)]
 public struct PP_Var {
-  public PP_VarType type;
+  public PPVarType type;
   /**
    * The <code>padding</code> ensures <code>value</code> is aligned on an
    * 8-byte boundary relative to the start of the struct. Some compilers

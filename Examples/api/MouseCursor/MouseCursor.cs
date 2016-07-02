@@ -13,7 +13,7 @@ namespace MouseCursor
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPBConsole.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from MouseCursor using C#").AsPP_Var());
+            PPBConsole.Log(Instance, PPLogLevel.Log, new PPVar("Hello from MouseCursor using C#").AsPP_Var());
             MakeCustomCursor();
 
             return true;
@@ -27,8 +27,8 @@ namespace MouseCursor
                 Console.WriteLine("Unexpected message.");
             }
 
-            PP_MouseCursor_Type cursor = (PP_MouseCursor_Type)varMessage.AsInt();
-            if (cursor == PP_MouseCursor_Type.Custom)
+            PPMouseCursorType cursor = (PPMouseCursorType)varMessage.AsInt();
+            if (cursor == PPMouseCursorType.Custom)
             {
                 var hotSpot = new PPPoint(16,16);
                 PPBMouseCursor.SetCursor(Instance, cursor, custom_cursor_, hotSpot);
@@ -46,7 +46,7 @@ namespace MouseCursor
         {
             var size = new PPSize(32,32);
 
-            custom_cursor_ = PPBImageData.Create(Instance, PP_ImageDataFormat.Bgra_premul, size, PP_Bool.PP_TRUE);
+            custom_cursor_ = PPBImageData.Create(Instance, PPImageDataFormat.BgraPremul, size, PPBool.True);
 
             DrawCircle(16, 16, 9, 14, 0.8f, 0.8f, 0);
             DrawCircle(11, 12, 2, 3, 0, 0, 0);
@@ -60,7 +60,7 @@ namespace MouseCursor
             var desc = new PP_ImageDataDesc();
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(custom_cursor_, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(custom_cursor_, out desc) == PPBool.False)
                 return;
 
             dataPtr = PPBImageData.Map(custom_cursor_);
@@ -110,7 +110,7 @@ namespace MouseCursor
             var desc = new PP_ImageDataDesc();
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(custom_cursor_, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(custom_cursor_, out desc) == PPBool.False)
                 return;
 
             dataPtr = PPBImageData.Map(custom_cursor_);

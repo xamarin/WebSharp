@@ -27,7 +27,7 @@ namespace PepperSharp {
 /**
  * This enumeration contains the types of input events.
  */
-public enum PP_InputEvent_Type {
+public enum PPInputEventType {
   Undefined = -1,
   /**
    * Notification that a mouse button was pressed.
@@ -125,25 +125,25 @@ public enum PP_InputEvent_Type {
    *
    * Register for this event using the PP_INPUTEVENT_CLASS_IME class.
    */
-  Ime_composition_start = 11,
+  ImeCompositionStart = 11,
   /**
    * Notification that the input method composition string is updated.
    *
    * Register for this event using the PP_INPUTEVENT_CLASS_IME class.
    */
-  Ime_composition_update = 12,
+  ImeCompositionUpdate = 12,
   /**
    * Notification that an input method composition process has completed.
    *
    * Register for this event using the PP_INPUTEVENT_CLASS_IME class.
    */
-  Ime_composition_end = 13,
+  ImeCompositionEnd = 13,
   /**
    * Notification that an input method committed a string.
    *
    * Register for this event using the PP_INPUTEVENT_CLASS_IME class.
    */
-  Ime_text = 14,
+  ImeText = 14,
   /**
    * Notification that a finger was placed on a touch-enabled device.
    *
@@ -175,7 +175,7 @@ public enum PP_InputEvent_Type {
  * bit. Retrieve the modifiers from an input event using the GetEventModifiers
  * function on PPB_InputEvent.
  */
-public enum PP_InputEvent_Modifier {
+public enum PPInputEventModifier {
   Shiftkey = 1 << 0,
   Controlkey = 1 << 1,
   Altkey = 1 << 2,
@@ -196,14 +196,14 @@ public enum PP_InputEvent_Modifier {
  * the mouse button for a mouse down or up event, use GetMouseButton on
  * PPB_InputEvent.
  */
-public enum PP_InputEvent_MouseButton {
+public enum PPInputEventMouseButton {
   None = -1,
   Left = 0,
   Middle = 1,
   Right = 2
 }
 
-public enum PP_InputEvent_Class {
+public enum PPInputEventClass {
   /**
    * Request mouse input events.
    *
@@ -419,7 +419,7 @@ public static partial class PPBInputEvent {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_InputEvent_IsInputEvent")]
-  extern static PP_Bool _IsInputEvent ( PP_Resource resource);
+  extern static PPBool _IsInputEvent ( PP_Resource resource);
 
   /**
    * IsInputEvent() returns true if the given resource is a valid input event
@@ -431,14 +431,14 @@ public static partial class PPBInputEvent {
    * @return <code>PP_TRUE</code> if the given resource is a valid input event
    * resource.
    */
-  public static PP_Bool IsInputEvent ( PP_Resource resource)
+  public static PPBool IsInputEvent ( PP_Resource resource)
   {
   	return _IsInputEvent (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_InputEvent_GetType")]
-  extern static PP_InputEvent_Type _GetType ( PP_Resource eventArg);
+  extern static PPInputEventType _GetType ( PP_Resource eventArg);
 
   /**
    * GetType() returns the type of input event for the given input event
@@ -450,7 +450,7 @@ public static partial class PPBInputEvent {
    * @return A <code>PP_InputEvent_Type</code> if its a valid input event or
    * <code>PP_INPUTEVENT_TYPE_UNDEFINED</code> if the resource is invalid.
    */
-  public static PP_InputEvent_Type GetType ( PP_Resource eventArg)
+  public static PPInputEventType GetType ( PP_Resource eventArg)
   {
   	return _GetType (eventArg);
   }
@@ -508,10 +508,10 @@ public static partial class PPBInputEvent {
 public static partial class PPBMouseInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
-                                      PP_InputEvent_Type type,
+                                      PPInputEventType type,
                                       double time_stamp,
                                       uint modifiers,
-                                      PP_InputEvent_MouseButton mouse_button,
+                                      PPInputEventMouseButton mouse_button,
                                       PP_Point mouse_position,
                                       int click_count,
                                       PP_Point mouse_movement);
@@ -546,10 +546,10 @@ public static partial class PPBMouseInputEvent {
    * @return A <code>PP_Resource</code> containing the new mouse input event.
    */
   public static PP_Resource Create ( PP_Instance instance,
-                                     PP_InputEvent_Type type,
+                                     PPInputEventType type,
                                      double time_stamp,
                                      uint modifiers,
-                                     PP_InputEvent_MouseButton mouse_button,
+                                     PPInputEventMouseButton mouse_button,
                                      PP_Point mouse_position,
                                      int click_count,
                                      PP_Point mouse_movement)
@@ -567,7 +567,7 @@ public static partial class PPBMouseInputEvent {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_MouseInputEvent_IsMouseInputEvent")]
-  extern static PP_Bool _IsMouseInputEvent ( PP_Resource resource);
+  extern static PPBool _IsMouseInputEvent ( PP_Resource resource);
 
   /**
    * IsMouseInputEvent() determines if a resource is a mouse event.
@@ -577,14 +577,14 @@ public static partial class PPBMouseInputEvent {
    * @return <code>PP_TRUE</code> if the given resource is a valid mouse input
    * event, otherwise <code>PP_FALSE</code>.
    */
-  public static PP_Bool IsMouseInputEvent ( PP_Resource resource)
+  public static PPBool IsMouseInputEvent ( PP_Resource resource)
   {
   	return _IsMouseInputEvent (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseInputEvent_GetButton")]
-  extern static PP_InputEvent_MouseButton _GetButton ( PP_Resource mouse_event);
+  extern static PPInputEventMouseButton _GetButton ( PP_Resource mouse_event);
 
   /**
    * GetButton() returns the mouse button that generated a mouse down or up
@@ -597,7 +597,7 @@ public static partial class PPBMouseInputEvent {
    * value will be <code>PP_EVENT_MOUSEBUTTON_NONE</code> for mouse move,
    * enter, and leave events, and for all non-mouse events.
    */
-  public static PP_InputEvent_MouseButton GetButton ( PP_Resource mouse_event)
+  public static PPInputEventMouseButton GetButton ( PP_Resource mouse_event)
   {
   	return _GetButton (mouse_event);
   }
@@ -670,7 +670,7 @@ public static partial class PPBWheelInputEvent {
                                       uint modifiers,
                                       PP_FloatPoint wheel_delta,
                                       PP_FloatPoint wheel_ticks,
-                                      PP_Bool scroll_by_page);
+                                      PPBool scroll_by_page);
 
   /**
    * Create() creates a wheel input event with the given parameters. Normally
@@ -702,7 +702,7 @@ public static partial class PPBWheelInputEvent {
                                      uint modifiers,
                                      PP_FloatPoint wheel_delta,
                                      PP_FloatPoint wheel_ticks,
-                                     PP_Bool scroll_by_page)
+                                     PPBool scroll_by_page)
   {
   	return _Create (instance,
                    time_stamp,
@@ -715,7 +715,7 @@ public static partial class PPBWheelInputEvent {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_WheelInputEvent_IsWheelInputEvent")]
-  extern static PP_Bool _IsWheelInputEvent ( PP_Resource resource);
+  extern static PPBool _IsWheelInputEvent ( PP_Resource resource);
 
   /**
    * IsWheelInputEvent() determines if a resource is a wheel event.
@@ -726,7 +726,7 @@ public static partial class PPBWheelInputEvent {
    * @return <code>PP_TRUE</code> if the given resource is a valid wheel input
    * event.
    */
-  public static PP_Bool IsWheelInputEvent ( PP_Resource resource)
+  public static PPBool IsWheelInputEvent ( PP_Resource resource)
   {
   	return _IsWheelInputEvent (resource);
   }
@@ -798,7 +798,7 @@ public static partial class PPBWheelInputEvent {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_WheelInputEvent_GetScrollByPage")]
-  extern static PP_Bool _GetScrollByPage ( PP_Resource wheel_event);
+  extern static PPBool _GetScrollByPage ( PP_Resource wheel_event);
 
   /**
    * GetScrollByPage() indicates if the scroll delta x/y indicates pages or
@@ -811,7 +811,7 @@ public static partial class PPBWheelInputEvent {
    * scrolling by pages. <code>PP_FALSE</code> if not or if the resource is not
    * a wheel event.
    */
-  public static PP_Bool GetScrollByPage ( PP_Resource wheel_event)
+  public static PPBool GetScrollByPage ( PP_Resource wheel_event)
   {
   	return _GetScrollByPage (wheel_event);
   }
@@ -826,7 +826,7 @@ public static partial class PPBWheelInputEvent {
 public static partial class PPBKeyboardInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_KeyboardInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
-                                      PP_InputEvent_Type type,
+                                      PPInputEventType type,
                                       double time_stamp,
                                       uint modifiers,
                                       uint key_code,
@@ -864,7 +864,7 @@ public static partial class PPBKeyboardInputEvent {
    * event.
    */
   public static PP_Resource Create ( PP_Instance instance,
-                                     PP_InputEvent_Type type,
+                                     PPInputEventType type,
                                      double time_stamp,
                                      uint modifiers,
                                      uint key_code,
@@ -883,7 +883,7 @@ public static partial class PPBKeyboardInputEvent {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_KeyboardInputEvent_IsKeyboardInputEvent")]
-  extern static PP_Bool _IsKeyboardInputEvent ( PP_Resource resource);
+  extern static PPBool _IsKeyboardInputEvent ( PP_Resource resource);
 
   /**
    * IsKeyboardInputEvent() determines if a resource is a keyboard event.
@@ -892,7 +892,7 @@ public static partial class PPBKeyboardInputEvent {
    *
    * @return <code>PP_TRUE</code> if the given resource is a valid input event.
    */
-  public static PP_Bool IsKeyboardInputEvent ( PP_Resource resource)
+  public static PPBool IsKeyboardInputEvent ( PP_Resource resource)
   {
   	return _IsKeyboardInputEvent (resource);
   }
@@ -964,21 +964,21 @@ public static partial class PPBKeyboardInputEvent {
  * @addtogroup Enums
  * @{
  */
-public enum PP_TouchListType {
+public enum PPTouchListType {
   /**
    * The list of all TouchPoints which are currently down.
    */
-  PP_TOUCHLIST_TYPE_TOUCHES = 0,
+  TouchlistTypeTouches = 0,
   /**
    * The list of all TouchPoints whose state has changed since the last
    * TouchInputEvent.
    */
-  PP_TOUCHLIST_TYPE_CHANGEDTOUCHES = 1,
+  TouchlistTypeChangedtouches = 1,
   /**
    * The list of all TouchPoints which are targeting this plugin.  This is a
    * subset of Touches.
    */
-  PP_TOUCHLIST_TYPE_TARGETTOUCHES = 2
+  TouchlistTypeTargettouches = 2
 }
 /**
  * @}
@@ -995,7 +995,7 @@ public enum PP_TouchListType {
 public static partial class PPBTouchInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_TouchInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
-                                      PP_InputEvent_Type type,
+                                      PPInputEventType type,
                                       double time_stamp,
                                       uint modifiers);
 
@@ -1022,7 +1022,7 @@ public static partial class PPBTouchInputEvent {
    * @return A <code>PP_Resource</code> containing the new touch input event.
    */
   public static PP_Resource Create ( PP_Instance instance,
-                                     PP_InputEvent_Type type,
+                                     PPInputEventType type,
                                      double time_stamp,
                                      uint modifiers)
   {
@@ -1032,7 +1032,7 @@ public static partial class PPBTouchInputEvent {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_TouchInputEvent_AddTouchPoint")]
   extern static void _AddTouchPoint ( PP_Resource touch_event,
-                                      PP_TouchListType list,
+                                      PPTouchListType list,
                                       PP_TouchPoint point);
 
   /**
@@ -1046,7 +1046,7 @@ public static partial class PPBTouchInputEvent {
    * @param[in] point The point to add to the list.
    */
   public static void AddTouchPoint ( PP_Resource touch_event,
-                                     PP_TouchListType list,
+                                     PPTouchListType list,
                                      PP_TouchPoint point)
   {
   	 _AddTouchPoint (touch_event, list, point);
@@ -1055,7 +1055,7 @@ public static partial class PPBTouchInputEvent {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_TouchInputEvent_IsTouchInputEvent")]
-  extern static PP_Bool _IsTouchInputEvent ( PP_Resource resource);
+  extern static PPBool _IsTouchInputEvent ( PP_Resource resource);
 
   /**
    * IsTouchInputEvent() determines if a resource is a touch event.
@@ -1065,7 +1065,7 @@ public static partial class PPBTouchInputEvent {
    * @return <code>PP_TRUE</code> if the given resource is a valid touch input
    * event, otherwise <code>PP_FALSE</code>.
    */
-  public static PP_Bool IsTouchInputEvent ( PP_Resource resource)
+  public static PPBool IsTouchInputEvent ( PP_Resource resource)
   {
   	return _IsTouchInputEvent (resource);
   }
@@ -1073,7 +1073,7 @@ public static partial class PPBTouchInputEvent {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_TouchInputEvent_GetTouchCount")]
   extern static uint _GetTouchCount ( PP_Resource resource,
-                                      PP_TouchListType list);
+                                      PPTouchListType list);
 
   /**
    * Returns the number of touch-points in the specified list.
@@ -1086,7 +1086,7 @@ public static partial class PPBTouchInputEvent {
    * @return The number of touch-points in the specified list.
    */
   public static uint GetTouchCount ( PP_Resource resource,
-                                     PP_TouchListType list)
+                                     PPTouchListType list)
   {
   	return _GetTouchCount (resource, list);
   }
@@ -1095,7 +1095,7 @@ public static partial class PPBTouchInputEvent {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_TouchInputEvent_GetTouchByIndex")]
   extern static PP_TouchPoint _GetTouchByIndex ( PP_Resource resource,
-                                                 PP_TouchListType list,
+                                                 PPTouchListType list,
                                                  uint index);
 
   /**
@@ -1111,7 +1111,7 @@ public static partial class PPBTouchInputEvent {
    * @return A <code>PP_TouchPoint</code> representing the touch-point.
    */
   public static PP_TouchPoint GetTouchByIndex ( PP_Resource resource,
-                                                PP_TouchListType list,
+                                                PPTouchListType list,
                                                 uint index)
   {
   	return _GetTouchByIndex (resource, list, index);
@@ -1120,7 +1120,7 @@ public static partial class PPBTouchInputEvent {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_TouchInputEvent_GetTouchById")]
   extern static PP_TouchPoint _GetTouchById ( PP_Resource resource,
-                                              PP_TouchListType list,
+                                              PPTouchListType list,
                                               uint touch_id);
 
   /**
@@ -1136,7 +1136,7 @@ public static partial class PPBTouchInputEvent {
    * @return A <code>PP_TouchPoint</code> representing the touch-point.
    */
   public static PP_TouchPoint GetTouchById ( PP_Resource resource,
-                                             PP_TouchListType list,
+                                             PPTouchListType list,
                                              uint touch_id)
   {
   	return _GetTouchById (resource, list, touch_id);
@@ -1148,7 +1148,7 @@ public static partial class PPBTouchInputEvent {
 public static partial class PPBIMEInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_IMEInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
-                                      PP_InputEvent_Type type,
+                                      PPInputEventType type,
                                       double time_stamp,
                                       PP_Var text,
                                       uint segment_number,
@@ -1194,7 +1194,7 @@ public static partial class PPBIMEInputEvent {
    * @return A <code>PP_Resource</code> containing the new IME input event.
    */
   public static PP_Resource Create ( PP_Instance instance,
-                                     PP_InputEvent_Type type,
+                                     PPInputEventType type,
                                      double time_stamp,
                                      PP_Var text,
                                      uint segment_number,
@@ -1216,7 +1216,7 @@ public static partial class PPBIMEInputEvent {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_IMEInputEvent_IsIMEInputEvent")]
-  extern static PP_Bool _IsIMEInputEvent ( PP_Resource resource);
+  extern static PPBool _IsIMEInputEvent ( PP_Resource resource);
 
   /**
    * IsIMEInputEvent() determines if a resource is an IME event.
@@ -1225,7 +1225,7 @@ public static partial class PPBIMEInputEvent {
    *
    * @return <code>PP_TRUE</code> if the given resource is a valid input event.
    */
-  public static PP_Bool IsIMEInputEvent ( PP_Resource resource)
+  public static PPBool IsIMEInputEvent ( PP_Resource resource)
   {
   	return _IsIMEInputEvent (resource);
   }

@@ -24,7 +24,7 @@ namespace PepperSharp {
  * The <code>PP_MouseCursor_Type</code> enumeration lists the available stock
  * cursor types.
  */
-public enum PP_MouseCursor_Type {
+public enum PPMouseCursorType {
   Custom = -1,
   Pointer = 0,
   Cross = 1,
@@ -83,10 +83,10 @@ public enum PP_MouseCursor_Type {
  */
 public static partial class PPBMouseCursor {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseCursor_SetCursor")]
-  extern static PP_Bool _SetCursor ( PP_Instance instance,
-                                     PP_MouseCursor_Type type,
-                                     PP_Resource image,
-                                     PP_Point hot_spot);
+  extern static PPBool _SetCursor ( PP_Instance instance,
+                                    PPMouseCursorType type,
+                                    PP_Resource image,
+                                    PP_Point hot_spot);
 
   /**
    * Sets the given mouse cursor. The mouse cursor will be in effect whenever
@@ -119,10 +119,10 @@ public static partial class PPBMouseCursor {
    * @return PP_TRUE on success, or PP_FALSE if the instance or cursor type
    * is invalid, or if the image is too large.
    */
-  public static PP_Bool SetCursor ( PP_Instance instance,
-                                    PP_MouseCursor_Type type,
-                                    PP_Resource image,
-                                    PP_Point hot_spot)
+  public static PPBool SetCursor ( PP_Instance instance,
+                                   PPMouseCursorType type,
+                                   PP_Resource image,
+                                   PP_Point hot_spot)
   {
   	return _SetCursor (instance, type, image, hot_spot);
   }

@@ -301,7 +301,7 @@ public static partial class PPBMessageLoop {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_PostQuit")]
   extern static int _PostQuit ( PP_Resource message_loop,
-                                PP_Bool should_destroy);
+                                PPBool should_destroy);
 
   /**
    * Posts a quit message to the given message loop's work queue. Work posted
@@ -326,7 +326,7 @@ public static partial class PPBMessageLoop {
    *     quit.
    */
   public static int PostQuit ( PP_Resource message_loop,
-                               PP_Bool should_destroy)
+                               PPBool should_destroy)
   {
   	return _PostQuit (message_loop, should_destroy);
   }

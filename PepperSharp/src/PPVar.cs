@@ -9,7 +9,7 @@ namespace PepperSharp
     {
 
         internal PP_Var ppvar = new PP_Var();
-        public static readonly PPVar Empty = new PPVar(PP_VarType.Null);
+        public static readonly PPVar Empty = new PPVar(PPVarType.Null);
 
         // |is_managed_| indicates if the instance manages |var_|.
         // You need to check if |var_| is refcounted to call Release().
@@ -19,7 +19,7 @@ namespace PepperSharp
 
         #region Constructors
 
-        private PPVar(PP_VarType type)
+        private PPVar(PPVarType type)
         {
             ppvar.type = type;
         }
@@ -28,7 +28,7 @@ namespace PepperSharp
         {
             if (var is int || var is uint)
             {
-                ppvar.type = PP_VarType.Int32;
+                ppvar.type = PPVarType.Int32;
                 ppvar.value.as_int = (int)var;
                 isManaged = true;
             }
@@ -39,27 +39,27 @@ namespace PepperSharp
             }
             else if (var is bool)
             {
-                ppvar.type = PP_VarType.Bool;
-                ppvar.value.as_bool = (bool)var ? PP_Bool.PP_TRUE : PP_Bool.PP_FALSE;
+                ppvar.type = PPVarType.Bool;
+                ppvar.value.as_bool = (bool)var ? PPBool.True : PPBool.False;
                 isManaged = true;
             }
             else if (var is double)
             {
-                ppvar.type = PP_VarType.Double;
+                ppvar.type = PPVarType.Double;
                 ppvar.value.as_double = (double)var;
                 isManaged = true;
             }
             // Note: You may see precision differences 
             else if (var is float)
             {
-                ppvar.type = PP_VarType.Double;
+                ppvar.type = PPVarType.Double;
                 ppvar.value.as_double = Convert.ToDouble((float)var);
                 isManaged = true;
             }
 
             else
             {
-                ppvar.type = PP_VarType.Undefined;
+                ppvar.type = PPVarType.Undefined;
                 isManaged = true;
             }
         }
@@ -124,7 +124,7 @@ namespace PepperSharp
         // only do refcounting on the necessary objects.
         bool NeedsRefcounting(PP_Var var)
         {
-            return var.type > PP_VarType.Double;
+            return var.type > PPVarType.Double;
         }
 
         // This helper function uses the latest available version of VarFromUtf8. Note
@@ -138,7 +138,7 @@ namespace PepperSharp
         {
             if (!IsBoolean)
                 return false;
-            return ppvar.value.as_bool == PP_Bool.PP_TRUE;
+            return ppvar.value.as_bool == PPBool.True;
         }
 
         public int AsInt()
@@ -284,42 +284,42 @@ namespace PepperSharp
         /// This function determines if this <code>Var</code> is an undefined value.
         ///
         /// @return true if this <code>Var</code> is undefined, otherwise false.
-        public bool IsUndefined { get { return ppvar.type == PP_VarType.Undefined; } }
+        public bool IsUndefined { get { return ppvar.type == PPVarType.Undefined; } }
 
         /// This function determines if this <code>Var</code> is a null value.
         ///
         /// @return true if this <code>Var</code> is null, otherwise false.
-        public bool IsNull { get { return ppvar.type == PP_VarType.Null; } }
+        public bool IsNull { get { return ppvar.type == PPVarType.Null; } }
 
         /// This function determines if this <code>Var</code> is a bool value.
         ///
         /// @return true if this <code>Var</code> is a bool, otherwise false.
-        public bool IsBoolean { get { return ppvar.type == PP_VarType.Bool; } }
+        public bool IsBoolean { get { return ppvar.type == PPVarType.Bool; } }
 
         /// This function determines if this <code>Var</code> is a string value.
         ///
         /// @return true if this <code>Var</code> is a string, otherwise false.
-        public bool IsString { get { return ppvar.type == PP_VarType.String; } }
+        public bool IsString { get { return ppvar.type == PPVarType.String; } }
 
         /// This function determines if this <code>Var</code> is an object.
         ///
         /// @return true if this <code>Var</code> is an object, otherwise false.
-        public bool IsObject { get { return ppvar.type == PP_VarType.Object; } }
+        public bool IsObject { get { return ppvar.type == PPVarType.Object; } }
 
         /// This function determines if this <code>Var</code> is an array.
         ///
         /// @return true if this <code>Var</code> is an array, otherwise false.
-        public bool IsArray { get { return ppvar.type == PP_VarType.Array; } }
+        public bool IsArray { get { return ppvar.type == PPVarType.Array; } }
 
         /// This function determines if this <code>Var</code> is a dictionary.
         ///
         /// @return true if this <code>Var</code> is a dictionary, otherwise false.
-        public bool IsDictionary { get { return ppvar.type == PP_VarType.Dictionary; } }
+        public bool IsDictionary { get { return ppvar.type == PPVarType.Dictionary; } }
 
         /// This function determines if this <code>Var</code> is a resource.
         ///
         /// @return true if this <code>Var</code> is a resource, otherwise false.
-        public bool IsResource { get { return ppvar.type == PP_VarType.Resource; } }
+        public bool IsResource { get { return ppvar.type == PPVarType.Resource; } }
 
         /// This function determines if this <code>Var</code> is an integer value.
         /// The <code>is_int</code> function returns the internal representation.
@@ -329,7 +329,7 @@ namespace PepperSharp
         /// to check is_number().
         ///
         /// @return true if this <code>Var</code> is an integer, otherwise false.
-        public bool IsInt { get { return ppvar.type == PP_VarType.Int32; } }
+        public bool IsInt { get { return ppvar.type == PPVarType.Int32; } }
 
         /// This function determines if this <code>Var</code> is a double value.
         /// The <code>is_double</code> function returns the internal representation.
@@ -339,7 +339,7 @@ namespace PepperSharp
         /// check is_number().
         ///
         /// @return true if this <code>Var</code> is a double, otherwise false.
-        public bool IsDouble { get { return ppvar.type == PP_VarType.Double; } }
+        public bool IsDouble { get { return ppvar.type == PPVarType.Double; } }
 
         /// This function determines if this <code>Var</code> is a number.
         ///
@@ -349,13 +349,13 @@ namespace PepperSharp
         {
             get
             {
-                return ppvar.type == PP_VarType.Int32 ||
-                 ppvar.type == PP_VarType.Double;
+                return ppvar.type == PPVarType.Int32 ||
+                 ppvar.type == PPVarType.Double;
             }
         }
 
         /// This function determines if this <code>Var</code> is an ArrayBuffer.
-        public bool IsArrayBuffer { get { return ppvar.type == PP_VarType.Array_buffer; } }
+        public bool IsArrayBuffer { get { return ppvar.type == PPVarType.ArrayBuffer; } }
 
         public static implicit operator PP_Var(PPVar var)
         {

@@ -62,7 +62,7 @@ public static partial class PPBURLLoader {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_IsURLLoader")]
-  extern static PP_Bool _IsURLLoader ( PP_Resource resource);
+  extern static PPBool _IsURLLoader ( PP_Resource resource);
 
   /**
    * IsURLLoader() determines if a resource is an <code>URLLoader</code>.
@@ -74,7 +74,7 @@ public static partial class PPBURLLoader {
    * <code>PP_FALSE</code> if the resource is invalid or some type other
    * than <code>URLLoader</code>.
    */
-  public static PP_Bool IsURLLoader ( PP_Resource resource)
+  public static PPBool IsURLLoader ( PP_Resource resource)
   {
   	return _IsURLLoader (resource);
   }
@@ -135,9 +135,9 @@ public static partial class PPBURLLoader {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_GetUploadProgress")]
-  extern static PP_Bool _GetUploadProgress ( PP_Resource loader,
-                                            out long bytes_sent,
-                                            out long total_bytes_to_be_sent);
+  extern static PPBool _GetUploadProgress ( PP_Resource loader,
+                                           out long bytes_sent,
+                                           out long total_bytes_to_be_sent);
 
   /**
    * GetUploadProgress() returns the current upload progress (which is
@@ -156,9 +156,9 @@ public static partial class PPBURLLoader {
    * @return <code>PP_TRUE</code> if the upload progress is available,
    * <code>PP_FALSE</code> if it is not available.
    */
-  public static PP_Bool GetUploadProgress ( PP_Resource loader,
-                                           out long bytes_sent,
-                                           out long total_bytes_to_be_sent)
+  public static PPBool GetUploadProgress ( PP_Resource loader,
+                                          out long bytes_sent,
+                                          out long total_bytes_to_be_sent)
   {
   	return _GetUploadProgress (loader,
                               out bytes_sent,
@@ -167,7 +167,7 @@ public static partial class PPBURLLoader {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_GetDownloadProgress")]
-  extern static PP_Bool _GetDownloadProgress (
+  extern static PPBool _GetDownloadProgress (
       PP_Resource loader,
       out long bytes_received,
       out long total_bytes_to_be_received);
@@ -191,7 +191,7 @@ public static partial class PPBURLLoader {
    * @return <code>PP_TRUE</code> if the download progress is available,
    * <code>PP_FALSE</code> if it is not available.
    */
-  public static PP_Bool GetDownloadProgress (
+  public static PPBool GetDownloadProgress (
       PP_Resource loader,
       out long bytes_received,
       out long total_bytes_to_be_received)

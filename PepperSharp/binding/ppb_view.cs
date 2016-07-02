@@ -27,7 +27,7 @@ namespace PepperSharp {
  */
 public static partial class PPBView {
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_IsView")]
-  extern static PP_Bool _IsView ( PP_Resource resource);
+  extern static PPBool _IsView ( PP_Resource resource);
 
   /**
    * IsView() determines if the given resource is a valid
@@ -42,14 +42,14 @@ public static partial class PPBView {
    * <code>PPB_View</code> or <code>PP_FALSE</code> if it is an invalid
    * resource or is a resource of another type.
    */
-  public static PP_Bool IsView ( PP_Resource resource)
+  public static PPBool IsView ( PP_Resource resource)
   {
   	return _IsView (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_GetRect")]
-  extern static PP_Bool _GetRect ( PP_Resource resource, out PP_Rect rect);
+  extern static PPBool _GetRect ( PP_Resource resource, out PP_Rect rect);
 
   /**
    * GetRect() retrieves the rectangle of the module instance associated
@@ -73,14 +73,14 @@ public static partial class PPBView {
    * @return Returns <code>PP_TRUE</code> if the resource was valid and the
    * viewport rectangle was filled in, <code>PP_FALSE</code> if not.
    */
-  public static PP_Bool GetRect ( PP_Resource resource, out PP_Rect rect)
+  public static PPBool GetRect ( PP_Resource resource, out PP_Rect rect)
   {
   	return _GetRect (resource, out rect);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_IsFullscreen")]
-  extern static PP_Bool _IsFullscreen ( PP_Resource resource);
+  extern static PPBool _IsFullscreen ( PP_Resource resource);
 
   /**
    * IsFullscreen() returns whether the instance is currently
@@ -92,14 +92,14 @@ public static partial class PPBView {
    * @return <code>PP_TRUE</code> if the instance is in full screen mode,
    * or <code>PP_FALSE</code> if it's not or the resource is invalid.
    */
-  public static PP_Bool IsFullscreen ( PP_Resource resource)
+  public static PPBool IsFullscreen ( PP_Resource resource)
   {
   	return _IsFullscreen (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_IsVisible")]
-  extern static PP_Bool _IsVisible ( PP_Resource resource);
+  extern static PPBool _IsVisible ( PP_Resource resource);
 
   /**
    * IsVisible() determines whether the module instance might be visible to
@@ -120,14 +120,14 @@ public static partial class PPBView {
    * @return <code>PP_TRUE</code> if the instance might be visible to the
    * user, <code>PP_FALSE</code> if it is definitely not visible.
    */
-  public static PP_Bool IsVisible ( PP_Resource resource)
+  public static PPBool IsVisible ( PP_Resource resource)
   {
   	return _IsVisible (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_IsPageVisible")]
-  extern static PP_Bool _IsPageVisible ( PP_Resource resource);
+  extern static PPBool _IsPageVisible ( PP_Resource resource);
 
   /**
    * IsPageVisible() determines if the page that contains the module instance
@@ -147,14 +147,14 @@ public static partial class PPBView {
    * @return <code>PP_TRUE</code> if the instance is plausibly visible to the
    * user, <code>PP_FALSE</code> if it is definitely not visible.
    */
-  public static PP_Bool IsPageVisible ( PP_Resource resource)
+  public static PPBool IsPageVisible ( PP_Resource resource)
   {
   	return _IsPageVisible (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_GetClipRect")]
-  extern static PP_Bool _GetClipRect ( PP_Resource resource, out PP_Rect clip);
+  extern static PPBool _GetClipRect ( PP_Resource resource, out PP_Rect clip);
 
   /**
    * GetClipRect() returns the clip rectangle relative to the upper-left corner
@@ -199,7 +199,7 @@ public static partial class PPBView {
    * @return Returns <code>PP_TRUE</code> if the resource was valid and the
    * clip rect was filled in, <code>PP_FALSE</code> if not.
    */
-  public static PP_Bool GetClipRect ( PP_Resource resource, out PP_Rect clip)
+  public static PPBool GetClipRect ( PP_Resource resource, out PP_Rect clip)
   {
   	return _GetClipRect (resource, out clip);
   }
@@ -251,8 +251,8 @@ public static partial class PPBView {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_GetScrollOffset")]
-  extern static PP_Bool _GetScrollOffset ( PP_Resource resource,
-                                          out PP_Point offset);
+  extern static PPBool _GetScrollOffset ( PP_Resource resource,
+                                         out PP_Point offset);
 
   /**
    * GetScrollOffset returns the scroll offset of the window containing the
@@ -267,8 +267,8 @@ public static partial class PPBView {
    * @return Returns <code>PP_TRUE</code> if the resource was valid and the
    * offset was filled in, <code>PP_FALSE</code> if not.
    */
-  public static PP_Bool GetScrollOffset ( PP_Resource resource,
-                                         out PP_Point offset)
+  public static PPBool GetScrollOffset ( PP_Resource resource,
+                                        out PP_Point offset)
   {
   	return _GetScrollOffset (resource, out offset);
   }

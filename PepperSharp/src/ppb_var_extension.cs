@@ -26,7 +26,7 @@ namespace PepperSharp {
          * <code>PP_Bool</code>.
          */
         [FieldOffset(0)]
-        public PP_Bool as_bool;
+        public PPBool as_bool;
         /**
          * If <code>type</code> is <code>PP_VARTYPE_INT32</code>,
          * <code>as_int</code> represents the value of this <code>PP_Var</code> as

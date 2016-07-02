@@ -23,7 +23,7 @@ namespace PepperSharp {
 /**
  * This enumeration contains properties that can be set on a URL request.
  */
-public enum PP_URLRequestProperty {
+public enum PPURLRequestProperty {
   /** This corresponds to a string (<code>PP_VARTYPE_STRING</code>). */
   Url = 0,
   /**
@@ -183,7 +183,7 @@ public static partial class PPBURLRequestInfo {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLRequestInfo_IsURLRequestInfo")]
-  extern static PP_Bool _IsURLRequestInfo ( PP_Resource resource);
+  extern static PPBool _IsURLRequestInfo ( PP_Resource resource);
 
   /**
    * IsURLRequestInfo() determines if a resource is a
@@ -196,16 +196,16 @@ public static partial class PPBURLRequestInfo {
    * <code>URLRequestInfo</code>, <code>PP_FALSE</code> if the resource is
    * invalid or some type other than <code>URLRequestInfo</code>.
    */
-  public static PP_Bool IsURLRequestInfo ( PP_Resource resource)
+  public static PPBool IsURLRequestInfo ( PP_Resource resource)
   {
   	return _IsURLRequestInfo (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLRequestInfo_SetProperty")]
-  extern static PP_Bool _SetProperty ( PP_Resource request,
-                                       PP_URLRequestProperty property,
-                                       PP_Var value);
+  extern static PPBool _SetProperty ( PP_Resource request,
+                                      PPURLRequestProperty property,
+                                      PP_Var value);
 
   /**
    * SetProperty() sets a request property. The value of the property must be
@@ -220,9 +220,9 @@ public static partial class PPBURLRequestInfo {
    * @return <code>PP_TRUE</code> if successful, <code>PP_FALSE</code> if any
    * of the parameters are invalid.
    */
-  public static PP_Bool SetProperty ( PP_Resource request,
-                                      PP_URLRequestProperty property,
-                                      PP_Var value)
+  public static PPBool SetProperty ( PP_Resource request,
+                                     PPURLRequestProperty property,
+                                     PP_Var value)
   {
   	return _SetProperty (request, property, value);
   }
@@ -230,9 +230,9 @@ public static partial class PPBURLRequestInfo {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLRequestInfo_AppendDataToBody")]
-  extern static PP_Bool _AppendDataToBody ( PP_Resource request,
-                                            IntPtr data,
-                                            uint len);
+  extern static PPBool _AppendDataToBody ( PP_Resource request,
+                                           IntPtr data,
+                                           uint len);
 
   /**
    * AppendDataToBody() appends data to the request body. A Content-Length
@@ -248,9 +248,9 @@ public static partial class PPBURLRequestInfo {
    *
    *
    */
-  public static PP_Bool AppendDataToBody ( PP_Resource request,
-                                           IntPtr data,
-                                           uint len)
+  public static PPBool AppendDataToBody ( PP_Resource request,
+                                          IntPtr data,
+                                          uint len)
   {
   	return _AppendDataToBody (request, data, len);
   }
@@ -258,7 +258,7 @@ public static partial class PPBURLRequestInfo {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLRequestInfo_AppendFileToBody")]
-  extern static PP_Bool _AppendFileToBody (
+  extern static PPBool _AppendFileToBody (
       PP_Resource request,
       PP_Resource file_ref,
       long start_offset,
@@ -288,12 +288,11 @@ public static partial class PPBURLRequestInfo {
    * @return <code>PP_TRUE</code> if successful, <code>PP_FALSE</code> if any
    * of the parameters are invalid.
    */
-  public static PP_Bool AppendFileToBody (
-      PP_Resource request,
-      PP_Resource file_ref,
-      long start_offset,
-      long number_of_bytes,
-      double expected_last_modified_time)
+  public static PPBool AppendFileToBody ( PP_Resource request,
+                                          PP_Resource file_ref,
+                                          long start_offset,
+                                          long number_of_bytes,
+                                          double expected_last_modified_time)
   {
   	return _AppendFileToBody (request,
                              file_ref,

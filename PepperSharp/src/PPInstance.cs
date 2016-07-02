@@ -34,7 +34,7 @@ namespace PepperSharp
 
         public bool BindGraphics(PP_Resource graphics2d)
         {
-            if (PPBInstance.BindGraphics(Instance, graphics2d) == PP_Bool.PP_TRUE)
+            if (PPBInstance.BindGraphics(Instance, graphics2d) == PPBool.True)
                 return true;
             else
                 return false;
@@ -66,12 +66,12 @@ namespace PepperSharp
             }
         }
 
-        public void LogToConsole(PP_LogLevel level, object value)
+        public void LogToConsole(PPLogLevel level, object value)
         {
             PPBConsole.Log(Instance, level, new PPVar(value));
         }
 
-        public void LogToConsoleWithSource(PP_LogLevel level,
+        public void LogToConsoleWithSource(PPLogLevel level,
                                           string source,
                                           object value)
         {

@@ -43,7 +43,7 @@ public delegate void PP_CompletionCallback_Func (IntPtr user_data, int result);
  * This enumeration contains flags used to control how non-NULL callbacks are
  * scheduled by asynchronous methods.
  */
-public enum PP_CompletionCallback_Flag {
+public enum PPCompletionCallbackFlag {
   /**
    * By default any non-NULL callback will always invoked asynchronously,
    * on success or error, even if the operation could complete synchronously

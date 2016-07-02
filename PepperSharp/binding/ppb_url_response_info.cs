@@ -23,7 +23,7 @@ namespace PepperSharp {
 /**
  * This enumeration contains properties set on a URL response.
  */
-public enum PP_URLResponseProperty {
+public enum PPURLResponseProperty {
   /**
    * This corresponds to a string (PP_VARTYPE_STRING); an absolute URL formed by
    * resolving the relative request URL with the absolute document URL. Refer
@@ -90,7 +90,7 @@ public enum PP_URLResponseProperty {
 public static partial class PPBURLResponseInfo {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLResponseInfo_IsURLResponseInfo")]
-  extern static PP_Bool _IsURLResponseInfo ( PP_Resource resource);
+  extern static PPBool _IsURLResponseInfo ( PP_Resource resource);
 
   /**
    * IsURLResponseInfo() determines if a response is a
@@ -103,7 +103,7 @@ public static partial class PPBURLResponseInfo {
    * <code>URLResponseInfo</code>, <code>PP_FALSE</code> if the resource is
    * invalid or some type other than <code>URLResponseInfo</code>.
    */
-  public static PP_Bool IsURLResponseInfo ( PP_Resource resource)
+  public static PPBool IsURLResponseInfo ( PP_Resource resource)
   {
   	return _IsURLResponseInfo (resource);
   }
@@ -111,7 +111,7 @@ public static partial class PPBURLResponseInfo {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLResponseInfo_GetProperty")]
   extern static PP_Var _GetProperty ( PP_Resource response,
-                                      PP_URLResponseProperty property);
+                                      PPURLResponseProperty property);
 
   /**
    * GetProperty() gets a response property.
@@ -125,7 +125,7 @@ public static partial class PPBURLResponseInfo {
    * successful, <code>PP_VARTYPE_VOID</code> if an input parameter is invalid.
    */
   public static PP_Var GetProperty ( PP_Resource response,
-                                     PP_URLResponseProperty property)
+                                     PPURLResponseProperty property)
   {
   	return _GetProperty (response, property);
   }

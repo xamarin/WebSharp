@@ -26,8 +26,8 @@ namespace Graphics_2D
         public override bool Init(int argc, string[] argn, string[] argv)
         {
             instance.pp_instance = Handle.ToInt32();
-            PPBConsole.Log(instance, PP_LogLevel.Log, new PPVar("Hello from PepperSharp using C#").AsPP_Var());
-            PPBInputEvent.RequestInputEvents(instance, (int)PP_InputEvent_Class.Mouse);
+            PPBConsole.Log(instance, PPLogLevel.Log, new PPVar("Hello from PepperSharp using C#").AsPP_Var());
+            PPBInputEvent.RequestInputEvents(instance, (int)PPInputEventClass.Mouse);
             int seed = 1;
             random = new Random(seed);
             CreatePalette();
@@ -67,13 +67,13 @@ namespace Graphics_2D
 
             
             var eventType = PPBInputEvent.GetType(inputEvent);
-            if (eventType == PP_InputEvent_Type.Mousedown ||
-                eventType == PP_InputEvent_Type.Mousemove)
+            if (eventType == PPInputEventType.Mousedown ||
+                eventType == PPInputEventType.Mousemove)
             {
                 var mouseButton = PPBMouseInputEvent.GetButton(inputEvent);
-                if (mouseButton == PP_InputEvent_MouseButton.None)
+                if (mouseButton == PPInputEventMouseButton.None)
                     return true;
-                if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
+                if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PPBool.True)
                 {
                     
                     PPPoint pos = PPBMouseInputEvent.GetPosition(inputEvent);
@@ -85,7 +85,7 @@ namespace Graphics_2D
                 }
             }
 
-            if (eventType == PP_InputEvent_Type.Mouseup)
+            if (eventType == PPInputEventType.Mouseup)
                 mouseDown = false;
             
             return true;
@@ -94,8 +94,8 @@ namespace Graphics_2D
         bool CreateContext(PPSize new_size)
         {
             bool kIsAlwaysOpaque = true;
-            var isAlwaysOpaque = new PP_Bool();
-            isAlwaysOpaque = kIsAlwaysOpaque ? PP_Bool.PP_TRUE : PP_Bool.PP_FALSE;
+            var isAlwaysOpaque = new PPBool();
+            isAlwaysOpaque = kIsAlwaysOpaque ? PPBool.True : PPBool.False;
             context = PPBGraphics2D.Create(instance, new_size, isAlwaysOpaque);
 
             // Call SetScale before BindGraphics so the image is scaled correctly on
@@ -103,7 +103,7 @@ namespace Graphics_2D
             PPBGraphics2D.SetScale(context, (1.0f / deviceScale));
 
             var osize = new PP_Size();
-            var oopaque = new PP_Bool();
+            var oopaque = new PPBool();
 
             PPBGraphics2D.Describe(context, out osize, out oopaque);
 
@@ -140,7 +140,7 @@ namespace Graphics_2D
             byte a = 255;
             var format = PPBImageData.GetNativeImageDataFormat();
 
-            if (format == PP_ImageDataFormat.Bgra_premul)
+            if (format == PPImageDataFormat.BgraPremul)
             {
                 return (uint)((a << 24) | (r << 16) | (g << 8) | b);
             }
@@ -249,13 +249,13 @@ namespace Graphics_2D
             // See the comment above the call to ReplaceContents below.
             var format = PPBImageData.GetNativeImageDataFormat();
             bool kDontInitToZero = false;
-            var dontInitToZero = kDontInitToZero ? PP_Bool.PP_TRUE : PP_Bool.PP_FALSE;
+            var dontInitToZero = kDontInitToZero ? PPBool.True : PPBool.False;
             var image_data = PPBImageData.Create(instance, format, size, dontInitToZero);
             var desc = new PP_ImageDataDesc();
 
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(image_data, out desc) == PP_Bool.PP_TRUE)
+            if (PPBImageData.Describe(image_data, out desc) == PPBool.True)
             {
                 dataPtr = PPBImageData.Map(image_data);
                 if (dataPtr == IntPtr.Zero)
@@ -325,7 +325,7 @@ namespace Graphics_2D
 
             var completionCallback = new PP_CompletionCallback();
             completionCallback.func = callback;
-            completionCallback.flags = (int)PP_CompletionCallback_Flag.None;
+            completionCallback.flags = (int)PPCompletionCallbackFlag.None;
 
             var flushResult = PPBGraphics2D.Flush(context, completionCallback);
         }

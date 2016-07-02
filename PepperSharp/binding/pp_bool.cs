@@ -25,9 +25,9 @@ namespace PepperSharp {
  * guaranteed to be compatible between C and C++, whereas the PPAPI C headers
  * can be included from C or C++ code.
  */
-public enum PP_Bool {
-  PP_FALSE = 0,
-  PP_TRUE = 1
+public enum PPBool {
+  False = 0,
+  True = 1
 }
 /**
  * @}

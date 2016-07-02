@@ -27,7 +27,7 @@ public static partial class PPBGraphics2D {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_Size size,
-                                      PP_Bool is_always_opaque);
+                                      PPBool is_always_opaque);
 
   /**
    * Create() creates a 2D graphics context. The returned graphics context will
@@ -53,14 +53,14 @@ public static partial class PPBGraphics2D {
    */
   public static PP_Resource Create ( PP_Instance instance,
                                      PP_Size size,
-                                     PP_Bool is_always_opaque)
+                                     PPBool is_always_opaque)
   {
   	return _Create (instance, size, is_always_opaque);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_IsGraphics2D")]
-  extern static PP_Bool _IsGraphics2D ( PP_Resource resource);
+  extern static PPBool _IsGraphics2D ( PP_Resource resource);
 
   /**
    * IsGraphics2D() determines if the given resource is a valid
@@ -72,16 +72,16 @@ public static partial class PPBGraphics2D {
    * <code>PP_FALSE</code> if it is an invalid resource or is a resource of
    * another type.
    */
-  public static PP_Bool IsGraphics2D ( PP_Resource resource)
+  public static PPBool IsGraphics2D ( PP_Resource resource)
   {
   	return _IsGraphics2D (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Describe")]
-  extern static PP_Bool _Describe ( PP_Resource graphics_2d,
-                                   out PP_Size size,
-                                   out PP_Bool is_always_opaque);
+  extern static PPBool _Describe ( PP_Resource graphics_2d,
+                                  out PP_Size size,
+                                  out PPBool is_always_opaque);
 
   /**
    * Describe() retrieves the configuration for the given graphics context,
@@ -96,9 +96,9 @@ public static partial class PPBGraphics2D {
    * the resource is invalid. The output parameters will be set to 0 on a
    * <code>PP_FALSE</code>.
    */
-  public static PP_Bool Describe ( PP_Resource graphics_2d,
-                                  out PP_Size size,
-                                  out PP_Bool is_always_opaque)
+  public static PPBool Describe ( PP_Resource graphics_2d,
+                                 out PP_Size size,
+                                 out PPBool is_always_opaque)
   {
   	return _Describe (graphics_2d, out size, out is_always_opaque);
   }
@@ -304,7 +304,7 @@ public static partial class PPBGraphics2D {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_SetScale")]
-  extern static PP_Bool _SetScale ( PP_Resource resource,  float scale);
+  extern static PPBool _SetScale ( PP_Resource resource,  float scale);
 
   /**
    * SetScale() sets the scale factor that will be applied when painting the
@@ -323,7 +323,7 @@ public static partial class PPBGraphics2D {
    * @return Returns <code>PP_TRUE</code> on success or <code>PP_FALSE</code> if
    * the resource is invalid or the scale factor is 0 or less.
    */
-  public static PP_Bool SetScale ( PP_Resource resource,  float scale)
+  public static PPBool SetScale ( PP_Resource resource,  float scale)
   {
   	return _SetScale (resource, scale);
   }
@@ -348,10 +348,10 @@ public static partial class PPBGraphics2D {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_SetLayerTransform")]
-  extern static PP_Bool _SetLayerTransform ( PP_Resource resource,
-                                             float scale,
-                                             PP_Point origin,
-                                             PP_Point translate);
+  extern static PPBool _SetLayerTransform ( PP_Resource resource,
+                                            float scale,
+                                            PP_Point origin,
+                                            PP_Point translate);
 
   /**
    * SetLayerTransform() sets a transformation factor that will be applied for
@@ -368,10 +368,10 @@ public static partial class PPBGraphics2D {
    * @return Returns <code>PP_TRUE</code> on success or <code>PP_FALSE</code>
    * if the resource is invalid or the scale factor is 0 or less.
    */
-  public static PP_Bool SetLayerTransform ( PP_Resource resource,
-                                            float scale,
-                                            PP_Point origin,
-                                            PP_Point translate)
+  public static PPBool SetLayerTransform ( PP_Resource resource,
+                                           float scale,
+                                           PP_Point origin,
+                                           PP_Point translate)
   {
   	return _SetLayerTransform (resource, scale, origin, translate);
   }

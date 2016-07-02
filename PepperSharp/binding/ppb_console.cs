@@ -19,7 +19,7 @@ namespace PepperSharp {
  * @addtogroup Enums
  * @{
  */
-public enum PP_LogLevel {
+public enum PPLogLevel {
   Tip = 0,
   Log = 1,
   Warning = 2,
@@ -36,7 +36,7 @@ public enum PP_LogLevel {
 public static partial class PPBConsole {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Console_Log")]
   extern static void _Log ( PP_Instance instance,
-                            PP_LogLevel level,
+                            PPLogLevel level,
                             PP_Var value);
 
   /**
@@ -46,7 +46,7 @@ public static partial class PPBConsole {
    * The value may be any type of Var.
    */
   public static void Log ( PP_Instance instance,
-                           PP_LogLevel level,
+                           PPLogLevel level,
                            PP_Var value)
   {
   	 _Log (instance, level, value);
@@ -55,7 +55,7 @@ public static partial class PPBConsole {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Console_LogWithSource")]
   extern static void _LogWithSource ( PP_Instance instance,
-                                      PP_LogLevel level,
+                                      PPLogLevel level,
                                       PP_Var source,
                                       PP_Var value);
 
@@ -70,7 +70,7 @@ public static partial class PPBConsole {
    * doing the log statement rather than have "python" show up in the console.
    */
   public static void LogWithSource ( PP_Instance instance,
-                                     PP_LogLevel level,
+                                     PPLogLevel level,
                                      PP_Var source,
                                      PP_Var value)
   {

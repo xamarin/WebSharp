@@ -27,7 +27,7 @@ namespace PepperSharp {
  */
 public static partial class PPBFullscreen {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Fullscreen_IsFullscreen")]
-  extern static PP_Bool _IsFullscreen ( PP_Instance instance);
+  extern static PPBool _IsFullscreen ( PP_Instance instance);
 
   /**
    * IsFullscreen() checks whether the module instance is currently in
@@ -39,15 +39,15 @@ public static partial class PPBFullscreen {
    * @return <code>PP_TRUE</code> if the module instance is in fullscreen mode,
    * <code>PP_FALSE</code> if the module instance is not in fullscreen mode.
    */
-  public static PP_Bool IsFullscreen ( PP_Instance instance)
+  public static PPBool IsFullscreen ( PP_Instance instance)
   {
   	return _IsFullscreen (instance);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Fullscreen_SetFullscreen")]
-  extern static PP_Bool _SetFullscreen ( PP_Instance instance,
-                                         PP_Bool fullscreen);
+  extern static PPBool _SetFullscreen ( PP_Instance instance,
+                                        PPBool fullscreen);
 
   /**
    * SetFullscreen() switches the module instance to and from fullscreen
@@ -70,16 +70,15 @@ public static partial class PPBFullscreen {
    * @return <code>PP_TRUE</code> on success or <code>PP_FALSE</code> on
    * failure.
    */
-  public static PP_Bool SetFullscreen ( PP_Instance instance,
-                                        PP_Bool fullscreen)
+  public static PPBool SetFullscreen ( PP_Instance instance,
+                                       PPBool fullscreen)
   {
   	return _SetFullscreen (instance, fullscreen);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Fullscreen_GetScreenSize")]
-  extern static PP_Bool _GetScreenSize ( PP_Instance instance,
-                                        out PP_Size size);
+  extern static PPBool _GetScreenSize ( PP_Instance instance, out PP_Size size);
 
   /**
    * GetScreenSize() gets the size of the screen in pixels. The module instance
@@ -93,7 +92,7 @@ public static partial class PPBFullscreen {
    * @return <code>PP_TRUE</code> on success or <code>PP_FALSE</code> on
    * failure.
    */
-  public static PP_Bool GetScreenSize ( PP_Instance instance, out PP_Size size)
+  public static PPBool GetScreenSize ( PP_Instance instance, out PP_Size size)
   {
   	return _GetScreenSize (instance, out size);
   }
