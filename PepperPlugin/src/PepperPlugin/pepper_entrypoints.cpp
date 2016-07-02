@@ -14,6 +14,9 @@
 #include "ppapi/c/ppb_messaging.h"
 #include "ppapi/c/ppb_mouse_cursor.h"
 #include "ppapi/c/ppb_mouse_lock.h"
+#include "ppapi/c/ppb_url_loader.h"
+#include "ppapi/c/ppb_url_request_info.h"
+#include "ppapi/c/ppb_url_response_info.h"
 #include "ppapi/c/ppb_var.h"
 #include "ppapi/c/ppb_view.h"
 #include "ppapi/c/ppp_input_event.h"
@@ -110,6 +113,15 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_MouseLock_1_0>() {
 			return PPB_MOUSELOCK_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_URLLoader_1_0>() {
+			return PPB_URLLOADER_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_URLRequestInfo_1_0>() {
+			return PPB_URLREQUESTINFO_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_URLResponseInfo_1_0>() {
+			return PPB_URLRESPONSEINFO_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_Var_1_0>() {
 			return PPB_VAR_INTERFACE_1_0;
@@ -795,6 +807,144 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_MouseLock */
+
+		#pragma region /* Begin entry point methods for PPB_URLLoader */
+
+		PEPPER_EXPORT PP_Resource PPB_URLLoader_Create(PP_Instance instance) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_URLLoader_IsURLLoader(PP_Resource resource) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->IsURLLoader(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_URLLoader_Open(PP_Resource loader, PP_Resource request_info, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->Open(loader, request_info, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_URLLoader_FollowRedirect(PP_Resource loader, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->FollowRedirect(loader, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_URLLoader_GetUploadProgress(PP_Resource loader, int64_t* bytes_sent, int64_t* total_bytes_to_be_sent) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->GetUploadProgress(loader, bytes_sent, total_bytes_to_be_sent);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_URLLoader_GetDownloadProgress(PP_Resource loader, int64_t* bytes_received, int64_t* total_bytes_to_be_received) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->GetDownloadProgress(loader, bytes_received, total_bytes_to_be_received);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_URLLoader_GetResponseInfo(PP_Resource loader) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->GetResponseInfo(loader);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_URLLoader_ReadResponseBody(PP_Resource loader, void* buffer, int32_t bytes_to_read, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->ReadResponseBody(loader, buffer, bytes_to_read, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_URLLoader_FinishStreamingToFile(PP_Resource loader, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				return get_interface<PPB_URLLoader_1_0>()->FinishStreamingToFile(loader, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_URLLoader_Close(PP_Resource loader) {
+			if (has_interface<PPB_URLLoader_1_0>()) {
+				get_interface<PPB_URLLoader_1_0>()->Close(loader);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_URLLoader */
+
+		#pragma region /* Begin entry point methods for PPB_URLRequestInfo */
+
+		PEPPER_EXPORT PP_Resource PPB_URLRequestInfo_Create(PP_Instance instance) {
+			if (has_interface<PPB_URLRequestInfo_1_0>()) {
+				return get_interface<PPB_URLRequestInfo_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_URLRequestInfo_IsURLRequestInfo(PP_Resource resource) {
+			if (has_interface<PPB_URLRequestInfo_1_0>()) {
+				return get_interface<PPB_URLRequestInfo_1_0>()->IsURLRequestInfo(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_URLRequestInfo_SetProperty(PP_Resource request, PP_URLRequestProperty property, struct PP_Var value) {
+			if (has_interface<PPB_URLRequestInfo_1_0>()) {
+				return get_interface<PPB_URLRequestInfo_1_0>()->SetProperty(request, property, value);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_URLRequestInfo_AppendDataToBody(PP_Resource request, const void* data, uint32_t len) {
+			if (has_interface<PPB_URLRequestInfo_1_0>()) {
+				return get_interface<PPB_URLRequestInfo_1_0>()->AppendDataToBody(request, data, len);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_URLRequestInfo_AppendFileToBody(PP_Resource request, PP_Resource file_ref, int64_t start_offset, int64_t number_of_bytes, PP_Time expected_last_modified_time) {
+			if (has_interface<PPB_URLRequestInfo_1_0>()) {
+				return get_interface<PPB_URLRequestInfo_1_0>()->AppendFileToBody(request, file_ref, start_offset, number_of_bytes, expected_last_modified_time);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_URLRequestInfo */
+
+		#pragma region /* Begin entry point methods for PPB_URLResponseInfo */
+
+		PEPPER_EXPORT PP_Bool PPB_URLResponseInfo_IsURLResponseInfo(PP_Resource resource) {
+			if (has_interface<PPB_URLResponseInfo_1_0>()) {
+				return get_interface<PPB_URLResponseInfo_1_0>()->IsURLResponseInfo(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_URLResponseInfo_GetProperty(PP_Resource response, PP_URLResponseProperty property) {
+			if (has_interface<PPB_URLResponseInfo_1_0>()) {
+				return get_interface<PPB_URLResponseInfo_1_0>()->GetProperty(response, property);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_URLResponseInfo_GetBodyAsFileRef(PP_Resource response) {
+			if (has_interface<PPB_URLResponseInfo_1_0>()) {
+				return get_interface<PPB_URLResponseInfo_1_0>()->GetBodyAsFileRef(response);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_URLResponseInfo */
 
 		#pragma region /* Begin entry point methods for PPB_Var */
 

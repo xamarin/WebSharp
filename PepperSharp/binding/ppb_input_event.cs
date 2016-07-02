@@ -277,7 +277,7 @@ public enum PP_InputEvent_Class {
  * The <code>PPB_InputEvent</code> interface contains pointers to several
  * functions related to generic input events on the browser.
  */
-public static partial class PPB_InputEvent {
+public static partial class PPBInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_InputEvent_RequestInputEvents")]
   extern static int _RequestInputEvents ( PP_Instance instance,
                                           uint event_classes);
@@ -414,7 +414,7 @@ public static partial class PPB_InputEvent {
   public static void ClearInputEventRequest ( PP_Instance instance,
                                               uint event_classes)
   {
-  	_ClearInputEventRequest (instance, event_classes);
+  	 _ClearInputEventRequest (instance, event_classes);
   }
 
 
@@ -505,7 +505,7 @@ public static partial class PPB_InputEvent {
  * The <code>PPB_MouseInputEvent</code> interface contains pointers to several
  * functions related to mouse input events.
  */
-public static partial class PPB_MouseInputEvent {
+public static partial class PPBMouseInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
@@ -663,7 +663,7 @@ public static partial class PPB_MouseInputEvent {
  * The <code>PPB_WheelIputEvent</code> interface contains pointers to several
  * functions related to wheel input events.
  */
-public static partial class PPB_WheelInputEvent {
+public static partial class PPBWheelInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_WheelInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       double time_stamp,
@@ -823,7 +823,7 @@ public static partial class PPB_WheelInputEvent {
  * The <code>PPB_KeyboardInputEvent</code> interface contains pointers to
  * several functions related to keyboard input events.
  */
-public static partial class PPB_KeyboardInputEvent {
+public static partial class PPBKeyboardInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_KeyboardInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
@@ -992,7 +992,7 @@ public enum PP_TouchListType {
  * The <code>PPB_TouchInputEvent</code> interface contains pointers to several
  * functions related to touch events.
  */
-public static partial class PPB_TouchInputEvent {
+public static partial class PPBTouchInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_TouchInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
@@ -1049,7 +1049,7 @@ public static partial class PPB_TouchInputEvent {
                                      PP_TouchListType list,
                                      PP_TouchPoint point)
   {
-  	_AddTouchPoint (touch_event, list, point);
+  	 _AddTouchPoint (touch_event, list, point);
   }
 
 
@@ -1145,7 +1145,7 @@ public static partial class PPB_TouchInputEvent {
 
 }
 
-public static partial class PPB_IMEInputEvent {
+public static partial class PPBIMEInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPB_IMEInputEvent_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_InputEvent_Type type,
@@ -1334,7 +1334,7 @@ public static partial class PPB_IMEInputEvent {
                                    out uint start,
                                    out uint end)
   {
-  	_GetSelection (ime_event, out start, out end);
+  	 _GetSelection (ime_event, out start, out end);
   }
 
 

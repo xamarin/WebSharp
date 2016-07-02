@@ -22,7 +22,7 @@ namespace PepperSharp {
 /**
  * PPB_Var API
  */
-public static partial class PPB_Var {
+public static partial class PPBVar {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Var_AddRef")]
   extern static void _AddRef ( PP_Var var);
 
@@ -35,7 +35,7 @@ public static partial class PPB_Var {
    */
   public static void AddRef ( PP_Var var)
   {
-  	_AddRef (var);
+  	 _AddRef (var);
   }
 
 
@@ -56,7 +56,7 @@ public static partial class PPB_Var {
    */
   public static void Release ( PP_Var var)
   {
-  	_Release (var);
+  	 _Release (var);
   }
 
 

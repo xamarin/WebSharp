@@ -135,7 +135,7 @@ namespace PepperSharp {
  * implementation of your callback checks the "result" argument and returns
  * immediately on error.
  */
-public static partial class PPB_MessageLoop {
+public static partial class PPBMessageLoop {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_Create")]
   extern static PP_Resource _Create ( PP_Instance instance);
 

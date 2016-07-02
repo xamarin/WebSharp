@@ -19,7 +19,7 @@ namespace PepperSharp {
  * @addtogroup Interfaces
  * @{
  */
-public static partial class PPP_InputEvent {
+public static partial class PPPInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPP_InputEvent_HandleInputEvent")]
   extern static PP_Bool _HandleInputEvent ( PP_Instance instance,
                                             PP_Resource input_event);

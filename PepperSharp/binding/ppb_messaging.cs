@@ -26,7 +26,7 @@ namespace PepperSharp {
  * and is related to sending messages to JavaScript message event listeners on
  * the DOM element associated with specific module instance.
  */
-public static partial class PPB_Messaging {
+public static partial class PPBMessaging {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Messaging_PostMessage")]
   extern static void _PostMessage ( PP_Instance instance,  PP_Var message);
 
@@ -92,7 +92,7 @@ public static partial class PPB_Messaging {
    */
   public static void PostMessage ( PP_Instance instance,  PP_Var message)
   {
-  	_PostMessage (instance, message);
+  	 _PostMessage (instance, message);
   }
 
 
@@ -173,7 +173,7 @@ public static partial class PPB_Messaging {
    */
   public static void UnregisterMessageHandler ( PP_Instance instance)
   {
-  	_UnregisterMessageHandler (instance);
+  	 _UnregisterMessageHandler (instance);
   }
 
 

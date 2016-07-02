@@ -8,16 +8,16 @@ namespace InputEvent
     {
         public InputEvent(IntPtr handle) : base(handle)
         {
-            PPB_InputEvent.RequestInputEvents(Instance, (int)(PP_InputEvent_Class.Mouse | PP_InputEvent_Class.Wheel |
+            PPBInputEvent.RequestInputEvents(Instance, (int)(PP_InputEvent_Class.Mouse | PP_InputEvent_Class.Wheel |
                    PP_InputEvent_Class.Touch));
-            PPB_InputEvent.RequestFilteringInputEvents(Instance, (int)PP_InputEvent_Class.Keyboard);
+            PPBInputEvent.RequestFilteringInputEvents(Instance, (int)PP_InputEvent_Class.Keyboard);
         }
 
         ~InputEvent() { System.Console.WriteLine("InputEvent destructed"); }
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPB_Console.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from InputEvent using C#").AsPP_Var());
+            PPBConsole.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from InputEvent using C#").AsPP_Var());
  
             return true;
         }
@@ -37,23 +37,23 @@ namespace InputEvent
         public override void DidChangeView(PP_Resource view)
         {
             var viewRect = new PP_Rect();
-            PPB_View.GetRect(view, out viewRect);
+            PPBView.GetRect(view, out viewRect);
             string message = $"DidChangeView: x:{viewRect.point.x}" +
                             $" y: {viewRect.point.y}" +
                             $" width: {viewRect.size.width}" +
                             $" height: {viewRect.size.height} \n" +
-                            $" IsFullScreen: {(PPB_View.IsFullscreen(view) == PP_Bool.PP_TRUE)}" +
-                            $" IsVisible: {(PPB_View.IsVisible(view) == PP_Bool.PP_TRUE)}" +
-                            $" IsPageVisible: {(PPB_View.IsPageVisible(view) == PP_Bool.PP_TRUE)}" +
-                            $" GetDeviceScale: {PPB_View.GetDeviceScale(view)}" +
-                            $" GetCSSScale: {PPB_View.GetCSSScale(view)}";
+                            $" IsFullScreen: {(PPBView.IsFullscreen(view) == PP_Bool.PP_TRUE)}" +
+                            $" IsVisible: {(PPBView.IsVisible(view) == PP_Bool.PP_TRUE)}" +
+                            $" IsPageVisible: {(PPBView.IsPageVisible(view) == PP_Bool.PP_TRUE)}" +
+                            $" GetDeviceScale: {PPBView.GetDeviceScale(view)}" +
+                            $" GetCSSScale: {PPBView.GetCSSScale(view)}";
             PostMessage(message);
         }
 
         public override bool HandleInputEvent(PP_Resource inputEvent)
         {
 
-            var eventType = PPB_InputEvent.GetType(inputEvent);
+            var eventType = PPBInputEvent.GetType(inputEvent);
             switch (eventType)
             {
                 case PP_InputEvent_Type.Ime_composition_start:
@@ -70,15 +70,15 @@ namespace InputEvent
                 case PP_InputEvent_Type.Mouseenter:
                 case PP_InputEvent_Type.Mouseleave:
                 case PP_InputEvent_Type.Contextmenu:
-                    if (PPB_MouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
+                    if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
                     {
                         var mouse = $"Mouse event:" +
-                            $" modifier: {ModifierToString(PPB_InputEvent.GetModifiers(inputEvent))}" +
-                            $" button: {PPB_MouseInputEvent.GetButton(inputEvent)}" +
-                            $" x: {PPB_MouseInputEvent.GetPosition(inputEvent).x}" +
-                            $" y: {PPB_MouseInputEvent.GetPosition(inputEvent).y}" +
-                            $" click_count: {PPB_MouseInputEvent.GetClickCount(inputEvent)}" +
-                            $" time: {PPB_InputEvent.GetTimeStamp(inputEvent)}" +
+                            $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
+                            $" button: {PPBMouseInputEvent.GetButton(inputEvent)}" +
+                            $" x: {PPBMouseInputEvent.GetPosition(inputEvent).x}" +
+                            $" y: {PPBMouseInputEvent.GetPosition(inputEvent).y}" +
+                            $" click_count: {PPBMouseInputEvent.GetClickCount(inputEvent)}" +
+                            $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}" +
                             $" is_context_menu: {eventType == PP_InputEvent_Type.Contextmenu}";
                         PostMessage(mouse);
                     }
@@ -88,16 +88,16 @@ namespace InputEvent
 
                 case PP_InputEvent_Type.Wheel:
                     
-                    if (PPB_WheelInputEvent.IsWheelInputEvent(inputEvent) == PP_Bool.PP_TRUE)
+                    if (PPBWheelInputEvent.IsWheelInputEvent(inputEvent) == PP_Bool.PP_TRUE)
                     {
                         var wheel = "Wheel event:" +
-                            $" modifier: {ModifierToString(PPB_InputEvent.GetModifiers(inputEvent))}" +
-                            $" deltax: {PPB_WheelInputEvent.GetDelta(inputEvent).x}" +
-                            $" deltay: {PPB_WheelInputEvent.GetDelta(inputEvent).y}" +
-                            $" wheel_ticks_x: {PPB_WheelInputEvent.GetTicks(inputEvent).x}" +
-                            $" wheel_ticks_y: {PPB_WheelInputEvent.GetTicks(inputEvent).y}" +
-                            $" scroll_by_page: {PPB_WheelInputEvent.GetScrollByPage(inputEvent) == PP_Bool.PP_TRUE}" +
-                            $" time: {PPB_InputEvent.GetTimeStamp(inputEvent)}";
+                            $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
+                            $" deltax: {PPBWheelInputEvent.GetDelta(inputEvent).x}" +
+                            $" deltay: {PPBWheelInputEvent.GetDelta(inputEvent).y}" +
+                            $" wheel_ticks_x: {PPBWheelInputEvent.GetTicks(inputEvent).x}" +
+                            $" wheel_ticks_y: {PPBWheelInputEvent.GetTicks(inputEvent).y}" +
+                            $" scroll_by_page: {PPBWheelInputEvent.GetScrollByPage(inputEvent) == PP_Bool.PP_TRUE}" +
+                            $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}";
 
                         PostMessage(wheel);
                     }
@@ -108,14 +108,14 @@ namespace InputEvent
                 case PP_InputEvent_Type.Char:
                 case PP_InputEvent_Type.Keydown:
 
-                    if (PPB_KeyboardInputEvent.IsKeyboardInputEvent(inputEvent) == PP_Bool.PP_TRUE)
+                    if (PPBKeyboardInputEvent.IsKeyboardInputEvent(inputEvent) == PP_Bool.PP_TRUE)
                     {
 
                         var keyboard = "Key event:" +
-                            $" modifier: {ModifierToString(PPB_InputEvent.GetModifiers(inputEvent))}" +
-                            $" key_code: {PPB_KeyboardInputEvent.GetCode(inputEvent)}" +
-                            $" time: {PPB_InputEvent.GetTimeStamp(inputEvent)}" +
-                        $" text: {new PPVar(PPB_KeyboardInputEvent.GetCharacterText(inputEvent)).DebugString()}";
+                            $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
+                            $" key_code: {PPBKeyboardInputEvent.GetCode(inputEvent)}" +
+                            $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}" +
+                        $" text: {new PPVar(PPBKeyboardInputEvent.GetCharacterText(inputEvent)).DebugString()}";
                         
                         PostMessage(keyboard);
                     }

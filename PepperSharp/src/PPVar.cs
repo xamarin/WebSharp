@@ -70,7 +70,7 @@ namespace PepperSharp
             isManaged = true;
             if (NeedsRefcounting(ppvar))
             {
-                PPB_Var.AddRef(ppvar);
+                PPBVar.AddRef(ppvar);
             }
         }
 
@@ -80,7 +80,7 @@ namespace PepperSharp
             isManaged = true;
             if (NeedsRefcounting(ppvar))
             {
-                PPB_Var.AddRef(ppvar);
+                PPBVar.AddRef(ppvar);
             }
         }
         #endregion
@@ -102,9 +102,9 @@ namespace PepperSharp
                     // Free other state (managed objects).
                 }
                 // Free up the reference counters.
-                if (NeedsRefcounting(ppvar))
+                if (NeedsRefcounting(ppvar) && isManaged)
                 {
-                    PPB_Var.Release(ppvar);
+                    PPBVar.Release(ppvar);
                 }
 
                 disposed = true;
@@ -131,7 +131,7 @@ namespace PepperSharp
         // that version 1.0 of this method has a different API to later versions.
         public static PP_Var VarFromUtf8Helper(string utf8_str)
         {
-            return PPB_Var.VarFromUtf8(utf8_str, (uint)utf8_str.Length);
+            return PPBVar.VarFromUtf8(utf8_str, (uint)utf8_str.Length);
         }
 
         public bool AsBoolean()
@@ -168,7 +168,7 @@ namespace PepperSharp
 
             uint len = 0;
 
-            return PPB_Var.VarToUtf8(ppvar, out len);
+            return PPBVar.VarToUtf8(ppvar, out len);
         }
 
         public PP_Var AsPP_Var()

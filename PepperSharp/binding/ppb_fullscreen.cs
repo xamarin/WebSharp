@@ -25,7 +25,7 @@ namespace PepperSharp {
  * This interface provides a way of checking the current screen mode and
  * toggling fullscreen mode.
  */
-public static partial class PPB_Fullscreen {
+public static partial class PPBFullscreen {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Fullscreen_IsFullscreen")]
   extern static PP_Bool _IsFullscreen ( PP_Instance instance);
 

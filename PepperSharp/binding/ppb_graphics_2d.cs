@@ -23,7 +23,7 @@ namespace PepperSharp {
 /**
  * <code>PPB_Graphics2D</code> defines the interface for a 2D graphics context.
  */
-public static partial class PPB_Graphics2D {
+public static partial class PPBGraphics2D {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Create")]
   extern static PP_Resource _Create ( PP_Instance instance,
                                       PP_Size size,
@@ -154,7 +154,7 @@ public static partial class PPB_Graphics2D {
                                       PP_Point top_left,
                                       PP_Rect src_rect)
   {
-  	_PaintImageData (graphics_2d, image_data, top_left, src_rect);
+  	 _PaintImageData (graphics_2d, image_data, top_left, src_rect);
   }
 
 
@@ -185,7 +185,7 @@ public static partial class PPB_Graphics2D {
                               PP_Rect clip_rect,
                               PP_Point amount)
   {
-  	_Scroll (graphics_2d, clip_rect, amount);
+  	 _Scroll (graphics_2d, clip_rect, amount);
   }
 
 
@@ -228,7 +228,7 @@ public static partial class PPB_Graphics2D {
   public static void ReplaceContents ( PP_Resource graphics_2d,
                                        PP_Resource image_data)
   {
-  	_ReplaceContents (graphics_2d, image_data);
+  	 _ReplaceContents (graphics_2d, image_data);
   }
 
 

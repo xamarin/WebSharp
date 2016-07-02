@@ -34,7 +34,7 @@ namespace PepperSharp
 
         public bool BindGraphics(PP_Resource graphics2d)
         {
-            if (PPB_Instance.BindGraphics(Instance, graphics2d) == PP_Bool.PP_TRUE)
+            if (PPBInstance.BindGraphics(Instance, graphics2d) == PP_Bool.PP_TRUE)
                 return true;
             else
                 return false;
@@ -50,8 +50,7 @@ namespace PepperSharp
         /// <param name="message"></param>
         public void PostMessage(object message)
         {
-            // We convert this to string for now
-            PPB_Messaging.PostMessage(Instance, new PPVar(message).AsPP_Var());
+            PPBMessaging.PostMessage(Instance, new PPVar(message).AsPP_Var());
         }
 
         PP_Instance instance = new PP_Instance();
@@ -65,6 +64,18 @@ namespace PepperSharp
                 }
                 return instance;
             }
+        }
+
+        public void LogToConsole(PP_LogLevel level, object value)
+        {
+            PPBConsole.Log(Instance, level, new PPVar(value));
+        }
+
+        public void LogToConsoleWithSource(PP_LogLevel level,
+                                          string source,
+                                          object value)
+        {
+            PPBConsole.LogWithSource(Instance, level, new PPVar(source), new PPVar(value));
         }
 
     }

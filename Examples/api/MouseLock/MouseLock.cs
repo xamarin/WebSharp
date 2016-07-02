@@ -39,8 +39,8 @@ namespace MouseLock
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPB_Console.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from MouseLock using C#").AsPP_Var());
-            PPB_InputEvent.RequestInputEvents(Instance, (int)(PP_InputEvent_Class.Mouse | PP_InputEvent_Class.Keyboard));
+            PPBConsole.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from MouseLock using C#").AsPP_Var());
+            PPBInputEvent.RequestInputEvents(Instance, (int)(PP_InputEvent_Class.Mouse | PP_InputEvent_Class.Keyboard));
 
             return true;
         }
@@ -48,27 +48,27 @@ namespace MouseLock
         public override void DidChangeView(PP_Resource view)
         {
             var viewRect = new PP_Rect();
-            var result = PPB_View.GetRect(view, out viewRect);
+            var result = PPBView.GetRect(view, out viewRect);
 
             // DidChangeView can get called for many reasons, so we only want to
             // rebuild the device context if we really need to.
 
             if ((size_.Width == viewRect.size.width && size_.Height == viewRect.size.height) &&
-                (was_fullscreen_ == (PPB_View.IsFullscreen(view) == PP_Bool.PP_TRUE)) && 
+                (was_fullscreen_ == (PPBView.IsFullscreen(view) == PP_Bool.PP_TRUE)) && 
                 is_context_bound_)
             {
                 Log($"DidChangeView SKIP {viewRect.size.width}, {viewRect.size.height} " +
-                    $"FULL={(PPB_View.IsFullscreen(view) == PP_Bool.PP_TRUE)} " +
+                    $"FULL={(PPBView.IsFullscreen(view) == PP_Bool.PP_TRUE)} " +
                     $"CTX Bound={is_context_bound_}");
                 return;
             }
 
             Log($"DidChangeView DO {viewRect.size.width}, {viewRect.size.height} " +
-    $"FULL={(PPB_View.IsFullscreen(view) == PP_Bool.PP_TRUE)} " +
+    $"FULL={(PPBView.IsFullscreen(view) == PP_Bool.PP_TRUE)} " +
     $"CTX Bound={is_context_bound_}");
 
             size_ = viewRect.size; ;
-            device_context_ = PPB_Graphics2D.Create(Instance, size_, PP_Bool.PP_FALSE);
+            device_context_ = PPBGraphics2D.Create(Instance, size_, PP_Bool.PP_FALSE);
             waiting_for_flush_completion_ = false;
 
             is_context_bound_ = BindGraphics(device_context_);
@@ -91,7 +91,7 @@ namespace MouseLock
             }
 
             // Remember if we are fullscreen or not
-            was_fullscreen_ = (PPB_View.IsFullscreen(view) == PP_Bool.PP_TRUE);
+            was_fullscreen_ = (PPBView.IsFullscreen(view) == PP_Bool.PP_TRUE);
 
             // Paint this context
             Paint();
@@ -137,7 +137,7 @@ namespace MouseLock
         int LockMouse(PP_CompletionCallback cc)
         {
             Log("LockMouse");
-            return PPB_MouseLock.LockMouse(Instance, cc);
+            return PPBMouseLock.LockMouse(Instance, cc);
         }
 
         void DidLockMouse(IntPtr userData, int result)
@@ -159,13 +159,13 @@ namespace MouseLock
         /// has lost the mouse lock.
         void UnlockMouse()
         {
-            PPB_MouseLock.UnlockMouse(Instance);
+            PPBMouseLock.UnlockMouse(Instance);
         }
 
         PP_Resource PaintImage(PPSize size)
         {
             
-            var image = PPB_ImageData.Create(Instance, PP_ImageDataFormat.Bgra_premul, size, PP_Bool.PP_FALSE);
+            var image = PPBImageData.Create(Instance, PP_ImageDataFormat.Bgra_premul, size, PP_Bool.PP_FALSE);
 
             if (image.pp_resource == 0) // || image.data() == NULL)
             {
@@ -175,7 +175,7 @@ namespace MouseLock
 
             var desc = new PP_ImageDataDesc();
 
-            if (PPB_ImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
             {
                 Log("Skipping image.\n");
                 return image;
@@ -203,14 +203,14 @@ namespace MouseLock
 
             var desc = new PP_ImageDataDesc();
 
-            if (PPB_ImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
             {
                 return;
             }
 
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            dataPtr = PPB_ImageData.Map(image);
+            dataPtr = PPBImageData.Map(image);
             if (dataPtr == IntPtr.Zero)
                 return;
             data = new int[(desc.size.width * desc.size.height)];
@@ -240,14 +240,14 @@ namespace MouseLock
 
             var desc = new PP_ImageDataDesc();
 
-            if (PPB_ImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
             {
                 return;
             }
 
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            dataPtr = PPB_ImageData.Map(image);
+            dataPtr = PPBImageData.Map(image);
             if (dataPtr == IntPtr.Zero)
                 return;
             data = new int[(desc.size.width * desc.size.height)];
@@ -292,14 +292,14 @@ namespace MouseLock
 
             var desc = new PP_ImageDataDesc();
 
-            if (PPB_ImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(image, out desc) == PP_Bool.PP_FALSE)
             {
                 return;
             }
 
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            dataPtr = PPB_ImageData.Map(image);
+            dataPtr = PPBImageData.Map(image);
             if (dataPtr == IntPtr.Zero)
                 return;
             data = new int[(desc.size.width * desc.size.height)];
@@ -403,12 +403,12 @@ namespace MouseLock
                 return;
             }
 
-            PPB_Graphics2D.ReplaceContents(device_context_, image);
+            PPBGraphics2D.ReplaceContents(device_context_, image);
             waiting_for_flush_completion_ = true;
 
             var callDidFlush = new PP_CompletionCallback();
             callDidFlush.func = DidFlush;
-            PPB_Graphics2D.Flush(device_context_, callDidFlush);
+            PPBGraphics2D.Flush(device_context_, callDidFlush);
         }
 
         void DidFlush(IntPtr userData, int result)
@@ -421,13 +421,13 @@ namespace MouseLock
         void Log(string format, params object[] args)
         {
             string message = string.Format(format, args);
-            PPB_Console.Log(Instance, PP_LogLevel.Error, new PPVar(message).AsPP_Var());
+            PPBConsole.Log(Instance, PP_LogLevel.Error, new PPVar(message).AsPP_Var());
         }
 
         public override bool HandleInputEvent(PP_Resource inputEvent)
         {
 
-            var eventType = PPB_InputEvent.GetType(inputEvent);
+            var eventType = PPBInputEvent.GetType(inputEvent);
             switch (eventType)
             {
                 case PP_InputEvent_Type.Mousedown:
@@ -448,9 +448,9 @@ namespace MouseLock
 
                 case PP_InputEvent_Type.Mousemove:
 
-                    if (PPB_MouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
+                    if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
                     {
-                        mouse_movement_ = PPB_MouseInputEvent.GetMovement(inputEvent);
+                        mouse_movement_ = PPBMouseInputEvent.GetMovement(inputEvent);
                         Paint();
                         return true;
                     }
@@ -460,19 +460,19 @@ namespace MouseLock
 
                 case PP_InputEvent_Type.Keydown:
 
-                    if (PPB_KeyboardInputEvent.IsKeyboardInputEvent(inputEvent) == PP_Bool.PP_TRUE)
+                    if (PPBKeyboardInputEvent.IsKeyboardInputEvent(inputEvent) == PP_Bool.PP_TRUE)
                     {
 
                         // Switch in and out of fullscreen when 'Enter' is hit
-                        if (PPB_KeyboardInputEvent.GetKeyCode(inputEvent) == kReturnKeyCode)
+                        if (PPBKeyboardInputEvent.GetKeyCode(inputEvent) == kReturnKeyCode)
                         {
                             // Ignore switch if in transition
                             if (!is_context_bound_)
                                 return true;
 
-                            if (PPB_Fullscreen.IsFullscreen(Instance) == PP_Bool.PP_TRUE)
+                            if (PPBFullscreen.IsFullscreen(Instance) == PP_Bool.PP_TRUE)
                             {
-                                if (PPB_Fullscreen.SetFullscreen(Instance, PP_Bool.PP_FALSE) != PP_Bool.PP_TRUE)
+                                if (PPBFullscreen.SetFullscreen(Instance, PP_Bool.PP_FALSE) != PP_Bool.PP_TRUE)
                                 {
                                     Log("Could not leave fullscreen mode\n");
                                 }
@@ -483,7 +483,7 @@ namespace MouseLock
                             }
                             else
                             {
-                                if (PPB_Fullscreen.SetFullscreen(Instance, PP_Bool.PP_TRUE) != PP_Bool.PP_TRUE)
+                                if (PPBFullscreen.SetFullscreen(Instance, PP_Bool.PP_TRUE) != PP_Bool.PP_TRUE)
                                 {
                                     Log("Could not enter fullscreen mode\n");
                                 }

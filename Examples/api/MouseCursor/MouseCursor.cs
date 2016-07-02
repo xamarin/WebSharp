@@ -13,7 +13,7 @@ namespace MouseCursor
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPB_Console.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from MouseCursor using C#").AsPP_Var());
+            PPBConsole.Log(Instance, PP_LogLevel.Log, new PPVar("Hello from MouseCursor using C#").AsPP_Var());
             MakeCustomCursor();
 
             return true;
@@ -31,12 +31,12 @@ namespace MouseCursor
             if (cursor == PP_MouseCursor_Type.Custom)
             {
                 var hotSpot = new PPPoint(16,16);
-                PPB_MouseCursor.SetCursor(Instance, cursor, custom_cursor_, hotSpot);
+                PPBMouseCursor.SetCursor(Instance, cursor, custom_cursor_, hotSpot);
             }
             else
             {
                 var refPoint = new PPPoint();
-                PPB_MouseCursor.SetCursor(Instance, cursor, new PP_Resource(), refPoint);
+                PPBMouseCursor.SetCursor(Instance, cursor, new PP_Resource(), refPoint);
             }
 
         }
@@ -46,7 +46,7 @@ namespace MouseCursor
         {
             var size = new PPSize(32,32);
 
-            custom_cursor_ = PPB_ImageData.Create(Instance, PP_ImageDataFormat.Bgra_premul, size, PP_Bool.PP_TRUE);
+            custom_cursor_ = PPBImageData.Create(Instance, PP_ImageDataFormat.Bgra_premul, size, PP_Bool.PP_TRUE);
 
             DrawCircle(16, 16, 9, 14, 0.8f, 0.8f, 0);
             DrawCircle(11, 12, 2, 3, 0, 0, 0);
@@ -60,10 +60,10 @@ namespace MouseCursor
             var desc = new PP_ImageDataDesc();
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            if (PPB_ImageData.Describe(custom_cursor_, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(custom_cursor_, out desc) == PP_Bool.PP_FALSE)
                 return;
 
-            dataPtr = PPB_ImageData.Map(custom_cursor_);
+            dataPtr = PPBImageData.Map(custom_cursor_);
             if (dataPtr == IntPtr.Zero)
                 return;
 
@@ -110,10 +110,10 @@ namespace MouseCursor
             var desc = new PP_ImageDataDesc();
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            if (PPB_ImageData.Describe(custom_cursor_, out desc) == PP_Bool.PP_FALSE)
+            if (PPBImageData.Describe(custom_cursor_, out desc) == PP_Bool.PP_FALSE)
                 return;
 
-            dataPtr = PPB_ImageData.Map(custom_cursor_);
+            dataPtr = PPBImageData.Map(custom_cursor_);
             if (dataPtr == IntPtr.Zero)
                 return;
 

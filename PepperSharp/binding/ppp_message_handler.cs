@@ -30,7 +30,7 @@ namespace PepperSharp {
  * This interface struct should not be returned by PPP_GetInterface; instead it
  * must be passed as a parameter to PPB_Messaging::RegisterMessageHandler.
  */
-public static partial class PPP_MessageHandler {
+public static partial class PPPMessageHandler {
   [DllImport("PepperPlugin", EntryPoint = "PPP_MessageHandler_HandleMessage")]
   extern static void _HandleMessage ( PP_Instance instance,
                                      ref IntPtr user_data,
@@ -51,7 +51,7 @@ public static partial class PPP_MessageHandler {
                                     ref IntPtr user_data,
                                      PP_Var message)
   {
-  	_HandleMessage (instance, ref user_data, message);
+  	 _HandleMessage (instance, ref user_data, message);
   }
 
 
@@ -86,7 +86,7 @@ public static partial class PPP_MessageHandler {
                                              PP_Var message,
                                             out PP_Var response)
   {
-  	_HandleBlockingMessage (instance, ref user_data, message, out response);
+  	 _HandleBlockingMessage (instance, ref user_data, message, out response);
   }
 
 
@@ -105,7 +105,7 @@ public static partial class PPP_MessageHandler {
    */
   public static void Destroy ( PP_Instance instance, ref IntPtr user_data)
   {
-  	_Destroy (instance, ref user_data);
+  	 _Destroy (instance, ref user_data);
   }
 
 

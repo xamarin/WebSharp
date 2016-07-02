@@ -95,7 +95,7 @@ public struct PP_ImageDataDesc {
  * The <code>PPB_ImageData</code> interface contains pointers to several
  * functions for determining the browser's treatment of image data.
  */
-public static partial class PPB_ImageData {
+public static partial class PPBImageData {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_ImageData_GetNativeImageDataFormat")]
   extern static PP_ImageDataFormat _GetNativeImageDataFormat ();
@@ -247,7 +247,7 @@ public static partial class PPB_ImageData {
    */
   public static void Unmap ( PP_Resource image_data)
   {
-  	_Unmap (image_data);
+  	 _Unmap (image_data);
   }
 
 

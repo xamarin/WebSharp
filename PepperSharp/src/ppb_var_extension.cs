@@ -58,7 +58,7 @@ namespace PepperSharp {
     /**
      * PPB_Var API
      */
-    public static partial class PPB_Var
+    public static partial class PPBVar
     {
         [DllImport("PepperPlugin", EntryPoint = "PPB_Var_VarToUtf8")]
         extern static IntPtr _VarToUtf8(PP_Var var, out uint len);

@@ -26,8 +26,8 @@ namespace Graphics_2D
         public override bool Init(int argc, string[] argn, string[] argv)
         {
             instance.pp_instance = Handle.ToInt32();
-            PPB_Console.Log(instance, PP_LogLevel.Log, new PPVar("Hello from PepperSharp using C#").AsPP_Var());
-            PPB_InputEvent.RequestInputEvents(instance, (int)PP_InputEvent_Class.Mouse);
+            PPBConsole.Log(instance, PP_LogLevel.Log, new PPVar("Hello from PepperSharp using C#").AsPP_Var());
+            PPBInputEvent.RequestInputEvents(instance, (int)PP_InputEvent_Class.Mouse);
             int seed = 1;
             random = new Random(seed);
             CreatePalette();
@@ -38,9 +38,9 @@ namespace Graphics_2D
         public override void DidChangeView(PP_Resource view)
         {
             var viewRect = new PP_Rect();
-            var result = PPB_View.GetRect(view, out viewRect);
+            var result = PPBView.GetRect(view, out viewRect);
 
-            deviceScale = PPB_View.GetDeviceScale(view);
+            deviceScale = PPBView.GetDeviceScale(view);
             var newSize = new PPSize((int)(viewRect.size.width * deviceScale),
                                     (int)(viewRect.size.height * deviceScale));
 
@@ -66,17 +66,17 @@ namespace Graphics_2D
                 return true;
 
             
-            var eventType = PPB_InputEvent.GetType(inputEvent);
+            var eventType = PPBInputEvent.GetType(inputEvent);
             if (eventType == PP_InputEvent_Type.Mousedown ||
                 eventType == PP_InputEvent_Type.Mousemove)
             {
-                var mouseButton = PPB_MouseInputEvent.GetButton(inputEvent);
+                var mouseButton = PPBMouseInputEvent.GetButton(inputEvent);
                 if (mouseButton == PP_InputEvent_MouseButton.None)
                     return true;
-                if (PPB_MouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
+                if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PP_Bool.PP_TRUE)
                 {
                     
-                    PPPoint pos = PPB_MouseInputEvent.GetPosition(inputEvent);
+                    PPPoint pos = PPBMouseInputEvent.GetPosition(inputEvent);
                     //Console.WriteLine($"yes it is {pos.x}");
                     mouse.x = (int)(pos.X * deviceScale);
                     mouse.y = (int)(pos.Y * deviceScale);
@@ -96,16 +96,16 @@ namespace Graphics_2D
             bool kIsAlwaysOpaque = true;
             var isAlwaysOpaque = new PP_Bool();
             isAlwaysOpaque = kIsAlwaysOpaque ? PP_Bool.PP_TRUE : PP_Bool.PP_FALSE;
-            context = PPB_Graphics2D.Create(instance, new_size, isAlwaysOpaque);
+            context = PPBGraphics2D.Create(instance, new_size, isAlwaysOpaque);
 
             // Call SetScale before BindGraphics so the image is scaled correctly on
             // HiDPI displays.
-            PPB_Graphics2D.SetScale(context, (1.0f / deviceScale));
+            PPBGraphics2D.SetScale(context, (1.0f / deviceScale));
 
             var osize = new PP_Size();
             var oopaque = new PP_Bool();
 
-            PPB_Graphics2D.Describe(context, out osize, out oopaque);
+            PPBGraphics2D.Describe(context, out osize, out oopaque);
 
             if (!BindGraphics(context))
             {
@@ -138,7 +138,7 @@ namespace Graphics_2D
         uint MakeColor(byte r, byte g, byte b)
         {
             byte a = 255;
-            var format = PPB_ImageData.GetNativeImageDataFormat();
+            var format = PPBImageData.GetNativeImageDataFormat();
 
             if (format == PP_ImageDataFormat.Bgra_premul)
             {
@@ -247,17 +247,17 @@ namespace Graphics_2D
         void Paint()
         {
             // See the comment above the call to ReplaceContents below.
-            var format = PPB_ImageData.GetNativeImageDataFormat();
+            var format = PPBImageData.GetNativeImageDataFormat();
             bool kDontInitToZero = false;
             var dontInitToZero = kDontInitToZero ? PP_Bool.PP_TRUE : PP_Bool.PP_FALSE;
-            var image_data = PPB_ImageData.Create(instance, format, size, dontInitToZero);
+            var image_data = PPBImageData.Create(instance, format, size, dontInitToZero);
             var desc = new PP_ImageDataDesc();
 
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
-            if (PPB_ImageData.Describe(image_data, out desc) == PP_Bool.PP_TRUE)
+            if (PPBImageData.Describe(image_data, out desc) == PP_Bool.PP_TRUE)
             {
-                dataPtr = PPB_ImageData.Map(image_data);
+                dataPtr = PPBImageData.Map(image_data);
                 if (dataPtr == IntPtr.Zero)
                     return;
                 data = new int[(desc.size.width * desc.size.height)];
@@ -295,7 +295,7 @@ namespace Graphics_2D
             //   "front buffer" (which the module is painting into) are just being
             //   swapped back and forth.
             //
-            PPB_Graphics2D.ReplaceContents(context, image_data);
+            PPBGraphics2D.ReplaceContents(context, image_data);
         }
 
         void MainLoop(int dt)
@@ -327,7 +327,7 @@ namespace Graphics_2D
             completionCallback.func = callback;
             completionCallback.flags = (int)PP_CompletionCallback_Flag.None;
 
-            var flushResult = PPB_Graphics2D.Flush(context, completionCallback);
+            var flushResult = PPBGraphics2D.Flush(context, completionCallback);
         }
 
     }

@@ -53,6 +53,9 @@
     <Compile Include="binding\ppb_messaging.cs" />
     <Compile Include="binding\ppb_mouse_cursor.cs" />
     <Compile Include="binding\ppb_mouse_lock.cs" />
+    <Compile Include="binding\ppb_url_loader.cs" />
+    <Compile Include="binding\ppb_url_request_info.cs" />
+    <Compile Include="binding\ppb_url_response_info.cs" />
     <Compile Include="binding\ppb_var.cs" />
     <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\pp_var.cs" />
