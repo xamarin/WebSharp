@@ -29,8 +29,8 @@ namespace PepperSharp {
  */
 public static partial class PPBMouseLock {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseLock_LockMouse")]
-  extern static int _LockMouse ( PP_Instance instance,
-                                 PP_CompletionCallback callback);
+  extern static int _LockMouse ( PPInstance instance,
+                                 PPCompletionCallback callback);
 
   /**
    * LockMouse() requests the mouse to be locked.
@@ -56,15 +56,15 @@ public static partial class PPBMouseLock {
    *
    * @return An int32_t containing an error code from <code>pp_errors.h</code>.
    */
-  public static int LockMouse ( PP_Instance instance,
-                                PP_CompletionCallback callback)
+  public static int LockMouse ( PPInstance instance,
+                                PPCompletionCallback callback)
   {
   	return _LockMouse (instance, callback);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseLock_UnlockMouse")]
-  extern static void _UnlockMouse ( PP_Instance instance);
+  extern static void _UnlockMouse ( PPInstance instance);
 
   /**
    * UnlockMouse() causes the mouse to be unlocked, allowing it to track user
@@ -75,7 +75,7 @@ public static partial class PPBMouseLock {
    * @param[in] instance A <code>PP_Instance</code> identifying one instance
    * of a module.
    */
-  public static void UnlockMouse ( PP_Instance instance)
+  public static void UnlockMouse ( PPInstance instance)
   {
   	 _UnlockMouse (instance);
   }

@@ -29,8 +29,8 @@ namespace PepperSharp {
  * indicate a "NULL handle."
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_Instance {
-	public int pp_instance;
+public partial struct PPInstance {
+	public int ppinstance;
 }
 /**
  * @}

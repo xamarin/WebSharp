@@ -23,7 +23,7 @@ namespace PepperSharp {
  * The PP_Point structure defines the integer x and y coordinates of a point.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_Point {
+public partial struct PPPoint {
   /**
    * This value represents the horizontal coordinate of a point, starting with 0
    * as the left-most coordinate.
@@ -41,7 +41,7 @@ public struct PP_Point {
  * of a point.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_FloatPoint {
+public partial struct PPFloatPoint {
   public float x;
   public float y;
 };

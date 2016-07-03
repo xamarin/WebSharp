@@ -27,7 +27,7 @@ namespace PepperSharp {
  */
 public static partial class PPPMouseLock {
   [DllImport("PepperPlugin", EntryPoint = "PPP_MouseLock_MouseLockLost")]
-  extern static void _MouseLockLost ( PP_Instance instance);
+  extern static void _MouseLockLost ( PPInstance instance);
 
   /**
    * MouseLockLost() is called when the instance loses the mouse lock, such as
@@ -36,7 +36,7 @@ public static partial class PPPMouseLock {
    * @param[in] instance A <code>PP_Instance</code> identifying one instance
    * of a module.
    */
-  public static void MouseLockLost ( PP_Instance instance)
+  public static void MouseLockLost ( PPInstance instance)
   {
   	 _MouseLockLost (instance);
   }

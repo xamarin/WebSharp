@@ -4,7 +4,7 @@ using PepperSharp;
 
 namespace MouseLock
 {
-    public class MouseLock : PPInstance
+    public class MouseLock : Instance
     {
 
         PPSize size_ = PPSize.Zero;
@@ -30,7 +30,7 @@ namespace MouseLock
             Down = 3
         }
 
-        PP_Resource device_context_;
+        PPResource device_context_;
 
 
         public MouseLock(IntPtr handle) : base(handle) { }
@@ -39,15 +39,15 @@ namespace MouseLock
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPBConsole.Log(Instance, PPLogLevel.Log, new PPVar("Hello from MouseLock using C#").AsPP_Var());
-            PPBInputEvent.RequestInputEvents(Instance, (int)(PPInputEventClass.Mouse | PPInputEventClass.Keyboard));
+            PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from MouseLock using C#"));
+            PPBInputEvent.RequestInputEvents(this, (int)(PPInputEventClass.Mouse | PPInputEventClass.Keyboard));
 
             return true;
         }
 
-        public override void DidChangeView(PP_Resource view)
+        public override void DidChangeView(PPResource view)
         {
-            var viewRect = new PP_Rect();
+            var viewRect = new PPRect();
             var result = PPBView.GetRect(view, out viewRect);
 
             // DidChangeView can get called for many reasons, so we only want to
@@ -68,7 +68,7 @@ namespace MouseLock
     $"CTX Bound={is_context_bound_}");
 
             size_ = viewRect.size; ;
-            device_context_ = PPBGraphics2D.Create(Instance, size_, PPBool.False);
+            device_context_ = PPBGraphics2D.Create(this, size_, PPBool.False);
             waiting_for_flush_completion_ = false;
 
             is_context_bound_ = BindGraphics(device_context_);
@@ -134,10 +134,10 @@ namespace MouseLock
         /// completion.
         ///
         /// @return An int32_t containing an error code from <code>PPErrors.h</code>.
-        int LockMouse(PP_CompletionCallback cc)
+        int LockMouse(PPCompletionCallback cc)
         {
             Log("LockMouse");
-            return PPBMouseLock.LockMouse(Instance, cc);
+            return PPBMouseLock.LockMouse(this, cc);
         }
 
         void DidLockMouse(IntPtr userData, int result)
@@ -159,21 +159,21 @@ namespace MouseLock
         /// has lost the mouse lock.
         void UnlockMouse()
         {
-            PPBMouseLock.UnlockMouse(Instance);
+            PPBMouseLock.UnlockMouse(this);
         }
 
-        PP_Resource PaintImage(PPSize size)
+        PPResource PaintImage(PPSize size)
         {
             
-            var image = PPBImageData.Create(Instance, PPImageDataFormat.BgraPremul, size, PPBool.False);
+            var image = PPBImageData.Create(this, PPImageDataFormat.BgraPremul, size, PPBool.False);
 
-            if (image.pp_resource == 0) // || image.data() == NULL)
+            if (image.ppresource == 0) // || image.data() == NULL)
             {
                 Log("Skipping image.\n");
                 return image;
             }
 
-            var desc = new PP_ImageDataDesc();
+            var desc = new PPImageDataDesc();
 
             if (PPBImageData.Describe(image, out desc) == PPBool.False)
             {
@@ -188,9 +188,9 @@ namespace MouseLock
             return image;
         }
 
-        void ClearToBackground(PP_Resource image)
+        void ClearToBackground(PPResource image)
         {
-            if (image.pp_resource == 0)
+            if (image.ppresource == 0)
             {
                 Log("ClearToBackground with NULL image.");
                 return;
@@ -201,7 +201,7 @@ namespace MouseLock
                 return;
             }
 
-            var desc = new PP_ImageDataDesc();
+            var desc = new PPImageDataDesc();
 
             if (PPBImageData.Describe(image, out desc) == PPBool.False)
             {
@@ -229,16 +229,16 @@ namespace MouseLock
 
         }
 
-        void DrawCenterSpot(PP_Resource image,
+        void DrawCenterSpot(PPResource image,
                                        uint spot_color)
         {
-            if (image.pp_resource == 0)
+            if (image.ppresource == 0)
             {
                 Log("DrawCenterSpot with NULL image");
                 return;
             }
 
-            var desc = new PP_ImageDataDesc();
+            var desc = new PPImageDataDesc();
 
             if (PPBImageData.Describe(image, out desc) == PPBool.False)
             {
@@ -281,16 +281,16 @@ namespace MouseLock
             
         }
 
-        void DrawNeedle(PP_Resource image,
+        void DrawNeedle(PPResource image,
                                    uint needle_color)
         {
-            if (image.pp_resource == 0)
+            if (image.ppresource == 0)
             {
                 Log("DrawNeedle with NULL image");
                 return;
             }
 
-            var desc = new PP_ImageDataDesc();
+            var desc = new PPImageDataDesc();
 
             if (PPBImageData.Describe(image, out desc) == PPBool.False)
             {
@@ -397,7 +397,7 @@ namespace MouseLock
             }
 
             var image = PaintImage(size_);
-            if (image.pp_resource == 0)
+            if (image.ppresource == 0)
             {
                 Log("Could not create image data\n");
                 return;
@@ -406,7 +406,7 @@ namespace MouseLock
             PPBGraphics2D.ReplaceContents(device_context_, image);
             waiting_for_flush_completion_ = true;
 
-            var callDidFlush = new PP_CompletionCallback();
+            var callDidFlush = new PPCompletionCallback();
             callDidFlush.func = DidFlush;
             PPBGraphics2D.Flush(device_context_, callDidFlush);
         }
@@ -421,10 +421,10 @@ namespace MouseLock
         void Log(string format, params object[] args)
         {
             string message = string.Format(format, args);
-            PPBConsole.Log(Instance, PPLogLevel.Error, new PPVar(message).AsPP_Var());
+            PPBConsole.Log(this, PPLogLevel.Error, new Var(message));
         }
 
-        public override bool HandleInputEvent(PP_Resource inputEvent)
+        public override bool HandleInputEvent(PPResource inputEvent)
         {
 
             var eventType = PPBInputEvent.GetType(inputEvent);
@@ -438,7 +438,7 @@ namespace MouseLock
                     }
                     else
                     {
-                        PP_CompletionCallback cc = new PP_CompletionCallback();
+                        PPCompletionCallback cc = new PPCompletionCallback();
                         cc.func = DidLockMouse;
                         LockMouse(cc);
 
@@ -470,9 +470,9 @@ namespace MouseLock
                             if (!is_context_bound_)
                                 return true;
 
-                            if (PPBFullscreen.IsFullscreen(Instance) == PPBool.True)
+                            if (PPBFullscreen.IsFullscreen(this) == PPBool.True)
                             {
-                                if (PPBFullscreen.SetFullscreen(Instance, PPBool.False) != PPBool.True)
+                                if (PPBFullscreen.SetFullscreen(this, PPBool.False) != PPBool.True)
                                 {
                                     Log("Could not leave fullscreen mode\n");
                                 }
@@ -483,7 +483,7 @@ namespace MouseLock
                             }
                             else
                             {
-                                if (PPBFullscreen.SetFullscreen(Instance, PPBool.True) != PPBool.True)
+                                if (PPBFullscreen.SetFullscreen(this, PPBool.True) != PPBool.True)
                                 {
                                     Log("Could not enter fullscreen mode\n");
                                 }

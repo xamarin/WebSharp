@@ -69,14 +69,14 @@ public enum PPImageDataFormat {
  * image data.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_ImageDataDesc {
+public partial struct PPImageDataDesc {
   /**
    * This value represents one of the image data types in the
    * <code>PP_ImageDataFormat</code> enum.
    */
   public PPImageDataFormat format;
   /** This value represents the size of the bitmap in pixels. */
-  public PP_Size size;
+  public PPSize size;
   /**
    * This value represents the row width in bytes. This may be different than
    * width * 4 since there may be padding at the end of the lines.
@@ -137,10 +137,10 @@ public static partial class PPBImageData {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_Create")]
-  extern static PP_Resource _Create ( PP_Instance instance,
-                                      PPImageDataFormat format,
-                                      PP_Size size,
-                                      PPBool init_to_zero);
+  extern static PPResource _Create ( PPInstance instance,
+                                     PPImageDataFormat format,
+                                     PPSize size,
+                                     PPBool init_to_zero);
 
   /**
    * Create() allocates an image data resource with the given format and size.
@@ -164,17 +164,17 @@ public static partial class PPBImageData {
    * @return A <code>PP_Resource</code> with a nonzero ID on success or zero on
    * failure. Failure means the instance, image size, or format was invalid.
    */
-  public static PP_Resource Create ( PP_Instance instance,
-                                     PPImageDataFormat format,
-                                     PP_Size size,
-                                     PPBool init_to_zero)
+  public static PPResource Create ( PPInstance instance,
+                                    PPImageDataFormat format,
+                                    PPSize size,
+                                    PPBool init_to_zero)
   {
   	return _Create (instance, format, size, init_to_zero);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_IsImageData")]
-  extern static PPBool _IsImageData ( PP_Resource image_data);
+  extern static PPBool _IsImageData ( PPResource image_data);
 
   /**
    * IsImageData() determines if a given resource is image data.
@@ -186,15 +186,15 @@ public static partial class PPBImageData {
    * resource is an image data or <code>PP_FALSE</code> if the resource is
    * invalid or some type other than image data.
    */
-  public static PPBool IsImageData ( PP_Resource image_data)
+  public static PPBool IsImageData ( PPResource image_data)
   {
   	return _IsImageData (image_data);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_Describe")]
-  extern static PPBool _Describe ( PP_Resource image_data,
-                                  out PP_ImageDataDesc desc);
+  extern static PPBool _Describe ( PPResource image_data,
+                                  out PPImageDataDesc desc);
 
   /**
    * Describe() computes the description of the
@@ -210,15 +210,15 @@ public static partial class PPBImageData {
    * <code>PP_FALSE</code>, the <code>desc</code> structure will be filled
    * with 0.
    */
-  public static PPBool Describe ( PP_Resource image_data,
-                                 out PP_ImageDataDesc desc)
+  public static PPBool Describe ( PPResource image_data,
+                                 out PPImageDataDesc desc)
   {
   	return _Describe (image_data, out desc);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_Map")]
-  extern static IntPtr _Map ( PP_Resource image_data);
+  extern static IntPtr _Map ( PPResource image_data);
 
   /**
    * Map() maps an image data into the module address space.
@@ -228,14 +228,14 @@ public static partial class PPBImageData {
    *
    * @return A pointer to the beginning of the data.
    */
-  public static IntPtr Map ( PP_Resource image_data)
+  public static IntPtr Map ( PPResource image_data)
   {
   	return _Map (image_data);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_ImageData_Unmap")]
-  extern static void _Unmap ( PP_Resource image_data);
+  extern static void _Unmap ( PPResource image_data);
 
   /**
    * Unmap is a pointer to a function that unmaps an image data from the module
@@ -244,7 +244,7 @@ public static partial class PPBImageData {
    * @param[in] image_data A <code>PP_Resource</code> corresponding to image
    * data.
    */
-  public static void Unmap ( PP_Resource image_data)
+  public static void Unmap ( PPResource image_data)
   {
   	 _Unmap (image_data);
   }

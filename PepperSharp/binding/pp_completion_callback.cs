@@ -29,7 +29,7 @@ namespace PepperSharp {
  * some operation-dependent meaning (such as bytes read).
  */
 [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-public delegate void PP_CompletionCallback_Func (IntPtr user_data, int result);
+public delegate void PPCompletionCallbackFunc (IntPtr user_data, int result);
 
 /**
  * @}
@@ -135,12 +135,12 @@ public enum PPCompletionCallbackFlag {
  * (e.g. number of bytes read).
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_CompletionCallback {
+public partial struct PPCompletionCallback {
   /**
    * This value is a callback function that will be called, or NULL if this is
    * a blocking completion callback.
    */
-  public PP_CompletionCallback_Func func;
+  public PPCompletionCallbackFunc func;
   /**
    * This value is a pointer to user data passed to a callback function.
    */

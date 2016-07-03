@@ -129,7 +129,7 @@ public enum PPVarType {
  * PP_Vars sent from JavaScript.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_Var {
+public partial struct PPVar {
   public PPVarType type;
   /**
    * The <code>padding</code> ensures <code>value</code> is aligned on an
@@ -143,7 +143,7 @@ public struct PP_Var {
    * the fields of <code>value</code> is valid at a time based upon
    * <code>type</code>.
    */
-  public PP_VarValue value;
+  public PPVarValue value;
 };
 /**
  * @}

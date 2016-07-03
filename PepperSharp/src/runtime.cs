@@ -17,18 +17,18 @@ namespace PepperSharp
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public class PPResource : INativeObject, IDisposable
+    public class Resource : INativeObject, IDisposable
     {
         internal IntPtr handle;
         public IntPtr Handle => handle;
 
-        public PPResource(IntPtr handle)
+        public Resource(IntPtr handle)
         {
             this.handle = handle;
             Console.WriteLine($"PPResource constructed {handle}");
         }
 
-        protected PPResource() { }
+        protected Resource() { }
 
         public void Dispose()
         {
@@ -41,7 +41,7 @@ namespace PepperSharp
             // TODO: do something here
         }
 
-        ~PPResource()
+        ~Resource()
         {
             Dispose(false);
         }

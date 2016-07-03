@@ -41,7 +41,7 @@ namespace PepperSharp {
  */
 public static partial class PPBURLLoader {
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_Create")]
-  extern static PP_Resource _Create ( PP_Instance instance);
+  extern static PPResource _Create ( PPInstance instance);
 
   /**
    * Create() creates a new <code>URLLoader</code> object. The
@@ -55,14 +55,14 @@ public static partial class PPBURLLoader {
    * @return A <code>PP_Resource</code> corresponding to a URLLoader if
    * successful, 0 if the instance is invalid.
    */
-  public static PP_Resource Create ( PP_Instance instance)
+  public static PPResource Create ( PPInstance instance)
   {
   	return _Create (instance);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_IsURLLoader")]
-  extern static PPBool _IsURLLoader ( PP_Resource resource);
+  extern static PPBool _IsURLLoader ( PPResource resource);
 
   /**
    * IsURLLoader() determines if a resource is an <code>URLLoader</code>.
@@ -74,16 +74,16 @@ public static partial class PPBURLLoader {
    * <code>PP_FALSE</code> if the resource is invalid or some type other
    * than <code>URLLoader</code>.
    */
-  public static PPBool IsURLLoader ( PP_Resource resource)
+  public static PPBool IsURLLoader ( PPResource resource)
   {
   	return _IsURLLoader (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_Open")]
-  extern static int _Open ( PP_Resource loader,
-                            PP_Resource request_info,
-                            PP_CompletionCallback callback);
+  extern static int _Open ( PPResource loader,
+                            PPResource request_info,
+                            PPCompletionCallback callback);
 
   /**
    * Open() begins loading the <code>URLRequestInfo</code>. The operation
@@ -101,17 +101,17 @@ public static partial class PPBURLLoader {
    *
    * @return An int32_t containing an error code from <code>pp_errors.h</code>.
    */
-  public static int Open ( PP_Resource loader,
-                           PP_Resource request_info,
-                           PP_CompletionCallback callback)
+  public static int Open ( PPResource loader,
+                           PPResource request_info,
+                           PPCompletionCallback callback)
   {
   	return _Open (loader, request_info, callback);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_FollowRedirect")]
-  extern static int _FollowRedirect ( PP_Resource loader,
-                                      PP_CompletionCallback callback);
+  extern static int _FollowRedirect ( PPResource loader,
+                                      PPCompletionCallback callback);
 
   /**
    * FollowRedirect() can be invoked to follow a redirect after Open()
@@ -127,15 +127,15 @@ public static partial class PPBURLLoader {
    *
    * @return An int32_t containing an error code from <code>pp_errors.h</code>.
    */
-  public static int FollowRedirect ( PP_Resource loader,
-                                     PP_CompletionCallback callback)
+  public static int FollowRedirect ( PPResource loader,
+                                     PPCompletionCallback callback)
   {
   	return _FollowRedirect (loader, callback);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_GetUploadProgress")]
-  extern static PPBool _GetUploadProgress ( PP_Resource loader,
+  extern static PPBool _GetUploadProgress ( PPResource loader,
                                            out long bytes_sent,
                                            out long total_bytes_to_be_sent);
 
@@ -156,7 +156,7 @@ public static partial class PPBURLLoader {
    * @return <code>PP_TRUE</code> if the upload progress is available,
    * <code>PP_FALSE</code> if it is not available.
    */
-  public static PPBool GetUploadProgress ( PP_Resource loader,
+  public static PPBool GetUploadProgress ( PPResource loader,
                                           out long bytes_sent,
                                           out long total_bytes_to_be_sent)
   {
@@ -168,7 +168,7 @@ public static partial class PPBURLLoader {
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_GetDownloadProgress")]
   extern static PPBool _GetDownloadProgress (
-      PP_Resource loader,
+      PPResource loader,
       out long bytes_received,
       out long total_bytes_to_be_received);
 
@@ -192,7 +192,7 @@ public static partial class PPBURLLoader {
    * <code>PP_FALSE</code> if it is not available.
    */
   public static PPBool GetDownloadProgress (
-      PP_Resource loader,
+      PPResource loader,
       out long bytes_received,
       out long total_bytes_to_be_received)
   {
@@ -203,7 +203,7 @@ public static partial class PPBURLLoader {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_GetResponseInfo")]
-  extern static PP_Resource _GetResponseInfo ( PP_Resource loader);
+  extern static PPResource _GetResponseInfo ( PPResource loader);
 
   /**
    * GetResponseInfo() returns the current <code>URLResponseInfo</code> object.
@@ -215,17 +215,17 @@ public static partial class PPBURLLoader {
    * <code>URLResponseInfo</code> if successful, 0 if the loader is not a valid
    * resource or if Open() has not been called.
    */
-  public static PP_Resource GetResponseInfo ( PP_Resource loader)
+  public static PPResource GetResponseInfo ( PPResource loader)
   {
   	return _GetResponseInfo (loader);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_ReadResponseBody")]
-  extern static int _ReadResponseBody ( PP_Resource loader,
+  extern static int _ReadResponseBody ( PPResource loader,
                                        IntPtr buffer,
                                         int bytes_to_read,
-                                        PP_CompletionCallback callback);
+                                        PPCompletionCallback callback);
 
   /**
    * ReadResponseBody() is used to read the response body. The size of the
@@ -244,10 +244,10 @@ public static partial class PPBURLLoader {
    * @return An int32_t containing the number of bytes read or an error code
    * from <code>pp_errors.h</code>.
    */
-  public static int ReadResponseBody ( PP_Resource loader,
+  public static int ReadResponseBody ( PPResource loader,
                                       byte[] buffer,
                                        int bytes_to_read,
-                                       PP_CompletionCallback callback)
+                                       PPCompletionCallback callback)
   {
   	unsafe
   	{
@@ -263,8 +263,8 @@ public static partial class PPBURLLoader {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLLoader_FinishStreamingToFile")]
-  extern static int _FinishStreamingToFile ( PP_Resource loader,
-                                             PP_CompletionCallback callback);
+  extern static int _FinishStreamingToFile ( PPResource loader,
+                                             PPCompletionCallback callback);
 
   /**
    * FinishStreamingToFile() is used to wait for the response body to be
@@ -283,15 +283,15 @@ public static partial class PPBURLLoader {
    * @return An int32_t containing the number of bytes read or an error code
    * from <code>pp_errors.h</code>.
    */
-  public static int FinishStreamingToFile ( PP_Resource loader,
-                                            PP_CompletionCallback callback)
+  public static int FinishStreamingToFile ( PPResource loader,
+                                            PPCompletionCallback callback)
   {
   	return _FinishStreamingToFile (loader, callback);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_Close")]
-  extern static void _Close ( PP_Resource loader);
+  extern static void _Close ( PPResource loader);
 
   /**
    * Close is a pointer to a function used to cancel any pending IO and close
@@ -306,7 +306,7 @@ public static partial class PPBURLLoader {
    * @param[in] loader A <code>PP_Resource</code> corresponding to a
    * <code>URLLoader</code>.
    */
-  public static void Close ( PP_Resource loader)
+  public static void Close ( PPResource loader)
   {
   	 _Close (loader);
   }

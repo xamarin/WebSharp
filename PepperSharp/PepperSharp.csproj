@@ -60,7 +60,7 @@
     <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ppb_var_extension.cs" />
-    <Compile Include="src\PPInstance.cs" />
+    <Compile Include="src\Instance.cs" />
     <Compile Include="binding\ppp_input_event.cs" />
     <Compile Include="binding\ppp_message_handler.cs" />
     <Compile Include="binding\ppp_messaging.cs" />
@@ -83,7 +83,7 @@
     <Compile Include="src\PPPoint.cs" />
     <Compile Include="src\PPRect.cs" />
     <Compile Include="src\PPSize.cs" />
-    <Compile Include="src\PPVar.cs" />
+    <Compile Include="src\Var.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

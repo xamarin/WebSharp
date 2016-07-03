@@ -4,14 +4,14 @@ using PepperSharp;
 
 namespace Graphics_2D
 {
-    public class Graphics_2D : PPInstance
+    public class Graphics_2D : Instance
     {
-        PP_Instance instance = new PP_Instance();
+        PPInstance instance = new PPInstance();
 
-        PP_Resource context;
-        PP_Resource flushContext;
+        PPResource context;
+        PPResource flushContext;
         PPSize size;
-        PP_Point mouse;
+        PPPoint mouse;
         bool mouseDown;
         byte[] buffer;
         uint[] palette = new uint[256];
@@ -25,8 +25,8 @@ namespace Graphics_2D
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            instance.pp_instance = Handle.ToInt32();
-            PPBConsole.Log(instance, PPLogLevel.Log, new PPVar("Hello from PepperSharp using C#").AsPP_Var());
+            instance.ppinstance = Handle.ToInt32();
+            PPBConsole.Log(instance, PPLogLevel.Log, new Var("Hello from PepperSharp using C#"));
             PPBInputEvent.RequestInputEvents(instance, (int)PPInputEventClass.Mouse);
             int seed = 1;
             random = new Random(seed);
@@ -35,9 +35,9 @@ namespace Graphics_2D
             return true;
         }
 
-        public override void DidChangeView(PP_Resource view)
+        public override void DidChangeView(PPResource view)
         {
-            var viewRect = new PP_Rect();
+            var viewRect = new PPRect();
             var result = PPBView.GetRect(view, out viewRect);
 
             deviceScale = PPBView.GetDeviceScale(view);
@@ -51,7 +51,7 @@ namespace Graphics_2D
             // flight. This may have happened if the context was not created
             // successfully, or if this is the first call to DidChangeView (when the
             // module first starts). In either case, start the main loop.
-            if (flushContext.pp_resource == 0)
+            if (flushContext.ppresource == 0)
                 MainLoop(0);
         }
 
@@ -60,7 +60,7 @@ namespace Graphics_2D
             //Console.WriteLine($"Graphics_2D DidChangeFocus: {hasFocus}");
         }
 
-        public override bool HandleInputEvent(PP_Resource inputEvent)
+        public override bool HandleInputEvent(PPResource inputEvent)
         {
             if (buffer == null)
                 return true;
@@ -102,7 +102,7 @@ namespace Graphics_2D
             // HiDPI displays.
             PPBGraphics2D.SetScale(context, (1.0f / deviceScale));
 
-            var osize = new PP_Size();
+            var osize = new PPSize();
             var oopaque = new PPBool();
 
             PPBGraphics2D.Describe(context, out osize, out oopaque);
@@ -251,7 +251,7 @@ namespace Graphics_2D
             bool kDontInitToZero = false;
             var dontInitToZero = kDontInitToZero ? PPBool.True : PPBool.False;
             var image_data = PPBImageData.Create(instance, format, size, dontInitToZero);
-            var desc = new PP_ImageDataDesc();
+            var desc = new PPImageDataDesc();
 
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
@@ -300,12 +300,12 @@ namespace Graphics_2D
 
         void MainLoop(int dt)
         {
-            if (context.pp_resource == 0)
+            if (context.ppresource == 0)
             {
                 // The current Graphics2D context is null, so updating and rendering is
                 // pointless. Set flush_context_ to null as well, so if we get another
                 // DidChangeView call, the main loop is started again.
-                flushContext.pp_resource = context.pp_resource;
+                flushContext.ppresource = context.ppresource;
                 return;
             }
 
@@ -314,16 +314,16 @@ namespace Graphics_2D
             // Store a reference to the context that is being flushed; this ensures
             // the callback is called, even if context_ changes before the flush
             // completes.
-            flushContext.pp_resource = context.pp_resource;
+            flushContext.ppresource = context.ppresource;
 
-            PP_CompletionCallback_Func callback = 
+            PPCompletionCallbackFunc callback = 
                 (IntPtr callbackUserData, int result) =>
                    {
                         MainLoop(result);
                     };
 
 
-            var completionCallback = new PP_CompletionCallback();
+            var completionCallback = new PPCompletionCallback();
             completionCallback.func = callback;
             completionCallback.flags = (int)PPCompletionCallbackFlag.None;
 

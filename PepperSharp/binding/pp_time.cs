@@ -24,8 +24,8 @@ namespace PepperSharp {
  * (00:00:00 UTC, January 1, 1970).
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_Time {
-	public double pp_time;
+public partial struct PPTime {
+	public double pptime;
 }
 
 /**
@@ -39,8 +39,8 @@ public struct PP_Time {
  * epoch, so the most you can do is compare two values.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_TimeTicks {
-	public double pp_timeticks;
+public partial struct PPTimeTicks {
+	public double pptimeticks;
 }
 
 /**
@@ -48,8 +48,8 @@ public struct PP_TimeTicks {
  * measured in seconds.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_TimeDelta {
-	public double pp_timedelta;
+public partial struct PPTimeDelta {
+	public double pptimedelta;
 }
 /**
  * @}

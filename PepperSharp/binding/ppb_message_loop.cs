@@ -137,7 +137,7 @@ namespace PepperSharp {
  */
 public static partial class PPBMessageLoop {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_Create")]
-  extern static PP_Resource _Create ( PP_Instance instance);
+  extern static PPResource _Create ( PPInstance instance);
 
   /**
    * Creates a message loop resource.
@@ -146,33 +146,33 @@ public static partial class PPBMessageLoop {
    * issuing any other PPAPI calls on it, you must associate it with a message
    * loop by calling AttachToCurrentThread.
    */
-  public static PP_Resource Create ( PP_Instance instance)
+  public static PPResource Create ( PPInstance instance)
   {
   	return _Create (instance);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_GetForMainThread")]
-  extern static PP_Resource _GetForMainThread ();
+  extern static PPResource _GetForMainThread ();
 
   /**
    * Returns a resource identifying the message loop for the main thread. The
    * main thread always has a message loop created by the system.
    */
-  public static PP_Resource GetForMainThread ()
+  public static PPResource GetForMainThread ()
   {
   	return _GetForMainThread ();
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_GetCurrent")]
-  extern static PP_Resource _GetCurrent ();
+  extern static PPResource _GetCurrent ();
 
   /**
    * Returns a reference to the PPB_MessageLoop object attached to the current
    * thread. If there is no attached message loop, the return value will be 0.
    */
-  public static PP_Resource GetCurrent ()
+  public static PPResource GetCurrent ()
   {
   	return _GetCurrent ();
   }
@@ -180,7 +180,7 @@ public static partial class PPBMessageLoop {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_MessageLoop_AttachToCurrentThread")]
-  extern static int _AttachToCurrentThread ( PP_Resource message_loop);
+  extern static int _AttachToCurrentThread ( PPResource message_loop);
 
   /**
    * Sets the given message loop resource as being the associated message loop
@@ -207,14 +207,14 @@ public static partial class PPBMessageLoop {
    *     loop attached to it. See the interface level discussion about these
    *     special threads, which include realtime audio threads.
    */
-  public static int AttachToCurrentThread ( PP_Resource message_loop)
+  public static int AttachToCurrentThread ( PPResource message_loop)
   {
   	return _AttachToCurrentThread (message_loop);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_Run")]
-  extern static int _Run ( PP_Resource message_loop);
+  extern static int _Run ( PPResource message_loop);
 
   /**
    * Runs the thread message loop. Running the message loop is required for you
@@ -238,15 +238,15 @@ public static partial class PPBMessageLoop {
    *     fashion (Run is already on the stack). This will occur if you attempt
    *     to call run on the main thread's message loop (see above).
    */
-  public static int Run ( PP_Resource message_loop)
+  public static int Run ( PPResource message_loop)
   {
   	return _Run (message_loop);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_PostWork")]
-  extern static int _PostWork ( PP_Resource message_loop,
-                                PP_CompletionCallback callback,
+  extern static int _PostWork ( PPResource message_loop,
+                                PPCompletionCallback callback,
                                 long delay_ms);
 
   /**
@@ -291,8 +291,8 @@ public static partial class PPBMessageLoop {
    *     is null (this will be the case if you pass PP_BlockUntilComplete()).
    *   - PP_ERROR_FAILED: The message loop has been destroyed.
    */
-  public static int PostWork ( PP_Resource message_loop,
-                               PP_CompletionCallback callback,
+  public static int PostWork ( PPResource message_loop,
+                               PPCompletionCallback callback,
                                long delay_ms)
   {
   	return _PostWork (message_loop, callback, delay_ms);
@@ -300,7 +300,7 @@ public static partial class PPBMessageLoop {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_MessageLoop_PostQuit")]
-  extern static int _PostQuit ( PP_Resource message_loop,
+  extern static int _PostQuit ( PPResource message_loop,
                                 PPBool should_destroy);
 
   /**
@@ -325,8 +325,7 @@ public static partial class PPBMessageLoop {
    *     The main thread's message loop is managed by the system and can't be
    *     quit.
    */
-  public static int PostQuit ( PP_Resource message_loop,
-                               PPBool should_destroy)
+  public static int PostQuit ( PPResource message_loop,  PPBool should_destroy)
   {
   	return _PostQuit (message_loop, should_destroy);
   }

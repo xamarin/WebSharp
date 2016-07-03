@@ -3,46 +3,33 @@ using System.Runtime.InteropServices;
 
 namespace PepperSharp
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct PPPoint
+    public partial struct PPPoint
     {
-
-        internal PP_Point point;
 
         public static readonly PPPoint Zero = new PPPoint(0, 0);
 
         public PPPoint (int x, int y)
         {
-            point = new PP_Point();
-            point.x = x;
-            point.y = y;
+            this.x = x;
+            this.y = y;
         }
 
         public PPPoint(PPPoint other)
         {
-            point = new PP_Point();
-            point.x = other.X;
-            point.y = other.Y;
-        }
-
-        public PPPoint(PP_Point other)
-        {
-            point = new PP_Point();
-            point.x = other.x;
-            point.y = other.y;
-
+            x = other.X;
+            y = other.Y;
         }
 
         public int X
         {
-            get { return point.x; }
-            set { point.x = value; }
+            get { return x; }
+            set { x = value; }
         }
 
         public int Y
         {
-            get { return point.y; }
-            set { point.y = value; }
+            get { return y; }
+            set { y = value; }
         }
 
         public void Swap (ref PPPoint other)
@@ -60,14 +47,5 @@ namespace PepperSharp
             return String.Format("PPPoint : (x={0}, y={1})", X, Y);
         }
 
-        public static implicit operator PP_Point (PPPoint point)
-        {
-            return point.point;
-        }
-
-        public static implicit operator PPPoint (PP_Point point)
-        {
-            return new PPPoint(point);
-        }
     }
 }

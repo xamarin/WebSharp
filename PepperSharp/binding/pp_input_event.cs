@@ -36,7 +36,7 @@ namespace PepperSharp {
  * "lost focus" as the equivalent of "all keys up."
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_InputEvent_Key {
+public partial struct PPInputEventKey {
   /** This value is a bit field combination of the EVENT_MODIFIER flags. */
   public uint modifier;
   /**
@@ -68,7 +68,7 @@ public struct PP_InputEvent_Key {
  * isn't lost"), 'R' character event, 'R' key up.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_InputEvent_Character {
+public partial struct PPInputEventCharacter {
   /** A combination of the <code>PP_InputEvent_Modifier</code> flags. */
   public uint modifier;
   /**
@@ -85,7 +85,7 @@ public struct PP_InputEvent_Character {
  * except mouse wheel events.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_InputEvent_Mouse {
+public partial struct PPInputEventMouse {
   /**
    * This value is a bit field combination of the
    * <code>PP_InputEvent_Modifier</code> flags.
@@ -126,7 +126,7 @@ public struct PP_InputEvent_Mouse {
  * events.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_InputEvent_Wheel {
+public partial struct PPInputEventWheel {
   /**
    * This value represents a combination of the <code>EVENT_MODIFIER</code>
    * flags.

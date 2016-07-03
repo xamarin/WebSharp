@@ -22,7 +22,7 @@ namespace PepperSharp {
  * The <code>PP_Size</code> struct contains the size of a 2D rectangle.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_Size {
+public partial struct PPSize {
   /** This value represents the width of the rectangle. */
   public int width;
   /** This value represents the height of the rectangle. */
@@ -33,7 +33,7 @@ public struct PP_Size {
  * The <code>PP_FloatSize</code> struct contains the size of a 2D rectangle.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_FloatSize {
+public partial struct PPFloatSize {
   /** This value represents the width of the rectangle. */
   public float width;
   /** This value represents the height of the rectangle. */

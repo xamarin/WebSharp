@@ -164,7 +164,7 @@ public enum PPURLRequestProperty {
  */
 public static partial class PPBURLRequestInfo {
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLRequestInfo_Create")]
-  extern static PP_Resource _Create ( PP_Instance instance);
+  extern static PPResource _Create ( PPInstance instance);
 
   /**
    * Create() creates a new <code>URLRequestInfo</code> object.
@@ -175,7 +175,7 @@ public static partial class PPBURLRequestInfo {
    * @return A <code>PP_Resource</code> identifying the
    * <code>URLRequestInfo</code> if successful, 0 if the instance is invalid.
    */
-  public static PP_Resource Create ( PP_Instance instance)
+  public static PPResource Create ( PPInstance instance)
   {
   	return _Create (instance);
   }
@@ -183,7 +183,7 @@ public static partial class PPBURLRequestInfo {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLRequestInfo_IsURLRequestInfo")]
-  extern static PPBool _IsURLRequestInfo ( PP_Resource resource);
+  extern static PPBool _IsURLRequestInfo ( PPResource resource);
 
   /**
    * IsURLRequestInfo() determines if a resource is a
@@ -196,16 +196,16 @@ public static partial class PPBURLRequestInfo {
    * <code>URLRequestInfo</code>, <code>PP_FALSE</code> if the resource is
    * invalid or some type other than <code>URLRequestInfo</code>.
    */
-  public static PPBool IsURLRequestInfo ( PP_Resource resource)
+  public static PPBool IsURLRequestInfo ( PPResource resource)
   {
   	return _IsURLRequestInfo (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLRequestInfo_SetProperty")]
-  extern static PPBool _SetProperty ( PP_Resource request,
+  extern static PPBool _SetProperty ( PPResource request,
                                       PPURLRequestProperty property,
-                                      PP_Var value);
+                                      PPVar value);
 
   /**
    * SetProperty() sets a request property. The value of the property must be
@@ -220,9 +220,9 @@ public static partial class PPBURLRequestInfo {
    * @return <code>PP_TRUE</code> if successful, <code>PP_FALSE</code> if any
    * of the parameters are invalid.
    */
-  public static PPBool SetProperty ( PP_Resource request,
+  public static PPBool SetProperty ( PPResource request,
                                      PPURLRequestProperty property,
-                                     PP_Var value)
+                                     PPVar value)
   {
   	return _SetProperty (request, property, value);
   }
@@ -230,7 +230,7 @@ public static partial class PPBURLRequestInfo {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLRequestInfo_AppendDataToBody")]
-  extern static PPBool _AppendDataToBody ( PP_Resource request,
+  extern static PPBool _AppendDataToBody ( PPResource request,
                                            IntPtr data,
                                            uint len);
 
@@ -248,7 +248,7 @@ public static partial class PPBURLRequestInfo {
    *
    *
    */
-  public static PPBool AppendDataToBody ( PP_Resource request,
+  public static PPBool AppendDataToBody ( PPResource request,
                                           IntPtr data,
                                           uint len)
   {
@@ -259,8 +259,8 @@ public static partial class PPBURLRequestInfo {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLRequestInfo_AppendFileToBody")]
   extern static PPBool _AppendFileToBody (
-      PP_Resource request,
-      PP_Resource file_ref,
+      PPResource request,
+      PPResource file_ref,
       long start_offset,
       long number_of_bytes,
       double expected_last_modified_time);
@@ -288,8 +288,8 @@ public static partial class PPBURLRequestInfo {
    * @return <code>PP_TRUE</code> if successful, <code>PP_FALSE</code> if any
    * of the parameters are invalid.
    */
-  public static PPBool AppendFileToBody ( PP_Resource request,
-                                          PP_Resource file_ref,
+  public static PPBool AppendFileToBody ( PPResource request,
+                                          PPResource file_ref,
                                           long start_offset,
                                           long number_of_bytes,
                                           double expected_last_modified_time)

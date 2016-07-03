@@ -3,38 +3,38 @@
 
 namespace PepperSharp
 {
-    public partial class PPInstance : PPResource
+    public partial class Instance : Resource
     {
-        protected PPInstance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
-        protected PPInstance(IntPtr handle) : base(handle) { }
+        protected Instance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
+        protected Instance(IntPtr handle) : base(handle) { }
 
         public virtual bool Init(int argc, string[] argn, string[] argv)
         {
             return true;
         }
 
-        public virtual void DidChangeView(PP_Resource view)
+        public virtual void DidChangeView(PPResource view)
         { }
 
         public virtual void DidChangeFocus(bool hasFocus)
         { }
 
-        public virtual bool HandleInputEvent(PP_Resource inputEvent)
+        public virtual bool HandleInputEvent(PPResource inputEvent)
         {
             return false;
         }
 
-        public virtual bool HandleDocumentLoad(PP_Resource urlLoader)
+        public virtual bool HandleDocumentLoad(PPResource urlLoader)
         {
             return false;
         }
 
-        public virtual void HandleMessage (PP_Var message)
+        public virtual void HandleMessage (PPVar message)
         { }
 
-        public bool BindGraphics(PP_Resource graphics2d)
+        public bool BindGraphics(PPResource graphics2d)
         {
-            if (PPBInstance.BindGraphics(Instance, graphics2d) == PPBool.True)
+            if (PPBInstance.BindGraphics(this, graphics2d) == PPBool.True)
                 return true;
             else
                 return false;
@@ -50,32 +50,37 @@ namespace PepperSharp
         /// <param name="message"></param>
         public void PostMessage(object message)
         {
-            PPBMessaging.PostMessage(Instance, new PPVar(message).AsPP_Var());
+            PPBMessaging.PostMessage(this, new Var(message));
         }
 
-        PP_Instance instance = new PP_Instance();
-        public PP_Instance Instance
+        PPInstance instance = new PPInstance();
+        public PPInstance PPInstance
         {
             get
             {
-                if (instance.pp_instance == 0)
+                if (instance.ppinstance == 0)
                 {
-                    instance.pp_instance = this.Handle.ToInt32();
+                    instance.ppinstance = this.Handle.ToInt32();
                 }
                 return instance;
             }
         }
 
+        public static implicit operator PPInstance(Instance instance)
+        {
+            return instance.PPInstance;
+        }
+
         public void LogToConsole(PPLogLevel level, object value)
         {
-            PPBConsole.Log(Instance, level, new PPVar(value));
+            PPBConsole.Log(this, level, new Var(value));
         }
 
         public void LogToConsoleWithSource(PPLogLevel level,
                                           string source,
                                           object value)
         {
-            PPBConsole.LogWithSource(Instance, level, new PPVar(source), new PPVar(value));
+            PPBConsole.LogWithSource(this, level, new Var(source), new Var(value));
         }
 
     }

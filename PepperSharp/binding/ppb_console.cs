@@ -35,9 +35,9 @@ public enum PPLogLevel {
  */
 public static partial class PPBConsole {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Console_Log")]
-  extern static void _Log ( PP_Instance instance,
+  extern static void _Log ( PPInstance instance,
                             PPLogLevel level,
-                            PP_Var value);
+                            PPVar value);
 
   /**
    * Logs the given message to the JavaScript console associated with the
@@ -45,19 +45,19 @@ public static partial class PPBConsole {
    * issuing the log message will be automatically prepended to the message.
    * The value may be any type of Var.
    */
-  public static void Log ( PP_Instance instance,
+  public static void Log ( PPInstance instance,
                            PPLogLevel level,
-                           PP_Var value)
+                           PPVar value)
   {
   	 _Log (instance, level, value);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Console_LogWithSource")]
-  extern static void _LogWithSource ( PP_Instance instance,
+  extern static void _LogWithSource ( PPInstance instance,
                                       PPLogLevel level,
-                                      PP_Var source,
-                                      PP_Var value);
+                                      PPVar source,
+                                      PPVar value);
 
   /**
    * Logs a message to the console with the given source information rather
@@ -69,10 +69,10 @@ public static partial class PPBConsole {
    * interpreter, you would want log messages to contain the source .py file
    * doing the log statement rather than have "python" show up in the console.
    */
-  public static void LogWithSource ( PP_Instance instance,
+  public static void LogWithSource ( PPInstance instance,
                                      PPLogLevel level,
-                                     PP_Var source,
-                                     PP_Var value)
+                                     PPVar source,
+                                     PPVar value)
   {
   	 _LogWithSource (instance, level, source, value);
   }

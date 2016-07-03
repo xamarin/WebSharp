@@ -304,11 +304,11 @@ public:
 			return false;
 
 		// Load up our methods to be called so we do not have look them up each time.
-		did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(PepperSharp.PP_Resource)");
+		did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(PepperSharp.PPResource)");
 		did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeFocus(bool)");
-		handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(PepperSharp.PP_Resource)");
-		handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(PepperSharp.PP_Resource)");
-		handle_message = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleMessage(PepperSharp.PP_Var)");
+		handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(PepperSharp.PPResource)");
+		handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(PepperSharp.PPResource)");
+		handle_message = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleMessage(PepperSharp.PPVar)");
 
 		MonoObject *result = NULL;
 

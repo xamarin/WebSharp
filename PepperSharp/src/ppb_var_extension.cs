@@ -18,7 +18,7 @@ namespace PepperSharp {
      */
 
     [StructLayout(LayoutKind.Explicit, Pack = 8)]
-    public struct PP_VarValue
+    public struct PPVarValue
     {
         /**
          * If <code>type</code> is <code>PP_VARTYPE_BOOL</code>,
@@ -61,7 +61,7 @@ namespace PepperSharp {
     public static partial class PPBVar
     {
         [DllImport("PepperPlugin", EntryPoint = "PPB_Var_VarToUtf8")]
-        extern static IntPtr _VarToUtf8(PP_Var var, out uint len);
+        extern static IntPtr _VarToUtf8(PPVar var, out uint len);
 
         /**
          * VarToUtf8() converts a string-type var to a char* encoded in UTF-8. This
@@ -81,7 +81,7 @@ namespace PepperSharp {
          *
          * @return A char* encoded in UTF-8.
          */
-        public static string VarToUtf8(PP_Var var, out uint len)
+        public static string VarToUtf8(PPVar var, out uint len)
         {
             return Marshal.PtrToStringAnsi(_VarToUtf8(var, out len));
         }

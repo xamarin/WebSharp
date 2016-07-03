@@ -35,8 +35,8 @@ namespace PepperSharp {
  * the internal reference count reaches 0.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_Resource {
-	public int pp_resource;
+public partial struct PPResource {
+	public int ppresource;
 }
 /**
  * @}

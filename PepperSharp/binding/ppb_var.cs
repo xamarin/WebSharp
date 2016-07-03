@@ -24,7 +24,7 @@ namespace PepperSharp {
  */
 public static partial class PPBVar {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Var_AddRef")]
-  extern static void _AddRef ( PP_Var var);
+  extern static void _AddRef ( PPVar var);
 
   /**
    * AddRef() adds a reference to the given var. If this is not a refcounted
@@ -33,14 +33,14 @@ public static partial class PPBVar {
    *
    * @param[in] var A <code>PP_Var</code> that will have a reference added.
    */
-  public static void AddRef ( PP_Var var)
+  public static void AddRef ( PPVar var)
   {
   	 _AddRef (var);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Var_Release")]
-  extern static void _Release ( PP_Var var);
+  extern static void _Release ( PPVar var);
 
   /**
    * Release() removes a reference to given var, deleting it if the internal
@@ -54,14 +54,14 @@ public static partial class PPBVar {
    *
    * @param[in] var A <code>PP_Var</code> that will have a reference removed.
    */
-  public static void Release ( PP_Var var)
+  public static void Release ( PPVar var)
   {
   	 _Release (var);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Var_VarFromUtf8")]
-  extern static PP_Var _VarFromUtf8 ( string data,  uint len);
+  extern static PPVar _VarFromUtf8 ( string data,  uint len);
 
   /**
    * VarFromUtf8() creates a string var from a string. The string must be
@@ -87,7 +87,7 @@ public static partial class PPBVar {
    * @return A <code>PP_Var</code> structure containing a reference counted
    * string object.
    */
-  public static PP_Var VarFromUtf8 ( string data,  uint len)
+  public static PPVar VarFromUtf8 ( string data,  uint len)
   {
   	return _VarFromUtf8 (data, len);
   }
@@ -118,7 +118,7 @@ public static partial class PPBVar {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Var_VarToResource")]
-  extern static PP_Resource _VarToResource ( PP_Var var);
+  extern static PPResource _VarToResource ( PPVar var);
 
   /**
    * Converts a resource-type var to a <code>PP_Resource</code>.
@@ -129,14 +129,14 @@ public static partial class PPBVar {
    * is not a resource. The reference count of the resource is incremented on
    * behalf of the caller.
    */
-  public static PP_Resource VarToResource ( PP_Var var)
+  public static PPResource VarToResource ( PPVar var)
   {
   	return _VarToResource (var);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Var_VarFromResource")]
-  extern static PP_Var _VarFromResource ( PP_Resource resource);
+  extern static PPVar _VarFromResource ( PPResource resource);
 
   /**
    * Creates a new <code>PP_Var</code> from a given resource. Implicitly adds a
@@ -149,7 +149,7 @@ public static partial class PPBVar {
    * <code>PP_VARTYPE_RESOURCE</code>. The reference count of the var is set to
    * 1 on behalf of the caller.
    */
-  public static PP_Var VarFromResource ( PP_Resource resource)
+  public static PPVar VarFromResource ( PPResource resource)
   {
   	return _VarFromResource (resource);
   }

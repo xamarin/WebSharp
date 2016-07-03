@@ -32,9 +32,9 @@ namespace PepperSharp {
  */
 public static partial class PPPMessageHandler {
   [DllImport("PepperPlugin", EntryPoint = "PPP_MessageHandler_HandleMessage")]
-  extern static void _HandleMessage ( PP_Instance instance,
+  extern static void _HandleMessage ( PPInstance instance,
                                      ref IntPtr user_data,
-                                      PP_Var message);
+                                      PPVar message);
 
   /**
    * Invoked as a result of JavaScript invoking postMessage() on the plugin's
@@ -47,9 +47,9 @@ public static partial class PPPMessageHandler {
    * @param[in] message A copy of the parameter that JavaScript provided to
    * postMessage().
    */
-  public static void HandleMessage ( PP_Instance instance,
+  public static void HandleMessage ( PPInstance instance,
                                     ref IntPtr user_data,
-                                     PP_Var message)
+                                     PPVar message)
   {
   	 _HandleMessage (instance, ref user_data, message);
   }
@@ -57,10 +57,10 @@ public static partial class PPPMessageHandler {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPP_MessageHandler_HandleBlockingMessage")]
-  extern static void _HandleBlockingMessage ( PP_Instance instance,
+  extern static void _HandleBlockingMessage ( PPInstance instance,
                                              ref IntPtr user_data,
-                                              PP_Var message,
-                                             out PP_Var response);
+                                              PPVar message,
+                                             out PPVar response);
 
   /**
    * Invoked as a result of JavaScript invoking postMessageAndAwaitResponse()
@@ -81,17 +81,17 @@ public static partial class PPPMessageHandler {
    * returned as the result of postMessageAndAwaitResponse() to the invoking
    *
    */
-  public static void HandleBlockingMessage ( PP_Instance instance,
+  public static void HandleBlockingMessage ( PPInstance instance,
                                             ref IntPtr user_data,
-                                             PP_Var message,
-                                            out PP_Var response)
+                                             PPVar message,
+                                            out PPVar response)
   {
   	 _HandleBlockingMessage (instance, ref user_data, message, out response);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPP_MessageHandler_Destroy")]
-  extern static void _Destroy ( PP_Instance instance, ref IntPtr user_data);
+  extern static void _Destroy ( PPInstance instance, ref IntPtr user_data);
 
   /**
    * Invoked when the handler object is no longer needed. After this, no more
@@ -103,7 +103,7 @@ public static partial class PPPMessageHandler {
    * @param[in] user_data is the same pointer which was provided by a call to
    * RegisterMessageHandler.
    */
-  public static void Destroy ( PP_Instance instance, ref IntPtr user_data)
+  public static void Destroy ( PPInstance instance, ref IntPtr user_data)
   {
   	 _Destroy (instance, ref user_data);
   }

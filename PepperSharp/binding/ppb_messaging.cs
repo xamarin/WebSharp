@@ -28,7 +28,7 @@ namespace PepperSharp {
  */
 public static partial class PPBMessaging {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Messaging_PostMessage")]
-  extern static void _PostMessage ( PP_Instance instance,  PP_Var message);
+  extern static void _PostMessage ( PPInstance instance,  PPVar message);
 
   /**
    * PostMessage() asynchronously invokes any listeners for message events on
@@ -90,7 +90,7 @@ public static partial class PPBMessaging {
    *
    * The browser will pop-up an alert saying "Hello world!"
    */
-  public static void PostMessage ( PP_Instance instance,  PP_Var message)
+  public static void PostMessage ( PPInstance instance,  PPVar message)
   {
   	 _PostMessage (instance, message);
   }
@@ -99,10 +99,10 @@ public static partial class PPBMessaging {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_Messaging_RegisterMessageHandler")]
   extern static int _RegisterMessageHandler (
-      PP_Instance instance,
+      PPInstance instance,
       ref IntPtr user_data,
       IntPtr handler,
-      PP_Resource message_loop);
+      PPResource message_loop);
 
   /**
    * Registers a handler for receiving messages from JavaScript. If a handler
@@ -140,10 +140,10 @@ public static partial class PPBMessaging {
    * @return PP_OK on success, or an error from pp_errors.h.
    */
   public static int RegisterMessageHandler (
-      PP_Instance instance,
+      PPInstance instance,
       ref IntPtr user_data,
       IntPtr handler,
-      PP_Resource message_loop)
+      PPResource message_loop)
   {
   	return _RegisterMessageHandler (instance,
                                    ref user_data,
@@ -154,7 +154,7 @@ public static partial class PPBMessaging {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_Messaging_UnregisterMessageHandler")]
-  extern static void _UnregisterMessageHandler ( PP_Instance instance);
+  extern static void _UnregisterMessageHandler ( PPInstance instance);
 
   /**
    * Unregisters the current message handler for <code>instance</code> if one
@@ -171,7 +171,7 @@ public static partial class PPBMessaging {
    * @param[in] instance A <code>PP_Instance</code> identifying one instance
    * of a module.
    */
-  public static void UnregisterMessageHandler ( PP_Instance instance)
+  public static void UnregisterMessageHandler ( PPInstance instance)
   {
   	 _UnregisterMessageHandler (instance);
   }

@@ -25,9 +25,9 @@ namespace PepperSharp {
  */
 public static partial class PPBGraphics2D {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Create")]
-  extern static PP_Resource _Create ( PP_Instance instance,
-                                      PP_Size size,
-                                      PPBool is_always_opaque);
+  extern static PPResource _Create ( PPInstance instance,
+                                     PPSize size,
+                                     PPBool is_always_opaque);
 
   /**
    * Create() creates a 2D graphics context. The returned graphics context will
@@ -51,16 +51,16 @@ public static partial class PPBGraphics2D {
    * @return A <code>PP_Resource</code> containing the 2D graphics context if
    * successful or 0 if unsuccessful.
    */
-  public static PP_Resource Create ( PP_Instance instance,
-                                     PP_Size size,
-                                     PPBool is_always_opaque)
+  public static PPResource Create ( PPInstance instance,
+                                    PPSize size,
+                                    PPBool is_always_opaque)
   {
   	return _Create (instance, size, is_always_opaque);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_IsGraphics2D")]
-  extern static PPBool _IsGraphics2D ( PP_Resource resource);
+  extern static PPBool _IsGraphics2D ( PPResource resource);
 
   /**
    * IsGraphics2D() determines if the given resource is a valid
@@ -72,15 +72,15 @@ public static partial class PPBGraphics2D {
    * <code>PP_FALSE</code> if it is an invalid resource or is a resource of
    * another type.
    */
-  public static PPBool IsGraphics2D ( PP_Resource resource)
+  public static PPBool IsGraphics2D ( PPResource resource)
   {
   	return _IsGraphics2D (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Describe")]
-  extern static PPBool _Describe ( PP_Resource graphics_2d,
-                                  out PP_Size size,
+  extern static PPBool _Describe ( PPResource graphics_2d,
+                                  out PPSize size,
                                   out PPBool is_always_opaque);
 
   /**
@@ -96,8 +96,8 @@ public static partial class PPBGraphics2D {
    * the resource is invalid. The output parameters will be set to 0 on a
    * <code>PP_FALSE</code>.
    */
-  public static PPBool Describe ( PP_Resource graphics_2d,
-                                 out PP_Size size,
+  public static PPBool Describe ( PPResource graphics_2d,
+                                 out PPSize size,
                                  out PPBool is_always_opaque)
   {
   	return _Describe (graphics_2d, out size, out is_always_opaque);
@@ -105,10 +105,10 @@ public static partial class PPBGraphics2D {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_PaintImageData")]
-  extern static void _PaintImageData ( PP_Resource graphics_2d,
-                                       PP_Resource image_data,
-                                       PP_Point top_left,
-                                       PP_Rect src_rect);
+  extern static void _PaintImageData ( PPResource graphics_2d,
+                                       PPResource image_data,
+                                       PPPoint top_left,
+                                       PPRect src_rect);
 
   /**
    * PaintImageData() enqueues a paint of the given image into the context.
@@ -149,19 +149,19 @@ public static partial class PPBGraphics2D {
    * @param[in] src_rect The rectangular area where the <code>ImageData</code>
    * will be painted.
    */
-  public static void PaintImageData ( PP_Resource graphics_2d,
-                                      PP_Resource image_data,
-                                      PP_Point top_left,
-                                      PP_Rect src_rect)
+  public static void PaintImageData ( PPResource graphics_2d,
+                                      PPResource image_data,
+                                      PPPoint top_left,
+                                      PPRect src_rect)
   {
   	 _PaintImageData (graphics_2d, image_data, top_left, src_rect);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Scroll")]
-  extern static void _Scroll ( PP_Resource graphics_2d,
-                               PP_Rect clip_rect,
-                               PP_Point amount);
+  extern static void _Scroll ( PPResource graphics_2d,
+                               PPRect clip_rect,
+                               PPPoint amount);
 
   /**
    * Scroll() enqueues a scroll of the context's backing store. This
@@ -181,17 +181,17 @@ public static partial class PPBGraphics2D {
    * @param[in] amount The amount the area in the clipping rectangle will
    * shifted.
    */
-  public static void Scroll ( PP_Resource graphics_2d,
-                              PP_Rect clip_rect,
-                              PP_Point amount)
+  public static void Scroll ( PPResource graphics_2d,
+                              PPRect clip_rect,
+                              PPPoint amount)
   {
   	 _Scroll (graphics_2d, clip_rect, amount);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_ReplaceContents")]
-  extern static void _ReplaceContents ( PP_Resource graphics_2d,
-                                        PP_Resource image_data);
+  extern static void _ReplaceContents ( PPResource graphics_2d,
+                                        PPResource image_data);
 
   /**
    * ReplaceContents() provides a slightly more efficient way to paint the
@@ -225,16 +225,16 @@ public static partial class PPBGraphics2D {
    * @param[in] graphics_2d The 2D Graphics resource.
    * @param[in] image The <code>ImageData</code> to be painted.
    */
-  public static void ReplaceContents ( PP_Resource graphics_2d,
-                                       PP_Resource image_data)
+  public static void ReplaceContents ( PPResource graphics_2d,
+                                       PPResource image_data)
   {
   	 _ReplaceContents (graphics_2d, image_data);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Flush")]
-  extern static int _Flush ( PP_Resource graphics_2d,
-                             PP_CompletionCallback callback);
+  extern static int _Flush ( PPResource graphics_2d,
+                             PPCompletionCallback callback);
 
   /**
    * Flush() flushes any enqueued paint, scroll, and replace commands to the
@@ -296,15 +296,15 @@ public static partial class PPBGraphics2D {
    * not issued its callback yet.  In the failure case, nothing will be updated
    * and no callback will be scheduled.
    */
-  public static int Flush ( PP_Resource graphics_2d,
-                            PP_CompletionCallback callback)
+  public static int Flush ( PPResource graphics_2d,
+                            PPCompletionCallback callback)
   {
   	return _Flush (graphics_2d, callback);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_SetScale")]
-  extern static PPBool _SetScale ( PP_Resource resource,  float scale);
+  extern static PPBool _SetScale ( PPResource resource,  float scale);
 
   /**
    * SetScale() sets the scale factor that will be applied when painting the
@@ -323,14 +323,14 @@ public static partial class PPBGraphics2D {
    * @return Returns <code>PP_TRUE</code> on success or <code>PP_FALSE</code> if
    * the resource is invalid or the scale factor is 0 or less.
    */
-  public static PPBool SetScale ( PP_Resource resource,  float scale)
+  public static PPBool SetScale ( PPResource resource,  float scale)
   {
   	return _SetScale (resource, scale);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_GetScale")]
-  extern static float _GetScale ( PP_Resource resource);
+  extern static float _GetScale ( PPResource resource);
 
   /***
    * GetScale() gets the scale factor that will be applied when painting the
@@ -341,17 +341,17 @@ public static partial class PPBGraphics2D {
    * @return Returns the scale factor for the graphics context. If the resource
    * is not a valid <code>Graphics2D</code> context, this will return 0.0.
    */
-  public static float GetScale ( PP_Resource resource)
+  public static float GetScale ( PPResource resource)
   {
   	return _GetScale (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_SetLayerTransform")]
-  extern static PPBool _SetLayerTransform ( PP_Resource resource,
+  extern static PPBool _SetLayerTransform ( PPResource resource,
                                             float scale,
-                                            PP_Point origin,
-                                            PP_Point translate);
+                                            PPPoint origin,
+                                            PPPoint translate);
 
   /**
    * SetLayerTransform() sets a transformation factor that will be applied for
@@ -368,10 +368,10 @@ public static partial class PPBGraphics2D {
    * @return Returns <code>PP_TRUE</code> on success or <code>PP_FALSE</code>
    * if the resource is invalid or the scale factor is 0 or less.
    */
-  public static PPBool SetLayerTransform ( PP_Resource resource,
+  public static PPBool SetLayerTransform ( PPResource resource,
                                            float scale,
-                                           PP_Point origin,
-                                           PP_Point translate)
+                                           PPPoint origin,
+                                           PPPoint translate)
   {
   	return _SetLayerTransform (resource, scale, origin, translate);
   }

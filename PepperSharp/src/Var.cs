@@ -3,13 +3,13 @@
 namespace PepperSharp
 {
     /// <summary>
-    /// This class provides helper methods around a PP_Var
+    /// This class provides helper methods around a PPVar
     /// </summary>
-    public sealed class PPVar : IDisposable
+    public partial class Var : IDisposable
     {
 
-        internal PP_Var ppvar = new PP_Var();
-        public static readonly PPVar Empty = new PPVar(PPVarType.Null);
+        internal PPVar ppvar = new PPVar();
+        public static readonly PPVar Empty = new Var(PPVarType.Null);
 
         // |is_managed_| indicates if the instance manages |var_|.
         // You need to check if |var_| is refcounted to call Release().
@@ -19,12 +19,12 @@ namespace PepperSharp
 
         #region Constructors
 
-        private PPVar(PPVarType type)
+        private Var(PPVarType type)
         {
             ppvar.type = type;
         }
 
-        public PPVar(object var)
+        public Var(object var)
         {
             if (var is int || var is uint)
             {
@@ -64,7 +64,7 @@ namespace PepperSharp
             }
         }
 
-        public PPVar(PP_Var var)
+        public Var(PPVar var)
         {
             ppvar = var;
             isManaged = true;
@@ -74,7 +74,7 @@ namespace PepperSharp
             }
         }
 
-        public PPVar(PPVar other)
+        public Var(Var other)
         {
             ppvar = other.ppvar;
             isManaged = true;
@@ -111,7 +111,7 @@ namespace PepperSharp
             }
         }
 
-        ~PPVar()
+        ~Var()
         {
             // Simply call Dispose(false).
             Dispose(false);
@@ -122,14 +122,14 @@ namespace PepperSharp
         // Technically you can call AddRef and Release on any Var, but it may involve
         // cross-process calls depending on the plugin. This is an optimization so we
         // only do refcounting on the necessary objects.
-        bool NeedsRefcounting(PP_Var var)
+        bool NeedsRefcounting(PPVar var)
         {
             return var.type > PPVarType.Double;
         }
 
         // This helper function uses the latest available version of VarFromUtf8. Note
         // that version 1.0 of this method has a different API to later versions.
-        public static PP_Var VarFromUtf8Helper(string utf8_str)
+        public static PPVar VarFromUtf8Helper(string utf8_str)
         {
             return PPBVar.VarFromUtf8(utf8_str, (uint)utf8_str.Length);
         }
@@ -171,7 +171,7 @@ namespace PepperSharp
             return PPBVar.VarToUtf8(ppvar, out len);
         }
 
-        public PP_Var AsPP_Var()
+        public PPVar AsPPVar()
         {
             return ppvar;
         }
@@ -357,9 +357,9 @@ namespace PepperSharp
         /// This function determines if this <code>Var</code> is an ArrayBuffer.
         public bool IsArrayBuffer { get { return ppvar.type == PPVarType.ArrayBuffer; } }
 
-        public static implicit operator PP_Var(PPVar var)
+        public static implicit operator PPVar(Var var)
         {
-            return var.AsPP_Var();
+            return var.AsPPVar();
         }
 
     }

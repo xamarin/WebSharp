@@ -24,7 +24,7 @@ namespace PepperSharp {
  * single touch point, such as position, id, rotation angle, and pressure.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_TouchPoint {
+public partial struct PPTouchPoint {
   /**
    * This value represents the identifier for this TouchPoint. The id
    * corresponds to the order in which the points were pressed. For example,
@@ -38,12 +38,12 @@ public struct PP_TouchPoint {
    * This value represents the x and y pixel position of this TouchPoint
    * relative to the upper-left of the module instance receiving the event.
    */
-  public PP_FloatPoint position;
+  public PPFloatPoint position;
   /**
    * This value represents the elliptical radii, in screen pixels, in the x
    * and y direction of this TouchPoint.
    */
-  public PP_FloatPoint radius;
+  public PPFloatPoint radius;
   /**
    * This value represents the angle of rotation in degrees of the elliptical
    * model of this TouchPoint clockwise from "up."

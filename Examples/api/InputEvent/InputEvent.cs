@@ -4,20 +4,20 @@ using PepperSharp;
 
 namespace InputEvent
 {
-    public class InputEvent : PPInstance
+    public class InputEvent : Instance
     {
         public InputEvent(IntPtr handle) : base(handle)
         {
-            PPBInputEvent.RequestInputEvents(Instance, (int)(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
+            PPBInputEvent.RequestInputEvents(this, (int)(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
                    PPInputEventClass.Touch));
-            PPBInputEvent.RequestFilteringInputEvents(Instance, (int)PPInputEventClass.Keyboard);
+            PPBInputEvent.RequestFilteringInputEvents(this, (int)PPInputEventClass.Keyboard);
         }
 
         ~InputEvent() { System.Console.WriteLine("InputEvent destructed"); }
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPBConsole.Log(Instance, PPLogLevel.Log, new PPVar("Hello from InputEvent using C#").AsPP_Var());
+            PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from InputEvent using C#").AsPPVar());
  
             return true;
         }
@@ -34,9 +34,9 @@ namespace InputEvent
         }
 
         /// Scrolling the mouse wheel causes a DidChangeView event.
-        public override void DidChangeView(PP_Resource view)
+        public override void DidChangeView(PPResource view)
         {
-            var viewRect = new PP_Rect();
+            var viewRect = new PPRect();
             PPBView.GetRect(view, out viewRect);
             string message = $"DidChangeView: x:{viewRect.point.x}" +
                             $" y: {viewRect.point.y}" +
@@ -50,7 +50,7 @@ namespace InputEvent
             PostMessage(message);
         }
 
-        public override bool HandleInputEvent(PP_Resource inputEvent)
+        public override bool HandleInputEvent(PPResource inputEvent)
         {
 
             var eventType = PPBInputEvent.GetType(inputEvent);
@@ -115,7 +115,7 @@ namespace InputEvent
                             $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
                             $" key_code: {PPBKeyboardInputEvent.GetCode(inputEvent)}" +
                             $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}" +
-                        $" text: {new PPVar(PPBKeyboardInputEvent.GetCharacterText(inputEvent)).DebugString()}";
+                        $" text: {new Var(PPBKeyboardInputEvent.GetCharacterText(inputEvent)).DebugString()}";
                         
                         PostMessage(keyboard);
                     }

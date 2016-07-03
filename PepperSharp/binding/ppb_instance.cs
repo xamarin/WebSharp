@@ -27,8 +27,7 @@ namespace PepperSharp {
  */
 public static partial class PPBInstance {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Instance_BindGraphics")]
-  extern static PPBool _BindGraphics ( PP_Instance instance,
-                                       PP_Resource device);
+  extern static PPBool _BindGraphics ( PPInstance instance,  PPResource device);
 
   /**
    * BindGraphics() binds the given graphics as the current display surface.
@@ -56,15 +55,14 @@ public static partial class PPBInstance {
    * type. On success, a reference to the device will be held by the
    * instance, so the caller can release its reference if it chooses.
    */
-  public static PPBool BindGraphics ( PP_Instance instance,
-                                      PP_Resource device)
+  public static PPBool BindGraphics ( PPInstance instance,  PPResource device)
   {
   	return _BindGraphics (instance, device);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Instance_IsFullFrame")]
-  extern static PPBool _IsFullFrame ( PP_Instance instance);
+  extern static PPBool _IsFullFrame ( PPInstance instance);
 
   /**
    * IsFullFrame() determines if the instance is full-frame. Such an instance
@@ -79,7 +77,7 @@ public static partial class PPBInstance {
    * @return A <code>PP_Bool</code> containing <code>PP_TRUE</code> if the
    * instance is full-frame.
    */
-  public static PPBool IsFullFrame ( PP_Instance instance)
+  public static PPBool IsFullFrame ( PPInstance instance)
   {
   	return _IsFullFrame (instance);
   }

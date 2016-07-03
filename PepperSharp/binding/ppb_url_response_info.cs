@@ -90,7 +90,7 @@ public enum PPURLResponseProperty {
 public static partial class PPBURLResponseInfo {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLResponseInfo_IsURLResponseInfo")]
-  extern static PPBool _IsURLResponseInfo ( PP_Resource resource);
+  extern static PPBool _IsURLResponseInfo ( PPResource resource);
 
   /**
    * IsURLResponseInfo() determines if a response is a
@@ -103,15 +103,15 @@ public static partial class PPBURLResponseInfo {
    * <code>URLResponseInfo</code>, <code>PP_FALSE</code> if the resource is
    * invalid or some type other than <code>URLResponseInfo</code>.
    */
-  public static PPBool IsURLResponseInfo ( PP_Resource resource)
+  public static PPBool IsURLResponseInfo ( PPResource resource)
   {
   	return _IsURLResponseInfo (resource);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLResponseInfo_GetProperty")]
-  extern static PP_Var _GetProperty ( PP_Resource response,
-                                      PPURLResponseProperty property);
+  extern static PPVar _GetProperty ( PPResource response,
+                                     PPURLResponseProperty property);
 
   /**
    * GetProperty() gets a response property.
@@ -124,8 +124,8 @@ public static partial class PPBURLResponseInfo {
    * @return A <code>PP_Var</code> containing the response property value if
    * successful, <code>PP_VARTYPE_VOID</code> if an input parameter is invalid.
    */
-  public static PP_Var GetProperty ( PP_Resource response,
-                                     PPURLResponseProperty property)
+  public static PPVar GetProperty ( PPResource response,
+                                    PPURLResponseProperty property)
   {
   	return _GetProperty (response, property);
   }
@@ -133,7 +133,7 @@ public static partial class PPBURLResponseInfo {
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLResponseInfo_GetBodyAsFileRef")]
-  extern static PP_Resource _GetBodyAsFileRef ( PP_Resource response);
+  extern static PPResource _GetBodyAsFileRef ( PPResource response);
 
   /**
    * GetBodyAsFileRef() returns a FileRef pointing to the file containing the
@@ -150,7 +150,7 @@ public static partial class PPBURLResponseInfo {
    * if successful, 0 if <code>PP_URLREQUESTPROPERTY_STREAMTOFILE</code> was
    * not requested or if the <code>URLLoader</code> has not been opened yet.
    */
-  public static PP_Resource GetBodyAsFileRef ( PP_Resource response)
+  public static PPResource GetBodyAsFileRef ( PPResource response)
   {
   	return _GetBodyAsFileRef (response);
   }

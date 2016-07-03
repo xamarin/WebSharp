@@ -4,7 +4,7 @@ using PepperSharp;
 
 namespace MouseCursor
 {
-    public class MouseCursor : PPInstance
+    public class MouseCursor : Instance
     {
 
         public MouseCursor(IntPtr handle) : base(handle) { }
@@ -13,15 +13,15 @@ namespace MouseCursor
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPBConsole.Log(Instance, PPLogLevel.Log, new PPVar("Hello from MouseCursor using C#").AsPP_Var());
+            PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from MouseCursor using C#"));
             MakeCustomCursor();
 
             return true;
         }
 
-        public override void HandleMessage(PP_Var message)
+        public override void HandleMessage(PPVar message)
         {
-            var varMessage = new PPVar(message);
+            var varMessage = new Var(message);
             if (!varMessage.IsInt)
             {
                 Console.WriteLine("Unexpected message.");
@@ -31,22 +31,22 @@ namespace MouseCursor
             if (cursor == PPMouseCursorType.Custom)
             {
                 var hotSpot = new PPPoint(16,16);
-                PPBMouseCursor.SetCursor(Instance, cursor, custom_cursor_, hotSpot);
+                PPBMouseCursor.SetCursor(this, cursor, custom_cursor_, hotSpot);
             }
             else
             {
                 var refPoint = new PPPoint();
-                PPBMouseCursor.SetCursor(Instance, cursor, new PP_Resource(), refPoint);
+                PPBMouseCursor.SetCursor(this, cursor, new PPResource(), refPoint);
             }
 
         }
 
-        PP_Resource custom_cursor_;
+        PPResource custom_cursor_;
         void MakeCustomCursor()
         {
             var size = new PPSize(32,32);
 
-            custom_cursor_ = PPBImageData.Create(Instance, PPImageDataFormat.BgraPremul, size, PPBool.True);
+            custom_cursor_ = PPBImageData.Create(this, PPImageDataFormat.BgraPremul, size, PPBool.True);
 
             DrawCircle(16, 16, 9, 14, 0.8f, 0.8f, 0);
             DrawCircle(11, 12, 2, 3, 0, 0, 0);
@@ -57,7 +57,7 @@ namespace MouseCursor
         void DrawCircle(int cx, int cy, float alpha_radius, float radius,
                 float r, float g, float b)
         {
-            var desc = new PP_ImageDataDesc();
+            var desc = new PPImageDataDesc();
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
             if (PPBImageData.Describe(custom_cursor_, out desc) == PPBool.False)
@@ -107,7 +107,7 @@ namespace MouseCursor
         void DrawHorizontalLine(int x1, int x2, int y,
                         float r, float g, float b, float a)
         {
-            var desc = new PP_ImageDataDesc();
+            var desc = new PPImageDataDesc();
             int[] data = null;
             IntPtr dataPtr = IntPtr.Zero;
             if (PPBImageData.Describe(custom_cursor_, out desc) == PPBool.False)

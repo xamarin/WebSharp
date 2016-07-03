@@ -23,14 +23,14 @@ namespace PepperSharp {
  * rectangle.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_Rect {
+public partial struct PPRect {
   /**
    * This value represents the x and y coordinates of the upper-left corner of
    * the rectangle.
    */
-  public PP_Point point;
+  public PPPoint point;
   /** This value represents the width and height of the rectangle. */
-  public PP_Size size;
+  public PPSize size;
 };
 
 /**
@@ -38,14 +38,14 @@ public struct PP_Rect {
  * rectangle.
  */
 [StructLayout(LayoutKind.Sequential)]
-public struct PP_FloatRect {
+public partial struct PPFloatRect {
   /**
    * This value represents the x and y coordinates of the upper-left corner of
    * the rectangle.
    */
-  public PP_FloatPoint point;
+  public PPFloatPoint point;
   /** This value represents the width and height of the rectangle. */
-  public PP_FloatSize size;
+  public PPFloatSize size;
 };
 /**
  * @}

@@ -3,7 +3,7 @@ using PepperSharp;
 
 namespace HelloWorld
 {
-    public class HelloWorld : PPInstance
+    public class HelloWorld : Instance
     {
 
         ~HelloWorld()

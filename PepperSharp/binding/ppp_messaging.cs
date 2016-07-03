@@ -29,7 +29,7 @@ namespace PepperSharp {
  */
 public static partial class PPPMessaging {
   [DllImport("PepperPlugin", EntryPoint = "PPP_Messaging_HandleMessage")]
-  extern static void _HandleMessage ( PP_Instance instance,  PP_Var message);
+  extern static void _HandleMessage ( PPInstance instance,  PPVar message);
 
   /**
    * HandleMessage() is a function that the browser calls when PostMessage()
@@ -70,7 +70,7 @@ public static partial class PPPMessaging {
    * @endcode
    *
    */
-  public static void HandleMessage ( PP_Instance instance,  PP_Var message)
+  public static void HandleMessage ( PPInstance instance,  PPVar message)
   {
   	 _HandleMessage (instance, message);
   }

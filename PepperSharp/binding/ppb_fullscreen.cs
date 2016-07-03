@@ -27,7 +27,7 @@ namespace PepperSharp {
  */
 public static partial class PPBFullscreen {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Fullscreen_IsFullscreen")]
-  extern static PPBool _IsFullscreen ( PP_Instance instance);
+  extern static PPBool _IsFullscreen ( PPInstance instance);
 
   /**
    * IsFullscreen() checks whether the module instance is currently in
@@ -39,14 +39,14 @@ public static partial class PPBFullscreen {
    * @return <code>PP_TRUE</code> if the module instance is in fullscreen mode,
    * <code>PP_FALSE</code> if the module instance is not in fullscreen mode.
    */
-  public static PPBool IsFullscreen ( PP_Instance instance)
+  public static PPBool IsFullscreen ( PPInstance instance)
   {
   	return _IsFullscreen (instance);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Fullscreen_SetFullscreen")]
-  extern static PPBool _SetFullscreen ( PP_Instance instance,
+  extern static PPBool _SetFullscreen ( PPInstance instance,
                                         PPBool fullscreen);
 
   /**
@@ -70,15 +70,14 @@ public static partial class PPBFullscreen {
    * @return <code>PP_TRUE</code> on success or <code>PP_FALSE</code> on
    * failure.
    */
-  public static PPBool SetFullscreen ( PP_Instance instance,
-                                       PPBool fullscreen)
+  public static PPBool SetFullscreen ( PPInstance instance,  PPBool fullscreen)
   {
   	return _SetFullscreen (instance, fullscreen);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Fullscreen_GetScreenSize")]
-  extern static PPBool _GetScreenSize ( PP_Instance instance, out PP_Size size);
+  extern static PPBool _GetScreenSize ( PPInstance instance, out PPSize size);
 
   /**
    * GetScreenSize() gets the size of the screen in pixels. The module instance
@@ -92,7 +91,7 @@ public static partial class PPBFullscreen {
    * @return <code>PP_TRUE</code> on success or <code>PP_FALSE</code> on
    * failure.
    */
-  public static PPBool GetScreenSize ( PP_Instance instance, out PP_Size size)
+  public static PPBool GetScreenSize ( PPInstance instance, out PPSize size)
   {
   	return _GetScreenSize (instance, out size);
   }

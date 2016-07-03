@@ -83,10 +83,10 @@ public enum PPMouseCursorType {
  */
 public static partial class PPBMouseCursor {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseCursor_SetCursor")]
-  extern static PPBool _SetCursor ( PP_Instance instance,
+  extern static PPBool _SetCursor ( PPInstance instance,
                                     PPMouseCursorType type,
-                                    PP_Resource image,
-                                    PP_Point hot_spot);
+                                    PPResource image,
+                                    PPPoint hot_spot);
 
   /**
    * Sets the given mouse cursor. The mouse cursor will be in effect whenever
@@ -119,10 +119,10 @@ public static partial class PPBMouseCursor {
    * @return PP_TRUE on success, or PP_FALSE if the instance or cursor type
    * is invalid, or if the image is too large.
    */
-  public static PPBool SetCursor ( PP_Instance instance,
+  public static PPBool SetCursor ( PPInstance instance,
                                    PPMouseCursorType type,
-                                   PP_Resource image,
-                                   PP_Point hot_spot)
+                                   PPResource image,
+                                   PPPoint hot_spot)
   {
   	return _SetCursor (instance, type, image, hot_spot);
   }

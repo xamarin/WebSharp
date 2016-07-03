@@ -21,8 +21,8 @@ namespace PepperSharp {
  */
 public static partial class PPPInputEvent {
   [DllImport("PepperPlugin", EntryPoint = "PPP_InputEvent_HandleInputEvent")]
-  extern static PPBool _HandleInputEvent ( PP_Instance instance,
-                                           PP_Resource input_event);
+  extern static PPBool _HandleInputEvent ( PPInstance instance,
+                                           PPResource input_event);
 
   /**
    * Function for receiving input events from the browser.
@@ -68,8 +68,8 @@ public static partial class PPPInputEvent {
    * be forwarded to the page (and eventually the browser) for the default
    * handling. For non-filtered events, the return value will be ignored.
    */
-  public static PPBool HandleInputEvent ( PP_Instance instance,
-                                          PP_Resource input_event)
+  public static PPBool HandleInputEvent ( PPInstance instance,
+                                          PPResource input_event)
   {
   	return _HandleInputEvent (instance, input_event);
   }
