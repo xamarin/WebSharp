@@ -5,6 +5,7 @@
 
 #include "ppapi/c/ppb.h"
 #include "ppapi/c/ppb_console.h"
+#include "ppapi/c/ppb_core.h"
 #include "ppapi/c/ppb_fullscreen.h"
 #include "ppapi/c/ppb_graphics_2d.h"
 #include "ppapi/c/ppb_image_data.h"
@@ -56,6 +57,9 @@ namespace Pepper {
 	namespace {
 		template <> const char*	interface_name<PPB_Console_1_0>() {
 			return PPB_CONSOLE_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_Core_1_0>() {
+			return PPB_CORE_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_Fullscreen_1_0>() {
 			return PPB_FULLSCREEN_INTERFACE_1_0;
@@ -182,6 +186,52 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Console */
+
+		#pragma region /* Begin entry point methods for PPB_Core */
+
+		PEPPER_EXPORT void PPB_Core_AddRefResource(PP_Resource resource) {
+			if (has_interface<PPB_Core_1_0>()) {
+				get_interface<PPB_Core_1_0>()->AddRefResource(resource);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_Core_ReleaseResource(PP_Resource resource) {
+			if (has_interface<PPB_Core_1_0>()) {
+				get_interface<PPB_Core_1_0>()->ReleaseResource(resource);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT PP_Time PPB_Core_GetTime(void) {
+			if (has_interface<PPB_Core_1_0>()) {
+				return get_interface<PPB_Core_1_0>()->GetTime();
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_TimeTicks PPB_Core_GetTimeTicks(void) {
+			if (has_interface<PPB_Core_1_0>()) {
+				return get_interface<PPB_Core_1_0>()->GetTimeTicks();
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_Core_CallOnMainThread(int32_t delay_in_milliseconds, struct PP_CompletionCallback callback, int32_t result) {
+			if (has_interface<PPB_Core_1_0>()) {
+				get_interface<PPB_Core_1_0>()->CallOnMainThread(delay_in_milliseconds, callback, result);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_Core_IsMainThread(void) {
+			if (has_interface<PPB_Core_1_0>()) {
+				return get_interface<PPB_Core_1_0>()->IsMainThread();
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_Core */
 
 		#pragma region /* Begin entry point methods for PPB_Fullscreen */
 

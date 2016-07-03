@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="binding\ppb_console.cs" />
+    <Compile Include="binding\ppb_core.cs" />
     <Compile Include="binding\ppb_fullscreen.cs" />
     <Compile Include="binding\ppb_graphics_2d.cs" />
     <Compile Include="binding\ppb_image_data.cs" />
