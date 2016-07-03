@@ -6,7 +6,6 @@ namespace Graphics_2D
 {
     public class Graphics_2D : Instance
     {
-        PPInstance instance = new PPInstance();
 
         PPResource context;
         PPResource flushContext;
@@ -25,9 +24,8 @@ namespace Graphics_2D
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            instance.ppinstance = Handle.ToInt32();
-            PPBConsole.Log(instance, PPLogLevel.Log, new Var("Hello from PepperSharp using C#"));
-            PPBInputEvent.RequestInputEvents(instance, (int)PPInputEventClass.Mouse);
+            PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from PepperSharp using C#"));
+            PPBInputEvent.RequestInputEvents(this, (int)PPInputEventClass.Mouse);
             int seed = 1;
             random = new Random(seed);
             CreatePalette();
@@ -96,7 +94,7 @@ namespace Graphics_2D
             bool kIsAlwaysOpaque = true;
             var isAlwaysOpaque = new PPBool();
             isAlwaysOpaque = kIsAlwaysOpaque ? PPBool.True : PPBool.False;
-            context = PPBGraphics2D.Create(instance, new_size, isAlwaysOpaque);
+            context = PPBGraphics2D.Create(this, new_size, isAlwaysOpaque);
 
             // Call SetScale before BindGraphics so the image is scaled correctly on
             // HiDPI displays.
@@ -250,7 +248,7 @@ namespace Graphics_2D
             var format = PPBImageData.GetNativeImageDataFormat();
             bool kDontInitToZero = false;
             var dontInitToZero = kDontInitToZero ? PPBool.True : PPBool.False;
-            var image_data = PPBImageData.Create(instance, format, size, dontInitToZero);
+            var image_data = PPBImageData.Create(this, format, size, dontInitToZero);
             var desc = new PPImageDataDesc();
 
             int[] data = null;
