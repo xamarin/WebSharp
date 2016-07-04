@@ -56,7 +56,15 @@ namespace PepperSharp
                 ppvar.value.as_double = Convert.ToDouble((float)var);
                 isManaged = true;
             }
-
+            else if (var is Var)
+            {
+                ppvar = ((Var)var).ppvar;
+                isManaged = true;
+                if (NeedsRefcounting(ppvar))
+                {
+                    PPBVar.AddRef(ppvar);
+                }
+            }
             else
             {
                 ppvar.type = PPVarType.Undefined;
@@ -360,6 +368,11 @@ namespace PepperSharp
         public static implicit operator PPVar(Var var)
         {
             return var.AsPPVar();
+        }
+
+        public static implicit operator Var(PPVar var)
+        {
+            return new Var(var);
         }
 
     }

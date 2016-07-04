@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputEvent", "..\..\Example
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URL_Loader", "..\..\Examples\api\URL_Loader\URL_Loader.csproj", "{993FBC0A-E79D-47F8-A0C3-19EFF0CED16B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "..\..\Examples\api\Core\Core.csproj", "{C26BFF35-A17B-468A-8834-F140B2CDD363}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,18 @@ Global
 		{993FBC0A-E79D-47F8-A0C3-19EFF0CED16B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{993FBC0A-E79D-47F8-A0C3-19EFF0CED16B}.Release|x86.ActiveCfg = Release|Any CPU
 		{993FBC0A-E79D-47F8-A0C3-19EFF0CED16B}.Release|x86.Build.0 = Release|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Debug|x86.Build.0 = Debug|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Release|x86.ActiveCfg = Release|Any CPU
+		{C26BFF35-A17B-468A-8834-F140B2CDD363}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,5 +167,6 @@ Global
 		{9442253A-A06F-433D-B417-45DD1C3D8EAA} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{3F43F788-5F72-4D20-9B88-74381F057DB3} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{993FBC0A-E79D-47F8-A0C3-19EFF0CED16B} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
+		{C26BFF35-A17B-468A-8834-F140B2CDD363} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 	EndGlobalSection
 EndGlobal
