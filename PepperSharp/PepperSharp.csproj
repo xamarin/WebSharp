@@ -59,6 +59,7 @@
     <Compile Include="binding\ppb_url_response_info.cs" />
     <Compile Include="binding\ppb_var.cs" />
     <Compile Include="binding\ppb_view.cs" />
+    <Compile Include="binding\ppb_websocket.cs" />
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ppb_var_extension.cs" />
     <Compile Include="src\Instance.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="binding\pp_stdint.cs" />
     <Compile Include="binding\pp_time.cs" />
     <Compile Include="binding\pp_touch_point.cs" />
+    <Compile Include="src\pp_completion_callback_extensions.cs" />
     <Compile Include="src\runtime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\PPPoint.cs" />

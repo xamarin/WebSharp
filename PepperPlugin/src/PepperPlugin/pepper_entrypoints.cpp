@@ -20,6 +20,7 @@
 #include "ppapi/c/ppb_url_response_info.h"
 #include "ppapi/c/ppb_var.h"
 #include "ppapi/c/ppb_view.h"
+#include "ppapi/c/ppb_websocket.h"
 #include "ppapi/c/ppp_input_event.h"
 #include "ppapi/c/ppp_messaging.h"
 #include "ppapi/c/ppp_mouse_lock.h"
@@ -144,6 +145,9 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_View_1_2>() {
 			return PPB_VIEW_INTERFACE_1_2;
+		}
+		template <> const char*	interface_name<PPB_WebSocket_1_0>() {
+			return PPB_WEBSOCKET_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPP_InputEvent_0_1>() {
 			return PPP_INPUT_EVENT_INTERFACE_0_1;
@@ -1171,6 +1175,108 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_View */
+
+		#pragma region /* Begin entry point methods for PPB_WebSocket */
+
+		PEPPER_EXPORT PP_Resource PPB_WebSocket_Create(PP_Instance instance) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_WebSocket_IsWebSocket(PP_Resource resource) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->IsWebSocket(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_WebSocket_Connect(PP_Resource web_socket, struct PP_Var url, const struct PP_Var protocols[], uint32_t protocol_count, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->Connect(web_socket, url, protocols, protocol_count, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_WebSocket_Close(PP_Resource web_socket, uint16_t code, struct PP_Var reason, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->Close(web_socket, code, reason, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_WebSocket_ReceiveMessage(PP_Resource web_socket, struct PP_Var* message, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->ReceiveMessage(web_socket, message, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_WebSocket_SendMessage(PP_Resource web_socket, struct PP_Var message) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->SendMessage(web_socket, message);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT uint64_t PPB_WebSocket_GetBufferedAmount(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetBufferedAmount(web_socket);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT uint16_t PPB_WebSocket_GetCloseCode(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetCloseCode(web_socket);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_WebSocket_GetCloseReason(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetCloseReason(web_socket);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_WebSocket_GetCloseWasClean(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetCloseWasClean(web_socket);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_WebSocket_GetExtensions(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetExtensions(web_socket);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_WebSocket_GetProtocol(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetProtocol(web_socket);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_WebSocketReadyState PPB_WebSocket_GetReadyState(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetReadyState(web_socket);
+			}
+			return PP_WEBSOCKETREADYSTATE_INVALID;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_WebSocket_GetURL(PP_Resource web_socket) {
+			if (has_interface<PPB_WebSocket_1_0>()) {
+				return get_interface<PPB_WebSocket_1_0>()->GetURL(web_socket);
+			}
+			return PP_MakeNull();
+		}
+
+		#pragma endregion /* End entry point generation for PPB_WebSocket */
 
 		#pragma region /* Begin entry point methods for PPP_InputEvent */
 
