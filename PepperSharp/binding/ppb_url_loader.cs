@@ -249,6 +249,9 @@ public static partial class PPBURLLoader {
                                        int bytes_to_read,
                                        PPCompletionCallback callback)
   {
+  	if (buffer == null)
+  		throw new ArgumentNullException ("buffer");
+
   	unsafe
   	{
   		fixed (byte* buffer_ = &buffer[0])

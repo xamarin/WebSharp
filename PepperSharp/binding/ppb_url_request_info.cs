@@ -231,7 +231,7 @@ public static partial class PPBURLRequestInfo {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLRequestInfo_AppendDataToBody")]
   extern static PPBool _AppendDataToBody ( PPResource request,
-                                           IntPtr data,
+                                          IntPtr data,
                                            uint len);
 
   /**
@@ -249,10 +249,19 @@ public static partial class PPBURLRequestInfo {
    *
    */
   public static PPBool AppendDataToBody ( PPResource request,
-                                          IntPtr data,
+                                         byte[] data,
                                           uint len)
   {
-  	return _AppendDataToBody (request, data, len);
+  	if (data == null)
+  		throw new ArgumentNullException ("data");
+
+  	unsafe
+  	{
+  		fixed (byte* data_ = &data[0])
+  		{
+  			return _AppendDataToBody (request, (IntPtr) data_, len);
+  		}
+  	}
   }
 
 
