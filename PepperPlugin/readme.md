@@ -23,7 +23,7 @@ The previous command will install the source files that the PepperPlugin solutio
 PepperPlugin Solution
 ---
 
-You should now be able to compile the solution provided.  Open the PepperPlugin.sln file found here https://github.com/xamarin/WebSharp/tree/master/PepperPlugin/src and select Build.
+You should now be able to compile the solution provided.  Open the ```PepperPlugin.sln``` file found in the ```WebSharp\PepperPlugin\src\``` directory and select Build.
 
 You can also use the command line from a Visual Studio 2015 Native Command Prompt.
 
