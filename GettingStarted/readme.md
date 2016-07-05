@@ -112,10 +112,11 @@ The code you just added will append and ```<embed>``` tag dynamically to the htm
 
 The workhorses of the embed element are the ```assembly``` and ```class``` attributes.
 
-Now we can startup the application again and in the console you should see:
+Now we can startup the application again with ```npm start``` and in the console you should see:
 
 ```
 GettingStarted.HelloWorld: HelloWorld from C#
 ```
+![GettingStarted](../GettingStarted/screenshots/GettingStarted.PNG)
 
 If there is an error about 'plugin can not be loaded' make sure that you have the 32 bit version of Electron installed.
