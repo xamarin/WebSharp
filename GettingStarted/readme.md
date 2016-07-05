@@ -1,5 +1,16 @@
+
+Notice
+======
+
+This workflow is just a temporary workflow while we get the effort bootstrapped, it will likely take a very
+different shape in the future.   While currently this references binaries, we will be adding a source-code
+mode with Roslyn, where we automatically compile the code on demand.
+
+This is just a workflow that is being used during development.   We are open to suggestions on how to improve
+this.
+
 Getting Started
-===
+===============
 
 Electron offers a Quick Start on their site: http://electron.atom.io/docs/tutorial/quick-start/ that explains how to get started.
 
