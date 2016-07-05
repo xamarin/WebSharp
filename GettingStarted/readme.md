@@ -7,6 +7,8 @@ Pre-requisites
 ---
 - node.js can be found here - https://nodejs.org/
 - 32 bit version of Electron is required right now - From a command prompt ```> npm install --arch=ia32 electron-prebuilt```.  This will install the 32 bit electron prebuilt which is required for now.  You can also install globally with the ```-g``` parameter.
+- Make sure the PepperPlugin has been built.  https://github.com/xamarin/WebSharp/blob/master/PepperPlugin/readme.md
+
 
 Install Electron quick start
 ---
