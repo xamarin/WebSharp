@@ -17,7 +17,7 @@ The install should be in the same directory level as the WebSharp checkout but n
 
 To get the actual source files you will need to install the ```canary``` bundle.  Open a command prompt and change into the nacl_sdk directory that was just created and execute the following code.
 
-```
+```shell
 > cd nacl_sdk
 > naclsdk update canary
 ```
@@ -31,7 +31,7 @@ You should now be able to compile the solution provided.  Open the ```PepperPlug
 
 You can also use the command line from a Visual Studio 2015 Native Command Prompt.
 
-```
+```shell
 > cd WebSharp\PepperPlugin\src
 WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln
 ```
