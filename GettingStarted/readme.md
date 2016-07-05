@@ -7,6 +7,7 @@ Pre-requisites
 ---
 - node.js can be found here - https://nodejs.org/
 - 32 bit version of Electron is required right now - From a command prompt ```> npm install --arch=ia32 electron-prebuilt```.  This will install the 32 bit electron prebuilt which is required for now.  You can also install globally with the ```-g``` parameter.
+- Visual Studio 2015 minimum Community edition
 - Make sure the PepperPlugin has been built.  https://github.com/xamarin/WebSharp/blob/master/PepperPlugin/readme.md
 
 
@@ -30,6 +31,15 @@ $ npm install --arch=ia32 && npm start
 
 
 ![elctron_quick_start](../GettingStarted/screenshots/electron-quick-start.PNG)
+
+
+Building GettingStarted example
+---
+
+Open the project solution GettingStarted.sln in Visual Studio 2015 and build it.  This can also be done from the Visual Studio 2015 Command prompt as well by executing ```msbuild GettingStarted.sln```
+
+
+
 
 Register our plugin with Electron
 ---
