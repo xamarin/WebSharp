@@ -14,13 +14,13 @@ Pre-requisites
 Install Electron quick start
 ---
 
-Clone and run the code in this tutorial by using the atom/electron-quick-start repository.
+Clone and run the code in this tutorial by using the [atom/electron-quick-start](https://github.com/electron/electron-quick-start) repository.
 
-Note: Running this requires Git and Node.js (which includes npm) on your system.
+Note: Running this requires [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/download/) (which includes [npm](https://www.npmjs.com/)) on your system.
 
-Change to directory \WebSharp\WebSharp\GettingStarted>
+Change to directory ```WebSharp\GettingStarted>```
 
-```
+```shell
 # Clone the repository
 $ git clone https://github.com/electron/electron-quick-start
 # Go into the repository
@@ -61,7 +61,7 @@ app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';applicatio
 
 When we create our browser window we also need to specify that plugins will be used so in the same file find the code that reads ```mainWindow = new BrowserWindow({width: 800, height: 600})``` and lets add a reference to ```'webPreferences': { 'plugins': true }```
 
-```
+```javascript
   // Create the browser window.
     mainWindow = new BrowserWindow(
         {
@@ -84,7 +84,7 @@ Open the file named ```index.html``` and scroll down to see the code for the bod
 
 Add the following code inside the ```<body>``` tag of the html.
 
-```
+```html
       <div id="pluginTarget" />
       <script>
         var pluginTarget = document.getElementById("pluginTarget");
@@ -104,7 +104,7 @@ Add the following code inside the ```<body>``` tag of the html.
 
 The code you just added will append and ```<embed>``` tag dynamically to the html file that tells the PepperPlugin what assembly and class to load.
 
-```
+```html
         // pepper specific attributes
         moduleEl.setAttribute('assembly', __dirname + "\\..\\bin\\Debug\\GettingStarted.dll")  // set assembly to load
         moduleEl.setAttribute('class', "GettingStarted.HelloWorld")               // set class of Plugin Instance definition
