@@ -58,6 +58,9 @@
     <Compile Include="binding\ppb_url_request_info.cs" />
     <Compile Include="binding\ppb_url_response_info.cs" />
     <Compile Include="binding\ppb_var.cs" />
+    <Compile Include="binding\ppb_var_array.cs" />
+    <Compile Include="binding\ppb_var_array_buffer.cs" />
+    <Compile Include="binding\ppb_var_dictionary.cs" />
     <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\ppb_websocket.cs" />
     <Compile Include="binding\pp_var.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="src\PPRect.cs" />
     <Compile Include="src\PPSize.cs" />
     <Compile Include="src\Var.cs" />
+    <Compile Include="src\VarArrayBuffer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

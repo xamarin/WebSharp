@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 using PepperSharp;
 
@@ -37,7 +38,7 @@ namespace WebSocket
                 case 'b':
                     // The command 'b' requests to send a message as a binary frame. The
                     // message is passed as an argument like "b;message".
-                    //SendAsBinary(message.substr(2));
+                    SendAsBinary(message.Substring(2));
                     break;
                 case 't':
                     // The command 't' requests to send a message as a text frame. The message
@@ -95,10 +96,10 @@ namespace WebSocket
             {
                 if (((Var)receive_var_).IsArrayBuffer)
                 {
-                    // TODO: implement array buffer receive
-                    //    pp::VarArrayBuffer array_buffer(receive_var_);
-                    //    std::string message_text = ArrayToString(array_buffer);
-                    //    PostMessage("receive (binary): " + message_text);
+
+                    var arrayBuffer = new VarArrayBuffer(receive_var_);
+                    var messageText = ArrayToString(arrayBuffer);
+                    PostMessage($"receive (binary): {messageText}");
                 }
                 else
                 {
@@ -143,6 +144,47 @@ namespace WebSocket
                 return;
             PPBWebSocket.SendMessage(websocket_, new Var(message));
             PostMessage("send (text): " + message);
+        }
+
+        const int MAX_TO_CONVERT = 8;
+        const int BYTES_PER_CHAR = 4;
+        const int TAIL_AND_NUL_SIZE = 4;
+
+        static string ArrayToString(VarArrayBuffer array)
+        {
+            var hexString = new StringBuilder();
+
+            int offs = 0;
+            var data = array.Map();
+            var size = 0;
+            for (offs = 0; offs < array.ByteLength && offs < MAX_TO_CONVERT; offs++, size++)
+            {
+                hexString.Append(data[offs].ToString("x").ToUpper());
+                hexString.Append("h ");
+            }
+
+            hexString.Append("...");
+
+            array.UnMap();
+            return hexString.ToString();
+        }
+
+        void SendAsBinary(string message)
+        {
+            if (!IsConnected())
+                return;
+
+            var size = (uint)message.Length;
+            var arrayBuffer = new VarArrayBuffer(size);
+
+            var data = arrayBuffer.Map();
+            for (int i = 0; i < size; ++i)
+                data[i] = (byte)message[i];
+            arrayBuffer.Flush();
+            arrayBuffer.UnMap();
+            PPBWebSocket.SendMessage(websocket_, arrayBuffer);
+            var messageText = ArrayToString(arrayBuffer);
+            PostMessage($"send (binary): {messageText}");
         }
     }
 

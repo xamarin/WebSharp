@@ -19,6 +19,9 @@
 #include "ppapi/c/ppb_url_request_info.h"
 #include "ppapi/c/ppb_url_response_info.h"
 #include "ppapi/c/ppb_var.h"
+#include "ppapi/c/ppb_var_array.h"
+#include "ppapi/c/ppb_var_array_buffer.h"
+#include "ppapi/c/ppb_var_dictionary.h"
 #include "ppapi/c/ppb_view.h"
 #include "ppapi/c/ppb_websocket.h"
 #include "ppapi/c/ppp_input_event.h"
@@ -136,6 +139,15 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_Var_1_2>() {
 			return PPB_VAR_INTERFACE_1_2;
+		}
+		template <> const char*	interface_name<PPB_VarArray_1_0>() {
+			return PPB_VAR_ARRAY_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_VarArrayBuffer_1_0>() {
+			return PPB_VAR_ARRAY_BUFFER_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_VarDictionary_1_0>() {
+			return PPB_VAR_DICTIONARY_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_View_1_0>() {
 			return PPB_VIEW_INTERFACE_1_0;
@@ -1066,6 +1078,123 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Var */
+
+		#pragma region /* Begin entry point methods for PPB_VarArray */
+
+		PEPPER_EXPORT struct PP_Var PPB_VarArray_Create(void) {
+			if (has_interface<PPB_VarArray_1_0>()) {
+				return get_interface<PPB_VarArray_1_0>()->Create();
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_VarArray_Get(struct PP_Var array, uint32_t index) {
+			if (has_interface<PPB_VarArray_1_0>()) {
+				return get_interface<PPB_VarArray_1_0>()->Get(array, index);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VarArray_Set(struct PP_Var array, uint32_t index, struct PP_Var value) {
+			if (has_interface<PPB_VarArray_1_0>()) {
+				return get_interface<PPB_VarArray_1_0>()->Set(array, index, value);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT uint32_t PPB_VarArray_GetLength(struct PP_Var array) {
+			if (has_interface<PPB_VarArray_1_0>()) {
+				return get_interface<PPB_VarArray_1_0>()->GetLength(array);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VarArray_SetLength(struct PP_Var array, uint32_t length) {
+			if (has_interface<PPB_VarArray_1_0>()) {
+				return get_interface<PPB_VarArray_1_0>()->SetLength(array, length);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_VarArray */
+
+		#pragma region /* Begin entry point methods for PPB_VarArrayBuffer */
+
+		PEPPER_EXPORT struct PP_Var PPB_VarArrayBuffer_Create(uint32_t size_in_bytes) {
+			if (has_interface<PPB_VarArrayBuffer_1_0>()) {
+				return get_interface<PPB_VarArrayBuffer_1_0>()->Create(size_in_bytes);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VarArrayBuffer_ByteLength(struct PP_Var array, uint32_t* byte_length) {
+			if (has_interface<PPB_VarArrayBuffer_1_0>()) {
+				return get_interface<PPB_VarArrayBuffer_1_0>()->ByteLength(array, byte_length);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT void* PPB_VarArrayBuffer_Map(struct PP_Var array) {
+			if (has_interface<PPB_VarArrayBuffer_1_0>()) {
+				return get_interface<PPB_VarArrayBuffer_1_0>()->Map(array);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_VarArrayBuffer_Unmap(struct PP_Var array) {
+			if (has_interface<PPB_VarArrayBuffer_1_0>()) {
+				get_interface<PPB_VarArrayBuffer_1_0>()->Unmap(array);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_VarArrayBuffer */
+
+		#pragma region /* Begin entry point methods for PPB_VarDictionary */
+
+		PEPPER_EXPORT struct PP_Var PPB_VarDictionary_Create(void) {
+			if (has_interface<PPB_VarDictionary_1_0>()) {
+				return get_interface<PPB_VarDictionary_1_0>()->Create();
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_VarDictionary_Get(struct PP_Var dict, struct PP_Var key) {
+			if (has_interface<PPB_VarDictionary_1_0>()) {
+				return get_interface<PPB_VarDictionary_1_0>()->Get(dict, key);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VarDictionary_Set(struct PP_Var dict, struct PP_Var key, struct PP_Var value) {
+			if (has_interface<PPB_VarDictionary_1_0>()) {
+				return get_interface<PPB_VarDictionary_1_0>()->Set(dict, key, value);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT void PPB_VarDictionary_Delete(struct PP_Var dict, struct PP_Var key) {
+			if (has_interface<PPB_VarDictionary_1_0>()) {
+				get_interface<PPB_VarDictionary_1_0>()->Delete(dict, key);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VarDictionary_HasKey(struct PP_Var dict, struct PP_Var key) {
+			if (has_interface<PPB_VarDictionary_1_0>()) {
+				return get_interface<PPB_VarDictionary_1_0>()->HasKey(dict, key);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_VarDictionary_GetKeys(struct PP_Var dict) {
+			if (has_interface<PPB_VarDictionary_1_0>()) {
+				return get_interface<PPB_VarDictionary_1_0>()->GetKeys(dict);
+			}
+			return PP_MakeNull();
+		}
+
+		#pragma endregion /* End entry point generation for PPB_VarDictionary */
 
 		#pragma region /* Begin entry point methods for PPB_View */
 

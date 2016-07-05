@@ -19,7 +19,7 @@ namespace PepperSharp
 
         #region Constructors
 
-        private Var(PPVarType type)
+        internal Var(PPVarType type)
         {
             ppvar.type = type;
         }
