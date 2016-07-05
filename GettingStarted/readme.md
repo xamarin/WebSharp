@@ -14,11 +14,11 @@ Pre-requisites
 Install Electron quick start
 ---
 
-Clone and run the code in this tutorial by using the atom/electron-quick-start repository.
+Clone and run the code in this tutorial by using the [atom/electron-quick-start](https://github.com/electron/electron-quick-start) repository.
 
-Note: Running this requires Git and Node.js (which includes npm) on your system.
+Note: Running this requires [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/download/) (which includes [npm](https://www.npmjs.com/)) on your system.
 
-Change to directory \WebSharp\WebSharp\GettingStarted>
+Change to directory ```WebSharp\GettingStarted>```
 
 ```
 # Clone the repository
