@@ -15,6 +15,14 @@ This will be made up of a few components:
 For the `Xamarin.W3C` APIs, we intend to use the TypeScript type definitions to generate
 a strongly typed .NET API.
 
+# Current Work
+
+This is a work in progress, and we are only getting started.   This means that the activation
+workflow for .NET code is not finalized, nor is the API that is exposed to .NET code running
+on Electron.
+
+With that being said, check the [GettingStarted](./GettingStarted) document for the basics.
+
 # Future Work
 
 We hope that the `Xamarin.W3C` API would be used in the future when we compile .NET code
