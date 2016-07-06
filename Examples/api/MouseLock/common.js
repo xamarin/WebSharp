@@ -33,7 +33,7 @@ var common = (function() {
       // For NaCl modules use application/x-nacl.
       var mimetype = 'application/x-nacl';
       if (tool == 'pepper') {
-          mimetype = 'application/x-ppapi-PepperPlugin';
+          mimetype = 'application/electron-dotnet';
       } else if (isHostToolchain(tool)) {
           // For non-NaCl PPAPI plugins use the x-ppapi-debug/release
           // mime type.

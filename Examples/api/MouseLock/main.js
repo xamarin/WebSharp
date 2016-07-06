@@ -9,8 +9,8 @@ const BrowserWindow = electron.BrowserWindow
 let mainWindow
 
 var ppapiPath = __dirname + '\\..\\..\\..\\PepperPlugin\\bin\\Win32\\Debug\\PepperPlugin.dll';
-console.log('PPAPI path ' +  ppapiPath + ';application/x-ppapi-PepperPlugin');
-app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';application/x-ppapi-PepperPlugin');
+console.log('PPAPI path ' +  ppapiPath + ';application/electron-dotnet');
+app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';application/electron-dotnet');
 
 function createWindow () {
   // Create the browser window.
