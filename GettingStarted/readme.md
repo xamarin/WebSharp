@@ -57,7 +57,7 @@ Register our plugin with Electron
 
 We now need to tell electron that we will be using plugins so to activate them we need to edit the <b>_main.js_</b> file in the electron_quick_start directory.
 
-Right after the line that reads ```let window``` we will need to append ```'register-pepper-plugins'``` to the command line switches to tell Electron which plugin will be activated and will be referenced by ```application/x-ppapi-PepperPlugin``` 
+Right after the line that reads ```let window``` we will need to append ```'register-pepper-plugins'``` to the command line switches to tell Electron which plugin will be activated and will be referenced by ```application/electron-dotnet``` 
 
 ```javascript
 // Keep a global reference of the window object, if you don't, the window will
@@ -66,8 +66,8 @@ let mainWindow
 
 // Tell electron that we will be using plugins and which one
 var ppapiPath = __dirname + '\\..\\..\\PepperPlugin\\bin\\Win32\\Debug\\PepperPlugin.dll';
-console.log('PPAPI path ' +  ppapiPath + ';application/x-ppapi-PepperPlugin');
-app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';application/x-ppapi-PepperPlugin');
+console.log('PPAPI path ' +  ppapiPath + ';application/electron-dotnet');
+app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';application/electron-dotnet');
 ```
 
 When we create our browser window we also need to specify that plugins will be used so in the same file find the code that reads ```mainWindow = new BrowserWindow({width: 800, height: 600})``` and lets add a reference to ```'webPreferences': { 'plugins': true }```
@@ -104,7 +104,7 @@ Add the following code inside the ```<body>``` tag of the html.
         moduleEl.setAttribute('id', 'plugin');
         moduleEl.setAttribute('width', 300);
         moduleEl.setAttribute('height', 200);
-        moduleEl.setAttribute('type', 'application/x-ppapi-PepperPlugin');
+        moduleEl.setAttribute('type', 'application/electron-dotnet');
         // pepper specific attributes
         moduleEl.setAttribute('assembly', __dirname + "\\..\\bin\\Debug\\GettingStarted.dll")  // set assembly to load
         moduleEl.setAttribute('class', "GettingStarted.HelloWorld")               // set class of Plugin Instance definition
