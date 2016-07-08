@@ -26,6 +26,10 @@
 #undef PostMessage
 // Allow 'this' in initializer list
 #pragma warning(disable : 4355)
+
+// used for obtaining file information
+#include <strsafe.h>
+#include <codecvt>
 #endif
 
 using namespace std;
@@ -108,13 +112,17 @@ namespace pepper {
 		return method;
 	}
 
-	MonoClass* find_class(const char* nameSpace, const char* className, MonoImage* image)
+	MonoClass* find_class(const char* namspace, const char* className, vector<MonoImage*> images)
 	{
 		MonoClass *klass = NULL;
-		klass = mono_class_from_name(image, nameSpace, className);
+		for (auto& image : images) {
+			klass = mono_class_from_name(image, namspace, className);
+			if (klass) {
+				return klass;
+			}
+		}
 		return klass;
 	}
-
 
 	void InitMono() {
 
@@ -198,10 +206,11 @@ namespace pepper {
 
 	}
 
-	MonoObject* create_managed_wrapper(intptr_t ptr, const char* nameSpace, const char* className, MonoImage* image)
+
+	MonoObject* create_managed_wrapper(intptr_t ptr, const char* nameSpace, const char* className, vector<MonoImage*> images)
 	{
 
-		MonoClass * wrapper = find_class(nameSpace, className, image);
+		MonoClass * wrapper = find_class(nameSpace, className, images);
 		if (wrapper == nullptr) {
 			return nullptr;
 		}
@@ -226,6 +235,74 @@ namespace pepper {
 		return obj;
 	}
 
+	// TODO: The following routines will probably only work on windows so will need to be 
+	// looked at for other platforms.
+	wstring toUTF16(const std::string& str)
+	{
+		using convert_typeX = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+		return converterX.from_bytes(str);
+	}
+
+	string toUTF8(const std::wstring& wstr)
+	{
+		using convert_typeX = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+		return converterX.to_bytes(wstr);
+	}
+
+	std::vector<std::string> get_assembly_list ( std::string path = ".", bool includePath = true)
+	{
+
+		WIN32_FIND_DATA ffd;
+		TCHAR szDir[MAX_PATH];
+		HANDLE hFind = INVALID_HANDLE_VALUE;
+		DWORD dwError = 0;
+
+		vector<std::string> fileList;
+
+		// Check that the input path plus 7 is not longer than MAX_PATH.
+		// Three characters are for the "\*.dll" plus NULL appended below.
+		if (path.length() > (MAX_PATH - 7))
+		{
+			printf("\nDirectory path is too long.\n");
+			return fileList;
+		}
+
+		auto wPath = toUTF16(path);
+
+		// Prepare string for use with FindFile functions.  First, copy the
+		// string to a buffer, then append '\*.dll' to the directory name.
+		StringCchCopy(szDir, MAX_PATH, wPath.c_str());
+		StringCchCat(szDir, MAX_PATH, TEXT("\\*.dll"));
+
+		// Find the first file in the directory.
+		hFind = FindFirstFile(szDir, &ffd);
+
+		if (INVALID_HANDLE_VALUE == hFind)
+		{
+			return fileList;
+		}
+
+		// List all the files in the directory with some info about them.
+		do
+		{
+			if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				if (includePath)
+					fileList.push_back(path + '\\' + toUTF8(ffd.cFileName));
+				else
+					fileList.push_back(toUTF8(ffd.cFileName));
+			}
+		} while (FindNextFile(hFind, &ffd) != 0);
+
+		FindClose(hFind);
+
+		return fileList;
+	}
+
 }  // namespace
 
 class PluginInstance : public pp::Instance, public pp::MouseLock {
@@ -243,9 +320,14 @@ public:
 
 		auto className = string();
 		auto nameSpace = string();
-		
+
 		MonoArray *parmsArgN = mono_array_new(monoDomain, mono_get_string_class(), argc);
 		MonoArray *parmsArgV = mono_array_new(monoDomain, mono_get_string_class(), argc);
+
+		//printf("cwd: %s\n", GetCWD().c_str());
+
+		auto src = string();
+		auto path = string();
 
 		for (unsigned int x = 0; x < argc; x++)
 		{
@@ -254,50 +336,48 @@ public:
 
 			//printf("argn = %s argv = %s\n", argn[x], argv[x]);
 			auto property = string(argn[x]);
-			
-			if (property == "assembly")
-			{
 
-				printf("loading assembly: %s \n", argv[x]);
-				//// open our assembly
+			if (property == "path")
+			{
+				path += argv[x];
+			}
+			if (property == "src")
+			{
+				src += argv[x];
+			}
+		}
+
+		if (path.length() >= 0)
+		{
+			auto fileList = get_assembly_list(path);
+			for (string f : fileList)
+			{
+				printf("loading assembly: %s\n", f.c_str());
 				MonoAssembly* assembly = mono_domain_assembly_open(monoDomain,
-					argv[x]);
+					f.c_str());
 				if (assembly)
-					monoImage = mono_assembly_get_image(assembly);
+				{
+					auto gotImage = mono_assembly_get_image(assembly);
+					images.push_back(gotImage);
+				}
 				else
-					fprintf(stderr, "Error loading assembly: %s\n", argv[x]);
-
-				// TODO: Clean this up.
-				auto str = string(argv[x]);
-				auto found = str.find_last_of("/\\");
-				str = str.substr(0, found) + "\\Xamarin.PepperSharp.dll";
-				
-				// open our PepperSharp assembly so we can find those classes.
-				assembly = mono_domain_assembly_open(monoDomain,
-					str.c_str());
-
-				peppersharpImage = NULL;
-				if (assembly)
-					peppersharpImage = mono_assembly_get_image(assembly);
-				else
-					fprintf(stderr, "Error loading assembly: %s\n", "Xamarin.PepperSharp.dll");
-				
+					fprintf(stderr, "Error loading assembly: %s\n", f.c_str());
 			}
 
-			// If we have an error loading assembly then return false
-			if (!monoImage)
-				return false;
+		}
 
-			if (property == "class")
-			{
-				printf("loading class: %s\n", argv[x]);
-				split_namespace_class(argv[x], nameSpace, className);
+		// If we have an error loading assemblies then return false
+		if (images.empty())
+			return false;
 
-				instanceClass = mono_class_from_name(monoImage, nameSpace.c_str(), className.c_str());
-				if (!instanceClass)
-					fprintf(stderr, "Error loading: namespace %s / class %s\n", nameSpace.c_str(), className.c_str());
-			}
+		if (src.length() >= 0)
+		{
+			printf("loading class: %s\n", src.c_str());
+			split_namespace_class(src.c_str(), nameSpace, className);
 
+			instanceClass = find_class(nameSpace.c_str(), className.c_str(), images);
+			if (!instanceClass)
+				fprintf(stderr, "Error loading: namespace %s / class %s\n", nameSpace.c_str(), className.c_str());
 		}
 
 		if (!instanceClass)
@@ -314,7 +394,7 @@ public:
 
 		printf("Constructing an instance of: %s\n", className.c_str());
 		auto instance = pp_instance();
-		pluginInstance = create_managed_wrapper(instance, nameSpace.c_str(), className.c_str(), monoImage);
+		pluginInstance = create_managed_wrapper(instance, nameSpace.c_str(), className.c_str(), images);
 
 		// Call Init method
 		printf("Calling Init on instance of: %s\n", className.c_str());
@@ -326,8 +406,6 @@ public:
 		
 		if (mono_invoke_with_desc(":Init(int,string[],string[])", args, instanceClass, pluginInstance, &result))
 			return *(bool *)mono_object_unbox(result);
-
-
 
 		return true;
 	}
@@ -412,10 +490,10 @@ public:
 	}
 
 private:
-	MonoImage *monoImage;
-	MonoImage *peppersharpImage;
+
 	MonoClass *instanceClass;
 	MonoObject *pluginInstance;
+	std::vector<MonoImage*> images;
 
 	// methods to be called on our instance
 	MonoMethod* did_change_view = NULL;

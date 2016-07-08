@@ -128,12 +128,8 @@ var common = (function() {
     moduleEl.setAttribute('id', 'nacl_module');
     moduleEl.setAttribute('width', width);
     moduleEl.setAttribute('height', height);
-    moduleEl.setAttribute('path', path);
-    moduleEl.setAttribute('src', path + '/' + name + '.nmf');
-
-    // pepper specific attributes
-    moduleEl.setAttribute('assembly', path + '/' + name + '.dll')  // set assembly to load
-    moduleEl.setAttribute('class', name + '.' + name)               // set class of Plugin Instance definition
+    moduleEl.setAttribute('path', __dirname + '\\' + path);
+    moduleEl.setAttribute('src', name + '.' + name);
 
     // Add any optional arguments
     if (attrs) {

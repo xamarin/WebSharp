@@ -17,12 +17,8 @@
               embed.type = 'application/electron-dotnet';
               embed.width = 300;
               embed.height = 200;
-              var assembly = document.createAttribute("assembly");       // Create a "assembly" attribute
-              assembly.value = ".\\bin\\Debug\\Graphics_2D.dll";                           // Set the value of the assembly attribute
-              embed.setAttributeNode(assembly);                          // Add the class attribute to <h1>
-              var klass = document.createAttribute("class");       // Create a "assembly" attribute
-              klass.value = "Graphics_2D.Graphics_2D";                           // Set the value of the assembly attribute
-              embed.setAttributeNode(klass);                          // Add the class attribute to <h1>
+              embed.setAttribute('path', __dirname + '.\\bin\\Debug');
+              embed.setAttribute('src', 'Graphics_2D.Graphics_2D');
               pluginTarget.appendChild(embed);
           }
       </script>
