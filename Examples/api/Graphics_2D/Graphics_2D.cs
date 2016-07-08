@@ -294,6 +294,7 @@ namespace Graphics_2D
             //   swapped back and forth.
             //
             PPBGraphics2D.ReplaceContents(context, image_data);
+            PPBCore.ReleaseResource(image_data);
         }
 
         void MainLoop(int dt)
