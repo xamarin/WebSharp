@@ -64,10 +64,9 @@ Right after the line that reads ```let window``` we will need to append ```'regi
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-// Tell electron that we will be using plugins and which one
-var ppapiPath = __dirname + '\\..\\..\\PepperPlugin\\bin\\Win32\\Debug\\PepperPlugin.dll';
-console.log('PPAPI path ' +  ppapiPath + ';application/electron-dotnet');
-app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';application/electron-dotnet');
+// Register the dotnet plugin with Electron:
+require('../../Tools/electron-dotnet').Register();
+
 ```
 
 When we create our browser window we also need to specify that plugins will be used so in the same file find the code that reads ```mainWindow = new BrowserWindow({width: 800, height: 600})``` and lets add a reference to ```'webPreferences': { 'plugins': true }```
@@ -99,29 +98,25 @@ Add the following code inside the ```<body>``` tag of the html.
       <div id="pluginTarget" />
       <script>
         var pluginTarget = document.getElementById("pluginTarget");
-        var moduleEl = document.createElement('embed');
-        moduleEl.setAttribute('name', 'plugin');
-        moduleEl.setAttribute('id', 'plugin');
-        moduleEl.setAttribute('width', 300);
-        moduleEl.setAttribute('height', 200);
-        moduleEl.setAttribute('type', 'application/electron-dotnet');
-        // pepper specific attributes
-        moduleEl.setAttribute('assembly', __dirname + "\\..\\bin\\Debug\\GettingStarted.dll")  // set assembly to load
-        moduleEl.setAttribute('class', "GettingStarted.HelloWorld")               // set class of Plugin Instance definition
+        var moduleEl = require('../../Tools/electron-dotnet').Embed({
+            name: 'plugin',
+            id: 'plugin',
+            width: 300,
+            height: 200,
+            src: 'GettingStarted.HelloWorld',
+            path: "..\\bin\\Debug\\"
+        });
         pluginTarget.appendChild(moduleEl);
 
       </script>
 ```
 
-The code you just added will append and ```<embed>``` tag dynamically to the html file that tells the PepperPlugin what assembly and class to load.
+The electron-dotnet's Embed method is a helper to create an ```<embed>``` tag that hosts a Module Instance implementation.
 
-```html
-        // pepper specific attributes
-        moduleEl.setAttribute('assembly', __dirname + "\\..\\bin\\Debug\\GettingStarted.dll")  // set assembly to load
-        moduleEl.setAttribute('class', "GettingStarted.HelloWorld")               // set class of Plugin Instance definition
-```
-
-The workhorses of the embed element are the ```assembly``` and ```class``` attributes.
+- height : The displayed height of the resource, in CSS pixels.
+- src : The dot net class the implements the Module Instance that is embedded.
+- path : The path where the assemblies can be found.
+- width : The displayed width of the resource, in CSS pixels.
 
 Now we can startup the application again with ```npm start``` and in the console you should see:
 
