@@ -12,6 +12,9 @@ The install should be in the same directory level as the WebSharp checkout but n
 ```
 .
 +-- nacl_sdk
+            +-- naclsdk (and naclsdk.bat for Windows)
+            +-- sdk_cache
+            +-- sdk_tools
 +-- WebSharp
 ```
 
