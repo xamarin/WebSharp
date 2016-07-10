@@ -15,11 +15,11 @@ The install should be in the same directory level as the WebSharp checkout but n
 +-- WebSharp
 ```
 
-To get the actual source files you will need to install the ```canary``` bundle.  Open a command prompt and change into the nacl_sdk directory that was just created and execute the following code.
+To get the actual source files you will need to install the ```pepper-canary``` bundle.  Open a command prompt and change into the nacl_sdk directory that was just created and execute the following code.
 
 ```shell
 > cd nacl_sdk
-> naclsdk update canary
+> naclsdk update pepper-canary
 ```
 
 The previous command will install the source files that the PepperPlugin solution will use to build the necessary assemblies.
