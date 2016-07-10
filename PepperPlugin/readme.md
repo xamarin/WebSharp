@@ -4,9 +4,12 @@ PepperPlugin
 Pre-requisites
 ---
 
-To compile the PepperPlugin solution the [nacl sdk](https://developer.chrome.com/native-client/sdk/download) is required to build the PepperPlugin solution.
+- [mono embedding](http://www.mono-project.com/docs/advanced/embedding/) is being used so an installation of [mono](http://www.mono-project.com/download/) needs to be installed. (Note: 32bit installation for right now)
+- nacl_sdk
 
-You can find the install instructions for windows here: https://developer.chrome.com/native-client/sdk/download#installing-the-sdk.  
+To compile the PepperPlugin solution the [nacl sdk](https://developer.chrome.com/native-client/sdk/download) is required.
+
+You can find platform specific install instructions here: https://developer.chrome.com/native-client/sdk/download#installing-the-sdk.  
 The install should be in the same directory level as the WebSharp checkout but not in it.
 
 ```
