@@ -294,6 +294,9 @@ namespace Graphics_2D
             //   swapped back and forth.
             //
             PPBGraphics2D.ReplaceContents(context, image_data);
+
+            // Clean up after ourselves
+            PPBImageData.Unmap(image_data);
             PPBCore.ReleaseResource(image_data);
         }
 

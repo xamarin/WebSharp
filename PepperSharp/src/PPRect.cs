@@ -21,6 +21,14 @@ namespace PepperSharp
             : this(origin.X, origin.Y, size.Width, size.Height)
         {  }
 
+        public PPRect(int width, int height)
+            :this(0,0,width,height)
+        { }
+
+        public PPRect(PPSize size)
+            : this(size.Width, size.Height)
+        { }
+
         public PPPoint Origin
         {
             get { return point;  }
@@ -57,10 +65,42 @@ namespace PepperSharp
             set { size.height = value; }
         }
 
+        public int Right
+        {
+            get { return X + Width; }
+        }
+
+        public int Bottom
+        {
+            get { return Y + Height; }
+        }
+
         public override string ToString()
         {
             return String.Format($"PPRect : ({point.x},{point.y}),({size.width}, {size.height})");
         }
 
+        public static bool operator ==(PPRect r1, PPRect r2)
+        {
+            // If both are null, or both are same instance, return true.
+            if (System.Object.ReferenceEquals(r1, r2))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)r1 == null) || ((object)r2 == null))
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Height;
+        }
+
+        public static bool operator !=(PPRect r1, PPRect r2)
+        {
+            return !(r1 == r2);
+        }
     }
 }
