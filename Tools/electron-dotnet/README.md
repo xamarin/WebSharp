@@ -7,7 +7,7 @@ Usage:
 
 Register the dotnet plugin with Electron:
 
-var ed = require("electron-dotnet").Register();
+```require("electron-dotnet").Register();```
 
 
 To embed a Module Instance:
