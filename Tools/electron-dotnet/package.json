@@ -1,0 +1,16 @@
+{
+  "name": "electron-dotnet",
+  "version": "0.0.1",
+  "description": "electron-dotnet provides helper methods to register and embed dotnet plugins into Electron.",
+  "main": "index.js",
+  "author": "Xamarin, Inc",
+  "scripts": {},
+  "keywords": [
+    "electron",
+    "dotnet",
+    "mono",
+    "ppapi"
+  ],
+  "license": "To be determined",
+  "dependencies": {}
+}
