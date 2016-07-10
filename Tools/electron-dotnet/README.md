@@ -7,11 +7,14 @@ Usage:
 
 Register the dotnet plugin with Electron:
 
-```require("electron-dotnet").Register();```
+```javascript
+require("electron-dotnet").Register();
+```
 
 
 To embed a Module Instance:
 
+```javascript
       <script>
         var pluginTarget = document.getElementById("pluginTarget");
         var moduleEl = require('electron-dotnet').Embed({
@@ -23,6 +26,7 @@ To embed a Module Instance:
             path: "..\\bin\\Debug\\"
         });
         pluginTarget.appendChild(moduleEl);
+```
 
 The Embed method is a helper to create an ```<embed>``` tag that hosts a Module Instance implementation.
 
