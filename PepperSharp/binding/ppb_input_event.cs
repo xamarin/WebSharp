@@ -176,19 +176,19 @@ public enum PPInputEventType {
  * function on PPB_InputEvent.
  */
 public enum PPInputEventModifier {
-  Shiftkey = 1 << 0,
-  Controlkey = 1 << 1,
-  Altkey = 1 << 2,
-  Metakey = 1 << 3,
-  Iskeypad = 1 << 4,
-  Isautorepeat = 1 << 5,
-  Leftbuttondown = 1 << 6,
-  Middlebuttondown = 1 << 7,
-  Rightbuttondown = 1 << 8,
-  Capslockkey = 1 << 9,
-  Numlockkey = 1 << 10,
-  Isleft = 1 << 11,
-  Isright = 1 << 12
+  Shiftkey = 1<<0,
+  Controlkey = 1<<1,
+  Altkey = 1<<2,
+  Metakey = 1<<3,
+  Iskeypad = 1<<4,
+  Isautorepeat = 1<<5,
+  Leftbuttondown = 1<<6,
+  Middlebuttondown = 1<<7,
+  Rightbuttondown = 1<<8,
+  Capslockkey = 1<<9,
+  Numlockkey = 1<<10,
+  Isleft = 1<<11,
+  Isright = 1<<12
 }
 
 /**
@@ -213,7 +213,7 @@ public enum PPInputEventClass {
    * testing, which is very uncommon. Requesting non-filtered mouse events will
    * lead to higher performance.
    */
-  Mouse = 1 << 0,
+  Mouse = 1<<0,
   /**
    * Requests keyboard events. Often you will want to request filtered mode
    * (via RequestFilteringInputEvents) for keyboard events so you can pass on
@@ -225,7 +225,7 @@ public enum PPInputEventClass {
    * sent to the page. You can not request these keyboard commands since it
    * would allow pages to trap users on a page.
    */
-  Keyboard = 1 << 1,
+  Keyboard = 1<<1,
   /**
    * Identifies scroll wheel input event. Wheel events must be requested in
    * filtering mode via RequestFilteringInputEvents(). This is because many
@@ -244,7 +244,7 @@ public enum PPInputEventClass {
    * for scrolling, producing the nested scrolling behavior users expect from
    * frames in a page.
    */
-  Wheel = 1 << 2,
+  Wheel = 1<<2,
   /**
    * Identifies touch input events.
    *
@@ -257,13 +257,13 @@ public enum PPInputEventClass {
    * touch-end. If the plugin does register for touch events, then the synthetic
    * mouse events are not created.
    */
-  Touch = 1 << 3,
+  Touch = 1<<3,
   /**
    * Identifies IME composition input events.
    *
    * Request this input event class if you allow on-the-spot IME input.
    */
-  Ime = 1 << 4
+  Ime = 1<<4
 }
 /**
  * @}

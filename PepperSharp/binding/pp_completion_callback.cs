@@ -58,7 +58,7 @@ public enum PPCompletionCallbackFlag {
    * no way to run the callback on the correct thread. In this case, a log
    * message will be emitted and the plugin will be made to crash.
    */
-  None = 0 << 0,
+  None = 0<<0,
   /**
    * This flag allows any method taking such callback to complete synchronously
    * and not call the callback if the operation would not block. This is useful
@@ -73,7 +73,7 @@ public enum PPCompletionCallbackFlag {
    * run asynchronously, the invoked method will return
    * PP_ERROR_NO_MESSAGE_LOOP.
    */
-  Optional = 1 << 0
+  Optional = 1<<0
 }
 /**
  * @}

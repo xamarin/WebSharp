@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="binding\ppb_audio.cs" />
+    <Compile Include="binding\ppb_audio_buffer.cs" />
+    <Compile Include="binding\ppb_audio_config.cs" />
+    <Compile Include="binding\ppb_audio_encoder.cs" />
     <Compile Include="binding\ppb_console.cs" />
     <Compile Include="binding\ppb_core.cs" />
     <Compile Include="binding\ppb_fullscreen.cs" />
@@ -63,6 +67,8 @@
     <Compile Include="binding\ppb_var_dictionary.cs" />
     <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\ppb_websocket.cs" />
+    <Compile Include="binding\pp_array_output.cs" />
+    <Compile Include="binding\pp_codecs.cs" />
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ppb_var_extension.cs" />
     <Compile Include="src\Instance.cs" />

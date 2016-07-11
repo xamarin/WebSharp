@@ -4,6 +4,10 @@
 #include "pepper_entrypoints.h"
 
 #include "ppapi/c/ppb.h"
+#include "ppapi/c/ppb_audio.h"
+#include "ppapi/c/ppb_audio_buffer.h"
+#include "ppapi/c/ppb_audio_config.h"
+#include "ppapi/c/ppb_audio_encoder.h"
 #include "ppapi/c/ppb_console.h"
 #include "ppapi/c/ppb_core.h"
 #include "ppapi/c/ppb_fullscreen.h"
@@ -59,6 +63,24 @@ namespace Pepper {
 
 namespace Pepper {
 	namespace {
+		template <> const char*	interface_name<PPB_Audio_1_0>() {
+			return PPB_AUDIO_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_Audio_1_1>() {
+			return PPB_AUDIO_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_AudioBuffer_0_1>() {
+			return PPB_AUDIOBUFFER_INTERFACE_0_1;
+		}
+		template <> const char*	interface_name<PPB_AudioConfig_1_0>() {
+			return PPB_AUDIO_CONFIG_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_AudioConfig_1_1>() {
+			return PPB_AUDIO_CONFIG_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_AudioEncoder_0_1>() {
+			return PPB_AUDIOENCODER_INTERFACE_0_1;
+		}
 		template <> const char*	interface_name<PPB_Console_1_0>() {
 			return PPB_CONSOLE_INTERFACE_1_0;
 		}
@@ -184,6 +206,251 @@ namespace Pepper {
 	extern "C" {
 #endif
 	namespace {
+
+		#pragma region /* Begin entry point methods for PPB_Audio */
+
+		PEPPER_EXPORT PP_Resource PPB_Audio_Create(PP_Instance instance, PP_Resource config, PPB_Audio_Callback audio_callback, void* user_data) {
+			if (has_interface<PPB_Audio_1_1>()) {
+				return get_interface<PPB_Audio_1_1>()->Create(instance, config, audio_callback, user_data);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_Audio_IsAudio(PP_Resource resource) {
+			if (has_interface<PPB_Audio_1_1>()) {
+				return get_interface<PPB_Audio_1_1>()->IsAudio(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_Audio_GetCurrentConfig(PP_Resource audio) {
+			if (has_interface<PPB_Audio_1_1>()) {
+				return get_interface<PPB_Audio_1_1>()->GetCurrentConfig(audio);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_Audio_StartPlayback(PP_Resource audio) {
+			if (has_interface<PPB_Audio_1_1>()) {
+				return get_interface<PPB_Audio_1_1>()->StartPlayback(audio);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_Audio_StopPlayback(PP_Resource audio) {
+			if (has_interface<PPB_Audio_1_1>()) {
+				return get_interface<PPB_Audio_1_1>()->StopPlayback(audio);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_Audio */
+
+		#pragma region /* Begin entry point methods for PPB_AudioBuffer */
+
+		PEPPER_EXPORT PP_Bool PPB_AudioBuffer_IsAudioBuffer(PP_Resource resource) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->IsAudioBuffer(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_TimeDelta PPB_AudioBuffer_GetTimestamp(PP_Resource buffer) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->GetTimestamp(buffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_AudioBuffer_SetTimestamp(PP_Resource buffer, PP_TimeDelta timestamp) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				get_interface<PPB_AudioBuffer_0_1>()->SetTimestamp(buffer, timestamp);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT PP_AudioBuffer_SampleRate PPB_AudioBuffer_GetSampleRate(PP_Resource buffer) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->GetSampleRate(buffer);
+			}
+			return PP_AUDIOBUFFER_SAMPLERATE_UNKNOWN;
+		}
+
+		PEPPER_EXPORT PP_AudioBuffer_SampleSize PPB_AudioBuffer_GetSampleSize(PP_Resource buffer) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->GetSampleSize(buffer);
+			}
+			return PP_AUDIOBUFFER_SAMPLESIZE_UNKNOWN;
+		}
+
+		PEPPER_EXPORT uint32_t PPB_AudioBuffer_GetNumberOfChannels(PP_Resource buffer) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->GetNumberOfChannels(buffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT uint32_t PPB_AudioBuffer_GetNumberOfSamples(PP_Resource buffer) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->GetNumberOfSamples(buffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void* PPB_AudioBuffer_GetDataBuffer(PP_Resource buffer) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->GetDataBuffer(buffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT uint32_t PPB_AudioBuffer_GetDataBufferSize(PP_Resource buffer) {
+			if (has_interface<PPB_AudioBuffer_0_1>()) {
+				return get_interface<PPB_AudioBuffer_0_1>()->GetDataBufferSize(buffer);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_AudioBuffer */
+
+		#pragma region /* Begin entry point methods for PPB_AudioConfig */
+
+		PEPPER_EXPORT PP_Resource PPB_AudioConfig_CreateStereo16Bit(PP_Instance instance, PP_AudioSampleRate sample_rate, uint32_t sample_frame_count) {
+			if (has_interface<PPB_AudioConfig_1_1>()) {
+				return get_interface<PPB_AudioConfig_1_1>()->CreateStereo16Bit(instance, sample_rate, sample_frame_count);
+			}
+			else if (has_interface<PPB_AudioConfig_1_0>()) {
+				return get_interface<PPB_AudioConfig_1_0>()->CreateStereo16Bit(instance, sample_rate, sample_frame_count);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT uint32_t PPB_AudioConfig_RecommendSampleFrameCount(PP_Instance instance, PP_AudioSampleRate sample_rate, uint32_t requested_sample_frame_count) {
+			if (has_interface<PPB_AudioConfig_1_1>()) {
+				return get_interface<PPB_AudioConfig_1_1>()->RecommendSampleFrameCount(instance, sample_rate, requested_sample_frame_count);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_AudioConfig_IsAudioConfig(PP_Resource resource) {
+			if (has_interface<PPB_AudioConfig_1_1>()) {
+				return get_interface<PPB_AudioConfig_1_1>()->IsAudioConfig(resource);
+			}
+			else if (has_interface<PPB_AudioConfig_1_0>()) {
+				return get_interface<PPB_AudioConfig_1_0>()->IsAudioConfig(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_AudioSampleRate PPB_AudioConfig_GetSampleRate(PP_Resource config) {
+			if (has_interface<PPB_AudioConfig_1_1>()) {
+				return get_interface<PPB_AudioConfig_1_1>()->GetSampleRate(config);
+			}
+			else if (has_interface<PPB_AudioConfig_1_0>()) {
+				return get_interface<PPB_AudioConfig_1_0>()->GetSampleRate(config);
+			}
+			return PP_AUDIOSAMPLERATE_NONE;
+		}
+
+		PEPPER_EXPORT uint32_t PPB_AudioConfig_GetSampleFrameCount(PP_Resource config) {
+			if (has_interface<PPB_AudioConfig_1_1>()) {
+				return get_interface<PPB_AudioConfig_1_1>()->GetSampleFrameCount(config);
+			}
+			else if (has_interface<PPB_AudioConfig_1_0>()) {
+				return get_interface<PPB_AudioConfig_1_0>()->GetSampleFrameCount(config);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_AudioSampleRate PPB_AudioConfig_RecommendSampleRate(PP_Instance instance) {
+			if (has_interface<PPB_AudioConfig_1_1>()) {
+				return get_interface<PPB_AudioConfig_1_1>()->RecommendSampleRate(instance);
+			}
+			return PP_AUDIOSAMPLERATE_NONE;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_AudioConfig */
+
+		#pragma region /* Begin entry point methods for PPB_AudioEncoder */
+
+		PEPPER_EXPORT PP_Resource PPB_AudioEncoder_Create(PP_Instance instance) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_AudioEncoder_IsAudioEncoder(PP_Resource resource) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->IsAudioEncoder(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_AudioEncoder_GetSupportedProfiles(PP_Resource audio_encoder, struct PP_ArrayOutput output, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->GetSupportedProfiles(audio_encoder, output, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_AudioEncoder_Initialize(PP_Resource audio_encoder, uint32_t channels, PP_AudioBuffer_SampleRate input_sample_rate, PP_AudioBuffer_SampleSize input_sample_size, PP_AudioProfile output_profile, uint32_t initial_bitrate, PP_HardwareAcceleration acceleration, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->Initialize(audio_encoder, channels, input_sample_rate, input_sample_size, output_profile, initial_bitrate, acceleration, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_AudioEncoder_GetNumberOfSamples(PP_Resource audio_encoder) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->GetNumberOfSamples(audio_encoder);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_AudioEncoder_GetBuffer(PP_Resource audio_encoder, PP_Resource* audio_buffer, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->GetBuffer(audio_encoder, audio_buffer, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_AudioEncoder_Encode(PP_Resource audio_encoder, PP_Resource audio_buffer, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->Encode(audio_encoder, audio_buffer, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_AudioEncoder_GetBitstreamBuffer(PP_Resource audio_encoder, struct PP_AudioBitstreamBuffer* bitstream_buffer, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				return get_interface<PPB_AudioEncoder_0_1>()->GetBitstreamBuffer(audio_encoder, bitstream_buffer, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_AudioEncoder_RecycleBitstreamBuffer(PP_Resource audio_encoder, struct PP_AudioBitstreamBuffer bitstream_buffer) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				get_interface<PPB_AudioEncoder_0_1>()->RecycleBitstreamBuffer(audio_encoder, &bitstream_buffer);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_AudioEncoder_RequestBitrateChange(PP_Resource audio_encoder, uint32_t bitrate) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				get_interface<PPB_AudioEncoder_0_1>()->RequestBitrateChange(audio_encoder, bitrate);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_AudioEncoder_Close(PP_Resource audio_encoder) {
+			if (has_interface<PPB_AudioEncoder_0_1>()) {
+				get_interface<PPB_AudioEncoder_0_1>()->Close(audio_encoder);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_AudioEncoder */
 
 		#pragma region /* Begin entry point methods for PPB_Console */
 
