@@ -26,6 +26,9 @@
 #include "ppapi/c/ppb_var_array.h"
 #include "ppapi/c/ppb_var_array_buffer.h"
 #include "ppapi/c/ppb_var_dictionary.h"
+#include "ppapi/c/ppb_video_decoder.h"
+#include "ppapi/c/ppb_video_encoder.h"
+#include "ppapi/c/ppb_video_frame.h"
 #include "ppapi/c/ppb_view.h"
 #include "ppapi/c/ppb_websocket.h"
 #include "ppapi/c/ppp_input_event.h"
@@ -170,6 +173,27 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_VarDictionary_1_0>() {
 			return PPB_VAR_DICTIONARY_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_VideoDecoder_0_1>() {
+			return PPB_VIDEODECODER_INTERFACE_0_1;
+		}
+		template <> const char*	interface_name<PPB_VideoDecoder_0_2>() {
+			return PPB_VIDEODECODER_INTERFACE_0_2;
+		}
+		template <> const char*	interface_name<PPB_VideoDecoder_1_0>() {
+			return PPB_VIDEODECODER_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_VideoDecoder_1_1>() {
+			return PPB_VIDEODECODER_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_VideoEncoder_0_1>() {
+			return PPB_VIDEOENCODER_INTERFACE_0_1;
+		}
+		template <> const char*	interface_name<PPB_VideoEncoder_0_2>() {
+			return PPB_VIDEOENCODER_INTERFACE_0_2;
+		}
+		template <> const char*	interface_name<PPB_VideoFrame_0_1>() {
+			return PPB_VIDEOFRAME_INTERFACE_0_1;
 		}
 		template <> const char*	interface_name<PPB_View_1_0>() {
 			return PPB_VIEW_INTERFACE_1_0;
@@ -1462,6 +1486,297 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_VarDictionary */
+
+		#pragma region /* Begin entry point methods for PPB_VideoDecoder */
+
+		PEPPER_EXPORT PP_Resource PPB_VideoDecoder_Create(PP_Instance instance) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				return get_interface<PPB_VideoDecoder_1_1>()->Create(instance);
+			}
+			else if (has_interface<PPB_VideoDecoder_1_0>()) {
+				return get_interface<PPB_VideoDecoder_1_0>()->Create(instance);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_2>()) {
+				return get_interface<PPB_VideoDecoder_0_2>()->Create(instance);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_1>()) {
+				return get_interface<PPB_VideoDecoder_0_1>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VideoDecoder_IsVideoDecoder(PP_Resource resource) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				return get_interface<PPB_VideoDecoder_1_1>()->IsVideoDecoder(resource);
+			}
+			else if (has_interface<PPB_VideoDecoder_1_0>()) {
+				return get_interface<PPB_VideoDecoder_1_0>()->IsVideoDecoder(resource);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_2>()) {
+				return get_interface<PPB_VideoDecoder_0_2>()->IsVideoDecoder(resource);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_1>()) {
+				return get_interface<PPB_VideoDecoder_0_1>()->IsVideoDecoder(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoDecoder_Initialize(PP_Resource video_decoder, PP_Resource graphics3d_context, PP_VideoProfile profile, PP_HardwareAcceleration acceleration, uint32_t min_picture_count, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				return get_interface<PPB_VideoDecoder_1_1>()->Initialize(video_decoder, graphics3d_context, profile, acceleration, min_picture_count, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoDecoder_Decode(PP_Resource video_decoder, uint32_t decode_id, uint32_t size, const void* buffer, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				return get_interface<PPB_VideoDecoder_1_1>()->Decode(video_decoder, decode_id, size, buffer, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_1_0>()) {
+				return get_interface<PPB_VideoDecoder_1_0>()->Decode(video_decoder, decode_id, size, buffer, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_2>()) {
+				return get_interface<PPB_VideoDecoder_0_2>()->Decode(video_decoder, decode_id, size, buffer, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_1>()) {
+				return get_interface<PPB_VideoDecoder_0_1>()->Decode(video_decoder, decode_id, size, buffer, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoDecoder_GetPicture(PP_Resource video_decoder, struct PP_VideoPicture* picture, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				return get_interface<PPB_VideoDecoder_1_1>()->GetPicture(video_decoder, picture, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_1_0>()) {
+				return get_interface<PPB_VideoDecoder_1_0>()->GetPicture(video_decoder, picture, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_VideoDecoder_RecyclePicture(PP_Resource video_decoder, struct PP_VideoPicture picture) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				get_interface<PPB_VideoDecoder_1_1>()->RecyclePicture(video_decoder, &picture);
+			}
+			else if (has_interface<PPB_VideoDecoder_1_0>()) {
+				get_interface<PPB_VideoDecoder_1_0>()->RecyclePicture(video_decoder, &picture);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_2>()) {
+				get_interface<PPB_VideoDecoder_0_2>()->RecyclePicture(video_decoder, &picture);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_1>()) {
+				get_interface<PPB_VideoDecoder_0_1>()->RecyclePicture(video_decoder, &picture);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoDecoder_Flush(PP_Resource video_decoder, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				return get_interface<PPB_VideoDecoder_1_1>()->Flush(video_decoder, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_1_0>()) {
+				return get_interface<PPB_VideoDecoder_1_0>()->Flush(video_decoder, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_2>()) {
+				return get_interface<PPB_VideoDecoder_0_2>()->Flush(video_decoder, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_1>()) {
+				return get_interface<PPB_VideoDecoder_0_1>()->Flush(video_decoder, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoDecoder_Reset(PP_Resource video_decoder, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoDecoder_1_1>()) {
+				return get_interface<PPB_VideoDecoder_1_1>()->Reset(video_decoder, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_1_0>()) {
+				return get_interface<PPB_VideoDecoder_1_0>()->Reset(video_decoder, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_2>()) {
+				return get_interface<PPB_VideoDecoder_0_2>()->Reset(video_decoder, callback);
+			}
+			else if (has_interface<PPB_VideoDecoder_0_1>()) {
+				return get_interface<PPB_VideoDecoder_0_1>()->Reset(video_decoder, callback);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_VideoDecoder */
+
+		#pragma region /* Begin entry point methods for PPB_VideoEncoder */
+
+		PEPPER_EXPORT PP_Resource PPB_VideoEncoder_Create(PP_Instance instance) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->Create(instance);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VideoEncoder_IsVideoEncoder(PP_Resource resource) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->IsVideoEncoder(resource);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->IsVideoEncoder(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoEncoder_GetSupportedProfiles(PP_Resource video_encoder, struct PP_ArrayOutput output, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->GetSupportedProfiles(video_encoder, output, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoEncoder_Initialize(PP_Resource video_encoder, PP_VideoFrame_Format input_format, struct PP_Size input_visible_size, PP_VideoProfile output_profile, uint32_t initial_bitrate, PP_HardwareAcceleration acceleration, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->Initialize(video_encoder, input_format, &input_visible_size, output_profile, initial_bitrate, acceleration, callback);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->Initialize(video_encoder, input_format, &input_visible_size, output_profile, initial_bitrate, acceleration, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoEncoder_GetFramesRequired(PP_Resource video_encoder) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->GetFramesRequired(video_encoder);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->GetFramesRequired(video_encoder);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoEncoder_GetFrameCodedSize(PP_Resource video_encoder, struct PP_Size* coded_size) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->GetFrameCodedSize(video_encoder, coded_size);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->GetFrameCodedSize(video_encoder, coded_size);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoEncoder_GetVideoFrame(PP_Resource video_encoder, PP_Resource* video_frame, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->GetVideoFrame(video_encoder, video_frame, callback);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->GetVideoFrame(video_encoder, video_frame, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoEncoder_Encode(PP_Resource video_encoder, PP_Resource video_frame, PP_Bool force_keyframe, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->Encode(video_encoder, video_frame, force_keyframe, callback);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->Encode(video_encoder, video_frame, force_keyframe, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_VideoEncoder_GetBitstreamBuffer(PP_Resource video_encoder, struct PP_BitstreamBuffer* bitstream_buffer, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				return get_interface<PPB_VideoEncoder_0_2>()->GetBitstreamBuffer(video_encoder, bitstream_buffer, callback);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				return get_interface<PPB_VideoEncoder_0_1>()->GetBitstreamBuffer(video_encoder, bitstream_buffer, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_VideoEncoder_RecycleBitstreamBuffer(PP_Resource video_encoder, struct PP_BitstreamBuffer bitstream_buffer) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				get_interface<PPB_VideoEncoder_0_2>()->RecycleBitstreamBuffer(video_encoder, &bitstream_buffer);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				get_interface<PPB_VideoEncoder_0_1>()->RecycleBitstreamBuffer(video_encoder, &bitstream_buffer);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_VideoEncoder_RequestEncodingParametersChange(PP_Resource video_encoder, uint32_t bitrate, uint32_t framerate) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				get_interface<PPB_VideoEncoder_0_2>()->RequestEncodingParametersChange(video_encoder, bitrate, framerate);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				get_interface<PPB_VideoEncoder_0_1>()->RequestEncodingParametersChange(video_encoder, bitrate, framerate);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_VideoEncoder_Close(PP_Resource video_encoder) {
+			if (has_interface<PPB_VideoEncoder_0_2>()) {
+				get_interface<PPB_VideoEncoder_0_2>()->Close(video_encoder);
+			}
+			else if (has_interface<PPB_VideoEncoder_0_1>()) {
+				get_interface<PPB_VideoEncoder_0_1>()->Close(video_encoder);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_VideoEncoder */
+
+		#pragma region /* Begin entry point methods for PPB_VideoFrame */
+
+		PEPPER_EXPORT PP_Bool PPB_VideoFrame_IsVideoFrame(PP_Resource resource) {
+			if (has_interface<PPB_VideoFrame_0_1>()) {
+				return get_interface<PPB_VideoFrame_0_1>()->IsVideoFrame(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_TimeDelta PPB_VideoFrame_GetTimestamp(PP_Resource frame) {
+			if (has_interface<PPB_VideoFrame_0_1>()) {
+				return get_interface<PPB_VideoFrame_0_1>()->GetTimestamp(frame);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_VideoFrame_SetTimestamp(PP_Resource frame, PP_TimeDelta timestamp) {
+			if (has_interface<PPB_VideoFrame_0_1>()) {
+				get_interface<PPB_VideoFrame_0_1>()->SetTimestamp(frame, timestamp);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT PP_VideoFrame_Format PPB_VideoFrame_GetFormat(PP_Resource frame) {
+			if (has_interface<PPB_VideoFrame_0_1>()) {
+				return get_interface<PPB_VideoFrame_0_1>()->GetFormat(frame);
+			}
+			return PP_VIDEOFRAME_FORMAT_UNKNOWN;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_VideoFrame_GetSize(PP_Resource frame, struct PP_Size* size) {
+			if (has_interface<PPB_VideoFrame_0_1>()) {
+				return get_interface<PPB_VideoFrame_0_1>()->GetSize(frame, size);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT void* PPB_VideoFrame_GetDataBuffer(PP_Resource frame) {
+			if (has_interface<PPB_VideoFrame_0_1>()) {
+				return get_interface<PPB_VideoFrame_0_1>()->GetDataBuffer(frame);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT uint32_t PPB_VideoFrame_GetDataBufferSize(PP_Resource frame) {
+			if (has_interface<PPB_VideoFrame_0_1>()) {
+				return get_interface<PPB_VideoFrame_0_1>()->GetDataBufferSize(frame);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_VideoFrame */
 
 		#pragma region /* Begin entry point methods for PPB_View */
 

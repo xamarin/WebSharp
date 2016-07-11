@@ -65,6 +65,9 @@
     <Compile Include="binding\ppb_var_array.cs" />
     <Compile Include="binding\ppb_var_array_buffer.cs" />
     <Compile Include="binding\ppb_var_dictionary.cs" />
+    <Compile Include="binding\ppb_video_decoder.cs" />
+    <Compile Include="binding\ppb_video_encoder.cs" />
+    <Compile Include="binding\ppb_video_frame.cs" />
     <Compile Include="binding\ppb_view.cs" />
     <Compile Include="binding\ppb_websocket.cs" />
     <Compile Include="binding\pp_array_output.cs" />
