@@ -179,6 +179,16 @@ namespace PepperSharp
             return PPBVar.VarToUtf8(ppvar, out len);
         }
 
+        public PPResource AsResource()
+        {
+            if (!IsResource)
+            {
+                return PPResource.Empty;
+            }
+
+            return PPBVar.VarToResource(ppvar);
+        }
+
         public PPVar AsPPVar()
         {
             return ppvar;

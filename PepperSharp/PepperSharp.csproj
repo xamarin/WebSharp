@@ -54,6 +54,8 @@
     <Compile Include="binding\ppb_image_data.cs" />
     <Compile Include="binding\ppb_input_event.cs" />
     <Compile Include="binding\ppb_instance.cs" />
+    <Compile Include="binding\ppb_media_stream_audio_track.cs" />
+    <Compile Include="binding\ppb_media_stream_video_track.cs" />
     <Compile Include="binding\ppb_message_loop.cs" />
     <Compile Include="binding\ppb_messaging.cs" />
     <Compile Include="binding\ppb_mouse_cursor.cs" />
@@ -92,14 +94,17 @@
     <Compile Include="binding\pp_stdint.cs" />
     <Compile Include="binding\pp_time.cs" />
     <Compile Include="binding\pp_touch_point.cs" />
-    <Compile Include="src\pp_completion_callback_extensions.cs" />
+    <Compile Include="src\PPCompletionCallback.cs" />
+    <Compile Include="src\PPResource.cs" />
     <Compile Include="src\runtime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\PPPoint.cs" />
     <Compile Include="src\PPRect.cs" />
     <Compile Include="src\PPSize.cs" />
     <Compile Include="src\Var.cs" />
+    <Compile Include="src\VarArray.cs" />
     <Compile Include="src\VarArrayBuffer.cs" />
+    <Compile Include="src\VarDictionary.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

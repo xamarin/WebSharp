@@ -165,7 +165,7 @@ namespace WebSocket
 
             hexString.Append("...");
 
-            array.UnMap();
+            array.Unmap();
             return hexString.ToString();
         }
 
@@ -181,7 +181,7 @@ namespace WebSocket
             for (int i = 0; i < size; ++i)
                 data[i] = (byte)message[i];
             arrayBuffer.Flush();
-            arrayBuffer.UnMap();
+            arrayBuffer.Unmap();
             PPBWebSocket.SendMessage(websocket_, arrayBuffer);
             var messageText = ArrayToString(arrayBuffer);
             PostMessage($"send (binary): {messageText}");

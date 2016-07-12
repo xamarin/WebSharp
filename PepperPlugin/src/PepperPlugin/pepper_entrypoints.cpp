@@ -15,10 +15,13 @@
 #include "ppapi/c/ppb_image_data.h"
 #include "ppapi/c/ppb_input_event.h"
 #include "ppapi/c/ppb_instance.h"
+#include "ppapi/c/ppb_media_stream_audio_track.h"
+#include "ppapi/c/ppb_media_stream_video_track.h"
 #include "ppapi/c/ppb_message_loop.h"
 #include "ppapi/c/ppb_messaging.h"
 #include "ppapi/c/ppb_mouse_cursor.h"
 #include "ppapi/c/ppb_mouse_lock.h"
+#include "ppapi/c/ppb_opengles2.h"
 #include "ppapi/c/ppb_url_loader.h"
 #include "ppapi/c/ppb_url_request_info.h"
 #include "ppapi/c/ppb_url_response_info.h"
@@ -132,6 +135,15 @@ namespace Pepper {
 		template <> const char*	interface_name<PPB_Instance_1_0>() {
 			return PPB_INSTANCE_INTERFACE_1_0;
 		}
+		template <> const char*	interface_name<PPB_MediaStreamAudioTrack_0_1>() {
+			return PPB_MEDIASTREAMAUDIOTRACK_INTERFACE_0_1;
+		}
+		template <> const char*	interface_name<PPB_MediaStreamVideoTrack_0_1>() {
+			return PPB_MEDIASTREAMVIDEOTRACK_INTERFACE_0_1;
+		}
+		template <> const char*	interface_name<PPB_MediaStreamVideoTrack_1_0>() {
+			return PPB_MEDIASTREAMVIDEOTRACK_INTERFACE_1_0;
+		}
 		template <> const char*	interface_name<PPB_MessageLoop_1_0>() {
 			return PPB_MESSAGELOOP_INTERFACE_1_0;
 		}
@@ -146,6 +158,30 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_MouseLock_1_0>() {
 			return PPB_MOUSELOCK_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2_1_0>() {
+			return PPB_OPENGLES2_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2InstancedArrays_1_0>() {
+			return PPB_OPENGLES2_INSTANCEDARRAYS_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2FramebufferBlit_1_0>() {
+			return PPB_OPENGLES2_FRAMEBUFFERBLIT_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2FramebufferMultisample_1_0>() {
+			return PPB_OPENGLES2_FRAMEBUFFERMULTISAMPLE_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2ChromiumEnableFeature_1_0>() {
+			return PPB_OPENGLES2_CHROMIUMENABLEFEATURE_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2ChromiumMapSub_1_0>() {
+			return PPB_OPENGLES2_CHROMIUMMAPSUB_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2Query_1_0>() {
+			return PPB_OPENGLES2_QUERY_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_OpenGLES2VertexArrayObject_1_0>() {
+			return PPB_OPENGLES2_VERTEXARRAYOBJECT_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_URLLoader_1_0>() {
 			return PPB_URLLOADER_INTERFACE_1_0;
@@ -1055,6 +1091,171 @@ namespace Pepper {
 
 		#pragma endregion /* End entry point generation for PPB_Instance */
 
+		#pragma region /* Begin entry point methods for PPB_MediaStreamAudioTrack */
+
+		PEPPER_EXPORT PP_Bool PPB_MediaStreamAudioTrack_IsMediaStreamAudioTrack(PP_Resource resource) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->IsMediaStreamAudioTrack(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamAudioTrack_Configure(PP_Resource audio_track, const int32_t attrib_list[], struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->Configure(audio_track, attrib_list, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamAudioTrack_GetAttrib(PP_Resource audio_track, PP_MediaStreamAudioTrack_Attrib attrib, int32_t* value) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->GetAttrib(audio_track, attrib, value);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_MediaStreamAudioTrack_GetId(PP_Resource audio_track) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->GetId(audio_track);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_MediaStreamAudioTrack_HasEnded(PP_Resource audio_track) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->HasEnded(audio_track);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamAudioTrack_GetBuffer(PP_Resource audio_track, PP_Resource* buffer, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->GetBuffer(audio_track, buffer, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamAudioTrack_RecycleBuffer(PP_Resource audio_track, PP_Resource buffer) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->RecycleBuffer(audio_track, buffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_MediaStreamAudioTrack_Close(PP_Resource audio_track) {
+			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
+				get_interface<PPB_MediaStreamAudioTrack_0_1>()->Close(audio_track);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_MediaStreamAudioTrack */
+
+		#pragma region /* Begin entry point methods for PPB_MediaStreamVideoTrack */
+
+		PEPPER_EXPORT PP_Resource PPB_MediaStreamVideoTrack_Create(PP_Instance instance) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_MediaStreamVideoTrack_IsMediaStreamVideoTrack(PP_Resource resource) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->IsMediaStreamVideoTrack(resource);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->IsMediaStreamVideoTrack(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_Configure(PP_Resource video_track, const int32_t attrib_list[], struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->Configure(video_track, attrib_list, callback);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->Configure(video_track, attrib_list, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_GetAttrib(PP_Resource video_track, PP_MediaStreamVideoTrack_Attrib attrib, int32_t* value) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->GetAttrib(video_track, attrib, value);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->GetAttrib(video_track, attrib, value);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_MediaStreamVideoTrack_GetId(PP_Resource video_track) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->GetId(video_track);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->GetId(video_track);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_MediaStreamVideoTrack_HasEnded(PP_Resource video_track) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->HasEnded(video_track);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->HasEnded(video_track);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_GetFrame(PP_Resource video_track, PP_Resource* frame, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->GetFrame(video_track, frame, callback);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->GetFrame(video_track, frame, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_RecycleFrame(PP_Resource video_track, PP_Resource frame) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->RecycleFrame(video_track, frame);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->RecycleFrame(video_track, frame);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_MediaStreamVideoTrack_Close(PP_Resource video_track) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				get_interface<PPB_MediaStreamVideoTrack_1_0>()->Close(video_track);
+			}
+			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
+				get_interface<PPB_MediaStreamVideoTrack_0_1>()->Close(video_track);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_GetEmptyFrame(PP_Resource video_track, PP_Resource* frame, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->GetEmptyFrame(video_track, frame, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_PutFrame(PP_Resource video_track, PP_Resource frame) {
+			if (has_interface<PPB_MediaStreamVideoTrack_1_0>()) {
+				return get_interface<PPB_MediaStreamVideoTrack_1_0>()->PutFrame(video_track, frame);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_MediaStreamVideoTrack */
+
 		#pragma region /* Begin entry point methods for PPB_MessageLoop */
 
 		PEPPER_EXPORT PP_Resource PPB_MessageLoop_Create(PP_Instance instance) {
@@ -1164,6 +1365,1179 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_MouseLock */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2 */
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ActiveTexture(PP_Resource context, GLenum texture) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ActiveTexture(context, texture);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_AttachShader(PP_Resource context, GLuint program, GLuint shader) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->AttachShader(context, program, shader);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BindAttribLocation(PP_Resource context, GLuint program, GLuint index, const char* name) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BindAttribLocation(context, program, index, name);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BindBuffer(PP_Resource context, GLenum target, GLuint buffer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BindBuffer(context, target, buffer);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BindFramebuffer(PP_Resource context, GLenum target, GLuint framebuffer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BindFramebuffer(context, target, framebuffer);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BindRenderbuffer(PP_Resource context, GLenum target, GLuint renderbuffer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BindRenderbuffer(context, target, renderbuffer);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BindTexture(PP_Resource context, GLenum target, GLuint texture) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BindTexture(context, target, texture);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BlendColor(PP_Resource context, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BlendColor(context, red, green, blue, alpha);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BlendEquation(PP_Resource context, GLenum mode) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BlendEquation(context, mode);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BlendEquationSeparate(PP_Resource context, GLenum modeRGB, GLenum modeAlpha) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BlendEquationSeparate(context, modeRGB, modeAlpha);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BlendFunc(PP_Resource context, GLenum sfactor, GLenum dfactor) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BlendFunc(context, sfactor, dfactor);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BlendFuncSeparate(PP_Resource context, GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BlendFuncSeparate(context, srcRGB, dstRGB, srcAlpha, dstAlpha);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BufferData(PP_Resource context, GLenum target, GLsizeiptr size, const void* data, GLenum usage) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BufferData(context, target, size, data, usage);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_BufferSubData(PP_Resource context, GLenum target, GLintptr offset, GLsizeiptr size, const void* data) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->BufferSubData(context, target, offset, size, data);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLenum PPB_OpenGLES2_CheckFramebufferStatus(PP_Resource context, GLenum target) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->CheckFramebufferStatus(context, target);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Clear(PP_Resource context, GLbitfield mask) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Clear(context, mask);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ClearColor(PP_Resource context, GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ClearColor(context, red, green, blue, alpha);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ClearDepthf(PP_Resource context, GLclampf depth) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ClearDepthf(context, depth);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ClearStencil(PP_Resource context, GLint s) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ClearStencil(context, s);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ColorMask(PP_Resource context, GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ColorMask(context, red, green, blue, alpha);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_CompileShader(PP_Resource context, GLuint shader) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->CompileShader(context, shader);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_CompressedTexImage2D(PP_Resource context, GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void* data) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->CompressedTexImage2D(context, target, level, internalformat, width, height, border, imageSize, data);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_CompressedTexSubImage2D(PP_Resource context, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const void* data) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->CompressedTexSubImage2D(context, target, level, xoffset, yoffset, width, height, format, imageSize, data);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_CopyTexImage2D(PP_Resource context, GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->CopyTexImage2D(context, target, level, internalformat, x, y, width, height, border);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_CopyTexSubImage2D(PP_Resource context, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->CopyTexSubImage2D(context, target, level, xoffset, yoffset, x, y, width, height);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLuint PPB_OpenGLES2_CreateProgram(PP_Resource context) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->CreateProgram(context);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT GLuint PPB_OpenGLES2_CreateShader(PP_Resource context, GLenum type) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->CreateShader(context, type);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_CullFace(PP_Resource context, GLenum mode) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->CullFace(context, mode);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DeleteBuffers(PP_Resource context, GLsizei n, const GLuint* buffers) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DeleteBuffers(context, n, buffers);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DeleteFramebuffers(PP_Resource context, GLsizei n, const GLuint* framebuffers) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DeleteFramebuffers(context, n, framebuffers);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DeleteProgram(PP_Resource context, GLuint program) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DeleteProgram(context, program);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DeleteRenderbuffers(PP_Resource context, GLsizei n, const GLuint* renderbuffers) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DeleteRenderbuffers(context, n, renderbuffers);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DeleteShader(PP_Resource context, GLuint shader) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DeleteShader(context, shader);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DeleteTextures(PP_Resource context, GLsizei n, const GLuint* textures) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DeleteTextures(context, n, textures);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DepthFunc(PP_Resource context, GLenum func) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DepthFunc(context, func);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DepthMask(PP_Resource context, GLboolean flag) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DepthMask(context, flag);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DepthRangef(PP_Resource context, GLclampf zNear, GLclampf zFar) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DepthRangef(context, zNear, zFar);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DetachShader(PP_Resource context, GLuint program, GLuint shader) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DetachShader(context, program, shader);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Disable(PP_Resource context, GLenum cap) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Disable(context, cap);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DisableVertexAttribArray(PP_Resource context, GLuint index) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DisableVertexAttribArray(context, index);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DrawArrays(PP_Resource context, GLenum mode, GLint first, GLsizei count) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DrawArrays(context, mode, first, count);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_DrawElements(PP_Resource context, GLenum mode, GLsizei count, GLenum type, const void* indices) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->DrawElements(context, mode, count, type, indices);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Enable(PP_Resource context, GLenum cap) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Enable(context, cap);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_EnableVertexAttribArray(PP_Resource context, GLuint index) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->EnableVertexAttribArray(context, index);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Finish(PP_Resource context) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Finish(context);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Flush(PP_Resource context) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Flush(context);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_FramebufferRenderbuffer(PP_Resource context, GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->FramebufferRenderbuffer(context, target, attachment, renderbuffertarget, renderbuffer);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_FramebufferTexture2D(PP_Resource context, GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->FramebufferTexture2D(context, target, attachment, textarget, texture, level);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_FrontFace(PP_Resource context, GLenum mode) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->FrontFace(context, mode);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GenBuffers(PP_Resource context, GLsizei n, GLuint* buffers) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GenBuffers(context, n, buffers);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GenerateMipmap(PP_Resource context, GLenum target) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GenerateMipmap(context, target);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GenFramebuffers(PP_Resource context, GLsizei n, GLuint* framebuffers) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GenFramebuffers(context, n, framebuffers);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GenRenderbuffers(PP_Resource context, GLsizei n, GLuint* renderbuffers) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GenRenderbuffers(context, n, renderbuffers);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GenTextures(PP_Resource context, GLsizei n, GLuint* textures) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GenTextures(context, n, textures);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetActiveAttrib(PP_Resource context, GLuint program, GLuint index, GLsizei bufsize, GLsizei* length, GLint* size, GLenum* type, char* name) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetActiveAttrib(context, program, index, bufsize, length, size, type, name);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetActiveUniform(PP_Resource context, GLuint program, GLuint index, GLsizei bufsize, GLsizei* length, GLint* size, GLenum* type, char* name) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetActiveUniform(context, program, index, bufsize, length, size, type, name);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetAttachedShaders(PP_Resource context, GLuint program, GLsizei maxcount, GLsizei* count, GLuint* shaders) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetAttachedShaders(context, program, maxcount, count, shaders);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLint PPB_OpenGLES2_GetAttribLocation(PP_Resource context, GLuint program, const char* name) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->GetAttribLocation(context, program, name);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetBooleanv(PP_Resource context, GLenum pname, GLboolean* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetBooleanv(context, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetBufferParameteriv(PP_Resource context, GLenum target, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetBufferParameteriv(context, target, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLenum PPB_OpenGLES2_GetError(PP_Resource context) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->GetError(context);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetFloatv(PP_Resource context, GLenum pname, GLfloat* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetFloatv(context, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetFramebufferAttachmentParameteriv(PP_Resource context, GLenum target, GLenum attachment, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetFramebufferAttachmentParameteriv(context, target, attachment, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetIntegerv(PP_Resource context, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetIntegerv(context, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetProgramiv(PP_Resource context, GLuint program, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetProgramiv(context, program, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetProgramInfoLog(PP_Resource context, GLuint program, GLsizei bufsize, GLsizei* length, char* infolog) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetProgramInfoLog(context, program, bufsize, length, infolog);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetRenderbufferParameteriv(PP_Resource context, GLenum target, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetRenderbufferParameteriv(context, target, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetShaderiv(PP_Resource context, GLuint shader, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetShaderiv(context, shader, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetShaderInfoLog(PP_Resource context, GLuint shader, GLsizei bufsize, GLsizei* length, char* infolog) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetShaderInfoLog(context, shader, bufsize, length, infolog);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetShaderPrecisionFormat(PP_Resource context, GLenum shadertype, GLenum precisiontype, GLint* range, GLint* precision) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetShaderPrecisionFormat(context, shadertype, precisiontype, range, precision);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetShaderSource(PP_Resource context, GLuint shader, GLsizei bufsize, GLsizei* length, char* source) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetShaderSource(context, shader, bufsize, length, source);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT const GLubyte* PPB_OpenGLES2_GetString(PP_Resource context, GLenum name) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->GetString(context, name);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetTexParameterfv(PP_Resource context, GLenum target, GLenum pname, GLfloat* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetTexParameterfv(context, target, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetTexParameteriv(PP_Resource context, GLenum target, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetTexParameteriv(context, target, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetUniformfv(PP_Resource context, GLuint program, GLint location, GLfloat* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetUniformfv(context, program, location, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetUniformiv(PP_Resource context, GLuint program, GLint location, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetUniformiv(context, program, location, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLint PPB_OpenGLES2_GetUniformLocation(PP_Resource context, GLuint program, const char* name) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->GetUniformLocation(context, program, name);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetVertexAttribfv(PP_Resource context, GLuint index, GLenum pname, GLfloat* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetVertexAttribfv(context, index, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetVertexAttribiv(PP_Resource context, GLuint index, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetVertexAttribiv(context, index, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_GetVertexAttribPointerv(PP_Resource context, GLuint index, GLenum pname, void** pointer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->GetVertexAttribPointerv(context, index, pname, pointer);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Hint(PP_Resource context, GLenum target, GLenum mode) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Hint(context, target, mode);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2_IsBuffer(PP_Resource context, GLuint buffer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->IsBuffer(context, buffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2_IsEnabled(PP_Resource context, GLenum cap) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->IsEnabled(context, cap);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2_IsFramebuffer(PP_Resource context, GLuint framebuffer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->IsFramebuffer(context, framebuffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2_IsProgram(PP_Resource context, GLuint program) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->IsProgram(context, program);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2_IsRenderbuffer(PP_Resource context, GLuint renderbuffer) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->IsRenderbuffer(context, renderbuffer);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2_IsShader(PP_Resource context, GLuint shader) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->IsShader(context, shader);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2_IsTexture(PP_Resource context, GLuint texture) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				return get_interface<PPB_OpenGLES2_1_0>()->IsTexture(context, texture);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_LineWidth(PP_Resource context, GLfloat width) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->LineWidth(context, width);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_LinkProgram(PP_Resource context, GLuint program) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->LinkProgram(context, program);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_PixelStorei(PP_Resource context, GLenum pname, GLint param) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->PixelStorei(context, pname, param);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_PolygonOffset(PP_Resource context, GLfloat factor, GLfloat units) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->PolygonOffset(context, factor, units);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ReadPixels(PP_Resource context, GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void* pixels) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ReadPixels(context, x, y, width, height, format, type, pixels);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ReleaseShaderCompiler(PP_Resource context) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ReleaseShaderCompiler(context);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_RenderbufferStorage(PP_Resource context, GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->RenderbufferStorage(context, target, internalformat, width, height);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_SampleCoverage(PP_Resource context, GLclampf value, GLboolean invert) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->SampleCoverage(context, value, invert);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Scissor(PP_Resource context, GLint x, GLint y, GLsizei width, GLsizei height) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Scissor(context, x, y, width, height);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ShaderBinary(PP_Resource context, GLsizei n, const GLuint* shaders, GLenum binaryformat, const void* binary, GLsizei length) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ShaderBinary(context, n, shaders, binaryformat, binary, length);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ShaderSource(PP_Resource context, GLuint shader, GLsizei count, const char** str, const GLint* length) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ShaderSource(context, shader, count, str, length);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_StencilFunc(PP_Resource context, GLenum func, GLint ref, GLuint mask) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->StencilFunc(context, func, ref, mask);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_StencilFuncSeparate(PP_Resource context, GLenum face, GLenum func, GLint ref, GLuint mask) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->StencilFuncSeparate(context, face, func, ref, mask);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_StencilMask(PP_Resource context, GLuint mask) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->StencilMask(context, mask);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_StencilMaskSeparate(PP_Resource context, GLenum face, GLuint mask) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->StencilMaskSeparate(context, face, mask);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_StencilOp(PP_Resource context, GLenum fail, GLenum zfail, GLenum zpass) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->StencilOp(context, fail, zfail, zpass);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_StencilOpSeparate(PP_Resource context, GLenum face, GLenum fail, GLenum zfail, GLenum zpass) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->StencilOpSeparate(context, face, fail, zfail, zpass);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_TexImage2D(PP_Resource context, GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void* pixels) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->TexImage2D(context, target, level, internalformat, width, height, border, format, type, pixels);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_TexParameterf(PP_Resource context, GLenum target, GLenum pname, GLfloat param) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->TexParameterf(context, target, pname, param);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_TexParameterfv(PP_Resource context, GLenum target, GLenum pname, const GLfloat* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->TexParameterfv(context, target, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_TexParameteri(PP_Resource context, GLenum target, GLenum pname, GLint param) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->TexParameteri(context, target, pname, param);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_TexParameteriv(PP_Resource context, GLenum target, GLenum pname, const GLint* params) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->TexParameteriv(context, target, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_TexSubImage2D(PP_Resource context, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->TexSubImage2D(context, target, level, xoffset, yoffset, width, height, format, type, pixels);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform1f(PP_Resource context, GLint location, GLfloat x) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform1f(context, location, x);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform1fv(PP_Resource context, GLint location, GLsizei count, const GLfloat* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform1fv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform1i(PP_Resource context, GLint location, GLint x) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform1i(context, location, x);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform1iv(PP_Resource context, GLint location, GLsizei count, const GLint* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform1iv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform2f(PP_Resource context, GLint location, GLfloat x, GLfloat y) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform2f(context, location, x, y);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform2fv(PP_Resource context, GLint location, GLsizei count, const GLfloat* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform2fv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform2i(PP_Resource context, GLint location, GLint x, GLint y) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform2i(context, location, x, y);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform2iv(PP_Resource context, GLint location, GLsizei count, const GLint* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform2iv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform3f(PP_Resource context, GLint location, GLfloat x, GLfloat y, GLfloat z) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform3f(context, location, x, y, z);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform3fv(PP_Resource context, GLint location, GLsizei count, const GLfloat* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform3fv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform3i(PP_Resource context, GLint location, GLint x, GLint y, GLint z) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform3i(context, location, x, y, z);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform3iv(PP_Resource context, GLint location, GLsizei count, const GLint* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform3iv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform4f(PP_Resource context, GLint location, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform4f(context, location, x, y, z, w);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform4fv(PP_Resource context, GLint location, GLsizei count, const GLfloat* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform4fv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform4i(PP_Resource context, GLint location, GLint x, GLint y, GLint z, GLint w) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform4i(context, location, x, y, z, w);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Uniform4iv(PP_Resource context, GLint location, GLsizei count, const GLint* v) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Uniform4iv(context, location, count, v);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_UniformMatrix2fv(PP_Resource context, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->UniformMatrix2fv(context, location, count, transpose, value);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_UniformMatrix3fv(PP_Resource context, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->UniformMatrix3fv(context, location, count, transpose, value);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_UniformMatrix4fv(PP_Resource context, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->UniformMatrix4fv(context, location, count, transpose, value);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_UseProgram(PP_Resource context, GLuint program) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->UseProgram(context, program);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_ValidateProgram(PP_Resource context, GLuint program) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->ValidateProgram(context, program);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib1f(PP_Resource context, GLuint indx, GLfloat x) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib1f(context, indx, x);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib1fv(PP_Resource context, GLuint indx, const GLfloat* values) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib1fv(context, indx, values);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib2f(PP_Resource context, GLuint indx, GLfloat x, GLfloat y) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib2f(context, indx, x, y);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib2fv(PP_Resource context, GLuint indx, const GLfloat* values) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib2fv(context, indx, values);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib3f(PP_Resource context, GLuint indx, GLfloat x, GLfloat y, GLfloat z) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib3f(context, indx, x, y, z);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib3fv(PP_Resource context, GLuint indx, const GLfloat* values) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib3fv(context, indx, values);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib4f(PP_Resource context, GLuint indx, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib4f(context, indx, x, y, z, w);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttrib4fv(PP_Resource context, GLuint indx, const GLfloat* values) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttrib4fv(context, indx, values);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_VertexAttribPointer(PP_Resource context, GLuint indx, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* ptr) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->VertexAttribPointer(context, indx, size, type, normalized, stride, ptr);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2_Viewport(PP_Resource context, GLint x, GLint y, GLsizei width, GLsizei height) {
+			if (has_interface<PPB_OpenGLES2_1_0>()) {
+				get_interface<PPB_OpenGLES2_1_0>()->Viewport(context, x, y, width, height);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2 */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2InstancedArrays */
+
+		PEPPER_EXPORT void PPB_OpenGLES2InstancedArrays_DrawArraysInstancedANGLE(PP_Resource context, GLenum mode, GLint first, GLsizei count, GLsizei primcount) {
+			if (has_interface<PPB_OpenGLES2InstancedArrays_1_0>()) {
+				get_interface<PPB_OpenGLES2InstancedArrays_1_0>()->DrawArraysInstancedANGLE(context, mode, first, count, primcount);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2InstancedArrays_DrawElementsInstancedANGLE(PP_Resource context, GLenum mode, GLsizei count, GLenum type, const void* indices, GLsizei primcount) {
+			if (has_interface<PPB_OpenGLES2InstancedArrays_1_0>()) {
+				get_interface<PPB_OpenGLES2InstancedArrays_1_0>()->DrawElementsInstancedANGLE(context, mode, count, type, indices, primcount);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2InstancedArrays_VertexAttribDivisorANGLE(PP_Resource context, GLuint index, GLuint divisor) {
+			if (has_interface<PPB_OpenGLES2InstancedArrays_1_0>()) {
+				get_interface<PPB_OpenGLES2InstancedArrays_1_0>()->VertexAttribDivisorANGLE(context, index, divisor);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2InstancedArrays */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2FramebufferBlit */
+
+		PEPPER_EXPORT void PPB_OpenGLES2FramebufferBlit_BlitFramebufferEXT(PP_Resource context, GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter) {
+			if (has_interface<PPB_OpenGLES2FramebufferBlit_1_0>()) {
+				get_interface<PPB_OpenGLES2FramebufferBlit_1_0>()->BlitFramebufferEXT(context, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2FramebufferBlit */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2FramebufferMultisample */
+
+		PEPPER_EXPORT void PPB_OpenGLES2FramebufferMultisample_RenderbufferStorageMultisampleEXT(PP_Resource context, GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height) {
+			if (has_interface<PPB_OpenGLES2FramebufferMultisample_1_0>()) {
+				get_interface<PPB_OpenGLES2FramebufferMultisample_1_0>()->RenderbufferStorageMultisampleEXT(context, target, samples, internalformat, width, height);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2FramebufferMultisample */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2ChromiumEnableFeature */
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2ChromiumEnableFeature_EnableFeatureCHROMIUM(PP_Resource context, const char* feature) {
+			if (has_interface<PPB_OpenGLES2ChromiumEnableFeature_1_0>()) {
+				return get_interface<PPB_OpenGLES2ChromiumEnableFeature_1_0>()->EnableFeatureCHROMIUM(context, feature);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2ChromiumEnableFeature */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2ChromiumMapSub */
+
+		PEPPER_EXPORT void* PPB_OpenGLES2ChromiumMapSub_MapBufferSubDataCHROMIUM(PP_Resource context, GLuint target, GLintptr offset, GLsizeiptr size, GLenum access) {
+			if (has_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()) {
+				return get_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()->MapBufferSubDataCHROMIUM(context, target, offset, size, access);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2ChromiumMapSub_UnmapBufferSubDataCHROMIUM(PP_Resource context, const void* mem) {
+			if (has_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()) {
+				get_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()->UnmapBufferSubDataCHROMIUM(context, mem);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void* PPB_OpenGLES2ChromiumMapSub_MapTexSubImage2DCHROMIUM(PP_Resource context, GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, GLenum access) {
+			if (has_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()) {
+				return get_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()->MapTexSubImage2DCHROMIUM(context, target, level, xoffset, yoffset, width, height, format, type, access);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2ChromiumMapSub_UnmapTexSubImage2DCHROMIUM(PP_Resource context, const void* mem) {
+			if (has_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()) {
+				get_interface<PPB_OpenGLES2ChromiumMapSub_1_0>()->UnmapTexSubImage2DCHROMIUM(context, mem);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2ChromiumMapSub */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2Query */
+
+		PEPPER_EXPORT void PPB_OpenGLES2Query_GenQueriesEXT(PP_Resource context, GLsizei n, GLuint* queries) {
+			if (has_interface<PPB_OpenGLES2Query_1_0>()) {
+				get_interface<PPB_OpenGLES2Query_1_0>()->GenQueriesEXT(context, n, queries);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2Query_DeleteQueriesEXT(PP_Resource context, GLsizei n, const GLuint* queries) {
+			if (has_interface<PPB_OpenGLES2Query_1_0>()) {
+				get_interface<PPB_OpenGLES2Query_1_0>()->DeleteQueriesEXT(context, n, queries);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2Query_IsQueryEXT(PP_Resource context, GLuint id) {
+			if (has_interface<PPB_OpenGLES2Query_1_0>()) {
+				return get_interface<PPB_OpenGLES2Query_1_0>()->IsQueryEXT(context, id);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2Query_BeginQueryEXT(PP_Resource context, GLenum target, GLuint id) {
+			if (has_interface<PPB_OpenGLES2Query_1_0>()) {
+				get_interface<PPB_OpenGLES2Query_1_0>()->BeginQueryEXT(context, target, id);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2Query_EndQueryEXT(PP_Resource context, GLenum target) {
+			if (has_interface<PPB_OpenGLES2Query_1_0>()) {
+				get_interface<PPB_OpenGLES2Query_1_0>()->EndQueryEXT(context, target);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2Query_GetQueryivEXT(PP_Resource context, GLenum target, GLenum pname, GLint* params) {
+			if (has_interface<PPB_OpenGLES2Query_1_0>()) {
+				get_interface<PPB_OpenGLES2Query_1_0>()->GetQueryivEXT(context, target, pname, params);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2Query_GetQueryObjectuivEXT(PP_Resource context, GLuint id, GLenum pname, GLuint* params) {
+			if (has_interface<PPB_OpenGLES2Query_1_0>()) {
+				get_interface<PPB_OpenGLES2Query_1_0>()->GetQueryObjectuivEXT(context, id, pname, params);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2Query */
+
+		#pragma region /* Begin entry point methods for PPB_OpenGLES2VertexArrayObject */
+
+		PEPPER_EXPORT void PPB_OpenGLES2VertexArrayObject_GenVertexArraysOES(PP_Resource context, GLsizei n, GLuint* arrays) {
+			if (has_interface<PPB_OpenGLES2VertexArrayObject_1_0>()) {
+				get_interface<PPB_OpenGLES2VertexArrayObject_1_0>()->GenVertexArraysOES(context, n, arrays);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2VertexArrayObject_DeleteVertexArraysOES(PP_Resource context, GLsizei n, const GLuint* arrays) {
+			if (has_interface<PPB_OpenGLES2VertexArrayObject_1_0>()) {
+				get_interface<PPB_OpenGLES2VertexArrayObject_1_0>()->DeleteVertexArraysOES(context, n, arrays);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT GLboolean PPB_OpenGLES2VertexArrayObject_IsVertexArrayOES(PP_Resource context, GLuint array) {
+			if (has_interface<PPB_OpenGLES2VertexArrayObject_1_0>()) {
+				return get_interface<PPB_OpenGLES2VertexArrayObject_1_0>()->IsVertexArrayOES(context, array);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_OpenGLES2VertexArrayObject_BindVertexArrayOES(PP_Resource context, GLuint array) {
+			if (has_interface<PPB_OpenGLES2VertexArrayObject_1_0>()) {
+				get_interface<PPB_OpenGLES2VertexArrayObject_1_0>()->BindVertexArrayOES(context, array);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_OpenGLES2VertexArrayObject */
 
 		#pragma region /* Begin entry point methods for PPB_URLLoader */
 

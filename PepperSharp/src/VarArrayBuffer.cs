@@ -83,7 +83,7 @@ namespace PepperSharp
         /// and should still be released using <code>PPB_Var</code> when you are done
         /// with the<code> ArrayBuffer</code>.
         /// </summary>
-        public void UnMap()
+        public void Unmap()
         {
             PPBVarArrayBuffer.Unmap(ppvar);
             isMapped = false;
