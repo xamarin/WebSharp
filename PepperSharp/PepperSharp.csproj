@@ -75,6 +75,7 @@
     <Compile Include="binding\pp_array_output.cs" />
     <Compile Include="binding\pp_codecs.cs" />
     <Compile Include="binding\pp_var.cs" />
+    <Compile Include="src\ArrayOutput.cs" />
     <Compile Include="src\ppb_var_extension.cs" />
     <Compile Include="src\Instance.cs" />
     <Compile Include="binding\ppp_input_event.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="binding\pp_time.cs" />
     <Compile Include="binding\pp_touch_point.cs" />
     <Compile Include="src\PPCompletionCallback.cs" />
+    <Compile Include="src\PPCompletionCallbackWithOutput.cs" />
     <Compile Include="src\PPResource.cs" />
     <Compile Include="src\runtime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
