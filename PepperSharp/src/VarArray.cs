@@ -6,9 +6,9 @@ namespace PepperSharp
     public partial class VarArray : Var
     {
 
-        public VarArray() : base(Var.Empty)
+        public VarArray() : base(PPVarType.Null)
         {
-            ppvar = PPBVarDictionary.Create();
+            ppvar = PPBVarArray.Create();
         }
 
         public VarArray(Var var) : base(var)
