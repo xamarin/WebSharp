@@ -47,6 +47,11 @@ namespace PepperSharp
         }
 
     }
+
+    public enum PassRef
+    {
+        PassRef = 0
+    }
  
 
 }

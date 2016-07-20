@@ -62,7 +62,7 @@ namespace PepperSharp
             var result = (Var)PPBVarDictionary.GetKeys(ppvar);
             if (result.IsArray)
                 return (VarArray)result;
-            else;
+            else
                 return new VarArray();
         }
 

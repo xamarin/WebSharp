@@ -227,8 +227,8 @@ namespace VarArrayBufferInstance
         {
             Debug.Assert(!isFlushing);
             PPBGraphics2D.ReplaceContents(graphics2DContext, image_data);
-            var flushCallback = new PPCompletionCallback(DidFlush);
-            PPBGraphics2D.Flush(graphics2DContext, flushCallback);
+            //var flushCallback = new CompletionCallback(DidFlush);
+            PPBGraphics2D.Flush(graphics2DContext, new CompletionCallback(DidFlush).Callback);
             isFlushing = true;
         }
 

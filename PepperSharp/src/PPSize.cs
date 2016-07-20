@@ -59,7 +59,7 @@ namespace PepperSharp
             }
 
             // Return true if the fields match:
-            return s1.Width == s2.Height;
+            return s1.Width == s2.Width && s1.Height == s2.Height;
         }
 
         public static bool operator !=(PPSize s1, PPSize s2)
