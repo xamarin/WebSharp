@@ -84,7 +84,7 @@ public static partial class PPBAudio {
   extern static PPResource _Create ( PPInstance instance,
                                      PPResource config,
                                      PPBAudioCallback audio_callback,
-                                    ref IntPtr user_data);
+                                     IntPtr user_data);
 
   /**
    * Create() creates an audio resource. No sound will be heard until
@@ -113,9 +113,9 @@ public static partial class PPBAudio {
   public static PPResource Create ( PPInstance instance,
                                     PPResource config,
                                     PPBAudioCallback audio_callback,
-                                   ref IntPtr user_data)
+                                    IntPtr user_data)
   {
-  	return _Create (instance, config, audio_callback, ref user_data);
+  	return _Create (instance, config, audio_callback, user_data);
   }
 
 

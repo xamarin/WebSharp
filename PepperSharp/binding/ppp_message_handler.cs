@@ -33,7 +33,7 @@ namespace PepperSharp {
 public static partial class PPPMessageHandler {
   [DllImport("PepperPlugin", EntryPoint = "PPP_MessageHandler_HandleMessage")]
   extern static void _HandleMessage ( PPInstance instance,
-                                     ref IntPtr user_data,
+                                      IntPtr user_data,
                                       PPVar message);
 
   /**
@@ -48,17 +48,17 @@ public static partial class PPPMessageHandler {
    * postMessage().
    */
   public static void HandleMessage ( PPInstance instance,
-                                    ref IntPtr user_data,
+                                     IntPtr user_data,
                                      PPVar message)
   {
-  	 _HandleMessage (instance, ref user_data, message);
+  	 _HandleMessage (instance, user_data, message);
   }
 
 
   [DllImport("PepperPlugin",
              EntryPoint = "PPP_MessageHandler_HandleBlockingMessage")]
   extern static void _HandleBlockingMessage ( PPInstance instance,
-                                             ref IntPtr user_data,
+                                              IntPtr user_data,
                                               PPVar message,
                                              out PPVar response);
 
@@ -82,16 +82,16 @@ public static partial class PPPMessageHandler {
    *
    */
   public static void HandleBlockingMessage ( PPInstance instance,
-                                            ref IntPtr user_data,
+                                             IntPtr user_data,
                                              PPVar message,
                                             out PPVar response)
   {
-  	 _HandleBlockingMessage (instance, ref user_data, message, out response);
+  	 _HandleBlockingMessage (instance, user_data, message, out response);
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPP_MessageHandler_Destroy")]
-  extern static void _Destroy ( PPInstance instance, ref IntPtr user_data);
+  extern static void _Destroy ( PPInstance instance,  IntPtr user_data);
 
   /**
    * Invoked when the handler object is no longer needed. After this, no more
@@ -103,9 +103,9 @@ public static partial class PPPMessageHandler {
    * @param[in] user_data is the same pointer which was provided by a call to
    * RegisterMessageHandler.
    */
-  public static void Destroy ( PPInstance instance, ref IntPtr user_data)
+  public static void Destroy ( PPInstance instance,  IntPtr user_data)
   {
-  	 _Destroy (instance, ref user_data);
+  	 _Destroy (instance, user_data);
   }
 
 

@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VarArrayBuffer", "..\..\Exa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoEncode", "..\..\Examples\api\VideoEncode\VideoEncode.csproj", "{79D71849-94C7-4F38-A398-E6075728DFC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio", "..\..\Examples\api\Audio\Audio.csproj", "{00611288-3BE5-451F-8291-89E9D6E8A267}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -200,6 +202,18 @@ Global
 		{79D71849-94C7-4F38-A398-E6075728DFC7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{79D71849-94C7-4F38-A398-E6075728DFC7}.Release|x86.ActiveCfg = Release|Any CPU
 		{79D71849-94C7-4F38-A398-E6075728DFC7}.Release|x86.Build.0 = Release|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Debug|x86.Build.0 = Debug|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Release|x86.ActiveCfg = Release|Any CPU
+		{00611288-3BE5-451F-8291-89E9D6E8A267}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -215,5 +229,6 @@ Global
 		{AAC2BB7D-FBED-4BE9-83F1-B50FFFB75D67} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{E9E8A2F4-84DF-4E47-9707-6ED3A001F902} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{79D71849-94C7-4F38-A398-E6075728DFC7} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
+		{00611288-3BE5-451F-8291-89E9D6E8A267} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 	EndGlobalSection
 EndGlobal

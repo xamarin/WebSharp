@@ -100,7 +100,7 @@ public static partial class PPBMessaging {
              EntryPoint = "PPB_Messaging_RegisterMessageHandler")]
   extern static int _RegisterMessageHandler (
       PPInstance instance,
-      ref IntPtr user_data,
+      IntPtr user_data,
       IntPtr handler,
       PPResource message_loop);
 
@@ -141,14 +141,11 @@ public static partial class PPBMessaging {
    */
   public static int RegisterMessageHandler (
       PPInstance instance,
-      ref IntPtr user_data,
+      IntPtr user_data,
       IntPtr handler,
       PPResource message_loop)
   {
-  	return _RegisterMessageHandler (instance,
-                                   ref user_data,
-                                   handler,
-                                   message_loop);
+  	return _RegisterMessageHandler (instance, user_data, handler, message_loop);
   }
 
 
