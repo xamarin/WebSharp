@@ -12,5 +12,5 @@ To generate the C# bindings and the C++ PepperPlugin dll entrypoints do the foll
 
 This will create two directories in the ```binding``` folder.
 
-peppersharp - This is where the C# modules are generated.
-pepper - This is where the .dll entry point bindings for the PepperPlugin are generated.
+- peppersharp - This is where the C# modules are generated.
+- pepper - This is where the .dll entry point bindings for the PepperPlugin are generated.
