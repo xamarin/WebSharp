@@ -10,6 +10,9 @@
 #include "ppapi/c/ppb_audio_encoder.h"
 #include "ppapi/c/ppb_console.h"
 #include "ppapi/c/ppb_core.h"
+#include "ppapi/c/ppb_file_io.h"
+#include "ppapi/c/ppb_file_ref.h"
+#include "ppapi/c/ppb_file_system.h"
 #include "ppapi/c/ppb_fullscreen.h"
 #include "ppapi/c/ppb_graphics_2d.h"
 #include "ppapi/c/ppb_image_data.h"
@@ -91,6 +94,24 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_Core_1_0>() {
 			return PPB_CORE_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_FileIO_1_0>() {
+			return PPB_FILEIO_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_FileIO_1_1>() {
+			return PPB_FILEIO_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_FileRef_1_0>() {
+			return PPB_FILEREF_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_FileRef_1_1>() {
+			return PPB_FILEREF_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_FileRef_1_2>() {
+			return PPB_FILEREF_INTERFACE_1_2;
+		}
+		template <> const char*	interface_name<PPB_FileSystem_1_0>() {
+			return PPB_FILESYSTEM_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_Fullscreen_1_0>() {
 			return PPB_FULLSCREEN_INTERFACE_1_0;
@@ -550,6 +571,297 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Core */
+
+		#pragma region /* Begin entry point methods for PPB_FileIO */
+
+		PEPPER_EXPORT PP_Resource PPB_FileIO_Create(PP_Instance instance) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->Create(instance);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_FileIO_IsFileIO(PP_Resource resource) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->IsFileIO(resource);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->IsFileIO(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_Open(PP_Resource file_io, PP_Resource file_ref, int32_t open_flags, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->Open(file_io, file_ref, open_flags, callback);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->Open(file_io, file_ref, open_flags, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_Query(PP_Resource file_io, struct PP_FileInfo* info, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->Query(file_io, info, callback);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->Query(file_io, info, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_Touch(PP_Resource file_io, PP_Time last_access_time, PP_Time last_modified_time, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->Touch(file_io, last_access_time, last_modified_time, callback);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->Touch(file_io, last_access_time, last_modified_time, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_Read(PP_Resource file_io, int64_t offset, char* buffer, int32_t bytes_to_read, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->Read(file_io, offset, buffer, bytes_to_read, callback);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->Read(file_io, offset, buffer, bytes_to_read, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_Write(PP_Resource file_io, int64_t offset, const char* buffer, int32_t bytes_to_write, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->Write(file_io, offset, buffer, bytes_to_write, callback);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->Write(file_io, offset, buffer, bytes_to_write, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_SetLength(PP_Resource file_io, int64_t length, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->SetLength(file_io, length, callback);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->SetLength(file_io, length, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_Flush(PP_Resource file_io, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->Flush(file_io, callback);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				return get_interface<PPB_FileIO_1_0>()->Flush(file_io, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_FileIO_Close(PP_Resource file_io) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				get_interface<PPB_FileIO_1_1>()->Close(file_io);
+			}
+			else if (has_interface<PPB_FileIO_1_0>()) {
+				get_interface<PPB_FileIO_1_0>()->Close(file_io);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileIO_ReadToArray(PP_Resource file_io, int64_t offset, int32_t max_read_length, struct PP_ArrayOutput* output, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileIO_1_1>()) {
+				return get_interface<PPB_FileIO_1_1>()->ReadToArray(file_io, offset, max_read_length, output, callback);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_FileIO */
+
+		#pragma region /* Begin entry point methods for PPB_FileRef */
+
+		PEPPER_EXPORT PP_Resource PPB_FileRef_Create(PP_Resource file_system, const char* path) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->Create(file_system, path);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->Create(file_system, path);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->Create(file_system, path);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_FileRef_IsFileRef(PP_Resource resource) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->IsFileRef(resource);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->IsFileRef(resource);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->IsFileRef(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_FileSystemType PPB_FileRef_GetFileSystemType(PP_Resource file_ref) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->GetFileSystemType(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->GetFileSystemType(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->GetFileSystemType(file_ref);
+			}
+			return PP_FILESYSTEMTYPE_EXTERNAL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_FileRef_GetName(PP_Resource file_ref) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->GetName(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->GetName(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->GetName(file_ref);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_FileRef_GetPath(PP_Resource file_ref) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->GetPath(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->GetPath(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->GetPath(file_ref);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_FileRef_GetParent(PP_Resource file_ref) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->GetParent(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->GetParent(file_ref);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->GetParent(file_ref);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileRef_MakeDirectory(PP_Resource directory_ref, int32_t make_directory_flags, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->MakeDirectory(directory_ref, make_directory_flags, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileRef_Touch(PP_Resource file_ref, PP_Time last_access_time, PP_Time last_modified_time, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->Touch(file_ref, last_access_time, last_modified_time, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->Touch(file_ref, last_access_time, last_modified_time, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->Touch(file_ref, last_access_time, last_modified_time, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileRef_Delete(PP_Resource file_ref, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->Delete(file_ref, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->Delete(file_ref, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->Delete(file_ref, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileRef_Rename(PP_Resource file_ref, PP_Resource new_file_ref, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->Rename(file_ref, new_file_ref, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->Rename(file_ref, new_file_ref, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_0>()) {
+				return get_interface<PPB_FileRef_1_0>()->Rename(file_ref, new_file_ref, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileRef_Query(PP_Resource file_ref, struct PP_FileInfo* info, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->Query(file_ref, info, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->Query(file_ref, info, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileRef_ReadDirectoryEntries(PP_Resource file_ref, struct PP_ArrayOutput output, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileRef_1_2>()) {
+				return get_interface<PPB_FileRef_1_2>()->ReadDirectoryEntries(file_ref, output, callback);
+			}
+			else if (has_interface<PPB_FileRef_1_1>()) {
+				return get_interface<PPB_FileRef_1_1>()->ReadDirectoryEntries(file_ref, output, callback);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_FileRef */
+
+		#pragma region /* Begin entry point methods for PPB_FileSystem */
+
+		PEPPER_EXPORT PP_Resource PPB_FileSystem_Create(PP_Instance instance, PP_FileSystemType type) {
+			if (has_interface<PPB_FileSystem_1_0>()) {
+				return get_interface<PPB_FileSystem_1_0>()->Create(instance, type);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_FileSystem_IsFileSystem(PP_Resource resource) {
+			if (has_interface<PPB_FileSystem_1_0>()) {
+				return get_interface<PPB_FileSystem_1_0>()->IsFileSystem(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_FileSystem_Open(PP_Resource file_system, int64_t expected_size, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_FileSystem_1_0>()) {
+				return get_interface<PPB_FileSystem_1_0>()->Open(file_system, expected_size, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_FileSystemType PPB_FileSystem_GetType(PP_Resource file_system) {
+			if (has_interface<PPB_FileSystem_1_0>()) {
+				return get_interface<PPB_FileSystem_1_0>()->GetType(file_system);
+			}
+			return PP_FILESYSTEMTYPE_EXTERNAL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_FileSystem */
 
 		#pragma region /* Begin entry point methods for PPB_Fullscreen */
 
