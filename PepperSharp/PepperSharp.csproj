@@ -49,6 +49,9 @@
     <Compile Include="binding\ppb_audio_encoder.cs" />
     <Compile Include="binding\ppb_console.cs" />
     <Compile Include="binding\ppb_core.cs" />
+    <Compile Include="binding\ppb_file_io.cs" />
+    <Compile Include="binding\ppb_file_ref.cs" />
+    <Compile Include="binding\ppb_file_system.cs" />
     <Compile Include="binding\ppb_fullscreen.cs" />
     <Compile Include="binding\ppb_graphics_2d.cs" />
     <Compile Include="binding\ppb_image_data.cs" />
@@ -74,6 +77,8 @@
     <Compile Include="binding\ppb_websocket.cs" />
     <Compile Include="binding\pp_array_output.cs" />
     <Compile Include="binding\pp_codecs.cs" />
+    <Compile Include="binding\pp_directory_entry.cs" />
+    <Compile Include="binding\pp_file_info.cs" />
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ArrayOutput.cs" />
     <Compile Include="src\ppb_var_extension.cs" />

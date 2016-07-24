@@ -13,20 +13,38 @@ namespace PepperSharp
         public CompletionCallback(PPCompletionCallbackFunc callbackFunc, object userData = null, PPCompletionCallbackFlag flags = PPCompletionCallbackFlag.None)
         {
             this.callbackFunc = callbackFunc;
-            if (userData == null)
-                this.userData = IntPtr.Zero;
-            else
+            // if no callbackfunc is specified then 
+            if (callbackFunc != null)
             {
-                GCHandle userDataHandle = GCHandle.Alloc(userData, GCHandleType.Pinned);
-                this.userData = (IntPtr)userDataHandle;
+                if (userData == null)
+                    this.userData = IntPtr.Zero;
+                else
+                {
+                    GCHandle userDataHandle = GCHandle.Alloc(userData, GCHandleType.Pinned);
+                    this.userData = (IntPtr)userDataHandle;
+                }
+                var ourCallback = new PPCompletionCallback();
+                ourCallback.func = OnCallBack;
+                ourCallback.flags = (int)PPCompletionCallbackFlag.None;
+                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
+                ourCallback.user_data = (IntPtr)userHandle;
+                Callback = ourCallback;
             }
-            var ourCallback = new PPCompletionCallback();
-            ourCallback.func = OnCallBack;
-            ourCallback.flags = (int)PPCompletionCallbackFlag.None; 
-            GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
-            ourCallback.user_data = (IntPtr)userHandle;
-            Callback = ourCallback;
         }
+
+
+        /// <summary>
+        /// The default constructor will create a blocking
+        /// <code>CompletionCallback</code> that can be passed to a method to
+        /// indicate that the calling thread should be blocked until the asynchronous
+        /// operation corresponding to the method completes.
+        ///
+        /// <strong>Note:</strong> Blocking completion callbacks are only allowed from
+        /// from background threads.
+        /// 
+        /// </summary>
+        public CompletionCallback() : this(null)
+        {  }
 
         void OnCallBack(IntPtr userData, int result)
         {
@@ -39,18 +57,6 @@ namespace PepperSharp
             }
             userDataHandle.Free();
         }
-
-        //public CompletionCallback(PPCompletionCallbackFunc func, object userData)
-        //    : this(func)
-        //{
-        //    if (userData == null)
-        //        this.userData = IntPtr.Zero;
-        //    else
-        //    {
-        //        GCHandle userHandle = GCHandle.Alloc(userData, GCHandleType.Pinned);
-        //        this.userData = (IntPtr)userHandle;
-        //    }
-        //}
 
         public static object GetUserData(IntPtr userData)
         {
@@ -73,5 +79,18 @@ namespace PepperSharp
 
         }
 
+        public static implicit operator PPCompletionCallback(CompletionCallback completionCallback)
+        {
+            return completionCallback.Callback;
+        }
+    }
+
+    public class BlockUntilComplete : CompletionCallback
+    {
+
+        public BlockUntilComplete () : base()
+        {
+            
+        }
     }
 }

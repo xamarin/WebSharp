@@ -47,7 +47,7 @@ namespace PepperSharp
                 if (IsArray)
                     Set(index, value);
             }
-        }            
+        }
 
         public Var Get(uint index)
         {

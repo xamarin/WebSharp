@@ -55,7 +55,15 @@ namespace PepperSharp
             userDataHandle.Free();
         }
 
+        public static implicit operator PPCompletionCallback(CompletionCallbackWithOutput<T> completionCallback)
+        {
+            return completionCallback.Callback;
+        }
 
+        public static implicit operator PPArrayOutput(CompletionCallbackWithOutput<T> completionCallback)
+        {
+            return (PPArrayOutput)completionCallback.OutputAdapter.Adapter;
+        }
     }
 
     public class CompletionCallbackWithOutput<T, U>
@@ -103,7 +111,15 @@ namespace PepperSharp
             userDataHandle.Free();
         }
 
+        public static implicit operator PPCompletionCallback(CompletionCallbackWithOutput<T, U> completionCallback)
+        {
+            return completionCallback.Callback;
+        }
 
+        public static implicit operator PPArrayOutput(CompletionCallbackWithOutput<T, U> completionCallback)
+        {
+            return (PPArrayOutput)completionCallback.OutputAdapter.Adapter;
+        }
     }
 
     public class CompletionCallbackWithOutput<T, U, V>
@@ -153,7 +169,15 @@ namespace PepperSharp
             userDataHandle.Free();
         }
 
+        public static implicit operator PPCompletionCallback(CompletionCallbackWithOutput<T, U, V> completionCallback)
+        {
+            return completionCallback.Callback;
+        }
 
+        public static implicit operator PPArrayOutput(CompletionCallbackWithOutput<T, U, V> completionCallback)
+        {
+            return (PPArrayOutput)completionCallback.OutputAdapter.Adapter;
+        }
     }
 
     public class APIArgumentAdapter<T> : OutputAdapterBase<T>
