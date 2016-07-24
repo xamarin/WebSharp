@@ -243,3 +243,14 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# Python binding compiled modules
+/Tools/binding/generators/*.pyc
+/Tools/binding/generators/ply/*.pyc
+
+# Generated output binding files
+/Tools/binding/pepper
+/Tools/binding/peppersharp
+/Tools/binding/*.pyproj
+/Tools/binding/*.sln
+/Tools/binding/api2
