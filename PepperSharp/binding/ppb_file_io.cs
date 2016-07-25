@@ -204,7 +204,7 @@ public static partial class PPBFileIO {
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileIO_Read")]
   extern static int _Read ( PPResource file_io,
                             long offset,
-                            string buffer,
+                            System.Text.StringBuilder buffer,
                             int bytes_to_read,
                             PPCompletionCallback callback);
 
@@ -236,7 +236,7 @@ public static partial class PPBFileIO {
    */
   public static int Read ( PPResource file_io,
                            long offset,
-                           string buffer,
+                           System.Text.StringBuilder buffer,
                            int bytes_to_read,
                            PPCompletionCallback callback)
   {
@@ -247,7 +247,7 @@ public static partial class PPBFileIO {
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileIO_Write")]
   extern static int _Write ( PPResource file_io,
                              long offset,
-                             string buffer,
+                             System.Text.StringBuilder buffer,
                              int bytes_to_write,
                              PPCompletionCallback callback);
 
@@ -272,7 +272,7 @@ public static partial class PPBFileIO {
    */
   public static int Write ( PPResource file_io,
                             long offset,
-                            string buffer,
+                            System.Text.StringBuilder buffer,
                             int bytes_to_write,
                             PPCompletionCallback callback)
   {
