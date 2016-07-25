@@ -135,10 +135,10 @@ class CSGen(object):
       'store': '%s'
     },
     'str_t': {
-      'in': '%s',
-      'inout': '%s',
-      'out': '%s',
-      'return': 'const %s',
+      'in': 'string%.0s',
+      'inout': 'System.Text.StringBuilder%.0s',
+      'out': 'System.Text.StringBuilder%.0s',
+      'return': 'string%.0s%s',
       'store': '%s'
     },
     'cstr_t': {
