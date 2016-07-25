@@ -178,7 +178,7 @@ class CSGen(object):
   'handle_t': 'int',
   'mem_t': 'IntPtr',
   'mem_ptr_t': 'mem_ptr_IntPtr',
-  'str_t': 'string',
+  'str_t': 'System.Text.StringBuilder',
   'cstr_t': 'string',
   'interface_t' : 'const void*'
   }
