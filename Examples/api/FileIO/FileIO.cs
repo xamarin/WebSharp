@@ -32,7 +32,7 @@ namespace FileIO
             messageLoop = PPBMessageLoop.Create(this);
             StartFileMessageLoop();
 
-            PPBMessageLoop.PostWork(messageLoop, new CompletionCallback(OpenFileSystem).Callback, 0);
+            PPBMessageLoop.PostWork(messageLoop, new CompletionCallback(OpenFileSystem), 0);
 
             return true;
         }
@@ -176,7 +176,7 @@ namespace FileIO
             ShowStatusMessage("Rename success");
         }
 
-        void OpenFileSystem(IntPtr userData, int result)
+        void OpenFileSystem(PPError result)
         {
             
             var rv = (PPError)PPBFileSystem.Open(fileSystem, 1024 * 1024, new BlockUntilComplete());

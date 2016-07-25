@@ -132,13 +132,13 @@ namespace VideoEncode
                                frame_size_.Height,
                                (int)PPMediaStreamVideoTrackAttrib.None};
 
-            PPBMediaStreamVideoTrack.Configure(video_track_, attrib_list, new CompletionCallback(OnConfiguredTrack).Callback);
+            PPBMediaStreamVideoTrack.Configure(video_track_, attrib_list, new CompletionCallback(OnConfiguredTrack));
 
         }
 
-        void OnConfiguredTrack(IntPtr userData, int result)
+        void OnConfiguredTrack(PPError result)
         {
-            if ((PPError)result != PPError.Ok)
+            if (result != PPError.Ok)
             {
                 LogError(result, "Cannot configure track");
                 return;
@@ -178,13 +178,13 @@ namespace VideoEncode
             // delay for the next tick.
             
             var delta = tick - Clamp(0, tick, now - last_encode_tick_ - tick);
-            PPBCore.CallOnMainThread((int)(delta * 1000), new CompletionCallback(GetEncoderFrameTick).Callback, 0);
+            PPBCore.CallOnMainThread((int)(delta * 1000), new CompletionCallback(GetEncoderFrameTick), 0);
 
             last_encode_tick_ = now;
             is_encode_ticking_ = true;
         }
 
-        private void GetEncoderFrameTick(IntPtr user_data, int result)
+        private void GetEncoderFrameTick(PPError result)
         {
             is_encode_ticking_ = false;
             if (is_encoding_)
@@ -256,11 +256,11 @@ namespace VideoEncode
 
         void EncodeFrame(PPResource frame) {
             frames_timestamps_.Enqueue((long)(PPBVideoFrame.GetTimestamp(frame) * 1000));
-            PPBVideoEncoder.Encode(video_encoder_, frame, PPBool.False, new CompletionCallback(OnEncodeDone).Callback);
+            PPBVideoEncoder.Encode(video_encoder_, frame, PPBool.False, new CompletionCallback(OnEncodeDone));
 
         }
 
-        private void OnEncodeDone(IntPtr user_data, int result)
+        private void OnEncodeDone(PPError result)
         {
             if ((PPError)result == PPError.Aborted)
                 return;
@@ -306,7 +306,7 @@ namespace VideoEncode
             var error = (PPError)PPBVideoEncoder.Initialize(video_encoder_,
                 frame_format_, frame_size_, video_profile_, 2000000,
                 PPHardwareAcceleration.Withfallback,
-                new CompletionCallback(OnInitializedEncoder).Callback);
+                new CompletionCallback(OnInitializedEncoder));
 
             if (error != PPError.OkCompletionpending)
             {
@@ -315,7 +315,7 @@ namespace VideoEncode
             }
         }
 
-        void OnInitializedEncoder(IntPtr userData, int result)
+        void OnInitializedEncoder(PPError result)
         {
             if ((PPError)result != PPError.Ok)
             {

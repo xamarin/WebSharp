@@ -228,14 +228,14 @@ namespace VarArrayBufferInstance
             Debug.Assert(!isFlushing);
             PPBGraphics2D.ReplaceContents(graphics2DContext, image_data);
             //var flushCallback = new CompletionCallback(DidFlush);
-            PPBGraphics2D.Flush(graphics2DContext, new CompletionCallback(DidFlush).Callback);
+            PPBGraphics2D.Flush(graphics2DContext, new CompletionCallback(DidFlush));
             isFlushing = true;
         }
 
         /// The callback that gets invoked when a flush completes. This is bound to a
         /// <code>CompletionCallback</code> and passed as a parameter to
         /// <code>Flush</code>.
-        void DidFlush(IntPtr userData, int error_code)
+        void DidFlush(PPError error_code)
         {
             isFlushing = false;
             // If there are no images in the queue, we're done for now.

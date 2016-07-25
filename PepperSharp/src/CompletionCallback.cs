@@ -17,7 +17,7 @@ namespace PepperSharp
         CompletionCallbackFunc compCallbackFunc;
         IntPtr userData;
 
-        public CompletionCallback(PPCompletionCallbackFunc callbackFunc, object userData = null, PPCompletionCallbackFlag flags = PPCompletionCallbackFlag.None)
+        protected CompletionCallback(PPCompletionCallbackFunc callbackFunc, object userData = null, PPCompletionCallbackFlag flags = PPCompletionCallbackFlag.None)
         {
             this.callbackFunc = callbackFunc;
             // if no callbackfunc is specified then 

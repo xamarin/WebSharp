@@ -53,13 +53,12 @@ namespace WebSocket
             websocket_ = PPBWebSocket.Create(this);
             if (PPBWebSocket.IsWebSocket(websocket_) != PPBool.True)
                 return;
-            PPBWebSocket.Connect(websocket_, new Var(url), null, 0, new CompletionCallback(OnConnectCompletionCallback, this).Callback);
+            PPBWebSocket.Connect(websocket_, new Var(url), null, 0, new CompletionCallback<WebSocket>(OnConnectCompletionCallback, this).Callback);
             PostMessage("connecting...");
         }
 
-        void OnConnectCompletionCallback(IntPtr userData, int result)
+        void OnConnectCompletionCallback(PPError result, WebSocket instance)
         {
-            var instance = CompletionCallback.GetUserData<WebSocket>(userData);
             instance.OnConnectCompletion((PPError)result);
         }
 
@@ -79,12 +78,11 @@ namespace WebSocket
         {
             // |receive_var_| must be valid until |callback| is invoked.
             // Just use a member variable.
-            PPBWebSocket.ReceiveMessage(websocket_, out receive_var_, new CompletionCallback(OnReceiveCompletionCallback, this).Callback);
+            PPBWebSocket.ReceiveMessage(websocket_, out receive_var_, new CompletionCallback<WebSocket>(OnReceiveCompletionCallback, this));
         }
 
-        void OnReceiveCompletionCallback(IntPtr user_data, int result)
+        void OnReceiveCompletionCallback(PPError result, WebSocket instance)
         {
-            var instance = CompletionCallback.GetUserData<WebSocket>(user_data);
             instance.OnReceiveCompletion((PPError)result);
         }
 
@@ -121,12 +119,11 @@ namespace WebSocket
             if (!IsConnected())
                 return;
             PPBWebSocket.Close(websocket_, (int)PPWebSocketCloseCode.WebsocketstatuscodeNormalClosure,
-                            new Var("bye"), new CompletionCallback(OnCloseCompletionCallback, this).Callback);
+                            new Var("bye"), new CompletionCallback<WebSocket>(OnCloseCompletionCallback, this));
         }
 
-        void OnCloseCompletionCallback(IntPtr user_data, int result)
+        void OnCloseCompletionCallback(PPError result, WebSocket instance)
         {
-            var instance = CompletionCallback.GetUserData<WebSocket>(user_data);
             instance.OnCloseCompletion((PPError)result);
         }
 
