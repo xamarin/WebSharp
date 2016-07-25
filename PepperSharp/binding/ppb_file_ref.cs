@@ -49,8 +49,7 @@ public enum PPMakeDirectoryFlags {
  */
 public static partial class PPBFileRef {
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileRef_Create")]
-  extern static PPResource _Create ( PPResource file_system,
-                                     System.Text.StringBuilder path);
+  extern static PPResource _Create ( PPResource file_system,  string path);
 
   /**
    * Create() creates a weak pointer to a file in the given file system. File
@@ -63,8 +62,7 @@ public static partial class PPBFileRef {
    * @return A <code>PP_Resource</code> corresponding to a file reference if
    * successful or 0 if the path is malformed.
    */
-  public static PPResource Create ( PPResource file_system,
-                                    System.Text.StringBuilder path)
+  public static PPResource Create ( PPResource file_system,  string path)
   {
   	return _Create (file_system, path);
   }
