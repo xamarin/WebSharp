@@ -11,6 +11,9 @@ let mainWindow
 // Register the dotnet plugin with Electron:
 require('../../../Tools/electron-dotnet').Register();
 
+// Set our User Data Directory same as setting --user-data-dir command line switch
+app.setPath('userData', __dirname + '/user-data-dir');
+
 function createWindow () {
   // Create the browser window.
     mainWindow = new BrowserWindow(

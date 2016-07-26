@@ -254,3 +254,6 @@ ModelManifest.xml
 /Tools/binding/*.pyproj
 /Tools/binding/*.sln
 /Tools/binding/api2
+
+# User Data Directories created and used by Electron when started up
+**/user-data-dir

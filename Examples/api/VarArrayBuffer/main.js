@@ -8,9 +8,11 @@ const BrowserWindow = electron.BrowserWindow
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-var ppapiPath = __dirname + '\\..\\..\\..\\PepperPlugin\\bin\\Win32\\Debug\\PepperPlugin.dll';
-console.log('PPAPI path ' +  ppapiPath + ';application/electron-dotnet');
-app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';application/electron-dotnet');
+// Register the dotnet plugin with Electron:
+require('../../../Tools/electron-dotnet').Register();
+
+// Set our User Data Directory same as setting --user-data-dir command line switch
+app.setPath('userData', __dirname + '/user-data-dir');
 
 function createWindow () {
   // Create the browser window.
