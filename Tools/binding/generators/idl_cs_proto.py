@@ -176,6 +176,8 @@ class CSGen(object):
   'int16_t': 'short',
   'uint16_t': 'ushort',
   'handle_t': 'int',
+  'int8_t': 'sbyte',
+  'uint8_t': 'byte',
   'mem_t': 'IntPtr',
   'mem_ptr_t': 'mem_ptr_IntPtr',
   'str_t': 'System.Text.StringBuilder',
@@ -538,7 +540,10 @@ class CSGen(object):
       name = prefix + arrayspec
     else:
       if not compose_mode:
-        name = prefix + name + arrayspec
+        if arrayspec:
+            name = prefix + name
+        else:
+            name = prefix + name + arrayspec
     if name in CSGen.RemapArgument:
         name = CSGen.RemapArgument[name]
     if callspec is None:
@@ -548,7 +553,10 @@ class CSGen(object):
             if compose_mode:
                 out = '%s %s' % (rtype, name) 
             else:
-                out = 'public %s %s' % (rtype, name)
+                if arrayspec:
+                    out = '//%s%s\npublic %s[] %s' % (rtype, arrayspec, rtype, name)
+                else:
+                    out = 'public %s %s' % (rtype, name)
     else:
       params = []
       for ptype, pname, parray, pspec in callspec:
