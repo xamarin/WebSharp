@@ -121,7 +121,7 @@ namespace FileIO
                 return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, file_name);
+            var fileref = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(file_name));
 
             result = (PPError)PPBFileRef.Delete(fileref, new BlockUntilComplete());
             if (result == PPError.Filenotfound)
@@ -144,7 +144,7 @@ namespace FileIO
                 ShowErrorMessage("File system is not open", PPError.Failed);
                 return;
             }
-            var refDir = PPBFileRef.Create(fileSystem, dirName);
+            var refDir = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(dirName));
 
             result = (PPError)PPBFileRef.MakeDirectory(refDir, (int)PPMakeDirectoryFlags.MakedirectoryflagNone, new BlockUntilComplete());
 
@@ -164,8 +164,8 @@ namespace FileIO
                 return;
             }
 
-            var refOld = PPBFileRef.Create(fileSystem, oldName);
-            var refNew = PPBFileRef.Create(fileSystem, newName);
+            var refOld = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(oldName));
+            var refNew = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(newName));
 
             result = (PPError)PPBFileRef.Rename(refOld, refNew, new BlockUntilComplete());
             if (result != PPError.Ok)
@@ -201,7 +201,7 @@ namespace FileIO
                 return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, fileName);
+            var fileref = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(fileName));
             var file = PPBFileIO.Create(this);
 
             var openResult = (PPError)PPBFileIO.Open(file, fileref, (int)PPFileOpenFlags.FileopenflagRead, new BlockUntilComplete());
@@ -233,11 +233,11 @@ namespace FileIO
             int offset = 0;
             int bytesRead = 0;
             int bytesToRead = (int)info.size;
-            var dataBuffer = new StringBuilder(bytesToRead);
+            var dataBuffer = new byte[bytesToRead];
+            var dataBufferString = new StringBuilder();
             while (bytesToRead > 0)
             {
-                dataBuffer.Clear();
-                dataBuffer.EnsureCapacity((int)info.size);
+                Array.Clear(dataBuffer, 0, bytesToRead);
                 bytesRead = PPBFileIO.Read(file, offset,
                             dataBuffer, (int)info.size - offset,
                            new BlockUntilComplete());
@@ -246,6 +246,7 @@ namespace FileIO
                 {
                     offset += bytesRead;
                     bytesToRead -= bytesRead;
+                    dataBufferString.Append(Encoding.UTF8.GetString(dataBuffer));
                 }
                 else if (bytesRead < 0)
                 {
@@ -254,7 +255,7 @@ namespace FileIO
                     return;
                 }
             }
-            PostArrayMessage("DISP", dataBuffer.ToString());
+            PostArrayMessage("DISP", dataBufferString.ToString());
             ShowStatusMessage("Load success");
         }
 
@@ -268,7 +269,7 @@ namespace FileIO
               return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, fileName);
+            var fileref = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(fileName));
             var file = PPBFileIO.Create(this);
 
             var openResult = (PPError)PPBFileIO.Open(file, fileref,
@@ -292,11 +293,12 @@ namespace FileIO
                 }
                 int offset = 0;
                 int bytesWritten = 0;
+                var byteContents = Encoding.UTF8.GetBytes(fileContents);
                 do
                 {
                     bytesWritten = PPBFileIO.Write(file, offset,
-                                               fileContents,
-                                               fileContents.Length,
+                                               byteContents,
+                                               byteContents.Length,
                                                new BlockUntilComplete());
                     if (bytesWritten > 0)
                     {
@@ -330,7 +332,7 @@ namespace FileIO
               return;
             }
 
-            var fileRef = PPBFileRef.Create(fileSystem, dir_name);
+            var fileRef = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(dir_name));
 
             // Pass ref along to keep it alive.
             var listCallback = new CompletionCallbackWithOutput<PPDirectoryEntry[], PPResource>(ListCallback, fileRef);

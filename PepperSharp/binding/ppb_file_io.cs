@@ -204,7 +204,7 @@ public static partial class PPBFileIO {
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileIO_Read")]
   extern static int _Read ( PPResource file_io,
                             long offset,
-                            System.Text.StringBuilder buffer,
+                           IntPtr buffer,
                             int bytes_to_read,
                             PPCompletionCallback callback);
 
@@ -236,18 +236,27 @@ public static partial class PPBFileIO {
    */
   public static int Read ( PPResource file_io,
                            long offset,
-                           System.Text.StringBuilder buffer,
+                          byte[] buffer,
                            int bytes_to_read,
                            PPCompletionCallback callback)
   {
-  	return _Read (file_io, offset, buffer, bytes_to_read, callback);
+  	if (buffer == null)
+  		throw new ArgumentNullException ("buffer");
+
+  	unsafe
+  	{
+  		fixed (byte* buffer_ = &buffer[0])
+  		{
+  			return _Read (file_io, offset, (IntPtr) buffer_, bytes_to_read, callback);
+  		}
+  	}
   }
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileIO_Write")]
   extern static int _Write ( PPResource file_io,
                              long offset,
-                             string buffer,
+                            IntPtr buffer,
                              int bytes_to_write,
                              PPCompletionCallback callback);
 
@@ -272,11 +281,22 @@ public static partial class PPBFileIO {
    */
   public static int Write ( PPResource file_io,
                             long offset,
-                            string buffer,
+                           byte[] buffer,
                             int bytes_to_write,
                             PPCompletionCallback callback)
   {
-  	return _Write (file_io, offset, buffer, bytes_to_write, callback);
+  	if (buffer == null)
+  		throw new ArgumentNullException ("buffer");
+
+  	unsafe
+  	{
+  		fixed (byte* buffer_ = &buffer[0])
+  		{
+  			return _Write (file_io, offset, (IntPtr) buffer_,
+                                      bytes_to_write,
+                                      callback);
+  		}
+  	}
   }
 
 

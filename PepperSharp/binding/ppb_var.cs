@@ -61,7 +61,7 @@ public static partial class PPBVar {
 
 
   [DllImport("PepperPlugin", EntryPoint = "PPB_Var_VarFromUtf8")]
-  extern static PPVar _VarFromUtf8 ( string data,  uint len);
+  extern static PPVar _VarFromUtf8 (IntPtr data,  uint len);
 
   /**
    * VarFromUtf8() creates a string var from a string. The string must be
@@ -87,9 +87,18 @@ public static partial class PPBVar {
    * @return A <code>PP_Var</code> structure containing a reference counted
    * string object.
    */
-  public static PPVar VarFromUtf8 ( string data,  uint len)
+  public static PPVar VarFromUtf8 (byte[] data,  uint len)
   {
-  	return _VarFromUtf8 (data, len);
+  	if (data == null)
+  		throw new ArgumentNullException ("data");
+
+  	unsafe
+  	{
+  		fixed (byte* data_ = &data[0])
+  		{
+  			return _VarFromUtf8 ((IntPtr) data_, len);
+  		}
+  	}
   }
 
 

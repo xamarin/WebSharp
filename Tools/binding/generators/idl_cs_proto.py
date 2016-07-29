@@ -135,9 +135,9 @@ class CSGen(object):
       'store': '%s'
     },
     'str_t': {
-      'in': 'string%.0s',
-      'inout': 'System.Text.StringBuilder%.0s',
-      'out': 'System.Text.StringBuilder%.0s',
+      'in': 'const %s',
+      'inout': 'ref %s',
+      'out': '%s',
       'return': 'string%.0s%s',
       'store': '%s'
     },
@@ -180,7 +180,7 @@ class CSGen(object):
   'uint8_t': 'byte',
   'mem_t': 'IntPtr',
   'mem_ptr_t': 'mem_ptr_IntPtr',
-  'str_t': 'System.Text.StringBuilder',
+  'str_t': 'str_t',
   'cstr_t': 'string',
   'interface_t' : 'const void*'
   }
@@ -449,6 +449,8 @@ class CSGen(object):
 
     # Generate passing type by modifying root type
     rtype = self.GetTypeByMode(node, release, mode)
+    if rtype == "str_t":
+        rtype = rtype
 
     # If this is an array output, change it from type* foo[] to type** foo.
     # type* foo[] means an array of pointers to type, which is confusing.
@@ -514,8 +516,15 @@ class CSGen(object):
     for rtype, name, array_dims, more_args in args_spec:
         if name in CSGen.RemapArgument:
             name = CSGen.RemapArgument[name]
-        if rtype.startswith('out IntPtr') or rtype.startswith(' const IntPtr'):  # special for unsafe
-            args.append('(IntPtr) %s_' % name)
+
+        # special for unsafe - The need to be converted to IntPtr
+        if rtype.startswith('out IntPtr') \
+            or rtype.startswith('out str_t') \
+            or rtype.startswith(' const IntPtr') \
+            or rtype.startswith(' const str_t') \
+            or rtype.startswith(' ref str_t'):  
+                args.append('(IntPtr) %s_' % name)
+
         elif rtype.startswith('out ') or rtype.startswith('ref '):
             args.append('%s%s' % (rtype[0:4], name))
         elif rtype.startswith(' ref '): # TODO: look into why there is a space
@@ -576,6 +585,12 @@ class CSGen(object):
                 eparm = eparm[len('out '):]
             elif eparm.startswith(' const IntPtr'):
                 eparm = eparm[len(' const '):]
+            elif eparm.startswith('out str_t'):
+                eparm = 'IntPtr' + eparm[len('out str_t'):]
+            elif eparm.startswith(' const str_t'):
+                eparm = 'IntPtr' + eparm[len(' const str_t'):]
+            elif eparm.startswith(' ref str_t'):
+                eparm = 'IntPtr' + eparm[len(' ref str_t'):]
             entryParams.append(eparm)
         out += 'extern static %s _%s (%s);\n' % (rtype, name, ', '.join(entryParams))
       else:
@@ -589,6 +604,15 @@ class CSGen(object):
             elif eparm.startswith(' const IntPtr'):
                 unsafeParams.append(eparm[len(' const IntPtr '):])
                 eparm = 'byte[]' + eparm[len(' const IntPtr'):]
+            elif eparm.startswith('out str_t'):
+                unsafeParams.append(eparm[len('out str_t '):])
+                eparm = 'byte[]' + eparm[len('out str_t'):]
+            elif eparm.startswith(' const str_t'):
+                unsafeParams.append(eparm[len(' const str_t '):])
+                eparm = 'byte[]' + eparm[len(' const str_t'):]
+            elif eparm.startswith(' ref str_t'):
+                unsafeParams.append(eparm[len(' ref str_t '):])
+                eparm = 'byte[]' + eparm[len(' ref str_t'):]
                 
             entryParams.append(eparm)
         out = 'public static %s %s (%s) \n{\n' % (rtype, name, ', '.join(entryParams))
