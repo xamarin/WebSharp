@@ -43,10 +43,10 @@ To build and target 64 bit version of the PepperPlugin which will only run with 
 WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x64 /p:Configuration=Release
 ```
 
-To build and target 32 bit version of the PepperPlugin which will only run with Electron 64 platforms.
+To build and target 32 bit version of the PepperPlugin which will only run with Electron 32 platforms.
 ```shell
 > cd WebSharp\PepperPlugin\src
-WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x84 /p:Configuration=Release
+WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x86 /p:Configuration=Release
 ```
 
 The solution is setup to build the PepperPlugin.dll, PepperSharp.dll and the examples that can be found in the Examples directory. 
