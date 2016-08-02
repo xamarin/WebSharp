@@ -449,8 +449,6 @@ class CSGen(object):
 
     # Generate passing type by modifying root type
     rtype = self.GetTypeByMode(node, release, mode)
-    if rtype == "str_t":
-        rtype = rtype
 
     # If this is an array output, change it from type* foo[] to type** foo.
     # type* foo[] means an array of pointers to type, which is confusing.
@@ -563,7 +561,7 @@ class CSGen(object):
                 out = '%s %s' % (rtype, name) 
             else:
                 if arrayspec:
-                    out = '//%s%s\npublic %s[] %s' % (rtype, arrayspec, rtype, name)
+                    out = 'public unsafe fixed %s %s%s' % (rtype, name, arrayspec)
                 else:
                     out = 'public %s %s' % (rtype, name)
     else:
