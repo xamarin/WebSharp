@@ -15,6 +15,7 @@
 #include "ppapi/c/ppb_file_system.h"
 #include "ppapi/c/ppb_fullscreen.h"
 #include "ppapi/c/ppb_graphics_2d.h"
+#include "ppapi/c/ppb_host_resolver.h"
 #include "ppapi/c/ppb_image_data.h"
 #include "ppapi/c/ppb_input_event.h"
 #include "ppapi/c/ppb_instance.h"
@@ -24,6 +25,9 @@
 #include "ppapi/c/ppb_messaging.h"
 #include "ppapi/c/ppb_mouse_cursor.h"
 #include "ppapi/c/ppb_mouse_lock.h"
+#include "ppapi/c/ppb_net_address.h"
+#include "ppapi/c/ppb_tcp_socket.h"
+#include "ppapi/c/ppb_udp_socket.h"
 #include "ppapi/c/ppb_url_loader.h"
 #include "ppapi/c/ppb_url_request_info.h"
 #include "ppapi/c/ppb_url_response_info.h"
@@ -125,6 +129,9 @@ namespace Pepper {
 		template <> const char*	interface_name<PPB_Graphics2D_1_2>() {
 			return PPB_GRAPHICS_2D_INTERFACE_1_2;
 		}
+		template <> const char*	interface_name<PPB_HostResolver_1_0>() {
+			return PPB_HOSTRESOLVER_INTERFACE_1_0;
+		}
 		template <> const char*	interface_name<PPB_ImageData_1_0>() {
 			return PPB_IMAGEDATA_INTERFACE_1_0;
 		}
@@ -178,6 +185,27 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_MouseLock_1_0>() {
 			return PPB_MOUSELOCK_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_NetAddress_1_0>() {
+			return PPB_NETADDRESS_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_TCPSocket_1_0>() {
+			return PPB_TCPSOCKET_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_TCPSocket_1_1>() {
+			return PPB_TCPSOCKET_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_TCPSocket_1_2>() {
+			return PPB_TCPSOCKET_INTERFACE_1_2;
+		}
+		template <> const char*	interface_name<PPB_UDPSocket_1_0>() {
+			return PPB_UDPSOCKET_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_UDPSocket_1_1>() {
+			return PPB_UDPSOCKET_INTERFACE_1_1;
+		}
+		template <> const char*	interface_name<PPB_UDPSocket_1_2>() {
+			return PPB_UDPSOCKET_INTERFACE_1_2;
 		}
 		template <> const char*	interface_name<PPB_URLLoader_1_0>() {
 			return PPB_URLLOADER_INTERFACE_1_0;
@@ -1010,6 +1038,52 @@ namespace Pepper {
 
 		#pragma endregion /* End entry point generation for PPB_Graphics2D */
 
+		#pragma region /* Begin entry point methods for PPB_HostResolver */
+
+		PEPPER_EXPORT PP_Resource PPB_HostResolver_Create(PP_Instance instance) {
+			if (has_interface<PPB_HostResolver_1_0>()) {
+				return get_interface<PPB_HostResolver_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_HostResolver_IsHostResolver(PP_Resource resource) {
+			if (has_interface<PPB_HostResolver_1_0>()) {
+				return get_interface<PPB_HostResolver_1_0>()->IsHostResolver(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_HostResolver_Resolve(PP_Resource host_resolver, const char* host, uint16_t port, struct PP_HostResolver_Hint hint, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_HostResolver_1_0>()) {
+				return get_interface<PPB_HostResolver_1_0>()->Resolve(host_resolver, host, port, &hint, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_HostResolver_GetCanonicalName(PP_Resource host_resolver) {
+			if (has_interface<PPB_HostResolver_1_0>()) {
+				return get_interface<PPB_HostResolver_1_0>()->GetCanonicalName(host_resolver);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT uint32_t PPB_HostResolver_GetNetAddressCount(PP_Resource host_resolver) {
+			if (has_interface<PPB_HostResolver_1_0>()) {
+				return get_interface<PPB_HostResolver_1_0>()->GetNetAddressCount(host_resolver);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_HostResolver_GetNetAddress(PP_Resource host_resolver, uint32_t index) {
+			if (has_interface<PPB_HostResolver_1_0>()) {
+				return get_interface<PPB_HostResolver_1_0>()->GetNetAddress(host_resolver, index);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_HostResolver */
+
 		#pragma region /* Begin entry point methods for PPB_ImageData */
 
 		PEPPER_EXPORT PP_ImageDataFormat PPB_ImageData_GetNativeImageDataFormat(void) {
@@ -1652,6 +1726,327 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_MouseLock */
+
+		#pragma region /* Begin entry point methods for PPB_NetAddress */
+
+		PEPPER_EXPORT PP_Resource PPB_NetAddress_CreateFromIPv4Address(PP_Instance instance, struct PP_NetAddress_IPv4 ipv4_addr) {
+			if (has_interface<PPB_NetAddress_1_0>()) {
+				return get_interface<PPB_NetAddress_1_0>()->CreateFromIPv4Address(instance, &ipv4_addr);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_NetAddress_CreateFromIPv6Address(PP_Instance instance, struct PP_NetAddress_IPv6 ipv6_addr) {
+			if (has_interface<PPB_NetAddress_1_0>()) {
+				return get_interface<PPB_NetAddress_1_0>()->CreateFromIPv6Address(instance, &ipv6_addr);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_NetAddress_IsNetAddress(PP_Resource resource) {
+			if (has_interface<PPB_NetAddress_1_0>()) {
+				return get_interface<PPB_NetAddress_1_0>()->IsNetAddress(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_NetAddress_Family PPB_NetAddress_GetFamily(PP_Resource addr) {
+			if (has_interface<PPB_NetAddress_1_0>()) {
+				return get_interface<PPB_NetAddress_1_0>()->GetFamily(addr);
+			}
+			return PP_NETADDRESS_FAMILY_UNSPECIFIED;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_NetAddress_DescribeAsString(PP_Resource addr, PP_Bool include_port) {
+			if (has_interface<PPB_NetAddress_1_0>()) {
+				return get_interface<PPB_NetAddress_1_0>()->DescribeAsString(addr, include_port);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_NetAddress_DescribeAsIPv4Address(PP_Resource addr, struct PP_NetAddress_IPv4* ipv4_addr) {
+			if (has_interface<PPB_NetAddress_1_0>()) {
+				return get_interface<PPB_NetAddress_1_0>()->DescribeAsIPv4Address(addr, ipv4_addr);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_NetAddress_DescribeAsIPv6Address(PP_Resource addr, struct PP_NetAddress_IPv6* ipv6_addr) {
+			if (has_interface<PPB_NetAddress_1_0>()) {
+				return get_interface<PPB_NetAddress_1_0>()->DescribeAsIPv6Address(addr, ipv6_addr);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_NetAddress */
+
+		#pragma region /* Begin entry point methods for PPB_TCPSocket */
+
+		PEPPER_EXPORT PP_Resource PPB_TCPSocket_Create(PP_Instance instance) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->Create(instance);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->Create(instance);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				return get_interface<PPB_TCPSocket_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_TCPSocket_IsTCPSocket(PP_Resource resource) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->IsTCPSocket(resource);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->IsTCPSocket(resource);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				return get_interface<PPB_TCPSocket_1_0>()->IsTCPSocket(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_TCPSocket_Bind(PP_Resource tcp_socket, PP_Resource addr, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->Bind(tcp_socket, addr, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->Bind(tcp_socket, addr, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_TCPSocket_Connect(PP_Resource tcp_socket, PP_Resource addr, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->Connect(tcp_socket, addr, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->Connect(tcp_socket, addr, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				return get_interface<PPB_TCPSocket_1_0>()->Connect(tcp_socket, addr, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_TCPSocket_GetLocalAddress(PP_Resource tcp_socket) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->GetLocalAddress(tcp_socket);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->GetLocalAddress(tcp_socket);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				return get_interface<PPB_TCPSocket_1_0>()->GetLocalAddress(tcp_socket);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_TCPSocket_GetRemoteAddress(PP_Resource tcp_socket) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->GetRemoteAddress(tcp_socket);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->GetRemoteAddress(tcp_socket);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				return get_interface<PPB_TCPSocket_1_0>()->GetRemoteAddress(tcp_socket);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_TCPSocket_Read(PP_Resource tcp_socket, char* buffer, int32_t bytes_to_read, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				//static const int kBufferSize = 1024;
+				//char receive_buffer_[kBufferSize];
+				//memset(receive_buffer_, 0, kBufferSize);
+				//printf("Do read %d\n", bytes_to_read);
+				//buffer[0] = 'H';
+				return get_interface<PPB_TCPSocket_1_2>()->Read(tcp_socket, buffer, bytes_to_read, callback);
+				//buffer = receive_buffer_;
+				//return rr;
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->Read(tcp_socket, buffer, bytes_to_read, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				return get_interface<PPB_TCPSocket_1_0>()->Read(tcp_socket, buffer, bytes_to_read, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_TCPSocket_Write(PP_Resource tcp_socket, const char* buffer, int32_t bytes_to_write, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->Write(tcp_socket, buffer, bytes_to_write, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->Write(tcp_socket, buffer, bytes_to_write, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				return get_interface<PPB_TCPSocket_1_0>()->Write(tcp_socket, buffer, bytes_to_write, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_TCPSocket_Listen(PP_Resource tcp_socket, int32_t backlog, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->Listen(tcp_socket, backlog, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->Listen(tcp_socket, backlog, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_TCPSocket_Accept(PP_Resource tcp_socket, PP_Resource* accepted_tcp_socket, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->Accept(tcp_socket, accepted_tcp_socket, callback);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				return get_interface<PPB_TCPSocket_1_1>()->Accept(tcp_socket, accepted_tcp_socket, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_TCPSocket_Close(PP_Resource tcp_socket) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				get_interface<PPB_TCPSocket_1_2>()->Close(tcp_socket);
+			}
+			else if (has_interface<PPB_TCPSocket_1_1>()) {
+				get_interface<PPB_TCPSocket_1_1>()->Close(tcp_socket);
+			}
+			else if (has_interface<PPB_TCPSocket_1_0>()) {
+				get_interface<PPB_TCPSocket_1_0>()->Close(tcp_socket);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT int32_t PPB_TCPSocket_SetOption(PP_Resource tcp_socket, PP_TCPSocket_Option name, struct PP_Var value, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_TCPSocket_1_2>()) {
+				return get_interface<PPB_TCPSocket_1_2>()->SetOption(tcp_socket, name, value, callback);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_TCPSocket */
+
+		#pragma region /* Begin entry point methods for PPB_UDPSocket */
+
+		PEPPER_EXPORT PP_Resource PPB_UDPSocket_Create(PP_Instance instance) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->Create(instance);
+			}
+			else if (has_interface<PPB_UDPSocket_1_1>()) {
+				return get_interface<PPB_UDPSocket_1_1>()->Create(instance);
+			}
+			else if (has_interface<PPB_UDPSocket_1_0>()) {
+				return get_interface<PPB_UDPSocket_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_UDPSocket_IsUDPSocket(PP_Resource resource) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->IsUDPSocket(resource);
+			}
+			else if (has_interface<PPB_UDPSocket_1_1>()) {
+				return get_interface<PPB_UDPSocket_1_1>()->IsUDPSocket(resource);
+			}
+			else if (has_interface<PPB_UDPSocket_1_0>()) {
+				return get_interface<PPB_UDPSocket_1_0>()->IsUDPSocket(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT int32_t PPB_UDPSocket_Bind(PP_Resource udp_socket, PP_Resource addr, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->Bind(udp_socket, addr, callback);
+			}
+			else if (has_interface<PPB_UDPSocket_1_1>()) {
+				return get_interface<PPB_UDPSocket_1_1>()->Bind(udp_socket, addr, callback);
+			}
+			else if (has_interface<PPB_UDPSocket_1_0>()) {
+				return get_interface<PPB_UDPSocket_1_0>()->Bind(udp_socket, addr, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Resource PPB_UDPSocket_GetBoundAddress(PP_Resource udp_socket) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->GetBoundAddress(udp_socket);
+			}
+			else if (has_interface<PPB_UDPSocket_1_1>()) {
+				return get_interface<PPB_UDPSocket_1_1>()->GetBoundAddress(udp_socket);
+			}
+			else if (has_interface<PPB_UDPSocket_1_0>()) {
+				return get_interface<PPB_UDPSocket_1_0>()->GetBoundAddress(udp_socket);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_UDPSocket_RecvFrom(PP_Resource udp_socket, char* buffer, int32_t num_bytes, PP_Resource* addr, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->RecvFrom(udp_socket, buffer, num_bytes, addr, callback);
+			}
+			else if (has_interface<PPB_UDPSocket_1_1>()) {
+				return get_interface<PPB_UDPSocket_1_1>()->RecvFrom(udp_socket, buffer, num_bytes, addr, callback);
+			}
+			else if (has_interface<PPB_UDPSocket_1_0>()) {
+				return get_interface<PPB_UDPSocket_1_0>()->RecvFrom(udp_socket, buffer, num_bytes, addr, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_UDPSocket_SendTo(PP_Resource udp_socket, const char* buffer, int32_t num_bytes, PP_Resource addr, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->SendTo(udp_socket, buffer, num_bytes, addr, callback);
+			}
+			else if (has_interface<PPB_UDPSocket_1_1>()) {
+				return get_interface<PPB_UDPSocket_1_1>()->SendTo(udp_socket, buffer, num_bytes, addr, callback);
+			}
+			else if (has_interface<PPB_UDPSocket_1_0>()) {
+				return get_interface<PPB_UDPSocket_1_0>()->SendTo(udp_socket, buffer, num_bytes, addr, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT void PPB_UDPSocket_Close(PP_Resource udp_socket) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				get_interface<PPB_UDPSocket_1_2>()->Close(udp_socket);
+			}
+			else if (has_interface<PPB_UDPSocket_1_1>()) {
+				get_interface<PPB_UDPSocket_1_1>()->Close(udp_socket);
+			}
+			else if (has_interface<PPB_UDPSocket_1_0>()) {
+				get_interface<PPB_UDPSocket_1_0>()->Close(udp_socket);
+			}
+			return ;
+		}
+
+		PEPPER_EXPORT int32_t PPB_UDPSocket_SetOption(PP_Resource udp_socket, PP_UDPSocket_Option name, struct PP_Var value, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->SetOption(udp_socket, name, value, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_UDPSocket_JoinGroup(PP_Resource udp_socket, PP_Resource group, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->JoinGroup(udp_socket, group, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_UDPSocket_LeaveGroup(PP_Resource udp_socket, PP_Resource group, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_UDPSocket_1_2>()) {
+				return get_interface<PPB_UDPSocket_1_2>()->LeaveGroup(udp_socket, group, callback);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_UDPSocket */
 
 		#pragma region /* Begin entry point methods for PPB_URLLoader */
 

@@ -121,7 +121,7 @@ namespace FileIO
                 return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(file_name));
+            var fileref = PPBFileRef.Create(fileSystem, file_name);
 
             result = (PPError)PPBFileRef.Delete(fileref, new BlockUntilComplete());
             if (result == PPError.Filenotfound)
@@ -144,7 +144,7 @@ namespace FileIO
                 ShowErrorMessage("File system is not open", PPError.Failed);
                 return;
             }
-            var refDir = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(dirName));
+            var refDir = PPBFileRef.Create(fileSystem, dirName);
 
             result = (PPError)PPBFileRef.MakeDirectory(refDir, (int)PPMakeDirectoryFlags.MakedirectoryflagNone, new BlockUntilComplete());
 
@@ -164,8 +164,8 @@ namespace FileIO
                 return;
             }
 
-            var refOld = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(oldName));
-            var refNew = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(newName));
+            var refOld = PPBFileRef.Create(fileSystem, oldName);
+            var refNew = PPBFileRef.Create(fileSystem, newName);
 
             result = (PPError)PPBFileRef.Rename(refOld, refNew, new BlockUntilComplete());
             if (result != PPError.Ok)
@@ -201,7 +201,7 @@ namespace FileIO
                 return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(fileName));
+            var fileref = PPBFileRef.Create(fileSystem, fileName);
             var file = PPBFileIO.Create(this);
 
             var openResult = (PPError)PPBFileIO.Open(file, fileref, (int)PPFileOpenFlags.FileopenflagRead, new BlockUntilComplete());
@@ -269,7 +269,7 @@ namespace FileIO
               return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(fileName));
+            var fileref = PPBFileRef.Create(fileSystem, fileName);
             var file = PPBFileIO.Create(this);
 
             var openResult = (PPError)PPBFileIO.Open(file, fileref,
@@ -332,7 +332,7 @@ namespace FileIO
               return;
             }
 
-            var fileRef = PPBFileRef.Create(fileSystem, Encoding.UTF8.GetBytes(dir_name));
+            var fileRef = PPBFileRef.Create(fileSystem, dir_name);
 
             // Pass ref along to keep it alive.
             var listCallback = new CompletionCallbackWithOutput<PPDirectoryEntry[], PPResource>(ListCallback, fileRef);

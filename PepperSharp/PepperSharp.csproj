@@ -54,6 +54,7 @@
     <Compile Include="binding\ppb_file_system.cs" />
     <Compile Include="binding\ppb_fullscreen.cs" />
     <Compile Include="binding\ppb_graphics_2d.cs" />
+    <Compile Include="binding\ppb_host_resolver.cs" />
     <Compile Include="binding\ppb_image_data.cs" />
     <Compile Include="binding\ppb_input_event.cs" />
     <Compile Include="binding\ppb_instance.cs" />
@@ -63,6 +64,9 @@
     <Compile Include="binding\ppb_messaging.cs" />
     <Compile Include="binding\ppb_mouse_cursor.cs" />
     <Compile Include="binding\ppb_mouse_lock.cs" />
+    <Compile Include="binding\ppb_net_address.cs" />
+    <Compile Include="binding\ppb_tcp_socket.cs" />
+    <Compile Include="binding\ppb_udp_socket.cs" />
     <Compile Include="binding\ppb_url_loader.cs" />
     <Compile Include="binding\ppb_url_request_info.cs" />
     <Compile Include="binding\ppb_url_response_info.cs" />
@@ -81,6 +85,8 @@
     <Compile Include="binding\pp_file_info.cs" />
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ArrayOutput.cs" />
+    <Compile Include="src\ppb_file_ref_extension.cs" />
+    <Compile Include="src\ppb_host_resolver_extension.cs" />
     <Compile Include="src\ppb_var_extension.cs" />
     <Compile Include="src\Instance.cs" />
     <Compile Include="binding\ppp_input_event.cs" />
@@ -102,6 +108,7 @@
     <Compile Include="binding\pp_touch_point.cs" />
     <Compile Include="src\CompletionCallback.cs" />
     <Compile Include="src\CompletionCallbackWithOutput.cs" />
+    <Compile Include="src\ppb_net_address_extension.cs" />
     <Compile Include="src\PPResource.cs" />
     <Compile Include="src\runtime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

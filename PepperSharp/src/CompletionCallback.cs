@@ -16,8 +16,9 @@ namespace PepperSharp
         PPCompletionCallbackFunc callbackFunc;
         CompletionCallbackFunc compCallbackFunc;
         IntPtr userData;
+        private PPCompletionCallbackFunc onConnectCompletion;
 
-        protected CompletionCallback(PPCompletionCallbackFunc callbackFunc, object userData = null, PPCompletionCallbackFlag flags = PPCompletionCallbackFlag.None)
+        internal CompletionCallback(PPCompletionCallbackFunc callbackFunc, object userData = null, PPCompletionCallbackFlag flags = PPCompletionCallbackFlag.None)
         {
             this.callbackFunc = callbackFunc;
             // if no callbackfunc is specified then 
@@ -67,6 +68,11 @@ namespace PepperSharp
         /// </summary>
         public CompletionCallback() : this((PPCompletionCallbackFunc)null)
         {  }
+
+        internal CompletionCallback(PPCompletionCallbackFunc onConnectCompletion)
+        {
+            this.onConnectCompletion = onConnectCompletion;
+        }
 
         void OnCallBack(IntPtr userData, int result)
         {
