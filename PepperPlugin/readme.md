@@ -4,7 +4,7 @@ PepperPlugin
 Pre-requisites
 ---
 
-- [mono embedding](http://www.mono-project.com/docs/advanced/embedding/) is being used so an installation of [mono](http://www.mono-project.com/download/) needs to be installed. (Note: 32bit installation for right now)
+- [mono embedding](http://www.mono-project.com/docs/advanced/embedding/) is being used so an installation of [mono](http://www.mono-project.com/download/) needs to be installed. (Note: Mono 32 bit or Mono 64 bit)
 - nacl_sdk
 
 To compile the PepperPlugin solution the [nacl sdk](https://developer.chrome.com/native-client/sdk/download) is required.
@@ -33,13 +33,20 @@ The previous command will install the source files that the PepperPlugin solutio
 PepperPlugin Solution
 ---
 
-You should now be able to compile the solution provided.  Open the ```PepperPlugin.sln``` file found in the ```WebSharp\PepperPlugin\src\``` directory and select Build.
+You should now be able to compile the solution provided.  Open the ```PepperPlugin.sln``` file found in the ```WebSharp\PepperPlugin\src\``` directory and select Build for the configuration and platform.
 
 You can also use the command line from a Visual Studio 2015 Native Command Prompt.
 
+To build and target 64 bit version of the PepperPlugin which will only run with Electron 64 platforms.
 ```shell
 > cd WebSharp\PepperPlugin\src
-WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln
+WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x64 /p:Configuration=Release
+```
+
+To build and target 32 bit version of the PepperPlugin which will only run with Electron 64 platforms.
+```shell
+> cd WebSharp\PepperPlugin\src
+WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x84 /p:Configuration=Release
 ```
 
 The solution is setup to build the PepperPlugin.dll, PepperSharp.dll and the examples that can be found in the Examples directory. 
