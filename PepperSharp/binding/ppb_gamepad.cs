@@ -58,7 +58,7 @@ public partial struct PPGamepadSampleData {
    */
   public PPBool connected;
   /* Padding to make the struct the same size between 64 and 32. */
-  public unsafe fixed char unused_pad_[4];
+  public unsafe fixed byte unused_pad_[4];
 }
 
 /**

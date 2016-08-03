@@ -226,7 +226,8 @@ class CSGen(object):
   RemapParameter = {
   'PP_Time': 'double',  # PP_TimeXXXX is better mapped to a double
   'PP_TimeTicks': 'double',
-  'PP_TimeDelta': 'double'
+  'PP_TimeDelta': 'double',
+  'char': 'byte' # when using char[] arrays as unused space in strucures char does not work
   }
 
   #

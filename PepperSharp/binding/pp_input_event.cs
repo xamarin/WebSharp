@@ -77,7 +77,7 @@ public partial struct PPInputEventCharacter {
    * maximum UTF-8 character is 4 bytes, there will always be at least one null
    * at the end so you can treat this as a null-terminated UTF-8 string.
    */
-  public unsafe fixed char text[5];
+  public unsafe fixed byte text[5];
 }
 
 /**
