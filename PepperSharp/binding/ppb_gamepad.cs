@@ -71,7 +71,7 @@ public partial struct PPGamepadsSampleData {
    */
   public uint length;
   /* Padding to make the struct the same size between 64 and 32. */
-  public unsafe fixed char unused_pad_[4];
+  public unsafe fixed byte unused_pad_[4];
   /**
    * Data for an individual gamepad device connected to the system.
    */
