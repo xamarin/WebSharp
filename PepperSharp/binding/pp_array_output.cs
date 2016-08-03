@@ -110,7 +110,7 @@ public partial struct PPArrayOutput {
    * to communicate how the data should be stored.
    */
   public IntPtr user_data;
-};
+}
 /**
  * @}
  */

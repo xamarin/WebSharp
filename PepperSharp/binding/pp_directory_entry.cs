@@ -23,7 +23,7 @@ namespace PepperSharp {
 public partial struct PPDirectoryEntry {
   public PPResource file_ref;
   public PPFileType file_type;
-};
+}
 /**
  * @}
  */

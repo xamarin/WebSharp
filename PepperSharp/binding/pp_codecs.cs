@@ -101,7 +101,7 @@ public partial struct PPVideoPicture {
    * this part of the picture.
    */
   public PPRect visible_rect;
-};
+}
 
 /**
  * Struct describing a decoded video picture. The decoded picture data is stored
@@ -133,7 +133,7 @@ public partial struct PPVideoPicture01 {
    * Dimensions of the texture holding the decoded picture.
    */
   public PPSize texture_size;
-};
+}
 
 /**
  * Supported video profile information. See the PPB_VideoEncoder function
@@ -161,7 +161,7 @@ public partial struct PPVideoProfileDescription {
    * Whether the profile is hardware accelerated.
    */
   public PPBool hardware_accelerated;
-};
+}
 
 /**
  * Supported video profile information. See the PPB_VideoEncoder function
@@ -190,7 +190,7 @@ public partial struct PPVideoProfileDescription01 {
    * both.
    */
   public PPHardwareAcceleration acceleration;
-};
+}
 
 /**
  * Supported audio profile information. See the PPB_AudioEncoder function
@@ -218,7 +218,7 @@ public partial struct PPAudioProfileDescription {
    * Whether the profile is hardware accelerated.
    */
   public PPBool hardware_accelerated;
-};
+}
 
 /**
  * Struct describing a bitstream buffer.
@@ -237,7 +237,7 @@ public partial struct PPBitstreamBuffer {
    * Whether the buffer represents a key frame.
    */
   public PPBool key_frame;
-};
+}
 
 /**
  * Struct describing an audio bitstream buffer.
@@ -252,7 +252,7 @@ public partial struct PPAudioBitstreamBuffer {
    * The base address of the bitstream data.
    */
   public IntPtr buffer;
-};
+}
 /**
  * @}
  */

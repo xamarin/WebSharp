@@ -27,7 +27,7 @@ public partial struct PPSize {
   public int width;
   /** This value represents the height of the rectangle. */
   public int height;
-};
+}
 
 /**
  * The <code>PP_FloatSize</code> struct contains the size of a 2D rectangle.
@@ -38,7 +38,7 @@ public partial struct PPFloatSize {
   public float width;
   /** This value represents the height of the rectangle. */
   public float height;
-};
+}
 /**
  * @}
  */

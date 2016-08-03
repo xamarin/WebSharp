@@ -82,7 +82,7 @@ public partial struct PPImageDataDesc {
    * width * 4 since there may be padding at the end of the lines.
    */
   public int stride;
-};
+}
 /**
  * @}
  */

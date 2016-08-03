@@ -150,7 +150,7 @@ public partial struct PPCompletionCallback {
    * asynchronous methods.
    */
   public int flags;
-};
+}
 /**
  * @}
  */

@@ -52,7 +52,7 @@ public partial struct PPHostResolverHint {
    * Combination of flags from <code>PP_HostResolver_Flag</code>.
    */
   public int flags;
-};
+}
 /**
  * @}
  */

@@ -113,9 +113,9 @@ namespace InputEvent
 
                         var keyboard = "Key event:" +
                             $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
-                            $" key_code: {PPBKeyboardInputEvent.GetCode(inputEvent)}" +
+                            $" key_code: {((Var)PPBKeyboardInputEvent.GetCode(inputEvent)).AsString()}" +
                             $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}" +
-                        $" text: {new Var(PPBKeyboardInputEvent.GetCharacterText(inputEvent)).DebugString()}";
+                        $" text: {((Var)PPBKeyboardInputEvent.GetCharacterText(inputEvent)).DebugString()}";
                         
                         PostMessage(keyboard);
                     }

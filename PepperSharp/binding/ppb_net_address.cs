@@ -57,7 +57,7 @@ public partial struct PPNetAddressIPv4 {
    * IPv4 address.
    */
   public unsafe fixed byte addr[4];
-};
+}
 
 /**
  * All members are expressed in network byte order.
@@ -72,7 +72,7 @@ public partial struct PPNetAddressIPv6 {
    * IPv6 address.
    */
   public unsafe fixed byte addr[16];
-};
+}
 /**
  * @}
  */

@@ -34,7 +34,7 @@ public partial struct PPPoint {
    * as the top-most coordinate.
    */
   public int y;
-};
+}
 
 /**
  * The PP_FloatPoint structure defines the floating-point x and y coordinates
@@ -44,7 +44,7 @@ public partial struct PPPoint {
 public partial struct PPFloatPoint {
   public float x;
   public float y;
-};
+}
 /**
  * @}
  */

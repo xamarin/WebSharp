@@ -83,7 +83,7 @@ public partial struct PPFileInfo {
    * This value represents the last time the file was modified.
    */
   public double last_modified_time;
-};
+}
 /**
  * @}
  */

@@ -31,7 +31,7 @@ public partial struct PPRect {
   public PPPoint point;
   /** This value represents the width and height of the rectangle. */
   public PPSize size;
-};
+}
 
 /**
  * The <code>PP_FloatRect</code> struct contains the size and location of a 2D
@@ -46,7 +46,7 @@ public partial struct PPFloatRect {
   public PPFloatPoint point;
   /** This value represents the width and height of the rectangle. */
   public PPFloatSize size;
-};
+}
 /**
  * @}
  */

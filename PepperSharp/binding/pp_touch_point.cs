@@ -56,7 +56,7 @@ public partial struct PPTouchPoint {
    * hardware and the value is not guaranteed to stay within that range.
    */
   public float pressure;
-};
+}
 /**
  * @}
  */

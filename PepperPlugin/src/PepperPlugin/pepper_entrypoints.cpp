@@ -14,6 +14,7 @@
 #include "ppapi/c/ppb_file_ref.h"
 #include "ppapi/c/ppb_file_system.h"
 #include "ppapi/c/ppb_fullscreen.h"
+#include "ppapi/c/ppb_gamepad.h"
 #include "ppapi/c/ppb_graphics_2d.h"
 #include "ppapi/c/ppb_host_resolver.h"
 #include "ppapi/c/ppb_image_data.h"
@@ -119,6 +120,9 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_Fullscreen_1_0>() {
 			return PPB_FULLSCREEN_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_Gamepad_1_0>() {
+			return PPB_GAMEPAD_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_Graphics2D_1_0>() {
 			return PPB_GRAPHICS_2D_INTERFACE_1_0;
@@ -915,6 +919,17 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Fullscreen */
+
+		#pragma region /* Begin entry point methods for PPB_Gamepad */
+
+		PEPPER_EXPORT void PPB_Gamepad_Sample(PP_Instance instance, struct PP_GamepadsSampleData* data) {
+			if (has_interface<PPB_Gamepad_1_0>()) {
+				get_interface<PPB_Gamepad_1_0>()->Sample(instance, data);
+			}
+			return ;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_Gamepad */
 
 		#pragma region /* Begin entry point methods for PPB_Graphics2D */
 
@@ -1859,14 +1874,7 @@ namespace Pepper {
 
 		PEPPER_EXPORT int32_t PPB_TCPSocket_Read(PP_Resource tcp_socket, char* buffer, int32_t bytes_to_read, struct PP_CompletionCallback callback) {
 			if (has_interface<PPB_TCPSocket_1_2>()) {
-				//static const int kBufferSize = 1024;
-				//char receive_buffer_[kBufferSize];
-				//memset(receive_buffer_, 0, kBufferSize);
-				//printf("Do read %d\n", bytes_to_read);
-				//buffer[0] = 'H';
 				return get_interface<PPB_TCPSocket_1_2>()->Read(tcp_socket, buffer, bytes_to_read, callback);
-				//buffer = receive_buffer_;
-				//return rr;
 			}
 			else if (has_interface<PPB_TCPSocket_1_1>()) {
 				return get_interface<PPB_TCPSocket_1_1>()->Read(tcp_socket, buffer, bytes_to_read, callback);

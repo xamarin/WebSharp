@@ -44,7 +44,7 @@ public partial struct PPInputEventKey {
    * Chrome populates this with the Windows-style Virtual Key code of the key.
    */
   public uint key_code;
-};
+}
 
 /**
  * The <code>PP_InputEvent_Character</code> struct represents a typed character
@@ -77,8 +77,8 @@ public partial struct PPInputEventCharacter {
    * maximum UTF-8 character is 4 bytes, there will always be at least one null
    * at the end so you can treat this as a null-terminated UTF-8 string.
    */
-  public string text;
-};
+  public unsafe fixed char text[5];
+}
 
 /**
  * The <code>PP_InputEvent_Mouse</code> struct represents all mouse events
@@ -119,7 +119,7 @@ public partial struct PPInputEventMouse {
   public float y;
   /* TODO(brettw) figure out exactly what this means. */
   public int click_count;
-};
+}
 
 /**
  * The <code>PP_InputEvent_Wheel</code> struct represents all mouse wheel
@@ -200,7 +200,7 @@ public partial struct PPInputEventWheel {
    * to scroll by pages.
    */
   public PPBool scroll_by_page;
-};
+}
 /**
  * @}
  */

@@ -247,6 +247,15 @@ class CSGen(object):
   '16Bits': '_16Bits',
   }
 
+  #
+  # UnrollArray
+  #
+  # A dictionary of argument names that need to be remapped
+  #
+  UnrollArray = [
+  'PPGamepadSampleData'
+  ]
+
   # Tell how to handle pointers to GL types.
   for gltype in ['GLbitfield', 'GLboolean', 'GLbyte', 'GLclampf',
                  'GLclampx', 'GLenum', 'GLfixed', 'GLfloat', 'GLint',
@@ -454,10 +463,6 @@ class CSGen(object):
     # type* foo[] means an array of pointers to type, which is confusing.
     arrayspec = [self.GetArraySpec(array) for array in node.GetListOf('Array')]
     
-    # If this is a char array then we want to remap it to a string
-    if len(arrayspec) > 0 and rtype == 'char':
-        rtype = 'string'
-        arrayspec = []
     if mode == 'out' and len(arrayspec) == 1 and arrayspec[0] == '[]':
       #rtype += '*'
       del arrayspec[0]
@@ -561,7 +566,14 @@ class CSGen(object):
                 out = '%s %s' % (rtype, name) 
             else:
                 if arrayspec:
-                    out = 'public unsafe fixed %s %s%s' % (rtype, name, arrayspec)
+                    if rtype in CSGen.UnrollArray:
+                        aSize = arrayspec[1:len(arrayspec)-1:]
+                        out = ''
+                        for i in range(0,int(aSize)-1):
+                            out += 'public %s %s_%s;\n' % (rtype, name, i+1)
+                        out += 'public %s %s_%s' % (rtype, name, int(aSize))
+                    else:
+                        out = 'public unsafe fixed %s %s%s' % (rtype, name, arrayspec)
                 else:
                     out = 'public %s %s' % (rtype, name)
     else:
@@ -860,7 +872,7 @@ class CSGen(object):
       if not member:
         continue
       members.append(member)
-    out += '%s\n};\n' % '\n'.join(members)
+    out += '%s\n}\n' % '\n'.join(members)
     return out
 
   def GetInterfaceName(self, node, release, include_version=False):

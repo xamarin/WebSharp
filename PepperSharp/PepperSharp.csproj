@@ -72,6 +72,7 @@
     <Compile Include="binding\ppb_file_ref.cs" />
     <Compile Include="binding\ppb_file_system.cs" />
     <Compile Include="binding\ppb_fullscreen.cs" />
+    <Compile Include="binding\ppb_gamepad.cs" />
     <Compile Include="binding\ppb_graphics_2d.cs" />
     <Compile Include="binding\ppb_host_resolver.cs" />
     <Compile Include="binding\ppb_image_data.cs" />

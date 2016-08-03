@@ -144,7 +144,7 @@ public partial struct PPVar {
    * <code>type</code>.
    */
   public PPVarValue value;
-};
+}
 /**
  * @}
  */
