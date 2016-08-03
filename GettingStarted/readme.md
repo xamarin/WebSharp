@@ -125,4 +125,4 @@ GettingStarted.HelloWorld: HelloWorld from C#
 ```
 ![GettingStarted](../GettingStarted/screenshots/GettingStarted.PNG)
 
-If there is an error about 'plugin can not be loaded' make sure that you have the 32 bit version of Electron installed.
+If there is an error about 'plugin can not be loaded' make sure that you have compiled the correct platform version (x86/x64) of the PepperPlugin that matches the Electron platform architecture that was installed above.
