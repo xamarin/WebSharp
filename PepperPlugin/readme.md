@@ -57,7 +57,7 @@ To build only the PepperSharp.dll assembly
 
 ```shell
 > cd WebSharp\PepperSharp
-WebSharp\PepperSharp> msbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Release /p:Platform=AnyCPU
+WebSharp\PepperSharp> msbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Release|Debug /p:Platform=AnyCPU
 ```
 
 Examples
