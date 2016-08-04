@@ -17,7 +17,7 @@ Electron offers a Quick Start on their site: http://electron.atom.io/docs/tutori
 Pre-requisites
 ---
 - node.js can be found here - https://nodejs.org/
-- Electron - From a command prompt ```> npm install electron-prebuilt```.  This will install the electron prebuilt which is required to run the plugins that you develop.  You can also install globally with the ```-g``` parameter.
+- Electron - From a command prompt ```> npm install electron-prebuilt```.  This will install the electron prebuilt which is required to run the plugins that you develop.  You can also install globally with the ```-g``` parameter. *Note on mac you may need to use ```> sudo npm install electron-prebuilt``` and enter you password when prompted and hit enter.*
 - Visual Studio 2015 minimum Community edition
 - Make sure the PepperPlugin has been built.  https://github.com/xamarin/WebSharp/blob/master/PepperPlugin/readme.md
 
