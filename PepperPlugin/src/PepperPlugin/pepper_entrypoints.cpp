@@ -27,6 +27,9 @@
 #include "ppapi/c/ppb_mouse_cursor.h"
 #include "ppapi/c/ppb_mouse_lock.h"
 #include "ppapi/c/ppb_net_address.h"
+#include "ppapi/c/ppb_network_list.h"
+#include "ppapi/c/ppb_network_monitor.h"
+#include "ppapi/c/ppb_network_proxy.h"
 #include "ppapi/c/ppb_tcp_socket.h"
 #include "ppapi/c/ppb_udp_socket.h"
 #include "ppapi/c/ppb_url_loader.h"
@@ -192,6 +195,15 @@ namespace Pepper {
 		}
 		template <> const char*	interface_name<PPB_NetAddress_1_0>() {
 			return PPB_NETADDRESS_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_NetworkList_1_0>() {
+			return PPB_NETWORKLIST_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_NetworkMonitor_1_0>() {
+			return PPB_NETWORKMONITOR_INTERFACE_1_0;
+		}
+		template <> const char*	interface_name<PPB_NetworkProxy_1_0>() {
+			return PPB_NETWORKPROXY_INTERFACE_1_0;
 		}
 		template <> const char*	interface_name<PPB_TCPSocket_1_0>() {
 			return PPB_TCPSOCKET_INTERFACE_1_0;
@@ -1794,6 +1806,102 @@ namespace Pepper {
 		}
 
 		#pragma endregion /* End entry point generation for PPB_NetAddress */
+
+		#pragma region /* Begin entry point methods for PPB_NetworkList */
+
+		PEPPER_EXPORT PP_Bool PPB_NetworkList_IsNetworkList(PP_Resource resource) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->IsNetworkList(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		PEPPER_EXPORT uint32_t PPB_NetworkList_GetCount(PP_Resource resource) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->GetCount(resource);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_NetworkList_GetName(PP_Resource resource, uint32_t index) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->GetName(resource, index);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT PP_NetworkList_Type PPB_NetworkList_GetType(PP_Resource resource, uint32_t index) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->GetType(resource, index);
+			}
+			return PP_NETWORKLIST_TYPE_ETHERNET;
+		}
+
+		PEPPER_EXPORT PP_NetworkList_State PPB_NetworkList_GetState(PP_Resource resource, uint32_t index) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->GetState(resource, index);
+			}
+			return PP_NETWORKLIST_STATE_DOWN;
+		}
+
+		PEPPER_EXPORT int32_t PPB_NetworkList_GetIpAddresses(PP_Resource resource, uint32_t index, struct PP_ArrayOutput output) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->GetIpAddresses(resource, index, output);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT struct PP_Var PPB_NetworkList_GetDisplayName(PP_Resource resource, uint32_t index) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->GetDisplayName(resource, index);
+			}
+			return PP_MakeNull();
+		}
+
+		PEPPER_EXPORT uint32_t PPB_NetworkList_GetMTU(PP_Resource resource, uint32_t index) {
+			if (has_interface<PPB_NetworkList_1_0>()) {
+				return get_interface<PPB_NetworkList_1_0>()->GetMTU(resource, index);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_NetworkList */
+
+		#pragma region /* Begin entry point methods for PPB_NetworkMonitor */
+
+		PEPPER_EXPORT PP_Resource PPB_NetworkMonitor_Create(PP_Instance instance) {
+			if (has_interface<PPB_NetworkMonitor_1_0>()) {
+				return get_interface<PPB_NetworkMonitor_1_0>()->Create(instance);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT int32_t PPB_NetworkMonitor_UpdateNetworkList(PP_Resource network_monitor, PP_Resource* network_list, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_NetworkMonitor_1_0>()) {
+				return get_interface<PPB_NetworkMonitor_1_0>()->UpdateNetworkList(network_monitor, network_list, callback);
+			}
+			return NULL;
+		}
+
+		PEPPER_EXPORT PP_Bool PPB_NetworkMonitor_IsNetworkMonitor(PP_Resource resource) {
+			if (has_interface<PPB_NetworkMonitor_1_0>()) {
+				return get_interface<PPB_NetworkMonitor_1_0>()->IsNetworkMonitor(resource);
+			}
+			return PP_FromBool(FALSE);
+		}
+
+		#pragma endregion /* End entry point generation for PPB_NetworkMonitor */
+
+		#pragma region /* Begin entry point methods for PPB_NetworkProxy */
+
+		PEPPER_EXPORT int32_t PPB_NetworkProxy_GetProxyForURL(PP_Instance instance, struct PP_Var url, struct PP_Var* proxy_string, struct PP_CompletionCallback callback) {
+			if (has_interface<PPB_NetworkProxy_1_0>()) {
+				return get_interface<PPB_NetworkProxy_1_0>()->GetProxyForURL(instance, url, proxy_string, callback);
+			}
+			return NULL;
+		}
+
+		#pragma endregion /* End entry point generation for PPB_NetworkProxy */
 
 		#pragma region /* Begin entry point methods for PPB_TCPSocket */
 

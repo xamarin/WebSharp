@@ -84,6 +84,9 @@
     <Compile Include="binding\ppb_messaging.cs" />
     <Compile Include="binding\ppb_mouse_cursor.cs" />
     <Compile Include="binding\ppb_mouse_lock.cs" />
+    <Compile Include="binding\ppb_network_list.cs" />
+    <Compile Include="binding\ppb_network_monitor.cs" />
+    <Compile Include="binding\ppb_network_proxy.cs" />
     <Compile Include="binding\ppb_net_address.cs" />
     <Compile Include="binding\ppb_tcp_socket.cs" />
     <Compile Include="binding\ppb_udp_socket.cs" />

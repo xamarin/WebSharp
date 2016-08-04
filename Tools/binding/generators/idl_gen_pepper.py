@@ -42,7 +42,9 @@ RemapDefaultValue = {
 'PP_AudioBuffer_SampleSize': 'PP_AUDIOBUFFER_SAMPLESIZE_UNKNOWN',
 'PP_VideoFrame_Format' : 'PP_VIDEOFRAME_FORMAT_UNKNOWN',
 'PP_FileSystemType' : 'PP_FILESYSTEMTYPE_EXTERNAL',
-'PP_NetAddress_Family' : 'PP_NETADDRESS_FAMILY_UNSPECIFIED'
+'PP_NetAddress_Family' : 'PP_NETADDRESS_FAMILY_UNSPECIFIED',
+'PP_NetworkList_Type' : 'PP_NETWORKLIST_TYPE_ETHERNET',
+'PP_NetworkList_State' : 'PP_NETWORKLIST_STATE_DOWN'
 }
 
 class PPKind(object):

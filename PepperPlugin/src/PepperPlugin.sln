@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Socket", "..\..\Examples\ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePad", "..\..\Examples\api\GamePad\GamePad.csproj", "{8AFB55CA-0633-48CB-B4BE-84DD52B613F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkMonitor", "..\..\Examples\api\NetworkMonitor\NetworkMonitor.csproj", "{E3C51A04-3617-49D5-9F09-539AEED77297}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -344,6 +346,22 @@ Global
 		{8AFB55CA-0633-48CB-B4BE-84DD52B613F4}.Release|x64.Build.0 = Release|Any CPU
 		{8AFB55CA-0633-48CB-B4BE-84DD52B613F4}.Release|x86.ActiveCfg = Release|Any CPU
 		{8AFB55CA-0633-48CB-B4BE-84DD52B613F4}.Release|x86.Build.0 = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|x64.Build.0 = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Debug|x86.Build.0 = Debug|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|x64.ActiveCfg = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|x64.Build.0 = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|x86.ActiveCfg = Release|Any CPU
+		{E3C51A04-3617-49D5-9F09-539AEED77297}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -364,5 +382,6 @@ Global
 		{D6E22EDE-45A2-4ABF-83E3-EE8E145D1A2E} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{57A52DA4-9945-4679-A72A-DA20CEC8C938} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{8AFB55CA-0633-48CB-B4BE-84DD52B613F4} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
+		{E3C51A04-3617-49D5-9F09-539AEED77297} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 	EndGlobalSection
 EndGlobal
