@@ -51,6 +51,15 @@ WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x86 /p:
 
 The solution is setup to build the PepperPlugin.dll, PepperSharp.dll and the examples that can be found in the Examples directory. 
 
+PepperSharp - C# PPAPI binding assembly
+---
+To build only the PepperSharp.dll assembly
+
+```shell
+> cd WebSharp\PepperSharp
+WebSharp\PepperSharp> msbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Release /p:Platform=AnyCPU
+```
+
 Examples
 ---
 
