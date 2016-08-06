@@ -1,5 +1,5 @@
 /* Copyright (c) 2016 Xamarin. */
-#include "stdafx.h"
+
 /* NOTE: this is auto-generated from IDL */
 #include "pepper_entrypoints.h"
 
@@ -320,7 +320,7 @@ namespace Pepper {
 			if (has_interface<PPB_Audio_1_1>()) {
 				return get_interface<PPB_Audio_1_1>()->IsAudio(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Resource PPB_Audio_GetCurrentConfig(PP_Resource audio) {
@@ -334,14 +334,14 @@ namespace Pepper {
 			if (has_interface<PPB_Audio_1_1>()) {
 				return get_interface<PPB_Audio_1_1>()->StartPlayback(audio);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_Audio_StopPlayback(PP_Resource audio) {
 			if (has_interface<PPB_Audio_1_1>()) {
 				return get_interface<PPB_Audio_1_1>()->StopPlayback(audio);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Audio */
@@ -352,7 +352,7 @@ namespace Pepper {
 			if (has_interface<PPB_AudioBuffer_0_1>()) {
 				return get_interface<PPB_AudioBuffer_0_1>()->IsAudioBuffer(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_TimeDelta PPB_AudioBuffer_GetTimestamp(PP_Resource buffer) {
@@ -439,7 +439,7 @@ namespace Pepper {
 			else if (has_interface<PPB_AudioConfig_1_0>()) {
 				return get_interface<PPB_AudioConfig_1_0>()->IsAudioConfig(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_AudioSampleRate PPB_AudioConfig_GetSampleRate(PP_Resource config) {
@@ -484,7 +484,7 @@ namespace Pepper {
 			if (has_interface<PPB_AudioEncoder_0_1>()) {
 				return get_interface<PPB_AudioEncoder_0_1>()->IsAudioEncoder(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_AudioEncoder_GetSupportedProfiles(PP_Resource audio_encoder, struct PP_ArrayOutput output, struct PP_CompletionCallback callback) {
@@ -611,7 +611,7 @@ namespace Pepper {
 			if (has_interface<PPB_Core_1_0>()) {
 				return get_interface<PPB_Core_1_0>()->IsMainThread();
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Core */
@@ -635,7 +635,7 @@ namespace Pepper {
 			else if (has_interface<PPB_FileIO_1_0>()) {
 				return get_interface<PPB_FileIO_1_0>()->IsFileIO(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_FileIO_Open(PP_Resource file_io, PP_Resource file_ref, int32_t open_flags, struct PP_CompletionCallback callback) {
@@ -752,7 +752,7 @@ namespace Pepper {
 			else if (has_interface<PPB_FileRef_1_0>()) {
 				return get_interface<PPB_FileRef_1_0>()->IsFileRef(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_FileSystemType PPB_FileRef_GetFileSystemType(PP_Resource file_ref) {
@@ -888,7 +888,7 @@ namespace Pepper {
 			if (has_interface<PPB_FileSystem_1_0>()) {
 				return get_interface<PPB_FileSystem_1_0>()->IsFileSystem(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_FileSystem_Open(PP_Resource file_system, int64_t expected_size, struct PP_CompletionCallback callback) {
@@ -913,21 +913,21 @@ namespace Pepper {
 			if (has_interface<PPB_Fullscreen_1_0>()) {
 				return get_interface<PPB_Fullscreen_1_0>()->IsFullscreen(instance);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_Fullscreen_SetFullscreen(PP_Instance instance, PP_Bool fullscreen) {
 			if (has_interface<PPB_Fullscreen_1_0>()) {
 				return get_interface<PPB_Fullscreen_1_0>()->SetFullscreen(instance, fullscreen);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_Fullscreen_GetScreenSize(PP_Instance instance, struct PP_Size* size) {
 			if (has_interface<PPB_Fullscreen_1_0>()) {
 				return get_interface<PPB_Fullscreen_1_0>()->GetScreenSize(instance, size);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Fullscreen */
@@ -968,7 +968,7 @@ namespace Pepper {
 			else if (has_interface<PPB_Graphics2D_1_0>()) {
 				return get_interface<PPB_Graphics2D_1_0>()->IsGraphics2D(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_Graphics2D_Describe(PP_Resource graphics_2d, struct PP_Size* size, PP_Bool* is_always_opaque) {
@@ -981,7 +981,7 @@ namespace Pepper {
 			else if (has_interface<PPB_Graphics2D_1_0>()) {
 				return get_interface<PPB_Graphics2D_1_0>()->Describe(graphics_2d, size, is_always_opaque);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT void PPB_Graphics2D_PaintImageData(PP_Resource graphics_2d, PP_Resource image_data, struct PP_Point top_left, struct PP_Rect src_rect) {
@@ -1043,7 +1043,7 @@ namespace Pepper {
 			else if (has_interface<PPB_Graphics2D_1_1>()) {
 				return get_interface<PPB_Graphics2D_1_1>()->SetScale(resource, scale);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT float PPB_Graphics2D_GetScale(PP_Resource resource) {
@@ -1060,7 +1060,7 @@ namespace Pepper {
 			if (has_interface<PPB_Graphics2D_1_2>()) {
 				return get_interface<PPB_Graphics2D_1_2>()->SetLayerTransform(resource, scale, &origin, &translate);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Graphics2D */
@@ -1078,7 +1078,7 @@ namespace Pepper {
 			if (has_interface<PPB_HostResolver_1_0>()) {
 				return get_interface<PPB_HostResolver_1_0>()->IsHostResolver(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_HostResolver_Resolve(PP_Resource host_resolver, const char* host, uint16_t port, struct PP_HostResolver_Hint hint, struct PP_CompletionCallback callback) {
@@ -1124,7 +1124,7 @@ namespace Pepper {
 			if (has_interface<PPB_ImageData_1_0>()) {
 				return get_interface<PPB_ImageData_1_0>()->IsImageDataFormatSupported(format);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Resource PPB_ImageData_Create(PP_Instance instance, PP_ImageDataFormat format, struct PP_Size size, PP_Bool init_to_zero) {
@@ -1138,14 +1138,14 @@ namespace Pepper {
 			if (has_interface<PPB_ImageData_1_0>()) {
 				return get_interface<PPB_ImageData_1_0>()->IsImageData(image_data);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_ImageData_Describe(PP_Resource image_data, struct PP_ImageDataDesc* desc) {
 			if (has_interface<PPB_ImageData_1_0>()) {
 				return get_interface<PPB_ImageData_1_0>()->Describe(image_data, desc);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT void* PPB_ImageData_Map(PP_Resource image_data) {
@@ -1191,7 +1191,7 @@ namespace Pepper {
 			if (has_interface<PPB_InputEvent_1_0>()) {
 				return get_interface<PPB_InputEvent_1_0>()->IsInputEvent(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_InputEvent_Type PPB_InputEvent_GetType(PP_Resource event) {
@@ -1233,7 +1233,7 @@ namespace Pepper {
 			else if (has_interface<PPB_MouseInputEvent_1_0>()) {
 				return get_interface<PPB_MouseInputEvent_1_0>()->IsMouseInputEvent(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_InputEvent_MouseButton PPB_MouseInputEvent_GetButton(PP_Resource mouse_event) {
@@ -1288,7 +1288,7 @@ namespace Pepper {
 			if (has_interface<PPB_WheelInputEvent_1_0>()) {
 				return get_interface<PPB_WheelInputEvent_1_0>()->IsWheelInputEvent(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT struct PP_FloatPoint PPB_WheelInputEvent_GetDelta(PP_Resource wheel_event) {
@@ -1309,7 +1309,7 @@ namespace Pepper {
 			if (has_interface<PPB_WheelInputEvent_1_0>()) {
 				return get_interface<PPB_WheelInputEvent_1_0>()->GetScrollByPage(wheel_event);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_WheelInputEvent */
@@ -1330,7 +1330,7 @@ namespace Pepper {
 			else if (has_interface<PPB_KeyboardInputEvent_1_0>()) {
 				return get_interface<PPB_KeyboardInputEvent_1_0>()->IsKeyboardInputEvent(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT uint32_t PPB_KeyboardInputEvent_GetKeyCode(PP_Resource key_event) {
@@ -1382,7 +1382,7 @@ namespace Pepper {
 			if (has_interface<PPB_TouchInputEvent_1_0>()) {
 				return get_interface<PPB_TouchInputEvent_1_0>()->IsTouchInputEvent(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT uint32_t PPB_TouchInputEvent_GetTouchCount(PP_Resource resource, PP_TouchListType list) {
@@ -1421,7 +1421,7 @@ namespace Pepper {
 			if (has_interface<PPB_IMEInputEvent_1_0>()) {
 				return get_interface<PPB_IMEInputEvent_1_0>()->IsIMEInputEvent(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT struct PP_Var PPB_IMEInputEvent_GetText(PP_Resource ime_event) {
@@ -1467,14 +1467,14 @@ namespace Pepper {
 			if (has_interface<PPB_Instance_1_0>()) {
 				return get_interface<PPB_Instance_1_0>()->BindGraphics(instance, device);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_Instance_IsFullFrame(PP_Instance instance) {
 			if (has_interface<PPB_Instance_1_0>()) {
 				return get_interface<PPB_Instance_1_0>()->IsFullFrame(instance);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_Instance */
@@ -1485,7 +1485,7 @@ namespace Pepper {
 			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
 				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->IsMediaStreamAudioTrack(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_MediaStreamAudioTrack_Configure(PP_Resource audio_track, const int32_t attrib_list[], struct PP_CompletionCallback callback) {
@@ -1513,7 +1513,7 @@ namespace Pepper {
 			if (has_interface<PPB_MediaStreamAudioTrack_0_1>()) {
 				return get_interface<PPB_MediaStreamAudioTrack_0_1>()->HasEnded(audio_track);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_MediaStreamAudioTrack_GetBuffer(PP_Resource audio_track, PP_Resource* buffer, struct PP_CompletionCallback callback) {
@@ -1555,7 +1555,7 @@ namespace Pepper {
 			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
 				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->IsMediaStreamVideoTrack(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_Configure(PP_Resource video_track, const int32_t attrib_list[], struct PP_CompletionCallback callback) {
@@ -1595,7 +1595,7 @@ namespace Pepper {
 			else if (has_interface<PPB_MediaStreamVideoTrack_0_1>()) {
 				return get_interface<PPB_MediaStreamVideoTrack_0_1>()->HasEnded(video_track);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_MediaStreamVideoTrack_GetFrame(PP_Resource video_track, PP_Resource* frame, struct PP_CompletionCallback callback) {
@@ -1731,7 +1731,7 @@ namespace Pepper {
 			if (has_interface<PPB_MouseCursor_1_0>()) {
 				return get_interface<PPB_MouseCursor_1_0>()->SetCursor(instance, type, image, &hot_spot);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_MouseCursor */
@@ -1774,7 +1774,7 @@ namespace Pepper {
 			if (has_interface<PPB_NetAddress_1_0>()) {
 				return get_interface<PPB_NetAddress_1_0>()->IsNetAddress(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_NetAddress_Family PPB_NetAddress_GetFamily(PP_Resource addr) {
@@ -1795,14 +1795,14 @@ namespace Pepper {
 			if (has_interface<PPB_NetAddress_1_0>()) {
 				return get_interface<PPB_NetAddress_1_0>()->DescribeAsIPv4Address(addr, ipv4_addr);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_NetAddress_DescribeAsIPv6Address(PP_Resource addr, struct PP_NetAddress_IPv6* ipv6_addr) {
 			if (has_interface<PPB_NetAddress_1_0>()) {
 				return get_interface<PPB_NetAddress_1_0>()->DescribeAsIPv6Address(addr, ipv6_addr);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_NetAddress */
@@ -1813,7 +1813,7 @@ namespace Pepper {
 			if (has_interface<PPB_NetworkList_1_0>()) {
 				return get_interface<PPB_NetworkList_1_0>()->IsNetworkList(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT uint32_t PPB_NetworkList_GetCount(PP_Resource resource) {
@@ -1887,7 +1887,7 @@ namespace Pepper {
 			if (has_interface<PPB_NetworkMonitor_1_0>()) {
 				return get_interface<PPB_NetworkMonitor_1_0>()->IsNetworkMonitor(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_NetworkMonitor */
@@ -1928,7 +1928,7 @@ namespace Pepper {
 			else if (has_interface<PPB_TCPSocket_1_0>()) {
 				return get_interface<PPB_TCPSocket_1_0>()->IsTCPSocket(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_TCPSocket_Bind(PP_Resource tcp_socket, PP_Resource addr, struct PP_CompletionCallback callback) {
@@ -2073,7 +2073,7 @@ namespace Pepper {
 			else if (has_interface<PPB_UDPSocket_1_0>()) {
 				return get_interface<PPB_UDPSocket_1_0>()->IsUDPSocket(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_UDPSocket_Bind(PP_Resource udp_socket, PP_Resource addr, struct PP_CompletionCallback callback) {
@@ -2177,7 +2177,7 @@ namespace Pepper {
 			if (has_interface<PPB_URLLoader_1_0>()) {
 				return get_interface<PPB_URLLoader_1_0>()->IsURLLoader(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_URLLoader_Open(PP_Resource loader, PP_Resource request_info, struct PP_CompletionCallback callback) {
@@ -2198,14 +2198,14 @@ namespace Pepper {
 			if (has_interface<PPB_URLLoader_1_0>()) {
 				return get_interface<PPB_URLLoader_1_0>()->GetUploadProgress(loader, bytes_sent, total_bytes_to_be_sent);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_URLLoader_GetDownloadProgress(PP_Resource loader, int64_t* bytes_received, int64_t* total_bytes_to_be_received) {
 			if (has_interface<PPB_URLLoader_1_0>()) {
 				return get_interface<PPB_URLLoader_1_0>()->GetDownloadProgress(loader, bytes_received, total_bytes_to_be_received);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Resource PPB_URLLoader_GetResponseInfo(PP_Resource loader) {
@@ -2251,28 +2251,28 @@ namespace Pepper {
 			if (has_interface<PPB_URLRequestInfo_1_0>()) {
 				return get_interface<PPB_URLRequestInfo_1_0>()->IsURLRequestInfo(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_URLRequestInfo_SetProperty(PP_Resource request, PP_URLRequestProperty property, struct PP_Var value) {
 			if (has_interface<PPB_URLRequestInfo_1_0>()) {
 				return get_interface<PPB_URLRequestInfo_1_0>()->SetProperty(request, property, value);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_URLRequestInfo_AppendDataToBody(PP_Resource request, const void* data, uint32_t len) {
 			if (has_interface<PPB_URLRequestInfo_1_0>()) {
 				return get_interface<PPB_URLRequestInfo_1_0>()->AppendDataToBody(request, data, len);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_URLRequestInfo_AppendFileToBody(PP_Resource request, PP_Resource file_ref, int64_t start_offset, int64_t number_of_bytes, PP_Time expected_last_modified_time) {
 			if (has_interface<PPB_URLRequestInfo_1_0>()) {
 				return get_interface<PPB_URLRequestInfo_1_0>()->AppendFileToBody(request, file_ref, start_offset, number_of_bytes, expected_last_modified_time);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_URLRequestInfo */
@@ -2283,7 +2283,7 @@ namespace Pepper {
 			if (has_interface<PPB_URLResponseInfo_1_0>()) {
 				return get_interface<PPB_URLResponseInfo_1_0>()->IsURLResponseInfo(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT struct PP_Var PPB_URLResponseInfo_GetProperty(PP_Resource response, PP_URLResponseProperty property) {
@@ -2389,7 +2389,7 @@ namespace Pepper {
 			if (has_interface<PPB_VarArray_1_0>()) {
 				return get_interface<PPB_VarArray_1_0>()->Set(array, index, value);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT uint32_t PPB_VarArray_GetLength(struct PP_Var array) {
@@ -2403,7 +2403,7 @@ namespace Pepper {
 			if (has_interface<PPB_VarArray_1_0>()) {
 				return get_interface<PPB_VarArray_1_0>()->SetLength(array, length);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_VarArray */
@@ -2421,7 +2421,7 @@ namespace Pepper {
 			if (has_interface<PPB_VarArrayBuffer_1_0>()) {
 				return get_interface<PPB_VarArrayBuffer_1_0>()->ByteLength(array, byte_length);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT void* PPB_VarArrayBuffer_Map(struct PP_Var array) {
@@ -2460,7 +2460,7 @@ namespace Pepper {
 			if (has_interface<PPB_VarDictionary_1_0>()) {
 				return get_interface<PPB_VarDictionary_1_0>()->Set(dict, key, value);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT void PPB_VarDictionary_Delete(struct PP_Var dict, struct PP_Var key) {
@@ -2474,7 +2474,7 @@ namespace Pepper {
 			if (has_interface<PPB_VarDictionary_1_0>()) {
 				return get_interface<PPB_VarDictionary_1_0>()->HasKey(dict, key);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT struct PP_Var PPB_VarDictionary_GetKeys(struct PP_Var dict) {
@@ -2517,7 +2517,7 @@ namespace Pepper {
 			else if (has_interface<PPB_VideoDecoder_0_1>()) {
 				return get_interface<PPB_VideoDecoder_0_1>()->IsVideoDecoder(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_VideoDecoder_Initialize(PP_Resource video_decoder, PP_Resource graphics3d_context, PP_VideoProfile profile, PP_HardwareAcceleration acceleration, uint32_t min_picture_count, struct PP_CompletionCallback callback) {
@@ -2622,7 +2622,7 @@ namespace Pepper {
 			else if (has_interface<PPB_VideoEncoder_0_1>()) {
 				return get_interface<PPB_VideoEncoder_0_1>()->IsVideoEncoder(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_VideoEncoder_GetSupportedProfiles(PP_Resource video_encoder, struct PP_ArrayOutput output, struct PP_CompletionCallback callback) {
@@ -2730,7 +2730,7 @@ namespace Pepper {
 			if (has_interface<PPB_VideoFrame_0_1>()) {
 				return get_interface<PPB_VideoFrame_0_1>()->IsVideoFrame(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_TimeDelta PPB_VideoFrame_GetTimestamp(PP_Resource frame) {
@@ -2758,7 +2758,7 @@ namespace Pepper {
 			if (has_interface<PPB_VideoFrame_0_1>()) {
 				return get_interface<PPB_VideoFrame_0_1>()->GetSize(frame, size);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT void* PPB_VideoFrame_GetDataBuffer(PP_Resource frame) {
@@ -2789,7 +2789,7 @@ namespace Pepper {
 			else if (has_interface<PPB_View_1_0>()) {
 				return get_interface<PPB_View_1_0>()->IsView(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_View_GetRect(PP_Resource resource, struct PP_Rect* rect) {
@@ -2802,7 +2802,7 @@ namespace Pepper {
 			else if (has_interface<PPB_View_1_0>()) {
 				return get_interface<PPB_View_1_0>()->GetRect(resource, rect);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_View_IsFullscreen(PP_Resource resource) {
@@ -2815,7 +2815,7 @@ namespace Pepper {
 			else if (has_interface<PPB_View_1_0>()) {
 				return get_interface<PPB_View_1_0>()->IsFullscreen(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_View_IsVisible(PP_Resource resource) {
@@ -2828,7 +2828,7 @@ namespace Pepper {
 			else if (has_interface<PPB_View_1_0>()) {
 				return get_interface<PPB_View_1_0>()->IsVisible(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_View_IsPageVisible(PP_Resource resource) {
@@ -2841,7 +2841,7 @@ namespace Pepper {
 			else if (has_interface<PPB_View_1_0>()) {
 				return get_interface<PPB_View_1_0>()->IsPageVisible(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT PP_Bool PPB_View_GetClipRect(PP_Resource resource, struct PP_Rect* clip) {
@@ -2854,7 +2854,7 @@ namespace Pepper {
 			else if (has_interface<PPB_View_1_0>()) {
 				return get_interface<PPB_View_1_0>()->GetClipRect(resource, clip);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT float PPB_View_GetDeviceScale(PP_Resource resource) {
@@ -2881,7 +2881,7 @@ namespace Pepper {
 			if (has_interface<PPB_View_1_2>()) {
 				return get_interface<PPB_View_1_2>()->GetScrollOffset(resource, offset);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPB_View */
@@ -2899,7 +2899,7 @@ namespace Pepper {
 			if (has_interface<PPB_WebSocket_1_0>()) {
 				return get_interface<PPB_WebSocket_1_0>()->IsWebSocket(resource);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT int32_t PPB_WebSocket_Connect(PP_Resource web_socket, struct PP_Var url, const struct PP_Var protocols[], uint32_t protocol_count, struct PP_CompletionCallback callback) {
@@ -2955,7 +2955,7 @@ namespace Pepper {
 			if (has_interface<PPB_WebSocket_1_0>()) {
 				return get_interface<PPB_WebSocket_1_0>()->GetCloseWasClean(web_socket);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		PEPPER_EXPORT struct PP_Var PPB_WebSocket_GetExtensions(PP_Resource web_socket) {
@@ -2994,7 +2994,7 @@ namespace Pepper {
 			if (has_interface<PPP_InputEvent_0_1>()) {
 				return get_interface<PPP_InputEvent_0_1>()->HandleInputEvent(instance, input_event);
 			}
-			return PP_FromBool(FALSE);
+			return PP_FromBool(false);
 		}
 
 		#pragma endregion /* End entry point generation for PPP_InputEvent */
