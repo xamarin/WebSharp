@@ -23,7 +23,7 @@ Option('disable_region_gen', 'Turn off #pragma region generation.')
 
 # Remap default values
 RemapDefaultValue = {
-'PP_Bool': 'PP_FromBool(FALSE)',
+'PP_Bool': 'PP_FromBool(false)',
 'void': '',
 'PP_ImageDataFormat': 'PP_IMAGEDATAFORMAT_BGRA_PREMUL',
 'PP_InputEvent_MouseButton' : 'PP_INPUTEVENT_MOUSEBUTTON_NONE',
@@ -124,7 +124,7 @@ class PepperGen(WrapperGen):
   def WriteCopyright(self, out):
     now = datetime.now()
     c = """/* Copyright (c) %s Xamarin. */
-#include "stdafx.h"
+
 /* NOTE: this is auto-generated from IDL */
 """ % now.year
     out.Write(c)
