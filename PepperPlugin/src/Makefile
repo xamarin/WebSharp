@@ -1,7 +1,20 @@
 # GNU Makefile based on shared rules provided by the Native Client SDK.
 # See README.Makefiles for more details.
 
+# First figure out the platform if not specified, so we can use it in the
+# rest of this file.  Currently defined values: Darwin
+ifeq "$(PLATFORM)" ""
+PLATFORM := $(shell uname)
+endif
+
+ifeq "$(PLATFORM)" "Darwin"
 VALID_TOOLCHAINS := mac
+MONO_ROOT ?=/Library/Frameworks/Mono.framework
+else
+VALID_TOOLCHAINS := win
+# Fill this out when and if we do a makefile for Windows
+endif
+
 
 NACL_SDK_ROOT ?= $(abspath $(CURDIR)/../../..)
 
