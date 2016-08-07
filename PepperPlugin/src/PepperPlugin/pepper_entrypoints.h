@@ -12,7 +12,11 @@
 #include "all_ppapi_cpp_includes.h"
 
 #ifndef PEPPER_EXPORT
+#if WIN32
 #define PEPPER_EXPORT __declspec(dllexport)
+#else
+#define PEPPER_EXPORT __attribute__((cdecl))
+#endif
 #endif
 
 
