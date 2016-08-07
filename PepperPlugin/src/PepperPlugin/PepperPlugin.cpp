@@ -142,6 +142,8 @@ namespace pepper {
         {
 #ifdef WIN32
             mono_root = "C:\\Program Files (x86)\\Mono"; // default install location on windows
+#else
+			mono_root = "/Library/Frameworks/Mono.framework/Libraries"; // default install location on Mac			
 #endif
         }
 #ifdef WIN32		
