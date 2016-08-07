@@ -30,7 +30,10 @@ To get the actual source files you will need to install the ```pepper-canary``` 
 
 The previous command will install the source files that the PepperPlugin solution will use to build the necessary assemblies.
 
-PepperPlugin Solution
+Building PepperPlugin
+---
+
+_Windows_
 ---
 
 You should now be able to compile the solution provided.  Open the ```PepperPlugin.sln``` file found in the ```WebSharp\PepperPlugin\src\``` directory and select Build for the configuration and platform.
@@ -50,6 +53,26 @@ WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x86 /p:
 ```
 
 The solution is setup to build the PepperPlugin.dll, PepperSharp.dll and the examples that can be found in the Examples directory. 
+
+_Mac_
+---
+
+A makefile is provided in the ```Websharp/PepperPlugin/src``` directory.
+
+You will need to have the [nacl sdk](https://developer.chrome.com/native-client/sdk/download) as mentioned above.
+
+```shell
+> cd WebSharp\PepperPlugin\src
+WebSharp\PepperPlugin\src> export NACL_SDK_ROOT=../../../nacl_sdk/pepper_canary/
+WebSharp\PepperPlugin\src> make
+```
+
+If you have another ```mono``` installation that you would like to use instead of the default that is installed you can also set ```MONO_ROOT```.
+
+```shell
+WebSharp\PepperPlugin\src> export MONO_ROOT=path.to.mono
+```
+
 
 PepperSharp - C# PPAPI binding assembly
 ---
