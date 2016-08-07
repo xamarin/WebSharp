@@ -18,12 +18,19 @@ function Register(pluginPath) {
     }
     if (isMac) {
         if (process.arch = 'x64')
-            ppapiPath = __dirname + '\\..\\bin\\mac\\PepperPlugin.dll';
+            ppapiPath = __dirname + '/../bin/mac/libPepperPlugin.so';
         else
-            ppapiPath = __dirname + '\\..\\bin\\mac\\PepperPlugin.dll';
+            ppapiPath = __dirname + '/../bin/mac/libPepperPlugin.so';
     }
     if (pluginPath)
-        ppapiPath = pluginPath + '\\PepperPlugin.dll';
+    {
+        if (isWindows) {
+            ppapiPath = pluginPath + '\\PepperPlugin.dll';
+        }
+        if (isMac) {
+            ppapiPath = pluginPath + '\\libPepperPlugin.so';
+        }
+    }
     //console.log('PPAPI path ' + ppapiPath + ';application/electron-dotnet');
     app.commandLine.appendSwitch('register-pepper-plugins', ppapiPath + ';application/electron-dotnet');
 
