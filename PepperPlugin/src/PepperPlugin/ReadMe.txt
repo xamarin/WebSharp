@@ -32,14 +32,6 @@ PepperPlugin.cpp
 	on the General propert page of the Linker folder in the project's Property
 	Pages dialog box.
 
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
-
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named PepperPlugin.pch and a precompiled types file named StdAfx.obj.
-
-/////////////////////////////////////////////////////////////////////////////
 Other notes:
 
 AppWizard uses "TODO:" comments to indicate parts of the source code you
