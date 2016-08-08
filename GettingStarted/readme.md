@@ -33,9 +33,9 @@ Change to directory ```WebSharp\GettingStarted>```
 
 ```shell
 # Clone the repository
-$ git clone https://github.com/electron/electron-quick-start
+$ git clone https://github.com/xamarin/sharp-electron-quick-start
 # Go into the repository
-$ cd electron-quick-start
+$ cd sharp-electron-quick-start
 # Install dependencies and run the app
 $ npm install && npm start
 ```
@@ -48,42 +48,6 @@ Building GettingStarted example
 ---
 
 Open the project solution GettingStarted.sln in Visual Studio 2015 and build it.  This can also be done from the Visual Studio 2015 Command prompt as well by executing ```msbuild GettingStarted.sln```
-
-
-
-
-Register our plugin with Electron
----
-
-We now need to tell electron that we will be using plugins so to activate them we need to edit the <b>_main.js_</b> file in the electron_quick_start directory.
-
-Right after the line that reads ```let window``` we will need to append ```'register-pepper-plugins'``` to the command line switches to tell Electron which plugin will be activated and will be referenced by ```application/electron-dotnet``` 
-
-```javascript
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
-
-// Register the dotnet plugin with Electron:
-require('../../Tools/electron-dotnet').Register();
-
-```
-
-When we create our browser window we also need to specify that plugins will be used so in the same file find the code that reads ```mainWindow = new BrowserWindow({width: 800, height: 600})``` and lets add a reference to ```'webPreferences': { 'plugins': true }```
-
-```javascript
-  // Create the browser window.
-    mainWindow = new BrowserWindow(
-        {
-            width: 800,
-            height: 600,
-            'webPreferences': {
-                'plugins': true
-            }
-        })
-```
-
-We now have Electron ready to start loading plugins.
 
 Embedding classes
 ---
