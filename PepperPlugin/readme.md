@@ -25,7 +25,7 @@ To get the actual source files you will need to install the ```pepper-canary``` 
 
 ```shell
 > cd nacl_sdk
-> naclsdk update pepper-canary
+> naclsdk update pepper_canary
 ```
 
 The previous command will install the source files that the PepperPlugin solution will use to build the necessary assemblies.
