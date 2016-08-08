@@ -62,9 +62,9 @@ A makefile is provided in the ```Websharp/PepperPlugin/src``` directory.
 You will need to have the [nacl sdk](https://developer.chrome.com/native-client/sdk/download) as mentioned above.
 
 ```shell
-> cd WebSharp\PepperPlugin\src
-WebSharp\PepperPlugin\src> export NACL_SDK_ROOT=../../../nacl_sdk/pepper_canary/
-WebSharp\PepperPlugin\src> make
+$ cd WebSharp/PepperPlugin/src
+$ export NACL_SDK_ROOT=../../../nacl_sdk/pepper_canary/
+$ make
 ```
 
 If you have another ```mono``` installation that you would like to use instead of the default that is installed you can also set ```MONO_ROOT```.
