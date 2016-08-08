@@ -25,7 +25,7 @@ Pre-requisites
 Install Electron quick start
 ---
 
-Clone and run the code in this tutorial by using the [atom/electron-quick-start](https://github.com/electron/electron-quick-start) repository.
+Clone and run the code in this tutorial by using the [xamarin/sharp-electron-quick-start](https://github.com/xamarin/sharp-electron-quick-start) repository.
 
 Note: Running this requires [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/download/) (which includes [npm](https://www.npmjs.com/)) on your system.
 
@@ -45,12 +45,12 @@ $ npm install && npm start
 
 
 Building GettingStarted example
----
+-------------------------------
 
-Open the project solution GettingStarted.sln in Visual Studio 2015 and build it.  This can also be done from the Visual Studio 2015 Command prompt as well by executing ```msbuild GettingStarted.sln```
+Build the `GettingStarted.sln`.   You can use either Visual Studio/Xamarin Studio, or `xbuild`/`msbuild` from the command line.
 
 Embedding classes
----
+-----------------
 
 All the .dll assemblies we want to load will be embedded using ```<embed></embed>```.  So lets load our .Net assembly.
 
