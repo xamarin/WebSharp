@@ -68,7 +68,7 @@ Add the following code inside the ```<body>``` tag of the html.
             width: 300,
             height: 200,
             src: 'GettingStarted.HelloWorld',
-            path: "..\\bin\\Debug\\"
+            path: "../bin/Debug"
         });
         pluginTarget.appendChild(moduleEl);
 
