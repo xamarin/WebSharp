@@ -30,6 +30,7 @@
  #include <codecvt>
  #else
  #include <dirent.h>
+ #include <dlfcn.h>
  #endif
 
 using namespace std;
@@ -156,11 +157,35 @@ namespace pepper {
         
         mono_set_dirs(mono_lib.c_str(), mono_etc.c_str());
 
-        //mono_set_dirs("C:\\Program Files (x86)\\Mono\\lib",
-        //	"C:\\Program Files (x86)\\Mono\\etc");
-        
+#ifdef WIN32
         ////// load the default Mono configuration file in 'etc/mono/config'
         mono_config_parse(nullptr);
+#else
+        // On Mac there are some problems finding the DLLImport so we are going to remap
+        // it here by creating a dllmap in memory and load it.
+        auto openHandle = dlopen(NULL, 0);
+        string config("");
+        if (openHandle)
+        {
+            auto dlsymVar = (void *)dlsym(openHandle,"PPB_Var_VarFromUtf8");
+            if (dlsymVar)
+            {
+                Dl_info dl_info;
+                dladdr(dlsymVar, &dl_info);
+                config = "<configuration>\n<dllmap os=\"osx\" dll=\"PepperPlugin\" target=\"";
+                config += dl_info.dli_fname; 
+                config += "\" />\n</configuration>";
+            }
+            dlclose(openHandle);
+        }
+        
+        if (config.length())
+            mono_config_parse_memory(config.c_str());
+        else
+            ////// load the default Mono configuration file in 'etc/mono/config'
+            mono_config_parse(nullptr);
+        
+#endif
         
         MonoDomain* domain = mono_jit_init_version("PepperPlugin Domain", "v4.0.30319");
 
