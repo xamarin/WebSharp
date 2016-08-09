@@ -11,13 +11,13 @@ function Register(pluginPath) {
 
     var ppapiPath = '';
     if (isWindows) {
-        if (process.arch = 'x64')
+        if (process.arch === 'x64')
             ppapiPath = __dirname + '\\..\\bin\\x64\\PepperPlugin.dll';
         else
             ppapiPath = __dirname + '\\..\\bin\\Win32\\PepperPlugin.dll';
     }
     if (isMac) {
-        if (process.arch = 'x64')
+        if (process.arch === 'x64')
             ppapiPath = __dirname + '/../bin/mac/libPepperPlugin.so';
         else
             ppapiPath = __dirname + '/../bin/mac/libPepperPlugin.so';
