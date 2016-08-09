@@ -56,14 +56,14 @@ The Electron plugin is delivered as a Node.js module and needs to be installed. 
 
 For Windows
 ```shell
-cd 
-npm install ../../Tools/electron-dotnet/
+$ cd sharp-electron-quick-start 
+$ npm install ../../Tools/electron-dotnet/
 ```
 
 For Mac
 ```shell
-cd 
-sudo npm install ../../Tools/electron-dotnet/
+$ cd sharp-electron-quick-start 
+$ sudo npm install ../../Tools/electron-dotnet/
 ```
 
 This will install electron-dotnet as a module and allow us to do ```require('electron-dotnet').Register()``` which registers the correct PepperPlugin assembly for the platform and architecture that is used by Electron.
