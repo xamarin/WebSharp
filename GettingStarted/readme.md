@@ -49,6 +49,25 @@ Building GettingStarted example
 
 Build the `GettingStarted.sln`.   You can use either Visual Studio/Xamarin Studio, or `xbuild`/`msbuild` from the command line.
 
+Installing 'electron-dotnet' Node.js module
+---
+
+The Electron plugin is delivered as a Node.js module and needs to be installed.  *Note: We will be installing the module from a local directory for now.*
+
+For Windows
+```shell
+cd 
+npm install ../../Tools/electron-dotnet/
+```
+
+For Mac
+```shell
+cd 
+sudo npm install ../../Tools/electron-dotnet/
+```
+
+This will install electron-dotnet as a module and allow us to do ```require('electron-dotnet').Register()``` which registers the correct PepperPlugin assembly for the platform and architecture that is used by Electron.
+
 Embedding classes
 -----------------
 
