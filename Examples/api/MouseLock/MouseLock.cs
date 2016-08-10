@@ -45,29 +45,29 @@ namespace MouseLock
             return true;
         }
 
-        public override void DidChangeView(PPResource view)
+        public override void DidChangeView(PPResource vview)
         {
-            var viewRect = new PPRect();
-            var result = PPBView.GetRect(view, out viewRect);
+            var view = new View(vview);
+            var viewRect = view.Rect;
 
             // DidChangeView can get called for many reasons, so we only want to
             // rebuild the device context if we really need to.
 
-            if ((size_.Width == viewRect.size.width && size_.Height == viewRect.size.height) &&
-                (was_fullscreen_ == (PPBView.IsFullscreen(view) == PPBool.True)) && 
+            if ((size_.Width == viewRect.Size.Width && size_.Height == viewRect.Size.Height) &&
+                (was_fullscreen_ == view.IsFullScreen) && 
                 is_context_bound_)
             {
                 Log($"DidChangeView SKIP {viewRect.size.width}, {viewRect.size.height} " +
-                    $"FULL={(PPBView.IsFullscreen(view) == PPBool.True)} " +
+                    $"FULL= {view.IsFullScreen} " +
                     $"CTX Bound={is_context_bound_}");
                 return;
             }
 
-            Log($"DidChangeView DO {viewRect.size.width}, {viewRect.size.height} " +
-    $"FULL={(PPBView.IsFullscreen(view) == PPBool.True)} " +
-    $"CTX Bound={is_context_bound_}");
+            Log($"DidChangeView DO {viewRect.Size.Width}, {viewRect.Size.Height} " +
+                $"FULL={view.IsFullScreen} " +
+                    $"CTX Bound={is_context_bound_}");
 
-            size_ = viewRect.size; ;
+            size_ = viewRect.Size; ;
             device_context_ = PPBGraphics2D.Create(this, size_, PPBool.False);
             waiting_for_flush_completion_ = false;
 
@@ -91,7 +91,7 @@ namespace MouseLock
             }
 
             // Remember if we are fullscreen or not
-            was_fullscreen_ = (PPBView.IsFullscreen(view) == PPBool.True);
+            was_fullscreen_ = view.IsFullScreen;
 
             // Paint this context
             Paint();

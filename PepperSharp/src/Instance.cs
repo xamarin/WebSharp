@@ -3,7 +3,7 @@
 
 namespace PepperSharp
 {
-    public partial class Instance : Resource
+    public partial class Instance : NativeInstance
     {
         protected Instance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
         protected Instance(IntPtr handle) : base(handle) { }
@@ -144,14 +144,20 @@ namespace PepperSharp
 
         public void LogToConsole(PPLogLevel level, object value)
         {
-            PPBConsole.Log(this, level, new Var(value));
+            if (value is Var)
+                PPBConsole.Log(this, level, (Var)value);
+            else
+                PPBConsole.Log(this, level, new Var(value));
         }
 
         public void LogToConsoleWithSource(PPLogLevel level,
                                           string source,
                                           object value)
         {
-            PPBConsole.LogWithSource(this, level, new Var(source), new Var(value));
+            if (value is Var)
+                PPBConsole.LogWithSource(this, level, new Var(source), (Var)value);
+            else
+                PPBConsole.LogWithSource(this, level, new Var(source), new Var(value));
         }
 
         /// <summary>

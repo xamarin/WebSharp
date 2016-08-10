@@ -17,18 +17,46 @@ namespace PepperSharp
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public class Resource : INativeObject, IDisposable
+    public class NativeInstance : INativeObject, IDisposable
     {
         internal IntPtr handle;
         public IntPtr Handle => handle;
 
-        public Resource(IntPtr handle)
+        public NativeInstance(IntPtr handle)
         {
             this.handle = handle;
-            Console.WriteLine($"PPResource constructed {handle}");
+            Console.WriteLine($"PPInstance constructed {handle}");
         }
 
-        protected Resource() { }
+        protected NativeInstance() { }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // TODO: do something here
+        }
+
+        ~NativeInstance()
+        {
+            Dispose(false);
+        }
+
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public class Resource : IDisposable
+    {
+        PPResource ppResource = PPResource.Empty;
+        
+        protected Resource(PPResource resource)
+        {
+            ppResource.ppresource = resource.ppresource;
+        }
 
         public void Dispose()
         {
@@ -44,6 +72,11 @@ namespace PepperSharp
         ~Resource()
         {
             Dispose(false);
+        }
+
+        public static implicit operator PPResource(Resource resource)
+        {
+            return resource.ppResource;
         }
 
     }

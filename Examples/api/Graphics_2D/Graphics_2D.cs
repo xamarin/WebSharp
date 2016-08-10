@@ -24,7 +24,7 @@ namespace Graphics_2D
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from PepperSharp using C#"));
+            LogToConsole(PPLogLevel.Log, "Hello from PepperSharp using C#");
             RequestInputEvents(PPInputEventClass.Mouse);
             int seed = 1;
             random = new Random(seed);
@@ -33,12 +33,12 @@ namespace Graphics_2D
             return true;
         }
 
-        public override void DidChangeView(PPResource view)
+        public override void DidChangeView(PPResource vview)
         {
-            var viewRect = new PPRect();
-            var result = PPBView.GetRect(view, out viewRect);
 
-            deviceScale = PPBView.GetDeviceScale(view);
+            var view = new View(vview);
+            var viewRect = view.Rect;
+            deviceScale = view.DeviceScale;
             var newSize = new PPSize((int)(viewRect.size.width * deviceScale),
                                     (int)(viewRect.size.height * deviceScale));
 

@@ -34,19 +34,19 @@ namespace InputEvent
         }
 
         /// Scrolling the mouse wheel causes a DidChangeView event.
-        public override void DidChangeView(PPResource view)
+        public override void DidChangeView(PPResource vview)
         {
-            var viewRect = new PPRect();
-            PPBView.GetRect(view, out viewRect);
-            string message = $"DidChangeView: x:{viewRect.point.x}" +
-                            $" y: {viewRect.point.y}" +
-                            $" width: {viewRect.size.width}" +
-                            $" height: {viewRect.size.height} \n" +
-                            $" IsFullScreen: {(PPBView.IsFullscreen(view) == PPBool.True)}" +
-                            $" IsVisible: {(PPBView.IsVisible(view) == PPBool.True)}" +
-                            $" IsPageVisible: {(PPBView.IsPageVisible(view) == PPBool.True)}" +
-                            $" GetDeviceScale: {PPBView.GetDeviceScale(view)}" +
-                            $" GetCSSScale: {PPBView.GetCSSScale(view)}";
+            var view = new View(vview);
+            var viewRect = view.Rect;
+            string message = $"DidChangeView: x:{viewRect.Origin.X}" +
+                            $" y: {viewRect.Origin.Y}" +
+                            $" width: {viewRect.Size.Width}" +
+                            $" height: {viewRect.Size.Height} \n" +
+                            $" IsFullScreen: {view.IsFullScreen}" +
+                            $" IsVisible: {view.IsVisible}" +
+                            $" IsPageVisible: {view.IsPageVisible}" +
+                            $" GetDeviceScale: {view.DeviceScale}" +
+                            $" GetCSSScale: {view.CSSScale}";
             PostMessage(message);
         }
 

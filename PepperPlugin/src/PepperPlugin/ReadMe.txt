@@ -46,10 +46,10 @@ Instance
 ---
 
 [] AddPerInstanceObject(const std::string &interface_name, void *object)
-[] BindGraphics(const Graphics2D &graphics)	
+[x] BindGraphics(const Graphics2D &graphics)	
 [] BindGraphics(const Graphics3D &graphics)	
 [] BindGraphics(const Compositor &compositor)	
-[] ClearInputEventRequest(uint32_t event_classes)	
+[x] ClearInputEventRequest(uint32_t event_classes)	
 [x] DidChangeFocus(bool has_focus)	
 [x] DidChangeView(const View &view)	
 [x] DidChangeView(const Rect &position, const Rect &clip)	
@@ -59,7 +59,7 @@ Instance
 [x] HandleMessage(const Var &message)	
 [] Init(uint32_t argc, const char *argn[], const char *argv[])
 [] Instance(PP_Instance instance)
-[] IsFullFrame()		
+[x] IsFullFrame()		
 [x] LogToConsole(PP_LogLevel level, const Var &value)
 [x] LogToConsoleWithSource(PP_LogLevel level, const Var &source, const Var &value)
 [x] PostMessage(const Var &message)	
@@ -67,10 +67,22 @@ Instance
 [] RegisterMessageHandler(MessageHandler *message_handler, const MessageLoop &message_loop)
 [] RemovePerInstanceObject(const std::string &interface_name, void *object)
 [] RemovePerInstanceObject(const InstanceHandle &instance, const std::string &interface_name, void *object)
-[] RequestFilteringInputEvents(uint32_t event_classes)
-[] RequestInputEvents(uint32_t event_classes)
+[x] RequestFilteringInputEvents(uint32_t event_classes)
+[x] RequestInputEvents(uint32_t event_classes)
 [] UnregisterMessageHandler()
 [] ~Instance()
+
+View
+---
+
+[x] 	GetRect ()
+[x] 	IsFullscreen ()
+[x] 	IsVisible ()
+[x] 	IsPageVisible () 
+[x] 	GetClipRect ()
+[x] 	GetDeviceScale () 
+[x] 	GetCSSScale ()
+[x] 	GetScrollOffset () 
 
 
 

@@ -56,10 +56,10 @@ namespace VarArrayBufferInstance
             }
         }
 
-        public override void DidChangeView(PPResource view)
+        public override void DidChangeView(PPResource vview)
         {
-            var viewRect = new PPRect();
-            var result = PPBView.GetRect(view, out viewRect);
+            var view = new View(vview);
+            var viewRect = view.Rect;
 
             if (size != viewRect.Size)
             {

@@ -21,10 +21,11 @@ namespace GamePad
             return true;
         }
 
-        public override void DidChangeView(PPResource view)
+        public override void DidChangeView(PPResource vview)
         {
-            var position = new PPRect();
-            var result = PPBView.GetRect(view, out position);
+            var view = new View(vview);
+            var position = view.Rect;
+
             if (position.Size.Width == Width &&
                 position.Size.Height == Height)
                 return;  // Size didn't change, no need to update anything.
