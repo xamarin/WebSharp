@@ -38,3 +38,40 @@ AppWizard uses "TODO:" comments to indicate parts of the source code you
 should add to or customize.
 
 /////////////////////////////////////////////////////////////////////////////
+
+TODO
+---
+
+Instance
+---
+
+[] AddPerInstanceObject(const std::string &interface_name, void *object)
+[] BindGraphics(const Graphics2D &graphics)	
+[] BindGraphics(const Graphics3D &graphics)	
+[] BindGraphics(const Compositor &compositor)	
+[] ClearInputEventRequest(uint32_t event_classes)	
+[x] DidChangeFocus(bool has_focus)	
+[x] DidChangeView(const View &view)	
+[x] DidChangeView(const Rect &position, const Rect &clip)	
+[] GetPerInstanceObject(PP_Instance instance, const std::string &interface_name)	
+[x] HandleDocumentLoad(const URLLoader &url_loader)	
+[x] HandleInputEvent(const pp::InputEvent &event)	
+[x] HandleMessage(const Var &message)	
+[] Init(uint32_t argc, const char *argn[], const char *argv[])
+[] Instance(PP_Instance instance)
+[] IsFullFrame()		
+[x] LogToConsole(PP_LogLevel level, const Var &value)
+[x] LogToConsoleWithSource(PP_LogLevel level, const Var &source, const Var &value)
+[x] PostMessage(const Var &message)	
+[] pp_instance() 
+[] RegisterMessageHandler(MessageHandler *message_handler, const MessageLoop &message_loop)
+[] RemovePerInstanceObject(const std::string &interface_name, void *object)
+[] RemovePerInstanceObject(const InstanceHandle &instance, const std::string &interface_name, void *object)
+[] RequestFilteringInputEvents(uint32_t event_classes)
+[] RequestInputEvents(uint32_t event_classes)
+[] UnregisterMessageHandler()
+[] ~Instance()
+
+
+
+
