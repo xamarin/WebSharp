@@ -44,28 +44,34 @@ namespace PepperSharp
             return String.Format("PPSize : (width={0}, height={1})", Width, Height);
         }
 
-        public static bool operator ==(PPSize s1, PPSize s2)
-        {
-            // If both are null, or both are same instance, return true.
-            if (System.Object.ReferenceEquals(s1, s2))
-            {
-                return true;
-            }
+        #region Equality
 
-            // If one is null, but not both, return false.
-            if (((object)s1 == null) || ((object)s2 == null))
-            {
+        public override bool Equals (object obj)
+        {
+            if (!(obj is PPSize))
                 return false;
-            }
 
-            // Return true if the fields match:
-            return s1.Width == s2.Width && s1.Height == s2.Height;
+            PPSize comp = (PPSize)obj;
+            return (comp.width == this.width) &&
+                   (comp.height == this.height);
         }
 
-        public static bool operator !=(PPSize s1, PPSize s2)
+        public override int GetHashCode ()
         {
-            return !(s1 == s2);
+            return width ^ height;
         }
+
+        public static bool operator == (PPSize sz1, PPSize sz2)
+        {
+            return sz1.Width == sz2.Width && sz1.Height == sz2.Height;
+        }
+
+        public static bool operator != (PPSize sz1, PPSize sz2)
+        {
+            return !(sz1 == sz2);
+        }
+
+        #endregion
 
     }
 }

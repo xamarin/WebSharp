@@ -47,5 +47,32 @@ namespace PepperSharp
             return String.Format("PPPoint : (x={0}, y={1})", X, Y);
         }
 
+        #region Equality
+
+        public override bool Equals (object obj)
+        {
+            if (!(obj is PPPoint)) return false;
+            PPPoint comp = (PPPoint)obj;
+            // Note value types can't have derived classes, so we don't need 
+            // to check the types of the objects here.  -- Microsoft, 2/21/2001
+            return comp.X == this.X && comp.Y == this.Y;
+        }
+
+        public override int GetHashCode ()
+        {
+            return unchecked(x ^ y);
+        }
+
+        public static bool operator == (PPPoint left, PPPoint right)
+        {
+            return left.X == right.X && left.Y == right.Y;
+        }
+
+        public static bool operator != (PPPoint left, PPPoint right)
+        {
+            return !(left == right);
+        }
+        #endregion Equality
+
     }
 }

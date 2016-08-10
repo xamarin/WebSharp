@@ -31,28 +31,33 @@ namespace PepperSharp
             get { return ppresource == 0;  }
         }
 
-        public static bool operator == (PPResource s1, PPResource s2)
-        {
-            // If both are null, or both are same instance, return true.
-            if (System.Object.ReferenceEquals(s1, s2))
-            {
-                return true;
-            }
+        #region Equality
 
-            // If one is null, but not both, return false.
-            if (((object)s1 == null) || ((object)s2 == null))
-            {
+        public override bool Equals (object obj)
+        {
+            if (!(obj is PPResource))
                 return false;
-            }
 
-            // Return true if the fields match:
-            return s1.ppresource == s2.ppresource;
+            PPResource comp = (PPResource)obj;
+            return (comp.ppresource == this.ppresource);
         }
 
-        public static bool operator !=(PPResource s1, PPResource s2)
+        public override int GetHashCode ()
         {
-            return !(s1 == s2);
+            return ppresource;
         }
+
+        public static bool operator == (PPResource resource1, PPResource resource2)
+        {
+            return resource1.ppresource == resource2.ppresource;
+        }
+
+        public static bool operator != (PPResource resource1, PPResource resource2)
+        {
+            return !(resource1 == resource2);
+        }
+
+        #endregion
 
         /// <summary>
         /// Sets this resource to null. This releases ownership of the resource.

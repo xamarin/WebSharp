@@ -128,7 +128,7 @@ var common = (function() {
     moduleEl.setAttribute('id', 'nacl_module');
     moduleEl.setAttribute('width', width);
     moduleEl.setAttribute('height', height);
-    moduleEl.setAttribute('path', __dirname + '\\' + path);
+    moduleEl.setAttribute('path', __dirname + '/' + path);
     moduleEl.setAttribute('src', name + '.' + name);
 
     // Add any optional arguments

@@ -80,27 +80,42 @@ namespace PepperSharp
             return String.Format($"PPRect : ({point.x},{point.y}),({size.width}, {size.height})");
         }
 
-        public static bool operator ==(PPRect r1, PPRect r2)
-        {
-            // If both are null, or both are same instance, return true.
-            if (System.Object.ReferenceEquals(r1, r2))
-            {
-                return true;
-            }
+        #region Equality
 
-            // If one is null, but not both, return false.
-            if (((object)r1 == null) || ((object)r2 == null))
-            {
+        public override bool Equals (object obj)
+        {
+            if (!(obj is PPRect))
                 return false;
-            }
 
-            // Return true if the fields match:
-            return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Height;
+            PPRect comp = (PPRect)obj;
+
+            return (comp.X == this.X) &&
+            (comp.Y == this.Y) &&
+            (comp.Width == this.Width) &&
+            (comp.Height == this.Height);
         }
 
-        public static bool operator !=(PPRect r1, PPRect r2)
+        public override int GetHashCode ()
         {
-            return !(r1 == r2);
+            return unchecked((int)((UInt32)X ^
+                        (((UInt32)Y << 13) | ((UInt32)Y >> 19)) ^
+                        (((UInt32)Width << 26) | ((UInt32)Width >> 6)) ^
+                        (((UInt32)Height << 7) | ((UInt32)Height >> 25))));
         }
+
+        public static bool operator == (PPRect left, PPRect right)
+        {
+            return (left.X == right.X
+                    && left.Y == right.Y
+                    && left.Width == right.Width
+                    && left.Height == right.Height);
+        }
+
+        public static bool operator != (PPRect left, PPRect right)
+        {
+            return !(left == right);
+        }
+        #endregion Equality
+
     }
 }

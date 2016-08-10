@@ -134,7 +134,7 @@ namespace PepperSharp
         {
             get
             {
-                if (dataStorageHandle == null || dataStorageHandle == IntPtr.Zero)
+                if (dataStorageHandle == IntPtr.Zero)
                     return output;
 
                 var ptrHandle = dataStorageHandle;
