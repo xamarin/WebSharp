@@ -1,5 +1,5 @@
 {
-  "name": "Example GamePad",
+  "name": "example-gamepad",
   "version": "1.0.0",
   "description": "The GamePad example demonstrates using the gamepad API.",
   "main": "main.js",

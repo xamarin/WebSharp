@@ -1,7 +1,7 @@
 {
-  "name": "Example URL_Loader",
+  "name": "example-web-socket",
   "version": "1.0.0",
-  "description": "Demonstrates API for handling URL Loading",
+  "description": "Demonstrates API for handling web socket.",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js"

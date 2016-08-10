@@ -1,5 +1,5 @@
 {
-  "name": "Example VideoEncode",
+  "name": "example-video-encode",
   "version": "1.0.0",
   "description": "Demonstrates demonstrates how to encode video.",
   "main": "main.js",

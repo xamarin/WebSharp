@@ -1,5 +1,5 @@
 {
-  "name": "Example Socket",
+  "name": "example-socket",
   "version": "1.0.0",
   "description": "The Socket example demonstrates how to use the TCP and UDP socket API.",
   "main": "main.js",

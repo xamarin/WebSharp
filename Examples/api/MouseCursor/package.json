@@ -1,5 +1,5 @@
 {
-  "name": "Example MouseCursor",
+  "name": "example-mousecursor",
   "version": "1.0.0",
   "description": "Demonstrates API to change the mouse cursor",
   "main": "main.js",

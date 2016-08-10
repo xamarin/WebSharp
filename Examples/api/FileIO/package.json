@@ -1,5 +1,5 @@
 {
-  "name": "Example FileIO",
+  "name": "example-fileIO",
   "version": "1.0.0",
   "description": "The File IO example demonstrates saving, loading, and deleting files from the persistent file store.",
   "main": "main.js",

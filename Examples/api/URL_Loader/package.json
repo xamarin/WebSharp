@@ -1,5 +1,5 @@
 {
-  "name": "Example URL_Loader",
+  "name": "example-url-loader",
   "version": "1.0.0",
   "description": "Demonstrates API for handling URL Loading",
   "main": "main.js",

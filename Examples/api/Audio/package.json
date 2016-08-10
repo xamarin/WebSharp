@@ -1,5 +1,5 @@
 {
-  "name": "Example Audio",
+  "name": "example-audio",
   "version": "1.0.0",
   "description": "Demonstrates API for handling audio.  The Sine Wave Synthesizer example demonstrates playing sound (a sine wave). Enter the desired frequency and hit play to start, stop to end.",
   "main": "main.js",

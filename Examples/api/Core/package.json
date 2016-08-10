@@ -1,5 +1,5 @@
 {
-  "name": "Example Core",
+  "name": "example-core",
   "version": "1.0.0",
   "description": "Demonstrates Core API for the basic use of the Time and Callback functions.",
   "main": "main.js",

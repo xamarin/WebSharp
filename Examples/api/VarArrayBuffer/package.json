@@ -1,5 +1,5 @@
 {
-  "name": "Example VarArrayBuffer",
+  "name": "example-var-array-buffer",
   "version": "1.0.0",
   "description": "Demonstrates prompting the user for a file, passing the file contents to PepperPlugin Instance as a VarArrayBuffer, then drawing a histogram representing the contents of the file to a 2D square.",
   "main": "main.js",

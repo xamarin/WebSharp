@@ -1,5 +1,5 @@
 {
-  "name": "Example MouseCursor",
+  "name": "example-mouselock",
   "version": "1.0.0",
   "description": "Demonstrates API to lock the mouse cursor",
   "main": "main.js",

@@ -1,5 +1,5 @@
 {
-  "name": "Example NetworkMonitor",
+  "name": "example-network-monitor",
   "version": "1.0.0",
   "description": "The network_monitor example demonstrates how to listen for changes to the status of the network interfaces on this computer.",
   "main": "main.js",
