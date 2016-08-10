@@ -40,7 +40,7 @@ namespace MouseLock
         public override bool Init(int argc, string[] argn, string[] argv)
         {
             PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from MouseLock using C#"));
-            PPBInputEvent.RequestInputEvents(this, (int)(PPInputEventClass.Mouse | PPInputEventClass.Keyboard));
+            RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Keyboard);
 
             return true;
         }

@@ -25,7 +25,7 @@ namespace Graphics_2D
         public override bool Init(int argc, string[] argn, string[] argv)
         {
             PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from PepperSharp using C#"));
-            PPBInputEvent.RequestInputEvents(this, (int)PPInputEventClass.Mouse);
+            RequestInputEvents(PPInputEventClass.Mouse);
             int seed = 1;
             random = new Random(seed);
             CreatePalette();

@@ -8,9 +8,9 @@ namespace InputEvent
     {
         public InputEvent(IntPtr handle) : base(handle)
         {
-            PPBInputEvent.RequestInputEvents(this, (int)(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
-                   PPInputEventClass.Touch));
-            PPBInputEvent.RequestFilteringInputEvents(this, (int)PPInputEventClass.Keyboard);
+            RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
+                   PPInputEventClass.Touch);
+            RequestFilteringInputEvents(PPInputEventClass.Keyboard);
         }
 
         ~InputEvent() { System.Console.WriteLine("InputEvent destructed"); }
