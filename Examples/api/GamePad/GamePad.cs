@@ -8,7 +8,7 @@ namespace GamePad
     public class GamePad : Instance
     {
 
-        PPResource graphics_2d_context_;
+        Graphics2D graphics_2d_context_;
         PPResource pixel_buffer_;
 
         // Indicate whether a flush is pending.  This can only be called from the
@@ -141,14 +141,14 @@ namespace GamePad
             // Note that the pixel lock is held while the buffer is copied into the
             // device context and then flushed.
             PPRect srcRect = new PPRect(Size);
-            PPBGraphics2D.PaintImageData(graphics_2d_context_, pixel_buffer_, PPPoint.Zero, srcRect);
+            graphics_2d_context_.PaintImageData(pixel_buffer_, PPPoint.Zero, srcRect);
 
             if (FlushPending)
                 return;
 
             FlushPending = true;
 
-            PPBGraphics2D.Flush(graphics_2d_context_, new CompletionCallback
+            graphics_2d_context_.Flush(new CompletionCallback
                 (
                     (result) =>
                     {
@@ -173,10 +173,8 @@ namespace GamePad
             if (IsContextValid)
                 return;
 
-            bool kIsAlwaysOpaque = false;
-            var isAlwaysOpaque = new PPBool();
-            isAlwaysOpaque = kIsAlwaysOpaque ? PPBool.True : PPBool.False;
-            graphics_2d_context_ = PPBGraphics2D.Create(this, size, isAlwaysOpaque);
+            var isAlwaysOpaque = false;
+            graphics_2d_context_ = new Graphics2D(this, size, isAlwaysOpaque);
 
             if (!BindGraphics(graphics_2d_context_))
             {
@@ -215,11 +213,7 @@ namespace GamePad
             {
                 if (IsContextValid)
                 {
-                    var osize = new PPSize();
-                    var oopaque = new PPBool();
-
-                    PPBGraphics2D.Describe(graphics_2d_context_, out osize, out oopaque);
-                    return osize;
+                    return graphics_2d_context_.Size;
                 }
                 return PPSize.Zero;
             }

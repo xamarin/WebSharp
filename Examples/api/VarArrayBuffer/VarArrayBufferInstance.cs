@@ -12,7 +12,7 @@ namespace VarArrayBufferInstance
         const uint BLACK = 0xff000000u;
         const uint HISTOGRAM_SIZE = 256u;
 
-        PPResource graphics2DContext;
+        Graphics2D graphics2DContext;
 
         /// A queue of images to paint. We must maintain a queue because we can not
         /// call pp::Graphics2D::Flush while a Flush is already pending.
@@ -64,11 +64,8 @@ namespace VarArrayBufferInstance
             if (size != viewRect.Size)
             {
                 size = viewRect.Size;
-                Console.WriteLine(size);
-                bool is_AlwaysOpaque = true;
-                var isAlwaysOpaque = new PPBool();
-                isAlwaysOpaque = is_AlwaysOpaque ? PPBool.True : PPBool.False;
-                graphics2DContext = PPBGraphics2D.Create(this, viewRect.Size, isAlwaysOpaque);
+                bool isAlwaysOpaque = true;
+                graphics2DContext = new Graphics2D(this, viewRect.Size, isAlwaysOpaque);
 
                 BindGraphics(graphics2DContext);
 
@@ -226,9 +223,8 @@ namespace VarArrayBufferInstance
         void PaintAndFlush(PPResource image_data)
         {
             Debug.Assert(!isFlushing);
-            PPBGraphics2D.ReplaceContents(graphics2DContext, image_data);
-            //var flushCallback = new CompletionCallback(DidFlush);
-            PPBGraphics2D.Flush(graphics2DContext, new CompletionCallback(DidFlush));
+            graphics2DContext.ReplaceContents(image_data);
+            graphics2DContext.Flush(new CompletionCallback(DidFlush));
             isFlushing = true;
         }
 

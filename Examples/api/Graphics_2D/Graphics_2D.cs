@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using PepperSharp;
 
 namespace Graphics_2D
@@ -7,8 +8,8 @@ namespace Graphics_2D
     public class Graphics_2D : Instance
     {
 
-        PPResource context;
-        PPResource flushContext;
+        Graphics2D context;
+        Graphics2D flushContext;
         PPSize size;
         PPPoint mouse;
         bool mouseDown;
@@ -49,7 +50,7 @@ namespace Graphics_2D
             // flight. This may have happened if the context was not created
             // successfully, or if this is the first call to DidChangeView (when the
             // module first starts). In either case, start the main loop.
-            if (flushContext.ppresource == 0)
+            if (flushContext == null)
                 MainLoop(0);
         }
 
@@ -91,19 +92,13 @@ namespace Graphics_2D
 
         bool CreateContext(PPSize new_size)
         {
-            bool kIsAlwaysOpaque = true;
-            var isAlwaysOpaque = new PPBool();
-            isAlwaysOpaque = kIsAlwaysOpaque ? PPBool.True : PPBool.False;
-            context = PPBGraphics2D.Create(this, new_size, isAlwaysOpaque);
+            context = new Graphics2D(this, new_size, true);
 
             // Call SetScale before BindGraphics so the image is scaled correctly on
             // HiDPI displays.
-            PPBGraphics2D.SetScale(context, (1.0f / deviceScale));
+            context.Scale = (1.0f / deviceScale);
 
-            var osize = new PPSize();
-            var oopaque = new PPBool();
-
-            PPBGraphics2D.Describe(context, out osize, out oopaque);
+            var osize = context.Size;
 
             if (!BindGraphics(context))
             {
@@ -293,7 +288,7 @@ namespace Graphics_2D
             //   "front buffer" (which the module is painting into) are just being
             //   swapped back and forth.
             //
-            PPBGraphics2D.ReplaceContents(context, image_data);
+            context.ReplaceContents(image_data);
 
             // Clean up after ourselves
             PPBImageData.Unmap(image_data);
@@ -302,12 +297,12 @@ namespace Graphics_2D
 
         void MainLoop(int dt)
         {
-            if (context.ppresource == 0)
+            if (context.IsEmpty)
             {
                 // The current Graphics2D context is null, so updating and rendering is
                 // pointless. Set flush_context_ to null as well, so if we get another
                 // DidChangeView call, the main loop is started again.
-                flushContext.ppresource = context.ppresource;
+                flushContext = new Graphics2D(context);
                 return;
             }
 
@@ -316,20 +311,18 @@ namespace Graphics_2D
             // Store a reference to the context that is being flushed; this ensures
             // the callback is called, even if context_ changes before the flush
             // completes.
-            flushContext.ppresource = context.ppresource;
+            flushContext = new Graphics2D(context);
 
-            PPCompletionCallbackFunc callback = 
-                (IntPtr callbackUserData, int result) =>
+            CompletionCallbackFunc callback =
+                (PPError result) =>
                    {
-                        MainLoop(result);
-                    };
+                       MainLoop((int)result);
+                   };
 
 
-            var completionCallback = new PPCompletionCallback();
-            completionCallback.func = callback;
-            completionCallback.flags = (int)PPCompletionCallbackFlag.None;
+            var completionCallback = new CompletionCallback(callback);
 
-            var flushResult = PPBGraphics2D.Flush(context, completionCallback);
+            var flushResult = context.Flush(completionCallback);
         }
 
     }

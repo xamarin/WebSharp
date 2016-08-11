@@ -84,6 +84,19 @@ View
 [x] 	GetCSSScale ()
 [x] 	GetScrollOffset () 
 
+Graphics2D
+---
 
+[x] Flush(const CompletionCallback &cc)	
+[x] GetScale()
+[x] Graphics2D(const Graphics2D &other)
+[x] Graphics2D(const InstanceHandle &instance, const Size &size, bool is_always_opaque)
+[] operator=(const Graphics2D &other)
+[x] PaintImageData(const ImageData &image, const Point &top_left) 
+[x] PaintImageData(const ImageData &image, const Point &top_left, const Rect &src_rect) 
+[x] ReplaceContents(ImageData *image) 
+[x] Scroll(const Rect &clip, const Point &amount) 
+[x] SetScale(float scale) 
+[x] size() 
 
 

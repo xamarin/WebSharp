@@ -30,7 +30,7 @@ namespace MouseLock
             Down = 3
         }
 
-        PPResource device_context_;
+        Graphics2D device_context_;
 
 
         public MouseLock(IntPtr handle) : base(handle) { }
@@ -67,8 +67,8 @@ namespace MouseLock
                 $"FULL={view.IsFullScreen} " +
                     $"CTX Bound={is_context_bound_}");
 
-            size_ = viewRect.Size; ;
-            device_context_ = PPBGraphics2D.Create(this, size_, PPBool.False);
+            size_ = viewRect.Size;
+            device_context_ = new Graphics2D(this, size_, false);
             waiting_for_flush_completion_ = false;
 
             is_context_bound_ = BindGraphics(device_context_);
@@ -403,18 +403,16 @@ namespace MouseLock
                 return;
             }
 
-            PPBGraphics2D.ReplaceContents(device_context_, image);
+            device_context_.ReplaceContents(image);
             waiting_for_flush_completion_ = true;
 
-            var callDidFlush = new PPCompletionCallback();
-            callDidFlush.func = DidFlush;
-            PPBGraphics2D.Flush(device_context_, callDidFlush);
+            device_context_.Flush(new CompletionCallback(DidFlush));
         }
 
-        void DidFlush(IntPtr userData, int result)
+        void DidFlush(PPError result)
         {
             if (result != 0)
-                Log("Flushed failed with error number %d.\n", (PPError)result);
+                Log("Flushed failed with error number %d.\n", result);
             waiting_for_flush_completion_ = false;
         }
 
