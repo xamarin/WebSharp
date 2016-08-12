@@ -172,13 +172,13 @@ namespace VideoEncode
             // Avoid scheduling more than once at a time.
             if (is_encode_ticking_)
                 return;
-            var now = PPBCore.GetTime();
+            var now = Core.Time;
             double tick = 1.0 / 30;
             // If the callback was triggered late, we need to account for that
             // delay for the next tick.
             
             var delta = tick - Clamp(0, tick, now - last_encode_tick_ - tick);
-            PPBCore.CallOnMainThread((int)(delta * 1000), new CompletionCallback(GetEncoderFrameTick), 0);
+            Core.CallOnMainThread(new CompletionCallback(GetEncoderFrameTick), (int)(delta * 1000));
 
             last_encode_tick_ = now;
             is_encode_ticking_ = true;
@@ -298,7 +298,7 @@ namespace VideoEncode
         void StartEncoder()
         {
             if (video_encoder_.ppresource != 0)
-                PPBCore.ReleaseResource(video_encoder_);
+                video_encoder_.Dispose();
 
             video_encoder_ = PPBVideoEncoder.Create(this);
             frames_timestamps_.Clear();

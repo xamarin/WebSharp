@@ -115,3 +115,14 @@ ImageData
 [x] data()
 [x] GetAddr32(const Point& coord);
 
+Core
+---
+
+[x] void AddRefResource(PP_Resource resource) 
+[x] void ReleaseResource(PP_Resource resource)
+[x] PP_Time GetTime()
+[x] PP_TimeTicks GetTimeTicks();
+[x] void CallOnMainThread(int32_t delay_in_milliseconds,
+                        const CompletionCallback& callback,
+                        int32_t result = 0);
+[x] bool IsMainThread();

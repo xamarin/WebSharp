@@ -218,7 +218,6 @@ namespace VarArrayBufferInstance
             var imageData = paintQueue.Peek();
             paintQueue.Dequeue();
             PaintAndFlush(imageData);
-            PPBCore.ReleaseResource(imageData);
         }
     }
 }
