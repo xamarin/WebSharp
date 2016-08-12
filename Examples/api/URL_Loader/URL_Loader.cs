@@ -20,7 +20,7 @@ namespace URL_Loader
         public override void HandleMessage(PPVar messageToHandle)
         {
             var varMsg = new Var(messageToHandle);
-            PPBConsole.Log(this, PPLogLevel.Log, messageToHandle);
+            LogToConsole(PPLogLevel.Log, messageToHandle);
             if (!varMsg.IsString)
             {
                 return;
@@ -44,7 +44,7 @@ namespace URL_Loader
                     }
                     catch (Exception exc)
                     {
-                        PPBConsole.LogWithSource(this, PPLogLevel.Error, new Var(exc.Source), new Var(exc.Message));
+                        LogToConsoleWithSource(PPLogLevel.Error, exc.Source, exc.Message);
                     }
                 }
             }

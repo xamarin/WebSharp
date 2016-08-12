@@ -13,7 +13,7 @@ namespace MouseCursor
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from MouseCursor using C#"));
+            LogToConsole(PPLogLevel.Log, "Hello from MouseCursor using C#");
             MakeCustomCursor();
 
             return true;

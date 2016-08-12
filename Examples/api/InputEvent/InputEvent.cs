@@ -17,7 +17,7 @@ namespace InputEvent
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
-            PPBConsole.Log(this, PPLogLevel.Log, new Var("Hello from InputEvent using C#").AsPPVar());
+            LogToConsole(PPLogLevel.Log, "Hello from InputEvent using C#");
  
             return true;
         }
