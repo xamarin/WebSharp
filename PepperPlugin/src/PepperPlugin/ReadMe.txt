@@ -57,8 +57,8 @@ Instance
 [x] HandleDocumentLoad(const URLLoader &url_loader)	
 [x] HandleInputEvent(const pp::InputEvent &event)	
 [x] HandleMessage(const Var &message)	
-[] Init(uint32_t argc, const char *argn[], const char *argv[])
-[] Instance(PP_Instance instance)
+[x] Init(uint32_t argc, const char *argn[], const char *argv[])
+[x] Instance(PP_Instance instance)
 [x] IsFullFrame()		
 [x] LogToConsole(PP_LogLevel level, const Var &value)
 [x] LogToConsoleWithSource(PP_LogLevel level, const Var &source, const Var &value)
@@ -70,7 +70,7 @@ Instance
 [x] RequestFilteringInputEvents(uint32_t event_classes)
 [x] RequestInputEvents(uint32_t event_classes)
 [] UnregisterMessageHandler()
-[] ~Instance()
+[x] ~Instance()
 
 View
 ---
@@ -99,4 +99,19 @@ Graphics2D
 [x] SetScale(float scale) 
 [x] size() 
 
+ImageData
+---
+
+[] ImageData();
+[] ImageData(PassRef, PP_Resource resource);
+[] ImageData(const ImageData& other);
+[x] ImageData(const InstanceHandle& instance, PP_ImageDataFormat format, const Size& size, bool init_to_zero);
+[x] ImageData& operator=(const ImageData& other);
+[x] static bool IsImageDataFormatSupported(PP_ImageDataFormat format);
+[x] static PP_ImageDataFormat GetNativeImageDataFormat();
+[x] PP_ImageDataFormat format() const { return desc_.format; }
+[x] pp::Size size() const { return desc_.size; }
+[x] int32_t stride() const { return desc_.stride; }
+[x] data()
+[x] GetAddr32(const Point& coord);
 

@@ -31,7 +31,7 @@ namespace MouseCursor
             if (cursor == PPMouseCursorType.Custom)
             {
                 var hotSpot = new PPPoint(16,16);
-                PPBMouseCursor.SetCursor(this, cursor, custom_cursor_, hotSpot);
+                PPBMouseCursor.SetCursor(this, cursor, customCursor, hotSpot);
             }
             else
             {
@@ -41,12 +41,12 @@ namespace MouseCursor
 
         }
 
-        PPResource custom_cursor_;
+        ImageData customCursor;
         void MakeCustomCursor()
         {
             var size = new PPSize(32,32);
 
-            custom_cursor_ = PPBImageData.Create(this, PPImageDataFormat.BgraPremul, size, PPBool.True);
+            customCursor = new ImageData(this, PPImageDataFormat.BgraPremul, size, true);
 
             DrawCircle(16, 16, 9, 14, 0.8f, 0.8f, 0);
             DrawCircle(11, 12, 2, 3, 0, 0, 0);
@@ -57,19 +57,14 @@ namespace MouseCursor
         void DrawCircle(int cx, int cy, float alpha_radius, float radius,
                 float r, float g, float b)
         {
-            var desc = new PPImageDataDesc();
             int[] data = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(custom_cursor_, out desc) == PPBool.False)
-                return;
-
-            dataPtr = PPBImageData.Map(custom_cursor_);
+            IntPtr dataPtr = customCursor.Data;
             if (dataPtr == IntPtr.Zero)
                 return;
 
-            var size = desc.size;
+            var size = customCursor.Size;
 
-            data = new int[size.width * desc.size.height];
+            data = new int[size.width * customCursor.Size.Height];
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 
@@ -107,19 +102,16 @@ namespace MouseCursor
         void DrawHorizontalLine(int x1, int x2, int y,
                         float r, float g, float b, float a)
         {
-            var desc = new PPImageDataDesc();
-            int[] data = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(custom_cursor_, out desc) == PPBool.False)
-                return;
 
-            dataPtr = PPBImageData.Map(custom_cursor_);
+            int[] data = null;
+            IntPtr dataPtr = customCursor.Data;
             if (dataPtr == IntPtr.Zero)
                 return;
 
-            var size = desc.size;
+            var size = customCursor.Size;
 
-            data = new int[size.width * desc.size.height];
+            data = new int[size.width * customCursor.Size.Height];
+            data = new int[size.width * customCursor.Size.Height];
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 

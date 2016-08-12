@@ -131,8 +131,8 @@ namespace Graphics_2D
         uint MakeColor(byte r, byte g, byte b)
         {
             byte a = 255;
-            var format = PPBImageData.GetNativeImageDataFormat();
-
+            var format = ImageData.NativeImageDataFormat;
+            
             if (format == PPImageDataFormat.BgraPremul)
             {
                 return (uint)((a << 24) | (r << 16) | (g << 8) | b);
@@ -240,24 +240,17 @@ namespace Graphics_2D
         void Paint()
         {
             // See the comment above the call to ReplaceContents below.
-            var format = PPBImageData.GetNativeImageDataFormat();
+            var format = ImageData.NativeImageDataFormat;
             bool kDontInitToZero = false;
-            var dontInitToZero = kDontInitToZero ? PPBool.True : PPBool.False;
-            var image_data = PPBImageData.Create(this, format, size, dontInitToZero);
-            var desc = new PPImageDataDesc();
+            var dontInitToZero = kDontInitToZero;
+            var imageData = new ImageData(this, format, size, dontInitToZero);
 
             int[] data = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(image_data, out desc) == PPBool.True)
-            {
-                dataPtr = PPBImageData.Map(image_data);
-                if (dataPtr == IntPtr.Zero)
-                    return;
-                data = new int[(desc.size.width * desc.size.height)];
+            IntPtr dataPtr = imageData.Data;
+            if (dataPtr == IntPtr.Zero)
+                return;
 
-                Marshal.Copy(dataPtr, data, 0, data.Length);
-
-            }
+            data = new int[(imageData.Size.Width * imageData.Size.Height)];
 
 
             var num_pixels = (size.Width * size.Height);
@@ -288,11 +281,8 @@ namespace Graphics_2D
             //   "front buffer" (which the module is painting into) are just being
             //   swapped back and forth.
             //
-            context.ReplaceContents(image_data);
+            context.ReplaceContents(imageData);
 
-            // Clean up after ourselves
-            PPBImageData.Unmap(image_data);
-            PPBCore.ReleaseResource(image_data);
         }
 
         void MainLoop(int dt)

@@ -162,20 +162,12 @@ namespace MouseLock
             PPBMouseLock.UnlockMouse(this);
         }
 
-        PPResource PaintImage(PPSize size)
+        ImageData PaintImage(PPSize size)
         {
             
-            var image = PPBImageData.Create(this, PPImageDataFormat.BgraPremul, size, PPBool.False);
+            var image = new ImageData(this, PPImageDataFormat.BgraPremul, size, false);
 
-            if (image.ppresource == 0) // || image.data() == NULL)
-            {
-                Log("Skipping image.\n");
-                return image;
-            }
-
-            var desc = new PPImageDataDesc();
-
-            if (PPBImageData.Describe(image, out desc) == PPBool.False)
+            if (image.IsEmpty) // || image.data() == NULL)
             {
                 Log("Skipping image.\n");
                 return image;
@@ -188,9 +180,9 @@ namespace MouseLock
             return image;
         }
 
-        void ClearToBackground(PPResource image)
+        void ClearToBackground(ImageData image)
         {
-            if (image.ppresource == 0)
+            if (image.IsEmpty)
             {
                 Log("ClearToBackground with NULL image.");
                 return;
@@ -201,24 +193,19 @@ namespace MouseLock
                 return;
             }
 
-            var desc = new PPImageDataDesc();
-
-            if (PPBImageData.Describe(image, out desc) == PPBool.False)
-            {
+            if (image.IsEmpty)
                 return;
-            }
 
             int[] data = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            dataPtr = PPBImageData.Map(image);
+            IntPtr dataPtr = image.Data;
             if (dataPtr == IntPtr.Zero)
                 return;
-            data = new int[(desc.size.width * desc.size.height)];
+            data = new int[(image.Size.Width * image.Size.Height)];
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 
-            int image_height = desc.size.height; ;
-            int image_width = desc.size.width; ;
+            int image_height = image.Size.Height; ;
+            int image_width = image.Size.Width; ;
 
             for (int y = 0; y < image_height; ++y)
             {
@@ -229,42 +216,34 @@ namespace MouseLock
 
         }
 
-        void DrawCenterSpot(PPResource image,
+        void DrawCenterSpot(ImageData image,
                                        uint spot_color)
         {
-            if (image.ppresource == 0)
+            if (image.IsEmpty)
             {
                 Log("DrawCenterSpot with NULL image");
                 return;
             }
 
-            var desc = new PPImageDataDesc();
-
-            if (PPBImageData.Describe(image, out desc) == PPBool.False)
-            {
-                return;
-            }
-
             int[] data = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            dataPtr = PPBImageData.Map(image);
+            IntPtr dataPtr = image.Data;
             if (dataPtr == IntPtr.Zero)
                 return;
-            data = new int[(desc.size.width * desc.size.height)];
+            data = new int[(image.Size.Width * image.Size.Height)];
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 
             // Draw the center spot.  The ROI is bounded by the size of the spot, plus
             // one pixel.
-            int center_x = desc.size.width / 2;
-            int center_y = desc.size.height / 2;
+            int center_x = image.Size.Width / 2;
+            int center_y = image.Size.Height / 2;
             int region_of_interest_radius = kCentralSpotRadius + 1;
 
             var left_top = new PPPoint(Math.Max(0, center_x - region_of_interest_radius),
                 Math.Max(0, center_x - region_of_interest_radius));
 
-            var right_bottom = new PPPoint(Math.Min(desc.size.width, center_x + region_of_interest_radius),
-                Math.Min(desc.size.height, center_y + region_of_interest_radius));
+            var right_bottom = new PPPoint(Math.Min(image.Size.Width, center_x + region_of_interest_radius),
+                Math.Min(image.Size.Height, center_y + region_of_interest_radius));
 
             for (int y = left_top.Y; y < right_bottom.Y; ++y)
             {
@@ -272,7 +251,7 @@ namespace MouseLock
                 {
                     if (MouseLock.GetDistance(x, y, center_x, center_y) < kCentralSpotRadius)
                     {
-                        unchecked { data[y * desc.stride / 4 + x] = (int)spot_color; }
+                        unchecked { data[y * image.Stride / 4 + x] = (int)spot_color; }
                     }
                 }
             }
@@ -281,28 +260,20 @@ namespace MouseLock
             
         }
 
-        void DrawNeedle(PPResource image,
+        void DrawNeedle(ImageData image,
                                    uint needle_color)
         {
-            if (image.ppresource == 0)
+            if (image.IsEmpty)
             {
                 Log("DrawNeedle with NULL image");
                 return;
             }
 
-            var desc = new PPImageDataDesc();
-
-            if (PPBImageData.Describe(image, out desc) == PPBool.False)
-            {
-                return;
-            }
-
             int[] data = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            dataPtr = PPBImageData.Map(image);
+            IntPtr dataPtr = image.Data;
             if (dataPtr == IntPtr.Zero)
                 return;
-            data = new int[(desc.size.width * desc.size.height)];
+            data = new int[(image.Size.Width * image.Size.Height)];
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 
@@ -314,8 +285,8 @@ namespace MouseLock
 
             int abs_mouse_x = Math.Abs(mouse_movement_.X);
             int abs_mouse_y = Math.Abs(mouse_movement_.Y);
-            int center_x = desc.size.width / 2;
-            int center_y = desc.size.height / 2;
+            int center_x = image.Size.Width / 2;
+            int center_y = image.Size.Height / 2;
 
             var vertex = new PPPoint(mouse_movement_.X + center_x,
                                     mouse_movement_.Y + center_y);
@@ -350,8 +321,8 @@ namespace MouseLock
             var left_top = new PPPoint(Math.Max(0, center_x - abs_mouse_x),
                                         Math.Max(0, center_y - abs_mouse_y));
 
-            var right_bottom = new PPPoint(Math.Min(desc.size.width, center_x + abs_mouse_x),
-                                    Math.Min(desc.size.height, center_y + abs_mouse_y));
+            var right_bottom = new PPPoint(Math.Min(image.Size.Width, center_x + abs_mouse_x),
+                                    Math.Min(image.Size.Height, center_y + abs_mouse_y));
 
             for (int y = left_top.Y; y < right_bottom.Y; ++y)
             {
@@ -368,7 +339,7 @@ namespace MouseLock
 
                     if (within_bound_1 && within_bound_2 && within_bound_3)
                     {
-                        unchecked { data[y * desc.stride / 4 + x] = (int)needle_color; }
+                        unchecked { data[y * image.Stride / 4 + x] = (int)needle_color; }
                     }
                 }
             }
@@ -397,7 +368,7 @@ namespace MouseLock
             }
 
             var image = PaintImage(size_);
-            if (image.ppresource == 0)
+            if (image.IsEmpty)
             {
                 Log("Could not create image data\n");
                 return;

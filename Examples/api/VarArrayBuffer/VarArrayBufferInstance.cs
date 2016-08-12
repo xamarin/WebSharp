@@ -16,7 +16,7 @@ namespace VarArrayBufferInstance
 
         /// A queue of images to paint. We must maintain a queue because we can not
         /// call pp::Graphics2D::Flush while a Flush is already pending.
-        Queue<PPResource> paintQueue = new Queue<PPResource>();
+        Queue<ImageData> paintQueue = new Queue<ImageData>();
 
         /// The size of our rectangle in the DOM, as of the last time DidChangeView
         /// was called.
@@ -108,13 +108,12 @@ namespace VarArrayBufferInstance
         void DrawHistogram()
         {
             var imageData = MakeBlankImageData(size);
-            var desc = new PPImageDataDesc();
 
-            if (PPBImageData.Describe(imageData, out desc) == PPBool.False)
+            if (imageData.Data == IntPtr.Zero)
             {
                 return;
             }
-            for (uint i = 0; i < Math.Min(HISTOGRAM_SIZE, desc.size.Width); i++)
+            for (uint i = 0; i < Math.Min(HISTOGRAM_SIZE, imageData.Size.Width); i++)
             {
                 DrawBar(i, histogram[i], imageData);
             }
@@ -128,27 +127,21 @@ namespace VarArrayBufferInstance
         /// Draw a bar of the appropriate height based on <code>value</code> at
         /// <code>column</code> in <code>image_data</code>. <code>value</code> must be
         /// in the range [0, 1].
-        void DrawBar(uint column, double value, PPResource imageData)
+        void DrawBar(uint column, double value, ImageData imageData)
         {
             Debug.Assert((value >= 0.0) && (value <= 1.0));
-            var desc = new PPImageDataDesc();
+            //var desc = new PPImageDataDesc();
 
             int[] imageBuffer = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(imageData, out desc) == PPBool.True)
-            {
-                dataPtr = PPBImageData.Map(imageData);
-                if (dataPtr == IntPtr.Zero)
-                    return;
+            IntPtr dataPtr = imageData.Data;
+            if (dataPtr == IntPtr.Zero)
+                return;
 
-                imageBuffer = new int[(desc.size.width * desc.size.height)];
+            imageBuffer = new int[(imageData.Size.Width * imageData.Size.Height)];
+            Marshal.Copy(dataPtr, imageBuffer, 0, imageBuffer.Length);
 
-                Marshal.Copy(dataPtr, imageBuffer, 0, imageBuffer.Length);
-
-            }
-
-            var imageHeight = desc.size.Height;
-            var imageWidth = desc.size.Width;
+            var imageHeight = imageData.Size.Height;
+            var imageWidth = imageData.Size.Width;
 
             Debug.Assert(column < imageWidth);
 
@@ -163,7 +156,6 @@ namespace VarArrayBufferInstance
             }
 
             Marshal.Copy(imageBuffer, 0, dataPtr, imageBuffer.Length);
-            PPBImageData.Unmap(imageData);
         }
 
         uint MakeColor(uint colorARGB)
@@ -173,7 +165,7 @@ namespace VarArrayBufferInstance
             byte g = (byte)((colorARGB >> 8 & 255));
             byte b = (byte)(colorARGB >> 0 & 255);
 
-            var format = PPBImageData.GetNativeImageDataFormat();
+            var format = ImageData.NativeImageDataFormat;
 
             if (format == PPImageDataFormat.BgraPremul)
             {
@@ -188,39 +180,24 @@ namespace VarArrayBufferInstance
 
         /// Create and return a blank (all-black) <code>pp::ImageData</code> of the
         /// given <code>size</code>.
-        PPResource MakeBlankImageData(PPSize size) {
+        ImageData MakeBlankImageData(PPSize size) {
 
-            bool initToZero = false;
-            var isInitToZero = new PPBool();
-            isInitToZero = initToZero ? PPBool.True : PPBool.False;
-            var image_data = PPBImageData.Create(this, PPImageDataFormat.BgraPremul, size, isInitToZero);
+            bool isInitToZero = false;
+            var image_data = new ImageData(this, PPImageDataFormat.BgraPremul, size, isInitToZero);
             
-            var desc = new PPImageDataDesc();
+            IntPtr dataPtr = image_data.Data;
 
-            int[] imageBuffer = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(image_data, out desc) == PPBool.True)
-            {
-                dataPtr = PPBImageData.Map(image_data);
-                if (dataPtr == IntPtr.Zero)
-                    return new PPResource();
-
-                imageBuffer = new int[(desc.size.width * desc.size.height)];
-
-                Marshal.Copy(dataPtr, imageBuffer, 0, imageBuffer.Length);
-
-            }
+            var imageBuffer = new int[(image_data.Size.Width * image_data.Size.Height)];
 
             var black = (int)MakeColor(BLACK);
             for (int i = 0; i < size.Area; ++i)
                 imageBuffer[i] = black;
 
             Marshal.Copy(imageBuffer, 0, dataPtr, imageBuffer.Length);
-            PPBImageData.Unmap(image_data);
             return image_data;
         }
 
-        void PaintAndFlush(PPResource image_data)
+        void PaintAndFlush(ImageData image_data)
         {
             Debug.Assert(!isFlushing);
             graphics2DContext.ReplaceContents(image_data);

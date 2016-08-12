@@ -111,6 +111,7 @@
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ArrayOutput.cs" />
     <Compile Include="src\Graphics2D.cs" />
+    <Compile Include="src\ImageData.cs" />
     <Compile Include="src\ppb_file_ref_extension.cs" />
     <Compile Include="src\ppb_gamepad_extension.cs" />
     <Compile Include="src\ppb_host_resolver_extension.cs" />

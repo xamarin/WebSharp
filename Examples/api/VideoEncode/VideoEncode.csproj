@@ -47,19 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="background.js" />
-    <Content Include="common.js" />
-    <Content Include="example.js" />
-    <Content Include="icon128.png" />
-    <Content Include="index.html" />
-    <Content Include="main.js" />
-    <Content Include="renderer.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="package.json" />
-    <None Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\PepperSharp\PepperSharp.csproj">
       <Project>{8bad5f6c-1700-4d33-aa82-708184d560eb}</Project>
       <Name>PepperSharp</Name>

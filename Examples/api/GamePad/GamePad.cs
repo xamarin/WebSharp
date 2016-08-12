@@ -9,7 +9,7 @@ namespace GamePad
     {
 
         Graphics2D graphics_2d_context_;
-        PPResource pixel_buffer_;
+        ImageData pixel_buffer_;
 
         // Indicate whether a flush is pending.  This can only be called from the
         // main thread; it is not thread safe.
@@ -36,19 +36,19 @@ namespace GamePad
 
             // Delete the old pixel buffer and create a new one.
             if (!pixel_buffer_.IsEmpty)
-                PPBCore.ReleaseResource(pixel_buffer_);
+                pixel_buffer_.Dispose();
 
-            pixel_buffer_.ppresource = 0;
+            //pixel_buffer_.ppresource = 0;
             if (IsContextValid)
             {
-                pixel_buffer_ = PPBImageData.Create(this, PPImageDataFormat.BgraPremul,
-                    Size, PPBool.False);
+                pixel_buffer_ = new ImageData(this, PPImageDataFormat.BgraPremul,
+                    Size, false);
             }
 
             Paint();
         }
 
-        void FillRect(PPResource image,
+        void FillRect(ImageData image,
               int left,
               int top,
               int width,
@@ -56,27 +56,22 @@ namespace GamePad
               uint color)
         {
 
-            var desc = new PPImageDataDesc();
             int[] data = null;
-            IntPtr dataPtr = IntPtr.Zero;
-            if (PPBImageData.Describe(image, out desc) == PPBool.True)
-            {
-                dataPtr = PPBImageData.Map(image);
-                if (dataPtr == IntPtr.Zero)
-                    return;
-                data = new int[(desc.size.width * desc.size.height)];
+            IntPtr dataPtr = image.Data;
+            if (dataPtr == IntPtr.Zero)
+                return;
 
-                Marshal.Copy(dataPtr, data, 0, data.Length);
+            data = new int[(image.Size.Width * image.Size.Height)];
 
-            }
+            Marshal.Copy(dataPtr, data, 0, data.Length);
 
-            var stride = desc.size.width;
+            var stride = image.Size.width;
             for (int y = Math.Max(0, top);
-                 y < Math.Min(desc.size.Height - 1, top + height);
+                 y < Math.Min(image.Size.Height - 1, top + height);
                  y++)
             {
                 for (int x = Math.Max(0, left);
-                     x < Math.Min(desc.size.Width - 1, left + width);
+                     x < Math.Min(image.Size.Width - 1, left + width);
                      x++)
                 {
                     unchecked { data[y * stride + x] = (int)color; }
@@ -85,8 +80,6 @@ namespace GamePad
 
             Marshal.Copy(data, 0, dataPtr, data.Length);
 
-            // Clean up after ourselves
-            PPBImageData.Unmap(image);
         }
 
         PPGamepadsSampleData gamepad_data = new PPGamepadsSampleData();
