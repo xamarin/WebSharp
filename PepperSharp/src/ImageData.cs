@@ -54,8 +54,8 @@ namespace PepperSharp
             PPSize size,
             bool init_to_zero)
         {
-            ppResource = PPBImageData.Create(instance, format, size, init_to_zero ? PPBool.True : PPBool.False);
-            if (PPBImageData.IsImageData(ppResource) == PPBool.True)
+            handle = PPBImageData.Create(instance, format, size, init_to_zero ? PPBool.True : PPBool.False);
+            if (PPBImageData.IsImageData(handle) == PPBool.True)
             {
                 InitData();
             }

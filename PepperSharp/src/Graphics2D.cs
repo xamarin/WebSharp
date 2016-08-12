@@ -33,8 +33,8 @@ namespace PepperSharp
         /// </param>
         public Graphics2D(Instance instance, PPSize size, bool isAlwaysOpaque)
         {
-            ppResource = PPBGraphics2D.Create(instance, size, (isAlwaysOpaque) ? PPBool.True : PPBool.False);
-            if (!ppResource.IsEmpty)
+            handle = PPBGraphics2D.Create(instance, size, (isAlwaysOpaque) ? PPBool.True : PPBool.False);
+            if (!handle.IsEmpty)
             {
                 Size = size;
             }

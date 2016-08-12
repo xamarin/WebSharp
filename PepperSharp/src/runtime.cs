@@ -7,6 +7,8 @@
 // Copyright 2016 Xamarin Inc
 //
 using System;
+using System.Collections.Concurrent;
+
 using System.Runtime.InteropServices;
 
 namespace PepperSharp
@@ -21,11 +23,43 @@ namespace PepperSharp
     {
         internal IntPtr handle;
         public IntPtr Handle => handle;
+        static readonly int releaseLoopTime = (int)((1.0f / 30.0f) * 10000);
+
+        // internal ConcurrentQueue that holds PPResource's that need to be released on the Main Thread
+        internal static ConcurrentQueue<PPResource> resourceReleaseQueue = new ConcurrentQueue<PPResource>();
 
         public NativeInstance(IntPtr handle)
         {
             this.handle = handle;
             Console.WriteLine($"PPInstance constructed {handle}");
+
+            // Start our release pump
+            StartReleasePump();
+        }
+
+        /// <summary>
+        /// The method is called to start a call back process on the Browsers main thread
+        /// </summary>
+        void StartReleasePump()
+        {
+            PPBCore.CallOnMainThread(releaseLoopTime, new CompletionCallback(ReleasePump), releaseLoopTime);
+        }
+
+        /// <summary>
+        /// Method that will release all the PPResource's that have been placed on the queue to be released.
+        /// </summary>
+        /// <param name="result"></param>
+        void ReleasePump(PPError result)
+        {
+            if (!resourceReleaseQueue.IsEmpty)
+            {
+                PPResource resourceToBeReleased;
+                while (resourceReleaseQueue.TryDequeue(out resourceToBeReleased))
+                {
+                    PPBCore.ReleaseResource(resourceToBeReleased);
+                }
+            }
+            PPBCore.CallOnMainThread(releaseLoopTime, new CompletionCallback(ReleasePump), releaseLoopTime);
         }
 
         protected NativeInstance() { }
@@ -51,13 +85,15 @@ namespace PepperSharp
     [StructLayout(LayoutKind.Sequential)]
     public class Resource : IDisposable
     {
-        protected PPResource ppResource = PPResource.Empty;
+
+        internal PPResource handle = PPResource.Empty;
+        public PPResource Handle => handle;
 
         protected Resource() { }
 
         protected Resource(int resourceId)
         {
-            ppResource.ppresource = resourceId;
+            handle.ppresource = resourceId;
         }
 
         public Resource(PPResource resource) : this(resource.ppresource)
@@ -71,7 +107,7 @@ namespace PepperSharp
 
         public override string ToString()
         {
-            return ppResource.ToString();
+            return handle.ToString();
         }
 
         #region Equality
@@ -82,12 +118,12 @@ namespace PepperSharp
                 return false;
 
             Resource comp = (Resource)obj;
-            return (comp.ppResource == this.ppResource);
+            return (comp.handle == this.handle);
         }
 
         public override int GetHashCode()
         {
-            return ppResource.ppresource;
+            return handle.ppresource;
         }
 
         public static bool operator ==(Resource resource1, Resource resource2)
@@ -104,7 +140,7 @@ namespace PepperSharp
                 return false;
             }
 
-            return resource1.ppResource == resource2.ppResource;
+            return resource1.handle == resource2.handle;
         }
 
         public static bool operator !=(Resource resource1, Resource resource2)
@@ -132,7 +168,7 @@ namespace PepperSharp
         /// <returns>The detached <code>PPResource</code>.</returns>
         public Resource Detach()
         {
-            var ret = new Resource(ppResource);
+            var ret = new Resource(handle);
             Dispose();
             return ret;
         }
@@ -152,16 +188,17 @@ namespace PepperSharp
                 if (disposing)
                 {
                     // de-reference the managed resource.
-                    PPBCore.ReleaseResource(this);
+                    NativeInstance.resourceReleaseQueue.Enqueue(Handle);
                 }
-                ppResource.ppresource = 0; // set ourselves to empty
+                handle.ppresource = 0; // set ourselves to empty
             }
         }
+
         ~Resource ()
         {
-            // TODO: Look at releasing in some type of disposal pumping in
-            // case we are in threads.
-            Dispose(false);
+            // This will call the Dispose method with true so that the resource can be
+            // added to a queue to be released on the main thread.
+            Dispose(true);
         }
 
         #endregion
@@ -169,21 +206,12 @@ namespace PepperSharp
 
         public bool IsEmpty
         {
-            get { return ppResource.IsEmpty;  }
+            get { return handle.IsEmpty;  }
         }
-
-        //        Resource& Resource::operator=(const Resource& other) {
-        //  if (!other.is_null())
-        //    Module::Get()->core()->AddRefResource(other.pp_resource_);
-        //  if (!is_null())
-        //    Module::Get()->core()->ReleaseResource(pp_resource_);
-        //        pp_resource_ = other.pp_resource_;
-        //  return *this;
-        //}
 
         public static implicit operator PPResource(Resource resource)
         {
-            return resource.ppResource;
+            return resource.Handle;
         }
 
     }
@@ -192,6 +220,5 @@ namespace PepperSharp
     {
         PassRef = 0
     }
- 
 
 }

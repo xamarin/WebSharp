@@ -59,6 +59,8 @@ namespace PepperSharp
 
         #endregion
 
+        #region TODO: We can take out this code when we have the high level API finished.
+
         /// <summary>
         /// Sets this resource to null. This releases ownership of the resource.
         /// Same as calling Dispose()
@@ -104,5 +106,6 @@ namespace PepperSharp
 
         #endregion
 
+        #endregion
     }
 }
