@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 using PepperSharp;
 
-namespace MouseLock
+namespace MouseLockInstance
 {
-    public class MouseLock : Instance
+    public class MouseLockInstance : MouseLock
     {
 
         PPSize size_ = PPSize.Zero;
@@ -30,12 +30,17 @@ namespace MouseLock
             Down = 3
         }
 
-        Graphics2D device_context_;
+        Graphics2D deviceContext;
 
 
-        public MouseLock(IntPtr handle) : base(handle) { }
+        public MouseLockInstance(IntPtr handle) : base(handle)
+        {
+            // Setup our listeners for mouselock
+            MouseLocked += OnMouseLocked;
+            MouseUnLocked += OnMouseUnLocked;
+        }
 
-        ~MouseLock() { System.Console.WriteLine("MouseLock destructed"); }
+        ~MouseLockInstance() { System.Console.WriteLine("MouseLock destructed"); }
 
         public override bool Init(int argc, string[] argn, string[] argv)
         {
@@ -68,10 +73,10 @@ namespace MouseLock
                     $"CTX Bound={is_context_bound_}");
 
             size_ = viewRect.Size;
-            device_context_ = new Graphics2D(this, size_, false);
+            deviceContext = new Graphics2D(this, size_, false);
             waiting_for_flush_completion_ = false;
 
-            is_context_bound_ = BindGraphics(device_context_);
+            is_context_bound_ = BindGraphics(deviceContext);
             if (!is_context_bound_)
             {
                 Log("Could not bind to 2D context\n.");
@@ -102,10 +107,8 @@ namespace MouseLock
             //Console.WriteLine($"Graphics_2D DidChangeFocus: {hasFocus}");
         }
 
-
-        public override void MouseLockLost()
+        private void OnMouseUnLocked(object sender, EventArgs e)
         {
-
             if (mouse_locked_)
             {
                 Log("Mouselock unlocked.\n");
@@ -114,52 +117,16 @@ namespace MouseLock
             }
         }
 
-        /// LockMouse() requests the mouse to be locked.
-        ///
-        /// While the mouse is locked, the cursor is implicitly hidden from the user.
-        /// Any movement of the mouse will generate a
-        /// <code>PPInputEventType.MOUSEMOVE</code> event. The
-        /// <code>GetPosition()</code> function in <code>InputEvent()</code>
-        /// reports the last known mouse position just as mouse lock was
-        /// entered. The <code>GetMovement()</code> function provides relative
-        /// movement information indicating what the change in position of the mouse
-        /// would be had it not been locked.
-        ///
-        /// The browser may revoke the mouse lock for reasons including (but not
-        /// limited to) the user pressing the ESC key, the user activating another
-        /// program using a reserved keystroke (e.g. ALT+TAB), or some other system
-        /// event.
-        ///
-        /// @param[in] cc A <code>CompletionCallback</code> to be called upon
-        /// completion.
-        ///
-        /// @return An int32_t containing an error code from <code>PPErrors.h</code>.
-        int LockMouse(PPCompletionCallback cc)
+        private void OnMouseLocked(object sender, PPError result)
         {
-            Log("LockMouse");
-            return PPBMouseLock.LockMouse(this, cc);
-        }
-
-        void DidLockMouse(IntPtr userData, int result)
-        {
-
-            mouse_locked_ = (PPError)result == PPError.Ok;
-            if ((PPError)result != PPError.Ok)
+            mouse_locked_ = result == PPError.Ok;
+            if (result != PPError.Ok)
             {
-                Log($"Mouselock failed with failed with error number {(PPError)result}.\n");
+                Log($"Mouselock failed with failed with error number {result}.\n");
             }
             mouse_movement_ = PPPoint.Zero;
             Paint();
 
-        }
-
-        /// UnlockMouse causes the mouse to be unlocked, allowing it to track user
-        /// movement again. This is an asynchronous operation. The module instance
-        /// will be notified using the <code>PPP_MouseLock</code> interface when it
-        /// has lost the mouse lock.
-        void UnlockMouse()
-        {
-            PPBMouseLock.UnlockMouse(this);
         }
 
         ImageData PaintImage(PPSize size)
@@ -249,7 +216,7 @@ namespace MouseLock
             {
                 for (int x = left_top.X; x < right_bottom.X; ++x)
                 {
-                    if (MouseLock.GetDistance(x, y, center_x, center_y) < kCentralSpotRadius)
+                    if (MouseLockInstance.GetDistance(x, y, center_x, center_y) < kCentralSpotRadius)
                     {
                         unchecked { data[y * image.Stride / 4 + x] = (int)spot_color; }
                     }
@@ -374,10 +341,10 @@ namespace MouseLock
                 return;
             }
 
-            device_context_.ReplaceContents(image);
+            deviceContext.ReplaceContents(image);
             waiting_for_flush_completion_ = true;
 
-            device_context_.Flush(new CompletionCallback(DidFlush));
+            deviceContext.Flush(new CompletionCallback(DidFlush));
         }
 
         void DidFlush(PPError result)
@@ -407,9 +374,7 @@ namespace MouseLock
                     }
                     else
                     {
-                        PPCompletionCallback cc = new PPCompletionCallback();
-                        cc.func = DidLockMouse;
-                        LockMouse(cc);
+                        LockMouse();
 
                     }
                     return true;

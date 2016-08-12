@@ -111,10 +111,6 @@ namespace PepperSharp
             return PPBInstance.BindGraphics(this, graphics2d) == PPBool.True ? true : false;
         }
 
-        // Called by the browser when mouselock is lost.  This happens when the NaCl
-        // module exits fullscreen mode.
-        public virtual void MouseLockLost() { }
-
         /// <summary>
         /// asynchronously invokes any listeners for message events on the DOM element for the given instance.
         /// </summary>
