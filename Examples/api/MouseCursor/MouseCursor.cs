@@ -7,21 +7,22 @@ namespace MouseCursor
     public class MouseCursor : Instance
     {
 
-        public MouseCursor(IntPtr handle) : base(handle) { }
+        public MouseCursor(IntPtr handle) : base(handle)
+        {
+            ReceiveMessage += OnReceiveMessage;
+            Initialize += OnInitialize;
+        }
 
         ~MouseCursor() { System.Console.WriteLine("MouseCursor destructed"); }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
             LogToConsole(PPLogLevel.Log, "Hello from MouseCursor using C#");
             MakeCustomCursor();
-
-            return true;
         }
 
-        public override void HandleMessage(PPVar message)
+        private void OnReceiveMessage(object sender, Var varMessage)
         {
-            var varMessage = new Var(message);
             if (!varMessage.IsInt)
             {
                 Console.WriteLine("Unexpected message.");

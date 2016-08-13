@@ -11,31 +11,35 @@ namespace GamePad
         Graphics2D graphics_2d_context_;
         ImageData pixel_buffer_;
 
+        public GamePad(IntPtr handle) : base(handle)
+        {
+            ViewChanged += OnViewChanged;
+            Initialize += OnInitialize;
+        }
+
         // Indicate whether a flush is pending.  This can only be called from the
         // main thread; it is not thread safe.
         bool FlushPending { get; set; }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
             LogToConsoleWithSource(PPLogLevel.Log, "GamePad", "There be dragons.");
-            return true;
         }
 
-        public override void DidChangeView(PPResource vview)
+        private void OnViewChanged(object sender, View view)
         {
-            var view = new View(vview);
             var position = view.Rect;
 
             if (position.Size.Width == Width &&
                 position.Size.Height == Height)
                 return;  // Size didn't change, no need to update anything.
-
+           
             // Create a new device context with the new size.
             DestroyContext();
             CreateContext(position.size);
-
+            
             // Delete the old pixel buffer and create a new one.
-            if (!pixel_buffer_.IsEmpty)
+            if (pixel_buffer_ != null && !pixel_buffer_.IsEmpty)
                 pixel_buffer_.Dispose();
 
             //pixel_buffer_.ppresource = 0;

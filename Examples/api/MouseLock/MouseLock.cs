@@ -38,21 +38,22 @@ namespace MouseLockInstance
             // Setup our listeners for mouselock
             MouseLocked += OnMouseLocked;
             MouseUnLocked += OnMouseUnLocked;
+
+            ViewChanged += OnViewChanged;
+            Initialize += OnInitialize;
         }
 
         ~MouseLockInstance() { System.Console.WriteLine("MouseLock destructed"); }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
             LogToConsole(PPLogLevel.Log, "Hello from MouseLock using C#");
             RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Keyboard);
 
-            return true;
         }
 
-        public override void DidChangeView(PPResource vview)
+        private void OnViewChanged(object sender, View view)
         {
-            var view = new View(vview);
             var viewRect = view.Rect;
 
             // DidChangeView can get called for many reasons, so we only want to
@@ -100,11 +101,6 @@ namespace MouseLockInstance
 
             // Paint this context
             Paint();
-        }
-
-        public override void DidChangeFocus(bool hasFocus)
-        {
-            //Console.WriteLine($"Graphics_2D DidChangeFocus: {hasFocus}");
         }
 
         private void OnMouseUnLocked(object sender, EventArgs e)

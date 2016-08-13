@@ -19,25 +19,14 @@ namespace Graphics_2D
         Random random;
         const int mouseRadius = 15;
 
-        public Graphics_2D(IntPtr handle) : base(handle) { }
-
-        ~Graphics_2D() { System.Console.WriteLine("Graphics_2D destructed"); }
-
-        public override bool Init(int argc, string[] argn, string[] argv)
+        public Graphics_2D(IntPtr handle) : base(handle)
         {
-            LogToConsole(PPLogLevel.Log, "Hello from PepperSharp using C#");
-            RequestInputEvents(PPInputEventClass.Mouse);
-            int seed = 1;
-            random = new Random(seed);
-            CreatePalette();
-
-            return true;
+            ViewChanged += OnViewChanged;
+            Initialize += OnInitialize;
         }
 
-        public override void DidChangeView(PPResource vview)
+        private void OnViewChanged(object sender, View view)
         {
-
-            var view = new View(vview);
             var viewRect = view.Rect;
             deviceScale = view.DeviceScale;
             var newSize = new PPSize((int)(viewRect.size.width * deviceScale),
@@ -54,9 +43,15 @@ namespace Graphics_2D
                 MainLoop(0);
         }
 
-        public override void DidChangeFocus(bool hasFocus)
+        ~Graphics_2D() { System.Console.WriteLine("Graphics_2D destructed"); }
+
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
-            //Console.WriteLine($"Graphics_2D DidChangeFocus: {hasFocus}");
+            LogToConsole(PPLogLevel.Log, $"Hello from PepperSharp using C#");
+            RequestInputEvents(PPInputEventClass.Mouse);
+            int seed = 1;
+            random = new Random(seed);
+            CreatePalette();
         }
 
         public override bool HandleInputEvent(PPResource inputEvent)

@@ -11,9 +11,10 @@ namespace NetworkMonitor
         public NetworkMonitor(IntPtr handle) : base(handle)
         {
             networkMonitor = PPBNetworkMonitor.Create(this);
+            Initialize += OnInitialize;
         }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
             LogToConsoleWithSource(PPLogLevel.Log, "NetworkMonitor", "There be dragons.");
             // Start listing for network updates.
@@ -23,7 +24,6 @@ namespace NetworkMonitor
             {
                 PostMessage($"UpdateNetworkList failed: {result}");
             }
-            return base.Init(argc, argn, argv);
         }
 
         private void OnUpdateNetworkList(PPError result, PPResource networkList)

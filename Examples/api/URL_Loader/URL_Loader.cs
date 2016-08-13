@@ -9,7 +9,10 @@ namespace URL_Loader
         const string LOAD_URL_METHOD_ID = "getUrl";
         static char messageArgumentSeparator = ':';
 
-
+        public URL_Loader(IntPtr handle) : base(handle)
+        {
+            ReceiveMessage += OnReceiveMessage;
+        }
 
         // Called by the browser to handle the postMessage() call in Javascript.
         // The message in this case is expected to contain the string 'getUrl'
@@ -17,14 +20,15 @@ namespace URL_Loader
         // of the form 'getUrl:URL' is received, then start up an asynchronous
         // download of URL.  In the event that errors occur, this method posts an
         // error string back to the browser.
-        public override void HandleMessage(PPVar messageToHandle)
+        private void OnReceiveMessage(object sender, Var varMsg)
         {
-            var varMsg = new Var(messageToHandle);
-            LogToConsole(PPLogLevel.Log, messageToHandle);
+            
+            LogToConsole(PPLogLevel.Log, varMsg);
             if (!varMsg.IsString)
             {
                 return;
             }
+
             var message = varMsg.AsString();
 
             if (message.StartsWith(LOAD_URL_METHOD_ID))

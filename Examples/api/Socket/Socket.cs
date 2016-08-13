@@ -27,20 +27,23 @@ namespace Socket
 
         EchoServer echoServer;
 
-        public Socket(IntPtr handle) : base(handle) { }
-
-        public override bool Init(int argc, string[] argn, string[] argv)
+        public Socket(IntPtr handle) : base(handle)
         {
-            LogToConsoleWithSource(PPLogLevel.Log, "Socket", "There be dragons here.");
-            return base.Init(argc, argn, argv);
+            ReceiveMessage += OnReceiveMessage;
+            Initialize += OnInitialize;
         }
 
-        public override void HandleMessage(PPVar handleMessage)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
-            var var_message = (Var)handleMessage;
-            if (!var_message.IsString)
+            LogToConsoleWithSource(PPLogLevel.Log, "Socket", "There be dragons here.");
+        }
+
+        private void OnReceiveMessage(object sender, Var varMessage)
+        {
+            if (!varMessage.IsString)
                 return;
-            var message = var_message.AsString();
+
+            var message = varMessage.AsString();
             // This message must contain a command character followed by ';' and
             // arguments like "X;arguments".
             if (message.Length < 2 || message[1] != ';')

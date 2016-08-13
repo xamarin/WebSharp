@@ -35,9 +35,12 @@ namespace Audio
         {
             SampleFrameCount = SAMPLE_FRAME_COUNT;
             Frequency = DEFAULT_FREQUENCY;
+
+            ReceiveMessage += OnReceiveMessage;
+            Initialize += OnInitialize;
         }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
             // Ask the device for an appropriate sample count size.
             SampleFrameCount = PPBAudioConfig.RecommendSampleFrameCount(this, PPAudioSampleRate._44100, SAMPLE_FRAME_COUNT);
@@ -48,7 +51,6 @@ namespace Audio
                 PPBAudioConfig.CreateStereo16Bit(this, PPAudioSampleRate._44100, SampleFrameCount),
                 SineWaveCallback, thisHandle);
 
-            return true;
         }
 
         /// <summary>
@@ -63,10 +65,9 @@ namespace Audio
         ///     setFrequency:880
         /// If |var_message| is not a recognized method name, this method does nothing.
         /// </summary>
-        /// <param name="messageToHandle"></param>
-        public override void HandleMessage(PPVar messageToHandle)
+        /// <param name="varMessage"></param>
+        private void OnReceiveMessage(object sender, Var varMessage)
         {
-            var varMessage = new Var(messageToHandle);
             if (!varMessage.IsString)
             {
                 return;

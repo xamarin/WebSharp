@@ -8,35 +8,18 @@ namespace InputEvent
     {
         public InputEvent(IntPtr handle) : base(handle)
         {
+            ViewChanged += OnViewChanged;
+            FocusChanged += OnFocusChanged;
+            Initialize += OnInitialize;
+
             RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
                    PPInputEventClass.Touch);
             RequestFilteringInputEvents(PPInputEventClass.Keyboard);
         }
 
-        ~InputEvent() { System.Console.WriteLine("InputEvent destructed"); }
-
-        public override bool Init(int argc, string[] argn, string[] argv)
-        {
-            LogToConsole(PPLogLevel.Log, "Hello from InputEvent using C#");
- 
-            return true;
-        }
-
-        /// Clicking outside of the instance's bounding box
-        /// will create a DidChangeFocus event (the NaCl instance is
-        /// out of focus). Clicking back inside the instance's
-        /// bounding box will create another DidChangeFocus event
-        /// (the NaCl instance is back in focus). The default is
-        /// that the instance is out of focus.
-        public override void DidChangeFocus(bool hasFocus)
-        {
-            PostMessage($"DidChangeFocus: {hasFocus}");
-        }
-
         /// Scrolling the mouse wheel causes a DidChangeView event.
-        public override void DidChangeView(PPResource vview)
+        private void OnViewChanged(object sender, View view)
         {
-            var view = new View(vview);
             var viewRect = view.Rect;
             string message = $"DidChangeView: x:{viewRect.Origin.X}" +
                             $" y: {viewRect.Origin.Y}" +
@@ -48,6 +31,25 @@ namespace InputEvent
                             $" GetDeviceScale: {view.DeviceScale}" +
                             $" GetCSSScale: {view.CSSScale}";
             PostMessage(message);
+        }
+
+        ~InputEvent() { System.Console.WriteLine("InputEvent destructed"); }
+
+        private void OnInitialize(object sender, InitializeEventArgs args)
+        {
+            LogToConsole(PPLogLevel.Log, "Hello from InputEvent using C#");
+ 
+        }
+
+        /// Clicking outside of the instance's bounding box
+        /// will create a DidChangeFocus event (the NaCl instance is
+        /// out of focus). Clicking back inside the instance's
+        /// bounding box will create another DidChangeFocus event
+        /// (the NaCl instance is back in focus). The default is
+        /// that the instance is out of focus.
+        private void OnFocusChanged(object sender, bool hasFocus)
+        {
+            PostMessage($"DidChangeFocus: {hasFocus}");
         }
 
         public override bool HandleInputEvent(PPResource inputEvent)

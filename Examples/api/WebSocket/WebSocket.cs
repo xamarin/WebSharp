@@ -11,9 +11,13 @@ namespace WebSocket
         PPResource websocket_;
         PPVar receive_var_ = new PPVar();
 
-        public override void HandleMessage(PPVar msg)
+        public WebSocket(IntPtr handle) : base(handle)
         {
-            var var_message = (Var)msg;
+            ReceiveMessage += OnReceiveMessage;
+        }
+
+        private void OnReceiveMessage(object sender, Var var_message)
+        {
 
             if (!var_message.IsString)
                 return;

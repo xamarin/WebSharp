@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.ComponentModel;
 
 namespace PepperSharp
 {
@@ -8,33 +8,149 @@ namespace PepperSharp
         protected Instance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
         protected Instance(IntPtr handle) : base(handle) { }
 
-        public virtual bool Init(int argc, string[] argn, string[] argv)
+        /// <summary>
+        /// Event when the view information for the Instance has changed.
+        /// </summary>
+        public event EventHandler<View> ViewChanged;
+
+        /// <summary>
+        /// Event when an instance has gained or lost focus.
+        /// </summary>
+        public event EventHandler<bool> FocusChanged;
+
+        /// <summary>
+        /// Event when the browser calls PostMessage() on the DOM element for the instance in JavaScript.
+        /// </summary>
+        public event EventHandler<Var> ReceiveMessage;
+
+        // Define a class to hold custom Cancelable Event event info
+        public class InitializeEventArgs : CancelEventArgs
         {
+            internal InitializeEventArgs(int argc, string[] argn, string[] argv)
+            {
+                this.argc = argc;
+                this.argn = argn;
+                this.argv = argv;
+                Cancel = false;
+            }
+            private int argc;
+            private string[] argn;
+            private string[] argv;
+
+            public int Count
+            {
+                get { return argc; }
+            }
+
+            public string[] Names
+            {
+                get { return argn;  }
+            }
+
+            public string[] Values
+            {
+                get { return argv;  }
+            }
+        }
+
+        /// <summary>
+        /// Event when the browser calls PostMessage() on the DOM element for the instance in JavaScript.
+        /// </summary>
+        public delegate void InitializeDelegateAndHandler(object sender, InitializeEventArgs args);
+        public event InitializeDelegateAndHandler Initialize;
+
+        /// <summary>
+        /// Raise event to intialize the instance with the provided arguments. This
+        /// event will be raised immediately after the instance object is constructed.
+        /// </summary>
+        /// <remarks>
+        /// The OnInitialize method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <param name="args">An instance of InitializeEventArgs that is cancelable</param>
+        /// <returns>true if the event was not canceled and falce if the event was canceled for some reason.</returns>
+        protected virtual bool OnInitialize(InitializeEventArgs args)
+        {
+            var handler = Initialize;
+            if (handler != null)
+            {
+                bool cancel = false;
+                foreach (InitializeDelegateAndHandler subscriber in handler.GetInvocationList())
+                {
+                    subscriber.Invoke(this, args);
+                    if (args.Cancel)
+                    {
+                        cancel = true;
+                        break;
+                    }
+                }
+
+                return !cancel;
+            }
+
             return true;
         }
 
-        public virtual void DidChangeView(PPResource view)
-        { }
+        bool Init(int argc, string[] argn, string[] argv)
+        {
+
+            return OnInitialize(new InitializeEventArgs(argc, argn, argv));
+        }
 
         /// <summary>
-        /// DidChangeFocus() is called when an instance has gained or lost focus.
+        /// Raises the ViewChange event when the view information for the Instance
+        /// has changed. See the <code>View</code> object for information.
         ///
-        /// Having focus means that keyboard events will be sent to the instance.An instance's default condition is that it will not have focus.
+        /// Most implementations will want to check if the size and user visibility
+        /// changed, and either resize themselves or start/stop generating updates.
+        /// </summary>
+        /// <remarks>
+        /// The OnViewChanged method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <param name="view">The view object that contains the new view properties</param>
+        protected virtual void OnViewChanged(View view)
+        {
+            ViewChanged?.Invoke(this, view);
+        }
+
+        void DidChangeView(PPResource view)
+        {
+            OnViewChanged(new View(view));
+        }
+
+        /// <summary>
+        /// Raises the FocusChanged event when an instance has gained or lost focus.
+        ///
+        /// Having focus means that keyboard events will be sent to the instance.  An instance's default 
+        /// condition is that it will not have focus.
         ///
         /// The focus flag takes into account both browser tab and window focus as well as focus of the plugin 
         /// element on the page. In order to be deemed to have focus, the browser window must be topmost, 
         /// the tab must be selected in the window, and the instance must be the focused element on the page.
         /// 
         /// Note:Clicks on instances will give focus only if you handle the click event. 
-        /// Return true from HandleInputEvent in PPP_InputEvent (or use unfiltered events) to signal that the 
+        /// Return true from HandleInputEvent in InputEvent (or use unfiltered events) to signal that the 
         /// click event was handled. Otherwise, the browser will bubble the event and give focus to the element 
         /// on the page that actually did end up consuming it.If you're not getting focus, check to make sure
         /// you're either requesting them via RequestInputEvents() (which implicitly marks all input events as 
         /// consumed) or via RequestFilteringInputEvents() and returning true from your event handler.
         /// </summary>
+        /// <remarks>
+        /// The OnFocusChanged method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
         /// <param name="hasFocus">Indicates the new focused state of the instance.</param>
-        public virtual void DidChangeFocus(bool hasFocus)
-        { }
+        /// 
+        protected virtual void OnFocusChanged(bool hasFocus)
+        {
+            FocusChanged?.Invoke(this, hasFocus);
+        }
+
+        void DidChangeFocus(bool hasFocus)
+        {
+            OnFocusChanged(hasFocus);
+        }
 
         /// <summary>
         /// HandleInputEvent() handles input events from the browser.
@@ -77,15 +193,35 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// HandleMessage() is a function that the browser calls when PostMessage() is invoked on the DOM element for the instance in JavaScript.
+        /// Raises the RecieveMessage event when the browser calls PostMessage() on the DOM element for 
+        /// the instance in JavaScript.
         /// 
-        /// Note that PostMessage() in the JavaScript interface is asynchronous, meaning JavaScript execution will not be blocked while HandleMessage() is processing the message.
+        /// Note that PostMessage() in the JavaScript interface is asynchronous, meaning JavaScript execution 
+        /// will not be blocked while OnRecieveMessage is processing the message.
         /// 
-        /// When converting JavaScript arrays, any object properties whose name is not an array index are ignored.When passing arrays and objects, the entire reference graph will be converted and transferred.If the reference graph has cycles, the message will not be sent and an error will be logged to the console.
+        /// When converting JavaScript arrays, any object properties whose name is not an array index are 
+        /// ignored.  When passing arrays and objects, the entire reference graph will be converted and 
+        /// transferred.  If the reference graph has cycles, the message will not be sent and an error will 
+        /// be logged to the console.
         /// </summary>
-        /// <param name="message">A Var which has been converted from a JavaScript value. JavaScript array/object types are supported from Chrome M29 onward. All JavaScript values are copied when passing them to the plugin.</param>
-        public virtual void HandleMessage (PPVar message)
-        { }
+        /// <remarks>
+        /// The OnReceiveMessage method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <param name="message">A Var which has been converted from a JavaScript value. JavaScript 
+        /// array/object types are supported from Chrome M29 onward. All JavaScript values are copied 
+        /// when passing them to the plugin.
+        /// </param>
+        protected virtual void OnReceiveMessage(Var message)
+        {
+            ReceiveMessage?.Invoke(this, message);
+        }
+
+
+        void HandleMessage (PPVar message)
+        {
+            OnReceiveMessage(new Var(message));
+        }
 
         /// <summary>
         /// BindGraphics() binds the given graphics as the current display surface.
@@ -117,7 +253,10 @@ namespace PepperSharp
         /// <param name="message"></param>
         public void PostMessage(object message)
         {
-            PPBMessaging.PostMessage(this, new Var(message));
+            if (message is Var)
+                PPBMessaging.PostMessage(this, (Var)message);
+            else
+                PPBMessaging.PostMessage(this, new Var(message));
         }
 
         PPInstance instance = new PPInstance();
@@ -198,7 +337,10 @@ namespace PepperSharp
         /// significant overhead.
         /// </summary>
         /// <param name="eventClasses">A combination of flags from PP_InputEvent_Class that identifies the classes of events the instance is requesting. The flags are combined by logically ORing their values.</param>
-        /// <returns>PP_OK if the operation succeeded, PP_ERROR_BADARGUMENT if instance is invalid, or PP_ERROR_NOTSUPPORTED if one of the event class bits were illegal. In the case of an invalid bit, all valid bits will be applied and only the illegal bits will be ignored.</returns>
+        /// <returns>OK if the operation succeeded, BADARGUMENT if instance is invalid, or NOTSUPPORTED if 
+        /// one of the event class bits were illegal. In the case of an invalid bit, all valid bits will be 
+        /// applied and only the illegal bits will be ignored.
+        /// </returns>
         public PPError RequestFilteringInputEvents(PPInputEventClass eventClasses)
         {
             return (PPError)PPBInputEvent.RequestFilteringInputEvents(this, (uint)eventClasses);

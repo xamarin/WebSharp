@@ -20,9 +20,12 @@ namespace FileIO
         public FileIO (IntPtr handle) : base(handle)
         {
             fileSystem = PPBFileSystem.Create(this, PPFileSystemType.Localpersistent);
+
+            ReceiveMessage += OnReceiveMessage;
+            Initialize += OnInitialize;
         }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
 
             // Open the file system on the file_thread_. Since this is the first
@@ -33,8 +36,6 @@ namespace FileIO
             StartFileMessageLoop();
 
             PPBMessageLoop.PostWork(messageLoop, new CompletionCallback(OpenFileSystem), 0);
-
-            return true;
         }
 
         async void StartFileMessageLoop()
@@ -60,10 +61,9 @@ namespace FileIO
         ///
         /// </summary>
         /// <param name="vmessage">The message posted by the browser.</param>
-        public override void HandleMessage(PPVar vmessage)
+        private void OnReceiveMessage(object sender, Var varMessage)
         {
-            
-            Var varMessage = vmessage;
+
             if (!varMessage.IsArray)
                 return;
 

@@ -6,15 +6,19 @@ namespace HelloWorld
     public class HelloWorld : Instance
     {
 
+        public HelloWorld(IntPtr handle) : base(handle)
+        {
+            Initialize += OnInitialize;
+        }
+
         ~HelloWorld()
         {
             System.Console.WriteLine("HelloWorld destructed");
         }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
-            //LogToConsoleWithSource(PPLogLevel.Log, "HellowWorld.dll", "HelloWorld from PepperSharp using C#");
-            return true;
+            LogToConsoleWithSource(PPLogLevel.Log, "HellowWorld.dll", "HelloWorld from PepperSharp using C#");
         }
     }
 }

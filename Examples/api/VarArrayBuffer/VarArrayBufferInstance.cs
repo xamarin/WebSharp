@@ -29,12 +29,16 @@ namespace VarArrayBufferInstance
         /// resized.
         double[] histogram = new double[HISTOGRAM_SIZE];
 
-        public VarArrayBufferInstance(IntPtr handle) : base(handle) { }
+        public VarArrayBufferInstance(IntPtr handle) : base(handle)
+        {
+            ViewChanged += OnViewChanged;
+            ReceiveMessage += OnReceiveMessage;
+            Initialize += OnInitialize;
+        }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
             LogToConsole(PPLogLevel.Log, "VarArrayBuffer");
-            return true;
         }
 
         /// Handler for messages coming in from the browser via postMessage().  The
@@ -45,9 +49,8 @@ namespace VarArrayBufferInstance
         /// receive one, we compute and display a histogram based on its contents.
         ///
         /// @param[in] var_message The message posted by the browser.
-        public override void HandleMessage(PPVar message)
+        private void OnReceiveMessage(object sender, Var var_message)
         {
-            var var_message = (Var)message;
             if (var_message.IsArrayBuffer)
             {
                 var buffer = new VarArrayBuffer(var_message);
@@ -56,9 +59,8 @@ namespace VarArrayBufferInstance
             }
         }
 
-        public override void DidChangeView(PPResource vview)
+        private void OnViewChanged(object sender, View view)
         {
-            var view = new View(vview);
             var viewRect = view.Rect;
 
             if (size != viewRect.Size)

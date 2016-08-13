@@ -47,17 +47,18 @@ namespace VideoEncode
             frame_format_ = PPVideoFrameFormat.I420;
             InitializeVideoProfiles();
             ProbeEncoder();
+
+            ReceiveMessage += OnReceiveMessage;
+            Initialize += OnInitialize;
         }
 
-        public override bool Init(int argc, string[] argn, string[] argv)
+        private void OnInitialize(object sender, InitializeEventArgs args)
         {
             LogToConsole(PPLogLevel.Log, "VideoEncode");
-            return true;
         }
 
-        public override void HandleMessage(PPVar message)
+        private void OnReceiveMessage(object sender, Var var_message)
         {
-            var var_message = (Var)message;
             if (!var_message.IsDictionary)
             {
                 LogToConsole(PPLogLevel.Error, "Invalid message!");
