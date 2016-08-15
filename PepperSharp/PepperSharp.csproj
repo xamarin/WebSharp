@@ -113,6 +113,7 @@
     <Compile Include="src\Core.cs" />
     <Compile Include="src\Graphics2D.cs" />
     <Compile Include="src\ImageData.cs" />
+    <Compile Include="src\MouseCursor.cs" />
     <Compile Include="src\MouseLock.cs" />
     <Compile Include="src\ppb_file_ref_extension.cs" />
     <Compile Include="src\ppb_gamepad_extension.cs" />

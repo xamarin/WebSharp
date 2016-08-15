@@ -126,3 +126,11 @@ Core
                         const CompletionCallback& callback,
                         int32_t result = 0);
 [x] bool IsMainThread();
+
+MouseCursor
+----
+
+[x] static bool SetCursor(const InstanceHandle& instance,
+                        PP_MouseCursor_Type type,
+                        const ImageData& image = ImageData(),
+                        const Point& hot_spot = Point(0, 0));  *Note* this implemented as SetCursor on Instance

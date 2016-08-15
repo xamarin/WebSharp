@@ -373,6 +373,45 @@ namespace PepperSharp
             PPBInputEvent.ClearInputEventRequest(this, (uint)eventClasses);
         }
 
+        /// <summary>
+        /// Sets the given mouse cursor. The mouse cursor will be in effect whenever
+        /// the mouse is over the given instance until it is set again by another
+        /// call. Note that you can hide the mouse cursor by setting it to the
+        /// <code>PPMouseCursorType</code> type.
+        ///
+        /// This function allows setting both system defined mouse cursors and
+        /// custom cursors. To set a system-defined cursor, pass the type you want
+        /// and set the custom image to a default-constructor ImageData object.
+        /// To set a custom cursor, set the type to
+        /// <code>PPMouseCursorType.CUSTOM</code> and specify your image and hot
+        /// spot.
+        /// </summary>
+        /// <param name="type">A <code>PPMouseCursorType</code> identifying the type
+        /// of mouse cursor to show.
+        /// </param>
+        /// <param name="imageData">A <code>ImageData</code> object identifying the
+        /// custom image to set when the type is
+        /// <code>PPMouseCursorType.CUSTOM</code>. The image must be less than 32
+        /// pixels in each direction and must be of the system's native image format.
+        /// When you are specifying a predefined cursor, this parameter should be a
+        /// default-constructed ImageData.
+        /// </param>
+        /// <param name="hotSpot">When setting a custom cursor, this identifies the
+        /// pixel position within the given image of the "hot spot" of the cursor.
+        /// When specifying a stock cursor, this parameter is ignored.
+        /// </param>
+        /// <returns>true on success, or false if the instance or cursor type
+        /// was invalid or if the image was too large.</returns>
+        public bool SetCursor(PPMouseCursorType type, ImageData imageData = null, PPPoint? hotSpot = null)
+        {
+            var hs = PPPoint.Zero;
+            if (hotSpot.HasValue)
+                hs = hotSpot.Value;
+            if (imageData == null)
+                return PPBMouseCursor.SetCursor(this, type, PPResource.Empty, hs) == PPBool.True ? true : false;
+            else
+                return PPBMouseCursor.SetCursor(this, type, imageData, hs) == PPBool.True ? true : false;
+        }
 
     }
 }

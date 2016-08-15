@@ -32,12 +32,11 @@ namespace MouseCursor
             if (cursor == PPMouseCursorType.Custom)
             {
                 var hotSpot = new PPPoint(16,16);
-                PPBMouseCursor.SetCursor(this, cursor, customCursor, hotSpot);
+                SetCursor(cursor, customCursor, hotSpot);
             }
             else
-            {
-                var refPoint = new PPPoint();
-                PPBMouseCursor.SetCursor(this, cursor, new PPResource(), refPoint);
+            { 
+                SetCursor(cursor);
             }
 
         }
