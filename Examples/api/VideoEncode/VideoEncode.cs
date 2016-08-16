@@ -48,7 +48,7 @@ namespace VideoEncode
             InitializeVideoProfiles();
             ProbeEncoder();
 
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnHandleMessage;
             Initialize += OnInitialize;
         }
 
@@ -57,7 +57,7 @@ namespace VideoEncode
             LogToConsole(PPLogLevel.Log, "VideoEncode");
         }
 
-        private void OnReceiveMessage(object sender, Var var_message)
+        private void OnHandleMessage(object sender, Var var_message)
         {
             if (!var_message.IsDictionary)
             {

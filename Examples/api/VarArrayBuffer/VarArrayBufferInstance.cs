@@ -32,7 +32,7 @@ namespace VarArrayBufferInstance
         public VarArrayBufferInstance(IntPtr handle) : base(handle)
         {
             ViewChanged += OnViewChanged;
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnHandleMessage;
             Initialize += OnInitialize;
         }
 
@@ -49,7 +49,7 @@ namespace VarArrayBufferInstance
         /// receive one, we compute and display a histogram based on its contents.
         ///
         /// @param[in] var_message The message posted by the browser.
-        private void OnReceiveMessage(object sender, Var var_message)
+        private void OnHandleMessage(object sender, Var var_message)
         {
             if (var_message.IsArrayBuffer)
             {

@@ -9,7 +9,7 @@ namespace MouseCursor
 
         public MouseCursor(IntPtr handle) : base(handle)
         {
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnHandleMessage;
             Initialize += OnInitialize;
         }
 
@@ -21,7 +21,7 @@ namespace MouseCursor
             MakeCustomCursor();
         }
 
-        private void OnReceiveMessage(object sender, Var varMessage)
+        private void OnHandleMessage(object sender, Var varMessage)
         {
             if (!varMessage.IsInt)
             {

@@ -29,7 +29,7 @@ namespace Socket
 
         public Socket(IntPtr handle) : base(handle)
         {
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnHandleMessage;
             Initialize += OnInitialize;
         }
 
@@ -38,7 +38,7 @@ namespace Socket
             LogToConsoleWithSource(PPLogLevel.Log, "Socket", "There be dragons here.");
         }
 
-        private void OnReceiveMessage(object sender, Var varMessage)
+        private void OnHandleMessage(object sender, Var varMessage)
         {
             if (!varMessage.IsString)
                 return;

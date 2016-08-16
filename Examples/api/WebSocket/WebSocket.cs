@@ -13,7 +13,7 @@ namespace WebSocket
 
         public WebSocket(IntPtr handle) : base(handle)
         {
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnReceiveMessage;
         }
 
         private void OnReceiveMessage(object sender, Var var_message)

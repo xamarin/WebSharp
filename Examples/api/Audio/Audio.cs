@@ -36,7 +36,7 @@ namespace Audio
             SampleFrameCount = SAMPLE_FRAME_COUNT;
             Frequency = DEFAULT_FREQUENCY;
 
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnHandleMessage;
             Initialize += OnInitialize;
         }
 
@@ -66,7 +66,7 @@ namespace Audio
         /// If |var_message| is not a recognized method name, this method does nothing.
         /// </summary>
         /// <param name="varMessage"></param>
-        private void OnReceiveMessage(object sender, Var varMessage)
+        private void OnHandleMessage(object sender, Var varMessage)
         {
             if (!varMessage.IsString)
             {

@@ -11,7 +11,7 @@ namespace URL_Loader
 
         public URL_Loader(IntPtr handle) : base(handle)
         {
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnHandleMessage;
         }
 
         // Called by the browser to handle the postMessage() call in Javascript.
@@ -20,7 +20,7 @@ namespace URL_Loader
         // of the form 'getUrl:URL' is received, then start up an asynchronous
         // download of URL.  In the event that errors occur, this method posts an
         // error string back to the browser.
-        private void OnReceiveMessage(object sender, Var varMsg)
+        private void OnHandleMessage(object sender, Var varMsg)
         {
             
             LogToConsole(PPLogLevel.Log, varMsg);

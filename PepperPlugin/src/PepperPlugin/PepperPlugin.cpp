@@ -246,28 +246,29 @@ namespace pepper {
     }
     
     
-    MonoObject* create_managed_wrapper(intptr_t ptr, const char* nameSpace, const char* className, vector<MonoImage*> images)
+    MonoObject* create_managed_wrapper(void** args, const char* nameSpace, const char* className, vector<MonoImage*> images, const char* descConstr = NULL)
     {
         
         MonoClass * wrapper = find_class(nameSpace, className, images);
         if (wrapper == nullptr) {
             return nullptr;
         }
-        
+
         // create the class (doesn't run constructors)
         MonoObject* obj = mono_object_new(monoDomain, wrapper);
         if (obj == nullptr) {
             return nullptr;
         }
         
-        void *args[1] = { 0 };
-        args[0] = &ptr;
-        
         MonoObject* result;
-        if (!mono_invoke_with_desc(":.ctor(intptr)", args, wrapper, obj, &result))
+		string description(":.ctor(intptr)");
+		if (descConstr)
+			description = ":.ctor(" + string(descConstr) + ")";
+
+        if (!mono_invoke_with_desc((char*)description.c_str(), args, wrapper, obj, &result))
         {
-            fprintf(stderr, "Error creating managed wrapper for : %s.%s\n ", nameSpace, className);
-            return NULL;
+			fprintf(stderr, "Error creating managed wrapper for : %s.%s\n ", nameSpace, className);
+			return NULL;
         }
         
         
@@ -462,22 +463,24 @@ public:
             return false;
         
         // Load up our methods to be called so we do not have look them up each time.
-        did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeView(PepperSharp.PPResource)");
-        did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":DidChangeFocus(bool)");
+        did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":OnViewChanged(PepperSharp.View)");
+        did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":OnFocusChanged(bool)");
         handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(PepperSharp.PPResource)");
         handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(PepperSharp.PPResource)");
-        handle_message = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleMessage(PepperSharp.PPVar)");
+        handle_message = mono_class_get_method_from_desc_recursive(instanceClass, ":OnHandleMessage(PepperSharp.Var)");
         
         MonoObject *result = NULL;
-        
+
         printf("Constructing an instance of: %s\n", className.c_str());
         auto instance = pp_instance();
-        pluginInstance = create_managed_wrapper(instance, nameSpace.c_str(), className.c_str(), images);
+		void *args[3] = { 0 };
+		args[0] = &instance;
+
+        pluginInstance = create_managed_wrapper(args, nameSpace.c_str(), className.c_str(), images);
         
         // Call Init method
         printf("Calling Init on instance of: %s\n", className.c_str());
         
-        void *args[3] = { 0 };
         args[0] = &argc;
         args[1] = parmsArgN;
         args[2] = parmsArgV;
@@ -495,7 +498,9 @@ public:
         
         void *args[1] = { 0 };
         intptr_t res = view.pp_resource();
-        args[0] = &res;
+		args[0] = &res;
+
+		args[0] = create_managed_wrapper(args, "PepperSharp", "View", images, "PepperSharp.PPResource");
         MonoObject *result = NULL;
         mono_invoke_with_method(did_change_view, args, pluginInstance, &result);
     }
@@ -507,6 +512,7 @@ public:
         
         void *args[1] = { 0 };
         args[0] = &has_focus;
+
         MonoObject *result = NULL;
         mono_invoke_with_method(did_change_focus, args, pluginInstance, &result);
         
@@ -520,6 +526,7 @@ public:
         void *args[1] = { 0 };
         intptr_t res = url_loader.pp_resource();
         args[0] = &res;
+
         MonoObject *result = NULL;
         mono_invoke_with_method(handle_document_load, args, pluginInstance, &result);
         if (result)
@@ -536,6 +543,7 @@ public:
         void *args[1] = { 0 };
         intptr_t res = event.pp_resource();
         args[0] = &res;
+
         MonoObject *result = NULL;
         mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
         if (result)
@@ -548,12 +556,15 @@ public:
     {
         if (!handle_message)
             return;
-        
-        void *args[1] = { 0 };
-        auto var = message.pp_var();
-        args[0] = &var;
-        MonoObject *result = NULL;
-        mono_invoke_with_method(handle_message, args, pluginInstance, &result);
+
+		void *args[1] = { 0 };
+
+		PP_Var var = message.pp_var();
+		args[0] = &var;
+
+		MonoObject* result;
+		args[0] = create_managed_wrapper(args, "PepperSharp", "Var", images, "PepperSharp.PPVar");;
+		mono_invoke_with_method(handle_message, args, pluginInstance, &result);
         
     }
     

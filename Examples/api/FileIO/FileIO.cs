@@ -21,7 +21,7 @@ namespace FileIO
         {
             fileSystem = PPBFileSystem.Create(this, PPFileSystemType.Localpersistent);
 
-            ReceiveMessage += OnReceiveMessage;
+            HandleMessage += OnHandleMessage;
             Initialize += OnInitialize;
         }
 
@@ -61,7 +61,7 @@ namespace FileIO
         ///
         /// </summary>
         /// <param name="vmessage">The message posted by the browser.</param>
-        private void OnReceiveMessage(object sender, Var varMessage)
+        private void OnHandleMessage(object sender, Var varMessage)
         {
 
             if (!varMessage.IsArray)

@@ -21,7 +21,7 @@ namespace PepperSharp
         /// <summary>
         /// Event when the browser calls PostMessage() on the DOM element for the instance in JavaScript.
         /// </summary>
-        public event EventHandler<Var> ReceiveMessage;
+        public event EventHandler<Var> HandleMessage;
 
         // Define a class to hold custom Cancelable Event event info
         public class InitializeEventArgs : CancelEventArgs
@@ -114,11 +114,6 @@ namespace PepperSharp
             ViewChanged?.Invoke(this, view);
         }
 
-        void DidChangeView(PPResource view)
-        {
-            OnViewChanged(new View(view));
-        }
-
         /// <summary>
         /// Raises the FocusChanged event when an instance has gained or lost focus.
         ///
@@ -145,11 +140,6 @@ namespace PepperSharp
         protected virtual void OnFocusChanged(bool hasFocus)
         {
             FocusChanged?.Invoke(this, hasFocus);
-        }
-
-        void DidChangeFocus(bool hasFocus)
-        {
-            OnFocusChanged(hasFocus);
         }
 
         /// <summary>
@@ -193,7 +183,7 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// Raises the RecieveMessage event when the browser calls PostMessage() on the DOM element for 
+        /// Raises the HandleMessage event when the browser calls PostMessage() on the DOM element for 
         /// the instance in JavaScript.
         /// 
         /// Note that PostMessage() in the JavaScript interface is asynchronous, meaning JavaScript execution 
@@ -205,23 +195,18 @@ namespace PepperSharp
         /// be logged to the console.
         /// </summary>
         /// <remarks>
-        /// The OnReceiveMessage method also enables derived classes to handle the event without attaching 
+        /// The OnHandleMessage method also enables derived classes to handle the event without attaching 
         /// a delegate. This is the preferred technique for handling the event in a derived class.
         /// </remarks>
         /// <param name="message">A Var which has been converted from a JavaScript value. JavaScript 
         /// array/object types are supported from Chrome M29 onward. All JavaScript values are copied 
         /// when passing them to the plugin.
         /// </param>
-        protected virtual void OnReceiveMessage(Var message)
+        protected virtual void OnHandleMessage(Var message)
         {
-            ReceiveMessage?.Invoke(this, message);
+            HandleMessage?.Invoke(this, message);
         }
-
-
-        void HandleMessage (PPVar message)
-        {
-            OnReceiveMessage(new Var(message));
-        }
+ 
 
         /// <summary>
         /// BindGraphics() binds the given graphics as the current display surface.
