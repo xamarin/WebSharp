@@ -562,6 +562,16 @@ public:
 			if (result)
 				return *(bool *)mono_object_unbox(result);
 		}
+		case PP_INPUTEVENT_TYPE_WHEEL:
+		{
+			args[0] = create_managed_wrapper(args, "PepperSharp", "WheelInputEvent", images, "PepperSharp.InputEvent");
+
+			MonoObject *result = NULL;
+			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			if (result)
+				return *(bool *)mono_object_unbox(result);
+
+		}
 		default:
 		{
 			MonoObject *result = NULL;

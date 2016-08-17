@@ -83,6 +83,33 @@ namespace PepperSharp
             
         }
 
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a ContextMenu InputEvent.
+        /// </summary>
+        public event EventHandler<WheelEventArgs> Wheel;
+
+        public class WheelEventArgs : EventArgs
+        {
+            public PPFloatPoint Delta { get; private set; }
+            public PPFloatPoint Ticks { get; private set; }
+            public bool IsScrollByPage { get; private set; }
+            public double TimeStamp { get; private set; }
+            public PPInputEventModifier Modifiers { get; private set; }
+            public bool Handled { get; set; } = false;
+
+            public WheelEventArgs(PPFloatPoint delta, PPFloatPoint ticks, bool isScrollByPage, double timeStamp, PPInputEventModifier modifiers)
+            {
+                Delta = delta;
+                Ticks = ticks;
+                IsScrollByPage = isScrollByPage;
+                TimeStamp = timeStamp;
+                Modifiers = modifiers;
+            }
+
+        }
+
+
         // Custom class to hold Initialize Cancelable Event event info
         public class InitializeEventArgs : CancelEventArgs
         {
@@ -256,6 +283,12 @@ namespace PepperSharp
                 }
                 inputEvent.Handled = handled;
             }
+            else if (inputEvent is WheelInputEvent)
+            {
+                var wie = (WheelInputEvent)inputEvent;
+                var wieArgs = new WheelEventArgs(wie.Delta, wie.Ticks, wie.IsScrollByPage, wie.TimeStamp, wie.Modifiers);
+                handled = OnWheel(wieArgs);
+            }
 
             var handler = InputEvents;
             if (handler != null)
@@ -306,6 +339,12 @@ namespace PepperSharp
         protected virtual bool OnContextMenu(MouseEventArgs e)
         {
             ContextMenu?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnWheel (WheelEventArgs e)
+        {
+            Wheel?.Invoke(this, e);
             return e.Handled;
         }
 

@@ -158,3 +158,17 @@ MouseInputEvent
 [x] Point GetPosition() const;
 [x] int32_t GetClickCount() const;
 [x] Point GetMovement() const;
+
+WheelInputEvent
+---
+
+[x] explicit WheelInputEvent(const InputEvent& event);
+[ ] WheelInputEvent(const InstanceHandle& instance,
+                  PP_TimeTicks time_stamp,
+                  uint32_t modifiers,
+                  const FloatPoint& wheel_delta,
+                  const FloatPoint& wheel_ticks,
+                  bool scroll_by_page);
+[x] FloatPoint GetDelta() const;
+[x] FloatPoint GetTicks() const;
+[x] bool GetScrollByPage() const;

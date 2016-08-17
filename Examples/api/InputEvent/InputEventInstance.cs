@@ -19,6 +19,7 @@ namespace InputEventInstance
             MouseMove += HandleMouseEvents;
             MouseUp += HandleMouseEvents;
             ContextMenu += HandleMouseEvents;
+            Wheel += HandleWheel;
 
 
             RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
@@ -75,6 +76,20 @@ namespace InputEventInstance
             mouseEvent.Handled = true;
         }
 
+        private void HandleWheel(object sender, WheelEventArgs inputEvent)
+        {
+            var wheel = "Wheel event:" +
+                 $" modifier: {ModifierToString((uint)inputEvent.Modifiers)}" +
+                 $" deltax: {inputEvent.Delta.X}" +
+                 $" deltay: {inputEvent.Delta.Y}" +
+                 $" wheel_ticks_x: {inputEvent.Ticks.X}" +
+                 $" wheel_ticks_y: {inputEvent.Ticks.Y}" +
+                 $" scroll_by_page: {inputEvent.IsScrollByPage}" +
+                 $" time: {inputEvent.TimeStamp}";
+
+            PostMessage(wheel);
+        }
+
         private void OnInputEvents(object sender, InputEvent inputEvent)
         {
 
@@ -87,23 +102,6 @@ namespace InputEventInstance
                 case PPInputEventType.ImeText:
                 case PPInputEventType.Undefined:
                     // these cases are not handled.
-                    break;
-
-                case PPInputEventType.Wheel:
-                    
-                    if (PPBWheelInputEvent.IsWheelInputEvent(inputEvent) == PPBool.True)
-                    {
-                        var wheel = "Wheel event:" +
-                            $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
-                            $" deltax: {PPBWheelInputEvent.GetDelta(inputEvent).x}" +
-                            $" deltay: {PPBWheelInputEvent.GetDelta(inputEvent).y}" +
-                            $" wheel_ticks_x: {PPBWheelInputEvent.GetTicks(inputEvent).x}" +
-                            $" wheel_ticks_y: {PPBWheelInputEvent.GetTicks(inputEvent).y}" +
-                            $" scroll_by_page: {PPBWheelInputEvent.GetScrollByPage(inputEvent) == PPBool.True}" +
-                            $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}";
-
-                        PostMessage(wheel);
-                    }
                     break;
 
                 case PPInputEventType.Rawkeydown:
