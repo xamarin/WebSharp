@@ -465,7 +465,7 @@ public:
         // Load up our methods to be called so we do not have look them up each time.
         did_change_view = mono_class_get_method_from_desc_recursive(instanceClass, ":OnViewChanged(PepperSharp.View)");
         did_change_focus = mono_class_get_method_from_desc_recursive(instanceClass, ":OnFocusChanged(bool)");
-        handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleInputEvent(PepperSharp.PPResource)");
+        handle_input_event = mono_class_get_method_from_desc_recursive(instanceClass, ":OnInputEvents(PepperSharp.InputEvent)");
         handle_document_load = mono_class_get_method_from_desc_recursive(instanceClass, ":HandleDocumentLoad(PepperSharp.PPResource)");
         handle_message = mono_class_get_method_from_desc_recursive(instanceClass, ":OnHandleMessage(PepperSharp.Var)");
         
@@ -544,11 +544,32 @@ public:
         intptr_t res = event.pp_resource();
         args[0] = &res;
 
-        MonoObject *result = NULL;
-        mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
-        if (result)
-            return *(bool *)mono_object_unbox(result);
-        
+		args[0] = create_managed_wrapper(args, "PepperSharp", "InputEvent", images, "PepperSharp.PPResource");
+
+		switch (event.GetType())
+		{
+		case PP_INPUTEVENT_TYPE_MOUSEDOWN:
+		case PP_INPUTEVENT_TYPE_MOUSEENTER:
+		case PP_INPUTEVENT_TYPE_MOUSELEAVE:
+		case PP_INPUTEVENT_TYPE_MOUSEMOVE:
+		case PP_INPUTEVENT_TYPE_MOUSEUP:
+		case PP_INPUTEVENT_TYPE_CONTEXTMENU:
+		{
+			args[0] = create_managed_wrapper(args, "PepperSharp", "MouseInputEvent", images, "PepperSharp.InputEvent");
+
+			MonoObject *result = NULL;
+			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			if (result)
+				return *(bool *)mono_object_unbox(result);
+		}
+		default:
+		{
+			MonoObject *result = NULL;
+			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			if (result)
+				return *(bool *)mono_object_unbox(result);
+		}
+		}
         return false;
     }
     

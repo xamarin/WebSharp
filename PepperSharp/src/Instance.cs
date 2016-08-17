@@ -23,33 +23,79 @@ namespace PepperSharp
         /// </summary>
         public event EventHandler<Var> HandleMessage;
 
-        // Define a class to hold custom Cancelable Event event info
+        /// <summary>
+        /// Event when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript.
+        /// </summary>
+        public event EventHandler<InputEvent> InputEvents;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a MouseDown InputEvent.
+        /// </summary>
+        public event EventHandler<MouseEventArgs> MouseDown;
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a MouseUp InputEvent.
+        /// </summary>
+        public event EventHandler<MouseEventArgs> MouseUp;
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a MouseEnter InputEvent.
+        /// </summary>
+        public event EventHandler<MouseEventArgs> MouseEnter;
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a MouseLeave InputEvent.
+        /// </summary>
+        public event EventHandler<MouseEventArgs> MouseLeave;
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a MouseMove InputEvent.
+        /// </summary>
+        public event EventHandler<MouseEventArgs> MouseMove;
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a ContextMenu InputEvent.
+        /// </summary>
+        public event EventHandler<MouseEventArgs> ContextMenu;
+
+        public class MouseEventArgs : EventArgs
+        {
+            public PPInputEventMouseButton Buttons { get; private set; }
+            public int Clicks { get; private set; }
+            public PPPoint Position { get; private set; }
+            public PPPoint Movement { get; private set; }
+            public double TimeStamp { get; private set; }
+            public PPInputEventModifier Modifiers { get; private set; }
+            public bool Handled { get; set; } = false;
+            public bool IsContextMenu { get; private set; } = false;
+
+            public MouseEventArgs(PPInputEventMouseButton buttons, int clicks, PPPoint position, PPPoint movement, double timeStamp, PPInputEventModifier modifiers, bool isContextMenu = false )
+            {
+                Buttons = buttons;
+                Clicks = clicks;
+                Position = position;
+                Movement = movement;
+                TimeStamp = timeStamp;
+                Modifiers = modifiers;
+                IsContextMenu = isContextMenu;
+            }
+            
+        }
+
+        // Custom class to hold Initialize Cancelable Event event info
         public class InitializeEventArgs : CancelEventArgs
         {
+            public int Count { get; private set; }
+            public string[] Names { get; private set; }
+            public string[] Values { get; private set; }
+
             internal InitializeEventArgs(int argc, string[] argn, string[] argv)
             {
-                this.argc = argc;
-                this.argn = argn;
-                this.argv = argv;
+                Count = argc;
+                Names = argn;
+                Values = argv;
                 Cancel = false;
-            }
-            private int argc;
-            private string[] argn;
-            private string[] argv;
-
-            public int Count
-            {
-                get { return argc; }
-            }
-
-            public string[] Names
-            {
-                get { return argn;  }
-            }
-
-            public string[] Values
-            {
-                get { return argv;  }
             }
         }
 
@@ -143,7 +189,7 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// HandleInputEvent() handles input events from the browser.
+        /// Raises the HandleInput event from the browser.
         ///
         /// The default implementation does nothing and returns false.
         /// 
@@ -155,7 +201,10 @@ namespace PepperSharp
         /// with whether event propagation should continue.
         /// 
         /// Event propagation also controls focus.If you handle an event like a mouse event, typically the 
-        /// instance will be given focus. Returning false from a filtered event handler or not registering for an event type means that the click will be given to a lower part of the page and your instance will not receive focus.This allows an instance to be partially transparent, where clicks on the transparent areas will behave like clicks to the underlying page.
+        /// instance will be given focus. Returning false from a filtered event handler or not registering for 
+        /// an event type means that the click will be given to a lower part of the page and your instance 
+        /// will not receive focus.This allows an instance to be partially transparent, where clicks on the 
+        /// transparent areas will behave like clicks to the underlying page.
         /// 
         /// In general, you should try to keep input event handling short. Especially for filtered input events,
         /// the browser or page may be blocked waiting for you to respond.
@@ -170,11 +219,94 @@ namespace PepperSharp
         /// 
         /// Refer to RequestInputEvents and RequestFilteringInputEvents for further information.
         /// </summary>
+        /// <remarks>
+        /// The OnInputEvents method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
         /// <param name="inputEvent">The event to handle.</param>
         /// <returns>true if the event was handled, false if not. If you have registered to filter this class of events by calling RequestFilteringInputEvents, and you return false, the event will be forwarded to the page (and eventually the browser) for the default handling. For non-filtered events, the return value will be ignored.</returns>
-        public virtual bool HandleInputEvent(PPResource inputEvent)
+        protected virtual bool OnInputEvents (InputEvent inputEvent)
         {
-            return false;
+
+            bool handled = false;
+            if (inputEvent is MouseInputEvent)
+            {
+                var mie = (MouseInputEvent)inputEvent;
+                var mieArgs = new MouseEventArgs(mie.Button, mie.ClickCount, mie.Position, mie.Movement, mie.TimeStamp, mie.Modifiers, inputEvent.EventType == PPInputEventType.Contextmenu);
+                switch (mie.EventType)
+                {
+                    case PPInputEventType.Mousedown:
+                        handled = OnMouseDown(mieArgs);
+                        break;
+                    case PPInputEventType.Mouseup:
+                        handled = OnMouseUp(mieArgs);
+                        break;
+                    case PPInputEventType.Mouseenter:
+                        handled = OnMouseEnter(mieArgs);
+                        break;
+                    case PPInputEventType.Mouseleave:
+                        handled = OnMouseLeave(mieArgs);
+                        break;
+                    case PPInputEventType.Mousemove:
+                        handled = OnMouseMove(mieArgs);
+                        break;
+                    case PPInputEventType.Contextmenu:
+                        handled = OnContextMenu(mieArgs);
+                        break;
+                }
+                inputEvent.Handled = handled;
+            }
+
+            var handler = InputEvents;
+            if (handler != null)
+            {
+                foreach (EventHandler<InputEvent> subscriber in handler.GetInvocationList())
+                {
+                    subscriber.Invoke(this, inputEvent);
+                    if (inputEvent.Handled)
+                    {
+                        handled = true;
+                    }
+                }
+            }
+
+            return handled;
+        }
+
+        protected virtual bool OnMouseDown(MouseEventArgs e)
+        {
+            MouseDown?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnMouseUp(MouseEventArgs e)
+        {
+            MouseUp?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnMouseEnter(MouseEventArgs e)
+        {
+            MouseEnter?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnMouseLeave(MouseEventArgs e)
+        {
+            MouseLeave?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnMouseMove (MouseEventArgs e)
+        {
+            MouseMove?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnContextMenu(MouseEventArgs e)
+        {
+            ContextMenu?.Invoke(this, e);
+            return e.Handled;
         }
 
         public virtual bool HandleDocumentLoad(PPResource urlLoader)

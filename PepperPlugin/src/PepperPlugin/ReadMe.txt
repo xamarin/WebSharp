@@ -134,3 +134,27 @@ MouseCursor
                         PP_MouseCursor_Type type,
                         const ImageData& image = ImageData(),
                         const Point& hot_spot = Point(0, 0));  *Note* this implemented as SetCursor on Instance
+
+InputEvent
+---
+
+[x] PP_InputEvent_Type GetType() const;
+[x] PP_TimeTicks GetTimeStamp()
+[x] uint32_t GetModifiers() const;
+
+MouseInputEvent
+---
+
+[x] explicit MouseInputEvent(const InputEvent& event);
+[] MouseInputEvent(const InstanceHandle& instance,
+                  PP_InputEvent_Type type,
+                  PP_TimeTicks time_stamp,
+                  uint32_t modifiers,
+                  PP_InputEvent_MouseButton mouse_button,
+                  const Point& mouse_position,
+                  int32_t click_count,
+                  const Point& mouse_movement);
+[x] PP_InputEvent_MouseButton GetButton() const;
+[x] Point GetPosition() const;
+[x] int32_t GetClickCount() const;
+[x] Point GetMovement() const;

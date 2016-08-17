@@ -23,6 +23,10 @@ namespace Graphics_2D
         {
             ViewChanged += OnViewChanged;
             Initialize += OnInitialize;
+            MouseDown += OnMouseDownOrMove;
+            MouseMove += OnMouseDownOrMove;
+            MouseUp += OnMouseUp;
+            
         }
 
         private void OnViewChanged(object sender, View view)
@@ -54,35 +58,40 @@ namespace Graphics_2D
             CreatePalette();
         }
 
-        public override bool HandleInputEvent(PPResource inputEvent)
+
+        private void OnMouseDownOrMove(object sender, MouseEventArgs e)
         {
             if (buffer == null)
-                return true;
-
-            
-            var eventType = PPBInputEvent.GetType(inputEvent);
-            if (eventType == PPInputEventType.Mousedown ||
-                eventType == PPInputEventType.Mousemove)
             {
-                var mouseButton = PPBMouseInputEvent.GetButton(inputEvent);
-                if (mouseButton == PPInputEventMouseButton.None)
-                    return true;
-                if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PPBool.True)
-                {
-                    
-                    PPPoint pos = PPBMouseInputEvent.GetPosition(inputEvent);
-                    //Console.WriteLine($"yes it is {pos.x}");
-                    mouse.x = (int)(pos.X * deviceScale);
-                    mouse.y = (int)(pos.Y * deviceScale);
-
-                    mouseDown = true;
-                }
+                e.Handled = true;
+                return;
             }
 
-            if (eventType == PPInputEventType.Mouseup)
-                mouseDown = false;
-            
-            return true;
+            if (e.Buttons == PPInputEventMouseButton.None)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            PPPoint pos = e.Position;
+            mouse.x = (int)(pos.X * deviceScale);
+            mouse.y = (int)(pos.Y * deviceScale);
+
+            mouseDown = true;
+
+            e.Handled = true;
+        }
+
+        private void OnMouseUp(object sender, MouseEventArgs e)
+        {
+            if (buffer == null)
+            {
+                e.Handled = true;
+                return;
+            }
+
+            mouseDown = false;
+            e.Handled = true;
         }
 
         bool CreateContext(PPSize new_size)

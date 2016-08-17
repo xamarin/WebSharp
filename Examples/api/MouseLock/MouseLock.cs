@@ -38,9 +38,13 @@ namespace MouseLockInstance
             // Setup our listeners for mouselock
             MouseLocked += OnMouseLocked;
             MouseUnLocked += OnMouseUnLocked;
+            InputEvents += OnHandleInputEvent;
 
             ViewChanged += OnViewChanged;
             Initialize += OnInitialize;
+
+            MouseDown += OnMouseDown;
+            MouseMove += OnMouseMove;
         }
 
         ~MouseLockInstance() { System.Console.WriteLine("MouseLock destructed"); }
@@ -356,37 +360,33 @@ namespace MouseLockInstance
             LogToConsole(PPLogLevel.Error, message);
         }
 
-        public override bool HandleInputEvent(PPResource inputEvent)
+        private void OnMouseMove(object sender, MouseEventArgs mouseEvent)
+        {
+            mouse_movement_ = mouseEvent.Movement;
+            Paint();
+            mouseEvent.Handled = true;
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs mouseEvent)
+        {
+            if (mouse_locked_)
+            {
+                UnlockMouse();
+            }
+            else
+            {
+                LockMouse();
+
+            }
+            mouseEvent.Handled = true;
+        }
+
+        private void OnHandleInputEvent(object sender, InputEvent inputEvent)
         {
 
-            var eventType = PPBInputEvent.GetType(inputEvent);
+            var eventType = inputEvent.EventType;
             switch (eventType)
             {
-                case PPInputEventType.Mousedown:
-
-                    if (mouse_locked_)
-                    {
-                        UnlockMouse();
-                    }
-                    else
-                    {
-                        LockMouse();
-
-                    }
-                    return true;
-
-
-                case PPInputEventType.Mousemove:
-
-                    if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PPBool.True)
-                    {
-                        mouse_movement_ = PPBMouseInputEvent.GetMovement(inputEvent);
-                        Paint();
-                        return true;
-                    }
-
-                    return false;
-
 
                 case PPInputEventType.Keydown:
 
@@ -398,7 +398,11 @@ namespace MouseLockInstance
                         {
                             // Ignore switch if in transition
                             if (!is_context_bound_)
-                                return true;
+                            {
+                                inputEvent.Handled = true;
+                                return;
+
+                            }
 
                             if (PPBFullscreen.IsFullscreen(this) == PPBool.True)
                             {
@@ -424,9 +428,11 @@ namespace MouseLockInstance
                             }
 
                         }
-                        return true;
+                        inputEvent.Handled = true;
+                        return;
                     }
-                    return false;
+                    inputEvent.Handled = false;
+                    return;
 
 
                 case PPInputEventType.Mouseup:
@@ -447,7 +453,9 @@ namespace MouseLockInstance
                 case PPInputEventType.Touchend:
                 case PPInputEventType.Touchcancel:
                 default:
-                    return false;
+                    inputEvent.Handled = false;
+                    return;
+
             }
 
         }

@@ -2,15 +2,24 @@
 
 using PepperSharp;
 
-namespace InputEvent
+namespace InputEventInstance
 {
-    public class InputEvent : Instance
+    public class InputEventInstance : Instance
     {
-        public InputEvent(IntPtr handle) : base(handle)
+        public InputEventInstance(IntPtr handle) : base(handle)
         {
             ViewChanged += OnViewChanged;
             FocusChanged += OnFocusChanged;
             Initialize += OnInitialize;
+            InputEvents += OnInputEvents;
+
+            MouseDown += HandleMouseEvents;
+            MouseEnter += HandleMouseEvents;
+            MouseLeave += HandleMouseEvents;
+            MouseMove += HandleMouseEvents;
+            MouseUp += HandleMouseEvents;
+            ContextMenu += HandleMouseEvents;
+
 
             RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
                    PPInputEventClass.Touch);
@@ -33,7 +42,7 @@ namespace InputEvent
             PostMessage(message);
         }
 
-        ~InputEvent() { System.Console.WriteLine("InputEvent destructed"); }
+        ~InputEventInstance() { System.Console.WriteLine("InputEvent destructed"); }
 
         private void OnInitialize(object sender, InitializeEventArgs args)
         {
@@ -52,10 +61,24 @@ namespace InputEvent
             PostMessage($"DidChangeFocus: {hasFocus}");
         }
 
-        public override bool HandleInputEvent(PPResource inputEvent)
+        private void HandleMouseEvents(object sender, MouseEventArgs mouseEvent)
+        {
+            var mouse = $"Mouse event:" +
+                 $" modifier: {ModifierToString((uint)mouseEvent.Modifiers)}" +
+                 $" button: {mouseEvent.Buttons}" +
+                 $" x: {mouseEvent.Position.X}" +
+                 $" y: {mouseEvent.Position.Y}" +
+                 $" click_count: {mouseEvent.Clicks}" +
+                 $" time: {mouseEvent.TimeStamp}" +
+                 $" is_context_menu: {mouseEvent.IsContextMenu}";
+            PostMessage(mouse);
+            mouseEvent.Handled = true;
+        }
+
+        private void OnInputEvents(object sender, InputEvent inputEvent)
         {
 
-            var eventType = PPBInputEvent.GetType(inputEvent);
+            var eventType = inputEvent.EventType;
             switch (eventType)
             {
                 case PPInputEventType.ImeCompositionStart:
@@ -64,28 +87,6 @@ namespace InputEvent
                 case PPInputEventType.ImeText:
                 case PPInputEventType.Undefined:
                     // these cases are not handled.
-                    break;
-
-                case PPInputEventType.Mousedown:
-                case PPInputEventType.Mousemove:
-                case PPInputEventType.Mouseup:
-                case PPInputEventType.Mouseenter:
-                case PPInputEventType.Mouseleave:
-                case PPInputEventType.Contextmenu:
-                    if (PPBMouseInputEvent.IsMouseInputEvent(inputEvent) == PPBool.True)
-                    {
-                        var mouse = $"Mouse event:" +
-                            $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
-                            $" button: {PPBMouseInputEvent.GetButton(inputEvent)}" +
-                            $" x: {PPBMouseInputEvent.GetPosition(inputEvent).x}" +
-                            $" y: {PPBMouseInputEvent.GetPosition(inputEvent).y}" +
-                            $" click_count: {PPBMouseInputEvent.GetClickCount(inputEvent)}" +
-                            $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}" +
-                            $" is_context_menu: {eventType == PPInputEventType.Contextmenu}";
-                        PostMessage(mouse);
-                    }
-
-
                     break;
 
                 case PPInputEventType.Wheel:
@@ -137,7 +138,7 @@ namespace InputEvent
                     break;
             }
 
-            return true;
+            inputEvent.Handled = true;
         }
 
         static string ModifierToString(uint inputEventModifier)
