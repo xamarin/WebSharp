@@ -81,7 +81,7 @@ Add the following code inside the ```<body>``` tag of the html.
       <div id="pluginTarget" />
       <script>
         var pluginTarget = document.getElementById("pluginTarget");
-        var moduleEl = require('electron-dotnet').Embed({
+        var moduleEl = require('electron-prebuilt').Embed({
             name: 'plugin',
             id: 'plugin',
             width: 300,
