@@ -172,4 +172,59 @@ namespace PepperSharp
             get { return PPBWheelInputEvent.GetScrollByPage(this) == PPBool.True; }
         }
     }
+
+    public class KeyboardInputEvent : InputEvent
+    {
+        public KeyboardInputEvent(InputEvent inputEvent)
+        {
+            PPBCore.AddRefResource(inputEvent.Handle);
+            handle = inputEvent.handle;
+        }
+
+        /// <summary>
+        /// Gets the DOM keyCode field for the keyboard event.
+        /// Chrome populates this with the Windows-style Virtual Key code of the key.
+        /// </summary>
+        public uint KeyCode
+        {
+            get { return PPBKeyboardInputEvent.GetKeyCode(this); }
+        }
+
+        /// <summary>
+        /// Gets the typed character for the given character event.
+        ///
+        /// A string representing a single typed character for character
+        /// input events. For non-character input events the return value will be an
+        /// empty string.
+        /// </summary>
+        public string CharacterText
+        {
+            get
+            {
+                var ct = (Var)PPBKeyboardInputEvent.GetCharacterText(this);
+                if (ct.IsString)
+                    return ct.AsString();
+                else
+                    return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets the DOM |code| for the keyboard event.
+        //
+        /// A string representing a physical key that was pressed to
+        /// generate this event.
+        /// </summary>
+        public string Code
+        {
+            get
+            {
+                var code = (Var)PPBKeyboardInputEvent.GetCode(this);
+                if (code.IsString)
+                    return code.AsString();
+                else
+                    return string.Empty;
+            }
+        }
+    }
 }

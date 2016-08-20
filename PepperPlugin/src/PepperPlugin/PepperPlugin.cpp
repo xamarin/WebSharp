@@ -572,6 +572,18 @@ public:
 				return *(bool *)mono_object_unbox(result);
 
 		}
+		case PP_INPUTEVENT_TYPE_RAWKEYDOWN:
+		case PP_INPUTEVENT_TYPE_KEYUP:
+		case PP_INPUTEVENT_TYPE_CHAR:
+		case PP_INPUTEVENT_TYPE_KEYDOWN:
+		{
+			args[0] = create_managed_wrapper(args, "PepperSharp", "KeyboardInputEvent", images, "PepperSharp.InputEvent");
+
+			MonoObject *result = NULL;
+			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			if (result)
+				return *(bool *)mono_object_unbox(result);
+		}
 		default:
 		{
 			MonoObject *result = NULL;

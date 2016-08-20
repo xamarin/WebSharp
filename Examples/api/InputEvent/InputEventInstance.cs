@@ -19,7 +19,13 @@ namespace InputEventInstance
             MouseMove += HandleMouseEvents;
             MouseUp += HandleMouseEvents;
             ContextMenu += HandleMouseEvents;
+
             Wheel += HandleWheel;
+
+            KeyUp += HandleKeyboardEvents;
+            KeyDown += HandleKeyboardEvents;
+            KeyChar += HandleKeyboardEvents;
+            RawKeyDown += HandleKeyboardEvents;
 
 
             RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
@@ -90,6 +96,19 @@ namespace InputEventInstance
             PostMessage(wheel);
         }
 
+        private void HandleKeyboardEvents(object sender, KeyboardEventArgs inputEvent)
+        {
+            var keyboard = "Key event:" +
+                $" modifier: {ModifierToString((uint)inputEvent.Modifiers)}" +
+                $" key_code: {inputEvent.Code}" +
+                $" time: {inputEvent.TimeStamp}" +
+            $" text: {inputEvent.CharacterText}";
+
+            PostMessage(keyboard);
+
+        }
+
+
         private void OnInputEvents(object sender, InputEvent inputEvent)
         {
 
@@ -103,25 +122,6 @@ namespace InputEventInstance
                 case PPInputEventType.Undefined:
                     // these cases are not handled.
                     break;
-
-                case PPInputEventType.Rawkeydown:
-                case PPInputEventType.Keyup:
-                case PPInputEventType.Char:
-                case PPInputEventType.Keydown:
-
-                    if (PPBKeyboardInputEvent.IsKeyboardInputEvent(inputEvent) == PPBool.True)
-                    {
-
-                        var keyboard = "Key event:" +
-                            $" modifier: {ModifierToString(PPBInputEvent.GetModifiers(inputEvent))}" +
-                            $" key_code: {((Var)PPBKeyboardInputEvent.GetCode(inputEvent)).AsString()}" +
-                            $" time: {PPBInputEvent.GetTimeStamp(inputEvent)}" +
-                        $" text: {((Var)PPBKeyboardInputEvent.GetCharacterText(inputEvent)).DebugString()}";
-                        
-                        PostMessage(keyboard);
-                    }
-                    break;
-
 
                 case PPInputEventType.Touchstart:
                 case PPInputEventType.Touchmove:

@@ -85,7 +85,7 @@ namespace PepperSharp
 
         /// <summary>
         /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
-        /// that represents a ContextMenu InputEvent.
+        /// that represents a Wheel InputEvent.
         /// </summary>
         public event EventHandler<WheelEventArgs> Wheel;
 
@@ -109,6 +109,50 @@ namespace PepperSharp
 
         }
 
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a KeyboardInputEvent for KeyUp.
+        /// </summary>
+        public event EventHandler<KeyboardEventArgs> KeyUp;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a KeyboardInputEvent for KeyDown.
+        /// </summary>
+        public event EventHandler<KeyboardEventArgs> KeyDown;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a KeyboardInputEvent for Char.
+        /// </summary>
+        public event EventHandler<KeyboardEventArgs> KeyChar;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a KeyboardInputEvent for RawKeydown.
+        /// </summary>
+        public event EventHandler<KeyboardEventArgs> RawKeyDown;
+
+
+        public class KeyboardEventArgs : EventArgs
+        {
+            public uint KeyCode{ get; private set; }
+            public string CharacterText { get; private set; }
+            public string Code { get; private set; }
+            public double TimeStamp { get; private set; }
+            public PPInputEventModifier Modifiers { get; private set; }
+            public bool Handled { get; set; } = false;
+
+            public KeyboardEventArgs(uint keyCode, string text, string code, double timeStamp, PPInputEventModifier modifiers)
+            {
+                KeyCode = keyCode;
+                CharacterText = text;
+                Code = code;
+                TimeStamp = timeStamp;
+                Modifiers = modifiers;
+            }
+
+        }
 
         // Custom class to hold Initialize Cancelable Event event info
         public class InitializeEventArgs : CancelEventArgs
@@ -289,6 +333,26 @@ namespace PepperSharp
                 var wieArgs = new WheelEventArgs(wie.Delta, wie.Ticks, wie.IsScrollByPage, wie.TimeStamp, wie.Modifiers);
                 handled = OnWheel(wieArgs);
             }
+            else if (inputEvent is KeyboardInputEvent)
+            {
+                var kbie = (KeyboardInputEvent)inputEvent;
+                var kbieArgs = new KeyboardEventArgs(kbie.KeyCode, kbie.CharacterText, kbie.Code, kbie.TimeStamp, kbie.Modifiers);
+                switch (kbie.EventType)
+                {
+                    case PPInputEventType.Keyup:
+                        handled = OnKeyUp(kbieArgs);
+                        break;
+                    case PPInputEventType.Keydown:
+                        handled = OnKeyDown(kbieArgs);
+                        break;
+                    case PPInputEventType.Char:
+                        handled = OnKeyChar(kbieArgs);
+                        break;
+                    case PPInputEventType.Rawkeydown:
+                        handled = OnRawKeyDown(kbieArgs);
+                        break;
+                }
+            }
 
             var handler = InputEvents;
             if (handler != null)
@@ -345,6 +409,30 @@ namespace PepperSharp
         protected virtual bool OnWheel (WheelEventArgs e)
         {
             Wheel?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnKeyUp(KeyboardEventArgs e)
+        {
+            KeyUp?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnKeyDown(KeyboardEventArgs e)
+        {
+            KeyDown?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnKeyChar(KeyboardEventArgs e)
+        {
+            KeyChar?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnRawKeyDown(KeyboardEventArgs e)
+        {
+            RawKeyDown?.Invoke(this, e);
             return e.Handled;
         }
 
@@ -505,9 +593,9 @@ namespace PepperSharp
         /// <summary>
         /// IsFullFrame() determines if the instance is full-frame (repr).
         /// 
-        ///Such an instance represents the entire document in a frame rather than an embedded resource.
-        ///This can happen if the user does a top-level navigation or the page specifies an iframe to a 
-        ///resource with a MIME type registered by the module.
+        /// Such an instance represents the entire document in a frame rather than an embedded resource.
+        /// This can happen if the user does a top-level navigation or the page specifies an iframe to a 
+        /// resource with a MIME type registered by the module.
         /// </summary>
         public bool IsFullFrame
         {

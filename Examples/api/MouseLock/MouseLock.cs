@@ -38,13 +38,14 @@ namespace MouseLockInstance
             // Setup our listeners for mouselock
             MouseLocked += OnMouseLocked;
             MouseUnLocked += OnMouseUnLocked;
-            InputEvents += OnHandleInputEvent;
 
             ViewChanged += OnViewChanged;
             Initialize += OnInitialize;
 
             MouseDown += OnMouseDown;
             MouseMove += OnMouseMove;
+
+            KeyDown += OnKeyDown;
         }
 
         ~MouseLockInstance() { System.Console.WriteLine("MouseLock destructed"); }
@@ -53,7 +54,6 @@ namespace MouseLockInstance
         {
             LogToConsole(PPLogLevel.Log, "Hello from MouseLock using C#");
             RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Keyboard);
-
         }
 
         private void OnViewChanged(object sender, View view)
@@ -63,7 +63,7 @@ namespace MouseLockInstance
             // DidChangeView can get called for many reasons, so we only want to
             // rebuild the device context if we really need to.
 
-            if ((size_.Width == viewRect.Size.Width && size_.Height == viewRect.Size.Height) &&
+            if ((size_ == viewRect.Size) &&
                 (was_fullscreen_ == view.IsFullScreen) && 
                 is_context_bound_)
             {
@@ -122,7 +122,7 @@ namespace MouseLockInstance
             mouse_locked_ = result == PPError.Ok;
             if (result != PPError.Ok)
             {
-                Log($"Mouselock failed with failed with error number {result}.\n");
+                Log($"Mouselock failed with error number {result}.\n");
             }
             mouse_movement_ = PPPoint.Zero;
             Paint();
@@ -381,83 +381,44 @@ namespace MouseLockInstance
             mouseEvent.Handled = true;
         }
 
-        private void OnHandleInputEvent(object sender, InputEvent inputEvent)
+        private void OnKeyDown(object sender, KeyboardEventArgs keyboardEvent)
         {
-
-            var eventType = inputEvent.EventType;
-            switch (eventType)
+            // Switch in and out of fullscreen when 'Enter' is hit
+            if (keyboardEvent.KeyCode == kReturnKeyCode)
             {
+                // Ignore switch if in transition
+                if (!is_context_bound_)
+                {
+                    keyboardEvent.Handled = true;
+                    return;
 
-                case PPInputEventType.Keydown:
+                }
 
-                    if (PPBKeyboardInputEvent.IsKeyboardInputEvent(inputEvent) == PPBool.True)
+                if (PPBFullscreen.IsFullscreen(this) == PPBool.True)
+                {
+                    if (PPBFullscreen.SetFullscreen(this, PPBool.False) != PPBool.True)
                     {
-
-                        // Switch in and out of fullscreen when 'Enter' is hit
-                        if (PPBKeyboardInputEvent.GetKeyCode(inputEvent) == kReturnKeyCode)
-                        {
-                            // Ignore switch if in transition
-                            if (!is_context_bound_)
-                            {
-                                inputEvent.Handled = true;
-                                return;
-
-                            }
-
-                            if (PPBFullscreen.IsFullscreen(this) == PPBool.True)
-                            {
-                                if (PPBFullscreen.SetFullscreen(this, PPBool.False) != PPBool.True)
-                                {
-                                    Log("Could not leave fullscreen mode\n");
-                                }
-                                else
-                                {
-                                    is_context_bound_ = false;
-                                }
-                            }
-                            else
-                            {
-                                if (PPBFullscreen.SetFullscreen(this, PPBool.True) != PPBool.True)
-                                {
-                                    Log("Could not enter fullscreen mode\n");
-                                }
-                                else
-                                {
-                                    is_context_bound_ = false;
-                                }
-                            }
-
-                        }
-                        inputEvent.Handled = true;
-                        return;
+                        Log("Could not leave fullscreen mode\n");
                     }
-                    inputEvent.Handled = false;
-                    return;
-
-
-                case PPInputEventType.Mouseup:
-                case PPInputEventType.Mouseenter:
-                case PPInputEventType.Mouseleave:
-                case PPInputEventType.Wheel:
-                case PPInputEventType.Rawkeydown:
-                case PPInputEventType.Keyup:
-                case PPInputEventType.Char:
-                case PPInputEventType.Contextmenu:
-                case PPInputEventType.ImeCompositionStart:
-                case PPInputEventType.ImeCompositionUpdate:
-                case PPInputEventType.ImeCompositionEnd:
-                case PPInputEventType.ImeText:
-                case PPInputEventType.Undefined:
-                case PPInputEventType.Touchstart:
-                case PPInputEventType.Touchmove:
-                case PPInputEventType.Touchend:
-                case PPInputEventType.Touchcancel:
-                default:
-                    inputEvent.Handled = false;
-                    return;
+                    else
+                    {
+                        is_context_bound_ = false;
+                    }
+                }
+                else
+                {
+                    if (PPBFullscreen.SetFullscreen(this, PPBool.True) != PPBool.True)
+                    {
+                        Log("Could not enter fullscreen mode\n");
+                    }
+                    else
+                    {
+                        is_context_bound_ = false;
+                    }
+                }
 
             }
-
+            keyboardEvent.Handled = true;
         }
     }
 }

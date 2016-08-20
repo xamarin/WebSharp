@@ -172,3 +172,24 @@ WheelInputEvent
 [x] FloatPoint GetDelta() const;
 [x] FloatPoint GetTicks() const;
 [x] bool GetScrollByPage() const;
+
+KeyboardInputEvent
+---
+
+[x] explicit KeyboardInputEvent(const InputEvent& event);
+[ ] KeyboardInputEvent(const InstanceHandle& instance,
+                     PP_InputEvent_Type type,
+                     PP_TimeTicks time_stamp,
+                     uint32_t modifiers,
+                     uint32_t key_code,
+                     const Var& character_text);
+[ ] KeyboardInputEvent(const InstanceHandle& instance,
+                     PP_InputEvent_Type type,
+                     PP_TimeTicks time_stamp,
+                     uint32_t modifiers,
+                     uint32_t key_code,
+                     const Var& character_text,
+                     const Var& code);
+[x] uint32_t GetKeyCode() const;
+[x] Var GetCharacterText() const;
+[x] Var GetCode() const;
