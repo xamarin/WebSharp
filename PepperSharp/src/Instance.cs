@@ -657,5 +657,56 @@ namespace PepperSharp
                 return PPBMouseCursor.SetCursor(this, type, imageData, hs) == PPBool.True ? true : false;
         }
 
+        /// <summary>
+        /// Getter and Setter that checks whether the module instance is currently in
+        /// fullscreen mode or sets the instance to full screen mode.
+        /// 
+        /// The setter switches the module instance to and from fullscreen
+        /// mode.
+        /// 
+        /// The transition to and from fullscreen mode is asynchronous. During the
+        /// transition, IsFullscreen() will return the previous value and
+        /// no 2D or 3D device can be bound. The transition ends at DidChangeView()
+        /// when IsFullscreen() returns the new value. You might receive other
+        /// DidChangeView() calls while in transition.
+        ///
+        /// The transition to fullscreen mode can only occur while the browser is
+        /// processing a user gesture, even if <code>true</code> is returned.
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Throws InvalidOperationException if there was an error transitioning to or from
+        /// fullscreen mode.
+        /// </remarks>
+        public bool IsFullScreen
+        {
+            get { return PPBFullscreen.IsFullscreen(this) == PPBool.True; }
+            set
+            {
+                if (PPBFullscreen.SetFullscreen(this, value ? PPBool.True : PPBool.False) == PPBool.False)
+                    throw new InvalidOperationException("Setting full screen failed.");
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of the screen in pixels. The module instance
+        /// will be resized to this size when IsFullscreen is set to true to enter
+        /// fullscreen mode.
+        /// </summary>
+        /// <remarks>
+        /// Throws InvalidOperationException if there was an error obtaining the screen size for
+        /// some reason.
+        /// </remarks>
+        public PPSize ScreenSize
+        {
+            get
+            {
+                var outSize = PPSize.Zero;
+                if (PPBFullscreen.GetScreenSize(this, out outSize) == PPBool.False)
+                    throw new InvalidOperationException("Obtaining screen size failed.");
+                return outSize;
+            }
+        }
+
     }
 }

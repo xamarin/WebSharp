@@ -350,7 +350,7 @@ namespace MouseLockInstance
         void DidFlush(PPError result)
         {
             if (result != 0)
-                Log("Flushed failed with error number %d.\n", result);
+                Log("Flushed failed with error number {0}.\n", result);
             waiting_for_flush_completion_ = false;
         }
 
@@ -394,26 +394,29 @@ namespace MouseLockInstance
 
                 }
 
-                if (PPBFullscreen.IsFullscreen(this) == PPBool.True)
+                if (IsFullScreen)
                 {
-                    if (PPBFullscreen.SetFullscreen(this, PPBool.False) != PPBool.True)
+                    try
+                    {
+                        IsFullScreen = false;
+                        is_context_bound_ = false;
+                    }
+                    catch
                     {
                         Log("Could not leave fullscreen mode\n");
-                    }
-                    else
-                    {
-                        is_context_bound_ = false;
                     }
                 }
                 else
                 {
-                    if (PPBFullscreen.SetFullscreen(this, PPBool.True) != PPBool.True)
+                    try
+                    {
+                        Log("Setting to fullscreen size: {0}", ScreenSize);
+                        IsFullScreen = true;
+                        is_context_bound_ = false;
+                    }
+                    catch
                     {
                         Log("Could not enter fullscreen mode\n");
-                    }
-                    else
-                    {
-                        is_context_bound_ = false;
                     }
                 }
 

@@ -193,3 +193,10 @@ KeyboardInputEvent
 [x] uint32_t GetKeyCode() const;
 [x] Var GetCharacterText() const;
 [x] Var GetCode() const;
+
+Fullscreen
+---
+
+[x] bool IsFullscreen();
+[x] bool SetFullscreen(bool fullscreen);
+[x] bool GetScreenSize(Size* size);
