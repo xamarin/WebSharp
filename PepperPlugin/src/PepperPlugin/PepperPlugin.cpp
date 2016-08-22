@@ -210,6 +210,7 @@ namespace pepper {
         
         // finally, invoke the constructor
         MonoObject* exception = NULL;
+        
         *result = mono_runtime_invoke(method, instance, args, &exception);
         if (exception != nullptr)
         {
@@ -225,11 +226,20 @@ namespace pepper {
         
     }
     
-    bool mono_invoke_with_method(MonoMethod* method, void *args[], MonoObject* instance, MonoObject **result)
+    bool mono_invoke_with_desc(char* desc, void *args[], MonoClass* klass,
+                               int32_t instanceHandle, MonoObject **result)
+    {
+        auto target = mono_gchandle_get_target (instanceHandle);
+        return mono_invoke_with_desc(desc, args, klass, target, result);
+    }
+
+
+    bool mono_invoke_with_method(MonoMethod* method, void *args[], int32_t instanceHandle, MonoObject **result)
     {
         
         // finally, invoke the constructor
         MonoObject* exception = NULL;
+        auto instance = mono_gchandle_get_target (instanceHandle);
         *result = mono_runtime_invoke(method, instance, args, &exception);
         if (exception != nullptr)
         {
@@ -476,8 +486,9 @@ public:
 		void *args[3] = { 0 };
 		args[0] = &instance;
 
-        pluginInstance = create_managed_wrapper(args, nameSpace.c_str(), className.c_str(), images);
-        
+        auto pluginInstance = create_managed_wrapper(args, nameSpace.c_str(), className.c_str(), images);
+        pluginHandle = mono_gchandle_new(pluginInstance, /*pinned=*/true);
+
         // Call Init method
         printf("Calling Init on instance of: %s\n", className.c_str());
         
@@ -485,7 +496,7 @@ public:
         args[1] = parmsArgN;
         args[2] = parmsArgV;
         
-        if (mono_invoke_with_desc(":Init(int,string[],string[])", args, instanceClass, pluginInstance, &result))
+        if (mono_invoke_with_desc(":Init(int,string[],string[])", args, instanceClass, pluginHandle, &result))
             return *(bool *)mono_object_unbox(result);
         
         return true;
@@ -502,7 +513,7 @@ public:
 
 		args[0] = create_managed_wrapper(args, "PepperSharp", "View", images, "PepperSharp.PPResource");
         MonoObject *result = NULL;
-        mono_invoke_with_method(did_change_view, args, pluginInstance, &result);
+        mono_invoke_with_method(did_change_view, args, pluginHandle, &result);
     }
     
     virtual void DidChangeFocus(bool has_focus)
@@ -514,7 +525,7 @@ public:
         args[0] = &has_focus;
 
         MonoObject *result = NULL;
-        mono_invoke_with_method(did_change_focus, args, pluginInstance, &result);
+        mono_invoke_with_method(did_change_focus, args, pluginHandle, &result);
         
     }
     
@@ -528,7 +539,7 @@ public:
         args[0] = &res;
 
         MonoObject *result = NULL;
-        mono_invoke_with_method(handle_document_load, args, pluginInstance, &result);
+        mono_invoke_with_method(handle_document_load, args, pluginHandle, &result);
         if (result)
             return *(bool *)mono_object_unbox(result);
         
@@ -558,7 +569,7 @@ public:
 			args[0] = create_managed_wrapper(args, "PepperSharp", "MouseInputEvent", images, "PepperSharp.InputEvent");
 
 			MonoObject *result = NULL;
-			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			mono_invoke_with_method(handle_input_event, args, pluginHandle, &result);
 			if (result)
 				return *(bool *)mono_object_unbox(result);
 		}
@@ -567,7 +578,7 @@ public:
 			args[0] = create_managed_wrapper(args, "PepperSharp", "WheelInputEvent", images, "PepperSharp.InputEvent");
 
 			MonoObject *result = NULL;
-			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			mono_invoke_with_method(handle_input_event, args, pluginHandle, &result);
 			if (result)
 				return *(bool *)mono_object_unbox(result);
 
@@ -580,14 +591,14 @@ public:
 			args[0] = create_managed_wrapper(args, "PepperSharp", "KeyboardInputEvent", images, "PepperSharp.InputEvent");
 
 			MonoObject *result = NULL;
-			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			mono_invoke_with_method(handle_input_event, args, pluginHandle, &result);
 			if (result)
 				return *(bool *)mono_object_unbox(result);
 		}
 		default:
 		{
 			MonoObject *result = NULL;
-			mono_invoke_with_method(handle_input_event, args, pluginInstance, &result);
+			mono_invoke_with_method(handle_input_event, args, pluginHandle, &result);
 			if (result)
 				return *(bool *)mono_object_unbox(result);
 		}
@@ -607,7 +618,7 @@ public:
 
 		MonoObject* result;
 		args[0] = create_managed_wrapper(args, "PepperSharp", "Var", images, "PepperSharp.PPVar");;
-		mono_invoke_with_method(handle_message, args, pluginInstance, &result);
+		mono_invoke_with_method(handle_message, args, pluginHandle, &result);
         
     }
     
@@ -617,13 +628,14 @@ public:
         if (!mouseLockLost)
             return;
         MonoObject *result = NULL;
-        mono_invoke_with_method(mouseLockLost, NULL, pluginInstance, &result);
+        mono_invoke_with_method(mouseLockLost, NULL, pluginHandle, &result);
     }
     
 private:
     
     MonoClass *instanceClass;
-    MonoObject *pluginInstance;
+    int32_t pluginHandle;
+
     std::vector<MonoImage*> images;
     
     // methods to be called on our instance
