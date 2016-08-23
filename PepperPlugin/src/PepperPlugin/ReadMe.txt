@@ -200,3 +200,33 @@ Fullscreen
 [x] bool IsFullscreen();
 [x] bool SetFullscreen(bool fullscreen);
 [x] bool GetScreenSize(Size* size);
+
+TouchInputEvent
+---
+
+[x] explicit TouchInputEvent(const InputEvent& event);
+[ ] TouchInputEvent(const InstanceHandle& instance,
+                  PP_InputEvent_Type type,
+                  PP_TimeTicks time_stamp,
+                  uint32_t modifiers);
+[x] void AddTouchPoint(PP_TouchListType list, PP_TouchPoint point);
+[x] uint32_t GetTouchCount(PP_TouchListType list) const;
+[x] TouchPoint GetTouchByIndex(PP_TouchListType list, uint32_t index) const;
+[x] TouchPoint GetTouchById(PP_TouchListType list, uint32_t id) const;
+
+IMEInputEvent
+---
+
+[x] explicit IMEInputEvent(const InputEvent& event);
+[ ] IMEInputEvent(const InstanceHandle& instance,
+                PP_InputEvent_Type type,
+                PP_TimeTicks time_stamp,
+                const Var& text,
+                const std::vector<uint32_t>& segment_offsets,
+                int32_t target_segment,
+                const std::pair<uint32_t, uint32_t>& selection);
+[x] Var GetText() const;
+[x] uint32_t GetSegmentNumber() const;
+[x] uint32_t GetSegmentOffset(uint32_t index) const;
+[x] int32_t GetTargetSegment() const;
+[x] void GetSelection(uint32_t* start, uint32_t* end) const;

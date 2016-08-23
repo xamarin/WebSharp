@@ -595,6 +595,18 @@ public:
 			if (result)
 				return *(bool *)mono_object_unbox(result);
 		}
+		case PP_INPUTEVENT_TYPE_TOUCHSTART:
+		case PP_INPUTEVENT_TYPE_TOUCHMOVE:
+		case PP_INPUTEVENT_TYPE_TOUCHEND:
+		case PP_INPUTEVENT_TYPE_TOUCHCANCEL:
+		{
+			args[0] = create_managed_wrapper(args, "PepperSharp", "TouchInputEvent", images, "PepperSharp.InputEvent");
+
+			MonoObject *result = NULL;
+			mono_invoke_with_method(handle_input_event, args, pluginHandle, &result);
+			if (result)
+				return *(bool *)mono_object_unbox(result);
+		}
 		default:
 		{
 			MonoObject *result = NULL;

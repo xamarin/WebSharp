@@ -154,6 +154,54 @@ namespace PepperSharp
 
         }
 
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a TouchInputEvent for TouchStart.
+        /// </summary>
+        public event EventHandler<TouchInputEvent> TouchStart;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a TouchInputEvent for TouchEnd.
+        /// </summary>
+        public event EventHandler<TouchInputEvent> TouchEnd;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a TouchInputEvent for TouchCancel.
+        /// </summary>
+        public event EventHandler<TouchInputEvent> TouchCancel;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a TouchInputEvent for TouchMove.
+        /// </summary>
+        public event EventHandler<TouchInputEvent> TouchMove;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a IMEInputEvent for CompositionEnd.
+        /// </summary>
+        public event EventHandler<IMEInputEvent> IMECompositionEnd;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a IMEInputEvent for CompositionStart.
+        /// </summary>
+        public event EventHandler<IMEInputEvent> IMECompositionStart;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a IMEInputEvent for CompositionUpdate.
+        /// </summary>
+        public event EventHandler<IMEInputEvent> IMECompositionUpdate;
+
+        /// <summary>
+        /// Event raised when the browser calls HandleInputEvent on the DOM element for the instance in JavaScript 
+        /// that represents a IMEInputEvent for Text.
+        /// </summary>
+        public event EventHandler<IMEInputEvent> IMEText;
+
         // Custom class to hold Initialize Cancelable Event event info
         public class InitializeEventArgs : CancelEventArgs
         {
@@ -332,6 +380,7 @@ namespace PepperSharp
                 var wie = (WheelInputEvent)inputEvent;
                 var wieArgs = new WheelEventArgs(wie.Delta, wie.Ticks, wie.IsScrollByPage, wie.TimeStamp, wie.Modifiers);
                 handled = OnWheel(wieArgs);
+                inputEvent.Handled = handled;
             }
             else if (inputEvent is KeyboardInputEvent)
             {
@@ -352,6 +401,47 @@ namespace PepperSharp
                         handled = OnRawKeyDown(kbieArgs);
                         break;
                 }
+                inputEvent.Handled = handled;
+            }
+            else if (inputEvent is TouchInputEvent)
+            {
+                var tie = (TouchInputEvent)inputEvent;
+                switch (tie.EventType)
+                {
+                    case PPInputEventType.Touchstart:
+                        handled = OnTouchStart(tie);
+                        break;
+                    case PPInputEventType.Touchend:
+                        handled = OnTouchEnd(tie);
+                        break;
+                    case PPInputEventType.Touchmove:
+                        handled = OnTouchMove(tie);
+                        break;
+                    case PPInputEventType.Touchcancel:
+                        handled = OnTouchCancel(tie);
+                        break;
+                }
+                inputEvent.Handled = handled;
+            }
+            else if (inputEvent is IMEInputEvent)
+            {
+                var imeie = (IMEInputEvent)inputEvent;
+                switch (imeie.EventType)
+                {
+                    case PPInputEventType.ImeCompositionEnd:
+                        handled = OnIMECompositionEnd(imeie);
+                        break;
+                    case PPInputEventType.ImeCompositionStart:
+                        handled = OnIMECompositionStart(imeie);
+                        break;
+                    case PPInputEventType.ImeCompositionUpdate:
+                        handled = OnIMECompositionUpdate(imeie);
+                        break;
+                    case PPInputEventType.ImeText:
+                        handled = OnIMEText(imeie);
+                        break;
+                }
+                inputEvent.Handled = handled;
             }
 
             var handler = InputEvents;
@@ -433,6 +523,54 @@ namespace PepperSharp
         protected virtual bool OnRawKeyDown(KeyboardEventArgs e)
         {
             RawKeyDown?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnTouchStart(TouchInputEvent e)
+        {
+            TouchStart?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnTouchEnd(TouchInputEvent e)
+        {
+            TouchEnd?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnTouchCancel(TouchInputEvent e)
+        {
+            TouchCancel?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnTouchMove(TouchInputEvent e)
+        {
+            TouchMove?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnIMECompositionStart(IMEInputEvent e)
+        {
+            IMECompositionStart?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnIMECompositionEnd(IMEInputEvent e)
+        {
+            IMECompositionEnd?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnIMECompositionUpdate(IMEInputEvent e)
+        {
+            IMECompositionUpdate?.Invoke(this, e);
+            return e.Handled;
+        }
+
+        protected virtual bool OnIMEText(IMEInputEvent e)
+        {
+            IMEText?.Invoke(this, e);
             return e.Handled;
         }
 

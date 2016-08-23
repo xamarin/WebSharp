@@ -27,6 +27,15 @@ namespace InputEventInstance
             KeyChar += HandleKeyboardEvents;
             RawKeyDown += HandleKeyboardEvents;
 
+            TouchStart += HandleTouchEvents;
+            TouchEnd += HandleTouchEvents;
+            TouchMove += HandleTouchEvents;
+            TouchCancel += HandleTouchEvents;
+
+            IMECompositionEnd += HandleIMEEvents;
+            IMECompositionStart += HandleIMEEvents;
+            IMECompositionUpdate += HandleIMEEvents;
+            IMEText += HandleIMEEvents;
 
             RequestInputEvents(PPInputEventClass.Mouse | PPInputEventClass.Wheel |
                    PPInputEventClass.Touch);
@@ -94,6 +103,7 @@ namespace InputEventInstance
                  $" time: {inputEvent.TimeStamp}";
 
             PostMessage(wheel);
+            inputEvent.Handled = true;
         }
 
         private void HandleKeyboardEvents(object sender, KeyboardEventArgs inputEvent)
@@ -105,37 +115,28 @@ namespace InputEventInstance
             $" text: {inputEvent.CharacterText}";
 
             PostMessage(keyboard);
-
+            inputEvent.Handled = true;
         }
 
+        private void HandleTouchEvents(object sender, TouchInputEvent e)
+        {
+            // These cases are not handled
+        }
+
+        private void HandleIMEEvents(object sender, IMEInputEvent e)
+        {
+            // These cases are not handled
+        }
 
         private void OnInputEvents(object sender, InputEvent inputEvent)
         {
+            if (inputEvent.Handled)
+                return;
 
-            var eventType = inputEvent.EventType;
-            switch (eventType)
-            {
-                case PPInputEventType.ImeCompositionStart:
-                case PPInputEventType.ImeCompositionUpdate:
-                case PPInputEventType.ImeCompositionEnd:
-                case PPInputEventType.ImeText:
-                case PPInputEventType.Undefined:
-                    // these cases are not handled.
-                    break;
-
-                case PPInputEventType.Touchstart:
-                case PPInputEventType.Touchmove:
-                case PPInputEventType.Touchend:
-                case PPInputEventType.Touchcancel:
-                    break;
-                default:
-                    // For any unhandled events, send a message to the browser
-                    // so that the user is aware of these and can investigate.
-                    var message = $"Default (unhandled) event, type={eventType}";
-                    PostMessage(message);
-                    break;
-            }
-
+            // For any unhandled events, send a message to the browser
+            // so that the user is aware of these and can investigate.
+            var message = $"Default (unhandled) event, type={inputEvent.EventType}";
+            PostMessage(message);
             inputEvent.Handled = true;
         }
 

@@ -227,4 +227,134 @@ namespace PepperSharp
             }
         }
     }
+
+    public class TouchInputEvent : InputEvent
+    {
+        public TouchInputEvent(InputEvent inputEvent)
+        {
+            PPBCore.AddRefResource(inputEvent.Handle);
+            handle = inputEvent.handle;
+        }
+
+        /// <summary>
+        /// Adds the touch-point to the specified TouchList.
+        /// </summary>
+        /// <param name="list">The list that will be added to</param>
+        /// <param name="point">PPTouchPoint to add to the PPTouchList</param>
+        void AddTouchPoint(PPTouchListType list, PPTouchPoint point)
+        {
+            PPBTouchInputEvent.AddTouchPoint(this, list, point);
+        }
+
+        /// <summary>
+        /// Return the number of touchpoints in the list
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns>The number of TouchPoints in this TouchList.</returns>
+        uint GetTouchCount(PPTouchListType list)
+        {
+            return PPBTouchInputEvent.GetTouchCount(this, list);
+        }
+
+        /// <summary>
+        /// Returns the specific PPTouchPoint at the given index of the given list
+        /// </summary>
+        /// <param name="list">PPTouchListType</param>
+        /// <param name="index">Index of the touchpoint in the list</param>
+        /// <returns>The TouchPoint at the given index of the given list, or an empty
+        /// TouchPoint if the index is out of range.</returns>
+        PPTouchPoint GetTouchByIndex(PPTouchListType list, uint index)
+        {
+            return PPBTouchInputEvent.GetTouchByIndex(this, list, index);
+        }
+
+        /// <summary>
+        /// Returns the PPTouchPoint in the given list with the given identifier
+        /// </summary>
+        /// <param name="list">PPTouchList</param>
+        /// <param name="id">Id of the touchpoint in the list.</param>
+        /// <returns>The TouchPoint in the given list with the given identifier, or an
+        /// empty TouchPoint if the list does not contain a TouchPoint with that identifier.
+        /// </returns>
+        PPTouchPoint GetTouchById(PPTouchListType list, uint id)
+        {
+            return PPBTouchInputEvent.GetTouchByIndex(this, list, id);
+        }
+    }
+
+    public class IMEInputEvent : InputEvent
+    {
+        public IMEInputEvent(InputEvent inputEvent)
+        {
+            PPBCore.AddRefResource(inputEvent.Handle);
+            handle = inputEvent.handle;
+        }
+
+        /// <summary>
+        /// Getter that returns the composition text as a UTF-8 string for the given IME event.
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                var txt = (Var)PPBIMEInputEvent.GetText(this);
+                if (txt.IsString)
+                    return txt.AsString();
+                else
+                    return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Getter that returns the number of segments in the composition text.
+        ///
+        /// For events other than COMPOSITION_UPDATE, returns 0.
+        /// </summary>
+        public uint SegmentNumber
+        {
+            get { return PPBIMEInputEvent.GetSegmentNumber(this);  }
+        }
+
+        /// <summary>
+        /// Returns the position of the index-th segmentation point in the composition
+        /// text. The position is given by a byte-offset (not a character-offset) of
+        /// the string returned by GetText(). It always satisfies
+        /// 0=GetSegmentOffset(0) < ... < GetSegmentOffset(i) < GetSegmentOffset(i+1)
+        /// < ... < GetSegmentOffset(GetSegmentNumber())=(byte-length of GetText()).
+        /// Note that [GetSegmentOffset(i), GetSegmentOffset(i+1)) represents the
+        /// range of the i-th segment, and hence GetSegmentNumber() can be a valid
+        /// argument to this function instead of an off-by-1 error.
+        /// </summary>
+        /// <param name="index">An integer indicating a segment.</param>
+        /// <returns>
+        /// The byte-offset of the segmentation point.If the event is not
+        /// COMPOSITION_UPDATE or index is out of range, returns 0. 
+        /// </returns>
+        public uint GetSegmentOffset(uint index)
+        {
+            return PPBIMEInputEvent.GetSegmentOffset(this, index);
+        }
+
+        /// <summary>
+        /// Getter that returns the index of the current target segment of composition.
+        ///
+        /// When there is no active target segment, or the event is not COMPOSITION_UPDATE,
+        /// returns -1.
+        /// </summary>
+        public int TargetSegment
+        {
+            get { return PPBIMEInputEvent.GetTargetSegment(this);  }
+        }
+
+        /// <summary>
+        /// Obtains the range selected by caret in the composition text.
+        /// </summary>
+        /// <param name="start">An integer indicating a start offset of selection range.</param>
+        /// <param name="end">An integer indicating an end offset of selection range.</param>
+        public void GetSelection(out uint start, out uint end)
+        {
+            PPBIMEInputEvent.GetSelection(this, out start, out end);
+        }
+    }
+
 }
