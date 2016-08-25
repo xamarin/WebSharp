@@ -195,6 +195,13 @@ namespace pepper {
         {
             monoDomain = load_domain();
         }
+
+		// Some API's when embedded will throw something like the following:
+		// System.Configuration.ConfigurationErrorsException: Error Initializing the configuration system. 
+		// ---> System.ArgumentException: The 'ExeConfigFilename' argument cannot be null.
+		// What we do here is set the config in the domain which seems to get around this error.
+		mono_domain_set_config(monoDomain, ".", "");
+
     }
     
     bool mono_invoke_with_desc(char* desc, void *args[], MonoClass* klass,
@@ -601,6 +608,18 @@ public:
 		case PP_INPUTEVENT_TYPE_TOUCHCANCEL:
 		{
 			args[0] = create_managed_wrapper(args, "PepperSharp", "TouchInputEvent", images, "PepperSharp.InputEvent");
+
+			MonoObject *result = NULL;
+			mono_invoke_with_method(handle_input_event, args, pluginHandle, &result);
+			if (result)
+				return *(bool *)mono_object_unbox(result);
+		}
+		case PP_INPUTEVENT_TYPE_IME_COMPOSITION_END:
+		case PP_INPUTEVENT_TYPE_IME_COMPOSITION_START:
+		case PP_INPUTEVENT_TYPE_IME_COMPOSITION_UPDATE:
+		case PP_INPUTEVENT_TYPE_IME_TEXT:
+		{
+			args[0] = create_managed_wrapper(args, "PepperSharp", "IMEInputEvent", images, "PepperSharp.InputEvent");
 
 			MonoObject *result = NULL;
 			mono_invoke_with_method(handle_input_event, args, pluginHandle, &result);
