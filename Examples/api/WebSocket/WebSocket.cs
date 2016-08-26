@@ -2,14 +2,16 @@
 using System.Text;
 
 using PepperSharp;
+using System.Linq;
 
 namespace WebSocket
 {
     public class WebSocket : Instance
     {
 
-        PPResource websocket_;
-        PPVar receive_var_ = new PPVar();
+        PepperSharp.WebSocket webSocket2;
+        ArraySegment<byte> rcvBuffer = new ArraySegment<byte>();
+
 
         public WebSocket(IntPtr handle) : base(handle)
         {
@@ -42,148 +44,138 @@ namespace WebSocket
                 case 'b':
                     // The command 'b' requests to send a message as a binary frame. The
                     // message is passed as an argument like "b;message".
-                    SendAsBinary(message.Substring(2));
+                    Send(message.Substring(2), WebSocketMessageType.Binary);
                     break;
                 case 't':
                     // The command 't' requests to send a message as a text frame. The message
                     // is passed as an argument like "t;message".
-                    SendAsText(message.Substring(2));
+                    Send(message.Substring(2), WebSocketMessageType.Text);
                     break;
             }
         }
 
-        void Open(string url)
+         void Open(string url)
         {
-            websocket_ = PPBWebSocket.Create(this);
-            if (PPBWebSocket.IsWebSocket(websocket_) != PPBool.True)
-                return;
-            PPBWebSocket.Connect(websocket_, new Var(url), null, 0, new CompletionCallback<WebSocket>(OnConnectCompletionCallback, this).Callback);
+            webSocket2 = new PepperSharp.WebSocket(this);
+
+            webSocket2.Connection += HandleConnection;
+            webSocket2.Closed += HandleClosed;
+            webSocket2.ReceiveData += HandleReceiveData;
+
             PostMessage("connecting...");
+            webSocket2.Connect(new Uri(url));
         }
 
-        void OnConnectCompletionCallback(PPError result, WebSocket instance)
+         private void HandleConnection(object sender, PPError result)
         {
-            instance.OnConnectCompletion((PPError)result);
-        }
-
-        void OnConnectCompletion(PPError result)
-        {
-            if (result != PPError.Ok)
+            var ws = sender as PepperSharp.WebSocket;
+            if (ws == null || ws.State != PepperSharp.WebSocketState.Open)
             {
-                PostMessage("connection failed");
+                PostMessage($"connection failed {result}");
                 return;
             }
+
             PostMessage("connected");
             Receive();
         }
- 
 
         void Receive()
         {
-            // |receive_var_| must be valid until |callback| is invoked.
-            // Just use a member variable.
-            PPBWebSocket.ReceiveMessage(websocket_, out receive_var_, new CompletionCallback<WebSocket>(OnReceiveCompletionCallback, this));
+            var rcvBytes = new byte[128];
+            rcvBuffer = new ArraySegment<byte>(rcvBytes);
+            var receiveResult = webSocket2.Receive(rcvBuffer);
+            if (receiveResult != PPError.OkCompletionpending)
+                PostMessage($"receive failed {receiveResult}");
         }
 
-        void OnReceiveCompletionCallback(PPError result, WebSocket instance)
+        private void HandleReceiveData(object sender, PepperSharp.WebSocketReceiveResult rcvResult)
         {
-            instance.OnReceiveCompletion((PPError)result);
-        }
+            if (rcvResult.MessageType == PepperSharp.WebSocketMessageType.Close)
+                return;
 
-        void OnReceiveCompletion(PPError result)
-        {
-            if (result == PPError.Ok)
+            if (rcvResult.MessageType == PepperSharp.WebSocketMessageType.Text)
             {
-                if (((Var)receive_var_).IsArrayBuffer)
-                {
-
-                    var arrayBuffer = new VarArrayBuffer(receive_var_);
-                    var messageText = ArrayToString(arrayBuffer);
-                    PostMessage($"receive (binary): {messageText}");
-                }
-                else
-                {
-                    PostMessage("receive (text): " + (Var)receive_var_);
-                }
+                byte[] msgBytes = rcvBuffer.Skip(rcvBuffer.Offset).Take((int)rcvResult.Count).ToArray();
+                string rcvMsg = Encoding.UTF8.GetString(msgBytes);
+                PostMessage($"receive (text): {rcvMsg}");
             }
+            else if (rcvResult.MessageType == PepperSharp.WebSocketMessageType.Binary)
+            {
+
+                byte[] msgBytes = rcvBuffer.Skip(rcvBuffer.Offset).Take((int)rcvResult.Count).ToArray();
+                var messageText = ArrayToString(msgBytes);
+                PostMessage($"receive (binary): {messageText}");
+            }
+
             Receive();
         }
 
+
         bool IsConnected()
         {
-            if (websocket_.ppresource > 0 && PPBWebSocket.IsWebSocket(websocket_) != PPBool.True)
-                return false;
-            if (PPBWebSocket.GetReadyState(websocket_) != PPWebSocketReadyState.Open)
-                return false;
-            return true;
+            if (webSocket2.State == PepperSharp.WebSocketState.Open)
+                return true;
+
+            if (webSocket2 != null)
+                Console.WriteLine($"Socket is closed {webSocket2.CloseStatus} / {webSocket2.CloseStatusDescription}");
+
+            return false;
         }
 
         void Close()
         {
             if (!IsConnected())
                 return;
-            PPBWebSocket.Close(websocket_, (int)PPWebSocketCloseCode.WebsocketstatuscodeNormalClosure,
-                            new Var("bye"), new CompletionCallback<WebSocket>(OnCloseCompletionCallback, this));
+
+            webSocket2.Close(PepperSharp.WebSocketCloseStatus.NormalClosure, "Bye");
         }
 
-        void OnCloseCompletionCallback(PPError result, WebSocket instance)
+        private void HandleClosed(object sender, PPError e)
         {
-            instance.OnCloseCompletion((PPError)result);
-        }
 
-        void OnCloseCompletion(PPError result)
-        {
-            PostMessage(new Var(PPError.Ok == result ? "closed" : "abnormally closed"));
-        }
+            if (e != PPError.Ok)
+                PostMessage($"error closing {e} - {webSocket2.CloseStatus} / {webSocket2.CloseStatusDescription}");
 
-        void SendAsText(string message)
+            PostMessage(webSocket2.State == PepperSharp.WebSocketState.Closed 
+                ? $"closed {webSocket2.CloseStatus} / {webSocket2.CloseStatusDescription}" 
+                : $"abnormally closed {webSocket2.CloseStatus} / {webSocket2.CloseStatusDescription}");
+        }
+        
+        void Send(string message, PepperSharp.WebSocketMessageType messageType)
         {
-            if (!IsConnected())
-                return;
-            PPBWebSocket.SendMessage(websocket_, new Var(message));
-            PostMessage("send (text): " + message);
+            byte[] sendBytes = Encoding.UTF8.GetBytes(message);
+            var sendBuffer = new ArraySegment<byte>(sendBytes);
+
+            var sendResult = webSocket2.Send(sendBuffer, messageType);
+
+            var msgBytes = (messageType == PepperSharp.WebSocketMessageType.Text) ? message : ArrayToString(sendBytes);
+            if (sendResult != PPError.Ok)
+                PostMessage($"send failed ({messageType}) - {sendResult}: {msgBytes}");
+            else
+                PostMessage($"send ({messageType}): {msgBytes}");
         }
 
         const int MAX_TO_CONVERT = 8;
         const int BYTES_PER_CHAR = 4;
         const int TAIL_AND_NUL_SIZE = 4;
 
-        static string ArrayToString(VarArrayBuffer array)
+        static string ArrayToString(byte[] array)
         {
             var hexString = new StringBuilder();
 
             int offs = 0;
-            var data = array.Map();
             var size = 0;
-            for (offs = 0; offs < array.ByteLength && offs < MAX_TO_CONVERT; offs++, size++)
+            for (offs = 0; offs < array.Length && offs < MAX_TO_CONVERT; offs++, size++)
             {
-                hexString.Append(data[offs].ToString("x").ToUpper());
+                hexString.Append(array[offs].ToString("x").ToUpper());
                 hexString.Append("h ");
             }
 
             hexString.Append("...");
 
-            array.Unmap();
             return hexString.ToString();
         }
 
-        void SendAsBinary(string message)
-        {
-            if (!IsConnected())
-                return;
-
-            var size = (uint)message.Length;
-            var arrayBuffer = new VarArrayBuffer(size);
-
-            var data = arrayBuffer.Map();
-            for (int i = 0; i < size; ++i)
-                data[i] = (byte)message[i];
-            arrayBuffer.Flush();
-            arrayBuffer.Unmap();
-            PPBWebSocket.SendMessage(websocket_, arrayBuffer);
-            var messageText = ArrayToString(arrayBuffer);
-            PostMessage($"send (binary): {messageText}");
-        }
     }
-
+    
 }

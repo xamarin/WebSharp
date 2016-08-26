@@ -181,7 +181,7 @@ namespace PepperSharp
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!IsEmpty)
             {
