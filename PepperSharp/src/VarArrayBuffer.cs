@@ -71,7 +71,8 @@ namespace PepperSharp
             dataPtr = PPBVarArrayBuffer.Map(ppvar);
             var numBytes = ByteLength;
             dataMap = new byte[numBytes];
-            Marshal.Copy(dataPtr, dataMap, 0, dataMap.Length);
+            if (numBytes > 0)
+                Marshal.Copy(dataPtr, dataMap, 0, dataMap.Length);
             isMapped = true;
             return dataMap;
         }
@@ -111,7 +112,7 @@ namespace PepperSharp
         /// </summary>
         public void Flush()
         {
-            if (isMapped)
+            if (isMapped && dataMap.Length > 0)
                 Marshal.Copy(dataMap, 0, dataPtr, dataMap.Length);
         }
 
