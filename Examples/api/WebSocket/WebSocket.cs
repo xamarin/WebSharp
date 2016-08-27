@@ -63,7 +63,15 @@ namespace WebSocket
             webSocket2.ReceiveData += HandleReceiveData;
 
             PostMessage("connecting...");
-            webSocket2.Connect(new Uri(url));
+
+            try 
+            {
+                webSocket2.Connect (url);
+            }
+            catch (Exception exc)
+            {
+                PostMessage ($"connection failed {exc.Message}");
+            }
         }
 
          private void HandleConnection(object sender, PPError result)
