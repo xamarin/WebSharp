@@ -140,8 +140,13 @@ namespace PepperSharp
         // that version 1.0 of this method has a different API to later versions.
         public static PPVar VarFromUtf8Helper(string utf8_str)
         {
-            var bytes = Encoding.UTF8.GetBytes (utf8_str);
-            return PPBVar.VarFromUtf8(bytes, (uint)bytes.Length);
+            if (string.IsNullOrEmpty(utf8_str))
+                return PPBVar.VarUtf8Empty();
+            else
+            {
+                var bytes = Encoding.UTF8.GetBytes(utf8_str);
+                return PPBVar.VarFromUtf8(bytes, (uint)bytes.Length);
+            }
         }
 
         public bool AsBoolean()

@@ -85,6 +85,15 @@ namespace PepperSharp {
         {
             return Marshal.PtrToStringAnsi(_VarToUtf8(var, out len));
         }
+
+        /// <summary>
+        /// Helper method for creating a Var for an empty string.
+        /// </summary>
+        /// <returns></returns>
+        public static PPVar VarUtf8Empty()
+        {
+            return _VarFromUtf8(IntPtr.Zero, 0);
+        }
     }
 }
 /**
