@@ -4,10 +4,10 @@ all:
 	@echo    make build 	- builds the example project
 	@echo    make run 		- installs the environment and runs the example
 
-SRCS = InputEventInstance.cs
+SRCS = Graphics_2D.cs
 
 build: $(SRCS)
-	(xbuild InputEvent.csproj /t:Rebuild /p:Configuration=Debug /p:Platform=AnyCPU)
+	(xbuild Graphics_2D.csproj /t:Rebuild /p:Configuration=Debug /p:Platform=AnyCPU)
 
 run: build
 	npm install && npm start
