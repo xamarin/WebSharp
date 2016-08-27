@@ -230,3 +230,23 @@ IMEInputEvent
 [x] uint32_t GetSegmentOffset(uint32_t index) const;
 [x] int32_t GetTargetSegment() const;
 [x] void GetSelection(uint32_t* start, uint32_t* end) const;
+
+WebSocket
+---
+[x] explicit WebSocket(const InstanceHandle& instance);
+[x] int32_t Connect(const Var& url, const Var protocols[],
+                  uint32_t protocol_count, const CompletionCallback& callback);
+[x] int32_t Close(uint16_t code, const Var& reason,
+                const CompletionCallback& callback);
+[x] int32_t ReceiveMessage(Var* message,
+                         const CompletionCallback& callback);
+
+[x] int32_t SendMessage(const Var& message);
+[x] uint64_t GetBufferedAmount();
+[x] uint16_t GetCloseCode();
+[x] Var GetCloseReason();
+[x] bool GetCloseWasClean();
+[x] Var GetExtensions();
+[x] Var GetProtocol();
+[x] PP_WebSocketReadyState GetReadyState();
+[x] Var GetURL();

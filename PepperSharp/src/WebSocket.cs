@@ -271,6 +271,87 @@ namespace PepperSharp
             }
         }
 
+        /// <summary>
+        /// Returns the number of bytes of text and binary
+        /// messages that have been queued for the WebSocket connection to send, but
+        /// have not been transmitted to the network yet.
+        /// </summary>
+        public ulong BufferedAmount
+        {
+            get { return PPBWebSocket.GetBufferedAmount(this);  }
+        }
+
+        /// <summary>
+        /// Returns if the connection was closed cleanly for the
+        /// specified WebSocket connection.
+        ///
+        /// Returns <code>false</code> if called before the connection is
+        /// closed, called on an invalid resource, or closed for abnormal reasons.
+        /// Otherwise, returns <code>true</code> if the connection was closed
+        /// cleanly. 
+        /// </summary>
+        public bool IsCloseWasClean
+        {
+            get { return PPBWebSocket.GetCloseWasClean(this) == PPBool.True; }
+        }
+
+        /// <summary>
+        /// Gets the extensions selected by the server for the
+        /// specified WebSocket connection.
+        ///
+        /// If called before the connection is established, the data is an empty
+        /// string. Returns an empty string if called on an Invalid resource. Currently 
+        /// the data for valid resources are always an empty string.
+        /// </summary>
+        public string Extensions
+        {
+            get
+            {
+                var extensions = (Var)PPBWebSocket.GetExtensions(this);
+                if (extensions.IsString)
+                    return extensions.AsString();
+                else
+                    return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets the sub-protocol chosen by the server for the
+        /// specified WebSocket connection.
+        ///
+        /// If called before the connection is established, the return is an empty string. 
+        /// Returns an empty string if called on an invalid resource.
+        /// </summary>
+        public string Protocol
+        {
+            get
+            {
+                var prot = (Var)PPBWebSocket.GetProtocol(this);
+                if (prot.IsString)
+                    return prot.AsString();
+                else
+                    return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets the URL associated with specified WebSocket connection.
+        ///
+        /// If called before the connection is established, the return is an empty string. 
+        /// Returns an empty string if called on an invalid resource.
+        /// </summary>
+        public string URL
+        {
+            get
+            {
+                var url = (Var)PPBWebSocket.GetURL(this);
+                if (url.IsString)
+                    return url.AsString();
+                else
+                    return string.Empty;
+            }
+        }
+
         private void ThrowIfNotConnected()
         {
             if (handle == PPResource.Empty)
