@@ -62,7 +62,17 @@ namespace PepperSharp
         /// <summary>
         /// Connects to the specified WebSocket server
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">String representation of the of the WebSocket server to connect to.</param>
+        /// <param name="protocols"></param>
+        public void Connect (string url, string [] protocols = null)
+        {
+            Connect (new Uri (url), protocols);
+        }
+
+        /// <summary>
+        /// Connects to the specified WebSocket server
+        /// </summary>
+        /// <param name="url">The URI of the WebSocket server to connect to.</param>
         /// <param name="protocols"></param>
         public void Connect(Uri url, string[] protocols = null )
         {
@@ -108,8 +118,8 @@ namespace PepperSharp
         /// <summary>
         /// Closes the connection to the WebSocket server
         /// </summary>
-        /// <param name="closeCode"></param>
-        /// <param name="reason"></param>
+        /// <param name="closeCode">The WebSocket close status</param>
+        /// <param name="reason">A description of the close status.</param>
         /// <returns></returns>
         public PPError Close(WebSocketCloseStatus closeCode, string reason = null)
         {
@@ -126,7 +136,7 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// Returns the Close Status of the WebSocket.
+        /// Gets the reason why the close handshake was initiated on WebSocket instance.
         /// </summary>
         public WebSocketCloseStatus? CloseStatus
         {
@@ -140,7 +150,7 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// Returns the Description used when closing the WebSocket.
+        /// Gets a description of the reason why the WebSocket instance was closed.
         /// </summary>
         public string CloseStatusDescription
         {
