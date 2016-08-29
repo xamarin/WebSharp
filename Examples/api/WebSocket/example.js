@@ -4,38 +4,45 @@
 
 // Called by the common.js module.
 function attachListeners() {
-  document.getElementById('connectForm').addEventListener('submit', doConnect);
-  document.getElementById('sendForm').addEventListener('submit', doSend);
-  document.getElementById('closeButton').addEventListener('click', doClose);
+    document.getElementById('connectForm').addEventListener('submit', doConnect);
+    document.getElementById('sendForm').addEventListener('submit', doSend);
+    document.getElementById('closeButton').addEventListener('click', doClose);
+    document.getElementById('is_async').addEventListener('click', doAsync);
 }
 
 // Called by the common.js module.
 function moduleDidLoad() {
-  // The module is not hidden by default so we can easily see if the plugin
-  // failed to load.
-  common.hideModule();
+    // The module is not hidden by default so we can easily see if the plugin
+    // failed to load.
+    common.hideModule();
 }
 
 function doConnect(event) {
-  // Send a request message. See also websocket.cc for the request format.
-  var url = document.getElementById('url').value;
-  common.naclModule.postMessage('o;' + url);
-  event.preventDefault();
+    // Send a request message. See also websocket.cc for the request format.
+    var url = document.getElementById('url').value;
+    common.naclModule.postMessage('o;' + url);
+    event.preventDefault();
 }
 
 function doSend() {
-  // Send a request message. See also websocket.cc for the request format.
-  var message = document.getElementById('message').value;
-  var type = document.getElementById('is_binary').checked ? 'b;' : 't;';
-  common.naclModule.postMessage(type + message);
-  event.preventDefault();
+    // Send a request message. See also websocket.cc for the request format.
+    var message = document.getElementById('message').value;
+    var type = document.getElementById('is_binary').checked ? 'b;' : 't;';
+    common.naclModule.postMessage(type + message);
+    event.preventDefault();
 }
 
 function doClose() {
-  // Send a request message. See also websocket.cc for the request format.
-  common.naclModule.postMessage('c;');
+    // Send a request message. See also websocket.cc for the request format.
+    common.naclModule.postMessage('c;');
+}
+
+function doAsync() {
+    // 
+    var type = document.getElementById('is_async').checked ? 'a;' : 's;';
+    common.naclModule.postMessage(type);
 }
 
 function handleMessage(message) {
-  common.logMessage(message.data);
+    common.logMessage(message.data);
 }

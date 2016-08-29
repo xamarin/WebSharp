@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using System.Net;
 using System.Text;
+using System.Threading;
 
 namespace PepperSharp
 {
@@ -104,7 +105,7 @@ namespace PepperSharp
                 }
             }
 
-            PPBWebSocket.Connect(this, new Var(url.AbsoluteUri),
+            var connectResult = (PPError)PPBWebSocket.Connect(this, new Var(url.AbsoluteUri),
                 varProtocols, varProtocols == null ? 0 : (uint)varProtocols.Length,
                 new CompletionCallback(OnConnect)
                 );
@@ -113,6 +114,89 @@ namespace PepperSharp
         protected void OnConnect(PPError error)
         {
             Connection?.Invoke(this, error);
+        }
+
+        /// <summary>
+        /// Connects asynchronously to the specified WebSocket server
+        /// </summary>
+        /// <param name="url">The URI of the WebSocket server to connect to.</param>
+        /// <param name="protocols"></param>
+        /// 
+        public Task<PPError> ConnectAsync(Uri url, MessageLoop messageLoop, string[] protocols = null, MessageLoop connectLoop = null)
+        {
+            if (PPBWebSocket.IsWebSocket(this) != PPBool.True)
+                throw new PlatformNotSupportedException("Websocket not supported");
+
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
+            if (!url.IsAbsoluteUri)
+            {
+                throw new ArgumentException("Not Absolute URI", nameof(url));
+            }
+            if (url.Scheme.ToLower() != UriSchemeWs && url.Scheme.ToLower() != UriSchemeWss)
+            {
+                throw new ArgumentException("Scheme invalid", nameof(url));
+            }
+
+            return ConnectAsyncCore(url, protocols, connectLoop);
+ 
+        }
+
+        private async Task<PPError> ConnectAsyncCore(Uri uri, string[] protocols, MessageLoop connectLoop = null)
+        {
+            var tcs = new TaskCompletionSource<PPError>();
+            EventHandler<PPError> handler = (s, e) => { tcs.TrySetResult(e); };
+
+            try
+            {
+                Connection += handler;
+
+                if (MessageLoop == null && connectLoop == null)
+                {
+                    Connect(uri, protocols);
+                }
+                else
+                {
+                    PPVar[] varProtocols = null;
+
+                    if (protocols != null)
+                    {
+                        varProtocols = new PPVar[protocols.Length];
+
+                        for (int p = 0; p < protocols.Length; p++)
+                        {
+                            varProtocols[p] = new Var(protocols[p]);
+                        }
+                    }
+                    Action<PPError> action = new Action<PPError>((e) =>
+                        {
+                            var result = (PPError)PPBWebSocket.Connect(this, new Var(uri.AbsoluteUri),
+                                varProtocols, varProtocols == null ? 0 : (uint)varProtocols.Length,
+                                new BlockUntilComplete()
+                            );
+                            tcs.TrySetResult(result);
+                        }
+                    );
+                    if (connectLoop == null)
+                        MessageLoop.PostWork(action);
+                    else
+                        connectLoop.PostWork(action);
+                }
+                return await tcs.Task;
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+                tcs.SetException(exc);
+                return PPError.Aborted;
+            }
+            finally
+            {
+                Connection -= handler;
+            }
         }
 
         /// <summary>
@@ -133,6 +217,61 @@ namespace PepperSharp
         protected void OnClose(PPError error)
         {
             Closed?.Invoke(this, error);
+        }
+
+        /// <summary>
+        /// Closes the connection to the WebSocket server asynchronously
+        /// </summary>
+        /// <param name="closeCode">The WebSocket close status</param>
+        /// <param name="reason">A description of the close status.</param>
+        /// <returns></returns>
+        public Task<PPError> CloseAsync(WebSocketCloseStatus closeCode, string reason = null, MessageLoop closeLoop = null)
+        {
+            return CloseAsyncCore(closeCode, reason, closeLoop);
+        }
+
+        private async Task<PPError> CloseAsyncCore(WebSocketCloseStatus closeCode, string reason = null, MessageLoop closeLoop = null)
+        {
+            var tcs = new TaskCompletionSource<PPError>();
+            EventHandler<PPError> handler = (s, e) => { tcs.TrySetResult(e); };
+
+            try
+            {
+                Closed += handler;
+
+                if (MessageLoop == null && closeLoop == null)
+                {
+                    Close(closeCode, reason);
+                }
+                else
+                {
+                    Action<PPError> action = new Action<PPError>((e) =>
+                    {
+                        var result = (PPError)PPBWebSocket.Close(this, (ushort)closeCode,
+                            string.IsNullOrEmpty(reason) ? null : new Var(reason),
+                            new BlockUntilComplete()
+                        );
+                        tcs.TrySetResult(result);
+                    }
+                    );
+                    if (closeLoop == null)
+                        MessageLoop.PostWork(action);
+                    else
+                        closeLoop.PostWork(action);
+                }
+                return await tcs.Task;
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+                tcs.SetException(exc);
+                return PPError.Aborted;
+            }
+            finally
+            {
+                Closed -= handler;
+            }
         }
 
         /// <summary>
@@ -205,6 +344,92 @@ namespace PepperSharp
         }
 
         /// <summary>
+        /// Sends a message to the WebSocket server asynchronously
+        /// </summary>
+        /// <param name="buffer">An ArraySegment of bytes that will be sent to the WebSocket server.</param>
+        /// <param name="messageType">This is the message type to send Binary or Text</param>
+        /// <returns>Ok or an error</returns>
+        public Task<PPError> SendAsync(ArraySegment<byte> buffer, WebSocketMessageType messageType, MessageLoop sendLoop = null)
+        {
+            ThrowIfNotConnected();
+
+            if (messageType != WebSocketMessageType.Binary &&
+                    messageType != WebSocketMessageType.Text)
+            {
+                throw new ArgumentException($"Invalid Message Type {messageType} in method Send - Valid values are {WebSocketMessageType.Binary}, {WebSocketMessageType.Text}",
+                    "messageType");
+            }
+
+            ValidateArraySegment<byte>(buffer, "buffer");
+
+            return SendAsyncCore(buffer, messageType, sendLoop);
+        }
+
+        private async Task<PPError> SendAsyncCore(ArraySegment<byte> buffer, WebSocketMessageType messageType, MessageLoop sendLoop)
+        {
+            var tcs = new TaskCompletionSource<PPError>();
+
+            try
+            {
+                if (messageType == WebSocketMessageType.Text)
+                {
+                    
+                    if (MessageLoop == null)
+                    {
+                        tcs.TrySetResult(Send(buffer, messageType));
+                    }
+                    else
+                    {
+                        Action<PPError> action = new Action<PPError>((e) =>
+                        {
+                            var varBuffer = new Var(Encoding.UTF8.GetString(buffer.Array));
+                            var result = (PPError)PPBWebSocket.SendMessage(this, varBuffer);
+                            tcs.TrySetResult(result);
+                        }
+                        );
+                        MessageLoop.PostWork(action);
+                    }
+                }
+                else
+                {
+                    if (MessageLoop == null)
+                    {
+                        tcs.TrySetResult(Send(buffer, messageType));
+                    }
+                    else
+                    {
+                        Action<PPError> action = new Action<PPError>((e) =>
+                        {
+                            var size = (uint)buffer.Count;
+                            var arrayBuffer = new VarArrayBuffer(size);
+
+                            var data = arrayBuffer.Map();
+                            for (int i = 0; i < size; ++i)
+                                data[i] = buffer.Array[i];
+                            arrayBuffer.Flush();
+                            arrayBuffer.Unmap();
+
+                            var result = (PPError)PPBWebSocket.SendMessage(this, arrayBuffer);
+                            tcs.TrySetResult(result);
+                        });
+                        if (sendLoop == null)
+                            MessageLoop.PostWork(action);
+                        else
+                            sendLoop.PostWork(action);
+                    }
+                }
+
+                return await tcs.Task;
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+                tcs.SetException(exc);
+                return PPError.Aborted;
+            }
+        }
+
+        /// <summary>
         /// Receive a message from the WebSocket server.
         /// </summary>
         /// <param name="buffer">An ArraySegment of byte that was returned</param>
@@ -257,6 +482,97 @@ namespace PepperSharp
             ReceiveData?.Invoke(this, receiveResult);
         }
 
+        /// <summary>
+        /// Receive a message from the WebSocket server asynchronously.
+        /// </summary>
+        /// <param name="buffer">An ArraySegment of byte that was returned</param>
+        /// <returns></returns>
+        public Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer, MessageLoop receiveLoop = null)
+        {
+            ThrowIfNotConnected();
+            return ReceiveAsyncCore(buffer, receiveLoop);
+        }
+
+        private async Task<WebSocketReceiveResult> ReceiveAsyncCore(ArraySegment<byte> buffer, MessageLoop receiveLoop = null)
+        {
+            var tcs = new TaskCompletionSource<WebSocketReceiveResult>();
+            EventHandler<WebSocketReceiveResult> handler = (s, e) => { tcs.TrySetResult(e); };
+
+            try
+            {
+                ReceiveData += handler;
+
+                if (MessageLoop == null)
+                {
+                    //Console.WriteLine("Receive no message loop");
+                    var receiveResult = Receive(buffer);
+                    if (receiveResult != PPError.Ok && !tcs.Task.IsCompleted)
+                    {
+                        tcs.TrySetResult(new WebSocketReceiveResult(0, WebSocketMessageType.Close, true));
+                    }
+                        
+                }
+                else
+                {
+                    Action<PPError> action = new Action<PPError>((e) =>
+                    {
+                        var rcvMsgResult = (PPError)PPBWebSocket.ReceiveMessage(this, out receiveVar, new BlockUntilComplete());
+                        WebSocketReceiveResult receiveResult = null;
+                        var recVar = (Var)receiveVar;
+                        if (State == WebSocketState.Open)
+                        {
+                            if (recVar.IsArrayBuffer)
+                            {
+                                var arrayBuffer = new VarArrayBuffer(receiveVar);
+                                var size = (uint)Math.Min(buffer.Count, arrayBuffer.ByteLength);
+
+                                int offs = 0;
+                                var data = arrayBuffer.Map();
+                                for (offs = 0; offs < size; offs++)
+                                {
+                                    buffer.Array[offs] = data[offs];
+                                }
+                                arrayBuffer.Unmap();
+                                receiveResult = new WebSocketReceiveResult(size, WebSocketMessageType.Binary, true);
+                            }
+                            else
+                            {
+                                var msg = Encoding.UTF8.GetBytes(recVar.AsString());
+                                var size = (uint)Math.Min(buffer.Count, msg.Length);
+
+                                int offs = 0;
+                                for (offs = 0; offs < size; offs++)
+                                {
+                                    buffer.Array[offs] = msg[offs];
+                                }
+                                receiveResult = new WebSocketReceiveResult(size, WebSocketMessageType.Text, true);
+                            }
+                        }
+                        else
+                            receiveResult = new WebSocketReceiveResult(0, WebSocketMessageType.Close, true, CloseStatus, CloseStatusDescription);
+
+                        tcs.TrySetResult(receiveResult);
+                    }
+                    );
+                    if (receiveLoop == null)
+                        MessageLoop.PostWork(action);
+                    else
+                        receiveLoop.PostWork(action);
+                }
+                return await tcs.Task;
+
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.Message);
+                tcs.SetException(exc);
+                return new WebSocketReceiveResult(0, WebSocketMessageType.Close, true);
+            }
+            finally
+            {
+                ReceiveData -= handler;
+            }
+        }
         /// <summary>
         /// Returns the state of the WebSocket
         /// </summary>

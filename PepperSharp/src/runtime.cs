@@ -89,6 +89,8 @@ namespace PepperSharp
         internal PPResource handle = PPResource.Empty;
         public PPResource Handle => handle;
 
+        public MessageLoop MessageLoop { get; set; }
+
         protected Resource() { }
 
         protected Resource(int resourceId)
@@ -191,6 +193,7 @@ namespace PepperSharp
                     NativeInstance.resourceReleaseQueue.Enqueue(Handle);
                 }
                 handle.ppresource = 0; // set ourselves to empty
+                MessageLoop = null;
             }
         }
 
