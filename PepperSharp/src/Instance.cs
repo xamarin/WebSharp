@@ -846,5 +846,10 @@ namespace PepperSharp
             }
         }
 
+        public MessageLoop CreateMessageLoop()
+        {
+            return new MessageLoop(this);
+        }
+
     }
 }

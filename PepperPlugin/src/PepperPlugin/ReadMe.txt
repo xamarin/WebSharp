@@ -250,3 +250,17 @@ WebSocket
 [x] Var GetProtocol();
 [x] PP_WebSocketReadyState GetReadyState();
 [x] Var GetURL();
+
+
+MessageLoop
+---
+[x] explicit MessageLoop(const InstanceHandle& instance);
+[ ] MessageLoop(const MessageLoop& other);
+[x] explicit MessageLoop(PP_Resource pp_message_loop);
+[x] static MessageLoop GetForMainThread();
+[x] static MessageLoop GetCurrent();
+[x] int32_t AttachToCurrentThread();
+[x] int32_t Run();
+[x] int32_t PostWork(const CompletionCallback& callback,
+                   int64_t delay_ms = 0);
+[x] int32_t PostQuit(bool should_destroy);
