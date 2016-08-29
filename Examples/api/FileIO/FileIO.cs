@@ -11,7 +11,7 @@ namespace FileIO
     {
 
         PPResource fileSystem;
-        PPResource messageLoop;
+        MessageLoop messageLoop;
 
         // Indicates whether file_system_ was opened successfully. We only read/write
         // this on the file_thread_.
@@ -32,25 +32,12 @@ namespace FileIO
             // operation we perform there, and because we do everything on the
             // file_thread_ synchronously, this ensures that the FileSystem is open
             // before any FileIO operations execute.
-            messageLoop = PPBMessageLoop.Create(this);
-            StartFileMessageLoop();
+            messageLoop = CreateMessageLoop();
+            //StartFileMessageLoop();
+            var startTask = messageLoop.Start();
 
-            PPBMessageLoop.PostWork(messageLoop, new CompletionCallback(OpenFileSystem), 0);
+            messageLoop.PostWork(new CompletionCallback(OpenFileSystem));
         }
-
-        async void StartFileMessageLoop()
-        {
-            await Task.Run(() => {
-                var messageLoopResult = (PPError)PPBMessageLoop.AttachToCurrentThread(messageLoop);
-                if (messageLoopResult != PPError.Ok)
-                    ShowErrorMessage("StartMessageLoop - AttachToCurrentThread: ", messageLoopResult);
-                messageLoopResult = (PPError)PPBMessageLoop.Run(messageLoop);
-                if (messageLoopResult != PPError.Ok)
-                    ShowErrorMessage("StartMessageLoop - Run: ", messageLoopResult);
-            });
-        }
-
-
 
         /// <summary>
         /// Handler for messages coming in from the browser via postMessage().  The
@@ -84,32 +71,32 @@ namespace FileIO
             Console.WriteLine($"command: {command} file_name: {fileName}");
             if (command == "load")
             {
-                PPBMessageLoop.PostWork(messageLoop, new CompletionCallback<string>(Load, fileName), 0);
+                messageLoop.PostWork(new CompletionCallback<string>(Load, fileName));
                 
             }
             else if (command == "save")
             {
                 var fileText = message[2].AsString();
-                PPBMessageLoop.PostWork(messageLoop, new CompletionCallback<string, string>(Save, fileName, fileText), 0);
+                messageLoop.PostWork(new CompletionCallback<string, string>(Save, fileName, fileText));
             }
             else if (command == "delete")
             {
-                PPBMessageLoop.PostWork(messageLoop, new CompletionCallback<string>(Delete, fileName), 0);
+                messageLoop.PostWork(new CompletionCallback<string>(Delete, fileName));
             }
             else if (command == "list")
             {
                 var dirName = fileName;
-                PPBMessageLoop.PostWork(messageLoop, new CompletionCallback<string>(List, dirName), 0);
+                messageLoop.PostWork(new CompletionCallback<string>(List, dirName));
             }
             else if (command == "makedir")
             {
                 var dirName = fileName;
-                PPBMessageLoop.PostWork(messageLoop, new CompletionCallback<string>(MakeDir, dirName), 0);
+                messageLoop.PostWork(new CompletionCallback<string>(MakeDir, dirName));
             }
             else if (command == "rename")
             {
                 var neName = message[2].AsString();
-                PPBMessageLoop.PostWork(messageLoop, new CompletionCallback<string, string>(Rename, fileName, neName), 0);
+                messageLoop.PostWork(new CompletionCallback<string, string>(Rename, fileName, neName));
             }
         }
 
