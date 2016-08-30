@@ -7,7 +7,8 @@ namespace CoreInstance
     public class CoreInstance : Instance
     {
         CompletionCallback callback;
-        double last_receive_time_;
+        double lastReceiveTime;
+        Action<PPError> action;
 
         public CoreInstance (IntPtr handle) : base(handle)
         {
@@ -23,24 +24,25 @@ namespace CoreInstance
             int delay = message.AsInt();
             if (delay > 0)
             {
+                action = DelayedPost;
+                //action = delegate (PPError result) { DelayedPost(result); };
+                //action = e => DelayedPost(e);
                 
                 // If a delay is requested, issue a callback after delay ms.
-                last_receive_time_ = Core.TimeTicks;
-                callback = new CompletionCallback(DelayedPost);
-                Core.CallOnMainThread(callback, delay);
+                lastReceiveTime = Core.TimeTicks;
+                Core.CallOnMainThread(action, delay);
             }
             else
             {
                 // If no delay is requested, reply immediately with zero time elapsed.
-                var msg = new Var(0);
-                PostMessage(msg);
+                PostMessage(0);
             }
         }
 
         void DelayedPost(PPError result)
         {
             // Send the time elapsed until the callbacked fired.
-            var msg = new Var(Core.TimeTicks - last_receive_time_);
+            var msg = Core.TimeTicks - lastReceiveTime;
             PostMessage(msg);
         }
     }

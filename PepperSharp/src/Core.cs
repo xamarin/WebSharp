@@ -72,23 +72,18 @@ namespace PepperSharp
         /// <strong>Note:</strong> If the browser is shutting down or if the module
         /// has no instances, then the callback function may not be called.
         ///
-        /// @param[in] delay_in_milliseconds An int32_t delay in milliseconds.
-        /// @param[in] callback A <code>CompletionCallback</code> callback function
-        /// that the browser will call after the specified delay.
-        /// @param[in] result An int32_t that the browser will pass to the given
-        /// <code>CompletionCallback</code>.
         /// </summary>
-        /// <param name="callback">A <code>CompletionCallback</code> callback function
+        /// <param name="callback">An <code>Action<PPError></code> callback function
         /// that the browser will call after the specified delay.
         /// </param>
         /// <param name="delay_in_milliseconds">An int delay in milliseconds.  Default 0</param>
         /// <param name="result">An int that the browser will pass to the given
-        /// <code>CompletionCallback</code>.  Default 0</param>
-        public static void CallOnMainThread(CompletionCallback callback,
+        /// <code>Action<PPError></PPError></code>.  Default 0</param>
+        public static void CallOnMainThread(Action<PPError> action,
                         int delay_in_milliseconds = 0,
                         int result = 0)
         {
-            PPBCore.CallOnMainThread(delay_in_milliseconds, callback, result);
+            PPBCore.CallOnMainThread(delay_in_milliseconds, new CompletionCallback(new CompletionCallbackFunc(action)), result);
         }
 
         /// <summary>

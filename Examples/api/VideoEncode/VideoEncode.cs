@@ -179,7 +179,7 @@ namespace VideoEncode
             // delay for the next tick.
             
             var delta = tick - Clamp(0, tick, now - last_encode_tick_ - tick);
-            Core.CallOnMainThread(new CompletionCallback(GetEncoderFrameTick), (int)(delta * 1000));
+            Core.CallOnMainThread(GetEncoderFrameTick, (int)(delta * 1000));
 
             last_encode_tick_ = now;
             is_encode_ticking_ = true;
