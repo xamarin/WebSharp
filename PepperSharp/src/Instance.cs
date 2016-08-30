@@ -256,7 +256,29 @@ namespace PepperSharp
             return true;
         }
 
-        bool Init(int argc, string[] argn, string[] argv)
+        /// <summary>
+        /// Init() initializes this instance with the provided arguments. This
+        /// function will be called immediately after the instance object is
+        /// constructed.
+        /// </summary>
+        /// <param name="argc">The number of arguments contained in <code>argn</code>
+        /// and <code>argv</code>.
+        /// </param>
+        /// <param name="argn">An array of argument names.  These argument names are
+        /// supplied in the \<embed\> tag, for example:
+        /// <code>\<embed id="nacl_module" dimensions="2"\></code> will produce two
+        /// argument names: "id" and "dimensions".
+        /// </param>
+        /// <param name="argv">An array of argument values.  These are the values of the
+        /// arguments listed in the \<embed\> tag, for example
+        /// <code>\<embed id="nacl_module" dimensions="2"\></code> will produce two
+        /// argument values: "nacl_module" and "2".  The indices of these values
+        /// match the indices of the corresponding names in <code>argn</code>.
+        /// </param>
+        /// <returns>true on success. Returning false causes the instance to be
+        /// deleted and no other functions to be called.
+        /// </returns>
+        public virtual bool Init(int argc, string[] argn, string[] argv)
         {
 
             return OnInitialize(new InitializeEventArgs(argc, argn, argv));
