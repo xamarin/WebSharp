@@ -218,6 +218,9 @@ namespace WebSocket
 
         bool IsConnected()
         {
+            if (webSocket2 == null)
+                return false;
+            
             if (webSocket2.State == PepperSharp.WebSocketState.Open)
                 return true;
 
@@ -263,13 +266,19 @@ namespace WebSocket
             byte[] sendBytes = Encoding.UTF8.GetBytes(message);
             var sendBuffer = new ArraySegment<byte>(sendBytes);
 
-            var sendResult = webSocket2.Send(sendBuffer, messageType);
+            try {
+                var sendResult = webSocket2.Send (sendBuffer, messageType);
 
-            var msgBytes = (messageType == PepperSharp.WebSocketMessageType.Text) ? message : ArrayToString(sendBytes);
-            if (sendResult != PPError.Ok)
-                PostMessage($"send failed ({messageType}) - {sendResult}: {msgBytes}");
-            else
-                PostMessage($"send ({messageType}): {msgBytes}");
+                var msgBytes = (messageType == PepperSharp.WebSocketMessageType.Text) ? message : ArrayToString (sendBytes);
+                if (sendResult != PPError.Ok)
+                    PostMessage ($"send failed ({messageType}) - {sendResult}: {msgBytes}");
+                else
+                    PostMessage ($"send ({messageType}): {msgBytes}");
+            }
+            catch (Exception exc)
+            {
+                PostMessage ($"send failed {exc.Message}");
+            }
         }
 
         async Task SendAsync(string message, PepperSharp.WebSocketMessageType messageType)
@@ -277,13 +286,19 @@ namespace WebSocket
             byte[] sendBytes = Encoding.UTF8.GetBytes(message);
             var sendBuffer = new ArraySegment<byte>(sendBytes);
 
-            var sendResult = await webSocket2.SendAsync(sendBuffer, messageType);
+            try {
+                var sendResult = await webSocket2.SendAsync (sendBuffer, messageType);
 
-            var msgBytes = (messageType == PepperSharp.WebSocketMessageType.Text) ? message : ArrayToString(sendBytes);
-            if (sendResult != PPError.Ok)
-                PostMessage($"send async failed ({messageType}) - {sendResult}: {msgBytes}");
-            else
-                PostMessage($"send async ({messageType}): {msgBytes}");
+                var msgBytes = (messageType == PepperSharp.WebSocketMessageType.Text) ? message : ArrayToString (sendBytes);
+                if (sendResult != PPError.Ok)
+                    PostMessage ($"send async failed ({messageType}) - {sendResult}: {msgBytes}");
+                else
+                    PostMessage ($"send async ({messageType}): {msgBytes}");
+            } 
+            catch (Exception exc) {
+                PostMessage ($"send async failed {exc.Message}");
+            }
+
         }
 
 
