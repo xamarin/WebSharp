@@ -264,3 +264,12 @@ MessageLoop
 [x] int32_t PostWork(const CompletionCallback& callback,
                    int64_t delay_ms = 0);
 [x] int32_t PostQuit(bool should_destroy);
+
+FileSystem
+---
+[ ] FileSystem(const FileSystem& other);
+[ ] explicit FileSystem(const Resource& resource);
+[ ] FileSystem(PassRef, PP_Resource resource);
+[x] FileSystem(const InstanceHandle& instance, PP_FileSystemType type);
+[x] int32_t Open(int64_t expected_size, const CompletionCallback& cc);
+[ ] static bool IsFileSystem(const Resource& resource);

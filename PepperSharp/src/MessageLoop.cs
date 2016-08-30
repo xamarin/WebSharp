@@ -23,19 +23,13 @@ namespace PepperSharp
         /// 
         /// </summary>
         /// <returns></returns>
-        public static MessageLoop GetForMainThread()
-        {
-            return new MessageLoop(PPBMessageLoop.GetForMainThread());
-        }
+        public static MessageLoop GetForMainThread() => new MessageLoop(PPBMessageLoop.GetForMainThread());
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static MessageLoop GetCurrent()
-        {
-            return new MessageLoop(PPBMessageLoop.GetCurrent());
-        }
+        public static MessageLoop GetCurrent() => new MessageLoop(PPBMessageLoop.GetCurrent());
 
         /// <summary>
         /// Sets the given message loop resource as being the associated message loop
@@ -63,10 +57,7 @@ namespace PepperSharp
         ///     loop attached to it. See the interface level discussion about these
         ///     special threads, which include realtime audio threads.
         /// </returns>
-        public PPError AttachToCurrentThread()
-        {
-            return (PPError)PPBMessageLoop.AttachToCurrentThread(this);
-        }
+        public PPError AttachToCurrentThread() => (PPError)PPBMessageLoop.AttachToCurrentThread(this);
 
         /// <summary>
         /// Runs the thread message loop. Running the message loop is required for
@@ -91,47 +82,7 @@ namespace PepperSharp
         ///     fashion (Run is already on the stack). This will occur if you attempt
         ///     to call run on the main thread's message loop (see above).
         /// </returns>
-        public PPError Run()
-        {
-            return (PPError)PPBMessageLoop.Run(this);
-        }
-
-        ///// <summary>
-        ///// Schedules work to run on the given message loop. This may be called from
-        ///// any thread. Posted work will be executed in the order it was posted when
-        ///// the message loop is Run().
-        /////
-        ///// The completion callback will be called with PPError.Ok as the "result"
-        ///// parameter if it is run normally. It is good practice to check for PP_OK
-        ///// and return early otherwise.
-        /////
-        ///// The "required" flag on the completion callback is ignored. If there is an
-        ///// error posting your callback, the error will be returned from PostWork and
-        ///// the callback will never be run (because there is no appropriate place to
-        ///// run your callback with an error without causing unexpected threading
-        ///// problems). If you associate memory with the completion callback (for
-        ///// example, you're using the C++ CompletionCallbackFactory), you will need to
-        ///// free this or manually run the callback. See "Desctruction and error
-        ///// handling" above.
-        /////
-        /////
-        ///// You can call this function before the message loop has started and the
-        ///// work will get queued until the message loop is run. You can also post
-        ///// work after the message loop has exited as long as should_destroy was
-        ///// false. It will be queued until the next invocation of Run().
-        ///// </summary>
-        ///// <param name="callback">A pointer to the completion callback to execute from the
-        ///// message loop.
-        ///// </param>
-        ///// <param name="delay">The number of milliseconds to delay execution of the given
-        ///// completion callback. Passing 0 means it will get queued normally and
-        ///// executed in order.
-        ///// </param>
-        ///// <returns></returns>
-        //public PPError PostWork(PPCompletionCallback callback, long delay = 0)
-        //{
-        //    return (PPError)PPBMessageLoop.PostWork(this, callback, delay);
-        //}
+        public PPError Run() => (PPError)PPBMessageLoop.Run(this);
 
         /// <summary>
         /// Schedules work to run on the given message loop. This may be called from
@@ -165,15 +116,10 @@ namespace PepperSharp
         /// executed in order.
         /// </param>
         /// <returns></returns>
-        public PPError PostWork(Action<PPError> action, long delay = 0)
-        {
-            TaskCompletionSource<PPError> tcs = new TaskCompletionSource<PPError>();
-            var fun = new CompletionCallbackFunc(action);
-            var callback = new CompletionCallback(fun);
-
-            var res = (PPError)PPBMessageLoop.PostWork(this, callback, delay);
-            return res;
-        }
+        public PPError PostWork(Action<PPError> action, long delay = 0) =>
+            (PPError)PPBMessageLoop.PostWork(this,
+                new CompletionCallback(new CompletionCallbackFunc(action))
+                , delay);
 
         /// <summary>
         /// Schedules work to run on the given message loop. This may be called from
@@ -207,15 +153,10 @@ namespace PepperSharp
         /// executed in order.
         /// </param>
         /// <returns></returns>
-        public PPError PostWork<T>(Action<PPError, T> action, T userData, long delay = 0)
-        {
-            TaskCompletionSource<PPError> tcs = new TaskCompletionSource<PPError>();
-            var fun = new CompletionCallbackFunc<T>(action);
-            var callback = new CompletionCallback<T>(fun, userData);
-
-            var res = (PPError)PPBMessageLoop.PostWork(this, callback, delay);
-            return res;
-        }
+        public PPError PostWork<T>(Action<PPError, T> action, T userData, long delay = 0) =>
+            (PPError)PPBMessageLoop.PostWork(this,
+                new CompletionCallback<T>(new CompletionCallbackFunc<T>(action), userData),
+                delay);
 
         /// <summary>
         /// Schedules work to run on the given message loop. This may be called from
@@ -249,15 +190,11 @@ namespace PepperSharp
         /// executed in order.
         /// </param>
         /// <returns></returns>
-        public PPError PostWork<T,U>(Action<PPError, T, U> action, T userData1, U userData2, long delay = 0)
-        {
-            TaskCompletionSource<PPError> tcs = new TaskCompletionSource<PPError>();
-            var fun = new CompletionCallbackFunc<T, U>(action);
-            var callback = new CompletionCallback<T, U>(fun, userData1, userData2);
-
-            var res = (PPError)PPBMessageLoop.PostWork(this, callback, delay);
-            return res;
-        }
+        public PPError PostWork<T, U>(Action<PPError, T, U> action, T userData1, U userData2, long delay = 0) =>
+            (PPError)PPBMessageLoop.PostWork(this, new CompletionCallback<T, U>(
+                new CompletionCallbackFunc<T, U>(action),
+                userData1,
+                userData2), delay);
 
         /// <summary>
         /// Posts a quit message to the given message loop's work queue. Work posted
@@ -274,10 +211,7 @@ namespace PepperSharp
         /// <param name="shouldDestroy">Marks the message loop as being in a destroyed
         /// state and prevents further posting of messages.</param>
         /// <returns></returns>
-        public PPError PostQuit(bool shouldDestroy)
-        {
-            return (PPError)PPBMessageLoop.PostQuit(this, shouldDestroy ? PPBool.True : PPBool.False);
-        }
+        public PPError PostQuit(bool shouldDestroy) => (PPError)PPBMessageLoop.PostQuit(this, shouldDestroy? PPBool.True : PPBool.False);
 
         public Task<PPError> Start()
         {

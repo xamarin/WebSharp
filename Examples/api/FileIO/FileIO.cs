@@ -10,7 +10,7 @@ namespace FileIO
     public class FileIO : Instance
     {
 
-        PPResource fileSystem;
+        FileSystem fileSystem;
         MessageLoop messageLoop;
 
         // Indicates whether file_system_ was opened successfully. We only read/write
@@ -19,7 +19,7 @@ namespace FileIO
 
         public FileIO (IntPtr handle) : base(handle)
         {
-            fileSystem = PPBFileSystem.Create(this, PPFileSystemType.Localpersistent);
+            fileSystem = new FileSystem(this, FileSystemType.LocalPersistent);
 
             HandleMessage += OnHandleMessage;
             Initialize += OnInitialize;
@@ -35,7 +35,12 @@ namespace FileIO
             messageLoop = CreateMessageLoop();
             var startTask = messageLoop.Start();
 
-            messageLoop.PostWork(OpenFileSystem);
+            // Set the MessageLoop that the filesystem will run asynchronously with
+            // This is not necassary though as the async will run regardless if a 
+            // MessageLoop is set or not.
+            fileSystem.MessageLoop = messageLoop;
+
+            OpenFileSystem();
         }
 
         /// <summary>
@@ -162,10 +167,10 @@ namespace FileIO
             ShowStatusMessage("Rename success");
         }
 
-        void OpenFileSystem(PPError result)
+        async Task OpenFileSystem()
         {
             
-            var rv = (PPError)PPBFileSystem.Open(fileSystem, 1024 * 1024, new BlockUntilComplete());
+            var rv = await fileSystem.OpenAsync(1024 * 1024);
             if (rv == PPError.Ok)
             {
                 isFileSystemReady = true;
