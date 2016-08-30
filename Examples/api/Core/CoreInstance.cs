@@ -6,7 +6,7 @@ namespace CoreInstance
 {
     public class CoreInstance : Instance
     {
-        CompletionCallback callback;
+
         double lastReceiveTime;
         Action<PPError> action;
 

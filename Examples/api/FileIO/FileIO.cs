@@ -33,10 +33,9 @@ namespace FileIO
             // file_thread_ synchronously, this ensures that the FileSystem is open
             // before any FileIO operations execute.
             messageLoop = CreateMessageLoop();
-            //StartFileMessageLoop();
             var startTask = messageLoop.Start();
 
-            messageLoop.PostWork(new CompletionCallback(OpenFileSystem));
+            messageLoop.PostWork(OpenFileSystem);
         }
 
         /// <summary>
@@ -71,32 +70,32 @@ namespace FileIO
             Console.WriteLine($"command: {command} file_name: {fileName}");
             if (command == "load")
             {
-                messageLoop.PostWork(new CompletionCallback<string>(Load, fileName));
+                messageLoop.PostWork(Load, fileName);
                 
             }
             else if (command == "save")
             {
                 var fileText = message[2].AsString();
-                messageLoop.PostWork(new CompletionCallback<string, string>(Save, fileName, fileText));
+                messageLoop.PostWork(Save, fileName, fileText);
             }
             else if (command == "delete")
             {
-                messageLoop.PostWork(new CompletionCallback<string>(Delete, fileName));
+                messageLoop.PostWork(Delete, fileName);
             }
             else if (command == "list")
             {
                 var dirName = fileName;
-                messageLoop.PostWork(new CompletionCallback<string>(List, dirName));
+                messageLoop.PostWork(List, dirName);
             }
             else if (command == "makedir")
             {
                 var dirName = fileName;
-                messageLoop.PostWork(new CompletionCallback<string>(MakeDir, dirName));
+                messageLoop.PostWork(MakeDir, dirName);
             }
             else if (command == "rename")
             {
                 var neName = message[2].AsString();
-                messageLoop.PostWork(new CompletionCallback<string, string>(Rename, fileName, neName));
+                messageLoop.PostWork(Rename, fileName, neName);
             }
         }
 
