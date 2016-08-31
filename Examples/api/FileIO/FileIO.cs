@@ -15,7 +15,7 @@ namespace FileIO
 
         // Indicates whether file_system_ was opened successfully. We only read/write
         // this on the file_thread_.
-        bool isFileSystemReady = false;
+        bool IsFileSystemReady { get; set; } = false;
 
         public FileIO (IntPtr handle) : base(handle)
         {
@@ -72,7 +72,7 @@ namespace FileIO
             }
 
             
-            Console.WriteLine($"command: {command} file_name: {fileName}");
+            Console.WriteLine($"command: {command} File Name: {fileName}");
             if (command == "load")
             {
                 messageLoop.PostWork(Load, fileName);
@@ -85,36 +85,41 @@ namespace FileIO
             }
             else if (command == "delete")
             {
-                messageLoop.PostWork(Delete, fileName);
+                Delete(fileName);
             }
             else if (command == "list")
             {
                 var dirName = fileName;
-                messageLoop.PostWork(List, dirName);
+                List(dirName);
             }
             else if (command == "makedir")
             {
                 var dirName = fileName;
-                messageLoop.PostWork(MakeDir, dirName);
+                MakeDir(dirName);
             }
             else if (command == "rename")
             {
-                var neName = message[2].AsString();
-                messageLoop.PostWork(Rename, fileName, neName);
+                var newName = message[2].AsString();
+                Rename(fileName, newName);
+            }
+            else if (command == "query")
+            {
+                var dirName = fileName;
+                Query(fileName);
             }
         }
 
-        private void Delete(PPError result, string file_name)
+        private async Task Delete(string fileName)
         {
-            if (!isFileSystemReady)
+            if (!IsFileSystemReady)
             {
                 ShowErrorMessage("File system is not open", PPError.Failed);
                 return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, file_name);
+            var fileref = new FileRef(fileSystem, fileName);
 
-            result = (PPError)PPBFileRef.Delete(fileref, new BlockUntilComplete());
+            var result = await fileref.DeleteAsync();
             if (result == PPError.Filenotfound)
             {
                 ShowErrorMessage("File/Directory not found", result);
@@ -128,37 +133,47 @@ namespace FileIO
             ShowStatusMessage("Delete success");
         }
 
-        private void MakeDir(PPError result, string dirName)
+        private async Task MakeDir(string dirName)
         {
-            if (!isFileSystemReady)
+            if (!IsFileSystemReady)
             {
                 ShowErrorMessage("File system is not open", PPError.Failed);
                 return;
             }
-            var refDir = PPBFileRef.Create(fileSystem, dirName);
 
-            result = (PPError)PPBFileRef.MakeDirectory(refDir, (int)PPMakeDirectoryFlags.MakedirectoryflagNone, new BlockUntilComplete());
-
-            if (result != PPError.Ok)
+            var refDir = new FileRef(fileSystem, dirName);
+            var makeResult = await refDir.MakeDirectoryAsync(MakeDirectoryFlags.None);
+            if (makeResult != PPError.Ok)
             {
-                ShowErrorMessage("Make directory failed", result);
+                ShowErrorMessage("Make directory failed", makeResult);
                 return;
             }
             ShowStatusMessage("Make directory success");
         }
 
-        private void Rename(PPError result, string oldName, string newName)
+        private async Task Rename(string oldName, string newName)
         {
-            if (!isFileSystemReady)
+            if (!IsFileSystemReady)
             {
                 ShowErrorMessage("File system is not open", PPError.Failed);
                 return;
             }
 
-            var refOld = PPBFileRef.Create(fileSystem, oldName);
-            var refNew = PPBFileRef.Create(fileSystem, newName);
+            var refOld = new FileRef(fileSystem, oldName);
+            var refNew = new FileRef(fileSystem, newName);
 
-            result = (PPError)PPBFileRef.Rename(refOld, refNew, new BlockUntilComplete());
+            var fileInfo = await refOld.QueryAsync();
+            var strInfo = new StringBuilder();
+            strInfo.Append($"QueryResult {fileInfo.QueryResult}\n");
+            strInfo.Append($"Size {fileInfo.Size}\n");
+            strInfo.Append($"Type {fileInfo.Type}\n");
+            strInfo.Append($"SystemType {fileInfo.SystemType}\n");
+            strInfo.Append($"CreationTime {fileInfo.UTCCreationTime}\n");
+            strInfo.Append($"LastAccessTime {fileInfo.UTCLastAccessTime}\n");
+            strInfo.Append($"LastModifiedTime {fileInfo.UTCLastModifiedTime}\n");
+            LogToConsole(PPLogLevel.Log, strInfo.ToString());
+
+            var result = await refOld.RenameAsync(refNew);
             if (result != PPError.Ok)
             {
                 ShowErrorMessage("Rename failed", result);
@@ -173,7 +188,7 @@ namespace FileIO
             var rv = await fileSystem.OpenAsync(1024 * 1024);
             if (rv == PPError.Ok)
             {
-                isFileSystemReady = true;
+                IsFileSystemReady = true;
                 // Notify the user interface that we're ready
                 PostArrayMessage("READY");
             }
@@ -186,13 +201,13 @@ namespace FileIO
         void Load(PPError result, string fileName)
         {
             
-            if (!isFileSystemReady)
+            if (!IsFileSystemReady)
             {
                 ShowErrorMessage("File system is not open", PPError.Failed);
                 return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, fileName);
+            var fileref = new FileRef(fileSystem, fileName);
             var file = PPBFileIO.Create(this);
 
             var openResult = (PPError)PPBFileIO.Open(file, fileref, (int)PPFileOpenFlags.FileopenflagRead, new BlockUntilComplete());
@@ -255,12 +270,12 @@ namespace FileIO
             string fileContents)
         {
             
-            if (!isFileSystemReady) {
+            if (!IsFileSystemReady) {
               ShowErrorMessage("File system is not open", PPError.Failed);
               return;
             }
 
-            var fileref = PPBFileRef.Create(fileSystem, fileName);
+            var fileref = new FileRef(fileSystem, fileName);
             var file = PPBFileIO.Create(this);
 
             var openResult = (PPError)PPBFileIO.Open(file, fileref,
@@ -315,49 +330,64 @@ namespace FileIO
             ShowStatusMessage("Save success");
         }
 
-        private void List(PPError result, string dir_name)
+        private async Task List(string dir_name)
         {
 
-            if (!isFileSystemReady) {
-              ShowErrorMessage("File system is not open", PPError.Failed);
-              return;
-            }
-
-            var fileRef = PPBFileRef.Create(fileSystem, dir_name);
-
-            // Pass ref along to keep it alive.
-            var listCallback = new CompletionCallbackWithOutput<PPDirectoryEntry[], PPResource>(ListCallback, fileRef);
-            PPBFileRef.ReadDirectoryEntries(fileRef, listCallback, listCallback);
-        }
-
-        void ListCallback(PPError result,
-                            PPDirectoryEntry[] entries,
-                          PPResource unused_ref )
-        {
-            
-            if (result != PPError.Ok)
+            if (!IsFileSystemReady)
             {
-                ShowErrorMessage("List failed", result);
+                ShowErrorMessage("File system is not open", PPError.Failed);
                 return;
             }
 
-            var sv = new List<string>();
-            if (entries != null)
+            var fileRef = new FileRef(fileSystem, dir_name);
+
+            var listResult = await fileRef.ReadDirectoryEntriesAsync(messageLoop);
+            if (listResult.Result != PPError.Ok)
             {
-                for (int i = 0; i < entries.Length; ++i)
-                {
-                    var name = (Var)PPBFileRef.GetName(entries[i].file_ref);
-                    if (name.IsString)
-                    {
-                        sv.Add(name.AsString());
-                    }
-                }
+                ShowErrorMessage("List failed", listResult.Result);
+                return;
             }
-            PostArrayMessage("LIST", sv.ToArray());
+
+            var entries = new List<string>();
+            foreach (var entry in listResult.Entries)
+            {
+                entries.Add(entry.FileRef.Name);
+            }
+
+            PostArrayMessage("LIST", entries.ToArray());
             ShowStatusMessage("List success");
         }
 
-        void PostArrayMessage(string command, string[] strings)
+        private async Task Query(string fileName)
+        {
+            if (!IsFileSystemReady)
+            {
+                ShowErrorMessage("File system is not open", PPError.Failed);
+                return;
+            }
+
+            var fileRef = new FileRef(fileSystem, fileName);
+
+            var fileInfo = await fileRef.QueryAsync();
+            var strInfo = new List<string>();
+            strInfo.Add($"QueryResult:      {fileInfo.QueryResult}");
+            strInfo.Add($"Size:             {fileInfo.Size}");
+            strInfo.Add($"Type:             {fileInfo.Type}");
+            strInfo.Add($"SystemType:       {fileInfo.SystemType}");
+            strInfo.Add($"CreationTime:     {fileInfo.UTCCreationTime.ToLocalTime()}");
+            strInfo.Add($"LastAccessTime:   {fileInfo.UTCLastAccessTime.ToLocalTime()}");
+            strInfo.Add($"LastModifiedTime: {fileInfo.UTCLastModifiedTime.ToLocalTime()}");
+
+            if (fileInfo.QueryResult != PPError.Ok)
+            {
+                ShowErrorMessage("Query failed", fileInfo.QueryResult);
+                return;
+            }
+            PostArrayMessage("QUERY", strInfo.ToArray());
+            ShowStatusMessage("Query success");
+        }
+
+        void PostArrayMessage(string command, params string[] strings)
         {
             var message = new VarArray();
             message[0] = new Var(command);
@@ -366,17 +396,6 @@ namespace FileIO
             }
 
             PostMessage(message);
-        }
-
-        void PostArrayMessage(string command)
-        {
-            PostArrayMessage(command, new string[0]);
-        }
-
-        void PostArrayMessage(string command, string s)
-        {
-            string[] sv = new string[1] { s };
-            PostArrayMessage(command, sv);
         }
 
         /// Encapsulates our simple javascript communication protocol

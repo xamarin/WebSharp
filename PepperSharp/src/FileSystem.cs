@@ -101,6 +101,18 @@ namespace PepperSharp
         }
     }
 
+    /**
+    * The <code>FileType</code> enum contains file type constants.
+    */
+    public enum FileType
+    {
+        /** A regular file type */
+        Regular = 0,
+        /** A directory */
+        Directory = 1,
+        /** A catch-all for unidentified types */
+        Other = 2
+    }
 
     /**
      * The <code>FileSystemType</code> enum contains file system type constants.

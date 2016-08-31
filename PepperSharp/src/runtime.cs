@@ -224,4 +224,20 @@ namespace PepperSharp
         PassRef = 0
     }
 
+    internal static class PepperSharpUtils
+    {
+
+        static DateTime PepperEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
+        internal static DateTime ConvertFromPepperTimestamp(double timestamp)
+        {
+            return PepperEpoch.AddSeconds(timestamp);
+        }
+
+        internal static double ConvertToPepperTimestamp(DateTime date)
+        {
+            return (date.ToUniversalTime() - PepperEpoch).TotalSeconds;
+        }
+    }
+
 }

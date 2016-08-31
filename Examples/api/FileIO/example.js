@@ -36,6 +36,7 @@ function attachListeners() {
   addEventListenerToButton('listDir', listDir);
   addEventListenerToButton('makeDir', makeDir);
   addEventListenerToButton('rename', rename);
+  addEventListenerToButton('query', query);
 }
 
 function onRadioClicked(e) {
@@ -109,6 +110,13 @@ function rename() {
   }
 }
 
+function query() {
+    if (common.naclModule) {
+        var queryName = document.querySelector('#query input').value;
+        common.naclModule.postMessage(makeMessage('query', queryName));
+    }
+}
+
 // Called by the common.js module.
 function handleMessage(message_event) {
   var msg = message_event.data;
@@ -150,6 +158,29 @@ function handleMessage(message_event) {
       var itemEl = document.createElement('li');
       itemEl.textContent = '<empty directory>';
       listDirOutputEl.appendChild(itemEl);
+    }
+  } else if (command == 'QUERY') {
+    var queryOutputEl = document.getElementById('queryInfoOutput');
+
+    // NOTE: files with | in their names will be incorrectly split. Fixing this
+    // is left as an exercise for the reader.
+
+    // Remove all children of this element...
+    while (queryOutputEl.firstChild) {
+        queryOutputEl.removeChild(queryOutputEl.firstChild);
+    }
+
+    if (args.length) {
+        // Add new <li> elements for each file.
+        for (var i = 0; i < args.length; ++i) {
+            var itemEl = document.createElement('li');
+            itemEl.textContent = args[i];
+            queryOutputEl.appendChild(itemEl);
+        }
+    } else {
+        var itemEl = document.createElement('li');
+        itemEl.textContent = '<empty directory>';
+        queryOutputEl.appendChild(itemEl);
     }
   }
 }

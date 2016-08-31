@@ -27,6 +27,7 @@
       <input type="radio" id="radio_listDir" name="group">List Directory
       <input type="radio" id="radio_makeDir" name="group">Make Directory
       <input type="radio" id="radio_rename" name="group">Rename
+      <input type="radio" id="radio_query" name="group">Query
     </span>
   </div>
   <div class="function" id="saveFile">
@@ -86,6 +87,18 @@
       <input id="renameNew" type="text" value="/filename2.txt">
     </div>
     <button>Rename</button>
+  </div>
+   <div class="function" id="query" hidden>
+    <div>
+      <span>
+        Filename/Directory:
+        <input type="text" value="/">
+        <button>Query</button>
+      </span>
+    </div>
+    Query Info:
+    <ul id="queryInfoOutput">
+    </ul>
   </div>
 
   <pre id="log" style="font-weight: bold"></pre>

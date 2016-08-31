@@ -273,3 +273,24 @@ FileSystem
 [x] FileSystem(const InstanceHandle& instance, PP_FileSystemType type);
 [x] int32_t Open(int64_t expected_size, const CompletionCallback& cc);
 [ ] static bool IsFileSystem(const Resource& resource);
+
+FileRef
+---
+[ ] explicit FileRef(PP_Resource resource);
+[x] FileRef(PassRef, PP_Resource resource);
+[x] FileRef(const FileSystem& file_system, const char* path);
+[ ] FileRef(const FileRef& other);
+[x] PP_FileSystemType GetFileSystemType() const;
+[x] Var GetName() const;
+[x] FileRef GetParent() const;
+[x] int32_t MakeDirectory(int32_t make_directory_flags,
+                        const CompletionCallback& cc);
+[x] int32_t Touch(PP_Time last_access_time,
+                PP_Time last_modified_time,
+                const CompletionCallback& cc);
+[x] int32_t Delete(const CompletionCallback& cc);
+[x] int32_t Rename(const FileRef& new_file_ref, const CompletionCallback& cc);
+[x] int32_t Query(const CompletionCallbackWithOutput<PP_FileInfo>& callback);
+[x] int32_t ReadDirectoryEntries(
+      const CompletionCallbackWithOutput< std::vector<DirectoryEntry> >&
+          callback);
