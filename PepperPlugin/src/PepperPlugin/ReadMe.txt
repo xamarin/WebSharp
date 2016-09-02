@@ -294,3 +294,31 @@ FileRef
 [x] int32_t ReadDirectoryEntries(
       const CompletionCallbackWithOutput< std::vector<DirectoryEntry> >&
           callback);
+
+FileIO
+---
+[x] explicit FileIO(const InstanceHandle& instance);
+[ ] FileIO(const FileIO& other);
+[x] int32_t Open(const FileRef& file_ref,
+               int32_t open_flags,
+               const CompletionCallback& cc);
+[x] int32_t Query(PP_FileInfo* result_buf,
+                const CompletionCallback& cc);
+[x] int32_t Touch(PP_Time last_access_time,
+                PP_Time last_modified_time,
+                const CompletionCallback& cc);
+[x] int32_t Read(int64_t offset,
+               char* buffer,
+               int32_t bytes_to_read,
+               const CompletionCallback& cc);
+[x] int32_t Read(int32_t offset,
+               int32_t max_read_length,
+               const CompletionCallbackWithOutput< std::vector<char> >& cc);
+[x] int32_t Write(int64_t offset,
+                const char* buffer,
+                int32_t bytes_to_write,
+                const CompletionCallback& cc);
+[x] int32_t SetLength(int64_t length,
+                    const CompletionCallback& cc);
+[x] int32_t Flush(const CompletionCallback& cc);
+[x] void Close();
