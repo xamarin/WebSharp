@@ -181,13 +181,12 @@ namespace PepperSharp
         /// repaint of the webpage, assuming this graphics context is bound to a
         /// module instance.
         ///
-        /// Flush() runs in asynchronous mode. Specify a callback function and
-        /// the argument for that callback function. The callback function will be
-        /// executed on the calling thread when the image has been painted to the
-        /// screen. While you are waiting for a <code>Flush</code> callback,
+        /// Flush() runs in asynchronous mode. Subscribe to the Flushed EventHandler
+        /// which will be invoked when the image has painted to the
+        /// screen. While you are waiting for a <code>Flush</code> event,
         /// additional calls to Flush() will fail.
         ///
-        /// Because the callback is executed (or thread unblocked) only when the
+        /// Because the EventHandler Flushed is invoked only when the
         /// module's image is actually on the screen, this function provides
         /// a way to rate limit animations. By waiting until the image is on the
         /// screen before painting the next frame, you can ensure you're not
@@ -195,7 +194,7 @@ namespace PepperSharp
         ///
         /// <strong>Unbound contexts</strong>
         /// If the context is not bound to a module instance, you will
-        /// still get a callback. The callback will execute after Flush() returns
+        /// still receive events. The event will be invoked after Flush() returns
         /// to avoid reentrancy. The callback will not wait until anything is
         /// painted to the screen because there will be nothing on the screen. The
         /// timing of this callback is not guaranteed and may be deprioritized by
@@ -208,33 +207,30 @@ namespace PepperSharp
         ///
         /// <strong>Detaching a context</strong>
         /// If you detach a context from a module instance, any
-        /// pending flush callbacks will be converted into the "unbound context"
+        /// pending flush events will be converted into the "unbound context"
         /// case.
         ///
         /// <strong>Released contexts</strong>
-        /// A callback may or may not still get called even if you have released all
+        /// A Flushed event may or may not still be received even if you have released all
         /// of your references to the context. This can occur if there are internal
         /// references to the context that means it has not been internally
         /// destroyed (for example, if it is still bound to an instance) or due to
         /// other implementation details. As a result, you should be careful to
-        /// check that flush callbacks are for the context you expect and that
-        /// you're capable of handling callbacks for context that you may have
+        /// check that flush events are for the context you expect and that
+        /// you're capable of handling events for context that you may have
         /// released your reference to.
         ///
         /// <strong>Shutdown</strong>
         /// If a module instance is removed when a Flush is pending, the
-        /// callback will not be executed.
+        /// event will not be fired.
         /// </summary>
-        /// <param name="cc">A <code>CompletionCallback</code> to be called when the
-        /// image has been painted on the screen.
-        /// </param>
-        /// <returns>Returns <code>OK</code> on success or
-        /// <code>BADRESOURCE</code> if the graphics context is invalid,
-        /// <code>BADARGUMENT</code> if the callback is null and
+        /// <returns>PPError code - Returns <code>Ok</code> on success or
+        /// <code>BadResource</code> if the graphics context is invalid,
+        /// <code>BadRrgument</code> if the callback is null and
         /// flush is being called from the main thread of the module, or
-        /// <code>INPROGRESS</code> if a flush is already pending that has
-        /// not issued its callback yet.  In the failure case, nothing will be
-        /// updated and no callback will be scheduled.</returns>
+        /// <code>InProgress</code> if a flush is already pending that has
+        /// not issued fired its event yet.  In the failure case, nothing will be
+        /// updated and no event will be fired.</returns>
         public PPError Flush()
             => (PPError)PPBGraphics2D.Flush(this, new CompletionCallback(OnFlushed));
 
@@ -242,6 +238,11 @@ namespace PepperSharp
         protected void OnFlushed (PPError result)
             => Flushed?.Invoke (this, result);
 
+        /// <summary>
+        /// Flushs the context asynchronously.  <see cref="Flush"/> for more information
+        /// </summary>
+        /// <returns>Error code.</returns>
+        /// <param name="messageLoop">Optional MessageLoop to execute the command on.</param>
         public Task<PPError> FlushAsync (MessageLoop messageLoop = null)
             => FlushAsyncCore (messageLoop);
 

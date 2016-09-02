@@ -68,7 +68,7 @@ namespace VarArrayBufferInstance
                 size = viewRect.Size;
                 bool isAlwaysOpaque = true;
                 graphics2DContext = new Graphics2D(this, viewRect.Size, isAlwaysOpaque);
-
+                graphics2DContext.Flushed += DidFlush;
                 BindGraphics(graphics2DContext);
 
                 // The images in our queue are the wrong size, so we won't paint them.
@@ -203,14 +203,14 @@ namespace VarArrayBufferInstance
         {
             Debug.Assert(!isFlushing);
             graphics2DContext.ReplaceContents(image_data);
-            graphics2DContext.Flush(new CompletionCallback(DidFlush));
+            graphics2DContext.Flush();
             isFlushing = true;
         }
 
         /// The callback that gets invoked when a flush completes. This is bound to a
         /// <code>CompletionCallback</code> and passed as a parameter to
         /// <code>Flush</code>.
-        void DidFlush(PPError error_code)
+        void DidFlush(object sender, PPError error_code)
         {
             isFlushing = false;
             // If there are no images in the queue, we're done for now.

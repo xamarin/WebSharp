@@ -79,6 +79,9 @@ namespace MouseLockInstance
 
             size_ = viewRect.Size;
             deviceContext = new Graphics2D(this, size_, false);
+
+            deviceContext.Flushed += DidFlush;
+
             waiting_for_flush_completion_ = false;
 
             is_context_bound_ = BindGraphics(deviceContext);
@@ -344,10 +347,10 @@ namespace MouseLockInstance
             deviceContext.ReplaceContents(image);
             waiting_for_flush_completion_ = true;
 
-            deviceContext.Flush(new CompletionCallback(DidFlush));
+            deviceContext.Flush();
         }
 
-        void DidFlush(PPError result)
+        void DidFlush(object sender, PPError result)
         {
             if (result != 0)
                 Log("Flushed failed with error number {0}.\n", result);
