@@ -257,32 +257,10 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// Init() initializes this instance with the provided arguments. This
-        /// function will be called immediately after the instance object is
-        /// constructed.
+        /// This is the entry point of the Init call that just passes the information on to the event handler
         /// </summary>
-        /// <param name="argc">The number of arguments contained in <code>argn</code>
-        /// and <code>argv</code>.
-        /// </param>
-        /// <param name="argn">An array of argument names.  These argument names are
-        /// supplied in the \<embed\> tag, for example:
-        /// <code>\<embed id="nacl_module" dimensions="2"\></code> will produce two
-        /// argument names: "id" and "dimensions".
-        /// </param>
-        /// <param name="argv">An array of argument values.  These are the values of the
-        /// arguments listed in the \<embed\> tag, for example
-        /// <code>\<embed id="nacl_module" dimensions="2"\></code> will produce two
-        /// argument values: "nacl_module" and "2".  The indices of these values
-        /// match the indices of the corresponding names in <code>argn</code>.
-        /// </param>
-        /// <returns>true on success. Returning false causes the instance to be
-        /// deleted and no other functions to be called.
-        /// </returns>
-        public virtual bool Init(int argc, string[] argn, string[] argv)
-        {
-
-            return OnInitialize(new InitializeEventArgs(argc, argn, argv));
-        }
+        bool Init(int argc, string[] argn, string[] argv)
+            => OnInitialize(new InitializeEventArgs(argc, argn, argv));
 
         /// <summary>
         /// Raises the ViewChange event when the view information for the Instance
@@ -297,9 +275,7 @@ namespace PepperSharp
         /// </remarks>
         /// <param name="view">The view object that contains the new view properties</param>
         protected virtual void OnViewChanged(View view)
-        {
-            ViewChanged?.Invoke(this, view);
-        }
+            => ViewChanged?.Invoke(this, view);
 
         /// <summary>
         /// Raises the FocusChanged event when an instance has gained or lost focus.
@@ -325,9 +301,7 @@ namespace PepperSharp
         /// <param name="hasFocus">Indicates the new focused state of the instance.</param>
         /// 
         protected virtual void OnFocusChanged(bool hasFocus)
-        {
-            FocusChanged?.Invoke(this, hasFocus);
-        }
+            => FocusChanged?.Invoke(this, hasFocus);
 
         /// <summary>
         /// Raises the HandleInput event from the browser.
@@ -622,10 +596,7 @@ namespace PepperSharp
         /// when passing them to the plugin.
         /// </param>
         protected virtual void OnHandleMessage(Var message)
-        {
-            HandleMessage?.Invoke(this, message);
-        }
- 
+            => HandleMessage?.Invoke(this, message);
 
         /// <summary>
         /// BindGraphics() binds the given graphics as the current display surface.
@@ -647,9 +618,7 @@ namespace PepperSharp
         /// <param name="graphics2d">A Graphics2D to bind</param>
         /// <returns>true if bind was successful or false if the device was not the correct type. On success, a reference to the device will be held by the instance, so the caller can release its reference if it chooses.</returns>
         public bool BindGraphics(PPResource graphics2d)
-        {
-            return PPBInstance.BindGraphics(this, graphics2d) == PPBool.True ? true : false;
-        }
+            => PPBInstance.BindGraphics(this, graphics2d) == PPBool.True ? true : false;
 
         /// <summary>
         /// asynchronously invokes any listeners for message events on the DOM element for the given instance.
@@ -720,9 +689,7 @@ namespace PepperSharp
         /// <param name="eventClasses">A combination of flags from PP_InputEvent_Class that identifies the classes of events the instance is requesting. The flags are combined by logically ORing their values.</param>
         /// <returns>PP_OK if the operation succeeded, PP_ERROR_BADARGUMENT if instance is invalid, or PP_ERROR_NOTSUPPORTED if one of the event class bits were illegal. In the case of an invalid bit, all valid bits will be applied and only the illegal bits will be ignored.</returns>
         public PPError RequestInputEvents(PPInputEventClass eventClasses)
-        {
-            return (PPError)PPBInputEvent.RequestInputEvents(this, (uint)eventClasses);
-        }
+            => (PPError)PPBInputEvent.RequestInputEvents(this, (uint)eventClasses);
 
         /// <summary>
         /// RequestFilteringInputEvents() requests that input events corresponding to the given input events 
@@ -746,9 +713,7 @@ namespace PepperSharp
         /// applied and only the illegal bits will be ignored.
         /// </returns>
         public PPError RequestFilteringInputEvents(PPInputEventClass eventClasses)
-        {
-            return (PPError)PPBInputEvent.RequestFilteringInputEvents(this, (uint)eventClasses);
-        }
+            => (PPError)PPBInputEvent.RequestFilteringInputEvents(this, (uint)eventClasses);
 
         /// <summary>
         /// IsFullFrame() determines if the instance is full-frame (repr).
@@ -758,9 +723,7 @@ namespace PepperSharp
         /// resource with a MIME type registered by the module.
         /// </summary>
         public bool IsFullFrame
-        {
-            get { return PPBInstance.IsFullFrame(this) == PPBool.True ? true : false; }
-        }
+            => PPBInstance.IsFullFrame(this) == PPBool.True ? true : false; 
 
         /// <summary>
         /// ClearInputEventRequest() requests that input events corresponding to the given input classes no longer be delivered to the instance.
@@ -773,9 +736,7 @@ namespace PepperSharp
         /// </summary>
         /// <param name="eventClasses">A combination of flags from PP_InputEvent_Class that identifies the classes of events the instance is no longer interested in.</param>
         public void ClearInputEventRequest(PPInputEventClass eventClasses)
-        {
-            PPBInputEvent.ClearInputEventRequest(this, (uint)eventClasses);
-        }
+            => PPBInputEvent.ClearInputEventRequest(this, (uint)eventClasses);
 
         /// <summary>
         /// Sets the given mouse cursor. The mouse cursor will be in effect whenever
@@ -869,9 +830,7 @@ namespace PepperSharp
         }
 
         public MessageLoop CreateMessageLoop()
-        {
-            return new MessageLoop(this);
-        }
+            => new MessageLoop(this);
 
     }
 }

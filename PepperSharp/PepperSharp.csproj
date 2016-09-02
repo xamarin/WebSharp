@@ -111,6 +111,7 @@
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ArrayOutput.cs" />
     <Compile Include="src\Core.cs" />
+    <Compile Include="src\FileIO.cs" />
     <Compile Include="src\FileRef.cs" />
     <Compile Include="src\FileSystem.cs" />
     <Compile Include="src\Graphics2D.cs" />

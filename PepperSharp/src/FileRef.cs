@@ -105,9 +105,7 @@ namespace PepperSharp
                 new CompletionCallback(OnMakeDirectory));
 
         protected virtual void OnMakeDirectory(PPError result)
-        {
-            HandleMakeDirectory?.Invoke(this, result);
-        }
+            => HandleMakeDirectory?.Invoke(this, result);
 
         /// <summary>
         /// MakeDirectoryAsync() makes a new directory asynchronously in the file system according to the
@@ -120,9 +118,7 @@ namespace PepperSharp
         /// <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
         /// <returns>Error code</returns>
         public Task<PPError> MakeDirectoryAsync(MakeDirectoryFlags makeDirectoryFlags, MessageLoop messageLoop = null)
-        {
-            return MakeDirectoryAsyncCore(makeDirectoryFlags, messageLoop);
-        }
+            => MakeDirectoryAsyncCore(makeDirectoryFlags, messageLoop);
 
         private async Task<PPError> MakeDirectoryAsyncCore(MakeDirectoryFlags makeDirectoryFlags, MessageLoop messageLoop = null)
         {
@@ -175,12 +171,10 @@ namespace PepperSharp
         /// <param name="lastModifiedTime">The last time the file was modified.</param>
         /// <returns>Ok if all went well</returns>
         public PPError Touch(DateTime lastAccessTime, DateTime lastModifiedTime)
-        {
-            return (PPError)PPBFileRef.Touch(this,
+            => (PPError)PPBFileRef.Touch(this,
                 PepperSharpUtils.ConvertToPepperTimestamp(lastAccessTime),
                 PepperSharpUtils.ConvertToPepperTimestamp(lastModifiedTime),
                 new CompletionCallback(OnTouch));
-        }
 
         protected virtual void OnTouch(PPError result)
             => HandleTouch?.Invoke(this, result);
@@ -479,9 +473,7 @@ namespace PepperSharp
         }
 
         protected void OnReadDirectoryEntries(PPError result, List<DirectoryEntry> entries)
-        {
-            HandleReadDirectoryEntries?.Invoke(this, new DirectoryEntries(result, entries));
-        }
+            => HandleReadDirectoryEntries?.Invoke(this, new DirectoryEntries(result, entries));
 
         /// <summary>
         /// ReadDirectoryEntries() Reads all entries in the directory asynchronously.
@@ -541,6 +533,28 @@ namespace PepperSharp
                 HandleReadDirectoryEntries -= handler;
             }
         }
+
+        #region Implement IDisposable.
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!IsEmpty)
+            {
+                if (disposing)
+                {
+                    HandleMakeDirectory = null;
+                    HandleTouch = null;
+                    HandleDelete = null;
+                    HandleRename = null;
+                    HandleQuery = null;
+                    HandleReadDirectoryEntries = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
 
     }
 

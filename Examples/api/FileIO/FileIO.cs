@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Text;
 
 using PepperSharp;
+using System.Linq;
 
 namespace FileIO
 {
@@ -75,13 +76,13 @@ namespace FileIO
             Console.WriteLine($"command: {command} File Name: {fileName}");
             if (command == "load")
             {
-                messageLoop.PostWork(Load, fileName);
+                Load(fileName);
                 
             }
             else if (command == "save")
             {
                 var fileText = message[2].AsString();
-                messageLoop.PostWork(Save, fileName, fileText);
+                Save(fileName, fileText);
             }
             else if (command == "delete")
             {
@@ -198,7 +199,7 @@ namespace FileIO
             }
         }
 
-        void Load(PPError result, string fileName)
+        async Task Load(string fileName)
         {
             
             if (!IsFileSystemReady)
@@ -208,9 +209,9 @@ namespace FileIO
             }
 
             var fileref = new FileRef(fileSystem, fileName);
-            var file = PPBFileIO.Create(this);
+            var file = new PepperSharp.FileIO(this);
 
-            var openResult = (PPError)PPBFileIO.Open(file, fileref, (int)PPFileOpenFlags.FileopenflagRead, new BlockUntilComplete());
+            var openResult = await file.OpenAsync(fileref, FileOpenFlags.Read);
             if (openResult == PPError.Filenotfound)
             {
                 ShowErrorMessage("File not found", openResult);
@@ -221,52 +222,55 @@ namespace FileIO
                 ShowErrorMessage("File open for read failed", openResult);
                 return;
             }
-
-            var info = new PPFileInfo();
-            var queryResult = (PPError)PPBFileIO.Query(file, out info, new BlockUntilComplete());
-            if (queryResult != PPError.Ok)
+            
+            var queryResult = await file.QueryAsync();
+            if (queryResult.QueryResult != PPError.Ok)
             {
-                ShowErrorMessage("File query failed", queryResult);
+                ShowErrorMessage("File query failed", queryResult.QueryResult);
                 return;
             }
+
             // FileIO.Read() can only handle int32 sizes
-            if (info.size > Int32.MaxValue)
+            if (queryResult.Size > Int32.MaxValue)
             {
                 ShowErrorMessage("File too big", PPError.Filetoobig);
                 return;
             }
 
-            int offset = 0;
-            int bytesRead = 0;
-            int bytesToRead = (int)info.size;
-            var dataBuffer = new byte[bytesToRead];
+            int numBytesRead = 0;
+            int numBytesToRead = (int)queryResult.Size;
+            var bytes = new byte[numBytesToRead];
             var dataBufferString = new StringBuilder();
-            while (bytesToRead > 0)
-            {
-                Array.Clear(dataBuffer, 0, bytesToRead);
-                bytesRead = PPBFileIO.Read(file, offset,
-                            dataBuffer, (int)info.size - offset,
-                           new BlockUntilComplete());
+            
+            var readBuffer = new ArraySegment<byte>(bytes);
 
-                if (bytesRead > 0)
+            while (numBytesToRead > 0)
+            {
+                var readResult = await file.ReadAsync(readBuffer, numBytesRead,
+                            readBuffer.Count);
+                
+                if (readResult.EndOfFile)
+                    break;
+
+                if (readResult.Count > 0)
                 {
-                    offset += bytesRead;
-                    bytesToRead -= bytesRead;
-                    dataBufferString.Append(Encoding.UTF8.GetString(dataBuffer));
+                    byte[] readBytes = readBuffer.Skip(readBuffer.Offset).Take((int)readResult.Count).ToArray();
+                    dataBufferString.Append(Encoding.UTF8.GetString(readBytes));
                 }
-                else if (bytesRead < 0)
+                else 
                 {
-                    // If bytes_read < PP_OK then it indicates the error code.
-                    ShowErrorMessage("File read failed", bytesRead);
+                    ShowErrorMessage("File read failed", numBytesRead);
                     return;
                 }
+
+                numBytesRead += readResult.Count;
+                numBytesToRead -= readResult.Count;
             }
             PostArrayMessage("DISP", dataBufferString.ToString());
             ShowStatusMessage("Load success");
         }
 
-        void Save(PPError result,
-            string fileName,
+        async Task Save(string fileName,
             string fileContents)
         {
             
@@ -276,12 +280,10 @@ namespace FileIO
             }
 
             var fileref = new FileRef(fileSystem, fileName);
-            var file = PPBFileIO.Create(this);
+            var file = new PepperSharp.FileIO(this);
 
-            var openResult = (PPError)PPBFileIO.Open(file, fileref,
-                (int)(PPFileOpenFlags.FileopenflagWrite | PPFileOpenFlags.FileopenflagCreate |
-                                  PPFileOpenFlags.FileopenflagTruncate),
-                new BlockUntilComplete());
+            var openResult = await file.OpenAsync(fileref,
+                FileOpenFlags.Write | FileOpenFlags.Create | FileOpenFlags.Truncate);
             if (openResult != PPError.Ok)
             {
                 ShowErrorMessage("File open for write failed", openResult);
@@ -302,10 +304,14 @@ namespace FileIO
                 var byteContents = Encoding.UTF8.GetBytes(fileContents);
                 do
                 {
-                    bytesWritten = PPBFileIO.Write(file, offset,
-                                               byteContents,
-                                               byteContents.Length,
-                                               new BlockUntilComplete());
+                    var writeResult = await file.WriteAsync(byteContents,
+                        offset, byteContents.Length);
+
+                    if (writeResult.EndOfFile)
+                        return;
+
+                    bytesWritten = writeResult.Count;
+
                     if (bytesWritten > 0)
                     {
                         offset += bytesWritten;
@@ -319,7 +325,7 @@ namespace FileIO
 
             }
             // All bytes have been written, flush the write buffer to complete
-            var flush_result = (PPError)PPBFileIO.Flush(file, new BlockUntilComplete());
+            var flush_result = await file.FlushAsync();
             if (flush_result != PPError.Ok)
             {
                   ShowErrorMessage("File fail to flush", flush_result);

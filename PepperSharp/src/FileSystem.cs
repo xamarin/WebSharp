@@ -34,9 +34,7 @@ namespace PepperSharp
             => (PPError)PPBFileSystem.Open(this, expected_size, new CompletionCallback(OnOpen));
 
         protected void OnOpen(PPError result)
-        {
-            HandleOpen?.Invoke(this, result);
-        }
+            => HandleOpen?.Invoke(this, result);
 
         /// <summary>
         /// Open() opens the file system asynchronously. A file system must be opened before running
@@ -53,9 +51,7 @@ namespace PepperSharp
         /// <param name="openLoop">Optional MessageLoop instance that can be used to post the command to</param>        
         /// <returns>A PPError code</returns>
         public Task<PPError> OpenAsync (long expected_size, MessageLoop openLoop = null)
-        {
-            return OpenAsyncCore(expected_size, openLoop);
-        }
+            => OpenAsyncCore(expected_size, openLoop);
 
         private async Task<PPError> OpenAsyncCore(long expected_size, MessageLoop openLoop = null)
         {
@@ -99,6 +95,24 @@ namespace PepperSharp
                 HandleOpen -= handler;
             }
         }
+
+        #region Implement IDisposable.
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!IsEmpty)
+            {
+                if (disposing)
+                {
+                    HandleOpen = null;
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
     }
 
     /**
