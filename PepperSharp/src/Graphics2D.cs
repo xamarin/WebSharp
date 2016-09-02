@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace PepperSharp
 {
@@ -9,27 +10,32 @@ namespace PepperSharp
         /// </summary>
         public PPSize Size { get; private set; }
 
+        /// <summary>
+        /// Event raised when the Graphics2D issues a Flush on the context.
+        /// </summary>
+        public event EventHandler<PPError> Flushed;
+
         public Graphics2D(PPResource resource) : base(resource)
         { }
 
 
         /// <summary>
         /// A constructor allocating a new 2D graphics context with the given size
-        /// in the browser, resulting object will be is_null() if the allocation
+        /// in the browser, resulting object will be IsEmpty if the allocation
         /// failed.
         ///
         /// </summary>
         /// <param name="instance">The instance with which this resource will be associated.</param>
         /// <param name="size">The size of the 2D graphics context in the browser, measured in pixels. See <code>Scale</code> for more information.</param>
-        /// <param name="isAlwaysOpaque">is_always_opaque Set the <code>is_always_opaque</code> flag
+        /// <param name="isAlwaysOpaque">Set the <code>isAlwaysOpaque</code> flag
         /// to true if you know that you will be painting only opaque data to this
         /// context. This option will disable blending when compositing the module
         /// with the web page, which might give higher performance on some computers.
         ///
-        /// If you set <code>is_always_opaque</code>, your alpha channel should
+        /// If you set <code>isAlwaysOpaque</code>, your alpha channel should
         /// always be set to 0xFF or there may be painting artifacts. The alpha values
         /// overwrite the destination alpha values without blending when
-        /// <code>is_always_opaque</code> is true.
+        /// <code>isAlwaysOpaque</code> is true.
         /// </param>
         public Graphics2D(Instance instance, PPSize size, bool isAlwaysOpaque)
         {
@@ -95,23 +101,23 @@ namespace PepperSharp
         /// There are two methods most modules will use for painting. The first
         /// method is to generate a new <code>ImageData</code> and then paint it. In
         /// this case, you'll set the location of your painting to
-        /// <code>top_left</code> and set <code>src_rect</code> to <code>NULL</code>.
+        /// <code>topLeft</code> and set <code>srcRect</code> to <code>NULL</code>.
         /// The second is that you're generating small invalid regions out of a larger
         /// bitmap representing your entire module. In this case, you would set the
-        /// location of your image to (0,0) and then set <code>src_rect</code> to the
+        /// location of your image to (0,0) and then set <code>srcRect</code> to the
         /// pixels you changed.
         /// </summary>
         /// <param name="image">The <code>ImageData</code> to be painted.</param>
-        /// <param name="top_left">A <code>Point</code> representing the
-        /// <code>top_left</code> location where the <code>ImageData</code> will be
+        /// <param name="topLeft">A <code>Point</code> representing the
+        /// <code>topLeft</code> location where the <code>ImageData</code> will be
         /// painted.
         /// </param>
         /// <param name="srcRect">The rectangular area where the <code>ImageData</code>
         /// will be painted.</param>
         public void PaintImageData(ImageData image,
-              PPPoint top_left, PPRect srcRect)
+                                   PPPoint topLeft, PPRect srcRect)
         {
-            PPBGraphics2D.PaintImageData(this, image, top_left, new PPRect(Size));
+            PPBGraphics2D.PaintImageData(this, image, topLeft, srcRect);
         }
 
         /// <summary>
@@ -229,9 +235,54 @@ namespace PepperSharp
         /// <code>INPROGRESS</code> if a flush is already pending that has
         /// not issued its callback yet.  In the failure case, nothing will be
         /// updated and no callback will be scheduled.</returns>
-        public PPError Flush(CompletionCallback cc)
+        public PPError Flush()
+            => (PPError)PPBGraphics2D.Flush(this, new CompletionCallback(OnFlushed));
+
+
+        protected void OnFlushed (PPError result)
+            => Flushed?.Invoke (this, result);
+
+        public Task<PPError> FlushAsync (MessageLoop messageLoop = null)
+            => FlushAsyncCore (messageLoop);
+
+        private async Task<PPError> FlushAsyncCore (MessageLoop messageLoop = null)
         {
-            return (PPError)PPBGraphics2D.Flush(this, cc);
+            var tcs = new TaskCompletionSource<PPError> ();
+            EventHandler<PPError> handler = (s, e) => { tcs.TrySetResult (e); };
+
+            try {
+                Flushed += handler;
+
+                if (MessageLoop == null && messageLoop == null) 
+                { 
+                    Flush (); 
+                } 
+                else 
+                {
+                    Action<PPError> action = new Action<PPError> ((e) => {
+                        var result = (PPError)PPBGraphics2D.Flush (this, new BlockUntilComplete());
+                        tcs.TrySetResult (result);
+                    }
+                    );
+                    if (messageLoop == null)
+                        MessageLoop.PostWork (action);
+                    else
+                        messageLoop.PostWork (action);
+                }
+                return await tcs.Task;
+
+            } 
+            catch (Exception exc) 
+            {
+                Console.WriteLine (exc.Message);
+                tcs.SetException (exc);
+                return PPError.Aborted;
+            } 
+            finally 
+            {
+                Flushed -= handler;
+            }
+
         }
 
         /// <summary>
@@ -271,6 +322,24 @@ namespace PepperSharp
         {
             return PPBGraphics2D.SetLayerTransform(this, scale, origin, translate) == PPBool.True ? true : false;
         }
+
+        #region Implement IDisposable.
+
+        protected override void Dispose (bool disposing)
+        {
+            if (!IsEmpty) 
+            {
+                if (disposing) 
+                {
+                    Flushed = null;
+                }
+            }
+
+            base.Dispose (disposing);
+        }
+
+        #endregion
+
 
     }
 }

@@ -8,8 +8,8 @@ namespace GamePad
     public class GamePad : Instance
     {
 
-        Graphics2D graphics_2d_context_;
-        ImageData pixel_buffer_;
+        Graphics2D graphics2DContext;
+        ImageData pixelBuffer;
 
         public GamePad(IntPtr handle) : base(handle)
         {
@@ -39,13 +39,13 @@ namespace GamePad
             CreateContext(position.size);
             
             // Delete the old pixel buffer and create a new one.
-            if (pixel_buffer_ != null && !pixel_buffer_.IsEmpty)
-                pixel_buffer_.Dispose();
+            if (pixelBuffer != null && !pixelBuffer.IsEmpty)
+                pixelBuffer.Dispose();
 
             //pixel_buffer_.ppresource = 0;
             if (IsContextValid)
             {
-                pixel_buffer_ = new ImageData(this, PPImageDataFormat.BgraPremul,
+                pixelBuffer = new ImageData(this, PPImageDataFormat.BgraPremul,
                     Size, false);
             }
 
@@ -90,7 +90,7 @@ namespace GamePad
         void Paint()
         {
             // Clear the background.
-            FillRect(pixel_buffer_, 0, 0, Width, Height, 0xfff0f0f0);
+            FillRect(pixelBuffer, 0, 0, Width, Height, 0xfff0f0f0);
 
             // Get current gamepad data.
             PPBGamepad.Sample(this, out gamepad_data);
@@ -112,7 +112,7 @@ namespace GamePad
                     int x = (int)(pad.Axes(i + 0) * width2 + width2) + offset;
                     int y = (int)(pad.Axes(i + 1) * height2 + height2);
                     uint box_bgra = 0x80000000;  // Alpha 50%.
-                    FillRect(pixel_buffer_, x - 3, y - 3, 7, 7, box_bgra);
+                    FillRect(pixelBuffer, x - 3, y - 3, 7, 7, box_bgra);
                 }
 
                 // Draw buttons.
@@ -122,7 +122,7 @@ namespace GamePad
                     uint colour = (uint)((button_val * 192) + 63) << 24;
                     int x = i * 8 + 10 + offset;
                     int y = 10;
-                    FillRect(pixel_buffer_, x - 3, y - 3, 7, 7, colour);
+                    FillRect(pixelBuffer, x - 3, y - 3, 7, 7, colour);
                 }
             }
 
@@ -138,31 +138,22 @@ namespace GamePad
             // Note that the pixel lock is held while the buffer is copied into the
             // device context and then flushed.
             PPRect srcRect = new PPRect(Size);
-            graphics_2d_context_.PaintImageData(pixel_buffer_, PPPoint.Zero, srcRect);
+            graphics2DContext.PaintImageData(pixelBuffer, PPPoint.Zero, srcRect);
 
             if (FlushPending)
                 return;
 
             FlushPending = true;
 
-            graphics_2d_context_.Flush(new CompletionCallback
-                (
-                    (result) =>
-                    {
-                        FlushPending = false;
-                        Paint();
-
-                    }
-
-                ));
+            graphics2DContext.Flush ();
         }
 
         void DestroyContext()
         {
             if (!IsContextValid)
                 return;
-            if (graphics_2d_context_ != null)
-                graphics_2d_context_.Dispose();
+            if (graphics2DContext != null)
+                graphics2DContext.Dispose();
         }
 
         void CreateContext(PPSize size)
@@ -171,9 +162,15 @@ namespace GamePad
                 return;
 
             var isAlwaysOpaque = false;
-            graphics_2d_context_ = new Graphics2D(this, size, isAlwaysOpaque);
+            graphics2DContext = new Graphics2D(this, size, isAlwaysOpaque);
 
-            if (!BindGraphics(graphics_2d_context_))
+            graphics2DContext.Flushed +=
+                (s, e) => {
+                    FlushPending = false;
+                    Paint ();
+                };
+
+            if (!BindGraphics(graphics2DContext))
             {
                 LogToConsole(PPLogLevel.Error, "Couldn't bind the device context\n");
             }
@@ -185,7 +182,7 @@ namespace GamePad
         {
             get
             {
-                return graphics_2d_context_ != null ? !graphics_2d_context_.IsEmpty : false;
+                return graphics2DContext != null ? !graphics2DContext.IsEmpty : false;
             }
         }
 
@@ -196,6 +193,7 @@ namespace GamePad
                 return Size.Width;
             }
         }
+
         int Height
         {
             get
@@ -210,7 +208,7 @@ namespace GamePad
             {
                 if (IsContextValid)
                 {
-                    return graphics_2d_context_.Size;
+                    return graphics2DContext.Size;
                 }
                 return PPSize.Zero;
             }

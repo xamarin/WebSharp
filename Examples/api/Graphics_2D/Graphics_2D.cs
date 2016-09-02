@@ -9,7 +9,6 @@ namespace Graphics_2D
     {
 
         Graphics2D context;
-        Graphics2D flushContext;
         PPSize size;
         PPPoint mouse;
         bool mouseDown;
@@ -28,7 +27,7 @@ namespace Graphics_2D
             MouseUp += OnMouseUp;
             
         }
-
+        bool first = true;
         private void OnViewChanged(object sender, View view)
         {
             var viewRect = view.Rect;
@@ -43,8 +42,11 @@ namespace Graphics_2D
             // flight. This may have happened if the context was not created
             // successfully, or if this is the first call to DidChangeView (when the
             // module first starts). In either case, start the main loop.
-            if (flushContext == null)
-                MainLoop(0);
+            if (first) 
+            {
+                first = false;
+                MainLoop (0);
+            }
         }
 
         ~Graphics_2D() { System.Console.WriteLine("Graphics_2D destructed"); }
@@ -96,6 +98,7 @@ namespace Graphics_2D
 
         bool CreateContext(PPSize new_size)
         {
+            
             context = new Graphics2D(this, new_size, true);
 
             // Call SetScale before BindGraphics so the image is scaled correctly on
@@ -293,30 +296,19 @@ namespace Graphics_2D
         {
             if (context.IsEmpty)
             {
-                // The current Graphics2D context is null, so updating and rendering is
-                // pointless. Set flush_context_ to null as well, so if we get another
-                // DidChangeView call, the main loop is started again.
-                flushContext = new Graphics2D(context);
                 return;
             }
 
             Update();
             Paint();
-            // Store a reference to the context that is being flushed; this ensures
-            // the callback is called, even if context_ changes before the flush
-            // completes.
-            flushContext = new Graphics2D(context);
 
-            CompletionCallbackFunc callback =
-                (PPError result) =>
-                   {
-                       MainLoop((int)result);
-                   };
+            FlushContext ();
+        }
 
-
-            var completionCallback = new CompletionCallback(callback);
-
-            var flushResult = context.Flush(completionCallback);
+        async void FlushContext()
+        {
+            var flushResult = await context.FlushAsync ();
+            MainLoop ((int)flushResult);
         }
 
     }
