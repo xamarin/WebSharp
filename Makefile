@@ -14,3 +14,9 @@ check:
 	@if test ! -x $(NACLSDK_TOOL); then echo "You need to install the nacl_sdk on the parent directory, https://developer.chrome.com/native-client/sdk/download#installing-the-sdk"; exit 1; fi
 	@if $(NACLSDK_TOOL) list | grep -q 'I *pepper_canary'; then echo $?; else echo "You should install the pepper_canary support using $(NACLSDK_TOOL) update pepper_canary"; exit 1; fi
 
+setup:
+	curl -O 'http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip'
+
+	unzip nacl_sdk.zip -d ../
+
+	../nacl_sdk/naclsdk update pepper_canary # Downloads the real SDK. This takes a while
