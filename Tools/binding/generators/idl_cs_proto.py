@@ -151,7 +151,7 @@ class CSGen(object):
     'TypeValue': {
       'in': '%s',
       'constptr_in': '%s',  # So we can use const* for PP_Var sometimes.
-      'inout': '%s',
+      'inout': 'ref %s',
       'out': '%s',
       'return': '%s',
       'store': '%s'
@@ -510,8 +510,14 @@ class CSGen(object):
     return "".join(strip.split('_')) 
 
   def FormatName(self, name) :
-    if name.startswith('PP_') or name.startswith('PB_') or name.startswith('PPP_') or name.startswith('PPB'):
-        name = self.StripUnderScores(name)
+
+    if name.startswith('ref '):
+        fname = name[4:]
+        if fname.startswith('PP_') or fname.startswith('PB_') or fname.startswith('PPP_') or fname.startswith('PPB'):
+            name = self.StripUnderScores(name)
+    else:
+        if name.startswith('PP_') or name.startswith('PB_') or name.startswith('PPP_') or name.startswith('PPB'):
+            name = self.StripUnderScores(name)
 
     return name
 

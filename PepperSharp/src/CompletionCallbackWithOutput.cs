@@ -19,6 +19,9 @@ namespace PepperSharp
         CompletionCallbackWithOutputFunc<T> CompletionCallbackFunc;
         public OutputAdapterBase<T> OutputAdapter { get; private set; }
 
+        // used internally for when we have to pass the PPArrayOutput as ref
+        internal PPArrayOutput ArrayOutput;
+
         public CompletionCallbackWithOutput (CompletionCallbackWithOutputFunc<T> completionCallback, int flags = 0)
         {
             CompletionCallbackFunc = completionCallback;
@@ -26,11 +29,12 @@ namespace PepperSharp
             if (typeof(T).IsArray)
             {
                 OutputAdapter = new ArrayOutputAdapterWithStorage<T>();
+                if (OutputAdapter.Adapter is PPArrayOutput)
+                    ArrayOutput = (PPArrayOutput)OutputAdapter.Adapter;
             }
             else
             {
-                var argAdapter = new APIArgumentAdapter<T>();
-                this.OutputAdapter = argAdapter;
+                this.OutputAdapter = new APIArgumentAdapter<T>();
             }
 
             Callback = new PPCompletionCallback();
@@ -75,6 +79,9 @@ namespace PepperSharp
         public OutputAdapterBase<T> OutputAdapter { get; private set; }
         U userData1;
 
+        // used internally for when we have to pass the PPArrayOutput as ref
+        internal PPArrayOutput ArrayOutput;
+
         public CompletionCallbackWithOutput(CompletionCallbackWithOutputFunc<T, U> completionCallback, U userData1, IntPtr? userData = null, int flags = 0)
         {
             CompletionCallbackFunc = completionCallback;
@@ -83,11 +90,12 @@ namespace PepperSharp
             if (typeof(T).IsArray)
             {
                 OutputAdapter = new ArrayOutputAdapterWithStorage<T>();
+                if (OutputAdapter.Adapter is PPArrayOutput)
+                    ArrayOutput = (PPArrayOutput)OutputAdapter.Adapter;
             }
             else
             {
-                var argAdapter = new APIArgumentAdapter<T>();
-                this.OutputAdapter = argAdapter;
+                this.OutputAdapter = new APIArgumentAdapter<T>(); 
             }
 
             Callback = new PPCompletionCallback();
@@ -132,6 +140,9 @@ namespace PepperSharp
         U userData1;
         V userData2;
 
+        // used internally for when we have to pass the PPArrayOutput as ref
+        internal PPArrayOutput ArrayOutput;
+
         public CompletionCallbackWithOutput(CompletionCallbackWithOutputFunc<T, U, V> completionCallback, U userData1, V userData2, int flags = 0)
         {
             CompletionCallbackFunc = completionCallback;
@@ -141,11 +152,12 @@ namespace PepperSharp
             if (typeof(T).IsArray)
             {
                 OutputAdapter = new ArrayOutputAdapterWithStorage<T>();
+                if (OutputAdapter.Adapter is PPArrayOutput)
+                    ArrayOutput = (PPArrayOutput)OutputAdapter.Adapter;
             }
             else
             {
-                var argAdapter = new APIArgumentAdapter<T>();
-                this.OutputAdapter = argAdapter;
+                this.OutputAdapter = new APIArgumentAdapter<T>(); 
             }
 
             Callback = new PPCompletionCallback();

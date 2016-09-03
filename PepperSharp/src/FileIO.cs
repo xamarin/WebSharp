@@ -439,9 +439,8 @@ namespace PepperSharp
 
                 );
 
-
             var arrayOutput = new CompletionCallbackWithOutput<byte[]>(new CompletionCallbackWithOutputFunc<byte[]>(readToArrayAction));
-            return (PPError)PPBFileIO.ReadToArray(this, offset, bytesToRead, arrayOutput, arrayOutput);
+            return (PPError)PPBFileIO.ReadToArray(this, offset, bytesToRead, ref arrayOutput.ArrayOutput, arrayOutput);
 
         }
 
@@ -478,7 +477,8 @@ namespace PepperSharp
                     Action<PPError> action = new Action<PPError>((e) =>
                     {
                         var arrayOutput = new ArrayOutputAdapterWithStorage<byte[]>();
-                        var result = (PPError)PPBFileIO.ReadToArray(this, offset, size, arrayOutput.PPArrayOutput, 
+                        PPArrayOutput ao = arrayOutput.PPArrayOutput;
+                        var result = (PPError)PPBFileIO.ReadToArray(this, offset, size, ref ao, 
                             new BlockUntilComplete());
                         var bytes = arrayOutput.Output;
                         Array.Copy(bytes, buffer.Array, Math.Min(bytes.Length, buffer.Count));

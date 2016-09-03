@@ -378,7 +378,7 @@ public static partial class PPBFileIO {
   extern static int _ReadToArray ( PPResource file_io,
                                    long offset,
                                    int max_read_length,
-                                   PPArrayOutput output,
+                                   ref PPArrayOutput output,
                                    PPCompletionCallback callback);
 
   /**
@@ -405,10 +405,14 @@ public static partial class PPBFileIO {
   public static int ReadToArray ( PPResource file_io,
                                   long offset,
                                   int max_read_length,
-                                  PPArrayOutput output,
+                                  ref PPArrayOutput output,
                                   PPCompletionCallback callback)
   {
-  	return _ReadToArray (file_io, offset, max_read_length, output, callback);
+  	return _ReadToArray (file_io,
+                        offset,
+                        max_read_length,
+                         ref output,
+                        callback);
   }
 
 

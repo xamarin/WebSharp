@@ -374,7 +374,7 @@ namespace VideoEncode
         {
             video_encoder_ = PPBVideoEncoder.Create(this);
             var encoderProbedCallback = new CompletionCallbackWithOutput<PPVideoProfileDescription[]>(OnEncoderProbed);
-            PPBVideoEncoder.GetSupportedProfiles(video_encoder_, (PPArrayOutput)encoderProbedCallback.OutputAdapter.Adapter, encoderProbedCallback.Callback);
+            PPBVideoEncoder.GetSupportedProfiles(video_encoder_, encoderProbedCallback, encoderProbedCallback.Callback);
         }
 
         void OnEncoderProbed(PPError result, PPVideoProfileDescription[] profiles)
