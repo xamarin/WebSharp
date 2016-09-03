@@ -42,7 +42,6 @@ namespace GamePad
             if (pixelBuffer != null && !pixelBuffer.IsEmpty)
                 pixelBuffer.Dispose();
 
-            //pixel_buffer_.ppresource = 0;
             if (IsContextValid)
             {
                 pixelBuffer = new ImageData(this, PPImageDataFormat.BgraPremul,

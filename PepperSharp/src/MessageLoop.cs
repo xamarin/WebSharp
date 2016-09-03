@@ -10,7 +10,6 @@ namespace PepperSharp
     public class MessageLoop : Resource
     {
 
-        Task loopTask;
         internal MessageLoop(Instance instance)
         {
             handle = PPBMessageLoop.Create(instance);
@@ -216,7 +215,7 @@ namespace PepperSharp
         public Task<PPError> Start()
         {
             var tcs = new TaskCompletionSource<PPError>();
-            loopTask = Task.Run(() =>
+            var loopTask = Task.Run(() =>
             {
 
                 // Try to attach to the current thread
