@@ -248,12 +248,12 @@ namespace VideoEncode
             PPBVideoFrame.SetTimestamp(dest, PPBVideoFrame.GetTimestamp(src));
             var destBuffer = PPBVideoFrame.GetDataBuffer(dest);
             var srcBuffer = PPBVideoFrame.GetDataBuffer(src);
-            CopyMemory(destBuffer, srcBuffer, srcSize);
+            unsafe
+            {
+                Buffer.MemoryCopy ((void*)srcBuffer, (void*)destBuffer, srcSize, srcSize);
+            }
             return PPError.Ok;
         }
-
-        [DllImport("kernel32.dll")]
-        static extern void CopyMemory(IntPtr destination, IntPtr source, uint length);
 
         void EncodeFrame(PPResource frame) {
             frames_timestamps_.Enqueue((long)(PPBVideoFrame.GetTimestamp(frame) * 1000));
