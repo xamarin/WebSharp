@@ -62,7 +62,7 @@ namespace PepperSharp
         /// <param name="fileRef">A FileRef instance</param>
         /// <param name="openFlags">A bit-mask of <code>FileOpenFlags</code> values.</param>
         /// <returns>Error code</returns>
-        PPError Open(FileRef fileRef, FileOpenFlags openFlags)
+        public PPError Open(FileRef fileRef, FileOpenFlags openFlags)
             => (PPError)PPBFileIO.Open(this, fileRef, (int)openFlags, new CompletionCallback(OnOpen));
 
         protected virtual void OnOpen(PPError result)
@@ -129,7 +129,7 @@ namespace PepperSharp
         /// function will fail if the FileIO object has not been opened.
         /// </summary>
         /// <returns>Error code</returns>
-        PPError Query()
+        public PPError Query()
         {
             var ficb = new CompletionCallbackWithOutput<PPFileInfo>(OnQuery);
             return (PPError)PPBFileIO.Query(this, out ficb.OutputAdapter.output, ficb);
