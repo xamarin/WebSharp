@@ -149,6 +149,7 @@
     <Compile Include="src\PPPoint.cs" />
     <Compile Include="src\PPRect.cs" />
     <Compile Include="src\PPSize.cs" />
+    <Compile Include="src\URLLoader.cs" />
     <Compile Include="src\Var.cs" />
     <Compile Include="src\VarArray.cs" />
     <Compile Include="src\VarArrayBuffer.cs" />
