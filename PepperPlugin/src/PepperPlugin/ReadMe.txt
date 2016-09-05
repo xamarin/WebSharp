@@ -322,3 +322,64 @@ FileIO
                     const CompletionCallback& cc);
 [x] int32_t Flush(const CompletionCallback& cc);
 [x] void Close();
+
+URLLoader
+---
+
+[ ] explicit URLLoader(PP_Resource resource);
+[x] explicit URLLoader(const InstanceHandle& instance);
+[ ] URLLoader(const URLLoader& other);
+[x] int32_t Open(const URLRequestInfo& request_info,
+               const CompletionCallback& cc);
+[x] int32_t FollowRedirect(const CompletionCallback& cc);
+[x] bool GetUploadProgress(int64_t* bytes_sent,
+                         int64_t* total_bytes_to_be_sent) const;
+[x] bool GetDownloadProgress(int64_t* bytes_received,
+                           int64_t* total_bytes_to_be_received) const;
+[x] URLResponseInfo GetResponseInfo() const;
+[x] int32_t ReadResponseBody(void* buffer,
+                           int32_t bytes_to_read,
+                           const CompletionCallback& cc);
+[x] int32_t FinishStreamingToFile(const CompletionCallback& cc);
+
+[x] void Close();
+
+URLRequestInfo
+---
+[x] explicit URLRequestInfo(const InstanceHandle& instance);
+[ ] URLRequestInfo(const URLRequestInfo& other);
+[x] bool SetProperty(PP_URLRequestProperty property, const Var& value);
+[x] bool AppendDataToBody(const void* data, uint32_t len);
+[x] bool AppendFileToBody(const FileRef& file_ref,
+                        PP_Time expected_last_modified_time = 0);
+[x] bool AppendFileRangeToBody(const FileRef& file_ref,
+                             int64_t start_offset,
+                             int64_t length,
+                             PP_Time expected_last_modified_time = 0);
+[x] bool SetURL(const Var& url_string) {
+[x] bool SetMethod(const Var& method_string) {
+[x] bool SetHeaders(const Var& headers_string) {
+[x] bool SetStreamToFile(bool enable) {
+[x] bool SetFollowRedirects(bool enable) {
+[x] bool SetRecordDownloadProgress(bool enable) {
+[x] bool SetRecordUploadProgress(bool enable) {
+[x] bool SetCustomReferrerURL(const Var& url) {
+[x] bool SetAllowCrossOriginRequests(bool enable) {
+[x] bool SetAllowCredentials(bool enable) {
+[x] bool SetCustomContentTransferEncoding(const Var& content_transfer_encoding) {
+[x] bool SetPrefetchBufferUpperThreshold(int32_t size) 
+[x] bool SetPrefetchBufferLowerThreshold(int32_t size) 
+[x] bool SetCustomUserAgent(const Var& user_agent)
+
+URLResponseInfo
+---
+[x] URLResponseInfo(PassRef, PP_Resource resource);
+[ ] URLResponseInfo(const URLResponseInfo& other);
+[x] Var GetProperty(PP_URLResponseProperty property) const;
+[x] FileRef GetBodyAsFileRef() const;
+[x] Var GetURL() const {
+[x] Var GetRedirectURL() const {
+[x] Var GetRedirectMethod()
+[x] int32_t GetStatusCode() 
+[x] Var GetStatusLine()
+[x] Var GetHeaders()

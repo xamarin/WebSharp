@@ -19,7 +19,7 @@ namespace PepperSharp
         /// <summary>
         /// Event raised when the URLLoader issues a ReadResponseBody.
         /// </summary>
-        public event EventHandler<PPError> HandleReadResonseBody;
+        public event EventHandler<PPError> HandleReadResponseBody;
 
         /// <summary>
         /// Event raised when the URLLoader issues a FishishStreamingToFile.
@@ -49,7 +49,11 @@ namespace PepperSharp
             {
                 if (disposing)
                 {
-
+                    HandleClose = null;
+                    HandleFinishStreamingToFile = null;
+                    HandleOpen = null;
+                    HandleReadResponseBody = null;
+                    HandleRedirect = null;
                 }
             }
 
@@ -67,7 +71,7 @@ namespace PepperSharp
         /// <param name="requestInfo">A <code>URLRequestInfo</code> corresponding to a
         /// URLRequestInfo.</param>
         /// <returns>Error code</returns>
-        public PPError Open(PPResource requestInfo)
+        public PPError Open(URLRequestInfo requestInfo)
             => (PPError)PPBURLLoader.Open(this, requestInfo, new CompletionCallback(OnOpen));
 
         protected virtual void OnOpen(PPError result)
@@ -83,10 +87,10 @@ namespace PepperSharp
         /// URLRequestInfo.</param>
         /// <param name="openLoop">Optional MessageLoop instance that can be used to post the command to</param>   
         /// <returns>Error code</returns>
-        public Task<PPError> OpenAsync(Resource requestInfo, MessageLoop openLoop = null)
+        public Task<PPError> OpenAsync(URLRequestInfo requestInfo, MessageLoop openLoop = null)
             => OpenAsyncCore(requestInfo, openLoop);
 
-        private async Task<PPError> OpenAsyncCore(Resource requestInfo, MessageLoop openLoop = null)
+        private async Task<PPError> OpenAsyncCore(URLRequestInfo requestInfo, MessageLoop openLoop = null)
         {
             var tcs = new TaskCompletionSource<PPError>();
             EventHandler<PPError> handler = (s, e) => { tcs.TrySetResult(e); };
@@ -228,8 +232,8 @@ namespace PepperSharp
         /// Will be an <code>IsEmpty</code> object if the loader is not a valid resource or if Open() has not been
         /// called.
         /// </summary>
-        public PPResource ResponseInfo
-            => PPBURLLoader.GetResponseInfo(this);
+        public URLResponseInfo ResponseInfo
+            => new URLResponseInfo(PPBURLLoader.GetResponseInfo(this));
 
 
         /// <summary>
@@ -246,7 +250,7 @@ namespace PepperSharp
                 new CompletionCallback(OnReadResponseBody));
 
         protected void OnReadResponseBody(PPError result)
-            => HandleReadResonseBody?.Invoke(this, result);
+            => HandleReadResponseBody?.Invoke(this, result);
 
         /// <summary>
         /// This function is used to read the response body asynchronously. The size of the buffer
@@ -271,7 +275,7 @@ namespace PepperSharp
 
             try
             {
-                HandleReadResonseBody += handler;
+                HandleReadResponseBody += handler;
 
                 if (MessageLoop == null && messageLoop == null)
                 {
@@ -303,7 +307,7 @@ namespace PepperSharp
             }
             finally
             {
-                HandleReadResonseBody -= handler;
+                HandleReadResponseBody -= handler;
             }
         }
 
