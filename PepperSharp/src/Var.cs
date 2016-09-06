@@ -27,10 +27,16 @@ namespace PepperSharp
 
         public Var(object var)
         {
-            if (var is int || var is uint)
+            if (var is int)
             {
                 ppvar.type = PPVarType.Int32;
                 ppvar.value.as_int = (int)var;
+                isManaged = true;
+            }
+            if (var is uint)
+            {
+                ppvar.type = PPVarType.Int32;
+                ppvar.value.as_int = Convert.ToInt32(var);
                 isManaged = true;
             }
             else if (var is string)
