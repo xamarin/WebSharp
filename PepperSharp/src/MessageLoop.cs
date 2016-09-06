@@ -10,7 +10,7 @@ namespace PepperSharp
     public class MessageLoop : Resource
     {
 
-        internal MessageLoop(Instance instance)
+        public MessageLoop(Instance instance)
         {
             handle = PPBMessageLoop.Create(instance);
         }

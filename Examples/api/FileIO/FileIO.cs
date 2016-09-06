@@ -33,7 +33,7 @@ namespace FileIO
             // operation we perform there, and because we do everything on the
             // file_thread_ synchronously, this ensures that the FileSystem is open
             // before any FileIO operations execute.
-            messageLoop = CreateMessageLoop();
+            messageLoop = new MessageLoop(this);
             var startTask = messageLoop.Start();
 
             // Set the MessageLoop that the filesystem will run asynchronously with

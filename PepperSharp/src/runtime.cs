@@ -190,10 +190,12 @@ namespace PepperSharp
                 if (disposing)
                 {
                     // de-reference the managed resource.
-                    NativeInstance.resourceReleaseQueue.Enqueue(Handle);
+                    MessageLoop = null;
                 }
+
+                // Release our managed resources
+                NativeInstance.resourceReleaseQueue.Enqueue(Handle);
                 handle.ppresource = 0; // set ourselves to empty
-                MessageLoop = null;
             }
         }
 
@@ -201,7 +203,7 @@ namespace PepperSharp
         {
             // This will call the Dispose method with true so that the resource can be
             // added to a queue to be released on the main thread.
-            Dispose(true);
+            Dispose(false);
         }
 
         #endregion

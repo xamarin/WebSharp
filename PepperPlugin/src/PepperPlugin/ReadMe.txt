@@ -383,3 +383,11 @@ URLResponseInfo
 [x] int32_t GetStatusCode() 
 [x] Var GetStatusLine()
 [x] Var GetHeaders()
+
+NetworkProxy
+---
+[ ] static bool IsAvailable();
+[x] static int32_t GetProxyForURL(
+      const InstanceHandle& instance,
+      const Var& url,
+      const pp::CompletionCallbackWithOutput<Var>& callback);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using PepperSharp;
 
@@ -6,119 +7,75 @@ namespace NetworkMonitor
 {
     public class NetworkMonitor : Instance
     {
-        PPResource networkMonitor;
 
         public NetworkMonitor(IntPtr handle) : base(handle)
         {
-            networkMonitor = PPBNetworkMonitor.Create(this);
             Initialize += OnInitialize;
         }
 
         private void OnInitialize(object sender, InitializeEventArgs args)
         {
             LogToConsoleWithSource(PPLogLevel.Log, "NetworkMonitor", "There be dragons.");
-            // Start listing for network updates.
-            var onUpdateNetworkListCallback = new CompletionCallbackWithOutput<PPResource>(OnUpdateNetworkList);
-            var result = (PPError)PPBNetworkMonitor.UpdateNetworkList(networkMonitor, out onUpdateNetworkListCallback.OutputAdapter.output, onUpdateNetworkListCallback);
-            if (result != PPError.OkCompletionpending)
-            {
-                PostMessage($"UpdateNetworkList failed: {result}");
-            }
+
+            UpdateNetworkList();
         }
 
-        private void OnUpdateNetworkList(PPError result, PPResource networkList)
+        async Task UpdateNetworkList()
         {
-            
-            // Send the new network list to JavaScript.
-            if (result < 0)
+            using (var networkMonitor = new PepperSharp.NetworkMonitor(this))
             {
-                PostMessage($"UpdateNetworkList failed: {result}");
-                return;
-            }
+                var networkListInfo = await networkMonitor.UpdateNetworkListAsync();
 
-            var varNetworkList = new VarArray();
-            uint count = PPBNetworkList.GetCount(networkList);
-
-            for (uint i = 0; i < count; ++i)
-            {
-                VarDictionary varNetwork = new VarDictionary();
-                
-                varNetwork.Set("displayName", ((Var)PPBNetworkList.GetDisplayName(networkList, i)).AsString());
-                varNetwork.Set("name", ((Var)PPBNetworkList.GetName(networkList, i)).AsString());
-                varNetwork.Set("state", GetNetworkStateAsString(PPBNetworkList.GetState(networkList, i)));
-                varNetwork.Set("type", GetNetworkTypeAsString(PPBNetworkList.GetType(networkList, i)));
-                varNetwork.Set("MTU", (int)PPBNetworkList.GetMTU(networkList, i));
-
-                var varIPAddresses = new VarArray();
-                var IPAddresses = new ArrayOutputAdapterWithStorage<PPResource[]>();
-                
-                result = (PPError)PPBNetworkList.GetIpAddresses(networkList, i, (PPArrayOutput)IPAddresses.Adapter);
-                if (result == PPError.Ok)
+                if (networkListInfo.Result != PPError.Ok)
                 {
-                    var length = IPAddresses.Output.Length;
-                    
-                    for (uint j = 0; j < IPAddresses.Output.Length; ++j)
+                    PostMessage($"UpdateNetworkList failed: {networkListInfo.Result}");
+                    return;
+                }
+
+                using (var networkList = networkListInfo.NetworkList)
+                {
+                    // Send the new network list to JavaScript.
+                    using (var varNetworkList = new VarArray())
                     {
-                        varIPAddresses.Set(j, GetNetAddressAsString(IPAddresses.Output[j]));
+                        uint infoIndex = 0;
+                        foreach (var nic in networkList.NetworkInterfaces)
+                        {
+                            using (VarDictionary varNetwork = new VarDictionary())
+                            {
+                                varNetwork.Set("displayName", nic.DisplayName);
+                                varNetwork.Set("name", nic.Name);
+                                varNetwork.Set("state", GetEnumAsString(typeof(NetworkInterfaceState), nic.State));
+                                varNetwork.Set("type", GetEnumAsString(typeof(NetworkInterfaceType), nic.NetworkType));
+                                varNetwork.Set("MTU", nic.MTU);
+
+                                using (var varIPAddresses = new VarArray())
+                                {
+                                    uint j = 0;
+                                    foreach (var address in nic.NetAddresses)
+                                    {
+                                        varIPAddresses.Set(j++, address.DescriptionWithPort);
+                                    }
+                                    varNetwork.Set("ipAddresses", varIPAddresses);
+                                    varNetworkList.Set(infoIndex++, varNetwork);
+                                }
+                            }
+                        }
+
+                        PostMessage(varNetworkList);
                     }
                 }
-                else
-                {
-                    // Call to GetIpAddresses failed, just give an empty list.
-                }
-                varNetwork.Set("ipAddresses", varIPAddresses);
-                varNetworkList.Set(i, varNetwork);
             }
 
-            PostMessage(varNetworkList);
         }
 
         // static
-        static string GetNetworkStateAsString(
-            PPNetworkListState state)
+        static string GetEnumAsString(Type type, object value)
         {
-            switch (state)
-            {
-                case PPNetworkListState.Up:
-                    return "up";
-
-                case PPNetworkListState.Down:
-                    return "down";
-
-                default:
-                    return "invalid";
-            }
+            if (Enum.IsDefined(type, value))
+                return Enum.GetName(type, value);
+            else
+                return "Invalid";
         }
-
-        // static
-        static string GetNetworkTypeAsString(
-            PPNetworkListType type)
-        {
-            switch (type)
-            {
-                case PPNetworkListType.Ethernet:
-                    return "ethernet";
-
-                case PPNetworkListType.Wifi:
-                    return "wifi";
-
-                case PPNetworkListType.Cellular:
-                    return "cellular";
-
-                case PPNetworkListType.Unknown:
-                    return "unknown";
-
-                default:
-                    return "invalid";
-            }
-        }
-
-        // static
-        static string GetNetAddressAsString(
-            PPResource address)
-        {
-            bool include_port = true;
-            return ((Var)PPBNetAddress.DescribeAsString(address, include_port?PPBool.True:PPBool.False)).AsString();
-        }
+ 
     }
 }

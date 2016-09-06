@@ -80,7 +80,7 @@ namespace URL_Loader
        
         public async Task Start()
         {
-            bodyMessageLoop = instance.CreateMessageLoop();
+            bodyMessageLoop = new MessageLoop(instance);
             bodyMessageLoop.Start();
 
             var openresult = await urlLoader.OpenAsync(urlRequest, bodyMessageLoop);

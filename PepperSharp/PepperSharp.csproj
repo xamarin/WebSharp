@@ -119,6 +119,10 @@
     <Compile Include="src\InputEvent.cs" />
     <Compile Include="src\MessageLoop.cs" />
     <Compile Include="src\MouseLock.cs" />
+    <Compile Include="src\NetAddress.cs" />
+    <Compile Include="src\NetworkList.cs" />
+    <Compile Include="src\NetworkMonitor.cs" />
+    <Compile Include="src\NetworkProxy.cs" />
     <Compile Include="src\ppb_gamepad_extension.cs" />
     <Compile Include="src\ppb_host_resolver_extension.cs" />
     <Compile Include="src\ppb_var_extension.cs" />

@@ -25,11 +25,11 @@ namespace WebSocket
             HandleMessage += OnReceiveMessage;
 
             // Create and start the general message loop
-            messageLoop = CreateMessageLoop();
+            messageLoop = new MessageLoop(this);
             messageLoop.Start();
 
             // Create and start the receive message loop
-            receiveLoop = CreateMessageLoop();
+            receiveLoop = new MessageLoop(this);
             receiveLoop.Start();
         }
 
