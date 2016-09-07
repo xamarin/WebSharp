@@ -7,6 +7,21 @@ namespace PepperSharp
         internal NetAddress(PPResource resource) : base(PassRef.PassRef, resource)
         { }
 
+        public NetAddress(Instance instance, ushort port, byte[] address = null)
+        {
+
+            if (address == null || address.Length <= PPNetAddressIPv4.IPv4AddressBytes)
+            {
+                var ipAddress = new PPNetAddressIPv4(port, address);
+                handle = PPBNetAddress.CreateFromIPv4Address(instance, ipAddress);
+            }
+            else
+            {
+                var ipAddress = new PPNetAddressIPv6(port, address);
+                handle = PPBNetAddress.CreateFromIPv6Address(instance, ipAddress);
+            }
+        }
+
         /// <summary>
         /// Gets the address family
         /// </summary>

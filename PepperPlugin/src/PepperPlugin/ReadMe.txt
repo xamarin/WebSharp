@@ -391,3 +391,50 @@ NetworkProxy
       const InstanceHandle& instance,
       const Var& url,
       const pp::CompletionCallbackWithOutput<Var>& callback);
+
+NetAddress
+---
+[x] NetAddress(PassRef, PP_Resource resource);
+[x] NetAddress(const InstanceHandle& instance,
+             const PP_NetAddress_IPv4& ipv4_addr);
+[x] NetAddress(const InstanceHandle& instance,
+             const PP_NetAddress_IPv6& ipv6_addr);
+[ ] NetAddress(const NetAddress& other);
+[x] virtual ~NetAddress();
+[ ] NetAddress& operator=(const NetAddress& other);
+[ ] static bool IsAvailable();
+[x] PP_NetAddress_Family GetFamily() const;
+[x] Var DescribeAsString(bool include_port) const;
+[x] bool DescribeAsIPv4Address(PP_NetAddress_IPv4* ipv4_addr) const;
+[x] bool DescribeAsIPv6Address(PP_NetAddress_IPv6* ipv6_addr) const;
+
+NetworkList
+---
+
+[x] NetworkList(PassRef, PP_Resource resource);
+[ ] static bool IsAvailable();
+[x] uint32_t GetCount() const;
+[x] std::string GetName(uint32_t index) const;
+[x] PP_NetworkList_Type GetType(uint32_t index) const;
+[x] PP_NetworkList_State GetState(uint32_t index) const;
+[x] int32_t GetIpAddresses(uint32_t index,
+                         std::vector<NetAddress>* addresses) const;
+[x] std::string GetDisplayName(uint32_t index) const;
+[x] uint32_t GetMTU(uint32_t index) const;
+
+NetworkMonitor
+---
+
+[x] explicit NetworkMonitor(const InstanceHandle& instance);
+[x] int32_t UpdateNetworkList(
+      const CompletionCallbackWithOutput<NetworkList>& callback);
+[ ] static bool IsAvailable();
+
+NetworkProxy
+---
+
+[ ] static bool IsAvailable();
+[x] static int32_t GetProxyForURL(
+      const InstanceHandle& instance,
+      const Var& url,
+      const pp::CompletionCallbackWithOutput<Var>& callback);

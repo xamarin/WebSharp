@@ -43,8 +43,8 @@ namespace Socket
 
             // Attempt to listen on all interfaces (0.0.0.0)
             // on the given port number.
-            var ipv4_addr = new PPNetAddressIPv4((ushort)IPAddress.HostToNetworkOrder(port));
-            var addr = PPBNetAddress.CreateFromIPv4Address(instance, ipv4_addr);
+            //var ipv4_addr = new PPNetAddressIPv4((ushort)IPAddress.HostToNetworkOrder(port));
+            var addr = new NetAddress(instance, (ushort)IPAddress.HostToNetworkOrder(port));
             var rtn = (PPError)PPBTCPSocket.Bind(listeningSocket, addr, new CompletionCallback(OnBindCompletion));
             if (rtn != PPError.OkCompletionpending)
             {
