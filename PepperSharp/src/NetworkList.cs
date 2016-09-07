@@ -70,17 +70,16 @@ namespace PepperSharp
             NetworkType = (NetworkInterfaceType)PPBNetworkList.GetType(networkList, index);
             MTU = PPBNetworkList.GetMTU(networkList, index);
 
-            var varIPAddresses = new VarArray();
-            var IPAddresses = new ArrayOutputAdapterWithStorage<PPResource[]>();
-
-            var result = (PPError)PPBNetworkList.GetIpAddresses(networkList, index, (PPArrayOutput)IPAddresses.Adapter);
-            if (result == PPError.Ok)
+            using (var varIPAddresses = new VarArray ())
             {
-                var length = IPAddresses.Output.Length;
+                var IPAddresses = new ArrayOutputAdapterWithStorage<PPResource []> ();
+                var result = (PPError)PPBNetworkList.GetIpAddresses (networkList, index, (PPArrayOutput)IPAddresses.Adapter);
+                if (result == PPError.Ok) {
+                    var length = IPAddresses.Output.Length;
 
-                for (uint j = 0; j < IPAddresses.Output.Length; ++j)
-                {
-                    ipAddress.Add(new NetAddress(IPAddresses.Output[j]));
+                    for (uint j = 0; j < IPAddresses.Output.Length; ++j) {
+                        ipAddress.Add (new NetAddress (IPAddresses.Output [j]));
+                    }
                 }
             }
         }

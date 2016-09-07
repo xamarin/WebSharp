@@ -841,6 +841,7 @@ namespace PepperSharp
     /**
     * The FileOpenFlags enum contains file open constants.
     */
+    [Flags]
     public enum FileOpenFlags
     {
         /** Requests read access to a file. */
