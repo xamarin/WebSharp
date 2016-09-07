@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,17 +39,34 @@ namespace PepperSharp
         /// </summary>
         public event EventHandler<DirectoryEntries> HandleReadDirectoryEntries;
 
-        public class DirectoryEntries : EventArgs
+        public sealed class DirectoryEntries : EventArgs, IDisposable
         {
             public PPError Result { get; private set; }
-            public List<DirectoryEntry> Entries { get; private set; }
+            public ReadOnlyCollection<DirectoryEntry> Entries { get; private set; }
 
-            internal DirectoryEntries(PPError result, List<DirectoryEntry> entries)
+            internal DirectoryEntries(PPError result, ReadOnlyCollection<DirectoryEntry> entries)
             {
                 Result = result;
                 Entries = entries;
             }
 
+            #region Implement IDisposable.
+
+            public void Dispose()
+            {
+                foreach (var entry in Entries)
+                    entry.Dispose();
+                Entries = null;
+                GC.SuppressFinalize(this);
+
+            }
+
+            ~DirectoryEntries()
+            {
+                Dispose();
+            }
+
+            #endregion
         }
 
         public FileRef (FileSystem fileSystem, string path)
@@ -469,10 +487,10 @@ namespace PepperSharp
                 }
             }
 
-            OnReadDirectoryEntries(result, sv);
+            OnReadDirectoryEntries(result, sv.AsReadOnly());
         }
 
-        protected void OnReadDirectoryEntries(PPError result, List<DirectoryEntry> entries)
+        protected void OnReadDirectoryEntries(PPError result, ReadOnlyCollection<DirectoryEntry> entries)
             => HandleReadDirectoryEntries?.Invoke(this, new DirectoryEntries(result, entries));
 
         /// <summary>
@@ -510,7 +528,7 @@ namespace PepperSharp
                         {
                             entries.Add(new DirectoryEntry(entry));
                         }
-                        tcs.TrySetResult(new DirectoryEntries(result, entries));
+                        tcs.TrySetResult(new DirectoryEntries(result, entries.AsReadOnly()));
                     }
                     );
 
@@ -526,7 +544,7 @@ namespace PepperSharp
             {
                 Console.WriteLine(exc.Message);
                 tcs.SetException(exc);
-                return new DirectoryEntries(PPError.Aborted, new List<DirectoryEntry> ());
+                return new DirectoryEntries(PPError.Aborted, new List<DirectoryEntry> ().AsReadOnly());
             }
             finally
             {
@@ -550,7 +568,6 @@ namespace PepperSharp
                     HandleReadDirectoryEntries = null;
                 }
             }
-
             base.Dispose(disposing);
         }
 
@@ -621,7 +638,7 @@ namespace PepperSharp
         }
     }
 
-    public class DirectoryEntry
+    public sealed class DirectoryEntry : IDisposable
     {
         public FileRef FileRef { get; private set; }
         public FileType FileType { get; private set; }
@@ -631,5 +648,22 @@ namespace PepperSharp
             FileRef = new FileRef(directoryEntry.file_ref);
             FileType = (FileType)directoryEntry.file_type;
         }
+
+        #region Implement IDisposable.
+
+        public void Dispose()
+        {
+            if (FileRef != null)
+                FileRef.Dispose();
+            GC.SuppressFinalize(this);
+
+        }
+
+        ~DirectoryEntry()
+        {
+            Dispose();
+        }
+
+        #endregion
     }
 }
