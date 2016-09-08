@@ -23,6 +23,7 @@ namespace PepperSharp
         internal Var(PPVarType type)
         {
             ppvar.type = type;
+            isManaged = true;
         }
 
         public Var(object var)
@@ -119,7 +120,7 @@ namespace PepperSharp
                 // Free up the reference counters.
                 if (NeedsRefcounting(ppvar) && isManaged)
                 {
-                    PPBVar.Release(ppvar);
+                    NativeInstance.resourceReleaseQueue.Enqueue(ppvar);
                 }
 
                 disposed = true;

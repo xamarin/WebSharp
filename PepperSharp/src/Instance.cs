@@ -629,7 +629,10 @@ namespace PepperSharp
             if (message is Var)
                 PPBMessaging.PostMessage(this, (Var)message);
             else
-                PPBMessaging.PostMessage(this, new Var(message));
+            {
+                using (var msg = new Var(message))
+                    PPBMessaging.PostMessage(this, msg);
+            }
         }
 
         PPInstance instance = new PPInstance();

@@ -26,7 +26,7 @@ namespace PepperSharp
         static readonly int releaseLoopTime = (int)((1.0f / 30.0f) * 10000);
 
         // internal ConcurrentQueue that holds PPResource's that need to be released on the Main Thread
-        internal static ConcurrentQueue<PPResource> resourceReleaseQueue = new ConcurrentQueue<PPResource>();
+        internal static ConcurrentQueue<object> resourceReleaseQueue = new ConcurrentQueue<object>();
 
         public NativeInstance(IntPtr handle)
         {
@@ -53,10 +53,16 @@ namespace PepperSharp
         {
             if (!resourceReleaseQueue.IsEmpty)
             {
-                PPResource resourceToBeReleased;
+                object resourceToBeReleased;
                 while (resourceReleaseQueue.TryDequeue(out resourceToBeReleased))
                 {
-                    PPBCore.ReleaseResource(resourceToBeReleased);
+                    if (resourceToBeReleased is PPResource)
+                        PPBCore.ReleaseResource((PPResource)resourceToBeReleased);
+                    else if (resourceToBeReleased is PPVar)
+                    {
+                        PPBVar.Release((PPVar)resourceToBeReleased);
+                    }
+                        
                 }
             }
             PPBCore.CallOnMainThread(releaseLoopTime, new CompletionCallback(ReleasePump), releaseLoopTime);
@@ -194,6 +200,7 @@ namespace PepperSharp
                 }
 
                 // Release our managed resources
+                Console.WriteLine($"release {Handle}");
                 NativeInstance.resourceReleaseQueue.Enqueue(Handle);
                 handle.ppresource = 0; // set ourselves to empty
             }
