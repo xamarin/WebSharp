@@ -11,7 +11,7 @@ namespace PepperSharp
 
     public delegate void CompletionCallbackWithOutputFunc<T, U, V>(PPError result, T output, U userData1, V userData2);
 
-    public class CompletionCallbackWithOutput<T> 
+    public class CompletionCallbackWithOutput<T> : IDisposable
     {
 
         public PPCompletionCallback Callback;
@@ -21,6 +21,9 @@ namespace PepperSharp
 
         // used internally for when we have to pass the PPArrayOutput as ref
         internal PPArrayOutput ArrayOutput;
+
+        protected bool IsDisposed { get; set; }
+        protected bool IsUserDataFreed { get; set; }
 
         public CompletionCallbackWithOutput (CompletionCallbackWithOutputFunc<T> completionCallback, int flags = 0)
         {
@@ -56,6 +59,7 @@ namespace PepperSharp
             {
                 instance.CompletionCallbackFunc((PPError)result, instance.OutputAdapter.output);
             }
+            instance.IsUserDataFreed = true;
             userDataHandle.Free();
         }
 
@@ -68,9 +72,41 @@ namespace PepperSharp
         {
             return (PPArrayOutput)completionCallback.OutputAdapter.Adapter;
         }
+
+        #region Implement IDisposable.
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    // de-reference the managed resource.
+                }
+                if (!IsUserDataFreed)
+                {
+                    ((GCHandle)Callback.user_data).Free();
+                }
+                IsDisposed = true;
+            }
+        }
+
+        ~CompletionCallbackWithOutput()
+        {
+            // This will call the Dispose method.
+            Dispose(false);
+        }
+
+        #endregion
     }
 
-    public class CompletionCallbackWithOutput<T, U>
+    public class CompletionCallbackWithOutput<T, U> : IDisposable
     {
 
         public PPCompletionCallback Callback;
@@ -81,6 +117,9 @@ namespace PepperSharp
 
         // used internally for when we have to pass the PPArrayOutput as ref
         internal PPArrayOutput ArrayOutput;
+
+        protected bool IsDisposed { get; set; }
+        protected bool IsUserDataFreed { get; set; }
 
         public CompletionCallbackWithOutput(CompletionCallbackWithOutputFunc<T, U> completionCallback, U userData1, IntPtr? userData = null, int flags = 0)
         {
@@ -100,7 +139,7 @@ namespace PepperSharp
 
             Callback = new PPCompletionCallback();
             Callback.func = OnCallBack;
-            GCHandle userHandle = GCHandle.Alloc(this);
+            GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
             Callback.user_data = (IntPtr)userHandle;
             Callback.flags = flags;
 
@@ -116,6 +155,7 @@ namespace PepperSharp
             {
                 instance.CompletionCallbackFunc((PPError)result, instance.OutputAdapter.output, instance.userData1);
             }
+            instance.IsUserDataFreed = true;
             userDataHandle.Free();
         }
 
@@ -128,9 +168,40 @@ namespace PepperSharp
         {
             return (PPArrayOutput)completionCallback.OutputAdapter.Adapter;
         }
+
+        #region Implement IDisposable.
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    // de-reference the managed resource.
+                }
+                if (!IsUserDataFreed)
+                    ((GCHandle)Callback.user_data).Free();
+
+                IsDisposed = true;
+            }
+        }
+
+        ~CompletionCallbackWithOutput()
+        {
+            // This will call the Dispose method.
+            Dispose(false);
+        }
+
+        #endregion
     }
 
-    public class CompletionCallbackWithOutput<T, U, V>
+    public class CompletionCallbackWithOutput<T, U, V> : IDisposable
     {
 
         public PPCompletionCallback Callback;
@@ -142,6 +213,9 @@ namespace PepperSharp
 
         // used internally for when we have to pass the PPArrayOutput as ref
         internal PPArrayOutput ArrayOutput;
+
+        protected bool IsDisposed { get; set; }
+        protected bool IsUserDataFreed { get; set; }
 
         public CompletionCallbackWithOutput(CompletionCallbackWithOutputFunc<T, U, V> completionCallback, U userData1, V userData2, int flags = 0)
         {
@@ -178,6 +252,7 @@ namespace PepperSharp
             {
                 instance.CompletionCallbackFunc((PPError)result, instance.OutputAdapter.output, instance.userData1, instance.userData2);
             }
+            instance.IsUserDataFreed = true;
             userDataHandle.Free();
         }
 
@@ -190,6 +265,39 @@ namespace PepperSharp
         {
             return (PPArrayOutput)completionCallback.OutputAdapter.Adapter;
         }
+
+        #region Implement IDisposable.
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    // de-reference the managed resource.
+                }
+                if (!IsUserDataFreed)
+                {
+                    ((GCHandle)Callback.user_data).Free();
+                }
+                IsDisposed = true;
+            }
+
+        }
+
+        ~CompletionCallbackWithOutput()
+        {
+            // This will call the Dispose method.
+            Dispose(false);
+        }
+
+        #endregion
     }
 
     public class APIArgumentAdapter<T> : OutputAdapterBase<T>

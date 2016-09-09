@@ -200,7 +200,6 @@ namespace PepperSharp
                 }
 
                 // Release our managed resources
-                Console.WriteLine($"release {Handle}");
                 NativeInstance.resourceReleaseQueue.Enqueue(Handle);
                 handle.ppresource = 0; // set ourselves to empty
             }

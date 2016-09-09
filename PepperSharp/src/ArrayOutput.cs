@@ -11,14 +11,15 @@ namespace PepperSharp
     /// derived classes below.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ArrayOutputAdapterBase<T> : OutputAdapterBase<T>
+    public class ArrayOutputAdapterBase<T> : OutputAdapterBase<T>, IDisposable
     {
         private PPArrayOutput arrayOutput = new PPArrayOutput();
+        protected bool IsDisposed { get; set; }
 
         public ArrayOutputAdapterBase() : base()
         {
             arrayOutput.GetDataBuffer = GetDataBufferThunk;
-            arrayOutput.user_data = (IntPtr)GCHandle.Alloc(this);
+            arrayOutput.user_data = (IntPtr)GCHandle.Alloc(this, GCHandleType.Pinned);
         }
 
         internal virtual IntPtr GetDataBuffer(uint element_count,
@@ -29,7 +30,13 @@ namespace PepperSharp
 
         public PPArrayOutput PPArrayOutput
         {
-            get { return arrayOutput; }
+            get
+            {
+                if (IsDisposed)
+                    throw new ObjectDisposedException(nameof(arrayOutput));
+
+                return arrayOutput;
+            }
         }
 
         internal static IntPtr GetDataBufferThunk(IntPtr buffer, uint count, uint size)
@@ -38,6 +45,38 @@ namespace PepperSharp
             var buff = (ArrayOutputAdapterBase<T>)userDataHandle.Target;
             return buff.GetDataBuffer(count, size);
         }
+
+        #region Implement IDisposable.
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // de-reference the managed resource.
+            }
+            if (arrayOutput.user_data != IntPtr.Zero)
+            {
+                ((GCHandle)arrayOutput.user_data).Free();
+                arrayOutput.user_data = IntPtr.Zero;
+            }
+            IsDisposed = true;
+
+        }
+
+        ~ArrayOutputAdapterBase()
+        {
+            // This will call the Dispose method.
+            Dispose(false);
+        }
+
+        #endregion
+
     }
 
     /// <summary>
@@ -57,7 +96,7 @@ namespace PepperSharp
     ///   }
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ArrayOutputAdapter<T> : ArrayOutputAdapterBase<T>
+    internal class ArrayOutputAdapter<T> : ArrayOutputAdapterBase<T>
     {
 
         protected IntPtr dataStorageHandle;
@@ -72,6 +111,9 @@ namespace PepperSharp
 
         internal override IntPtr GetDataBuffer(uint count, uint size)
         {
+            if (IsDisposed)
+                throw new ObjectDisposedException("ArrayOutputAdapter");
+
             if (count == 0)
                 return IntPtr.Zero;
 
@@ -106,12 +148,28 @@ namespace PepperSharp
 
         public override object Adapter
         {
-            get { return PPArrayOutput; }
+            get
+            {
+                if (IsDisposed)
+                    throw new ObjectDisposedException(nameof(PPArrayOutput));
+
+                return PPArrayOutput;
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (dataStorageHandle != IntPtr.Zero)
+            {
+                ((GCHandle)dataStorageHandle).Free();
+                dataStorageHandle = IntPtr.Zero;
+            }
+            base.Dispose(disposing);
         }
     }
 
     /// <summary>
-    ///  This is used by the CompletionCallbackFactory system to collect the output
+    /// This is used by the CompletionCallbackFactory system to collect the output
     /// parameters from an async function call. The collected data is then passed to
     /// the plugins callback function.
     ///
@@ -125,7 +183,7 @@ namespace PepperSharp
     ///    const std::vector<int>& result = adapter.output();
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ArrayOutputAdapterWithStorage<T> : ArrayOutputAdapter<T>
+    internal class ArrayOutputAdapterWithStorage<T> : ArrayOutputAdapter<T>
     {
         public ArrayOutputAdapterWithStorage() : base()
         { }
@@ -137,7 +195,7 @@ namespace PepperSharp
                 if (dataStorageHandle == IntPtr.Zero)
                     return output;
 
-                var ptrHandle = dataStorageHandle;
+                var ptrHandle = dataStorageHandle;  // Work variable for array offset
                 var array = ((Array)(object)output);
                 Type elementType;
                 if (typeof(T).IsArray)
