@@ -179,10 +179,7 @@ namespace PepperSharp
                             tcs.TrySetResult(result);
                         }
                     );
-                    if (connectLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        connectLoop.PostWork(action);
+                    InvokeHelper(action, connectLoop);
                 }
                 return await tcs.Task;
 
@@ -254,10 +251,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (closeLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        closeLoop.PostWork(action);
+                    InvokeHelper(action, closeLoop);
                 }
                 return await tcs.Task;
 
@@ -387,7 +381,7 @@ namespace PepperSharp
                             tcs.TrySetResult(result);
                         }
                         );
-                        MessageLoop.PostWork(action);
+                        InvokeHelper(action, sendLoop);
                     }
                 }
                 else
@@ -412,10 +406,7 @@ namespace PepperSharp
                             var result = (PPError)PPBWebSocket.SendMessage(this, arrayBuffer);
                             tcs.TrySetResult(result);
                         });
-                        if (sendLoop == null)
-                            MessageLoop.PostWork(action);
-                        else
-                            sendLoop.PostWork(action);
+                        InvokeHelper(action, sendLoop);
                     }
                 }
 
@@ -554,10 +545,7 @@ namespace PepperSharp
                         tcs.TrySetResult(receiveResult);
                     }
                     );
-                    if (receiveLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        receiveLoop.PostWork(action);
+                    InvokeHelper(action, receiveLoop);
                 }
                 return await tcs.Task;
 

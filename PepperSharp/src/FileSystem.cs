@@ -76,10 +76,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (openLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        openLoop.PostWork(action);
+                    InvokeHelper(action, openLoop);
                 }
                 return await tcs.Task;
 

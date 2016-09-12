@@ -113,10 +113,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (openLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        openLoop.PostWork(action);
+                    InvokeHelper(action, openLoop);
                 }
                 return await tcs.Task;
 
@@ -172,10 +169,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -291,10 +285,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -356,10 +347,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -431,10 +419,7 @@ namespace PepperSharp
                         tcs.TrySetResult(PPError.Ok);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 

@@ -10,6 +10,10 @@ namespace PepperSharp
     public class MessageLoop : Resource
     {
 
+        // Used as a marker to indicate that an async method is being executed on 
+        // on a thread from a MessageLoop.PostWork so it can be executed synchronously
+        public static readonly MessageLoop BlockingMessageLoop = new BlockingMessageLoop();
+
         public MessageLoop(Instance instance)
         {
             handle = PPBMessageLoop.Create(instance);
@@ -232,5 +236,11 @@ namespace PepperSharp
             return tcs.Task;
         }
 
+    }
+
+    internal class BlockingMessageLoop : MessageLoop
+    {
+        internal BlockingMessageLoop() : base(PPResource.Empty)
+        { }
     }
 }

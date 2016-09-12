@@ -160,8 +160,10 @@
     <Compile Include="src\VarArray.cs" />
     <Compile Include="src\VarArrayBuffer.cs" />
     <Compile Include="src\VarDictionary.cs" />
+    <Compile Include="src\VideoEncoder.cs" />
     <Compile Include="src\View.cs" />
     <Compile Include="src\WebSocket.cs" />
+    <Compile Include="src\VideoFrame.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

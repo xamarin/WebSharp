@@ -11,28 +11,28 @@ namespace VideoEncode
     {
 
 
-        bool is_encoding_;
+        bool IsEncoding { get; set; }
         bool is_encode_ticking_;
         bool is_receiving_track_frames_;
 
-        PPResource video_encoder_;
+        VideoEncoder videoEncoder;
 
         PPResource video_track_;
 
-        PPVideoProfile video_profile_;
-        PPVideoFrameFormat frame_format_;
+        VideoProfile videoProfile;
+        VideoFrameFormat frame_format_;
 
         PPSize requested_size_;
         PPSize frame_size_;
         PPSize encoder_size_;
         int encoded_frames_;
 
-        Queue<long> frames_timestamps_ = new Queue<long>();
+        Queue<long> frameTimeStampQueue = new Queue<long>();
 
-        PPResource current_track_frame_;
+        VideoFrame currentTrackFrame;
 
-        Dictionary<string, PPVideoProfile> profile_from_string_;
-        Dictionary<PPVideoProfile, string> profile_to_string_;
+        Dictionary<string, VideoProfile> profile_from_string_;
+        Dictionary<VideoProfile, string> profile_to_string_;
         IVFWriter ivf_writer_ = new IVFWriter();
 
         double last_encode_tick_;
@@ -42,9 +42,9 @@ namespace VideoEncode
 #if USE_VP8_INSTEAD_OF_H264
             video_profile_ = PPVideoProfile.Vp8Any;
 #else
-            video_profile_ = PPVideoProfile.H264main;
+            videoProfile = VideoProfile.H264main;
 #endif
-            frame_format_ = PPVideoFrameFormat.I420;
+            frame_format_ = VideoFrameFormat.I420;
             InitializeVideoProfiles();
             ProbeEncoder();
 
@@ -83,8 +83,8 @@ namespace VideoEncode
                 if (PPBMediaStreamVideoTrack.IsMediaStreamVideoTrack(resource_track) == PPBool.True)
                 {
                     video_track_ = resource_track;
-                    video_encoder_ = PPBVideoEncoder.Create(this);
-                    video_profile_ = VideoProfileFromString(dict_message.Get("profile").AsString());
+                    videoEncoder = new VideoEncoder(this);
+                    videoProfile = VideoProfileFromString(dict_message.Get("profile").AsString());
                     ConfigureTrack();
                 }
             }
@@ -101,20 +101,20 @@ namespace VideoEncode
 
         void StopEncode()
         {
-            PPBVideoEncoder.Close(video_encoder_);
+            videoEncoder.Close();
             StopTrackFrames();
             PPBMediaStreamVideoTrack.Close(video_track_);
-            is_encoding_ = false;
+            IsEncoding = false;
             encoded_frames_ = 0;
         }
 
         void StopTrackFrames()
         {
             is_receiving_track_frames_ = false;
-            if (!current_track_frame_.IsEmpty)
+            if (!currentTrackFrame.IsEmpty)
             {
-                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, current_track_frame_);
-                current_track_frame_.Detach();
+                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, currentTrackFrame);
+                currentTrackFrame.Detach();
             }
         }
 
@@ -145,7 +145,7 @@ namespace VideoEncode
                 return;
             }
 
-            if (is_encoding_)
+            if (IsEncoding)
             {
                 StartTrackFrames();
                 ScheduleNextEncode();
@@ -188,84 +188,85 @@ namespace VideoEncode
         private void GetEncoderFrameTick(PPError result)
         {
             is_encode_ticking_ = false;
-            if (is_encoding_)
+            //Console.WriteLine("GetEncoderFrameTick");
+            if (IsEncoding)
             {
-                if (current_track_frame_ != null && !current_track_frame_.IsEmpty)
+                //Console.WriteLine("GetEncoderFrameTick 2");
+                if (currentTrackFrame != null && !currentTrackFrame.IsEmpty)
                 {
-                    var frame = new PPResource(current_track_frame_);
-                    current_track_frame_.Detach();
+                    //Console.WriteLine("GetEncoderFrameTick 3");
+                    var frame = new VideoFrame(currentTrackFrame);
+                    currentTrackFrame.Detach();
                     GetEncoderFrame(frame);
                 }
                 ScheduleNextEncode();
             }
         }
 
-        void GetEncoderFrame(PPResource trackframe)
+        VideoFrame encoderTrackFrame;
+        void GetEncoderFrame(VideoFrame trackframe)
         {
-            var OnEncoderFrameCallback = new CompletionCallbackWithOutput<PPResource, PPResource>(OnEncoderFrame, trackframe);
-            PPBVideoEncoder.GetVideoFrame(video_encoder_, out OnEncoderFrameCallback.OutputAdapter.output, OnEncoderFrameCallback.Callback);
+            encoderTrackFrame = trackframe;
+            videoEncoder.GetVideoFrame();
 
         }
 
-        private void OnEncoderFrame(PPError result, PPResource encoder_frame, PPResource trackFrame)
+        private void HandleEncoderFrame(object sender, VideoEncoder.VideoFrameInfo videoFrameInfo)
         {
+            var result = videoFrameInfo.Result;
             if (result == PPError.Aborted)
             {
-                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, trackFrame);
+                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, encoderTrackFrame);
                 return;
             }
             if (result != PPError.Ok)
             {
-                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, trackFrame);
-                LogError(result, $"Cannot get video frame from video encoder {encoder_frame} / {trackFrame}");
+                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, encoderTrackFrame);
+                LogError(result, $"Cannot get video frame from video encoder {videoFrameInfo.VideoFrame} / {encoderTrackFrame}");
                 return;
             }
 
-            PPBVideoFrame.GetSize(trackFrame, out frame_size_);
+            encoderTrackFrame.GetSize(out frame_size_);
 
             if (frame_size_ != encoder_size_)
             {
-                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, trackFrame);
+                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, encoderTrackFrame);
                 LogError(PPError.Failed, "MediaStreamVideoTrack frame size incorrect");
                 return;
             }
 
-            if (CopyVideoFrame(encoder_frame, trackFrame) == PPError.Ok)
-                EncodeFrame(encoder_frame);
-            PPBMediaStreamVideoTrack.RecycleFrame(video_track_, trackFrame);
+            if (CopyVideoFrame(videoFrameInfo.VideoFrame, encoderTrackFrame) == PPError.Ok)
+                EncodeFrame(videoFrameInfo.VideoFrame);
+            PPBMediaStreamVideoTrack.RecycleFrame(video_track_, encoderTrackFrame);
+
         }
 
-        PPError CopyVideoFrame(PPResource dest, PPResource src)
+        PPError CopyVideoFrame(VideoFrame dest, VideoFrame src)
         {
 
-            var destSize = PPBVideoFrame.GetDataBufferSize(dest);
-            var srcSize = PPBVideoFrame.GetDataBufferSize(src);
-            if (PPBVideoFrame.GetDataBufferSize(dest) < PPBVideoFrame.GetDataBufferSize(src))
+            var destSize = dest.DataBufferSize;
+            var srcSize = src.DataBufferSize;
+            if (destSize < srcSize)
             {
                 LogError(PPError.Failed, $"Incorrect destination video frame buffer size : {destSize} < {srcSize}");
                 return PPError.Failed;
             }
-            PPBVideoFrame.SetTimestamp(dest, PPBVideoFrame.GetTimestamp(src));
-            var destBuffer = PPBVideoFrame.GetDataBuffer(dest);
-            var srcBuffer = PPBVideoFrame.GetDataBuffer(src);
-            unsafe
-            {
-                Buffer.MemoryCopy ((void*)srcBuffer, (void*)destBuffer, srcSize, srcSize);
-            }
+            dest.TimeStamp = src.TimeStamp;
+            dest.DataBuffer = src.DataBuffer;
             return PPError.Ok;
         }
 
         void EncodeFrame(PPResource frame) {
-            frames_timestamps_.Enqueue((long)(PPBVideoFrame.GetTimestamp(frame) * 1000));
-            PPBVideoEncoder.Encode(video_encoder_, frame, PPBool.False, new CompletionCallback(OnEncodeDone));
+            frameTimeStampQueue.Enqueue((long)(PPBVideoFrame.GetTimestamp(frame) * 1000));
+            videoEncoder.Encode(frame, false);
 
         }
 
-        private void OnEncodeDone(PPError result)
+        private void OnEncodeDone(object sender, PPError result)
         {
-            if ((PPError)result == PPError.Aborted)
+            if (result == PPError.Aborted)
                 return;
-            if ((PPError)result != PPError.Ok)
+            if (result != PPError.Ok)
                 LogError(result, "Encode failed");
         }
 
@@ -275,10 +276,11 @@ namespace VideoEncode
             {
                 return;
             }
-            if (!current_track_frame_.IsEmpty)
+
+            if (currentTrackFrame != null && !currentTrackFrame.IsEmpty)
             {
-                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, current_track_frame_);
-                current_track_frame_.Detach();
+                PPBMediaStreamVideoTrack.RecycleFrame(video_track_, currentTrackFrame);
+                currentTrackFrame.Detach();
             }
 
             if (result != PPError.Ok)
@@ -287,7 +289,8 @@ namespace VideoEncode
                 return;
             }
 
-            current_track_frame_ = new PPResource(frame);
+            var videoFrame = new VideoFrame(PassRef.PassRef, frame);
+            currentTrackFrame = new VideoFrame(videoFrame);
             if (is_receiving_track_frames_)
             {
                 var OnTrackFrameCallback = new CompletionCallbackWithOutput<PPResource>(OnTrackFrame);
@@ -298,16 +301,20 @@ namespace VideoEncode
 
         void StartEncoder()
         {
-            if (video_encoder_.ppresource != 0)
-                video_encoder_.Dispose();
+            if (!videoEncoder.IsEmpty)
+                videoEncoder.Dispose();
 
-            video_encoder_ = PPBVideoEncoder.Create(this);
-            frames_timestamps_.Clear();
+            videoEncoder = new VideoEncoder(this);
+            videoEncoder.HandleVideoFrame += HandleEncoderFrame;
+            videoEncoder.HandleEncode += OnEncodeDone;
+            videoEncoder.HandleBitstreamBuffer += HandleBitstreamBuffer;
 
-            var error = (PPError)PPBVideoEncoder.Initialize(video_encoder_,
-                frame_format_, frame_size_, video_profile_, 2000000,
-                PPHardwareAcceleration.Withfallback,
-                new CompletionCallback(OnInitializedEncoder));
+            frameTimeStampQueue.Clear();
+
+            videoEncoder.HandleInitialize += OnInitializedEncoder;
+            var error = videoEncoder.Initialize(
+                frame_format_, frame_size_, videoProfile, 2000000,
+                HardwareAcceleration.Withfallback);
 
             if (error != PPError.OkCompletionpending)
             {
@@ -316,7 +323,7 @@ namespace VideoEncode
             }
         }
 
-        void OnInitializedEncoder(PPError result)
+        void OnInitializedEncoder(object sender, PPError result)
         {
             if ((PPError)result != PPError.Ok)
             {
@@ -324,18 +331,16 @@ namespace VideoEncode
                 return;
             }
 
-            is_encoding_ = true;
+            IsEncoding = true;
             Log("started");
 
-            if ((PPError)PPBVideoEncoder.GetFrameCodedSize(video_encoder_, out encoder_size_) != PPError.Ok)
+            if (videoEncoder.GetFrameCodedSize(out encoder_size_) != PPError.Ok)
             {
                 LogError(result, "Cannot get encoder coded frame size");
                 return;
             }
 
-            var OnGetBitstreamBufferCallback = new CompletionCallbackWithOutput<PPBitstreamBuffer>(OnGetBitstreamBuffer);
-
-            var bitResult = (PPError)PPBVideoEncoder.GetBitstreamBuffer(video_encoder_, out OnGetBitstreamBufferCallback.OutputAdapter.output, OnGetBitstreamBufferCallback.Callback);
+            var bitResult = videoEncoder.GetBitstreamBuffer();
             if (encoder_size_ != frame_size_)
             {
                 ConfigureTrack();
@@ -347,9 +352,10 @@ namespace VideoEncode
             }
 
         }
-        void OnGetBitstreamBuffer(PPError result, PPBitstreamBuffer bitstreamBuffer)
-        {
 
+        private void HandleBitstreamBuffer(object sender, VideoEncoder.BitstreamBufferInfo bitstreamBufferInfo)
+        {
+            var result = bitstreamBufferInfo.Result;
             if (result == PPError.Aborted)
                 return;
 
@@ -360,45 +366,38 @@ namespace VideoEncode
             }
 
             encoded_frames_++;
-            var numBytes = bitstreamBuffer.size;
-            var bufferMap = new byte[numBytes];
-            Marshal.Copy(bitstreamBuffer.buffer, bufferMap, 0, bufferMap.Length);
 
-            PostDataMessage(bufferMap, numBytes);
-            PPBVideoEncoder.RecycleBitstreamBuffer(video_encoder_, bitstreamBuffer);
-            var OnGetBitstreamBufferCallback = new CompletionCallbackWithOutput<PPBitstreamBuffer>(OnGetBitstreamBuffer);
-            var bitResult = (PPError)PPBVideoEncoder.GetBitstreamBuffer(video_encoder_, out OnGetBitstreamBufferCallback.OutputAdapter.output, OnGetBitstreamBufferCallback.Callback);
+            PostDataMessage(bitstreamBufferInfo.Buffer, bitstreamBufferInfo.Size);
+            videoEncoder.RecycleBitstreamBuffer(bitstreamBufferInfo);
+
+            videoEncoder.GetBitstreamBuffer();
         }
 
         void ProbeEncoder()
         {
-            video_encoder_ = PPBVideoEncoder.Create(this);
-            var encoderProbedCallback = new CompletionCallbackWithOutput<PPVideoProfileDescription[]>(OnEncoderProbed);
-            PPBVideoEncoder.GetSupportedProfiles(video_encoder_, encoderProbedCallback, encoderProbedCallback.Callback);
+            videoEncoder = new VideoEncoder(this);
+            videoEncoder.HandleEncoderProbed += HandleEncoderProbed;
+            videoEncoder.GetSupportedProfiles();
         }
 
-        void OnEncoderProbed(PPError result, PPVideoProfileDescription[] profiles)
+        private void HandleEncoderProbed(object sender, VideoEncoder.VideoProfileInfo profileInfo)
         {
-
             var dict = new VarDictionary();
             dict.Set("name", "supportedProfiles");
             VarArray js_profiles = new VarArray();
             dict.Set("profiles", js_profiles);
 
-            if (result < 0)
+            if (profileInfo.Result < 0)
             {
-                LogError(result, "Cannot get supported profiles");
+                LogError(profileInfo.Result, "Cannot get supported profiles");
                 PostMessage(dict);
             }
 
-            if (profiles != null)
+            if (profileInfo.VideoProfileDescriptions.Count > 0)
             {
                 var idx = 0u;
-                for (var i = 0; i < profiles.Length; i++)
-                {
-                    var profile = profiles[i];
-                    js_profiles.Set(idx++, VideoProfileToString(profile.profile));
-                }
+                foreach (var profile in profileInfo.VideoProfileDescriptions)
+                    js_profiles.Set(idx++, VideoProfileToString(profile.Profile));
             }
             PostMessage(dict);
         }
@@ -412,15 +411,15 @@ namespace VideoEncode
             VarArrayBuffer array_buffer = null;
             byte[] data_ptr = null;
             uint data_offset = 0;
-            if (video_profile_ == PPVideoProfile.Vp8Any ||
-                video_profile_ == PPVideoProfile.Vp9Any)
+            if (videoProfile == VideoProfile.Vp8Any ||
+                videoProfile == VideoProfile.Vp9Any)
             {
                 uint frame_offset = 0;
                 if (encoded_frames_ == 1)
                 {
                     array_buffer = new VarArrayBuffer(size + ivf_writer_.GetFileHeaderSize() + ivf_writer_.GetFrameHeaderSize());
                     data_ptr = array_buffer.Map();
-                    frame_offset = ivf_writer_.WriteFileHeader(data_ptr, VideoProfileToString(video_profile_).ToUpper(),
+                    frame_offset = ivf_writer_.WriteFileHeader(data_ptr, VideoProfileToString(videoProfile).ToUpper(),
                         frame_size_.Width, frame_size_.Height);
                 }
                 else
@@ -428,8 +427,8 @@ namespace VideoEncode
                     array_buffer = new VarArrayBuffer(size + ivf_writer_.GetFrameHeaderSize());
                     data_ptr = array_buffer.Map();
                 }
-                var timestamp = frames_timestamps_.Peek();
-                frames_timestamps_.Dequeue();
+                var timestamp = frameTimeStampQueue.Peek();
+                frameTimeStampQueue.Dequeue();
                 data_offset =
                     frame_offset +
                     ivf_writer_.WriteFrameHeader(data_ptr, frame_offset, timestamp, size);
@@ -466,7 +465,7 @@ namespace VideoEncode
             PostMessage(dictionary);
         }
 
-        void AddVideoProfile(PPVideoProfile profile,
+        void AddVideoProfile(VideoProfile profile,
                                            string profile_str)
         {
             profile_to_string_.Add(profile, profile_str);
@@ -475,35 +474,35 @@ namespace VideoEncode
 
         void InitializeVideoProfiles()
         {
-            profile_from_string_ = new Dictionary<string, PPVideoProfile>();
-            profile_to_string_ = new Dictionary<PPVideoProfile, string>();
+            profile_from_string_ = new Dictionary<string, VideoProfile>();
+            profile_to_string_ = new Dictionary<VideoProfile, string>();
 
-            AddVideoProfile(PPVideoProfile.H264baseline, "h264baseline");
-            AddVideoProfile(PPVideoProfile.H264main, "h264main");
-            AddVideoProfile(PPVideoProfile.H264extended, "h264extended");
-            AddVideoProfile(PPVideoProfile.H264high, "h264high");
-            AddVideoProfile(PPVideoProfile.H264high10profile, "h264high10");
-            AddVideoProfile(PPVideoProfile.H264high422profile, "h264high422");
-            AddVideoProfile(PPVideoProfile.H264high444predictiveprofile,
+            AddVideoProfile(VideoProfile.H264baseline, "h264baseline");
+            AddVideoProfile(VideoProfile.H264main, "h264main");
+            AddVideoProfile(VideoProfile.H264extended, "h264extended");
+            AddVideoProfile(VideoProfile.H264high, "h264high");
+            AddVideoProfile(VideoProfile.H264high10profile, "h264high10");
+            AddVideoProfile(VideoProfile.H264high422profile, "h264high422");
+            AddVideoProfile(VideoProfile.H264high444predictiveprofile,
                             "h264high444predictive");
-            AddVideoProfile(PPVideoProfile.H264scalablebaseline, "h264scalablebaseline");
-            AddVideoProfile(PPVideoProfile.H264scalablehigh, "h264scalablehigh");
-            AddVideoProfile(PPVideoProfile.H264stereohigh, "h264stereohigh");
-            AddVideoProfile(PPVideoProfile.H264multiviewhigh, "h264multiviewhigh");
-            AddVideoProfile(PPVideoProfile.Vp8Any, "vp8");
-            AddVideoProfile(PPVideoProfile.Vp9Any, "vp9");
+            AddVideoProfile(VideoProfile.H264scalablebaseline, "h264scalablebaseline");
+            AddVideoProfile(VideoProfile.H264scalablehigh, "h264scalablehigh");
+            AddVideoProfile(VideoProfile.H264stereohigh, "h264stereohigh");
+            AddVideoProfile(VideoProfile.H264multiviewhigh, "h264multiviewhigh");
+            AddVideoProfile(VideoProfile.Vp8Any, "vp8");
+            AddVideoProfile(VideoProfile.Vp9Any, "vp9");
         }
 
-        PPVideoProfile VideoProfileFromString(string str)
+        VideoProfile VideoProfileFromString(string str)
         {
             if (!profile_from_string_.ContainsKey(str))
-                return PPVideoProfile.Vp8Any;
+                return VideoProfile.Vp8Any;
 
             return profile_from_string_[str];
 
         }
 
-        string VideoProfileToString(PPVideoProfile profile)
+        string VideoProfileToString(VideoProfile profile)
         {
             if (!profile_to_string_.ContainsKey(profile))
                 return "unknown";

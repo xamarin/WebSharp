@@ -118,6 +118,21 @@ namespace PepperSharp
             return handle.ToString();
         }
 
+        internal void InvokeHelper(Action<PPError> action, MessageLoop messageLoop = null, PPError result = PPError.OkCompletionpending)
+        {
+            if (messageLoop == null)
+                MessageLoop.PostWork(action);
+            else
+            {
+                if (messageLoop is BlockingMessageLoop)
+                {
+                    action(result);
+                }
+                else
+                    messageLoop.PostWork(action);
+            }
+        }
+
         #region Equality
 
         public override bool Equals(object obj)

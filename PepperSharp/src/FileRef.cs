@@ -161,10 +161,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -234,10 +231,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -302,10 +296,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -375,10 +366,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -400,7 +388,7 @@ namespace PepperSharp
         /// read this file or directory if it exists in the external filesystem.
         /// </summary>
         /// <returns>Error code</returns>
-        PPError Query()
+        public PPError Query()
         {
             var ficb = new CompletionCallbackWithOutput<PPFileInfo>(OnQuery);
             return (PPError)PPBFileRef.Query(this, out ficb.OutputAdapter.output, ficb);
@@ -443,10 +431,8 @@ namespace PepperSharp
                         tcs.TrySetResult(new FileInfo(result, fileInfo));
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -532,10 +518,7 @@ namespace PepperSharp
                     }
                     );
 
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 

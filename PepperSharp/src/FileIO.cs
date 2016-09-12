@@ -104,10 +104,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (openLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        openLoop.PostWork(action);
+                    InvokeHelper(action, openLoop);
                 }
                 return await tcs.Task;
 
@@ -172,10 +169,7 @@ namespace PepperSharp
                         tcs.TrySetResult(new FileInfo(result, fileInfo));
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -245,10 +239,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -398,10 +389,7 @@ namespace PepperSharp
                         tcs.TrySetResult(new FileIOResult((int)result, (int)result == 0));
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -476,20 +464,19 @@ namespace PepperSharp
                 {
                     Action<PPError> action = new Action<PPError>((e) =>
                     {
-                        var arrayOutput = new ArrayOutputAdapterWithStorage<byte[]>();
-                        PPArrayOutput ao = arrayOutput.PPArrayOutput;
-                        var result = (PPError)PPBFileIO.ReadToArray(this, offset, size, ref ao, 
-                            new BlockUntilComplete());
-                        var bytes = arrayOutput.Output;
-                        Array.Copy(bytes, buffer.Array, Math.Min(bytes.Length, buffer.Count));
+                        using (var arrayOutput = new ArrayOutputAdapterWithStorage<byte[]>())
+                        {
+                            PPArrayOutput ao = arrayOutput.PPArrayOutput;
+                            var result = (PPError)PPBFileIO.ReadToArray(this, offset, size, ref ao,
+                                new BlockUntilComplete());
+                            var bytes = arrayOutput.Output;
+                            Array.Copy(bytes, buffer.Array, Math.Min(bytes.Length, buffer.Count));
 
-                        tcs.TrySetResult(new FileIOResult((int)result, (int)result == 0));
+                            tcs.TrySetResult(new FileIOResult((int)result, (int)result == 0));
+                        }
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -563,10 +550,7 @@ namespace PepperSharp
                         tcs.TrySetResult(new FileIOResult((int)result, (int)result == 0));
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -630,10 +614,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -691,10 +672,7 @@ namespace PepperSharp
                         tcs.TrySetResult(result);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 
@@ -766,10 +744,7 @@ namespace PepperSharp
                         tcs.TrySetResult(PPError.Ok);
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 

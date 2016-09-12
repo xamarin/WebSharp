@@ -86,10 +86,7 @@ namespace PepperSharp
                         tcs.TrySetResult(new NetworkListInfo(result, new NetworkList(output.Output)));
                     }
                     );
-                    if (messageLoop == null)
-                        MessageLoop.PostWork(action);
-                    else
-                        messageLoop.PostWork(action);
+                    InvokeHelper(action, messageLoop);
                 }
                 return await tcs.Task;
 

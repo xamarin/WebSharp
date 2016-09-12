@@ -438,3 +438,42 @@ NetworkProxy
       const InstanceHandle& instance,
       const Var& url,
       const pp::CompletionCallbackWithOutput<Var>& callback);
+
+VideoEncoder
+---
+[x] explicit VideoEncoder(const InstanceHandle& instance);
+[ ] VideoEncoder(const VideoEncoder& other);
+[x] int32_t GetSupportedProfiles(const CompletionCallbackWithOutput<
+      std::vector<PP_VideoProfileDescription> >& cc);
+[x] int32_t Initialize(const PP_VideoFrame_Format& input_format,
+                     const Size& input_visible_size,
+                     const PP_VideoProfile& output_profile,
+                     const uint32_t initial_bitrate,
+                     PP_HardwareAcceleration acceleration,
+                     const CompletionCallback& cc);
+[x] int32_t GetFramesRequired();
+[x] int32_t GetFrameCodedSize(Size* coded_size);
+[x] int32_t GetVideoFrame(const CompletionCallbackWithOutput<VideoFrame>& cc);
+[x] int32_t Encode(const VideoFrame& video_frame,
+                 bool force_keyframe,
+                 const CompletionCallback& cc);
+[x] int32_t GetBitstreamBuffer(
+      const CompletionCallbackWithOutput<PP_BitstreamBuffer>& cc);
+[x] void RecycleBitstreamBuffer(const PP_BitstreamBuffer& bitstream_buffer);
+[x] void RequestEncodingParametersChange(uint32_t bitrate, uint32_t framerate);
+[x] void Close();
+
+VideoFrame
+---
+
+[x] VideoFrame();
+[x] VideoFrame(const VideoFrame& other);
+[x] explicit VideoFrame(const Resource& resource);
+[x] VideoFrame(PassRef, PP_Resource resource);
+[x] virtual ~VideoFrame();
+[x] PP_TimeDelta GetTimestamp() const;
+[x] void SetTimestamp(PP_TimeDelta timestamp);
+[x] PP_VideoFrame_Format GetFormat() const;
+[x] bool GetSize(Size* size) const;
+[x] void* GetDataBuffer();
+[x] uint32_t GetDataBufferSize() const;
