@@ -24,22 +24,6 @@ namespace PepperSharp
         /// </summary>
         public event EventHandler<VideoFrameInfo> HandleVideoFrame;
 
-        /**
-        * The <code>VideoFrameInfo</code> class represents all information
-        */
-        public class VideoFrameInfo : EventArgs
-        {
-            public PPError Result { get; private set; }
-            public VideoFrame VideoFrame { get; set; }
-
-            public VideoFrameInfo(PPError result, PPResource videoFrame)
-            {
-                Result = result;
-                VideoFrame = new VideoFrame(PassRef.PassRef, videoFrame);
-            }
-
-        }
-
         /// <summary>
         /// Event raised when the VideoEncoder issues an Encode call.
         /// </summary>
@@ -580,6 +564,7 @@ namespace PepperSharp
         /// <strong>Note:</strong> Destroying the video encoder closes it implicitly,
         /// so you are not required to call Close().
         /// </summary>
+        /// <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
         public Task<PPError> CloseAsync(MessageLoop messageLoop = null)
             => CloseAsyncCore(messageLoop);
 
@@ -642,6 +627,22 @@ namespace PepperSharp
         }
 
         #endregion
+
+    }
+
+    /**
+    * The <code>VideoFrameInfo</code> class represents all information
+    */
+    public class VideoFrameInfo : EventArgs
+    {
+        public PPError Result { get; private set; }
+        public VideoFrame VideoFrame { get; set; }
+
+        public VideoFrameInfo(PPError result, PPResource videoFrame)
+        {
+            Result = result;
+            VideoFrame = new VideoFrame(PassRef.PassRef, videoFrame);
+        }
 
     }
 

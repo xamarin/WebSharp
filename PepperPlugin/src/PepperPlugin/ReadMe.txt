@@ -477,3 +477,26 @@ VideoFrame
 [x] bool GetSize(Size* size) const;
 [x] void* GetDataBuffer();
 [x] uint32_t GetDataBufferSize() const;
+
+MediaStreamVideoTrack
+---
+
+[ ] MediaStreamVideoTrack(const MediaStreamVideoTrack& other);
+[x] explicit MediaStreamVideoTrack(const Resource& resource);
+[x] explicit MediaStreamVideoTrack(const InstanceHandle& instance);
+[x] MediaStreamVideoTrack(PassRef, PP_Resource resource);
+[x] ~MediaStreamVideoTrack();
+[x] int32_t Configure(const int32_t attributes[],
+                    const CompletionCallback& callback);
+[x] int32_t GetAttrib(PP_MediaStreamVideoTrack_Attrib attrib,
+                    int32_t* value);
+[x] std::string GetId() const;
+[x] bool HasEnded() const;
+[x] int32_t GetFrame(
+      const CompletionCallbackWithOutput<VideoFrame>& callback);
+[x] int32_t RecycleFrame(const VideoFrame& frame);
+[x] void Close();
+[x] int32_t GetEmptyFrame(
+      const CompletionCallbackWithOutput<VideoFrame>& callback);
+[x] int32_t PutFrame(const VideoFrame& frame);
+[x] static bool IsMediaStreamVideoTrack(const Resource& resource);

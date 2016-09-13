@@ -117,6 +117,7 @@
     <Compile Include="src\Graphics2D.cs" />
     <Compile Include="src\ImageData.cs" />
     <Compile Include="src\InputEvent.cs" />
+    <Compile Include="src\MediaStreamVideoTrack.cs" />
     <Compile Include="src\MessageLoop.cs" />
     <Compile Include="src\MouseLock.cs" />
     <Compile Include="src\NetAddress.cs" />
