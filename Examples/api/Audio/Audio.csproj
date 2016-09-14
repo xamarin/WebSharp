@@ -45,16 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="background.js" />
-    <Content Include="common.js" />
-    <Content Include="example.js" />
-    <Content Include="icon128.png" />
-    <Content Include="index.html" />
-    <Content Include="main.js" />
-    <Content Include="renderer.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="package.json" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>

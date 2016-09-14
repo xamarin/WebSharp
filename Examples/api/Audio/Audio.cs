@@ -21,7 +21,8 @@ namespace Audio
         // Only supporting stereo audio for now.
         const uint CHANNELS = 2u;
 
-        PPResource audio_;
+        PepperSharp.Audio audio;
+        //PPResource audio_;
         double Frequency { get; set; }
 
         // The last parameter sent to the sin function.  Used to prevent sine wave
@@ -43,13 +44,13 @@ namespace Audio
         private void OnInitialize(object sender, InitializeEventArgs args)
         {
             // Ask the device for an appropriate sample count size.
-            SampleFrameCount = PPBAudioConfig.RecommendSampleFrameCount(this, PPAudioSampleRate._44100, SAMPLE_FRAME_COUNT);
+            SampleFrameCount = AudioConfig.RecommendSampleFrameCount(this, AudioSampleRate._44100, SAMPLE_FRAME_COUNT);
 
             var thisHandle = (IntPtr)(GCHandle.Alloc(this, GCHandleType.Pinned));
 
-            audio_ = PPBAudio.Create(this, 
-                PPBAudioConfig.CreateStereo16Bit(this, PPAudioSampleRate._44100, SampleFrameCount),
-                SineWaveCallback, thisHandle);
+            audio = new PepperSharp.Audio(this, new AudioConfig(this,
+                    AudioSampleRate._44100, SampleFrameCount),
+                    SineWaveCallback);
 
         }
 
@@ -76,11 +77,11 @@ namespace Audio
 
             if (message == PLAY_SOUND_ID)
             {
-                PPBAudio.StartPlayback(audio_);
+                audio.StartPlayback();
             }
             else if (message == STOP_SOUND_ID)
             {
-                PPBAudio.StopPlayback(audio_);
+                audio.StopPlayback();
             }
             else if (message.Contains(SET_FREQUENCY_ID))
             {
@@ -101,40 +102,44 @@ namespace Audio
 
         }
 
-        void SineWaveCallback(IntPtr samples,
-                               uint buffer_size,
-                               double latency,
-                               IntPtr data)
+        void SineWaveCallback(byte[] samples,
+                uint bufferSize,
+                double latency,
+                object state)
         {
 
-            var instance = CompletionCallback.GetUserData<Audio>(data);
-            var frequency = instance.Frequency;
-            double delta = TWO_PI * frequency / (int)PPAudioSampleRate._44100;
+            var frequency = Frequency;
+            double delta = TWO_PI * frequency / (int)AudioSampleRate._44100;
             short maxShort = short.MaxValue;
 
             unsafe
             {
-                var samplesPtrOffset = Marshal.SizeOf<short>();
-
-                for (int sample_i = 0; sample_i < instance.SampleFrameCount;
-                        sample_i++, instance.Theta += delta)
+                fixed (byte* pBuffer = samples)
                 {
-                    // Keep theta_ from going beyond 2*Pi.
-                    if (instance.Theta > TWO_PI)
+                    short* pSample = (short*)pBuffer;
+
+                    for (int sample_i = 0; sample_i < SampleFrameCount;
+                            sample_i++, Theta += delta)
                     {
-                        instance.Theta -= TWO_PI;
+                        // Keep theta_ from going beyond 2*Pi.
+                        if (Theta > TWO_PI)
+                        {
+                            Theta -= TWO_PI;
+                        }
+
+                        var sinValue = Math.Sin(Theta);
+                        var scaledValue = (short)((sinValue * maxShort) + (maxShort / 2));
+                        for (int channel = 0; channel < CHANNELS; ++channel)
+                        {
+                            pSample[sample_i] = scaledValue;
+                        }
                     }
 
-                    var sinValue = Math.Sin(instance.Theta);
-                    var scaledValue = (short)((sinValue * maxShort) + (maxShort / 2));
-                    for (int channel = 0; channel < CHANNELS; ++channel)
-                    {
-                        Marshal.WriteInt16(samples, scaledValue);
-                        samples += samplesPtrOffset;
-                    }
+
                 }
             }
         }
+
     }
 
 
