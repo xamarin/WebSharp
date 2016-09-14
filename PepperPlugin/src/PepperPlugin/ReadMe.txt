@@ -500,3 +500,40 @@ MediaStreamVideoTrack
       const CompletionCallbackWithOutput<VideoFrame>& callback);
 [x] int32_t PutFrame(const VideoFrame& frame);
 [x] static bool IsMediaStreamVideoTrack(const Resource& resource);
+
+Audio
+---
+
+[x] Audio(const InstanceHandle& instance,
+        const AudioConfig& config,
+        PPB_Audio_Callback callback,
+        void* user_data);
+[x] Audio(const InstanceHandle& instance,
+        const AudioConfig& config,
+        PPB_Audio_Callback_1_0 callback,
+        void* user_data);
+[x] AudioConfig& config() { return config_; }
+[x] const AudioConfig& config() const { return config_; }
+[x] bool StartPlayback();
+[x] bool StopPlayback();
+
+AudioConfig
+---
+[x] AudioConfig(const InstanceHandle& instance,
+              PP_AudioSampleRate sample_rate,
+              uint32_t sample_frame_count);
+[x] static PP_AudioSampleRate RecommendSampleRate(
+      const InstanceHandle& instance);
+[x] static uint32_t RecommendSampleFrameCount(
+      const InstanceHandle& instance,
+      PP_AudioSampleRate sample_rate,
+      uint32_t requested_sample_frame_count);
+[x] PP_AudioSampleRate sample_rate() const { return sample_rate_; }
+[x] uint32_t sample_frame_count() const { return sample_frame_count_; }
+
+GamePad
+---
+
+[x] public static void Sample ( PPInstance instance,
+                             out PPGamepadsSampleData data)
+*Note* this is now part of the Instance and referenced from Instance.GamepadsSample(out GamepadsSampleData)

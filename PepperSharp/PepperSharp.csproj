@@ -116,6 +116,7 @@
     <Compile Include="src\FileIO.cs" />
     <Compile Include="src\FileRef.cs" />
     <Compile Include="src\FileSystem.cs" />
+    <Compile Include="src\Gamepad.cs" />
     <Compile Include="src\Graphics2D.cs" />
     <Compile Include="src\ImageData.cs" />
     <Compile Include="src\InputEvent.cs" />

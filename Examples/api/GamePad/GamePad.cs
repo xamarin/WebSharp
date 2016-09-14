@@ -85,22 +85,22 @@ namespace GamePad
 
         }
 
-        PPGamepadsSampleData gamepad_data = new PPGamepadsSampleData();
+        GamepadsSampleData gamepadData = new GamepadsSampleData();
         void Paint()
         {
             // Clear the background.
             FillRect(pixelBuffer, 0, 0, Width, Height, 0xfff0f0f0);
 
             // Get current gamepad data.
-            PPBGamepad.Sample(this, out gamepad_data);
+            GamepadsSample(out gamepadData);
 
             //// Draw the current state for each connected gamepad.
-            for (int p = 0; p < gamepad_data.Length; ++p)
+            for (int p = 0; p < gamepadData.Length; ++p)
             {
-                int width2 = (int)(Width / gamepad_data.Length / 2);
+                int width2 = (int)(Width / gamepadData.Length / 2);
                 int height2 = (int)(Height / 2);
                 int offset = width2 * 2 * p;
-                var pad = gamepad_data[p];
+                var pad = gamepadData[p];
 
                 if (!pad.IsConnected)
                     continue;

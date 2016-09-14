@@ -832,5 +832,16 @@ namespace PepperSharp
             }
         }
 
+        PPGamepadsSampleData gpo = new PPGamepadsSampleData();
+        /// <summary>
+        /// Allows retrieving data from gamepad/joystick devices that are connected to the system.
+        /// </summary>
+        /// <param name="sampleData">The data for all gamepads connected to the system.</param>
+        public void GamepadsSample(out GamepadsSampleData sampleData)
+        {
+            PPBGamepad.Sample(this, out gpo);
+            sampleData = new GamepadsSampleData(gpo);
+        }
+
     }
 }
