@@ -111,6 +111,7 @@
     <Compile Include="binding\pp_var.cs" />
     <Compile Include="src\ArrayOutput.cs" />
     <Compile Include="src\Audio.cs" />
+    <Compile Include="src\AudioBuffer.cs" />
     <Compile Include="src\AudioConfig.cs" />
     <Compile Include="src\Core.cs" />
     <Compile Include="src\FileIO.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="src\Graphics2D.cs" />
     <Compile Include="src\ImageData.cs" />
     <Compile Include="src\InputEvent.cs" />
+    <Compile Include="src\MediaStreamAudioTrack.cs" />
     <Compile Include="src\MediaStreamVideoTrack.cs" />
     <Compile Include="src\MessageLoop.cs" />
     <Compile Include="src\MouseLock.cs" />
