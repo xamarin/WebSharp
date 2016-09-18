@@ -79,7 +79,7 @@ public enum PPMediaStreamVideoTrackAttrib {
  * @addtogroup Interfaces
  * @{
  */
-public static partial class PPBMediaStreamVideoTrack { /* dev */
+internal static partial class PPBMediaStreamVideoTrack { /* dev */
   [DllImport("PepperPlugin", EntryPoint = "PPB_MediaStreamVideoTrack_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

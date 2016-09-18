@@ -2,7 +2,7 @@
 
 namespace PepperSharp
 {
-    public static partial class PPBHostResolver
+    internal static partial class PPBHostResolver
     {
         /**
          * Requests resolution of a host name. If the call completes successfully, the

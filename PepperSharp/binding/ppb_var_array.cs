@@ -20,7 +20,7 @@ namespace PepperSharp {
  * @addtogroup Interfaces
  * @{
  */
-public static partial class PPBVarArray {
+internal static partial class PPBVarArray {
   [DllImport("PepperPlugin", EntryPoint = "PPB_VarArray_Create")]
   extern static PPVar _Create ();
 

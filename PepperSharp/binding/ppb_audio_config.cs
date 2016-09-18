@@ -60,7 +60,7 @@ public enum PPAudioSampleRate {
  * </a> chapter in the Developer's Guide for information on using this
  * interface.
  */
-public static partial class PPBAudioConfig {
+internal static partial class PPBAudioConfig {
   [DllImport("PepperPlugin", EntryPoint = "PPB_AudioConfig_CreateStereo16Bit")]
   extern static PPResource _CreateStereo16Bit ( PPInstance instance,
                                                 PPAudioSampleRate sample_rate,

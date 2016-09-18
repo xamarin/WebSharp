@@ -28,7 +28,7 @@ namespace PepperSharp {
  * For more details about network communication permissions, please see:
  * http://developer.chrome.com/apps/app_network.html
  */
-public static partial class PPBNetworkMonitor {
+internal static partial class PPBNetworkMonitor {
   [DllImport("PepperPlugin", EntryPoint = "PPB_NetworkMonitor_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

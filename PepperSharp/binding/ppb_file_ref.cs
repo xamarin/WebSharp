@@ -47,7 +47,7 @@ public enum PPMakeDirectoryFlags {
  * a file system.  This struct contains a <code>PP_FileSystemType</code>
  * identifier and a file path string.
  */
-public static partial class PPBFileRef {
+internal static partial class PPBFileRef {
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileRef_Create")]
   extern static PPResource _Create ( PPResource file_system, IntPtr path);
 

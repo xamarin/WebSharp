@@ -162,7 +162,7 @@ public enum PPURLRequestProperty {
  * <code>PPB_URLLoader</code>. Refer to <code>PPB_URLLoader</code> for further
  * information.
  */
-public static partial class PPBURLRequestInfo {
+internal static partial class PPBURLRequestInfo {
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLRequestInfo_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

@@ -68,7 +68,7 @@ public enum PPFileOpenFlags {
  * The <code>PPB_FileIO</code> struct is used to operate on a regular file
  * (PP_FileType_Regular).
  */
-public static partial class PPBFileIO {
+internal static partial class PPBFileIO {
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileIO_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

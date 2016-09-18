@@ -27,7 +27,7 @@ namespace PepperSharp {
  * useful for certain classes of applications, especially first-person
  * perspective 3D applications and 3D modeling software.
  */
-public static partial class PPBMouseLock {
+internal static partial class PPBMouseLock {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseLock_LockMouse")]
   extern static int _LockMouse ( PPInstance instance,
                                  PPCompletionCallback callback);

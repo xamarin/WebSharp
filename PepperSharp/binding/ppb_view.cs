@@ -25,7 +25,7 @@ namespace PepperSharp {
  * You will receive new view information using
  * <code>PPP_Instance.DidChangeView</code>.
  */
-public static partial class PPBView {
+internal static partial class PPBView {
   [DllImport("PepperPlugin", EntryPoint = "PPB_View_IsView")]
   extern static PPBool _IsView ( PPResource resource);
 

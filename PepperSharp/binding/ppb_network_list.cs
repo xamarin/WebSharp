@@ -68,7 +68,7 @@ public enum PPNetworkListState {
  * is immutable.  The current networks configuration can be received
  * using the <code>PPB_NetworkMonitor</code> interface.
  */
-public static partial class PPBNetworkList {
+internal static partial class PPBNetworkList {
   [DllImport("PepperPlugin", EntryPoint = "PPB_NetworkList_IsNetworkList")]
   extern static PPBool _IsNetworkList ( PPResource resource);
 

@@ -79,7 +79,7 @@ public delegate void PPBAudioCallback (IntPtr sample_buffer,
  * ...audio_callback() will now be periodically invoked on a separate thread...
  * @endcode
  */
-public static partial class PPBAudio {
+internal static partial class PPBAudio {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Audio_Create")]
   extern static PPResource _Create ( PPInstance instance,
                                      PPResource config,

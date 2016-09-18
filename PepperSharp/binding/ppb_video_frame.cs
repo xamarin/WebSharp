@@ -49,7 +49,7 @@ public enum PPVideoFrameFormat {
  * @addtogroup Interfaces
  * @{
  */
-public static partial class PPBVideoFrame {
+internal static partial class PPBVideoFrame {
   [DllImport("PepperPlugin", EntryPoint = "PPB_VideoFrame_IsVideoFrame")]
   extern static PPBool _IsVideoFrame ( PPResource resource);
 

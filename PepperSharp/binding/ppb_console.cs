@@ -33,7 +33,7 @@ public enum PPLogLevel {
  * @addtogroup Interfaces
  * @{
  */
-public static partial class PPBConsole {
+internal static partial class PPBConsole {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Console_Log")]
   extern static void _Log ( PPInstance instance,
                             PPLogLevel level,

@@ -23,7 +23,7 @@ namespace PepperSharp {
  * The <code>PPB_FileSystem</code> struct identifies the file system type
  * associated with a file.
  */
-public static partial class PPBFileSystem {
+internal static partial class PPBFileSystem {
   [DllImport("PepperPlugin", EntryPoint = "PPB_FileSystem_Create")]
   extern static PPResource _Create ( PPInstance instance,
                                      PPFileSystemType type);

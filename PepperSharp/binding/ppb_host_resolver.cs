@@ -70,7 +70,7 @@ public partial struct PPHostResolverHint {
  * For more details about network communication permissions, please see:
  * http://developer.chrome.com/apps/app_network.html
  */
-public static partial class PPBHostResolver {
+internal static partial class PPBHostResolver {
   [DllImport("PepperPlugin", EntryPoint = "PPB_HostResolver_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

@@ -92,7 +92,7 @@ public partial struct PPGamepadsSampleData {
  * The <code>PPB_Gamepad</code> interface allows retrieving data from
  * gamepad/joystick devices that are connected to the system.
  */
-public static partial class PPBGamepad {
+internal static partial class PPBGamepad {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Gamepad_Sample")]
   extern static void _Sample ( PPInstance instance,
                               out PPGamepadsSampleData data);

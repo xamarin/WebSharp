@@ -28,7 +28,7 @@ namespace PepperSharp {
  * For more details about network communication permissions, please see:
  * http://developer.chrome.com/apps/app_network.html
  */
-public static partial class PPBNetworkProxy {
+internal static partial class PPBNetworkProxy {
   [DllImport("PepperPlugin", EntryPoint = "PPB_NetworkProxy_GetProxyForURL")]
   extern static int _GetProxyForURL ( PPInstance instance,
                                       PPVar url,

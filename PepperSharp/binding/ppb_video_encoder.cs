@@ -42,7 +42,7 @@ namespace PepperSharp {
  * All: vp8 (software).
  * ChromeOS, depending on your device: h264 (hardware), vp8 (hardware)
  */
-public static partial class PPBVideoEncoder {
+internal static partial class PPBVideoEncoder {
   [DllImport("PepperPlugin", EntryPoint = "PPB_VideoEncoder_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

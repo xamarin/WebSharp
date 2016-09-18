@@ -97,7 +97,7 @@ public enum PPUDPSocketOption {
  * For more details about network communication permissions, please see:
  * http://developer.chrome.com/apps/app_network.html
  */
-public static partial class PPBUDPSocket {
+internal static partial class PPBUDPSocket {
   [DllImport("PepperPlugin", EntryPoint = "PPB_UDPSocket_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

@@ -42,7 +42,7 @@ namespace PepperSharp {
  * Chrome and ChromeOS: aac, h264.
  * ChromeOS: mpeg4.
  */
-public static partial class PPBVideoDecoder {
+internal static partial class PPBVideoDecoder {
   [DllImport("PepperPlugin", EntryPoint = "PPB_VideoDecoder_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

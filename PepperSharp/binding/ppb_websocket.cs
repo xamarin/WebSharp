@@ -167,7 +167,7 @@ public enum PPWebSocketCloseCode {
  * The <code>PPB_WebSocket</code> interface provides bi-directional,
  * full-duplex, communications over a single TCP socket.
  */
-public static partial class PPBWebSocket {
+internal static partial class PPBWebSocket {
   [DllImport("PepperPlugin", EntryPoint = "PPB_WebSocket_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

@@ -26,7 +26,7 @@ namespace PepperSharp {
  * to memory management, time, and threads on the browser.
  *
  */
-public static partial class PPBCore {
+internal static partial class PPBCore {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Core_AddRefResource")]
   extern static void _AddRefResource ( PPResource resource);
 

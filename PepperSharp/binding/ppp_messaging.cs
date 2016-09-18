@@ -27,7 +27,7 @@ namespace PepperSharp {
  * that you must implement to handle postMessage events on the associated
  * DOM element.
  */
-public static partial class PPPMessaging {
+internal static partial class PPPMessaging {
   [DllImport("PepperPlugin", EntryPoint = "PPP_Messaging_HandleMessage")]
   extern static void _HandleMessage ( PPInstance instance,  PPVar message);
 

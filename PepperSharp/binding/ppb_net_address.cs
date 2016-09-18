@@ -85,7 +85,7 @@ public partial struct PPNetAddressIPv6 {
  * The <code>PPB_NetAddress</code> interface provides operations on network
  * addresses.
  */
-public static partial class PPBNetAddress {
+internal static partial class PPBNetAddress {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_NetAddress_CreateFromIPv4Address")]
   extern static PPResource _CreateFromIPv4Address (

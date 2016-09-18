@@ -23,7 +23,7 @@ namespace PepperSharp {
 /**
  * <code>PPB_Graphics2D</code> defines the interface for a 2D graphics context.
  */
-public static partial class PPBGraphics2D {
+internal static partial class PPBGraphics2D {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Graphics2D_Create")]
   extern static PPResource _Create ( PPInstance instance,
                                      PPSize size,

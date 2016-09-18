@@ -69,7 +69,7 @@ public enum PPMediaStreamAudioTrackAttrib {
  * @addtogroup Interfaces
  * @{
  */
-public static partial class PPBMediaStreamAudioTrack {
+internal static partial class PPBMediaStreamAudioTrack {
   [DllImport(
       "PepperPlugin",
       EntryPoint = "PPB_MediaStreamAudioTrack_IsMediaStreamAudioTrack")]

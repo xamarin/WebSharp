@@ -25,7 +25,7 @@ namespace PepperSharp {
  * The <code>PPP_MouseLock</code> interface contains a function that you must
  * implement to receive mouse lock events from the browser.
  */
-public static partial class PPPMouseLock {
+internal static partial class PPPMouseLock {
   [DllImport("PepperPlugin", EntryPoint = "PPP_MouseLock_MouseLockLost")]
   extern static void _MouseLockLost ( PPInstance instance);
 

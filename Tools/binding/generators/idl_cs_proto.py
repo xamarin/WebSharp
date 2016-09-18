@@ -903,7 +903,7 @@ class CSGen(object):
           self.GetStructName(node, release, include_version), channel_comment)
     else:
       interfaceName = self.GetInterfaceName(node, release, include_version)
-      out += 'public static partial class %s {%s\n' % (
+      out += 'internal static partial class %s {%s\n' % (
           self.StripUnderScores(interfaceName), channel_comment)
 
     channel = node.GetProperty('FILE').release_map.GetChannel(release)

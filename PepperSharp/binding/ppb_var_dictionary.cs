@@ -25,7 +25,7 @@ namespace PepperSharp {
  * strings while the values can be arbitrary vars. Key comparison is always
  * done by value instead of by reference.
  */
-public static partial class PPBVarDictionary {
+internal static partial class PPBVarDictionary {
   [DllImport("PepperPlugin", EntryPoint = "PPB_VarDictionary_Create")]
   extern static PPVar _Create ();
 

@@ -81,7 +81,7 @@ public enum PPMouseCursorType {
 /**
  * The <code>PPB_MouseCursor</code> allows setting the mouse cursor.
  */
-public static partial class PPBMouseCursor {
+internal static partial class PPBMouseCursor {
   [DllImport("PepperPlugin", EntryPoint = "PPB_MouseCursor_SetCursor")]
   extern static PPBool _SetCursor ( PPInstance instance,
                                     PPMouseCursorType type,

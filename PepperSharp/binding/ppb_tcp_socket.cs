@@ -73,7 +73,7 @@ public enum PPTCPSocketOption {
  * For more details about network communication permissions, please see:
  * http://developer.chrome.com/apps/app_network.html
  */
-public static partial class PPBTCPSocket {
+internal static partial class PPBTCPSocket {
   [DllImport("PepperPlugin", EntryPoint = "PPB_TCPSocket_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

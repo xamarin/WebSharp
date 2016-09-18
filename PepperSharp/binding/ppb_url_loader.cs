@@ -39,7 +39,7 @@ namespace PepperSharp {
  * - Then, access the downloaded file using the GetBodyAsFileRef() function of
  * the <code>URLResponseInfo</code> returned in step #4.
  */
-public static partial class PPBURLLoader {
+internal static partial class PPBURLLoader {
   [DllImport("PepperPlugin", EntryPoint = "PPB_URLLoader_Create")]
   extern static PPResource _Create ( PPInstance instance);
 

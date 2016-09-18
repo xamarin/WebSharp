@@ -25,7 +25,7 @@ namespace PepperSharp {
  * The PPB_Instance interface contains pointers to functions
  * related to the module instance on a web page.
  */
-public static partial class PPBInstance {
+internal static partial class PPBInstance {
   [DllImport("PepperPlugin", EntryPoint = "PPB_Instance_BindGraphics")]
   extern static PPBool _BindGraphics ( PPInstance instance,  PPResource device);
 

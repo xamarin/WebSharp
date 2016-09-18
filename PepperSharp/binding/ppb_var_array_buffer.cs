@@ -29,7 +29,7 @@ namespace PepperSharp {
  * <code>PostMessage</code> and <code>HandleMessage</code> functions of
  * <code>pp::Instance</code>.
  */
-public static partial class PPBVarArrayBuffer {
+internal static partial class PPBVarArrayBuffer {
   [DllImport("PepperPlugin", EntryPoint = "PPB_VarArrayBuffer_Create")]
   extern static PPVar _Create ( uint size_in_bytes);
 

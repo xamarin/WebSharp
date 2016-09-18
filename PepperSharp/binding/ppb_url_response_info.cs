@@ -87,7 +87,7 @@ public enum PPURLResponseProperty {
  * examining URL responses. Refer to <code>PPB_URLLoader</code> for further
  * information.
  */
-public static partial class PPBURLResponseInfo {
+internal static partial class PPBURLResponseInfo {
   [DllImport("PepperPlugin",
              EntryPoint = "PPB_URLResponseInfo_IsURLResponseInfo")]
   extern static PPBool _IsURLResponseInfo ( PPResource resource);

@@ -51,7 +51,7 @@ public enum PPAudioBufferSampleSize {
  * @addtogroup Interfaces
  * @{
  */
-public static partial class PPBAudioBuffer {
+internal static partial class PPBAudioBuffer {
   [DllImport("PepperPlugin", EntryPoint = "PPB_AudioBuffer_IsAudioBuffer")]
   extern static PPBool _IsAudioBuffer ( PPResource resource);
 

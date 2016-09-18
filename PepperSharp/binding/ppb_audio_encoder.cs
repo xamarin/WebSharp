@@ -40,7 +40,7 @@ namespace PepperSharp {
  * Available audio codecs vary by platform.
  * All: opus.
  */
-public static partial class PPBAudioEncoder { /* dev */
+internal static partial class PPBAudioEncoder { /* dev */
   [DllImport("PepperPlugin", EntryPoint = "PPB_AudioEncoder_Create")]
   extern static PPResource _Create ( PPInstance instance);
 
