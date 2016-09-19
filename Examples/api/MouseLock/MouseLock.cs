@@ -67,7 +67,7 @@ namespace MouseLockInstance
                 (was_fullscreen_ == view.IsFullScreen) && 
                 is_context_bound_)
             {
-                Log($"DidChangeView SKIP {viewRect.size.width}, {viewRect.size.height} " +
+                Log($"DidChangeView SKIP {viewRect.Size.Width}, {viewRect.Size.Height} " +
                     $"FULL= {view.IsFullScreen} " +
                     $"CTX Bound={is_context_bound_}");
                 return;

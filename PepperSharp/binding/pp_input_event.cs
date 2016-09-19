@@ -38,12 +38,12 @@ namespace PepperSharp {
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPInputEventKey {
   /** This value is a bit field combination of the EVENT_MODIFIER flags. */
-  public uint modifier;
+  internal uint modifier;
   /**
    * This value reflects the DOM KeyboardEvent <code>keyCode</code> field.
    * Chrome populates this with the Windows-style Virtual Key code of the key.
    */
-  public uint key_code;
+  internal uint key_code;
 }
 
 /**
@@ -70,14 +70,14 @@ public partial struct PPInputEventKey {
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPInputEventCharacter {
   /** A combination of the <code>PP_InputEvent_Modifier</code> flags. */
-  public uint modifier;
+  internal uint modifier;
   /**
    * This value represents the typed character as a single null-terminated UTF-8
    * character. Any unused bytes will be filled with null bytes. Since the
    * maximum UTF-8 character is 4 bytes, there will always be at least one null
    * at the end so you can treat this as a null-terminated UTF-8 string.
    */
-  public unsafe fixed byte text[5];
+  internal unsafe fixed byte text[5];
 }
 
 /**
@@ -90,13 +90,13 @@ public partial struct PPInputEventMouse {
    * This value is a bit field combination of the
    * <code>PP_InputEvent_Modifier</code> flags.
    */
-  public uint modifier;
+  internal uint modifier;
   /**
    * This value represents the button that changed for mouse down or up events.
    * This value will be <code>PP_EVENT_MOUSEBUTTON_NONE</code> for mouse move,
    * enter, and leave events.
    */
-  public PPInputEventMouseButton button;
+  internal PPInputEventMouseButton button;
   /**
    * This values represents the x coordinate of the mouse when the event
    * occurred.
@@ -106,7 +106,7 @@ public partial struct PPInputEventMouse {
    * in the DOM, and translating a mouse event into the coordinate space of the
    * plugin will give non-integer values.
    */
-  public float x;
+  internal float x;
   /**
    * This values represents the y coordinate of the mouse when the event
    * occurred.
@@ -116,9 +116,9 @@ public partial struct PPInputEventMouse {
    * in the DOM, and translating a mouse event into the coordinate space of the
    * plugin will give non-integer values.
    */
-  public float y;
+  internal float y;
   /* TODO(brettw) figure out exactly what this means. */
-  public int click_count;
+  internal int click_count;
 }
 
 /**
@@ -131,7 +131,7 @@ public partial struct PPInputEventWheel {
    * This value represents a combination of the <code>EVENT_MODIFIER</code>
    * flags.
    */
-  public uint modifier;
+  internal uint modifier;
   /**
    * The mouse wheel's horizontal scroll amount. A scroll to the right
    * (where the content moves left) is represented as positive values,
@@ -152,7 +152,7 @@ public partial struct PPInputEventWheel {
    * possible, for example, on some trackpads and newer mice that don't have
    * "clicks".
    */
-  public float delta_x;
+  internal float delta_x;
   /**
    * The mouse wheel's vertical scroll amount. A scroll down (where the
    * content moves up) is represented as positive values, and a scroll up
@@ -172,7 +172,7 @@ public partial struct PPInputEventWheel {
    * possible, for example, on some trackpads and newer mice that don't have
    * "clicks".
    */
-  public float delta_y;
+  internal float delta_y;
   /**
    * The number of "clicks" of the scroll wheel that have produced the
    * event. The value may have system-specific acceleration applied to it,
@@ -191,15 +191,15 @@ public partial struct PPInputEventWheel {
    * reaches positive or negative one. This should represent a similar amount
    * of scrolling as for a mouse that has a discrete mouse wheel.
    */
-  public float wheel_ticks_x;
+  internal float wheel_ticks_x;
   /** This value represents */
-  public float wheel_ticks_y;
+  internal float wheel_ticks_y;
   /**
    * Indicates if the scroll <code>delta_x</code>/<code>delta_y</code>
    * indicates pages or lines to scroll by. When true, the user is requesting
    * to scroll by pages.
    */
-  public PPBool scroll_by_page;
+  internal PPBool scroll_by_page;
 }
 /**
  * @}

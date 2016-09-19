@@ -28,7 +28,7 @@ namespace PepperSharp {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPModule {
-	public int ppmodule;
+	internal int ppmodule;
 }
 /**
  * @}

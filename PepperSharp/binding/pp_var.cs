@@ -130,20 +130,20 @@ public enum PPVarType {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPVar {
-  public PPVarType type;
+  internal PPVarType type;
   /**
    * The <code>padding</code> ensures <code>value</code> is aligned on an
    * 8-byte boundary relative to the start of the struct. Some compilers
    * align doubles on 8-byte boundaries for 32-bit x86, and some align on
    * 4-byte boundaries.
    */
-  public int padding;
+  internal int padding;
   /**
    * This <code>value</code> represents the contents of the PP_Var. Only one of
    * the fields of <code>value</code> is valid at a time based upon
    * <code>type</code>.
    */
-  public PPVarValue value;
+  internal PPVarValue value;
 }
 /**
  * @}

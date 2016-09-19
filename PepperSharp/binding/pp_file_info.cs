@@ -60,29 +60,29 @@ public enum PPFileSystemType {
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPFileInfo {
   /** This value represents the size of the file measured in bytes */
-  public long size;
+  internal long size;
   /**
    * This value represents the type of file as defined by the
    * <code>PP_FileType</code> enum
    */
-  public PPFileType type;
+  internal PPFileType type;
   /**
    * This value represents the file system type of the file as defined by the
    * <code>PP_FileSystemType</code> enum.
    */
-  public PPFileSystemType system_type;
+  internal PPFileSystemType system_type;
   /**
    * This value represents the creation time of the file.
    */
-  public double creation_time;
+  internal double creation_time;
   /**
    * This value represents the last time the file was accessed.
    */
-  public double last_access_time;
+  internal double last_access_time;
   /**
    * This value represents the last time the file was modified.
    */
-  public double last_modified_time;
+  internal double last_modified_time;
 }
 /**
  * @}

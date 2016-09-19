@@ -36,7 +36,7 @@ namespace GamePad
            
             // Create a new device context with the new size.
             DestroyContext();
-            CreateContext(position.size);
+            CreateContext(position.Size);
             
             // Delete the old pixel buffer and create a new one.
             if (pixelBuffer != null && !pixelBuffer.IsEmpty)
@@ -68,7 +68,7 @@ namespace GamePad
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 
-            var stride = image.Size.width;
+            var stride = image.Size.Width;
             for (int y = Math.Max(0, top);
                  y < Math.Min(image.Size.Height - 1, top + height);
                  y++)

@@ -21,8 +21,8 @@ namespace PepperSharp {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPDirectoryEntry {
-  public PPResource file_ref;
-  public PPFileType file_type;
+  internal PPResource file_ref;
+  internal PPFileType file_type;
 }
 /**
  * @}

@@ -28,12 +28,12 @@ public partial struct PPPoint {
    * This value represents the horizontal coordinate of a point, starting with 0
    * as the left-most coordinate.
    */
-  public int x;
+  internal int x;
   /**
    * This value represents the vertical coordinate of a point, starting with 0
    * as the top-most coordinate.
    */
-  public int y;
+  internal int y;
 }
 
 /**
@@ -42,8 +42,8 @@ public partial struct PPPoint {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPFloatPoint {
-  public float x;
-  public float y;
+  internal float x;
+  internal float y;
 }
 /**
  * @}

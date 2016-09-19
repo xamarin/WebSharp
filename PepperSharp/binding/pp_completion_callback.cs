@@ -140,16 +140,16 @@ public partial struct PPCompletionCallback {
    * This value is a callback function that will be called, or NULL if this is
    * a blocking completion callback.
    */
-  public PPCompletionCallbackFunc func;
+  internal PPCompletionCallbackFunc func;
   /**
    * This value is a pointer to user data passed to a callback function.
    */
-  public IntPtr user_data;
+  internal IntPtr user_data;
   /**
    * Flags used to control how non-NULL callbacks are scheduled by
    * asynchronous methods.
    */
-  public int flags;
+  internal int flags;
 }
 /**
  * @}

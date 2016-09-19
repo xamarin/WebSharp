@@ -33,29 +33,29 @@ public partial struct PPTouchPoint {
    * example, if two fingers are down, with id 0 and 1, and finger 0 releases,
    * the next finger to be pressed can be assigned to id 0.
    */
-  public uint id;
+  internal uint id;
   /**
    * This value represents the x and y pixel position of this TouchPoint
    * relative to the upper-left of the module instance receiving the event.
    */
-  public PPFloatPoint position;
+  internal PPFloatPoint position;
   /**
    * This value represents the elliptical radii, in screen pixels, in the x
    * and y direction of this TouchPoint.
    */
-  public PPFloatPoint radius;
+  internal PPFloatPoint radius;
   /**
    * This value represents the angle of rotation in degrees of the elliptical
    * model of this TouchPoint clockwise from "up."
    */
-  public float rotation_angle;
+  internal float rotation_angle;
   /**
    * This value represents the pressure applied to this TouchPoint.  This value
    * is typically between 0 and 1, with 0 indicating no pressure and 1
    * indicating some maximum pressure. Scaling differs depending on the
    * hardware and the value is not guaranteed to stay within that range.
    */
-  public float pressure;
+  internal float pressure;
 }
 /**
  * @}

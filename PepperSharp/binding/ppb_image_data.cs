@@ -74,14 +74,14 @@ public partial struct PPImageDataDesc {
    * This value represents one of the image data types in the
    * <code>PP_ImageDataFormat</code> enum.
    */
-  public PPImageDataFormat format;
+  internal PPImageDataFormat format;
   /** This value represents the size of the bitmap in pixels. */
-  public PPSize size;
+  internal PPSize size;
   /**
    * This value represents the row width in bytes. This may be different than
    * width * 4 since there may be padding at the end of the lines.
    */
-  public int stride;
+  internal int stride;
 }
 /**
  * @}

@@ -28,37 +28,37 @@ public partial struct PPGamepadSampleData {
   /**
    * Number of valid elements in the |axes| array.
    */
-  public uint axes_length;
+  internal uint axes_length;
   /**
    * Normalized values for the axes, indices valid up to |axes_length|-1. Axis
    * values range from -1..1, and are in order of "importance".
    */
-  public unsafe fixed float axes[16];
+  internal unsafe fixed float axes[16];
   /**
    * Number of valid elements in the |buttons| array.
    */
-  public uint buttons_length;
+  internal uint buttons_length;
   /**
    * Normalized values for the buttons, indices valid up to |buttons_length|
    * - 1. Button values range from 0..1, and are in order of importance.
    */
-  public unsafe fixed float buttons[32];
+  internal unsafe fixed float buttons[32];
   /**
    * Monotonically increasing value that is incremented when the data have
    * been updated.
    */
-  public double timestamp;
+  internal double timestamp;
   /**
    * Identifier for the type of device/manufacturer.
    */
-  public unsafe fixed ushort id[128];
+  internal unsafe fixed ushort id[128];
   /**
    * Is there a gamepad connected at this index? If this is false, no other
    * data in this structure is valid.
    */
-  public PPBool connected;
+  internal PPBool connected;
   /* Padding to make the struct the same size between 64 and 32. */
-  public unsafe fixed byte unused_pad_[4];
+  internal unsafe fixed byte unused_pad_[4];
 }
 
 /**
@@ -69,16 +69,16 @@ public partial struct PPGamepadsSampleData {
   /**
    * Number of valid elements in the |items| array.
    */
-  public uint length;
+  internal uint length;
   /* Padding to make the struct the same size between 64 and 32. */
-  public unsafe fixed byte unused_pad_[4];
+  internal unsafe fixed byte unused_pad_[4];
   /**
    * Data for an individual gamepad device connected to the system.
    */
-  public PPGamepadSampleData items_1;
-  public PPGamepadSampleData items_2;
-  public PPGamepadSampleData items_3;
-  public PPGamepadSampleData items_4;
+  internal PPGamepadSampleData items_1;
+  internal PPGamepadSampleData items_2;
+  internal PPGamepadSampleData items_3;
+  internal PPGamepadSampleData items_4;
 }
 /**
  * @}

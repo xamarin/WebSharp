@@ -173,9 +173,9 @@ namespace MediaStreamAudio
             // Draw some lines.
             for (int x = 0; x<size.Width; x++)
             {
-                unchecked { data[mid_height * size.width + x] = (int)kColorGrey3; }
-                unchecked { data[(mid_height + max_amplitude) * size.width + x] = (int)kColorGrey2; }
-                unchecked { data[(mid_height - max_amplitude) * size.width + x] = (int)kColorGrey2; }
+                unchecked { data[mid_height * size.Width + x] = (int)kColorGrey3; }
+                unchecked { data[(mid_height + max_amplitude) * size.Width + x] = (int)kColorGrey2; }
+                unchecked { data[(mid_height - max_amplitude) * size.Width + x] = (int)kColorGrey2; }
             }
 
             // Draw our samples.
@@ -185,7 +185,7 @@ namespace MediaStreamAudio
                 for (uint ch = 0; ch < Math.Min(channel_count_, 2U); ++ch) {
                     int y = samples_[i + ch] * max_amplitude /
                         (short.MaxValue + 1) + mid_height;
-                    unchecked { data[y * size.width + x] = (ch == 0 ? (int)kColorRed : (int)kColorGreen); }
+                    unchecked { data[y * size.Width + x] = (ch == 0 ? (int)kColorRed : (int)kColorGreen); }
                 }
             }
             Marshal.Copy(data, 0, dataPtr, data.Length);

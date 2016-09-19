@@ -577,12 +577,12 @@ class CSGen(object):
                         aSize = arrayspec[1:len(arrayspec)-1:]
                         out = ''
                         for i in range(0,int(aSize)-1):
-                            out += 'public %s %s_%s;\n' % (rtype, name, i+1)
-                        out += 'public %s %s_%s' % (rtype, name, int(aSize))
+                            out += 'internal %s %s_%s;\n' % (rtype, name, i+1)
+                        out += 'internal %s %s_%s' % (rtype, name, int(aSize))
                     else:
-                        out = 'public unsafe fixed %s %s%s' % (rtype, name, arrayspec)
+                        out = 'internal unsafe fixed %s %s%s' % (rtype, name, arrayspec)
                 else:
-                    out = 'public %s %s' % (rtype, name)
+                    out = 'internal %s %s' % (rtype, name)
     else:
       params = []
       for ptype, pname, parray, pspec in callspec:

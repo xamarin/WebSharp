@@ -47,11 +47,11 @@ public partial struct PPHostResolverHint {
   /**
    * Network address family.
    */
-  public PPNetAddressFamily family;
+  internal PPNetAddressFamily family;
   /**
    * Combination of flags from <code>PP_HostResolver_Flag</code>.
    */
-  public int flags;
+  internal int flags;
 }
 /**
  * @}

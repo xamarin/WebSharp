@@ -25,7 +25,7 @@ namespace PepperSharp {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPTime {
-	public double pptime;
+	internal double pptime;
 }
 
 /**
@@ -40,7 +40,7 @@ public partial struct PPTime {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPTimeTicks {
-	public double pptimeticks;
+	internal double pptimeticks;
 }
 
 /**
@@ -49,7 +49,7 @@ public partial struct PPTimeTicks {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPTimeDelta {
-	public double pptimedelta;
+	internal double pptimedelta;
 }
 /**
  * @}

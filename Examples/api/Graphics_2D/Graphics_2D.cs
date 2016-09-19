@@ -32,8 +32,8 @@ namespace Graphics_2D
         {
             var viewRect = view.Rect;
             deviceScale = view.DeviceScale;
-            var newSize = new PPSize((int)(viewRect.size.width * deviceScale),
-                                    (int)(viewRect.size.height * deviceScale));
+            var newSize = new PPSize((int)(viewRect.Size.Width * deviceScale),
+                                    (int)(viewRect.Size.Height * deviceScale));
 
             if (!CreateContext(newSize))
                 return;
@@ -76,8 +76,8 @@ namespace Graphics_2D
             }
 
             PPPoint pos = e.Position;
-            mouse.x = (int)(pos.X * deviceScale);
-            mouse.y = (int)(pos.Y * deviceScale);
+            mouse.X = (int)(pos.X * deviceScale);
+            mouse.Y = (int)(pos.Y * deviceScale);
 
             mouseDown = true;
 
@@ -228,8 +228,8 @@ namespace Graphics_2D
 
             // Draw a circle at the mouse position.
             int radius = (int)(mouseRadius * deviceScale);
-            int cx = mouse.x;
-            int cy = mouse.y;
+            int cx = mouse.X;
+            int cy = mouse.Y;
             int minx = cx - radius <= 0 ? 1 : cx - radius;
             int maxx = cx + radius >= width ? width - 1 : cx + radius;
             int miny = cy - radius <= 0 ? 1 : cy - radius;

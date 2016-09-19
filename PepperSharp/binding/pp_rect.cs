@@ -28,9 +28,9 @@ public partial struct PPRect {
    * This value represents the x and y coordinates of the upper-left corner of
    * the rectangle.
    */
-  public PPPoint point;
+  internal PPPoint point;
   /** This value represents the width and height of the rectangle. */
-  public PPSize size;
+  internal PPSize size;
 }
 
 /**
@@ -43,9 +43,9 @@ public partial struct PPFloatRect {
    * This value represents the x and y coordinates of the upper-left corner of
    * the rectangle.
    */
-  public PPFloatPoint point;
+  internal PPFloatPoint point;
   /** This value represents the width and height of the rectangle. */
-  public PPFloatSize size;
+  internal PPFloatSize size;
 }
 /**
  * @}

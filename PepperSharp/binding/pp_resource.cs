@@ -36,7 +36,7 @@ namespace PepperSharp {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPResource {
-	public int ppresource;
+	internal int ppresource;
 }
 /**
  * @}

@@ -30,7 +30,7 @@ namespace PepperSharp {
  */
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPInstance {
-	public int ppinstance;
+	internal int ppinstance;
 }
 /**
  * @}

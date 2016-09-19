@@ -24,9 +24,9 @@ namespace PepperSharp {
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPSize {
   /** This value represents the width of the rectangle. */
-  public int width;
+  internal int width;
   /** This value represents the height of the rectangle. */
-  public int height;
+  internal int height;
 }
 
 /**
@@ -35,9 +35,9 @@ public partial struct PPSize {
 [StructLayout(LayoutKind.Sequential)]
 public partial struct PPFloatSize {
   /** This value represents the width of the rectangle. */
-  public float width;
+  internal float width;
   /** This value represents the height of the rectangle. */
-  public float height;
+  internal float height;
 }
 /**
  * @}

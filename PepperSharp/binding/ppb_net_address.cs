@@ -52,11 +52,11 @@ public partial struct PPNetAddressIPv4 {
   /**
    * Port number.
    */
-  public ushort port;
+  internal ushort port;
   /**
    * IPv4 address.
    */
-  public unsafe fixed byte addr[4];
+  internal unsafe fixed byte addr[4];
 }
 
 /**
@@ -67,11 +67,11 @@ public partial struct PPNetAddressIPv6 {
   /**
    * Port number.
    */
-  public ushort port;
+  internal ushort port;
   /**
    * IPv6 address.
    */
-  public unsafe fixed byte addr[16];
+  internal unsafe fixed byte addr[16];
 }
 /**
  * @}

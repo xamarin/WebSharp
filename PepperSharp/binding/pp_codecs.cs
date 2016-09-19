@@ -77,12 +77,12 @@ public partial struct PPVideoPicture {
    * |decode_id| parameter of the Decode call which generated this picture.
    * See the PPB_VideoDecoder function Decode() for more details.
    */
-  public uint decode_id;
+  internal uint decode_id;
   /**
    * Texture ID in the plugin's GL context. The plugin can use this to render
    * the decoded picture.
    */
-  public uint texture_id;
+  internal uint texture_id;
   /**
    * The GL texture target for the decoded picture. Possible values are:
    *   GL_TEXTURE_2D
@@ -91,16 +91,16 @@ public partial struct PPVideoPicture {
    *
    * The pixel format of the texture is GL_RGBA.
    */
-  public uint texture_target;
+  internal uint texture_target;
   /**
    * Dimensions of the texture holding the decoded picture.
    */
-  public PPSize texture_size;
+  internal PPSize texture_size;
   /**
    * The visible subrectangle of the picture. The plugin should display only
    * this part of the picture.
    */
-  public PPRect visible_rect;
+  internal PPRect visible_rect;
 }
 
 /**
@@ -114,12 +114,12 @@ public partial struct PPVideoPicture01 {
    * |decode_id| parameter of the Decode call which generated this picture.
    * See the PPB_VideoDecoder function Decode() for more details.
    */
-  public uint decode_id;
+  internal uint decode_id;
   /**
    * Texture ID in the plugin's GL context. The plugin can use this to render
    * the decoded picture.
    */
-  public uint texture_id;
+  internal uint texture_id;
   /**
    * The GL texture target for the decoded picture. Possible values are:
    *   GL_TEXTURE_2D
@@ -128,11 +128,11 @@ public partial struct PPVideoPicture01 {
    *
    * The pixel format of the texture is GL_RGBA.
    */
-  public uint texture_target;
+  internal uint texture_target;
   /**
    * Dimensions of the texture holding the decoded picture.
    */
-  public PPSize texture_size;
+  internal PPSize texture_size;
 }
 
 /**
@@ -144,23 +144,23 @@ public partial struct PPVideoProfileDescription {
   /**
    * The codec profile.
    */
-  public PPVideoProfile profile;
+  internal PPVideoProfile profile;
   /**
    * Dimensions of the maximum resolution of video frames, in pixels.
    */
-  public PPSize max_resolution;
+  internal PPSize max_resolution;
   /**
    * The numerator of the maximum frame rate.
    */
-  public uint max_framerate_numerator;
+  internal uint max_framerate_numerator;
   /**
    * The denominator of the maximum frame rate.
    */
-  public uint max_framerate_denominator;
+  internal uint max_framerate_denominator;
   /**
    * Whether the profile is hardware accelerated.
    */
-  public PPBool hardware_accelerated;
+  internal PPBool hardware_accelerated;
 }
 
 /**
@@ -172,24 +172,24 @@ public partial struct PPVideoProfileDescription01 {
   /**
    * The codec profile.
    */
-  public PPVideoProfile profile;
+  internal PPVideoProfile profile;
   /**
    * Dimensions of the maximum resolution of video frames, in pixels.
    */
-  public PPSize max_resolution;
+  internal PPSize max_resolution;
   /**
    * The numerator of the maximum frame rate.
    */
-  public uint max_framerate_numerator;
+  internal uint max_framerate_numerator;
   /**
    * The denominator of the maximum frame rate.
    */
-  public uint max_framerate_denominator;
+  internal uint max_framerate_denominator;
   /**
    * A value indicating if the profile is available in hardware, software, or
    * both.
    */
-  public PPHardwareAcceleration acceleration;
+  internal PPHardwareAcceleration acceleration;
 }
 
 /**
@@ -201,23 +201,23 @@ public partial struct PPAudioProfileDescription {
   /**
    * The codec profile.
    */
-  public PPAudioProfile profile;
+  internal PPAudioProfile profile;
   /**
    * Maximum number of channels that can be encoded.
    */
-  public uint max_channels;
+  internal uint max_channels;
   /**
    * Sample size.
    */
-  public uint sample_size;
+  internal uint sample_size;
   /**
    * Sampling rate that can be encoded
    */
-  public uint sample_rate;
+  internal uint sample_rate;
   /**
    * Whether the profile is hardware accelerated.
    */
-  public PPBool hardware_accelerated;
+  internal PPBool hardware_accelerated;
 }
 
 /**
@@ -228,15 +228,15 @@ public partial struct PPBitstreamBuffer {
   /**
    * The size, in bytes, of the bitstream data.
    */
-  public uint size;
+  internal uint size;
   /**
    * The base address of the bitstream data.
    */
-  public IntPtr buffer;
+  internal IntPtr buffer;
   /**
    * Whether the buffer represents a key frame.
    */
-  public PPBool key_frame;
+  internal PPBool key_frame;
 }
 
 /**
@@ -247,11 +247,11 @@ public partial struct PPAudioBitstreamBuffer {
   /**
    * The size, in bytes, of the bitstream data.
    */
-  public uint size;
+  internal uint size;
   /**
    * The base address of the bitstream data.
    */
-  public IntPtr buffer;
+  internal IntPtr buffer;
 }
 /**
  * @}

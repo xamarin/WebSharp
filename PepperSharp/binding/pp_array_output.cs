@@ -104,12 +104,12 @@ public partial struct PPArrayOutput {
   /**
    * A pointer to the allocation function that the browser will call.
    */
-  public PPArrayOutputGetDataBuffer GetDataBuffer;
+  internal PPArrayOutputGetDataBuffer GetDataBuffer;
   /**
    * Data that is passed to the allocation function. Typically, this is used
    * to communicate how the data should be stored.
    */
-  public IntPtr user_data;
+  internal IntPtr user_data;
 }
 /**
  * @}

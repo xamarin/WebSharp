@@ -64,15 +64,15 @@ namespace MouseCursor
 
             var size = customCursor.Size;
 
-            data = new int[size.width * customCursor.Size.Height];
+            data = new int[size.Width * customCursor.Size.Height];
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 
             // It's less efficient to loop over the entire image this way, but the
             // image is small, and this is simpler.
-            for (int y = 0; y < size.width; ++y)
+            for (int y = 0; y < size.Width; ++y)
             {
-                for (int x = 0; x < size.width; ++x)
+                for (int x = 0; x < size.Width; ++x)
                 {
                     int dx = (x - cx);
                     int dy = (y - cy);
@@ -90,7 +90,7 @@ namespace MouseCursor
                             a = 1.0f;
                         }
 
-                        data[y * size.width + x] = (int)MakeColor(r, g, b, a);
+                        data[y * size.Width + x] = (int)MakeColor(r, g, b, a);
                     }
                 }
             }
@@ -110,14 +110,14 @@ namespace MouseCursor
 
             var size = customCursor.Size;
 
-            data = new int[size.width * customCursor.Size.Height];
-            data = new int[size.width * customCursor.Size.Height];
+            data = new int[size.Width * customCursor.Size.Height];
+            data = new int[size.Width * customCursor.Size.Height];
 
             Marshal.Copy(dataPtr, data, 0, data.Length);
 
             for (int x = x1; x <= x2; ++x)
             {
-                data[y * size.width + x] = (int)MakeColor(r, g, b, a);
+                data[y * size.Width + x] = (int)MakeColor(r, g, b, a);
             }
 
             Marshal.Copy(data, 0, dataPtr, data.Length);
