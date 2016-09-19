@@ -23,17 +23,31 @@ namespace PepperSharp
         /// Gets or Sets the timestamp of the video frame.  Given in seconds since the start of the 
         /// containing video stream.
         /// </summary>
-        public DateTime TimeStamp
+        public double TimeStamp
         {
             get
-            { return PepperSharpUtils.ConvertFromPepperTimestamp(PPBVideoFrame.GetTimestamp(this));  }
+            { return PPBVideoFrame.GetTimestamp(this);  }
+
+            set
+            {
+                PPBVideoFrame.SetTimestamp(this,value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the timestamp of the video frame.  Given in seconds since the start of the 
+        /// containing video stream.
+        /// </summary>
+        public DateTime DateTimeStamp
+        {
+            get
+            { return PepperSharpUtils.ConvertFromPepperTimestamp(PPBVideoFrame.GetTimestamp(this)); }
 
             set
             {
                 PPBVideoFrame.SetTimestamp(this, PepperSharpUtils.ConvertToPepperTimestamp(value));
             }
         }
-
         /// <summary>
         /// Gets the format of the video frame.
         /// </summary>

@@ -249,8 +249,8 @@ namespace VideoEncode
             return PPError.Ok;
         }
 
-        void EncodeFrame(PPResource frame) {
-            frameTimeStampQueue.Enqueue((long)(PPBVideoFrame.GetTimestamp(frame) * 1000));
+        void EncodeFrame(VideoFrame frame) {
+            frameTimeStampQueue.Enqueue((long)(frame.TimeStamp * 1000));
             videoEncoder.Encode(frame, false);
 
         }
