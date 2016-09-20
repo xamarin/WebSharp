@@ -11,6 +11,9 @@ This will be made up of a few components:
   surfaced to Chromium plugins to C# code.
 * `Xamarin.W3C.dll` API bindings that will provide access to the browser APIs, 
   built on top of `Xamarin.PepperSharp.dll`
+* `System.Windows.Browser` this API surfaces the DOM tree to C# as a strongly
+  typed set of objects.  An MIT licensed implementation of this is part of 
+  [Moonlight](https://github.com/mono/moon/tree/master/class/System.Windows.Browser) that could be refactored.
 
 For the `Xamarin.W3C` APIs, we intend to use the TypeScript type definitions to generate
 a strongly typed .NET API.
