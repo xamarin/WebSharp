@@ -13,20 +13,20 @@ namespace MediaStreamAudio
         const uint kColorGrey2 = 0xFF404040;
         const uint kColorGrey3 = 0xFF606060;
 
-        bool first_buffer_ = true;
-        uint sample_count_;
-        uint channel_count_;
+        bool firstBuffer = true;
+        uint sampleCount;
+        uint channelCount;
         short[] samples_;
 
         int timer_interval_;
 
         // Painting stuff.
-        PPSize size_ = PPSize.Zero;
-        Graphics2D device_context_;
-        bool pending_paint_;
-        bool waiting_for_flush_completion_;
+        PPSize size = PPSize.Zero;
+        Graphics2D deviceContext;
+        bool pendingPaint;
+        bool waitingForFlushCompletion;
 
-        MediaStreamAudioTrack audio_track_;
+        MediaStreamAudioTrack audioTrack;
 
         public MediaStreamAudio(IntPtr handle) : base(handle)
         {
@@ -45,14 +45,23 @@ namespace MediaStreamAudio
                 return;
 
             var resourceTrack = var_track.AsResource();
-            audio_track_ = new MediaStreamAudioTrack(resourceTrack);
-            audio_track_.HandleBuffer += OnGetBuffer;
-            audio_track_.GetBuffer();
+            audioTrack = new MediaStreamAudioTrack(resourceTrack);
+            audioTrack.HandleBuffer += OnGetBuffer;
+            audioTrack.GetBuffer();
         }
 
         void OnGetBuffer (object sender, MediaStreamAudioTrack.AudioBufferInfo audioBufferInfo)
         {
-            var buffer = audioBufferInfo.AudioBuffer;
+            if (audioBufferInfo.Result != PPError.Ok) {
+                Console.WriteLine ($"{audioBufferInfo.Result}");
+                return;
+            }
+
+            var buffer = new AudioBuffer (audioBufferInfo.AudioBuffer);
+
+            if (buffer.IsEmpty)
+               return;
+            
             if (buffer.SampleSize != AudioBufferSampleSize._16Bits)
                 throw new ArgumentException("Sample size is incorrect");
             
@@ -60,48 +69,48 @@ namespace MediaStreamAudio
             var channels = buffer.NumberOfChannels;
             var samples = buffer.NumberOfSamples / channels;
             
-            if (channel_count_ != channels || sample_count_ != samples)
+            if (channelCount != channels || sampleCount != samples)
             {
-                channel_count_ = channels;
-                sample_count_ = samples;
+                channelCount = channels;
+                sampleCount = samples;
 
-                samples_ = new short[sample_count_ * channel_count_];
+                samples_ = new short[sampleCount * channelCount];
 
                 // Try (+ 5) to ensure that we pick up a new set of samples between each
                 // timer-generated repaint.
-                timer_interval_ = (int)(sample_count_ * 1000) / (int)buffer.SampleRate + 5;
-                
+                timer_interval_ = (int)(sampleCount * 1000) / (int)buffer.SampleRate + 5;
+
                 // Start the timer for the first buffer.
-                if (first_buffer_)
+                if (firstBuffer)
                 {
-                    first_buffer_ = false;
+                    firstBuffer = false;
                     ScheduleNextTimer();
                 }
             }
 
             try
             {
-                Marshal.Copy(data, samples_, 0, (int)(sample_count_ * channel_count_));
+                Marshal.Copy(data, samples_, 0, (int)(sampleCount * channelCount));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             } 
 
-            audio_track_.RecycleBuffer(buffer);
-            audio_track_.GetBuffer();
+            audioTrack.RecycleBuffer(buffer);
+            audioTrack.GetBuffer();
         }
 
         private void DidChangeView(object sender, View view)
         {
             var position = view.Rect;
-            if (position.Size == size_)
+            if (position.Size == size)
                 return;
 
-            size_ = position.Size;
-            device_context_ = new Graphics2D(this, size_, false);
-            device_context_.Flushed += DidFlush;
-            if (!BindGraphics(device_context_))
+            size = position.Size;
+            deviceContext = new Graphics2D(this, size, false);
+            deviceContext.Flushed += DidFlush;
+            if (!BindGraphics(deviceContext))
                 return;
 
             Paint();
@@ -109,8 +118,8 @@ namespace MediaStreamAudio
 
         private void DidFlush(object sender, PPError e)
         {
-            waiting_for_flush_completion_ = false;
-            if (pending_paint_)
+            waitingForFlushCompletion = false;
+            if (pendingPaint)
                 Paint();
         }
 
@@ -121,74 +130,83 @@ namespace MediaStreamAudio
 
         void Paint()
         {
-            if (waiting_for_flush_completion_)
+            if (waitingForFlushCompletion)
             {
-                pending_paint_ = true;
+                pendingPaint = true;
                 return;
             }
 
-            pending_paint_ = false;
+            pendingPaint = false;
 
-            if (size_ == PPSize.Zero)
+            if (size == PPSize.Zero)
                 return;  // Nothing to do.
 
-            var image = PaintImage(size_);
-            if (!image.IsEmpty)
+            using (var image = PaintImage (size)) 
             {
-                device_context_.ReplaceContents(image);
-                waiting_for_flush_completion_ = true;
-                device_context_.Flush();
+                if (!image.IsEmpty)
+                {
+                    deviceContext.ReplaceContents(image);
+                    waitingForFlushCompletion = true;
+                    deviceContext.Flush();
+                }
             }
 
         }
 
-        ImageData PaintImage(PPSize size)
+
+        int [] imageDataBuffer = null; // This is our graphics data buffer
+        ImageData PaintImage(PPSize imageSize)
         {
-            var imageData = new ImageData(this, PPImageDataFormat.BgraPremul, size, false);
+            var imageData = new ImageData(this, PPImageDataFormat.BgraPremul, imageSize, false);
             if (imageData.IsEmpty)
               return imageData;
 
-            int[] data = null;
             IntPtr dataPtr = imageData.Data;
             if (dataPtr == IntPtr.Zero)
                 return imageData;
 
-            data = new int[(imageData.Size.Width * imageData.Size.Height)];
-            Marshal.Copy(dataPtr, data, 0, data.Length);
+            var imageDataSize = imageData.Size.Area;
 
-            var num_pixels = (size.Width * size.Height);
+            if (imageDataBuffer == null || imageDataBuffer.Length != imageDataSize)
+                imageDataBuffer = new int[imageDataSize];
+
+            Marshal.Copy(dataPtr, imageDataBuffer, 0, imageDataBuffer.Length);
+
+            var num_pixels = (imageSize.Width * imageSize.Height);
             uint offset = 0;
             var stride = imageData.Stride;
 
             // Clear to dark grey.
             for (uint i = 0; i < num_pixels; ++i)
             {
-                unchecked { data[offset] = (int)kColorGrey1; }
+                unchecked { imageDataBuffer[offset] = (int)kColorGrey1; }
                 offset++;
             }
 
-            int mid_height = size.Height / 2;
-            int max_amplitude = size.Height * 4 / 10;
+            int mid_height = imageSize.Height / 2;
+            int max_amplitude = imageSize.Height * 4 / 10;
 
             // Draw some lines.
-            for (int x = 0; x<size.Width; x++)
+            for (int x = 0; x<imageSize.Width; x++)
             {
-                unchecked { data[mid_height * size.Width + x] = (int)kColorGrey3; }
-                unchecked { data[(mid_height + max_amplitude) * size.Width + x] = (int)kColorGrey2; }
-                unchecked { data[(mid_height - max_amplitude) * size.Width + x] = (int)kColorGrey2; }
+                unchecked { imageDataBuffer[mid_height * imageSize.Width + x] = (int)kColorGrey3; }
+                unchecked { imageDataBuffer[(mid_height + max_amplitude) * imageSize.Width + x] = (int)kColorGrey2; }
+                unchecked { imageDataBuffer[(mid_height - max_amplitude) * imageSize.Width + x] = (int)kColorGrey2; }
             }
 
             // Draw our samples.
             for (int x = 0, i = 0;
-                x < Math.Min(size.Width, (int)sample_count_);
-                     x++, i += (int)channel_count_) {
-                for (uint ch = 0; ch < Math.Min(channel_count_, 2U); ++ch) {
+                x < Math.Min(imageSize.Width, (int)sampleCount);
+                     x++, i += (int)channelCount) 
+            {
+                for (uint ch = 0; ch < Math.Min(channelCount, 2U); ++ch) 
+                {
                     int y = samples_[i + ch] * max_amplitude /
                         (short.MaxValue + 1) + mid_height;
-                    unchecked { data[y * size.Width + x] = (ch == 0 ? (int)kColorRed : (int)kColorGreen); }
+                    unchecked { imageDataBuffer[y * imageSize.Width + x] = (ch == 0 ? (int)kColorRed : (int)kColorGreen); }
                 }
             }
-            Marshal.Copy(data, 0, dataPtr, data.Length);
+            Marshal.Copy(imageDataBuffer, 0, dataPtr, imageDataBuffer.Length);
 
             return imageData;
         }
