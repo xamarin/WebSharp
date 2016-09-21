@@ -22,54 +22,80 @@ Pre-requisites
 - Make sure the PepperPlugin has been built.  https://github.com/xamarin/WebSharp/blob/master/PepperPlugin/readme.md
 
 
-Install Electron quick start
----
-
-Clone and run the code in this tutorial by using the [xamarin/sharp-electron-quick-start](https://github.com/xamarin/sharp-electron-quick-start) repository.
-
-Note: Running this requires [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/download/) (which includes [npm](https://www.npmjs.com/)) on your system.
+Install Electron
+===
 
 Change to directory ```WebSharp\GettingStarted>```
 
 ```shell
-# Clone the repository
-$ git clone https://github.com/xamarin/sharp-electron-quick-start
-# Go into the repository
-$ cd sharp-electron-quick-start
 # Install dependencies and run the app
 $ npm install && npm start
 ```
 
+The above commands will install Electron and start the project.  You should see the following screen when after the previous command.
+If not make sure you have Node.js installed.
 
-![elctron_quick_start](../GettingStarted/screenshots/electron-quick-start.PNG)
+![electron_quick_start](../GettingStarted/screenshots/electron-quick-start.PNG)
 
 
-Building GettingStarted example
--------------------------------
+Building the GettingStarted example
+===
+
+Before you can embed a plugin we will first have to build the modules.
 
 Build the `GettingStarted.sln`.   You can use either Visual Studio/Xamarin Studio, or `xbuild`/`msbuild` from the command line.
 
+```shell
+# Windows from Visual Studio 2015 command prompt
+$ msbuild GettingStarted.sln
+```
+
+```shell
+# Mac terminal
+$ xbuild GettingStarted.sln
+```
+
+
 Installing 'electron-dotnet' Node.js module
----
+===
 
 The Electron plugin is delivered as a Node.js module and needs to be installed.  *Note: We will be installing the module from a local directory for now.*
 
 For Windows
 ```shell
-$ cd sharp-electron-quick-start 
-$ npm install ../../Tools/electron-dotnet/
+$ npm install ../Tools/electron-dotnet/
 ```
 
 For Mac
 ```shell
-$ cd sharp-electron-quick-start 
-$ sudo npm install ../../Tools/electron-dotnet/
+$ sudo npm install ../Tools/electron-dotnet/
 ```
 
 This will install electron-dotnet as a module and allow us to do ```require('electron-dotnet').Register()``` which registers the correct PepperPlugin assembly for the platform and architecture that is used by Electron.
 
+
+Registering the plugin
+===
+
+Before you can embed any .net code you will first have to register the plugin with Electron.
+
+Open the ```main.js``` file which you can find the GettingStarted directory in your favorite text editor and uncomment, remove the two slashes '//' from the beginning of line 11 that reads:
+
+```javascript
+//require('electron-dotnet').Register();
+```
+
+Will then become:
+
+```javascript
+require('electron-dotnet').Register();
+```
+
+*Note: Make sure you save the file.*
+
+
 Embedding classes
------------------
+===
 
 All the .dll assemblies we want to load will be embedded using ```<embed></embed>```.  So lets load our .Net assembly.
 
@@ -87,7 +113,7 @@ Add the following code inside the ```<body>``` tag of the html.
             width: 300,
             height: 200,
             src: 'GettingStarted.HelloWorld',
-            path: "../bin/Debug"
+            path: "./bin/Debug"
         });
         pluginTarget.appendChild(moduleEl);
 
