@@ -1,13 +1,26 @@
-PepperPlugin
-===
+# PepperPlugin
 
-Pre-requisites
----
+WebSharp's implementation of the Native Client API's allows the developer to run DotNet code out-of-process as an embedded plugin within a webpage.
+
+What follows are the instructions on how to compile WebSharp's plugin interface PepperPlugin. 
+
+## Pre-requisites
 
 - [mono embedding](http://www.mono-project.com/docs/advanced/embedding/) is being used so an installation of [mono](http://www.mono-project.com/download/) needs to be installed. (Note: Mono 32 bit or Mono 64 bit)
-- nacl_sdk
+- [Native Client SDK](https://developer.chrome.com/native-client) Native Client is a sandbox for running compiled C and C++ code in the browser efficiently and securely, independent of the user’s operating system.
+- Windows requires at least a Visual Studio 2015 Community Edition.
 
-To compile the PepperPlugin solution the [nacl sdk](https://developer.chrome.com/native-client/sdk/download) is required.
+## Compiling PepperPlugin
+---
+
+To compile the PepperPlugin solution the [Native Client SDK Download](https://developer.chrome.com/native-client/sdk/download) will need to be downloaded and installed.  Basically it is the following:
+
+- Download the [Native Client SDK](https://developer.chrome.com/native-client/sdk/download)
+- Unzipping the downloaded .zip file into the correct directory structure.  The PepperPlugin project uses the project sources to compile and link against.
+- Installing the correct sdk bundle
+- Building the PepperPlugin 
+ 
+### _Downloading and Installing the Native Client SDK_
 
 You can find platform specific install instructions here: https://developer.chrome.com/native-client/sdk/download#installing-the-sdk.  
 The install should be in the same directory level as the WebSharp checkout but not in it.
@@ -21,24 +34,46 @@ The install should be in the same directory level as the WebSharp checkout but n
 +-- WebSharp
 ```
 
+### _Installing the correct sdk bundle_
+
 To get the actual source files you will need to install the ```pepper-canary``` bundle.  Open a command prompt and change into the nacl_sdk directory that was just created and execute the following code.
 
-```shell
+```bash
 > cd nacl_sdk
 > naclsdk update pepper_canary
 ```
 
 The previous command will install the source files that the PepperPlugin solution will use to build the necessary assemblies.
 
-Building PepperPlugin
----
+#### _Setup via make (Mac) and nmake (Windows)_
 
-_Windows_
----
+There are also provided make files for setting up the Native Client SDK that you can try out but the above is the detailed way if this does not work for some reason.
+
+Windows Makefile.win will need to be run via a Visual Studio 2015 Native Tools Command Prompt and requires at least PowerShell version 5.
+
+```bash
+# Make sure you are in the main WebSharp directory in a Visual Studio 2015 Native Tools Command Prompt
+cd WebSharp
+WebSharp> nmake -f Makefile.win setup
+```
+
+Mac Makefile can be executed from a Mac terminal
+
+```bash
+# Make sure you are in the main WebSharp directory in a Mac terminal
+cd WebSharp
+WebSharp$ make setup
+```
+
+### _Building PepperPlugin_
+
+#### *Windows*
+
+Make sure you have the [Native Client SDK](https://developer.chrome.com/native-client) installed as explained above.
 
 You should now be able to compile the solution provided.  Open the ```PepperPlugin.sln``` file found in the ```WebSharp\PepperPlugin\src\``` directory and select Build for the configuration and platform.
 
-You can also use the command line from a Visual Studio 2015 Native Command Prompt.
+The solution can also be built from the command line using a Visual Studio 2015 Native Command Prompt.
 
 To build and target 64 bit version of the PepperPlugin which will only run with Electron 64 platforms.
 ```shell
@@ -46,26 +81,52 @@ To build and target 64 bit version of the PepperPlugin which will only run with 
 WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x64 /p:Configuration=Release
 ```
 
+This can also be run via the Makefile.win.
+
+```bash
+# Make sure you are in the main WebSharp directory in a Visual Studio 2015 Native Tools Command Prompt
+cd WebSharp
+WebSharp> nmake -f Makefile.win buildx64
+```
+
+
 To build and target 32 bit version of the PepperPlugin which will only run with Electron 32 platforms.
 ```shell
 > cd WebSharp\PepperPlugin\src
 WebSharp\PepperPlugin\src> msbuild PepperPlugin.sln /t:build /p:Platform=x86 /p:Configuration=Release
 ```
 
-The solution is setup to build the PepperPlugin.dll, PepperSharp.dll and the examples that can be found in the Examples directory. 
+This can also be run via the Makefile.win.
 
-_Mac_
----
+```bash
+# Make sure you are in the main WebSharp directory in a Visual Studio 2015 Native Tools Command Prompt
+cd WebSharp
+WebSharp> nmake -f Makefile.win buildx86
+```
+
+The PepperPlugin.sln solution is setup to build the PepperPlugin.dll, PepperSharp.dll and the examples that can be found in the Examples directory. 
+
+#### *Mac*
+
+You will need to have the [Native Client SDK](https://developer.chrome.com/native-client) as mentioned above.
 
 A makefile is provided in the ```Websharp/PepperPlugin/src``` directory.
-
-You will need to have the [nacl sdk](https://developer.chrome.com/native-client/sdk/download) as mentioned above.
 
 ```shell
 $ cd WebSharp/PepperPlugin/src
 $ export NACL_SDK_ROOT=../../../nacl_sdk/pepper_canary/
 $ make
 ```
+
+This can also be run via the Makefile
+
+```bash
+# Make sure you are in the main WebSharp directory in a Mac terminal
+cd WebSharp
+# This will also export the NACL_SDK_ROOT correctly so no need to set it.
+WebSharp$ make build
+```
+
 
 If you have another ```mono``` installation that you would like to use instead of the default that is installed you can also set ```MONO_ROOT```.
 
