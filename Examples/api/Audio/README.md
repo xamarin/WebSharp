@@ -22,7 +22,7 @@ msbuild Audio.csproj
 
 ### Mac
 ```bash
-# Compile the example project from Visual Studio 2015 Native Tools Command Prompt 
+# Compile the example project from Mac terminal 
 xbuild Audio.csproj
 ```
 
