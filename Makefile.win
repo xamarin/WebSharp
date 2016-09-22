@@ -1,0 +1,28 @@
+NACLSDK_TOOL=..\nacl_sdk\naclsdk
+
+all: 
+	@echo Usage:
+	@echo    nmake buildx64 	- builds the bindings for x64 architecture
+	@echo    nmake buildx86 	- builds the bindings for x86 (Win32) architecture
+	@echo    nmake setup 	- sets up the environment for you
+
+buildx64: 
+	cd .\PepperPlugin\src 
+	set NACL_SDK_ROOT=..\..\..\nacl_sdk\pepper_canary\
+
+	msbuild PepperPlugin.sln /t:build /p:Platform=x64 /p:Configuration=Release
+
+buildx86: 
+	cd .\PepperPlugin\src 
+	set NACL_SDK_ROOT=..\..\..\nacl_sdk\pepper_canary\
+
+	msbuild PepperPlugin.sln /t:build /p:Platform=x86 /p:Configuration=Release
+
+check:
+	@if test ! -x $(NACLSDK_TOOL); then echo "You need to install the nacl_sdk on the parent directory, https://developer.chrome.com/native-client/sdk/download#installing-the-sdk"; exit 1; fi
+	@if $(NACLSDK_TOOL) list | grep -q 'I *pepper_canary'; then echo $?; else echo "You should install the pepper_canary support using $(NACLSDK_TOOL) update pepper_canary"; exit 1; fi
+
+setup:
+	powershell -executionpolicy bypass -File .\setup.ps1
+
+    ..\nacl_sdk\naclsdk.bat update pepper_canary # Downloads the real SDK. This takes a while
