@@ -16,7 +16,7 @@ VALID_TOOLCHAINS := win
 endif
 
 
-NACL_SDK_ROOT ?= $(abspath $(CURDIR)/../../..)
+NACL_SDK_ROOT ?= $(abspath $(CURDIR)/../../../nacl_sdk/pepper_canary)
 
 TARGET = libPepperPlugin
 
