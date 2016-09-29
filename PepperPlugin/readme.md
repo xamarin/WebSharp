@@ -127,11 +127,33 @@ cd WebSharp
 WebSharp$ make build
 ```
 
+The makefile will try to use pkg-config for Compiling and Linking first
 
 If you have another ```mono``` installation that you would like to use instead of the default that is installed you can also set ```MONO_ROOT```.
 
 ```shell
-WebSharp\PepperPlugin\src> export MONO_ROOT=path.to.mono
+WebSharp/PepperPlugin/src$ export MONO_ROOT=path.to.mono
+```
+
+The makefile tries to use ```pkg-config``` for Compiling and Linking first if MONO_ROOT is not set.  You can verify if the pkg-config is setup correctly by doing the following:
+
+```shell
+WebSharp/PepperPlugin/src$ pkg-config --libs mono-2
+```
+
+If the mono-2 package is not found then the message below may be shown:
+
+```
+Package mono-2 was not found in the pkg-config search path.
+Perhaps you should add the directory containing `mono-2.pc'
+to the PKG_CONFIG_PATH environment variable
+No package 'mono-2' found
+```
+
+You may need to specify the search path explicitly. This may be installation dependent, but in most cases will look like:
+
+```shell
+WebSharp/PepperPlugin/src$ export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
 ```
 
 
