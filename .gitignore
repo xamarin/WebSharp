@@ -244,6 +244,9 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
+# Visual Studio Code 
+.vscode
+
 # Python binding compiled modules
 /Tools/binding/generators/*.pyc
 /Tools/binding/generators/ply/*.pyc
@@ -257,3 +260,4 @@ ModelManifest.xml
 
 # User Data Directories created and used by Electron when started up
 **/user-data-dir
+
