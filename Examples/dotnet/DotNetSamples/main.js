@@ -1,5 +1,5 @@
 const electron = require('electron')
-const dotnet = require('electron-dotnet')
+
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.

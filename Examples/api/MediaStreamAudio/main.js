@@ -9,7 +9,7 @@ const BrowserWindow = electron.BrowserWindow
 let mainWindow
 
 // Register the dotnet plugin with Electron:
-require('../../../Tools/electron-dotnet').Register();
+require('../../../electron-dotnet/lib/electron-dotnet.js').Register();
 
 // Set our User Data Directory same as setting --user-data-dir command line switch
 app.setPath('userData', __dirname + '/user-data-dir');
