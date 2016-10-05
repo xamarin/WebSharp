@@ -20,6 +20,7 @@ Foundations:
 ## Pre-requisites
 
 - [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
+- [Native Abstractions for Node.js](https://github.com/nodejs/nan) if there are errors during install pertaining to nan you may need to install this as well ```npm install nan``` 
 - [PepperPlugin](https://github.com/xamarin/WebSharp/tree/master/PepperPlugin) and its pre-requisites.
 
 ## Install
