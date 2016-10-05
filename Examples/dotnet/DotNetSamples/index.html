@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <script type="text/javascript" src="./samples/101_hello_lambda.js"></script>
+    <script type="text/javascript" src="./samples/102_hello_function.js"></script>
+    <script type="text/javascript" src="./samples/103_hello_file.js"></script>
+    <script type="text/javascript" src="./samples/104_add7_class.js"></script>
+    <script type="text/javascript" src="./samples/105_add7_dll.js"></script>
+    <script type="text/javascript" src="./samples/106_marshal_v82clr.js"></script>
+    <script type="text/javascript" src="./samples/107_marshal_clr2v8.js"></script>
+    <script type="text/javascript" src="./samples/108_func.js"></script>
+    <script type="text/javascript" src="./samples/108_lambda.js"></script>
+    <script type="text/javascript" src="./samples/109_sync.js"></script>
+    <script type="text/javascript" src="./samples/110_clr_instance.js"></script>
+    <script type="text/javascript" src="./samples/111_clr_listener.js"></script>
+    
+    <meta charset="UTF-8">
+    <title>DotNet samples</title>
+  </head>
+  <body>
+    <h1>DotNetSamples</h1>
+    <br>
+    The DotNetSamples sample demonstrates calling .net code in process from an electron application.  An overview can be found in the electron-dotnet module overview: https://github.com/xamarin/WebSharp/tree/master/electron-dotnet
+    <br><br>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using node <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+    <br><br>
+    <div>
+      <button onclick=hello_lambda()>101_hello_lambda</button> - prescriptive interface pattern
+    </div>
+    </p>
+    <div>
+      <button onclick=hello_function()>102_hello_function</button> - multiline function comment
+    </div>
+    </p>
+    <div>
+      <button onclick=hello_file()>103_hello_file</button> - separate file
+    </div>    
+    </p>
+    <div>
+      <button onclick=add7_class()>104_add7_class</button> - entire class instead of lambda
+    </div>    
+    </p>
+    <div>
+      <button onclick=add7_dll()>105_add7_dll</button> - pre-compiled DLL
+    On Windows: 
+    	csc.exe /target:library /debug Sample105.cs
+    On Mono (MacOS, Linux):
+        mcs -sdk:4.5 Sample105.cs -target:library
+    </div>    
+    </p>
+    <div>
+      <button onclick=hello_v82clr()>106_marshal_v82clr</button> - data from V8 to CLR
+    </div>    
+    </p>
+    <div>
+      <button onclick=hello_clr2v8()>107_marshal_clr2v8</button> - data from CLR to V8
+    </div>    
+    </p>
+    <div>
+      <button onclick=addAndMultiply_By2()>108_func</button> - marshal func from v8 to CLR and call node from .NET
+    </div>    
+    </p>
+    <div>
+      <button onclick=create_Counter()>108_lambda</button> - lambda func call
+    </div>    
+    </p>
+    <div>
+      <button onclick=hello_sync()>109_sync</button> - async and sync calling conventions
+    </div>    
+    </p>
+    <div>
+      <button onclick=create_Person()>110_clr_instance</button> - calling clr instance
+    </div>    
+    </p>
+    <div>
+      <button onclick=yield_control()>111_clr_listener yield</button> - yield control over process lifetime to CLR
+      <br>
+      <button onclick=regain_control()>111_clr_listener regain</button> - regain control - the process will not exit until one of the following happens:
+ <ul><li>- node.js calls controller.regainControl(), or</li>
+ <li>- CLR calls Startup.ReleaseControl()</li>
+ </ul>
+    </div>    
+    </p>
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>
