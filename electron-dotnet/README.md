@@ -11,7 +11,7 @@ You can script C# from a Node.js process:
 
 **ES5**
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var helloWorld = edge.func(function () {/*
     async (input) => { 
@@ -28,7 +28,7 @@ helloWorld('JavaScript', function (error, result) {
 
 In ES6 you can use [template strings](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings) to write multiline C# code.
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var helloWorld = edge.func(`
     async (input) => { 
@@ -178,9 +178,41 @@ If you have both desktop CLR and .NET Core installed, read [using .NET Core](#us
 
 #### OSX  
 
-* Node.js 6.x, 5.x, 4.x, 0.12.x, 0.10.x, or 0.8.x  
-* Mono 4.2.4 x64 and/or .NET Core
-* Follow [OSX setup instructions](#building-on-osx)  
+* Node.js 6.5 tested but may work on other versions without modifications depending on the version   
+* Mono 4.6.x x64 and/or .NET Core
+* Follow [OSX setup instructions](#building-on-osx)
+
+For now we install electron-dotnet from a directory until the workflow for delivering is worked out.
+
+One scenario is to install electron-dotnet into your application node modules.
+
+```bash
+# Install the version of electron that you will using.  Version 1.4.0 in this example.
+npm install electron@1.4.0
+# Now install electron-dotnet
+npm install path-to-electron-dotnet/electron-dotnet
+```
+
+Then ```require('electron-dotnet)``` as follows:
+
+```js
+// Reference electron-dotnet module that is installed in the application
+var dotnet = require('electron-dotnet');
+
+var hellolambda = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');
+``` 
+
+A second scenario, such as development or as you may see in our samples, is to reference the electron-dotnet via an absolute file reference instead of installing directly in the application.  To do this you will need to have installed and built electron-dot as described by [Building on OSX](#building-on-osx) 
+
+```js
+// Reference the electron-dotnet module via a file reference.  You may see this in our samples.
+var dotnet = require('../../../electron-dotnet/lib/electron-dotnet.js');
+
+var hellolambda = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');
+
+``` 
+
+
 
 ![image](https://cloud.githubusercontent.com/assets/822369/2808046/8f4ce378-cd0b-11e3-95dc-ef0842c28821.png)
 
@@ -225,7 +257,7 @@ npm install edge
 In your server.js:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var helloWorld = edge.func(function () {/*
     async (input) => { 
@@ -260,7 +292,7 @@ Edge provides several ways to integrate C# code into a Node.js application. Rega
 Edge provides a function that accepts a reference to C# code in one of the supported representations, and returns a Node.js function which acts as a JavaScript proxy to the `Func<object,Task<object>>` .NET delegate:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var myFunction = edge.func(...);
 ```
@@ -492,7 +524,7 @@ public class Startup
 In your Node.js code that invokes this .NET method you can display the result object that the callback method receives:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var getPerson = edge.func(function () {/*
     using System.Threading.Tasks;
@@ -554,7 +586,7 @@ In addition to marshalling data, edge can marshal proxies to JavaScript function
 Suppose the Node.js application passes an `add` function to the .NET code as a property of an object. The function receives two numbers and returns the sum of them via the provided callback:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var addAndMultiplyBy2 = edge.func(function () {/*
     async (dynamic input) => {
@@ -662,7 +694,7 @@ npm install edge-py
 In your server.js:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var hello = edge.func('py', function () {/*
     def hello(input):
@@ -729,7 +761,7 @@ lambda x: hello(x)
 In your hello.js file:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var hello = edge.func('py', 'hello.py');
 
@@ -753,7 +785,7 @@ In the examples above Python script was executing asynchronously on its own thre
 If you know your Python code is non-blocking, or if you know what you are doing, you can tell Edge.js to execute Python code on the singleton V8 thread. This will improve performance for non-blocking Python scripts embedded in a Node.js application:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var hello = edge.func('py', {
     source: function () {/*
@@ -790,7 +822,7 @@ npm install edge-ps
 In your server.js:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var hello = edge.func('ps', function () {/*
 "PowerShell welcomes $inputFromJS on $(Get-Date)"
@@ -820,7 +852,7 @@ What you can do in native PowerShell works in Node.js.
 Here you can reach out to IronPython from PowerShell from within Node.js on Windows. This holds true for working with JavaScript frameworks and C#.
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var helloPowerShell = edge.func('ps', function () {/*
 	"PowerShell welcomes $inputFromJS"
@@ -851,7 +883,7 @@ helloPython('Node.js', function(error, result){
 This section is coming up. In the meantime please refer to [Dave Thomas blog post](http://7sharpnine.com/posts/i-node-something/). This has been validated on Windows only. 
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var helloFs = edge.func('fs', function () {/*
     fun input -> async { 
@@ -881,7 +913,7 @@ npm install edge-lsharp
 In your server.js:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 var fact = edge.func('lsharp', function(){/*
 
 ;; Factorial
@@ -899,7 +931,7 @@ fact([5], function(err, answer){
 An LSharp filename can be passed in instead of the Lisp string/comment:
 
 ```js
-var edge = require('edge');
+var edge = require('electron-dotnet');
 var lisp = edge.func('lsharp', 'lisp-func.ls');
 
 lisp(['arg1', 'arg2'], function(err, result){
@@ -910,7 +942,7 @@ lisp(['arg1', 'arg2'], function(err, result){
 In Lisp you can specify either a function (as shown in the first example) or just return a value:
 
 ```js
-var edge = require('edge');
+var edge = require('electron-dotnet');
 var lisp = edge.func('lsharp', '(+ 2 3)');
 
 lisp([], function(err, answer){
@@ -945,7 +977,7 @@ set EDGE_SQL_CONNECTION_STRING=Data Source=localhost;Initial Catalog=Northwind;I
 In your server.js:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var getTop10Products = edge.func('sql', function () {/*
     select top 10 * from Products
@@ -984,7 +1016,7 @@ New Ikura
 You can construct a parameterized query once and provide parameter values on a per-call basis:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var getProduct = edge.func('sql', function () {/*
     select * from Products 
@@ -1002,7 +1034,7 @@ getProduct({ myProductId: 10 }, function (error, result) {
 The four basic CRUD operations are supported. For example, here is how an update can look like:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var updateProductName = edge.func('sql', function () {/*
     update Products
@@ -1029,7 +1061,7 @@ Edge.js marshals Node.js errors and exceptions to .NET as well as .NET exception
 CLR exceptions thrown in .NET code invoked from Node.js are marshalled as the `error` parameter to the Node.js callback function. Consider this example:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var clrFunc = edge.func(function () {/*
     async (dynamic input) => {
@@ -1091,7 +1123,7 @@ System.Reflection.TargetInvocationException: Exception has been thrown by the ta
 JavaScript exceptions thrown in Node.js code invoked from .NET are wrapped in a CLR exception and cause the asynchronous `Task<object>` to complete with a failure. Errors passed by Node.js code invoked from .NET code to the callback function's `error` parameter have the same effect. Consider this example:
 
 ```javascript
-var edge = require('edge');
+var edge = require('electron-dotnet');
 
 var multiplyBy2 = edge.func(function () {/*
     async (dynamic input) => {
@@ -1290,24 +1322,34 @@ Prerequisities:
 
 * [Homebrew](http://brew.sh/)  
 * [Mono x64](http://www.mono-project.com/download/#download-mac) and/or [.NET Core](https://dotnet.github.io/getting-started/) - see below  
-* [Node.js x64](http://nodejs.org/) (tested with v4.1.1)  
+* [Node.js x64](http://nodejs.org/) (tested with v4.1.1) 
+* [Native Abstractions for Node.js](https://github.com/nodejs/nan) 
+* [pkg-config](http://brewformulas.org/pkg-config) Normally this is installed/required during the install of mono.
 
-You can use Edge.js on OSX with either Mono or .NET Core installed, or both.
+You can use electron-dotnet.js on OSX with either Mono or .NET Core installed, or both.
 
 If you choose to [install Mono](http://www.mono-project.com/download/#download-mac), select the universal installer to make sure you get the x64 version. Edge.js requires Mono x64.  If you choose to install .NET Core, follow the steps [here](https://www.microsoft.com/net/core#macosx)
 
-Then install and build Edge.js:
+#### pkg-config
+When searching for mono to link against pkg-config is used.  Check for pkg-config via $ which pkg-config, if not found you will want to install it:
 
 ```bash
+# Install pkg-config
 brew install pkg-config
-npm install edge
 ```
 
-**NOTE** if the build process complains about being unable to locate Mono libraries, you may need to specify the search path explicitly. This may be installation dependent, but in most cases will look like: 
+Then install and build electron-dotnet.js:
+
+```bash
+#
+npm install
+```
+
+**NOTE** if the build process complains about being unable to locate Mono libraries or you want to specify a custom Mono build, you may need to specify the search path explicitly. This may be installation dependent, but in most cases will look like: 
 
 ```bash
 PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig \
-  npm install edge
+  npm install
 ```
 
 If you installed both Mono and .NET Core, by default Edge will use Mono. You opt in to using .NET Core with the `EDGE_USE_CORECLR` environment variable: 
@@ -1316,18 +1358,36 @@ If you installed both Mono and .NET Core, by default Edge will use Mono. You opt
 EDGE_USE_CORECLR=1 node myapp.js
 ```
 
-#### Building on OSX (advanced)
+#### Building on OSX (electron)
 
-To build edge from a clone of the repository or source code:
+The install process will try to work out the correct build configuration based on the version of electron that is installed but it may need a little help.
+
+The developer can install the version of electron pre-built before executing the ```npm install``` above.
 
 ```bash
-node-gyp configure build
+# The version to build against is verions 1.4.0
+npm install electron@1.4.0
+# Install electron-dotnet
+npm install
+```
+
+In the process above the install script will try to work out the best it can which Native Abstraction to build against.
+
+If you do not want to install the version of electron then you may need to build against a specific version by specifying the target on the build.
+
+To build electron-dotnet against a specific version of electron.
+
+```bash
+# Install electron-dotnet
+npm install
+# Rebuild the native modules against a specific electon version.  In this case version 1.4.0
+node-gyp configure build --target=1.4.0 --disturl=https://atom.io/download/atom-shell
 ```
 
 To build a debug build instead of release, you need to:
 
 ```bash
-node-gyp configure build -debug
+node-gyp configure build --target=1.4.0 --disturl=https://atom.io/download/atom-shell --debug
 export EDGE_NATIVE=/Users/tomek/edge/build/Debug/edge_nativeclr.node
 ```
 
