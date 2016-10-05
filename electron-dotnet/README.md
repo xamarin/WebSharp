@@ -202,7 +202,7 @@ var dotnet = require('electron-dotnet');
 var hellolambda = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');
 ``` 
 
-A second scenario, such as development or as you may see in our samples, is to reference the electron-dotnet via an absolute file reference instead of installing directly in the application.  To do this you will need to have installed and built electron-dot as described by [Building on OSX](#building-on-osx) 
+A second scenario, such as development or as you may see in our samples, is to reference the electron-dotnet via an absolute file reference instead of installing directly in the application.  To do this you will need to have installed and built electron-dotnet as described by [Building on OSX](#building-on-osx) 
 
 ```js
 // Reference the electron-dotnet module via a file reference.  You may see this in our samples.
@@ -1320,9 +1320,9 @@ npm run jshint
 
 Prerequisities:
 
-* [Homebrew](http://brew.sh/)  
+* [Homebrew](http://brew.sh/) if pkg-config is not available. 
 * [Mono x64](http://www.mono-project.com/download/#download-mac) and/or [.NET Core](https://dotnet.github.io/getting-started/) - see below  
-* [Node.js x64](http://nodejs.org/) (tested with v4.1.1) 
+* [Node.js x64](http://nodejs.org/) (tested with v6.5.0 and electron v1.4.0) 
 * [Native Abstractions for Node.js](https://github.com/nodejs/nan) 
 * [pkg-config](http://brewformulas.org/pkg-config) Normally this is installed/required during the install of mono.
 
@@ -1331,7 +1331,7 @@ You can use electron-dotnet.js on OSX with either Mono or .NET Core installed, o
 If you choose to [install Mono](http://www.mono-project.com/download/#download-mac), select the universal installer to make sure you get the x64 version. Edge.js requires Mono x64.  If you choose to install .NET Core, follow the steps [here](https://www.microsoft.com/net/core#macosx)
 
 #### pkg-config
-When searching for mono to link against pkg-config is used.  Check for pkg-config via $ which pkg-config, if not found you will want to install it:
+When searching for mono to link against, ```pkg-config``` is used.  Check for ```pkg-config``` via ```$ which pkg-config```, if not found you will want to install it:
 
 ```bash
 # Install pkg-config
