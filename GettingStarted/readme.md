@@ -68,7 +68,7 @@ $ npm install ../Tools/electron-dotnet/
 
 For Mac
 ```shell
-$ sudo npm install ../Tools/electron-dotnet/
+$ sudo npm install ../electron-dotnet
 ```
 
 This will install electron-dotnet as a module and allow us to do ```require('electron-dotnet').Register()``` which registers the correct PepperPlugin assembly for the platform and architecture that is used by Electron.
