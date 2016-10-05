@@ -28,7 +28,7 @@ TARGET = libPepperPlugin
 
 # Define the output directory of the Tools electron-dotnet node module
 # so the plugin can be found, loaded and registered correctly in electron
-OUTBASE=../../Tools/electron-dotnet/bin
+OUTBASE=../../electron-dotnet/lib/bin
 
 include $(NACL_SDK_ROOT)/tools/common.mk
 
