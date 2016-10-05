@@ -1352,7 +1352,7 @@ PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfi
   npm install
 ```
 
-If you installed both Mono and .NET Core, by default Edge will use Mono. You opt in to using .NET Core with the `EDGE_USE_CORECLR` environment variable: 
+If you installed both Mono and .NET Core, by default ```electron-dotnet``` will use Mono. You opt in to using .NET Core with the `EDGE_USE_CORECLR` environment variable: 
 
 ```bash
 EDGE_USE_CORECLR=1 node myapp.js
