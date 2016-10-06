@@ -108,7 +108,7 @@
       <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Mono\lib;$(SolutionDir)..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\Tools\electron-dotnet\bin\Win32\"</Command>
+      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\Win32\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>xcopy /y /d  "C:\Program Files %28x86%29\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
@@ -134,7 +134,7 @@
       <AdditionalLibraryDirectories>C:\Program Files\Mono\lib;$(SolutionDir)..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\Tools\electron-dotnet\bin\x64\"</Command>
+      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\x64\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>xcopy /y /d  "C:\Program Files\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
@@ -161,7 +161,7 @@
       <AdditionalLibraryDirectories>C:\Program Files %28x86%29\Mono\lib;$(SolutionDir)..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\Tools\electron-dotnet\bin\Win32\"</Command>
+      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\Win32\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>xcopy /y /d  "C:\Program Files %28x86%29\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
@@ -188,7 +188,7 @@
       <AdditionalLibraryDirectories>C:\Program Files\Mono\lib;$(SolutionDir)..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\Tools\electron-dotnet\bin\x64\"</Command>
+      <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\x64\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>xcopy /y /d  "C:\Program Files\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
