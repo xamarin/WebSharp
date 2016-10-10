@@ -1235,7 +1235,7 @@ Read more about [performance of Edge.js on the wiki](https://github.com/tjanczuk
 
 ### Building on Windows
 
-You must have Visual Studio 2015 toolset, Python 2.7.x, and node-gyp installed for building.
+You must have Visual Studio 2015 toolset, Python 2.7.x, and node-gyp installed for building.  [node-gyp windows install](https://github.com/nodejs/node-gyp#installation)
 
 To build and test the project against all supported versions of Node.js in x86 and x64 flavors, run the following:
 
@@ -1261,6 +1261,8 @@ npm install -g node-gyp
 node-gyp configure --msvs_version=2015
 node-gyp build -debug
 ```
+
+Additional requirements and install instructions can be found [node-gyp windows install](https://github.com/nodejs/node-gyp#installation)
 
 You can then set the `EDGE_NATIVE` environment variable to the fully qualified file name of the built edge_\*.node binary (edge\_nativeclr.node if you're using the native CLR runtime or edge\_coreclr.node if you're using .NET Core). It is useful during development, for example:
 
