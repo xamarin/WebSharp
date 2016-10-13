@@ -78,8 +78,6 @@ std::string MonoEmbedding::GetMonoEmbeddingPath()
 	strcat(fullPath, "/MonoEmbedding.exe");
 
 	std::string monoEmbeddingPath(fullPath);
-
-	monoEmbeddingPath += "/MonoEmbedding.exe";
 	DBG("MonoEmbedding::GetMonoEmbeddingPath: (%s)", monoEmbeddingPath.c_str());
 
 	return monoEmbeddingPath;
