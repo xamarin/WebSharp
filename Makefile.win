@@ -1,12 +1,27 @@
+
 NACLSDK_TOOL=..\nacl_sdk\naclsdk
 
 all: 
 	@echo Usage:
-	@echo    nmake buildx64 	- builds the bindings for x64 architecture
-	@echo    nmake buildx86 	- builds the bindings for x86 (Win32) architecture
+	@echo    nmake buildRelease	- builds the bindings for x86 (Win32) and x64 architectures - Release
+	@echo    nmake buildDebug 	- builds the bindings for x86 (Win32) and x64 architecture - Debug
+	@echo    nmake buildx64 	- builds the bindings for x64 architecture - Release
+	@echo    nmake buildx86 	- builds the bindings for x86 (Win32) architecture - Release
+	@echo    nmake buildx64Debug 	- builds the bindings for x64 architecture - Debug
+	@echo    nmake buildx86Debug 	- builds the bindings for x86 (Win32) architecture - Debug
 	@echo    nmake setup 	- sets up the environment for you
 
-buildx64: 
+buildRelease: 
+	@$(MAKE) /f ./Makefile.win buildx64
+
+	@$(MAKE) /f ./Makefile.win buildx86
+
+buildDebug: 
+	@$(MAKE) /f ./Makefile.win buildx64Debug
+	
+	@$(MAKE) /f ./Makefile.win buildx86Debug
+
+buildx64:
 	cd .\PepperPlugin\src 
 	set NACL_SDK_ROOT=..\..\..\nacl_sdk\pepper_canary\
 
@@ -17,6 +32,18 @@ buildx86:
 	set NACL_SDK_ROOT=..\..\..\nacl_sdk\pepper_canary\
 
 	msbuild PepperPlugin.sln /t:build /p:Platform=x86 /p:Configuration=Release
+
+buildx64Debug:
+	cd .\PepperPlugin\src 
+	set NACL_SDK_ROOT=..\..\..\nacl_sdk\pepper_canary\
+
+	msbuild PepperPlugin.sln /t:build /p:Platform=x64 /p:Configuration=Debug
+
+buildx86Debug: 
+	cd .\PepperPlugin\src 
+	set NACL_SDK_ROOT=..\..\..\nacl_sdk\pepper_canary\
+
+	msbuild PepperPlugin.sln /t:build /p:Platform=x86 /p:Configuration=Debug
 
 check:
 	@if test ! -x $(NACLSDK_TOOL); then echo "You need to install the nacl_sdk on the parent directory, https://developer.chrome.com/native-client/sdk/download#installing-the-sdk"; exit 1; fi
