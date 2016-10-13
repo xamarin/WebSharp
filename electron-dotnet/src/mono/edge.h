@@ -3,7 +3,9 @@
 
 #include "../common/edge_common.h"
 
+#ifndef EDGE_PLATFORM_WINDOWS
 #include <pthread.h>
+#endif
 #include "mono/metadata/class.h"
 #include "mono/metadata/object.h"
 #include "mono/metadata/appdomain.h"
@@ -36,6 +38,7 @@ public:
     static MonoString* ToString(MonoObject* o, MonoException** exc);
     static double Int64ToDouble(MonoObject* i64, MonoException** exc);
     static MonoString* TryConvertPrimitiveOrDecimal(MonoObject* obj, MonoException** exc);
+	static std::string GetMonoEmbeddingPath();
 };
 
 typedef struct clrActionContext {

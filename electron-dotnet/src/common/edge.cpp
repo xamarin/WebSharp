@@ -9,7 +9,11 @@
 #endif
 #ifdef HAVE_NATIVECLR
 #ifdef EDGE_PLATFORM_WINDOWS
+#ifndef HAVE_MONO
 #include "../dotnet/edge.h"
+#else
+#include "../mono/edge.h"
+#endif
 #else
 #include "../mono/edge.h"
 #endif
@@ -54,6 +58,9 @@ NAN_MODULE_INIT(init)
 #else
 #ifndef EDGE_PLATFORM_WINDOWS
     MonoEmbedding::Initialize();
+#endif
+#ifdef HAVE_MONO
+	MonoEmbedding::Initialize();
 #endif
 #endif
 

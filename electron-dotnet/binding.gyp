@@ -140,7 +140,8 @@
                 '/DHAVE_CORECLR',
                 '/D_NO_ASYNCRTIMP',
                 '/D_HAS_EXCEPTIONS'
-                '/EHsc'
+                '/EHsc',
+				'/MDd'
               ]
             },
             'VCLinkerTool': {
@@ -269,6 +270,87 @@
           'msvs_settings': {
             'VCCLCompilerTool': {
               # this is out of range and will generate a warning and skip adding RuntimeLibrary property:
+              'RuntimeLibrary': 3,
+              # this is out of range and will generate a warning and skip adding RuntimeTypeInfo property:
+              'RuntimeTypeInfo': -1,
+              'BasicRuntimeChecks': -1,
+              'ExceptionHandling': '0',
+              'AdditionalOptions': [
+                '/clr',
+                '/wd4506',
+                '/DHAVE_NATIVECLR',
+				'/MDd'
+              ]
+            },
+            'VCLinkerTool': {
+              'AdditionalOptions': [
+                '/ignore:4248'
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      'variables': {
+        'conditions': [
+          ['target_arch=="ia32"', {
+            'DEFAULT_MONO_ROOT': 'C:\Program Files %28x86%29\Mono'
+          }],
+          ['target_arch=="x64"', {
+            'DEFAULT_MONO_ROOT': 'C:\Program Files\Mono'
+          }],
+        ],
+      },
+      'target_name': 'edge_monoclr',
+      'win_delay_load_hook': 'false',
+      'include_dirs': [
+        "<!(node -e \"require('nan')\")",
+		    '<(DEFAULT_MONO_ROOT)\include\mono-2.0'
+      ],
+      'cflags+': [
+        '-DHAVE_NATIVECLR -std=c++11'
+      ],
+      'xcode_settings': {
+        'OTHER_CFLAGS': [
+          '-DHAVE_NATIVECLR'
+        ]
+      },
+      'conditions': [
+        [
+          'OS=="win"',
+          {
+			'conditions': [
+              [
+                '"<!(node -e \"require(\'./tools/gyp-whereis.js\')(\'mono.exe\')\")"!="null"',
+                {
+					'sources+': [
+						   'src/mono/clractioncontext.cpp',
+							'src/mono/clrfunc.cpp',
+							'src/mono/clrfuncinvokecontext.cpp',
+						   'src/mono/monoembedding.cpp',
+						   'src/mono/task.cpp',
+						   'src/mono/dictionary.cpp',
+						   'src/mono/nodejsfunc.cpp',
+						   'src/mono/nodejsfuncinvokecontext.cpp',
+						   'src/mono/utils.cpp',
+							'src/common/v8synchronizationcontext.cpp',
+							'src/common/edge.cpp'
+					]
+				},
+        {
+                  'type': 'none'
+                }
+			  ]
+			]
+          }
+        ]
+      ],
+      'configurations': {
+        'Release': {
+          'msvs_settings': {
+            'VCCLCompilerTool': {
+              # this is out of range and will generate a warning and skip adding RuntimeLibrary property:
               'RuntimeLibrary': -1,
               # this is out of range and will generate a warning and skip adding RuntimeTypeInfo property:
               'RuntimeTypeInfo': -1,
@@ -277,11 +359,52 @@
               'AdditionalOptions': [
                 '/clr',
                 '/wd4506',
-                '/DHAVE_NATIVECLR'
+				'/DHAVE_NATIVECLR',
+                '/DHAVE_MONO'
               ]
             },
             'VCLinkerTool': {
+			  'AdditionalDependencies' :
+			  [
+				'mono-2.0.lib'
+			  ],
+			  'AdditionalLibraryDirectories' :
+			  [
+				'<(DEFAULT_MONO_ROOT)\lib'
+			  ],
               'AdditionalOptions': [
+                '/ignore:4248'
+              ]
+            }
+          }
+        },
+        'Debug': {
+          'msvs_settings': {
+            'VCCLCompilerTool': {
+              # this should be /MDd but not being set properly so it is overridden in AdditionalOptions:
+              'RuntimeLibrary': 3,
+              # this is out of range and will generate a warning and skip adding RuntimeTypeInfo property:
+              'RuntimeTypeInfo': -1,
+              'BasicRuntimeChecks': -1,
+              'ExceptionHandling': '0',
+              'AdditionalOptions': [
+                '/clr',
+                '/wd4506',
+                '/DHAVE_NATIVECLR',
+                '/DHAVE_MONO',
+				'/MDd'
+              ]
+            },
+            'VCLinkerTool': {
+			  'AdditionalDependencies' :
+			  [
+				'mono-2.0.lib'
+			  ],
+			  'AdditionalLibraryDirectories' :
+			  [
+				'<(DEFAULT_MONO_ROOT)\lib'
+			  ],
+			  'AdditionalOptions': [
                 '/ignore:4248'
               ]
             }
@@ -300,6 +423,31 @@
         [
           'OS=="win"',
           {
+			        'conditions': [
+                [
+                  '"<!(node -e \"require(\'./tools/gyp-whereis.js\')(\'mono.exe\')\")"!="null"',
+                  {
+                 'actions+': [
+                    {
+                      'action_name': 'compile_mono_embed',
+                      'inputs': [
+                        'src/mono/*.cs'
+                      ],
+                      'outputs': [
+                        '$(ConfigurationName)/monoembedding.exe'
+                      ],
+                      'action': [
+                        'csc',
+                        '-target:exe',
+                        '-out:$(ConfigurationName)/MonoEmbedding.exe',
+                        'src/mono/*.cs',
+                        'src/common/*.cs'
+                      ]
+                    }
+                  ]                    
+				          }
+			          ]
+			        ]            
           },
           {
             'conditions': [

@@ -1,29 +1,34 @@
-#include <dlfcn.h>
+
+
 #include <limits.h>
-#include <libgen.h>
+
 #include "edge.h"
+#ifndef EDGE_PLATFORM_WINDOWS
+#include <dlfcn.h>
+#include <libgen.h>
+#else
+//#include <Pathcch.h>
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
+#endif
 
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/mono-config.h"
 #include "mono/jit/jit.h"
 
-
 MonoAssembly* MonoEmbedding::assembly = NULL;
 
 void MonoEmbedding::Initialize()
 {
+	DBG("MonoEmbedding::Initialize");
+
     // Construct the absolute file path to MonoEmbedding.exe assuming
     // it is located next to edge.node
-    Dl_info dlinfo;
-    char fullPath[PATH_MAX];
-    dladdr((void*)&MonoEmbedding::Initialize, &dlinfo);
-    strcpy(fullPath, dlinfo.dli_fname);
-    strcpy(fullPath, dirname(fullPath));
-    strcat(fullPath, "/MonoEmbedding.exe");
+	auto fullPath = GetMonoEmbeddingPath();
 
     mono_config_parse (NULL);
-    mono_jit_init (fullPath);
-    assembly = mono_domain_assembly_open (mono_domain_get(), fullPath);
+    mono_jit_init (fullPath.c_str());
+    assembly = mono_domain_assembly_open (mono_domain_get(), fullPath.c_str());
     MonoClass* klass = mono_class_from_name(mono_assembly_get_image(assembly), "", "MonoEmbedding");
     MonoMethod* main = mono_class_get_method_from_name(klass, "Main", -1);
     MonoException* exc;
@@ -36,6 +41,53 @@ void MonoEmbedding::Initialize()
     mono_add_internal_call("NodejsFunc::ExecuteActionOnV8Thread", (const void*)&NodejsFunc::ExecuteActionOnV8Thread); 
     mono_add_internal_call("NodejsFunc::Release", (const void*)&NodejsFunc::Release); 
 }
+
+
+// Construct the absolute file path to MonoEmbedding.exe assuming
+// it is located next to edge.node
+std::string MonoEmbedding::GetMonoEmbeddingPath()
+{
+#ifdef EDGE_PLATFORM_WINDOWS
+
+	TCHAR szPath[MAX_PATH];
+
+	if (!GetModuleFileName(GetModuleHandle("edge_monoclr.node"), szPath, MAX_PATH))
+	{
+		DBG("\nMonoEmbedding::GetMonoEmbeddingPath: Cannot find module edge_monoclr.node (%d)\n", GetLastError());
+	}
+
+	// We should probably move to Pathccw routines.
+	if (!PathRemoveFileSpec(szPath))
+	{
+		DBG("\nMonoEmbedding::GetMonoEmbeddingPath: Problem obtaining the path (%d)\n", GetLastError());
+	}
+
+
+	std::string monoEmbeddingPath(szPath);
+
+	monoEmbeddingPath += "\\MonoEmbedding.exe";
+	DBG("MonoEmbedding::GetMonoEmbeddingPath: (%s)", monoEmbeddingPath.c_str());
+
+	return monoEmbeddingPath;
+#else
+	Dl_info dlinfo;
+	char fullPath[PATH_MAX];
+	dladdr((void*)&MonoEmbedding::Initialize, &dlinfo);
+	strcpy(fullPath, dlinfo.dli_fname);
+	strcpy(fullPath, dirname(fullPath));
+	strcat(fullPath, "/MonoEmbedding.exe");
+
+	std::string monoEmbeddingPath(fullPath);
+
+	monoEmbeddingPath += "/MonoEmbedding.exe";
+	DBG("MonoEmbedding::GetMonoEmbeddingPath: (%s)", monoEmbeddingPath.c_str());
+
+	return monoEmbeddingPath;
+
+#endif
+
+}
+
 
 void MonoEmbedding::NormalizeException(MonoException** e) 
 {

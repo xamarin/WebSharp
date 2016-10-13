@@ -15,10 +15,13 @@ function determineVersion() {
     }
 
     throw new Error('The edge module has not been pre-compiled for node.js version ' + process.version +
-        '. You must build a custom version of edge.node. Please refer to https://github.com/tjanczuk/edge ' +
+        '. You must build a custom version of edge.node. Please refer to https://github.com/websharp/electron-dotnet ' +
         'for building instructions.');
 }
 var edgeNative;
+if (process.platform === 'win32' && process.env.EDGE_USE_MONOCLR === '1') {
+    process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + 'edge_monoclr');
+}
 if (process.env.EDGE_NATIVE) {
     edgeNative = process.env.EDGE_NATIVE;
 }

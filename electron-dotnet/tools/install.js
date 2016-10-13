@@ -38,20 +38,20 @@ if (process.platform === 'win32') {
 		.filter(isDirectory)
 		.map(getPath);
 
-	['msvcr120.dll', 'msvcp120.dll'].forEach(function (dllname) {
-		var dll32bit = path.resolve(lib32bit, dllname);
-		dest32dirs.forEach(copyFile(dll32bit, dllname));
-	});
+	// ['msvcr120.dll', 'msvcp120.dll'].forEach(function (dllname) {
+	// 	var dll32bit = path.resolve(lib32bit, dllname);
+	// 	dest32dirs.forEach(copyFile(dll32bit, dllname));
+	// });
 		
 	var dest64dirs = fs.readdirSync(lib64bit)
 		.map(getInfo(lib64bit))
 		.filter(isDirectory)
 		.map(getPath);
 
-	['msvcr120.dll', 'msvcp120.dll'].forEach(function (dllname) {
-		var dll64bit = path.resolve(lib64bit, dllname);
-		dest64dirs.forEach(copyFile(dll64bit, dllname));
-	});
+	// ['msvcr120.dll', 'msvcp120.dll'].forEach(function (dllname) {
+	// 	var dll64bit = path.resolve(lib64bit, dllname);
+	// 	dest64dirs.forEach(copyFile(dll64bit, dllname));
+	// });
 
 	var dotnetPath = whereis('dotnet', 'dotnet.exe');
 

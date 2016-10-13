@@ -353,11 +353,16 @@ v8::Local<v8::Value> ClrFunc::MarshalCLRExceptionToV8(MonoException* exception)
 
         const char* namespaceName = mono_class_get_namespace(klass);
         const char* className = mono_class_get_name(klass);
+#ifndef EDGE_PLATFORM_WINDOWS
         char full_name[strlen(namespaceName) + 1 + strlen(className) + 1]; 
         strcpy(full_name, namespaceName);
         strcat(full_name, ".");
         strcat(full_name, className);
-        name = stringCLR2V8(mono_string_new_wrapper(full_name));
+		name = stringCLR2V8(mono_string_new_wrapper(full_name));
+#else
+		auto full_name = std::string(namespaceName) + "." + std::string(className);
+		name = stringCLR2V8(mono_string_new_wrapper(full_name.c_str()));
+#endif
     }   
     
     // Construct an error that is just used for the prototype - not verify efficient

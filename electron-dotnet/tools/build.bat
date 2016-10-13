@@ -54,7 +54,7 @@ if not exist "%GYP%" (
     exit /b -1
 )
 
-"%NODEEXE%" "%GYP%" configure build --msvs_version=2015 -%FLAVOR%
+"%NODEEXE%" "%GYP%" configure --%FLAVOR% build --target=1.4.0 --dist-url=https://atom.io/download/atom-shell --msvs_version=2015
 if %ERRORLEVEL% neq 0 (
     echo Error building edge.node %FLAVOR% for node.js %2 v%3
     exit /b -1
@@ -67,10 +67,17 @@ if %ERRORLEVEL% neq 0 (
     exit /b -1
 )
 
-copy /y "%DESTDIR%\..\msvcr120.dll" "%DESTDIR%"
-if %ERRORLEVEL% neq 0 (
-    echo Error copying msvcr120.dll %FLAVOR% to %DESTDIR%
-    exit /b -1
+if exist ".\build\%FLAVOR%\MonoEmbedding*.exe" (
+    copy /y .\build\%FLAVOR%\MonoEmbedding*.exe "%DESTDIR%"
+    if %ERRORLEVEL% neq 0 (
+        echo Error copying MonoEmbedding.exe %FLAVOR% for node.js %2 v%3
+        exit /b -1
+    )
 )
+REM copy /y "%DESTDIR%\..\msvcr120.dll" "%DESTDIR%"
+REM if %ERRORLEVEL% neq 0 (
+REM     echo Error copying msvcr120.dll %FLAVOR% to %DESTDIR%
+REM     exit /b -1
+REM )
 
 echo Success building edge.node %FLAVOR% for node.js %2 v%3
