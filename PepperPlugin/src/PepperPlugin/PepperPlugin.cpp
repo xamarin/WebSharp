@@ -58,6 +58,15 @@ namespace pepper {
         return val == NULL ? "" : val;
     }
     
+	bool has_environment_variable(const char* variableName)
+	{
+#ifdef WIN32
+		return 0 < GetEnvironmentVariableA(variableName, NULL, 0);
+#else
+		return getenv(variableName) != NULL;
+#endif
+	}
+
     void split_namespace_class(const char* strc, string &nameSpace, string &className)
     {
         if (!strc)
@@ -131,11 +140,16 @@ namespace pepper {
         return klass;
     }
     
-    void InitMono() {
-        
+    void InitMono() 
+	{
+		if (has_environment_variable("PEPPER_DEBUG"))
+		{
+			debugMode = true;
+		}
+
         if (initialised)
             return;
-        
+
         // point to the relevant directories of the Mono installation
         auto mono_root = string(getEnvVar("MONO_ROOT"));
 		
@@ -224,7 +238,7 @@ namespace pepper {
             MonoObject *other_exc = NULL;
             auto str = mono_object_to_string(exception, &other_exc);
             char *mess = mono_string_to_utf8(str);
-            printf("Exception has been thrown calling: `%s` - exception is: %s \n", desc, mess);
+            DBG("Exception has been thrown calling: `%s` - exception is: %s", desc, mess);
             mono_free(mess);
             return false;
         }
@@ -253,7 +267,7 @@ namespace pepper {
             MonoObject *other_exc = NULL;
             auto str = mono_object_to_string(exception, &other_exc);
             char *mess = mono_string_to_utf8(str);
-            printf("Exception invoking method - exception is: %s \n", mess);
+            DBG("Exception invoking method - exception is: %s", mess);
             mono_free(mess);
             return false;
         }
@@ -325,7 +339,7 @@ namespace pepper {
         // Three characters are for the "\*.dll" plus NULL appended below.
        if (path.length() > (MAX_PATH - 7))
        {
-           printf("\nDirectory path is too long.\n");
+           DBG("\nDirectory path is too long.");
            return fileList;
        }
        
@@ -448,7 +462,7 @@ public:
             auto fileList = get_assembly_list(path);
             for (string f : fileList)
             {
-                printf("loading assembly: %s\n", f.c_str());
+                DBG("loading assembly: %s", f.c_str());
                 MonoAssembly* assembly = mono_domain_assembly_open(monoDomain,
                                                                    f.c_str());
                 if (assembly)
@@ -468,7 +482,7 @@ public:
         
         if (src.length())
         {
-            printf("loading class: %s\n", src.c_str());
+            DBG("loading class: %s", src.c_str());
             split_namespace_class(src.c_str(), nameSpace, className);
             
             instanceClass = find_class(nameSpace.c_str(), className.c_str(), images);
@@ -488,7 +502,7 @@ public:
         
         MonoObject *result = NULL;
 
-        printf("Constructing an instance of: %s\n", className.c_str());
+        DBG("Constructing an instance of: %s", className.c_str());
         auto instance = pp_instance();
 		void *args[3] = { 0 };
 		args[0] = &instance;
@@ -497,7 +511,7 @@ public:
         pluginHandle = mono_gchandle_new(pluginInstance, /*pinned=*/true);
 
         // Call Init method
-        printf("Calling Init on instance of: %s\n", className.c_str());
+        DBG("Calling Init on instance of: %s", className.c_str());
         
         args[0] = &argc;
         args[1] = parmsArgN;
