@@ -63,7 +63,7 @@ The Electron plugin is delivered as a Node.js module and needs to be installed. 
 
 For Windows
 ```shell
-$ npm install ../Tools/electron-dotnet/
+$ npm install ../electron-dotnet/
 ```
 
 For Mac
