@@ -11,6 +11,13 @@ function Register(pluginPath) {
 
     var ppapiPath = '';
     if (isWindows) {
+        var path = require('path');
+        var whereis = require(path.resolve(__dirname, '../tools/whereis.js'));
+        if (!whereis("mono.exe"))
+        {
+            throw new Error('Mono is required for PepperPlugins.  Please make sure mono is in the %PATH%.' +
+            '  For more information please refer to https://github.com/xamarin/WebSharp/tree/master/GettingStarted');
+        }
         if (process.arch === 'x64')
             ppapiPath = __dirname + '\\bin\\x64\\PepperPlugin.dll';
         else

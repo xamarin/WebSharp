@@ -1,6 +1,7 @@
 var fs = require('fs')
     , path = require('path')
     , builtEdge = path.resolve(__dirname, '../build/Release/' + (process.env.EDGE_USE_CORECLR || !fs.existsSync(path.resolve(__dirname, '../build/Release/edge_nativeclr.node')) ? 'edge_coreclr.node' : 'edge_nativeclr.node'))
+    , whereis = require(path.resolve(__dirname, '../tools/whereis.js'))
     , edge;
 
 var versionMap = [
@@ -20,6 +21,13 @@ function determineVersion() {
 }
 var edgeNative;
 if (process.platform === 'win32' && process.env.EDGE_USE_MONOCLR === '1') {
+    if (!whereis("mono.exe"))
+    {
+        throw new Error('The edge module for using mono embedding has been specified but mono can not be found' +
+        '. You must build a custom version of edge.node for using mono embedding or make sure that mono is in your %PATH%.' +
+        ' Please refer to https://github.com/websharp/electron-dotnet for building instructions.');
+    }
+    
     process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + 'edge_monoclr');
 }
 if (process.env.EDGE_NATIVE) {
