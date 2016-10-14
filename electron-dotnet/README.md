@@ -107,7 +107,9 @@ Listen to the [Edge.js podcast on Herdingcode](http://herdingcode.com/herding-co
 &nbsp;&nbsp;&nbsp;&nbsp;[How to: app.config](#how-to-appconfig)  
 &nbsp;&nbsp;&nbsp;&nbsp;[How to: debugging](#how-to-debugging)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Performance](#performance)  
-&nbsp;&nbsp;&nbsp;&nbsp;[Building on Windows](#building-on-windows)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Building on Windows](#building-on-windows)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Building with Mono support on Windows](#building-with-Mono)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Setting Mono Path on Windows](#Setting mono path)
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on OSX](#building-on-osx)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on Linux](#building-on-linux)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Running tests](#running-tests)  
@@ -1324,7 +1326,8 @@ Mono must be in your %PATH% for mono support to be built and also during runtime
     ```
 
   * Option 3:
-    * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions
+    * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions.
+    
       ```js
         if (process.platform === 'win32')
         {
@@ -1342,11 +1345,11 @@ Mono must be in your %PATH% for mono support to be built and also during runtime
       * In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable.
         * x64
           ```
-          "c:\Program Files\Mono\bin"
+          "c:\Program Files\Mono\bin;"
           ```
         * x86
           ```  
-          "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
+          "c:\Program Files (x86)\Mono\bin;"
           ```
      
      > :exclamation: Option 4 is not very flexible
