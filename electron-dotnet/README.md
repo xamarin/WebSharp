@@ -168,6 +168,8 @@ Edge.js runs on Windows, Linux, and OSX and requires Node.js 6.x, 5.x, 4.x, 0.12
 
 If you have both desktop CLR and .NET Core installed, read [using .NET Core](#using-net-core) for how to configure Edge to use one or the other. 
 
+If you want to use ```Mono```, read [Building with Mono support on Windows](#building-with-mono) for how to configure Edge to use ```Mono``` instead of native windows support.
+
 ![image](https://cloud.githubusercontent.com/assets/822369/2808066/3707f37c-cd0d-11e3-9b4e-7257ffc27c9c.png)
 
 #### Linux
@@ -1254,7 +1256,7 @@ You must have Visual Studio 2015 toolset, Python 2.7.x, and node-gyp installed f
 
     If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
-> :bulb: If building the mono clr you will need both a 32 bit and a 64 bit version of mono installed.
+> :bulb: If building the mono clr you will need both a 32 bit and a 64 bit version of mono installed see [Building with Mono support on Windows](#building-with-mono) below.
 
 To build and test the project against all supported versions of Node.js in x86 and x64 flavors, run the following:
 
@@ -1293,17 +1295,20 @@ You can also set the `EDGE_DEBUG` environment variable to 1 to have the edge mod
 
 ### Building with Mono
 
-To build ```electron-dotnet``` with Mono support you will need to have both a x86 and x64 bit mono installation.
+To build ```electron-dotnet``` with Mono support you will need to have both a x86 and x64 bit mono installation.  The ```build.bat``` section mentioned above will automatically detect if ```Mono``` can be detected in the windows execution path and execute the build process for both x86 and x64 architectures.
 
-If mono is built and Mono is installed, by default electron-dotnet will use window's native .Net support, you can opt in to using Mono by setting the EDGE_USE_MONOCLR environment variable:
+A generated node called ```edge_monoclr.node``` will be available for use. 
+
+If ```Mono``` support is built and ```Mono``` is installed, by default electron-dotnet will use window's native .Net support, you can opt in to using ```Mono``` by setting the ```EDGE_USE_MONOCLR``` environment variable:
 
 ```
+# tells electron-dotnet to load the mono clr version
 set EDGE_USE_MONOCLR=1
 ``` 
 
-Mono must be in your %PATH% for mono support to be built and also during runtime.
-
 #### Setting mono path
+
+Mono must be in your %PATH% for mono support to be built and also during the application execution.
 
   * Option 1:
 
