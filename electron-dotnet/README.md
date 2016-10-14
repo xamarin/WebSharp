@@ -1252,6 +1252,8 @@ You must have Visual Studio 2015 toolset, Python 2.7.x, and node-gyp installed f
 
     If the above steps didn't work for you, please visit [Microsoft's Node.js Guidelines for Windows](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules) for additional tips.
 
+> :bulb: If building the mono clr you will need both a 32 bit and a 64 bit version of mono installed.
+
 To build and test the project against all supported versions of Node.js in x86 and x64 flavors, run the following:
 
 ```
@@ -1264,7 +1266,7 @@ To build one of the versions of Node.js officially released by [Node.js](http://
 
 ```
 cd tools
-build.bat release 6.4.0
+build.bat release 6.5.0
 ```
 
 Note: the Node.js version number you provide must be version number corresponding to one of the subdirectories of http://nodejs.org/dist. The command will build both x32 and x64 architectures (assuming you use x64 machine). The command will also copy the edge\_\*.node executables to appropriate locations under lib\native directory where they are looked up from at runtime. The `npm install` step copies the C standard library shared DLL to the location of the edge\_\*.node files for the component to be ready to go.
@@ -1274,7 +1276,7 @@ To build the C++\CLI native extension using the version of Node.js installed on 
 ```
 npm install -g node-gyp
 node-gyp configure --msvs_version=2015
-node-gyp build -debug
+node-gyp build --debug
 ```
 
 Additional requirements and install instructions can be found [node-gyp windows install](https://github.com/nodejs/node-gyp#installation)
@@ -1286,6 +1288,68 @@ set EDGE_NATIVE=C:\projects\edge\build\Debug\edge_nativeclr.node
 ``` 
 
 You can also set the `EDGE_DEBUG` environment variable to 1 to have the edge module generate debug traces to the console when it runs.
+
+### Building with Mono
+
+To build ```electron-dotnet``` with Mono support you will need to have both a x86 and x64 bit mono installation.
+
+If mono is built and Mono is installed, by default electron-dotnet will use window's native .Net support, you can opt in to using Mono by setting the EDGE_USE_MONOCLR environment variable:
+
+```
+set EDGE_USE_MONOCLR=1
+``` 
+
+Mono must be in your %PATH% for mono support to be built and also during runtime.
+
+#### Setting mono path
+
+  * Option 1:
+
+    * Use mono's ```setmonopath.bat``` batch command before starting the electron application:
+
+      * x64
+        ```
+        > "c:\Program Files\Mono\bin\setmonopath.bat"
+        ```
+
+      * x86
+        ```
+        > "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
+        ```
+
+  * Option 2:
+    * Custom path environment variable set to the correct mono before starting the electron application.
+    ```
+    SET PATH=%PATH%;c:\path\to\mono
+    ```
+
+  * Option 3:
+    * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions
+      ```js
+        if (process.platform === 'win32')
+        {
+            if (process.arch === 'x64')
+                process.env.PATH = "c:\\Program Files\\Mono\\bin;" + process.env.PATH;
+            else
+                process.env.PATH = "c:\\\Program Files (x86)\\\Mono\\bin;" + process.env.PATH;
+        }
+      ```
+  * Option 4: 
+    * Set the path on Windows 10 and Windows 8
+      * In Search, search for and then select: System (Control Panel)
+      * Click the Advanced system settings link.
+      * Click Environment Variables. ...
+      * In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable.
+        * x64
+          ```
+          "c:\Program Files\Mono\bin"
+          ```
+        * x86
+          ```  
+          "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
+          ```
+     > :exclamation: Option 4 is not very flexible
+
 
 ### Running tests
 
