@@ -1348,6 +1348,7 @@ Mono must be in your %PATH% for mono support to be built and also during runtime
           ```  
           "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
           ```
+     
      > :exclamation: Option 4 is not very flexible
 
 
