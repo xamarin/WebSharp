@@ -111,7 +111,8 @@
       <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\Win32\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /y /d  "C:\Program Files %28x86%29\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -137,7 +138,8 @@
       <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\x64\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /y /d  "C:\Program Files\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -164,7 +166,8 @@
       <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\Win32\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /y /d  "C:\Program Files %28x86%29\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -191,7 +194,8 @@
       <Command>xcopy /y /d  "$(OutDir)*.dll" "$(MSBuildProjectDirectory)\..\..\..\electron-dotnet\lib\bin\x64\"</Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy /y /d  "C:\Program Files\Mono\bin\mono-2.0.dll" $(OutDir)</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

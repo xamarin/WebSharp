@@ -11,7 +11,6 @@ What follows are the instructions on how to compile WebSharp's plugin interface 
 - Windows requires at least a Visual Studio 2015 Community Edition.
 
 ## Compiling PepperPlugin
----
 
 To compile the PepperPlugin solution the [Native Client SDK Download](https://developer.chrome.com/native-client/sdk/download) will need to be downloaded and installed.  Basically it is the following:
 
@@ -156,9 +155,26 @@ You may need to specify the search path explicitly. This may be installation dep
 WebSharp/PepperPlugin/src$ export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
 ```
 
+### Mono and Windows Path
 
-PepperSharp - C# PPAPI binding assembly
----
+Mono has to be available in the windows %PATH% for everything to run correctly.
+
+For _development purposes_ you can can add a ```Pre-Build Event``` to the PepperPlugin project that will copy the ```mono-2.0.dll``` to the output directory instead of having to set the %PATH% all the time. 
+
+  * x86
+    ```shell
+    xcopy /y /d  "C:\Program Files %28x86%29\Mono\bin\mono-2.0.dll" $(OutDir)
+    ```
+
+  * x64
+    ```shell
+    xcopy /y /d  "C:\Program Files\Mono\bin\mono-2.0.dll" $(OutDir)   
+    ```
+
+For more information on setting the windows path see [Setting Mono path on Windows](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#setting-mono-path).
+
+### PepperSharp - C# PPAPI binding assembly
+
 To build only the PepperSharp.dll assembly
 
 ```shell
