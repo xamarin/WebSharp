@@ -1,0 +1,80 @@
+// A launch configuration that launches the electron application inside a new window
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Windows Main",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+      "program": "${workspaceRoot}/main.js",
+      "runtimeArgs": [
+        "--enable-logging"
+      ],
+      "stopOnEntry": false,
+      "env": {
+          "NODE-ENV": "devlopment"
+      },
+      "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
+      "name": "Debug Mac Main",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "program": "${workspaceRoot}/main.js",
+      "runtimeArgs": [
+        "--enable-logging"
+      ],
+      "stopOnEntry": false,
+      "env": {
+          "NODE-ENV": "devlopment"
+      },
+      "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
+      "name": "Debug Windows Renderer",
+      "type": "chrome",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+      "runtimeArgs": [
+        "${workspaceRoot}/main.js",
+        "--enable-logging",
+        "--remote-debugging-port=9222"
+      ],
+      "webRoot": "${workspaceRoot}",
+      "stopOnEntry": false,
+      "env": {
+          "NODE-ENV": "devlopment"
+      },
+      "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
+      "sourceMaps": false,
+      "outDir": null
+    },
+    {
+      "name": "Debug Mac Renderer",
+      "type": "chrome",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "runtimeArgs": [
+        "${workspaceRoot}/main.js",
+        "--enable-logging",
+        "--remote-debugging-port=9222"
+      ],
+      "webRoot": "${workspaceRoot}",
+      "stopOnEntry": false,
+      "env": {
+          "NODE-ENV": "devlopment"
+      },
+      "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
+      "sourceMaps": false,
+      "outDir": null
+    }
+  ]
+}
