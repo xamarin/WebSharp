@@ -19,7 +19,7 @@ To launch the generator simply type:
 yo electron-dotnet
 ```
 
-![The command generator](yocode.png)
+![The command generator](yoelectrondotnet.png)
 
 ## Generator Output
 
