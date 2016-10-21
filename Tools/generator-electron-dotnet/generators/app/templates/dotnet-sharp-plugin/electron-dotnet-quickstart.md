@@ -6,6 +6,7 @@
 * `main.js` - this is the main file where you will provide the implementation of your application.  The main.js should create windows and handle system events.
 * `index.html` - this is the web page you want to show.
 * `(application name).js` - this src file defines a C# expression that will be printed to the console by default.
+* `(application name).cs` - this src file defines a C# PepperPlugin implementation that will be printed to the console by default.
 
 ## Get up and running straight away
 * press `F5` to open a new window with your application loaded.

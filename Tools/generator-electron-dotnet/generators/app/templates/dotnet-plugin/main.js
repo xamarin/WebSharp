@@ -6,11 +6,18 @@ const {app, BrowserWindow} = require('electron')
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
 
-//require('electron-dotnet').Register();
+// Register PepperPlugin API
+require('electron-dotnet').Register();
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 600, height: 400, webPreferences: { plugins: true }})
+  mainWindow = new BrowserWindow(
+    {
+      width: 600,
+      height: 400,
+      webPreferences: { plugins: true }
+    }
+  )
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`)

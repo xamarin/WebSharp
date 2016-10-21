@@ -36,7 +36,84 @@ describe('test electron-dotnet generator', function () {
                         "electron": env.electronVersion
                     }
                 };
-                assert.file(['package.json', 'README.md', '.vscodeignore', 'index.html', 'main.js', 'renderer.js' , '.gitignore' ]);
+                assert.file(['package.json', 'README.md', '.vscodeignore', 'index.html', 'main.js', 'renderer.js' , './src/testCom.js', '.gitignore' ]);
+
+                var body = fs.readFileSync('package.json', 'utf8');
+
+                var actual = JSON.parse(body);
+                assert.deepEqual(expected, actual);
+
+                done();
+            });
+    });
+
+    it('dotnet-plugin', function (done) {
+        this.timeout(10000);
+
+        helpers.run(path.join(__dirname, '../generators/app'))
+            .withPrompts({
+                type: 'dotnet-plugin',
+                name: 'testCom',
+                displayName: 'Test Com',
+                description: 'My TestCom',
+                publisher: 'Xamarin',
+                className: 'Plugin',
+                gitInit: false
+            }) // Mock the prompt answers
+            .on('end', function () {
+                var expected = {
+                    "name": "testCom",
+                    "displayName": 'Test Com',
+                    "description": "My TestCom",
+                    "version": "0.0.1",
+                    "publisher": 'Xamarin',
+                    "main": "main.js",
+                    "scripts": {
+                        "start": "electron ."
+                    },
+                    "devDependencies": {
+                        "electron": env.electronVersion
+                    }
+                };
+                assert.file(['package.json', 'README.md', '.vscodeignore', 'index.html', 'main.js', 'renderer.js' , './src/testCom.cs', '.gitignore' ]);
+
+                var body = fs.readFileSync('package.json', 'utf8');
+
+                var actual = JSON.parse(body);
+                assert.deepEqual(expected, actual);
+
+                done();
+            });
+    });
+    it('dotnet-sharp-plugin', function (done) {
+        this.timeout(10000);
+
+        helpers.run(path.join(__dirname, '../generators/app'))
+            .withPrompts({
+                type: 'dotnet-sharp-plugin',
+                name: 'testCom',
+                displayName: 'Test Com',
+                description: 'My TestCom',
+                publisher: 'Xamarin',
+                className: 'Plugin',
+                gitInit: false
+            }) // Mock the prompt answers
+            .on('end', function () {
+                var expected = {
+                    "name": "testCom",
+                    "displayName": 'Test Com',
+                    "description": "My TestCom",
+                    "version": "0.0.1",
+                    "publisher": 'Xamarin',
+                    "main": "main.js",
+                    "scripts": {
+                        "start": "electron ."
+                    },
+                    "devDependencies": {
+                        "electron": env.electronVersion
+                    }
+                };
+                assert.file(['package.json', 'README.md', '.vscodeignore', 'index.html', 'main.js', 'renderer.js' , './src/testCom.cs', './src/testCom.js', '.gitignore' ]);
 
                 var body = fs.readFileSync('package.json', 'utf8');
 

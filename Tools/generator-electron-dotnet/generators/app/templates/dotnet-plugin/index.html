@@ -10,6 +10,20 @@
     We are using node <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
+    <div id="pluginTarget" />
+      <script>
+        var pluginTarget = document.getElementById("pluginTarget");
+        var moduleEl = require('electron-dotnet').Embed({
+            name: 'plugin',
+            id: 'plugin',
+            width: 300,
+            height: 200,
+            src: '<%- className %>.<%- className %>',
+            path: "./src"
+        });
+        pluginTarget.appendChild(moduleEl);
+
+      </script>
   </body>
 
   <script>

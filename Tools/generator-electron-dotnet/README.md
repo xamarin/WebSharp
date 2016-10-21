@@ -16,7 +16,7 @@ The Yeoman generator will walk you through the steps required to create your Ele
 To launch the generator simply type:
 
 ```bash
-yo code
+yo electron-dotnet
 ```
 
 ![The command generator](yocode.png)

@@ -113,6 +113,24 @@ module.exports = yeoman.generators.Base.extend({
             }.bind(this));
         },
 
+        askForClassName: function () {
+            var done = this.async();
+            if (['dotnet-plugin', 'dotnet-sharp-plugin'].indexOf(this.applicationConfig.type) === -1) {
+                done();
+                return;
+            }
+
+            this.prompt({
+                type: 'input',
+                name: 'className',
+                message: 'What\'s the name of your plugin class?',
+                default: this.applicationConfig.displayName.replace(/[^a-zA-Z0-9]/g, '_'),
+            }, function (classAnswer) {
+                this.applicationConfig.className = classAnswer.className;
+                done();
+            }.bind(this));
+        },
+
         // Ask for application description
         askForApplicationDescription: function () {
             var done = this.async();
@@ -196,6 +214,53 @@ module.exports = yeoman.generators.Base.extend({
         this.copy(this.sourceRoot() + '/jsconfig.json', './jsconfig.json');
 
         this.template(this.sourceRoot() + '/src/dotnet.js', './src/' + context.name + '.js', context);
+        this.template(this.sourceRoot() + '/index.html', './index.html', context);
+        this.template(this.sourceRoot() + '/main.js', './main.js', context);
+        this.template(this.sourceRoot() + '/package.json', './package.json', context);
+        this.template(this.sourceRoot() + '/renderer.js', './renderer.js', context);
+        this.template(this.sourceRoot() + '/.eslintrc.json', './.eslintrc.json', context);
+
+        this.applicationConfig.installDependencies = true;
+    },
+
+    // Write DotNet Sharp app
+    _writingDotNetPlugin: function () {
+        var context = this.applicationConfig;
+
+        this.directory(this.sourceRoot() + '/vscode', './.vscode');
+        //this.directory(this.sourceRoot() + '/test', './test');
+
+        this.copy(this.sourceRoot() + '/vscodeignore', './.vscodeignore');
+        this.copy(this.sourceRoot() + '/gitignore', './.gitignore');
+        this.template(this.sourceRoot() + '/README.md', './README.md', context);
+        this.template(this.sourceRoot() + '/electron-dotnet-quickstart.md', './electron-dotnet-quickstart.md', context);
+        this.copy(this.sourceRoot() + '/jsconfig.json', './jsconfig.json');
+
+        this.template(this.sourceRoot() + '/src/dotnet-plugin.cs', './src/' + context.name + '.cs', context);
+        this.template(this.sourceRoot() + '/index.html', './index.html', context);
+        this.template(this.sourceRoot() + '/main.js', './main.js', context);
+        this.template(this.sourceRoot() + '/package.json', './package.json', context);
+        this.template(this.sourceRoot() + '/renderer.js', './renderer.js', context);
+        this.template(this.sourceRoot() + '/.eslintrc.json', './.eslintrc.json', context);
+
+        this.applicationConfig.installDependencies = true;
+    },
+
+    // Write DotNet Sharp app
+    _writingDotNetSharpPlugin: function () {
+        var context = this.applicationConfig;
+
+        this.directory(this.sourceRoot() + '/vscode', './.vscode');
+        //this.directory(this.sourceRoot() + '/test', './test');
+
+        this.copy(this.sourceRoot() + '/vscodeignore', './.vscodeignore');
+        this.copy(this.sourceRoot() + '/gitignore', './.gitignore');
+        this.template(this.sourceRoot() + '/README.md', './README.md', context);
+        this.template(this.sourceRoot() + '/electron-dotnet-quickstart.md', './electron-dotnet-quickstart.md', context);
+        this.copy(this.sourceRoot() + '/jsconfig.json', './jsconfig.json');
+
+        this.template(this.sourceRoot() + '/src/dotnet.js', './src/' + context.name + '.js', context);
+        this.template(this.sourceRoot() + '/src/dotnet-plugin.cs', './src/' + context.name + '.cs', context);
         this.template(this.sourceRoot() + '/index.html', './index.html', context);
         this.template(this.sourceRoot() + '/main.js', './main.js', context);
         this.template(this.sourceRoot() + '/package.json', './package.json', context);
