@@ -7,6 +7,7 @@ all:
 
 build: check
 	(cd electron-dotnet; npm install electron; npm install)
+	(cd Tools/generator-electron-dotnet; npm install)
 	(cd PepperPlugin/src; export NACL_SDK_ROOT=../../../nacl_sdk/pepper_canary/; make)
 	(cd PepperSharp; xbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Release /p:Platform=AnyCPU)
 	(cd PepperSharp; xbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Debug /p:Platform=AnyCPU)
