@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+    "emitEntryPoint": false,
+    "outputName": <%- JSON.stringify(name) %>,
+    "compilerName": "csc",
+    "languageVersion": "csharp6"
+  },
+  "dependencies": {
+    "Xamarin.PepperSharp" : { "version": "*"}
+  },
+  "frameworks": {
+    "net451": {}
+  }
+}

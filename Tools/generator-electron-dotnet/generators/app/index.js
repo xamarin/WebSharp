@@ -237,6 +237,7 @@ module.exports = yeoman.generators.Base.extend({
         this.copy(this.sourceRoot() + '/jsconfig.json', './jsconfig.json');
 
         this.template(this.sourceRoot() + '/src/dotnet-plugin.cs', './src/' + context.name + '.cs', context);
+        this.template(this.sourceRoot() + '/src/project.json', './src/project.json', context);
         this.template(this.sourceRoot() + '/index.html', './index.html', context);
         this.template(this.sourceRoot() + '/main.js', './main.js', context);
         this.template(this.sourceRoot() + '/package.json', './package.json', context);
@@ -246,7 +247,7 @@ module.exports = yeoman.generators.Base.extend({
         this.applicationConfig.installDependencies = true;
     },
 
-    // Write DotNet Sharp app
+    // Write DotNet Sharp app with Pepper Plugin code module
     _writingDotNetSharpPlugin: function () {
         var context = this.applicationConfig;
 
@@ -261,6 +262,7 @@ module.exports = yeoman.generators.Base.extend({
 
         this.template(this.sourceRoot() + '/src/dotnet.js', './src/' + context.name + '.js', context);
         this.template(this.sourceRoot() + '/src/dotnet-plugin.cs', './src/' + context.name + '.cs', context);
+        this.template(this.sourceRoot() + '/src/project.json', './src/project.json', context);
         this.template(this.sourceRoot() + '/index.html', './index.html', context);
         this.template(this.sourceRoot() + '/main.js', './main.js', context);
         this.template(this.sourceRoot() + '/package.json', './package.json', context);

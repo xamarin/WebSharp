@@ -5,7 +5,7 @@
 * `package.json` - this is the manifest file in which you declare your application.  The format of package.json is exactly the same as that of Node’s modules, and the script specified by the main field is the startup script of your app, which will run the `main` process.  `Note:` If the main field is not present in package.json, Electron will attempt to load an index.js.
 * `main.js` - this is the main file where you will provide the implementation of your application.  The main.js should create windows and handle system events.
 * `index.html` - this is the web page you want to show.
-* `(application name).cs` - this src file defines a C# PepperPlugin implementation that will be printed to the console by default.
+* `<%- name %>.cs` - this src file defines a C# PepperPlugin implementation that will be printed to the console by default.
 
 ## Get up and running straight away
 * press `F5` to open a new window with your application loaded.
