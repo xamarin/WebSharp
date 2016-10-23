@@ -25,7 +25,7 @@ if not exist "%SELF%\build\nuget.exe" (
 call :build_peppersharp
 if %ERRORLEVEL% neq 0 exit /b -1
 
-call "%SELF%\build\nuget.exe"  pack "%SELF%\nuget\Xamarin.PepperSharp.nuspec" -OutputDirectory "%SELF%\build\nuget" -properties Configuration=%FLAVOR%  
+call "%SELF%\build\nuget.exe"  pack "%SELF%\nuget\Xamarin.PepperSharp.nuspec" -OutputDirectory "%SELF%\build\nuget" -properties Configuration=%FLAVOR% -basepath ..\..\PepperSharp  
 if %ERRORLEVEL% neq 0 (
 	echo Failure building Nuget package
 	cd "%SELF%"
