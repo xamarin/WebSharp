@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Xamarin.PepperSharp</id>
+        <version>0.0.1</version>
+        <authors>Xamarin</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>API bindings that will provide access to the APIs surfaced to Chromium plugins to C# code.</description>
+    </metadata>
+    <files>
+        <file src="..\..\..\PepperSharp\bin\$configuration$\Xamarin.PepperSharp.dll" target="lib\net45\Xamarin.PepperSharp.dll" />
+        <!--file src="..\..\..\PepperSharp\bin\Release\Xamarin.PepperSharp.dll" target="lib\netstandard1.4\Xamarin.PepperSharp.dll" /-->
+        <file src="..\..\..\PepperSharp\bin\$configuration$\Xamarin.PepperSharp.dll" target="lib\Xamarin.Mac\Xamarin.PepperSharp.dll" />
+    </files>
+</package>

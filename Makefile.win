@@ -16,10 +16,15 @@ buildRelease:
 
 	@$(MAKE) /f ./Makefile.win buildx86
 
+	electron-dotnet\tools\build_peppersharp.bat Release
+
+
 buildDebug: 
 	@$(MAKE) /f ./Makefile.win buildx64Debug
 	
 	@$(MAKE) /f ./Makefile.win buildx86Debug
+
+	electron-dotnet\tools\build_peppersharp.bat Debug
 
 buildx64:
 	cd .\PepperPlugin\src 
