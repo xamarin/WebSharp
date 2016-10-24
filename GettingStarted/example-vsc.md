@@ -46,7 +46,34 @@ Hit enter to start generating the application structure.
 
 This will install the dependencies automatically and when done you will have the application generated.
 
-![The electron-dotnet generator install](./screenshots/yogenfinsh.PNG)
+![The electron-dotnet generator finish](./screenshots/yogenfinish.PNG)
+
+# The Structure of an application
+After running, the generated application should have the following structure:
+
+```
+.
+|--- .eslintrc.json
+|--- .gitignore
+|--- .vscode
+     |--- launch.json
+     |--- settings.json
+|--- .vscodeignore
+|--- electron-dotnet-quickstart.md
+|--- index.html
+|--- jsconfig.json
+|--- main.js
+|--- node_modules
+     |--- All the node files used to run the electron application
+|--- package.json
+|--- README.md
+|--- renderer.js
+|--- src
+     |--- hello-world.cs
+     |--- hello-world.js
+     |--- project.json
+
+```
 
 
 
