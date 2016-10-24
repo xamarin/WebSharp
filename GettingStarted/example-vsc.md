@@ -22,8 +22,11 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
      make setup  # only needs to be run the first time
      make build
      ```
+## Getting Started      
+  * Install [.NET Core.](https://www.microsoft.com/net/core)
+  * Install the [C# extension from the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp).
 
-# Generate a `Electron Dotnet` Application
+## Generate a `Electron Dotnet` Application
 The simplest way to add a new `Electron DotNet` application for VS Code consumption is through adding a project. A project will have all the boot strap files available to run the `Electron` application.  For more details you can look at the [Electron Quick Start](https://github.com/electron/electron-quick-start).
 
 We have written a Yeoman generator to help get you started. Install Yeoman and the Yeoman Electron Dotnet generator that provides different templates for creating new applications:
@@ -48,7 +51,7 @@ This will install the dependencies automatically and when done you will have the
 
 ![The electron-dotnet generator finish](./screenshots/yogenfinish.PNG)
 
-# The Structure of an application
+## The Structure of an application
 After running, the generated application should have the following structure:
 
 ```
@@ -77,9 +80,9 @@ After running, the generated application should have the following structure:
 
 Let's go through the purpose of some of these files and explain what they do:
 
-## > Needs more information
+### > Needs more information
 
-# Compiling plugin code
+## Compiling plugin code
 Before running our application we will need to compile our plugin code ```hello-world.cs```.
 
 The compile target uses [Dotnet Core](https://www.microsoft.com/net/core) with one of the dependencies of the Plugin API `Xamarin.PepperSharp` delivered as a NuGet package.
@@ -102,7 +105,7 @@ HelloWorld\src$ dotnet publish
 cd ..
 ```
 
-# Running the application
+## Running the application
 
 To run the application we will need to install 'electron-dotnet' module which provides all of the ```Node.js``` implemenation for running within ```Electron```.
 
