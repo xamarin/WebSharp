@@ -36,10 +36,17 @@ You will be presented with three different project types. For this example, we w
 
 ![The electron-dotnet generator](./screenshots/yogen.PNG)
 
-You will be presented with a series of questions so that the generator can generate the application for you.  Fill in the answers as shown in the following screen shot.
+Once the type of application project is selected the generator will present you with a series of questions so that the generator can generate the application for you.  Fill in the answers as shown in the following screen shot.
 
 ![The electron-dotnet generator questions](./screenshots/yogenask.PNG)
 
+Hit enter to start generating the application structure.
+
+![The electron-dotnet generator install](./screenshots/yogeninstall.PNG)
+
+This will install the dependencies automatically and when done you will have the application generated.
+
+![The electron-dotnet generator install](./screenshots/yogenfinsh.PNG)
 
 
 
