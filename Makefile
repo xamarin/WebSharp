@@ -30,4 +30,4 @@ setup:
 	(mkdir -p electron-dotnet/tools/build)
 	(mkdir -p electron-dotnet/tools/build/nuget)
 
-	(cd electron-dotnet/tools/ && { mcs download.cs ; mono download.exe 'http://nuget.org/nuget.exe' ./build/nuget.exe; cd -; })
+	(cd electron-dotnet/tools/ && { mcs download.cs ; mono download.exe 'http://nuget.org/nuget.exe' ./build/nuget.exe;  mono ./build/nuget.exe update -self; cd -; })
