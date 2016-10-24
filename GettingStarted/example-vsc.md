@@ -106,6 +106,22 @@ HelloWorld\src$ dotnet publish
 cd ..
 ```
 
+### What do the commands above do?
+
+* Resolve the build assets by typing `dotnet restore`.
+  * Running `restore` pulls down the required packages declared in the project.json file.
+  * You'll see a new project.lock.json file in your project folder.
+  * This file contains information about your project's dependencies to make subsequent restores quicker.
+  * The `-s path-to-WebSharp/electron-dotnet/tools/build/nuget` in the `restore` is the nuget source where the `Xamarin.PepperSharp.xxx.nupkg` can be found.
+     * On Windows if a Local Package source is setup then the source will be search so you will not need to provide this parameter.
+     * On Mac it seems that the `restore` does not work for Local Package sources right now.  Your mileage may vary but this is the surefire way to get the dependencies restored correctly.
+  * The `Xamarin.PepperSharp.xxxx.nupkg` dependency is built during the Electron DotNet build process.
+* Build the source `hello-world.cs` implementation by typing `dotnet build`.
+  * The `build` command will compile the source file based on the definition found in the `project.json`
+* Make the assemblies available for use by typing `dotnet publish`.
+  * This will copy the implementation as well as the `Xamarin.PepperSharp.dll` from the nuget package available to be loaded.
+  * The `PepperPlugin` does not support loading from a nuget package so the `publish` will make all the dependencies available in one place so they can be loaded.
+
 ## Running the application
 
 To run the application we will need to install 'electron-dotnet' module which provides all of the ```Node.js``` implemenation for running within ```Electron```.
