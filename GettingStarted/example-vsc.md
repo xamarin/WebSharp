@@ -9,6 +9,7 @@ In this walkthrough, you'll add a C# and a new Plugin to an Electron application
 ## Prerequisites
 You need [node.js](https://nodejs.org/en/) installed and available in your $PATH.
    * Plugins require [Mono](http://www.mono-project.com/download/) installed and available in your $PATH.
+      
       > :bulb: Windows will need both the x86 and x64 bit versions installed and [available in your $PATH](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#setting-mono-path).
    * `electron-dotnet` needs to be built.  The easiest way is to use the provided `make` files available in the WebSharp base directory.
      ``` bash
@@ -33,11 +34,11 @@ yo electron-dotnet
 ```
 You will be presented with three different project types. For this example, we will pick `Both C# and Plugin`.  
 
-![The electron-dotnet generator](../GettingStarted/screenshots/yogen.png)
+![The electron-dotnet generator](./screenshots/yogen.PNG)
 
 You will be presented with a series of questions so that the generator can generate the application for you.  Fill in the answers as shown in the following screen shot.
 
-![The electron-dotnet generator questions](../GettingStarted/screenshots/yogenask.png)
+![The electron-dotnet generator questions](./screenshots/yogenask.PNG)
 
 
 
