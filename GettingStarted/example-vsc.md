@@ -55,25 +55,29 @@ After running, the generated application should have the following structure:
 .
 |--- .eslintrc.json
 |--- .gitignore
-|--- .vscode
+|--- .vscode                           // VS Code integration
      |--- launch.json
      |--- settings.json
 |--- .vscodeignore
 |--- electron-dotnet-quickstart.md
-|--- index.html
+|--- index.html                       // Html to be displayed in the app window
 |--- jsconfig.json
-|--- main.js
+|--- main.js                          // Defines the electron main process
 |--- node_modules
      |--- All the node files used to run the electron application
-|--- package.json
+|--- package.json                     // Various project metadata
 |--- README.md
-|--- renderer.js
-|--- src
-     |--- hello-world.cs
-     |--- hello-world.js
-     |--- project.json
+|--- renderer.js                      // Required in index.html and executed in the renderer process for that window 
+|--- src                              // sources
+     |--- hello-world.cs              // PepperPlugin implementation
+     |--- hello-world.js              // C# code implementation
+     |--- project.json                // Defines compilation infomration 
 
 ```
+
+Let's go through the purpose of some of these files and explain what they do:
+
+
 
 
 
