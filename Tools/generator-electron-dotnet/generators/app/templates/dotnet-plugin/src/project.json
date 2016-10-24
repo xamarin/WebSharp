@@ -4,7 +4,6 @@
     "debugType": "portable",
     "emitEntryPoint": false,
     "outputName": <%- JSON.stringify(name) %>,
-    "compilerName": "csc",
     "languageVersion": "csharp6"
   },
   "dependencies": {
