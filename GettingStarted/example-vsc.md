@@ -77,10 +77,53 @@ After running, the generated application should have the following structure:
 
 Let's go through the purpose of some of these files and explain what they do:
 
+## > Needs more information
+
+# Compiling plugin code
+Before running our application we will need to compile our plugin code ```hello-world.cs```.
+
+The compile target uses [Dotnet Core](https://www.microsoft.com/net/core) with one of the dependencies of the Plugin API `Xamarin.PepperSharp` delivered as a NuGet package.
+
+``` bash
+# Windows
+cd src
+HelloWorld\src> dotnet restore -s path-to-WebSharp\electron-dotnet\tools\build\nuget
+HelloWorld\src> dotnet build
+HelloWorld\src> dotnet publish
+cd ..
+```
+
+``` bash
+# Mac OSX
+cd src
+HelloWorld\src$ dotnet restore -s path-to-WebSharp/electron-dotnet/tools/build/nuget
+HelloWorld\src$ dotnet build
+HelloWorld\src$ dotnet publish
+cd ..
+```
+
+# Running the application
+
+To run the application we will need to install 'electron-dotnet' module which provides all of the ```Node.js``` implemenation for running within ```Electron```.
+
+> :bulb: This project dependency will be automatic in the future once the project workflow has been defined and will be installed with the template in the future.
+
+But right now we will have to do this install manually from the command line.
+
+``` bash
+# Windows
+HelloWorld> npm install path-to-WebSharp\electron-dotnet   
+HelloWorld> npm start 
+```
+
+> :bulb: Windows users need to make sure that mono is [available in their $PATH](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#setting-mono-path).  If not then a runtime error is generated.
 
 
-
-
+``` bash
+# Mac OSX
+HelloWorld$ npm install path-to-WebSharp/electron-dotnet   
+HelloWorld$ npm start 
+```
 
 
 
