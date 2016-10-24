@@ -23,8 +23,8 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
      make build
      ```
 
-# Generate a New Extension
-The simplest way to add a new Electron DotNet application for VS Code consumption is through adding a project. A project will have all the boot strap files available to run the `Electron` application.  For more details you can look at the [Electron Quick Start](https://github.com/electron/electron-quick-start).
+# Generate a `Electron Dotnet` Application
+The simplest way to add a new `Electron DotNet` application for VS Code consumption is through adding a project. A project will have all the boot strap files available to run the `Electron` application.  For more details you can look at the [Electron Quick Start](https://github.com/electron/electron-quick-start).
 
 We have written a Yeoman generator to help get you started. Install Yeoman and the Yeoman Electron Dotnet generator that provides different templates for creating new applications:
 
