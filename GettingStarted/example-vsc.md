@@ -195,7 +195,7 @@ The `Register` method is a wrapper around the following piece of code that will 
 app.commandLine.appendSwitch('register-pepper-plugins', native-client-implementation + ';application/electron-dotnet');
 ``` 
 
-On thing to notice in the above command line switch is `;application/electron-dotnet` that is appended to the native-client-implementation, which specifies the MIME type of the embedded content.  This is what tells the interface which Native Client implementation to load when an HTML `<embed></embed>` element is specified. 
+One thing to notice in the above command line switch is `;application/electron-dotnet` that is appended to the native-client-implementation, which specifies the MIME type of the embedded content.  This is what tells the interface which Native Client implementation to load when an HTML `<embed></embed>` element is specified. 
 
 
 The next piece of the puzzle to allow Native Client implementations to run is to tell the `BrowserWindow` that plugin api's need to be made available.
@@ -214,7 +214,13 @@ The added `webPreferences` parameter passed to the `BrowserWindow` creation does
 
 > :bulb: If the `main` field is not present in `package.json`, Electron will attempt to load an `index.js`.
 
-
+### Miscellaneous files
+* .vscode/launch.json - Defines Debugger launching targets. 
+* .vscode/settings.json - Place your settings in this file to overwrite default and user settings, by default specifies the typescript server. If you are receiving a *TypeScript tsserver error* you can install this into your project's local node_modules by exectuing `npm i typescript`.
+* .gitignore - Tells Git version control which patterns to ignore.
+* README.md - README file describing your application.
+* electron-dotnet-quickstart.md - A Quick Start guide for you.
+* .eslintrc.json - Configuring ESLint
 
 ## Compiling plugin code
 Before running our application we will need to compile our plugin code ```hello-world.cs```.
