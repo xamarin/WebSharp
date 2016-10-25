@@ -214,6 +214,86 @@ The added `webPreferences` parameter passed to the `BrowserWindow` creation does
 
 > :bulb: If the `main` field is not present in `package.json`, Electron will attempt to load an `index.js`.
 
+### Showing Information: index.html
+The web page you want to show is defined in the static html file `index.html`.  This file is loaded from the `main.js` file referenced above in the `createWindow()` method.
+
+``` js
+ // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/index.html`)
+```
+
+The static html file is just a normal file containing html elements that will be displayed in Electron's browser page.
+
+``` html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!!!</title>
+  </head>
+  <body>
+    <h1>Hello World!!!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using node <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+    <div id="pluginTarget" />
+      <script>
+        var pluginTarget = document.getElementById("pluginTarget");
+        var moduleEl = require('electron-dotnet').Embed({
+            name: 'plugin',
+            id: 'plugin',
+            width: 300,
+            height: 200,
+            src: 'HelloWorld.HelloWorld',
+            path: "./src/bin/Debug/net451"
+        });
+        pluginTarget.appendChild(moduleEl);
+
+      </script>
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>
+
+```
+
+The interesting part of the file above is where we actually defined where our plugin will be displayed.
+
+``` html
+
+    <div id="pluginTarget" />
+      <script>
+        var pluginTarget = document.getElementById("pluginTarget");
+        var moduleEl = require('electron-dotnet').Embed({
+            name: 'plugin',
+            id: 'plugin',
+            width: 300,
+            height: 200,
+            src: 'HelloWorld.HelloWorld',
+            path: "./src/bin/Debug/net451"
+        });
+        pluginTarget.appendChild(moduleEl);
+
+      </script>
+```
+
+The above code's `Embed` method is delivered in the `electron-dotnet` Node.js implementation which will create an `<embed></embed>` element defining our PepperSharp [Native Client](https://developer.chrome.com/native-client) implementation.  
+
+It is a convenience method to create an `<embed></embed>` tag that hosts a Module Instance implementation.
+
+- height : The displayed height of the resource, in CSS pixels.
+- src : The dot net class the implements the Module Instance that is embedded.
+- path : The path where the assemblies can be found.
+- width : The displayed width of the resource, in CSS pixels.
+
+If you remember above when we mentioned the `Register()` method that there was a Mime type also appended automatically, this is were it is used.  One extra attribute will be added to the `<embed>` element and that specifies the `type` attribute as `application/electron-dotnet`.  This is basically what the `Embed()` helper does. The same can be crafted by hand if need be with only this extra attribute added.
+
+We will get into more detail about the `src` and `path` later on in the [Compiling plugin code](#Compiling plugin code).
+
 ### Miscellaneous files
 * .vscode/launch.json - Defines Debugger launching targets. 
 * .vscode/settings.json - Place your settings in this file to overwrite default and user settings, by default specifies the typescript server. If you are receiving a *TypeScript tsserver error* you can install this into your project's local node_modules by exectuing `npm i typescript`.
