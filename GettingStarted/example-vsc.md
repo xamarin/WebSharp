@@ -109,7 +109,7 @@ As you can see above the information that was filled in from the template questi
 
 Electron is listed as one of the devDependencies and should have been installed when the template was created.  
 
-A `start` script has already been defined in the `scripts` section that can easily be run with the `npm run` command and is the default target for `npm start`.  In this case since we are creating an Electron application it just runs `electron .`.
+A `start` script has already been defined in the `scripts` section that can easily be run as the target of a `npm run` command and is the default target for `npm start`.  In this case since we are creating an Electron application is set to run `electron .`.
 
 ### Start up script of our app: main.js
 
@@ -194,6 +194,9 @@ The `Register` method is a wrapper around the following piece of code that will 
 ``` js
 app.commandLine.appendSwitch('register-pepper-plugins', native-client-implementation + ';application/electron-dotnet');
 ``` 
+
+On thing to notice in the above command line switch is `;application/electron-dotnet` that is appended to the native-client-implementation, which specifies the MIME type of the embedded content.  This is what tells the interface which Native Client implementation to load when an HTML `<embed></embed>` element is specified. 
+
 
 The next piece of the puzzle to allow Native Client implementations to run is to tell the `BrowserWindow` that plugin api's need to be made available.
 
