@@ -111,6 +111,108 @@ Electron is listed as one of the devDependencies and should have been installed 
 
 A `start` script has already been defined in the `scripts` section that can easily be run with the `npm run` command and is the default target for `npm start`.  In this case since we are creating an Electron application it just runs `electron .`.
 
+### Start up script of our app: main.js
+
+The `main.js` should create windows and handle system events.
+
+``` js
+
+// app is the Module to control application life.
+// BrowserWindow is the Module to create native browser window.
+const {app, BrowserWindow} = require('electron')
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+var mainWindow = null;
+
+// Register PepperPlugin API
+require('electron-dotnet').Register();
+
+function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow(
+    {
+      width: 600,
+      height: 400,
+      webPreferences: { plugins: true }
+    }
+  )
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/index.html`)
+
+  // Open the DevTools.
+  //mainWindow.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  })
+}
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow)
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', function () {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
+
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and require them here.
+
+```
+
+The code above differs from a typical `main.js` example by adding additional functionality for a PepperPlugin Native Client implementation.
+
+``` js
+// Register PepperPlugin API
+require('electron-dotnet').Register();
+```
+
+The above code's `Register` method is delivered in the `electron-dotnet` Node.js implementation which will register the correct [Native Client](https://developer.chrome.com/native-client) implementation for the platform.  The registering of any Native Client needs to be done in the Electron Main process before any rendering code is executed.
+
+The `Register` method is a wrapper around the following piece of code that will pass in command line switches before the application is actually started.
+
+``` js
+app.commandLine.appendSwitch('register-pepper-plugins', native-client-implementation + ';application/electron-dotnet');
+``` 
+
+The next piece of the puzzle to allow Native Client implementations to run is to tell the `BrowserWindow` that plugin api's need to be made available.
+
+``` js
+  mainWindow = new BrowserWindow(
+    {
+      width: 600,
+      height: 400,
+      webPreferences: { plugins: true }
+    }
+  )
+``` 
+
+The added `webPreferences` parameter passed to the `BrowserWindow` creation does just that.  Without this parameter access to the Native Client api's will fail.
+
+> :bulb: If the `main` field is not present in `package.json`, Electron will attempt to load an `index.js`.
+
+
+
 ## Compiling plugin code
 Before running our application we will need to compile our plugin code ```hello-world.cs```.
 
