@@ -292,7 +292,7 @@ It is a convenience method to create an `<embed></embed>` tag that hosts a Modul
 
 If you remember above when we mentioned the `Register()` method that there was a Mime type also appended automatically, this is were it is used.  One extra attribute will be added to the `<embed>` element and that specifies the `type` attribute as `application/electron-dotnet`.  This is basically what the `Embed()` helper does. The same can be crafted by hand if need be with only this extra attribute added.
 
-We will get into more detail about the `src` and `path` later on in the [Compiling plugin code](#Compiling plugin code).
+We will get into more detail about the `src` and `path` later on in the [Compiling plugin code](#compiling-plugin-code).
 
 ### Miscellaneous files
 * .vscode/launch.json - Defines Debugger launching targets. 
