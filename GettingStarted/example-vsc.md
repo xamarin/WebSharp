@@ -290,7 +290,13 @@ It is a convenience method to create an `<embed></embed>` tag that hosts a Modul
 - path : The path where the assemblies can be found.
 - width : The displayed width of the resource, in CSS pixels.
 
-If you remember above when we mentioned the `Register()` method that there was a Mime type also appended automatically, this is were it is used.  One extra attribute will be added to the `<embed>` element and that specifies the `type` attribute as `application/electron-dotnet`.  This is basically what the `Embed()` helper does. The same can be crafted by hand if need be with only this extra attribute added.
+If you remember above when we mentioned the `Register()` method that there was a Mime type also appended automatically, this is where it needs to be referenced.  One extra attribute will be added to the `<embed>` element and that specifies the `type` attribute as `application/electron-dotnet`.  This is basically what the `Embed()` helper does. The same can be crafted by hand if need be with only this extra attribute added.  For example:
+
+``` html
+<embed name="plugin" id="plugin" width="300" height="200" src="HelloWorld.HelloWorld" type="application/electron-dotnet" path="C:\Xamarin\WebSharp\HelloWorld\src\bin\Debug\net451">
+```
+
+> :bulb: Knowing how to do the above may come in handy if you do not have access to Node.js by creating the `BrowserWindow` with `nodeIntegration: false`.
 
 We will get into more detail about the `src` and `path` later on in the [Compiling plugin code](#compiling-plugin-code).
 
