@@ -36,7 +36,7 @@ We have written a Yeoman generator to help get you started. Install Yeoman and t
 npm install -g yo path-to-WebSharp-directory\Tools\generator-electron-dotnet
 yo electron-dotnet
 ```
-You will be presented with three different project types. For this example, we will pick `Both C# and Plugin`.  
+You will be presented with three different project types. For this example, we will pick `electron-dotnet.js: .NET and Node.js in-process with PepperPlugin`.  
 
 ![The electron-dotnet generator](./screenshots/yogen.PNG)
 
@@ -81,7 +81,35 @@ After running, the generated application should have the following structure:
 
 Let's go through the purpose of some of these files and explain what they do:
 
-### > Needs more information
+### The application manifest: package.json
+The format of `package.json` is exactly the same as that of [Node’s modules](https://docs.npmjs.com/getting-started/using-a-package.json), and the script specified by the `main` field is the startup script of your app, which will run the main process.
+
+* It serves as documentation for what packages your project depends on.
+* It allows you to specify the versions of a package that your project can use using [semantic versioning rules](https://docs.npmjs.com/getting-started/semantic-versioning).
+* Makes your build reproducable which means that its way easier to share with other developers.
+
+``` json
+{
+    "name": "hello-world",
+    "displayName": "Hello World!!!",
+    "description": "Hello World example application",
+    "version": "0.0.1",
+    "publisher": "Me",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}
+```
+
+As you can see above the information that was filled in from the template questions has been placed in this file.
+
+Electron is listed as one of the devDependencies and should have been installed when the template was created.  
+
+A `start` script has already been defined in the `scripts` section that can easily be run with the `npm run` command and is the default target for `npm start`.  In this case since we are creating an Electron application it just runs `electron .`.
 
 ## Compiling plugin code
 Before running our application we will need to compile our plugin code ```hello-world.cs```.
