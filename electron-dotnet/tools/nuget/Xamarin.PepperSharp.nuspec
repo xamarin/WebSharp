@@ -9,6 +9,5 @@
     </metadata>
     <files>
         <file src="bin/$configuration$/Xamarin.PepperSharp.dll" target="lib/net45/Xamarin.PepperSharp.dll" />
-        <file src="bin/$configuration$/Xamarin.PepperSharp.dll" target="lib/Xamarin.Mac/Xamarin.PepperSharp.dll" />
     </files>
 </package>
