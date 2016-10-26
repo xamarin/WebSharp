@@ -75,7 +75,7 @@ After running, the generated application should have the following structure:
 |--- src                              // sources
      |--- hello-world.cs              // PepperPlugin implementation
      |--- hello-world.js              // C# code implementation
-     |--- project.json                // Defines compilation infomration 
+     |--- project.json                // Defines compilation information 
 
 ```
 
@@ -180,7 +180,7 @@ app.on('activate', function () {
 
 ```
 
-The code above differs from a typical `main.js` example by adding additional functionality for a PepperPlugin Native Client implementation.
+The code above differs from a typical `main.js` example by adding additional functionality for a PepperPlugin [Native Client](https://developer.chrome.com/native-client) implementation.
 
 ``` js
 // Register PepperPlugin API
@@ -299,6 +299,74 @@ If you remember above when we mentioned the `Register()` method that there was a
 > :bulb: Knowing how to do the above may come in handy if you do not have access to Node.js by creating the `BrowserWindow` with `nodeIntegration: false`.
 
 We will get into more detail about the `src` and `path` later on in the [Compiling plugin code](#compiling-plugin-code).
+
+### Generated Code
+
+The generated application's code is in the `src` directory.  Depending on the project template selected there is an implementation of each type of application integration point generated.  When we selected the `electron-dotnet.js: .NET and Node.js in-process with PepperPlugin` we will have a total of two src files:
+
+``` bash
+.
+|--- src                              // sources
+     |--- hello-world.cs              // PepperPlugin implementation
+     |--- hello-world.js              // C# code implementation
+     |--- project.json                // Defines compilation information 
+
+```
+
+#### PepperPlugin [Native Client](https://developer.chrome.com/native-client) implementation: hello_world.cs
+The [Native Client](https://developer.chrome.com/native-client) implementation that will be loaded by the `require('electron-dotnet').Embed()` method mentioned above is outlined here:
+
+``` csharp
+using System;
+
+using PepperSharp;
+
+namespace HelloWorld
+{
+    public class HelloWorld : Instance
+    {
+        public HelloWorld (IntPtr handle) : base(handle)
+        {
+            Initialize += OnInitialize;
+        }
+
+        private void OnInitialize(object sender, InitializeEventArgs args)
+        {
+            LogToConsoleWithSource(PPLogLevel.Log, "HelloWorld.HelloWorld", "Hello from C#");
+        }
+    }
+}
+```
+
+* Reference the PepperSharp assembly: 
+    ``` csharp
+    using PepperSharp;
+    ```
+* Class extends `Instance` of the PepperSharp implementation: 
+    ``` csharp 
+    public class HelloWorld : Instance
+    ```
+* Subscribes to the `Initialize` event:
+   
+    ``` csharp
+    Initialize += OnInitialize;
+    ```
+   
+   - This event is raised to initialize this instance with the provided `InitializeEventArgs` class object.
+   - The `InitializeEventArgs` class object is `Cancelable`.
+     - InitializeEventArgs Properties:
+       - int Count : Gets the number of arguments 
+       - string[] Names : Gets the argument names 
+       - string[] Values : Gets the argument values
+       - bool Cancel : Gets or sets a value indicating whether the event should be canceled.
+
+
+
+* Output to the Console:
+    ``` csharp
+    LogToConsoleWithSource(PPLogLevel.Log, "HelloWorld.HelloWorld", "Hello from C#");
+    ```
+
 
 ### Miscellaneous files
 * .vscode/launch.json - Defines Debugger launching targets. 
