@@ -56,15 +56,15 @@ module.exports = yeoman.generators.Base.extend({
                 message: 'What type of Electron DotNet app do you want to create?',
                 choices: [
                     {
-                        name: 'DotNet C# (In Process)',
+                        name: 'electron-dotnet.js: .NET and Node.js in-process',
                         value: 'dotnet-sharp'
                     },
                     {
-                        name: 'DotNet Plugin (Out Of Process)',
+                        name: 'PepperPlugin: Native Client',
                         value: 'dotnet-plugin'
                     },
                     {
-                        name: 'Both C# and Plugin',
+                        name: 'electron-dotnet.js: .NET and Node.js in-process with PepperPlugin',
                         value: 'dotnet-sharp-plugin'
                     }
                 ]
