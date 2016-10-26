@@ -20,6 +20,7 @@ if not exist "%SELF%\build\repl.exe" (
 
 if not exist "%SELF%\build\nuget.exe" (
 	"%SELF%\build\download.exe" http://nuget.org/nuget.exe "%SELF%\build\nuget.exe"
+	call "%SELF%\build\nuget.exe" update -self
 )
 
 call :build_peppersharp
