@@ -357,13 +357,14 @@ namespace HelloWorld
    - This event is raised to initialize this instance with the provided `InitializeEventArgs` class object.
    - The `InitializeEventArgs` class object is `Cancelable`.
      - `InitializeEventArgs` Properties:
-        - int Count : Gets the number of arguments 
-        - string[] Names : Gets the argument names 
-        - string[] Values : Gets the argument values
-        - bool Cancel : Gets or sets a value indicating whether the event should be canceled.
-
-
-
+     
+        | Type       | Name   | Description  |
+        | ---------- |:-------|:------------ |
+        | int        | Count  | Gets the number of arguments |
+        | string[]   | Names  | Gets the argument names  |
+        | string[]   | Values | Gets the argument values  |
+        | bool       | Cancel | Gets or sets a value indicating whether the event should be canceled. |
+      
 * Output to the Console:
     ``` csharp
     LogToConsoleWithSource(PPLogLevel.Log, "HelloWorld.HelloWorld", "Hello from C#");
