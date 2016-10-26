@@ -339,10 +339,12 @@ namespace HelloWorld
 ```
 
 * Reference the PepperSharp assembly: 
+    
     ``` csharp
     using PepperSharp;
     ```
 * Class extends `Instance` of the PepperSharp implementation: 
+    
     ``` csharp 
     public class HelloWorld : Instance
     ```
@@ -354,11 +356,11 @@ namespace HelloWorld
    
    - This event is raised to initialize this instance with the provided `InitializeEventArgs` class object.
    - The `InitializeEventArgs` class object is `Cancelable`.
-     - InitializeEventArgs Properties:
-       - int Count : Gets the number of arguments 
-       - string[] Names : Gets the argument names 
-       - string[] Values : Gets the argument values
-       - bool Cancel : Gets or sets a value indicating whether the event should be canceled.
+     - `InitializeEventArgs` Properties:
+        - int Count : Gets the number of arguments 
+        - string[] Names : Gets the argument names 
+        - string[] Values : Gets the argument values
+        - bool Cancel : Gets or sets a value indicating whether the event should be canceled.
 
 
 
