@@ -191,7 +191,9 @@ The code above differs from a typical `main.js` example by adding additional fun
 require('electron-dotnet').Register();
 ```
 
-The above code's `Register` method is delivered in the `electron-dotnet` Node.js implementation which will register the correct [Native Client](https://developer.chrome.com/native-client) implementation for the platform.  The registering of any Native Client needs to be done in the Electron Main process before any rendering code is executed.
+The above code's `Register` method is delivered in the `electron-dotnet` Node.js implementation which will register the correct [Native Client](https://developer.chrome.com/native-client) implementation for the platform.  
+
+> :bulb: The registering of any [Native Client](https://developer.chrome.com/native-client) needs to be done in the Electron Main process before any rendering code is executed.
 
 The `Register` method is a wrapper around the following piece of code that will pass in command line switches before the application is actually started.
 
