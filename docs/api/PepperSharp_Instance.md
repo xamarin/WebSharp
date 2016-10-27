@@ -14,9 +14,7 @@ An instance is a rectangle on a web page that is managed by a PepperPlugin modul
 | Name | Description |
 | ---- | ----------- |
 | Instance () | Not implemented - Throws error if called |
-| Instance(IntPtr handle) | Creates an object instance of Instance using the handle passed.  The handle is a pointer passed to the class when instanciated by the PepperPlugin Native Client implementation. |
-
-## Methods
+| Instance(IntPtr handle) | Creates an object instance of Instance using the handle passed.  The handle is a pointer passed to the class when instantiated by the PepperPlugin Native Client implementation. |
 
 ## Methods
 
