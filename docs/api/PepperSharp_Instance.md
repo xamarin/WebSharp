@@ -1,6 +1,6 @@
 # Instance Class Reference
 
-## Summary
+## Description
 
 An instance is a rectangle on a web page that is managed by a PepperPlugin module.
 
