@@ -415,9 +415,9 @@ exports.sayHello = arg => {
 
 The first two lines of the file enables scripting C# from a Node.js and then creates a C# `hello` function for us.
 
-For more detailed information about scripting C# from a Node.js process please reference that [section of the documentation](
+For more detailed information about scripting C# from a Node.js process please reference the [How to: integrate C# code into Node.js code](
 https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#how-to-integrate-c-code-into-nodejs-code
-).
+) section of the documentation.
 
 What we do need to point out is the code:
 
