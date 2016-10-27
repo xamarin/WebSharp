@@ -325,7 +325,7 @@ We require the electron-dotnet.js generated file `"./src/hello-world.js"` which 
 
 When we get to debugging you will see why it is broken up this way.
 
-> :buld: We will not be going into the differences of Electron's Main and Renderer processes but for more informaiton you can start [here](http://electron.atom.io/docs/tutorial/quick-start/#differences-between-main-process-and-renderer-process) 
+> :bulb: We will not be going into the differences of Electron's Main and Renderer processes but for more informaiton you can start [here](http://electron.atom.io/docs/tutorial/quick-start/#differences-between-main-process-and-renderer-process) 
 
 ### Generated Code
 
