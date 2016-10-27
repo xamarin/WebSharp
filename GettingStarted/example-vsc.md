@@ -11,12 +11,16 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
    * Plugins require [Mono](http://www.mono-project.com/download/) installed and available in your $PATH.
       
       > :bulb: Windows will need both the x86 and x64 bit versions installed and [available in your $PATH](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#setting-mono-path).
-   * `electron-dotnet` needs to be built.  The easiest way is to use the provided `make` files available in the WebSharp base directory.
+   * `electron-dotnet` needs to be built.  The easiest way is to use the provided `make` files available in the WebSharp base directory.  
+   
+      * [Windows Prerequisites](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#building-on-windows)
+   
      ``` bash
      # Windows Visual Studio 2015 Command Line Prompt 
      nmake /f Makefile.win buildRelease
      ```
 
+      * [Mac Prerequisites](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#building-on-osx)
      ``` bash
      # Mac OSX terminal with XCode tools available for build.
      make setup  # only needs to be run the first time
@@ -409,7 +413,7 @@ exports.sayHello = arg => {
 
 The first two lines of the file enables scripting C# from a Node.js and then creates a C# `hello` function for us.
 
-For more detailed information about scripting C# from a Node.js process please reference that [section of the documentation]((
+For more detailed information about scripting C# from a Node.js process please reference that [section of the documentation](
 https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#how-to-integrate-c-code-into-nodejs-code
 ).
 
