@@ -431,7 +431,7 @@ exports.sayHello = arg => {
 }
 ``` 
 
-We will be referencing this code from Electron's Renderer process which can be found in the `renderer.js` file mentioned above. To do this we will export a function called `sayHello` so that it can be referenced in other processes.
+We will be referencing this code from Electron's Renderer process which can be found in the [`renderer.js` file mentioned above](#renderer-process-rendererjs). To do this we will export a function called `sayHello` so that it can be referenced in other processes.
 
 At the bottom of our [index.html](#showing-information-indexhtml) we require `renderer.js` which loads this file into Electrons's [Renderer](http://electron.atom.io/docs/tutorial/quick-start/#renderer-process) process.  
 
