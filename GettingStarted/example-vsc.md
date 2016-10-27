@@ -300,6 +300,27 @@ If you remember above when we mentioned the `Register()` method that there was a
 
 We will get into more detail about the `src` and `path` later on in the [Compiling plugin code](#compiling-plugin-code).
 
+### Renderer Process: renderer.js
+
+Since Electron uses Chromium for displaying web pages, Chromium’s multi-process architecture is also used. Each web page in Electron runs in its own process, which is called the renderer process.
+
+In normal browsers, web pages usually run in a sandboxed environment and are not allowed access to native resources. Electron users, however, have the power to use Node.js APIs in web pages allowing lower level operating system interactions.
+
+``` js
+// This file is required by the index.html file and will
+// be executed in the renderer process for that window.
+// All of the Node.js APIs are available in this process.
+var hello = require("./src/hello-world.js");
+
+hello.sayHello();
+```
+
+We require the electron-dotnet.js generated file `"./src/hello-world.js"` which is the .NET and Node.js in-process implementation. To print out the `Hello` message we will execute the exported method from that file `sayHello` which displays the message to the console.
+
+When we get to debugging you will see why it is broken up this way.
+
+> :buld: We will not be going into the differences of Electron's Main and Renderer processes but for more informaiton you can start [here](http://electron.atom.io/docs/tutorial/quick-start/#differences-between-main-process-and-renderer-process) 
+
 ### Generated Code
 
 The generated application's code is in the `src` directory.  Depending on the project template selected there is an implementation of each type of application integration point generated.  When we selected the `electron-dotnet.js: .NET and Node.js in-process with PepperPlugin` we will have a total of two src files:
@@ -369,6 +390,52 @@ namespace HelloWorld
     ``` csharp
     LogToConsoleWithSource(PPLogLevel.Log, "HelloWorld.HelloWorld", "Hello from C#");
     ```
+
+#### electron-dotnet.js: .NET and Node.js in-process implementation: hello_world.js
+
+``` js
+var dotnet = require('electron-dotnet');
+
+var hello = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');
+
+//Make method externaly visible this will be referenced in the renderer.js file
+exports.sayHello = arg => {
+	hello('Electron', function (error, result) {
+		if (error) throw error;
+		console.log(result);
+	});
+}
+```
+
+The first two lines of the file enables scripting C# from a Node.js and then creates a C# `hello` function for us.
+
+For more detailed information about scripting C# from a Node.js process please reference that [section of the documentation]((
+https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#how-to-integrate-c-code-into-nodejs-code
+).
+
+What we do need to point out is the code:
+
+``` js
+//Make method externaly visible this will be referenced in the renderer.js file
+exports.sayHello = arg => {
+	hello('Electron', function (error, result) {
+		if (error) throw error;
+		console.log(result);
+	});
+}
+``` 
+
+We will be referencing this code from Electron's Renderer process which can be found in the `renderer.js` file mentioned above. To do this we will export a function called `sayHello` so that it can be referenced in other processes.
+
+At the bottom of our [index.html](#showing-information-indexhtml) we require `renderer.js` which loads this file into Electrons's [Renderer](http://electron.atom.io/docs/tutorial/quick-start/#renderer-process) process.  
+
+``` js
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+```
+
 
 
 ### Miscellaneous files
