@@ -219,7 +219,7 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// Event when the browser calls PostMessage() on the DOM element for the instance in JavaScript.
+        /// Event raised to initialize this instance with the provided arguments..
         /// </summary>
         public delegate void InitializeDelegateAndHandler(object sender, InitializeEventArgs args);
         public event InitializeDelegateAndHandler Initialize;

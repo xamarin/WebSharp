@@ -88,14 +88,8 @@ namespace PepperSharp
     /// that the browser is writing does not match the size of the type we're using
     /// this will assert and return NULL (which will cause the browser to fail the
     /// call).
-    ///
-    /// Example that allows the browser to write into a given vector:
-    ///   void DoFoo(std::vector<int>* results) {
-    ///     ArrayOutputAdapter<int> adapter(results);
-    ///     ppb_foo->DoFoo(adapter.pp_array_output());
-    ///   }
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Generic type adapter</typeparam>
     internal class ArrayOutputAdapter<T> : ArrayOutputAdapterBase<T>
     {
 

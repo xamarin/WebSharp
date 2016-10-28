@@ -94,7 +94,7 @@ public enum PPCompletionCallbackFlag {
  *               callback, and the callback will be invoked later (barring
  *               system or thread shutdown; see PPB_MessageLoop for details).
  *               Required callbacks are the default.
- *               <br /><br />
+ *               
  *               NOTE: If you use a required callback on a background thread,
  *               you must have created and attached a PPB_MessageLoop.
  *               Otherwise, the system can not run your callback on that thread,
@@ -111,7 +111,7 @@ public enum PPCompletionCallbackFlag {
  *               callbacks, but can provide better performance for some APIs
  *               (especially APIs with buffered reads, such as PPB_URLLoader or
  *               PPB_FileIO).
- *               <br /><br />
+ *               
  *               NOTE: If you use an optional callback on a background thread,
  *               and you have not created and attached a PPB_MessageLoop, then
  *               the method you invoke will fail without running and return
@@ -122,7 +122,7 @@ public enum PPCompletionCallbackFlag {
  *               run to completion and return an appropriate code when finished
  *               (see below for more information). Blocking completion
  *               callbacks are only supported on background threads.
- *               <br /><br />
+ *               
  *               <code>PP_BlockUntilComplete()</code> provides a convenient way
  *               to specify blocking behavior. Refer to
  *               <code>PP_BlockUntilComplete</code> for more information.
