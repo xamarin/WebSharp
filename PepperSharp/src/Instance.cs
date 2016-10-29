@@ -3,9 +3,25 @@ using System.ComponentModel;
 
 namespace PepperSharp
 {
+    /// <summary>
+    /// An instance is a rectangle on a web page that is managed by a PepperPlugin module.
+    /// 
+    /// - An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.
+    /// 
+    /// - An instance is created by including an htmle `embed` element in a web page.
+    ///    - The htmle `embed` element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.
+    ///    - A PepperPlugin module may be included in a web page multiple times by using multiple htmle `embed` elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.
+    /// </summary>
     public partial class Instance : NativeInstance
     {
+        /// <summary>
+        /// Not supported - Throws error if called
+        /// </summary>
         protected Instance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
+        /// <summary>
+        /// Creates an object instance of Instance using the handle passed. The handle is a pointer passed to the class when instantiated by the PepperPlugin Native Client implementation.
+        /// </summary>
+        /// <param name="handle"></param>
         protected Instance(IntPtr handle) : base(handle) { }
 
         /// <summary>
