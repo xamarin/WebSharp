@@ -8,29 +8,57 @@ namespace PepperSharp
     /// 
     /// - An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.
     /// 
-    /// - An instance is created by including an htmle `embed` element in a web page.
-    ///    - The htmle `embed` element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.
-    ///    - A PepperPlugin module may be included in a web page multiple times by using multiple htmle `embed` elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.
+    /// - An instance is created by including an <code>&lt;embed&gt;&lt;/embed&gt;</code> element in a web page.
+    ///    - The <code>&lt;embed&gt;&lt;/embed&gt;</code> element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.
+    ///    - A PepperPlugin module may be included in a web page multiple times by using multiple <code>&lt;embed&gt;&lt;/embed&gt;</code> elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.
     /// </summary>
+    /// <example>
+    /// using System;
+    /// 
+    /// using PepperSharp;
+    /// 
+    /// namespace HelloWorld
+    /// {
+    ///    public class HelloWorld : Instance
+    ///    {
+    ///        public HelloWorld(IntPtr handle) : base(handle)
+    ///        {
+    ///            Initialize += OnInitialize;
+    ///        }
+    ///
+    ///        private void OnInitialize(object sender, InitializeEventArgs args)
+    ///        {
+    ///            LogToConsoleWithSource(PPLogLevel.Log, "HelloWorld.HelloWorld", "Hello from C#");
+    ///        }
+    ///    }
+    /// }
+    /// </example>
     public partial class Instance : NativeInstance
     {
+
+        PPInstance instance = new PPInstance();
+
         /// <summary>
-        /// Not supported - Throws error if called
+        /// Default constructor not supported - Throws error if called
         /// </summary>
-        protected Instance() { throw new PlatformNotSupportedException("Can not create an instace of PPInstance"); }
+        /// <exception cref="PlatformNotSupportedException"></exception>
+        protected Instance() { throw new PlatformNotSupportedException("Can not create a managed Instance"); }
         /// <summary>
-        /// Creates an object instance of Instance using the handle passed. The handle is a pointer passed to the class when instantiated by the PepperPlugin Native Client implementation.
+        /// A constructor used when creating managed representations of unmanaged objects; Called by the PepperPlugin Native Client implementation.
         /// </summary>
-        /// <param name="handle"></param>
+        /// <remarks>
+        /// This constructor is invoked by the Native Client runtime infrastructure to create a new managed representation for a pointer to an unmanaged pp:Instance object. You should not invoke this method directly
+        /// </remarks>
+        /// <param name="handle">Pointer (handle) to the unmanaged Native Client instance</param>
         protected Instance(IntPtr handle) : base(handle) { }
 
         /// <summary>
-        /// Event when the view information for the Instance has changed.
+        /// Event raised when the view information for the Instance has changed.
         /// </summary>
         public event EventHandler<View> ViewChanged;
 
         /// <summary>
-        /// Event when an instance has gained or lost focus.
+        /// Event raised when an instance has gained or lost focus.
         /// </summary>
         public event EventHandler<bool> FocusChanged;
 
@@ -238,6 +266,9 @@ namespace PepperSharp
         /// Event raised to initialize this instance with the provided arguments..
         /// </summary>
         public delegate void InitializeDelegateAndHandler(object sender, InitializeEventArgs args);
+        /// <summary>
+        /// Handler for Initialize 
+        /// </summary>
         public event InitializeDelegateAndHandler Initialize;
 
         /// <summary>
@@ -302,18 +333,19 @@ namespace PepperSharp
         /// The focus flag takes into account both browser tab and window focus as well as focus of the plugin 
         /// element on the page. In order to be deemed to have focus, the browser window must be topmost, 
         /// the tab must be selected in the window, and the instance must be the focused element on the page.
-        /// 
-        /// Note:Clicks on instances will give focus only if you handle the click event. 
-        /// Return true from HandleInputEvent in InputEvent (or use unfiltered events) to signal that the 
-        /// click event was handled. Otherwise, the browser will bubble the event and give focus to the element 
-        /// on the page that actually did end up consuming it.If you're not getting focus, check to make sure
-        /// you're either requesting them via RequestInputEvents() (which implicitly marks all input events as 
-        /// consumed) or via RequestFilteringInputEvents() and returning true from your event handler.
         /// </summary>
         /// <remarks>
         /// The OnFocusChanged method also enables derived classes to handle the event without attaching 
         /// a delegate. This is the preferred technique for handling the event in a derived class.
         /// </remarks>
+        /// <notes>
+        /// Clicks on instances will give focus only if you handle the click event. 
+        /// Return true from HandleInputEvent in InputEvent (or use unfiltered events) to signal that the 
+        /// click event was handled. Otherwise, the browser will bubble the event and give focus to the element 
+        /// on the page that actually did end up consuming it.If you're not getting focus, check to make sure
+        /// you're either requesting them via RequestInputEvents() (which implicitly marks all input events as 
+        /// consumed) or via RequestFilteringInputEvents() and returning true from your event handler.
+        /// </notes>
         /// <param name="hasFocus">Indicates the new focused state of the instance.</param>
         /// 
         protected virtual void OnFocusChanged(bool hasFocus)
@@ -342,18 +374,19 @@ namespace PepperSharp
         /// 
         /// The caller of this function will maintain a reference to the input event resource during this call.
         /// Unless you take a reference to the resource to hold it for later, you don't need to release it.
-        /// 
-        /// Note: If you're not receiving input events, make sure you register for the event classes you want 
-        /// by calling RequestInputEvents or RequestFilteringInputEvents. If you're still not receiving 
-        /// keyboard input events, make sure you're returning true (or using a non-filtered event handler) for
-        /// mouse events. Otherwise, the instance will not receive focus and keyboard events will not be sent.
-        /// 
-        /// Refer to RequestInputEvents and RequestFilteringInputEvents for further information.
         /// </summary>
         /// <remarks>
         /// The OnInputEvents method also enables derived classes to handle the event without attaching 
         /// a delegate. This is the preferred technique for handling the event in a derived class.
         /// </remarks>
+        /// <notes>
+        /// If you're not receiving input events, make sure you register for the event classes you want 
+        /// by calling RequestInputEvents or RequestFilteringInputEvents. If you're still not receiving 
+        /// keyboard input events, make sure you're returning true (or using a non-filtered event handler) for
+        /// mouse events. Otherwise, the instance will not receive focus and keyboard events will not be sent.
+        /// 
+        /// Refer to RequestInputEvents and RequestFilteringInputEvents for further information.
+        /// </notes>
         /// <param name="inputEvent">The event to handle.</param>
         /// <returns>true if the event was handled, false if not. If you have registered to filter this class of events by calling RequestFilteringInputEvents, and you return false, the event will be forwarded to the page (and eventually the browser) for the default handling. For non-filtered events, the return value will be ignored.</returns>
         protected virtual bool OnInputEvents (InputEvent inputEvent)
@@ -472,114 +505,561 @@ namespace PepperSharp
             return handled;
         }
 
+        /// <summary>
+        /// Notification that a mouse button was pressed.
+        /// 
+        /// Register for this event using the PPInputEventClass.Mouse class.
+        /// </summary>
+        /// <remarks>
+        /// The OnMouseDown method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    MouseDown += HandleMouseEvents;
+        ///    MouseEnter += HandleMouseEvents;
+        ///    MouseLeave += HandleMouseEvents;
+        ///    MouseMove += HandleMouseEvents;
+        ///    MouseUp += HandleMouseEvents;
+        ///    ContextMenu += HandleMouseEvents;
+        ///    RequestInputEvents(PPInputEventClass.Mouse);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns>true if handled, false otherwise.</returns>
         protected virtual bool OnMouseDown(MouseEventArgs e)
         {
             MouseDown?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a mouse button was released.
+        /// 
+        /// Register for this event using the PPInputEventClass.Mouse class.
+        /// </summary>
+        /// <remarks>
+        /// The OnMouseUp method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    MouseDown += HandleMouseEvents;
+        ///    MouseEnter += HandleMouseEvents;
+        ///    MouseLeave += HandleMouseEvents;
+        ///    MouseMove += HandleMouseEvents;
+        ///    MouseUp += HandleMouseEvents;
+        ///    ContextMenu += HandleMouseEvents;
+        ///    RequestInputEvents(PPInputEventClass.Mouse);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns>true if handled, false otherwise.</returns>
         protected virtual bool OnMouseUp(MouseEventArgs e)
         {
             MouseUp?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that the mouse entered the instance's bounds.
+        /// 
+        /// Register for this event using the PPInputEventClass.Mouse class.
+        /// </summary>
+        /// <remarks>
+        /// The OnMouseEnter method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    MouseDown += HandleMouseEvents;
+        ///    MouseEnter += HandleMouseEvents;
+        ///    MouseLeave += HandleMouseEvents;
+        ///    MouseMove += HandleMouseEvents;
+        ///    MouseUp += HandleMouseEvents;
+        ///    ContextMenu += HandleMouseEvents;
+        ///    RequestInputEvents(PPInputEventClass.Mouse);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns>true if handled, false otherwise.</returns>
         protected virtual bool OnMouseEnter(MouseEventArgs e)
         {
             MouseEnter?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a mouse left the instance's bounds.
+        /// 
+        /// Register for this event using the PPInputEventClass.Mouse class.
+        /// </summary>
+        /// <remarks>
+        /// The OnMouseLeave method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    MouseDown += HandleMouseEvents;
+        ///    MouseEnter += HandleMouseEvents;
+        ///    MouseLeave += HandleMouseEvents;
+        ///    MouseMove += HandleMouseEvents;
+        ///    MouseUp += HandleMouseEvents;
+        ///    ContextMenu += HandleMouseEvents;
+        ///    RequestInputEvents(PPInputEventClass.Mouse);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns>true if handled, false otherwise.</returns>
         protected virtual bool OnMouseLeave(MouseEventArgs e)
         {
             MouseLeave?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a mouse button was moved when it is over the instance or dragged out of it.
+        /// 
+        /// Register for this event using the PPInputEventClass.Mouse class.
+        /// </summary>
+        /// <remarks>
+        /// The OnMouseMove method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    MouseDown += HandleMouseEvents;
+        ///    MouseEnter += HandleMouseEvents;
+        ///    MouseLeave += HandleMouseEvents;
+        ///    MouseMove += HandleMouseEvents;
+        ///    MouseUp += HandleMouseEvents;
+        ///    ContextMenu += HandleMouseEvents;
+        ///    RequestInputEvents(PPInputEventClass.Mouse);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns>true if handled, false otherwise.</returns>
         protected virtual bool OnMouseMove (MouseEventArgs e)
         {
             MouseMove?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a context menu should be shown.
+        /// 
+        /// This message will be sent when the user right-clicks or performs another OS-specific mouse command that should open a context menu.When this event is delivered depends on the system, on some systems (Mac) it will delivered after the mouse down event, and on others (Windows) it will be delivered after the mouse up event.
+        ///
+        /// You will always get the normal mouse events. For example, you may see OnMouseDown, OnContextMenu, OnMouseUp or OnMouseDown, OnMouseUp, OnContextMenu.
+        /// 
+        /// The return value from the event handler determines if the context menu event will be passed to the page when you are using filtered input events(via RequestFilteringInputEvents()). In non-filtering mode the event will never be propagated and no context menu will be displayed.If you are handling mouse events in filtering mode, you may want to return true from this event even if you do not support a context menu to suppress the default one.
+        /// 
+        /// Register for this event using the PPInputEventClass.Mouse class.
+        /// </summary>
+        /// <remarks>
+        /// The OnContextMenu method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    MouseDown += HandleMouseEvents;
+        ///    MouseEnter += HandleMouseEvents;
+        ///    MouseLeave += HandleMouseEvents;
+        ///    MouseMove += HandleMouseEvents;
+        ///    MouseUp += HandleMouseEvents;
+        ///    ContextMenu += HandleMouseEvents;
+        ///    RequestInputEvents(PPInputEventClass.Mouse);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns>true if handled, false otherwise.</returns>
         protected virtual bool OnContextMenu(MouseEventArgs e)
         {
             ContextMenu?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that the scroll wheel was used.
+        ///
+        /// Register for this event using the PPInputEventClass.Wheel class.
+        /// </summary>
+        /// <remarks>
+        /// The OnWheel method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///    Wheel += HandleWheel;
+        ///    RequestInputEvents(PPInputEventClass.Wheel);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns>true if handled, false otherwise.</returns>
         protected virtual bool OnWheel (WheelEventArgs e)
         {
             Wheel?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a key was released.
+        /// 
+        /// Register for this event using the PPInputEventClass.Keyboard class.
+        /// </summary>
+        /// <remarks>
+        /// The OnKeyUp method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    KeyUp += HandleKeyboardEvents;
+        ///    KeyDown += HandleKeyboardEvents;
+        ///    KeyChar += HandleKeyboardEvents;
+        ///    RawKeyDown += HandleKeyboardEvents;
+        ///    RequestFilteringInputEvents(PPInputEventClass.Keyboard);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnKeyUp(KeyboardEventArgs e)
         {
             KeyUp?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a key was pressed.
+        /// 
+        /// This does not necessarily correspond to a character depending on the key and language.  Use the OnKeyChar for character input.
+        ///
+        /// Register for this event using the PPInputEventClass.Keyboard class.
+        /// </summary>
+        /// <remarks>
+        /// The OnKeyDown method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    KeyUp += HandleKeyboardEvents;
+        ///    KeyDown += HandleKeyboardEvents;
+        ///    KeyChar += HandleKeyboardEvents;
+        ///    RawKeyDown += HandleKeyboardEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.Keyboard);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnKeyDown(KeyboardEventArgs e)
         {
             KeyDown?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a character was typed.
+        /// 
+        /// Use this for text input. Key down events may generate 0, 1, or more than one character event depending on the key, locale, and operating system.
+        ///
+        /// Register for this event using the PPInputEventClass.Keyboard class.
+        /// </summary>
+        /// <remarks>
+        /// The OnKeyChar method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    KeyUp += HandleKeyboardEvents;
+        ///    KeyDown += HandleKeyboardEvents;
+        ///    KeyChar += HandleKeyboardEvents;
+        ///    RawKeyDown += HandleKeyboardEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.Keyboard);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnKeyChar(KeyboardEventArgs e)
         {
             KeyChar?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a key transitioned from "up" to "down".
+        /// 
+        /// Register for this event using the PPInputEventClass.Keyboard class.
+        /// </summary>
+        /// <remarks>
+        /// The OnRawKeyDown method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    KeyUp += HandleKeyboardEvents;
+        ///    KeyDown += HandleKeyboardEvents;
+        ///    KeyChar += HandleKeyboardEvents;
+        ///    RawKeyDown += HandleKeyboardEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.Keyboard);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnRawKeyDown(KeyboardEventArgs e)
         {
             RawKeyDown?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a finger was placed on a touch-enabled device.
+        /// 
+        /// Register for this event using the PPInputEventClass.Touch class.
+        /// </summary>
+        /// <remarks>
+        /// The OnTouchStart method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    TouchStart += HandleTouchEvents;
+        ///    TouchEnd += HandleTouchEvents;
+        ///    TouchMove += HandleTouchEvents;
+        ///    TouchCancel += HandleTouchEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.Touch);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnTouchStart(TouchInputEvent e)
         {
             TouchStart?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a finger was released on a touch-enabled device.
+        /// 
+        /// Register for this event using the PPInputEventClass.Touch class.
+        /// </summary>
+        /// <remarks>
+        /// The OnTouchEnd method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    TouchStart += HandleTouchEvents;
+        ///    TouchEnd += HandleTouchEvents;
+        ///    TouchMove += HandleTouchEvents;
+        ///    TouchCancel += HandleTouchEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.Touch);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnTouchEnd(TouchInputEvent e)
         {
             TouchEnd?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a touch event was canceled.
+        /// 
+        /// Register for this event using the PPInputEventClass.Touch class.
+        /// </summary>
+        /// <remarks>
+        /// The OnTouchCancel method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    TouchStart += HandleTouchEvents;
+        ///    TouchEnd += HandleTouchEvents;
+        ///    TouchMove += HandleTouchEvents;
+        ///    TouchCancel += HandleTouchEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.Touch);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnTouchCancel(TouchInputEvent e)
         {
             TouchCancel?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that a finger was moved on a touch-enabled device.
+        /// 
+        /// Register for this event using the PPInputEventClass.Touch class.
+        /// </summary>
+        /// <remarks>
+        /// The OnTouchMove method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    TouchStart += HandleTouchEvents;
+        ///    TouchEnd += HandleTouchEvents;
+        ///    TouchMove += HandleTouchEvents;
+        ///    TouchCancel += HandleTouchEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.Touch);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnTouchMove(TouchInputEvent e)
         {
             TouchMove?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that an input method composition process has just started.
+        /// 
+        /// Register for this event using the PPInputEventClass.IME class.
+        /// </summary>
+        /// <remarks>
+        /// The OnIMECompositionStart method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    IMECompositionEnd += HandleIMEEvents;
+        ///    IMECompositionStart += HandleIMEEvents;
+        ///    IMECompositionUpdate += HandleIMEEvents;
+        ///    IMEText += HandleIMEEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.IME);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnIMECompositionStart(IMEInputEvent e)
         {
             IMECompositionStart?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that an input method composition process has completed.
+        /// 
+        /// Register for this event using the PPInputEventClass.IME class.
+        /// </summary>
+        /// <remarks>
+        /// The OnIMECompositionEnd method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    IMECompositionEnd += HandleIMEEvents;
+        ///    IMECompositionStart += HandleIMEEvents;
+        ///    IMECompositionUpdate += HandleIMEEvents;
+        ///    IMEText += HandleIMEEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.IME);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnIMECompositionEnd(IMEInputEvent e)
         {
             IMECompositionEnd?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that the input method composition string is updated.
+        /// 
+        /// Register for this event using the PPInputEventClass.IME class.
+        /// </summary>
+        /// <remarks>
+        /// The OnIMECompositionUpdate method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    IMECompositionEnd += HandleIMEEvents;
+        ///    IMECompositionStart += HandleIMEEvents;
+        ///    IMECompositionUpdate += HandleIMEEvents;
+        ///    IMEText += HandleIMEEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.IME);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnIMECompositionUpdate(IMEInputEvent e)
         {
             IMECompositionUpdate?.Invoke(this, e);
             return e.Handled;
         }
 
+        /// <summary>
+        /// Notification that an input method committed a string.
+        /// 
+        /// Register for this event using the PPInputEventClass.IME class.
+        /// </summary>
+        /// <remarks>
+        /// The OnIMEText method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <example>
+        /// public InputEventInstance(IntPtr handle) : base(handle)
+        /// {
+        ///
+        ///    IMECompositionEnd += HandleIMEEvents;
+        ///    IMECompositionStart += HandleIMEEvents;
+        ///    IMECompositionUpdate += HandleIMEEvents;
+        ///    IMEText += HandleIMEEvents;
+        ///    
+        ///    RequestFilteringInputEvents(PPInputEventClass.IME);
+        /// }
+        /// </example>
+        /// <param name="e">Event args</param>
+        /// <returns></returns>
         protected virtual bool OnIMEText(IMEInputEvent e)
         {
             IMEText?.Invoke(this, e);
@@ -594,19 +1074,20 @@ namespace PepperSharp
         /// <summary>
         /// Raises the HandleMessage event when the browser calls PostMessage() on the DOM element for 
         /// the instance in JavaScript.
-        /// 
-        /// Note that PostMessage() in the JavaScript interface is asynchronous, meaning JavaScript execution 
+        /// </summary>
+        /// <remarks>
+        /// The OnHandleMessage method also enables derived classes to handle the event without attaching 
+        /// a delegate. This is the preferred technique for handling the event in a derived class.
+        /// </remarks>
+        /// <notes>
+        /// PostMessage() in the JavaScript interface is asynchronous, meaning JavaScript execution 
         /// will not be blocked while OnRecieveMessage is processing the message.
         /// 
         /// When converting JavaScript arrays, any object properties whose name is not an array index are 
         /// ignored.  When passing arrays and objects, the entire reference graph will be converted and 
         /// transferred.  If the reference graph has cycles, the message will not be sent and an error will 
         /// be logged to the console.
-        /// </summary>
-        /// <remarks>
-        /// The OnHandleMessage method also enables derived classes to handle the event without attaching 
-        /// a delegate. This is the preferred technique for handling the event in a derived class.
-        /// </remarks>
+        /// </notes>
         /// <param name="message">A Var which has been converted from a JavaScript value. JavaScript 
         /// array/object types are supported from Chrome M29 onward. All JavaScript values are copied 
         /// when passing them to the plugin.
@@ -637,9 +1118,12 @@ namespace PepperSharp
             => PPBInstance.BindGraphics(this, graphics2d) == PPBool.True ? true : false;
 
         /// <summary>
-        /// asynchronously invokes any listeners for message events on the DOM element for the given instance.
+        /// Asynchronously invokes any listeners for message events on the DOM element for the given instance.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">A manage object that will be converted to a JavaScript value.  JavaScript 
+        /// array/object types are supported from Chrome M29 onward. All JavaScript values are copied 
+        /// when passing them to the plugin.
+        /// </param>
         public void PostMessage(object message)
         {
             if (message is Var)
@@ -651,7 +1135,9 @@ namespace PepperSharp
             }
         }
 
-        PPInstance instance = new PPInstance();
+        /// <summary>
+        /// Getter that returnes the unmanaged pointer (Handle) of this instance.
+        /// </summary>
         public PPInstance PPInstance
         {
             get
@@ -664,11 +1150,22 @@ namespace PepperSharp
             }
         }
 
+        /// <summary>
+        /// Implicit conversion to unmanaged pointer (Handle).  Used by PInvoke.
+        /// </summary>
+        /// <param name="instance"></param>
         public static implicit operator PPInstance(Instance instance)
         {
             return instance.PPInstance;
         }
 
+        /// <summary>
+        /// Logs the given message to the JavaScript console associated with the given plugin instance with the given logging level.
+        /// 
+        /// The name of the plugin issuing the log message will be automatically prepended to the message.The value may be any type of Var.
+        /// </summary>
+        /// <param name="level">The log level</param>
+        /// <param name="value">The managed object to log.</param>
         public void LogToConsole(PPLogLevel level, object value)
         {
             if (value is Var)
@@ -677,6 +1174,15 @@ namespace PepperSharp
                 PPBConsole.Log(this, level, new Var(value));
         }
 
+        /// <summary>
+        /// Logs a message to the console with the given source information rather than using the internal PPAPI plugin name.
+        /// 
+        /// The regular log function will automatically prepend the name of your plugin to the message as the "source" of the message.  
+        /// Some plugins may wish to override this. 
+        /// </summary>
+        /// <param name="level">The log level</param>
+        /// <param name="source">Must be a string value</param>
+        /// <param name="value">The managed object to log.</param>
         public void LogToConsoleWithSource(PPLogLevel level,
                                           string source,
                                           object value)
@@ -688,7 +1194,7 @@ namespace PepperSharp
         }
 
         /// <summary>
-        /// RequestInputEvents() requests that input events corresponding to the given input events are delivered to the instance.
+        /// Requests that input events corresponding to the given input events are delivered to the instance.
         /// 
         /// By default, no input events are delivered.Call this function with the classes of events you are
         /// interested in to have them be delivered to the instance. Calling this function will override any 
@@ -711,7 +1217,7 @@ namespace PepperSharp
             => (PPError)PPBInputEvent.RequestInputEvents(this, (uint)eventClasses);
 
         /// <summary>
-        /// RequestFilteringInputEvents() requests that input events corresponding to the given input events 
+        /// Requests that input events corresponding to the given input events 
         /// are delivered to the instance for filtering.
         /// 
         /// By default, no input events are delivered.In most cases you would register to receive events by 
@@ -735,14 +1241,14 @@ namespace PepperSharp
             => (PPError)PPBInputEvent.RequestFilteringInputEvents(this, (uint)eventClasses);
 
         /// <summary>
-        /// IsFullFrame() determines if the instance is full-frame (repr).
+        /// Getter that returns if the instance is full-frame (repr).
         /// 
         /// Such an instance represents the entire document in a frame rather than an embedded resource.
         /// This can happen if the user does a top-level navigation or the page specifies an iframe to a 
         /// resource with a MIME type registered by the module.
         /// </summary>
         public bool IsFullFrame
-            => PPBInstance.IsFullFrame(this) == PPBool.True ? true : false; 
+            => PPBInstance.IsFullFrame(this) == PPBool.True ? true : false;
 
         /// <summary>
         /// ClearInputEventRequest() requests that input events corresponding to the given input classes no longer be delivered to the instance.
@@ -750,8 +1256,9 @@ namespace PepperSharp
         /// By default, no input events are delivered.If you have previously requested input events using 
         /// RequestInputEvents() or RequestFilteringInputEvents(), this function will unregister handling 
         /// for the given instance.This will allow greater browser performance for those events.
-        /// 
-        /// Note: You may still get some input events after clearing the flag if they were dispatched before the request was cleared. For example, if there are 3 mouse move events waiting to be delivered, and you clear the mouse event class during the processing of the first one, you'll still receive the next two. You just won't get more events generated.
+        /// <notes>
+        /// You may still get some input events after clearing the flag if they were dispatched before the request was cleared. For example, if there are 3 mouse move events waiting to be delivered, and you clear the mouse event class during the processing of the first one, you'll still receive the next two. You just won't get more events generated.
+        /// </notes>
         /// </summary>
         /// <param name="eventClasses">A combination of flags from PP_InputEvent_Class that identifies the classes of events the instance is no longer interested in.</param>
         public void ClearInputEventRequest(PPInputEventClass eventClasses)
@@ -760,9 +1267,11 @@ namespace PepperSharp
         /// <summary>
         /// Sets the given mouse cursor. The mouse cursor will be in effect whenever
         /// the mouse is over the given instance until it is set again by another
-        /// call. Note that you can hide the mouse cursor by setting it to the
+        /// call.
+        /// <notes>
+        /// You can hide the mouse cursor by setting it to the
         /// <code>PPMouseCursorType</code> type.
-        ///
+        /// </notes>
         /// This function allows setting both system defined mouse cursors and
         /// custom cursors. To set a system-defined cursor, pass the type you want
         /// and set the custom image to a default-constructor ImageData object.
@@ -818,6 +1327,7 @@ namespace PepperSharp
         /// Throws InvalidOperationException if there was an error transitioning to or from
         /// fullscreen mode.
         /// </remarks>
+        /// <exception cref="InvalidOperationException"></exception>
         public bool IsFullScreen
         {
             get { return PPBFullscreen.IsFullscreen(this) == PPBool.True; }
@@ -837,6 +1347,7 @@ namespace PepperSharp
         /// Throws InvalidOperationException if there was an error obtaining the screen size for
         /// some reason.
         /// </remarks>
+        /// <exception cref="InvalidOperationException"></exception>
         public PPSize ScreenSize
         {
             get
