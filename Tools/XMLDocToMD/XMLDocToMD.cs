@@ -46,7 +46,7 @@ namespace GithubWikiDoc
                 mdList = mdList.Replace("| [M:" + args[1] + ".", "| [");
 
                 if (mdList.Length > 0)
-                    Console.WriteLine(mdTable + mdList);
+                    Console.WriteLine(mdTable + mdList + "\n\n---\n");
 
                 mdTable = "\n## Properties\n| Name | Description |\n| --- | ----------- |\n";
 
@@ -60,7 +60,7 @@ namespace GithubWikiDoc
                 mdList = mdList.Replace("| [P:" + args[1] + ".", "| [");
 
                 if (mdList.Length > 0)
-                    Console.WriteLine(mdTable + mdList);
+                    Console.WriteLine(mdTable + mdList + "\n\n---\n");
 
                 mdTable = "\n## Methods\n| Name | Description |\n| --- | ----------- |\n";
 
@@ -74,7 +74,7 @@ namespace GithubWikiDoc
                 mdList = mdList.Replace("| [M:" + args[1] + ".", "| [");
 
                 if (mdList.Length > 0)
-                    Console.WriteLine(mdTable + mdList);
+                    Console.WriteLine(mdTable + mdList + "\n\n---\n");
 
                 mdTable = "\n## Events\n| Event | Description |\n| --- | ----------- |\n";
 
@@ -88,7 +88,7 @@ namespace GithubWikiDoc
                 mdList = mdList.Replace("| [E:" + args[1] + ".", "| [");
 
                 if (mdList.Length > 0)
-                    Console.WriteLine(mdTable + mdList);
+                    Console.WriteLine(mdTable + mdList + "\n\n---\n");
 
                 var classMembers = doc.Root.Elements("members").Elements("member").Where(
                         member => member.Attribute("name").Value.Substring(2).StartsWith(args[1])
@@ -122,7 +122,8 @@ namespace GithubWikiDoc
                     {"event", "##### {0}\n\n{1}\n\n---\n"},
                     {"summary", "{0}\n\n"},
                     {"remarks", "\n\n>{0}\n\n"},
-                    {"example", "_C# code_\n\n```c#\n{0}\n```\n\n"},
+                    {"notes", "\n\n> :bulb: {0}\n\n"},
+                    {"example", "_C# code_\n\n``` c#\n{0}\n```\n\n"},
                     {"seePage", "[[{1}|{0}]]"},
                     {"seeAnchor", "[{1}]({0})"},
                     {"param", "|Name | Description |\n|-----|------|\n|{0}: |{1}|\n" },
@@ -130,10 +131,11 @@ namespace GithubWikiDoc
                     {"returns", "Returns: {0}\n\n"},
                     {"externalLink", "[{1}]({0})"},
                     {"code", "`{0}`"},
-                    {"embed", "`<embed></embed>`"},
                     {"bold", "**{0}**"},
                     {"italic", "__{0}__"},
                     {"body", "_Java Script_\n\n``` js\n<body>\n   {0}\n<\body>\n```\n\n"},
+                    {"list", "{0}"},
+                    {"item", "\n{0}"},
                     {"none", ""}
                 };
 
@@ -156,6 +158,7 @@ namespace GithubWikiDoc
                     {"event", x=>d("name", x)},
                     {"summary", x=> new[]{ x.Nodes().ToMarkDown() }},
                     {"remarks", x => new[]{x.Nodes().ToMarkDown()}},
+                    {"notes", x => new[]{x.Nodes().ToMarkDownList()}},
                     {"example", x => new[]{x.Value.ToCodeBlock()}},
                     {"seePage", x=> d("cref", x) },
                     {"seeAnchor", x=> { var xx = d("cref", x); xx[0] = xx[0].ToLower(); return xx; }},
@@ -164,10 +167,11 @@ namespace GithubWikiDoc
                     {"returns", x => new[]{x.Nodes().ToMarkDown()}},
                     {"externalLink", x => d("href", x) },
                     {"code", x => new[]{x.Nodes().ToMarkDown()}},
-                    {"embed", x => new[]{x.Nodes().ToMarkDown()}},
                     {"bold", x => new[]{x.Nodes().ToMarkDown()}},
                     {"italic", x => new[]{x.Nodes().ToMarkDown()}},
                     {"body", x => new[]{x.Value.ToCodeBlock()}},
+                    {"list", x => new[]{x.Nodes().ToMarkDown()}},
+                    {"item", x => new[]{x.Nodes().ToMarkDown()}},
                     {"none", x => new string[0]}
                 };
 
@@ -198,10 +202,6 @@ namespace GithubWikiDoc
                 {
                     name = "code";
                 }
-                if (name == "embed")
-                {
-                    name = "embed";
-                }
                 if (name == "a")
                 {
                     name = "externalLink";
@@ -213,10 +213,6 @@ namespace GithubWikiDoc
                 if (name == "i")
                 {
                     name = "italic";
-                }
-                if (name == "body")
-                {
-                    name = "body";
                 }
                 if (name == "typeparam")
                 {
@@ -262,7 +258,8 @@ namespace GithubWikiDoc
                     {"event", "| [{0}](#{1}) {2}"},
                     {"summary", "| {0} |\n"},
                     {"remarks", ""},
-                    {"example", "_C# code_\n\n```c#\n{0}\n```\n\n"},
+                    {"notes", ""},
+                    {"example", ""},
                     {"seePage", "[[{1}|{0}]]"},
                     {"seeAnchor", "[{1}]({0})"},
                     {"param", "" },
@@ -270,10 +267,11 @@ namespace GithubWikiDoc
                     {"returns", ""},
                     {"externalLink", "[{1}]({0})"},
                     {"code", "`{0}`"},
-                    {"embed", "`<embed></embed>`"},
                     {"bold", "**{0}**"},
                     {"italic", "__{0}__"},
                     {"body", "_Java Script_\n\n``` js\n<body>\n   {0}\n<\body>\n```\n\n"},
+                    {"list", "{0}"},
+                    {"item", "\n{0}"},
                     {"none", ""}
                 };
 
@@ -297,6 +295,7 @@ namespace GithubWikiDoc
                     {"event", x=>d("name", x)},
                     {"summary", x=> new[]{ x.Nodes().ToMarkDownList() }},
                     {"remarks", x => new[]{x.Nodes().ToMarkDownList()}},
+                    {"notes", x => new[]{x.Nodes().ToMarkDownList()}},
                     {"example", x => new[]{x.Value.ToCodeBlock()}},
                     {"seePage", x=> d("cref", x) },
                     {"seeAnchor", x=> { var xx = d("cref", x); xx[0] = xx[0].ToLower(); return xx; }},
@@ -305,10 +304,11 @@ namespace GithubWikiDoc
                     {"returns", x => new[]{x.Nodes().ToMarkDownList()}},
                     {"externalLink", x => d("href", x) },
                     {"code", x => new[]{x.Nodes().ToMarkDownList()}},
-                    {"embed", x => new[]{x.Nodes().ToMarkDownList()}},
                     {"bold", x => new[]{x.Nodes().ToMarkDownList()}},
                     {"italic", x => new[]{x.Nodes().ToMarkDownList()}},
                     {"body", x => new[]{x.Value.ToCodeBlock()}},
+                    {"list", x => new[]{x.Nodes().ToMarkDownList()}},
+                    {"item", x => new[]{x.Nodes().ToMarkDownList()}},
                     {"none", x => new string[0]}
                 };
 
@@ -339,10 +339,6 @@ namespace GithubWikiDoc
                 {
                     name = "code";
                 }
-                if (name == "embed")
-                {
-                    name = "embed";
-                }
                 if (name == "a")
                 {
                     name = "externalLink";
@@ -354,10 +350,6 @@ namespace GithubWikiDoc
                 if (name == "i")
                 {
                     name = "italic";
-                }
-                if (name == "body")
-                {
-                    name = "body";
                 }
                 if (name == "typeparam")
                 {

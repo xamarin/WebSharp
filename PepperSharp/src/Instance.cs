@@ -5,12 +5,14 @@ namespace PepperSharp
 {
     /// <summary>
     /// An instance is a rectangle on a web page that is managed by a PepperPlugin module.
-    /// 
-    /// - An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.
-    /// 
-    /// - An instance is created by including an <code>&lt;embed&gt;&lt;/embed&gt;</code> element in a web page.
-    ///    - The <code>&lt;embed&gt;&lt;/embed&gt;</code> element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.
-    ///    - A PepperPlugin module may be included in a web page multiple times by using multiple <code>&lt;embed&gt;&lt;/embed&gt;</code> elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.
+    /// <list type="bullet">
+    ///    <item>- An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.</item>
+    ///    <item>- An instance is created by including an <code>&lt;embed&gt;&lt;/embed&gt;</code> element in a web page.</item>
+    ///       <list type="bullet">
+    ///          <item>   - The <code>&lt;embed&gt;&lt;/embed&gt;</code> element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.</item>
+    ///          <item>   - A PepperPlugin module may be included in a web page multiple times by using multiple <code>&lt;embed&gt;&lt;/embed&gt;</code> elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.</item>
+    ///       </list>
+    /// </list>
     /// </summary>
     /// <example>
     /// using System;

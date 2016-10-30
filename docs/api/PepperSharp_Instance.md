@@ -1,7 +1,11 @@
 # PepperSharp.Instance Class Reference
 ## Description
 
-An instance is a rectangle on a web page that is managed by a PepperPlugin module.</br>             </br>- An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.</br>             </br>- An instance is created by including an `<embed></embed>` element in a web page.</br>                - The `<embed></embed>` element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.</br>                - A PepperPlugin module may be included in a web page multiple times by using multiple `<embed></embed>` elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.</br>             
+An instance is a rectangle on a web page that is managed by a PepperPlugin module.</br>             
+- An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.
+- An instance is created by including an `<embed></embed>` element in a web page.
+   - The `<embed></embed>` element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.
+   - A PepperPlugin module may be included in a web page multiple times by using multiple `<embed></embed>` elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.
 
 _C# code_
 
@@ -131,7 +135,11 @@ _C# code_
 
 # T:PepperSharp.Instance
 
-An instance is a rectangle on a web page that is managed by a PepperPlugin module.</br>             </br>- An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.</br>             </br>- An instance is created by including an `<embed></embed>` element in a web page.</br>                - The `<embed></embed>` element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.</br>                - A PepperPlugin module may be included in a web page multiple times by using multiple `<embed></embed>` elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.</br>             
+An instance is a rectangle on a web page that is managed by a PepperPlugin module.</br>             
+- An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.
+- An instance is created by including an `<embed></embed>` element in a web page.
+   - The `<embed></embed>` element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.
+   - A PepperPlugin module may be included in a web page multiple times by using multiple `<embed></embed>` elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.
 
 _C# code_
 
