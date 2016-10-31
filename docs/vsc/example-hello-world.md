@@ -391,11 +391,13 @@ namespace HelloWorld
         | string[]   | Names  | Gets the argument names  |
         | string[]   | Values | Gets the argument values  |
         | bool       | Cancel | Gets or sets a value indicating whether the event should be canceled. |
-      
+
 * Output to the Console:
     ``` csharp
     LogToConsoleWithSource(PPLogLevel.Log, "HelloWorld.HelloWorld", "Hello from C#");
     ```
+
+> :bulb: More info on the different events that you can subscribe to can be found in the [PepperSharp.Instance API Documentation](https://github.com/xamarin/WebSharp/blob/master/docs/api/PepperSharp_Instance.md#events)
 
 #### electron-dotnet.js: .NET and Node.js in-process implementation: hello_world.js
 
