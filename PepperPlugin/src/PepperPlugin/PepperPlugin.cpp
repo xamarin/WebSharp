@@ -28,6 +28,10 @@
  // used for obtaining file information
  #include <strsafe.h>
  #include <codecvt>
+
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
+
  #else
  #include <dirent.h>
  #include <dlfcn.h>
@@ -411,7 +415,6 @@ namespace pepper {
         return fileList;
     }
 #endif
-
     
 }  // namespace
 
