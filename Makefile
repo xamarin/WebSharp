@@ -16,17 +16,20 @@ build: check
 
 check:
 	@if test ! -x $(NACLSDK_TOOL); then echo "You need to install the nacl_sdk on the parent directory, https://developer.chrome.com/native-client/sdk/download#installing-the-sdk"; exit 1; fi
-	@if $(NACLSDK_TOOL) list | grep -q 'I *pepper_canary'; then echo $?; else echo "You should install the pepper_canary support using $(NACLSDK_TOOL) update pepper_canary --force"; exit 1; fi
+	@if $(NACLSDK_TOOL) list | egrep -q 'I\*?.*pepper_canary'; then echo $?; else echo "You should install the pepper_canary support using $(NACLSDK_TOOL) update pepper_canary --force"; exit 1; fi
 	@if test ! -f $(NUGET_TOOL); then echo "You need to install NuGet.exe.  Run 'make setup'"; exit 1; fi
 
 
-setup:
+setup: setup-nacl setup-nuget
+
+setup-nacl:
 	curl -O 'http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip'
 
 	unzip nacl_sdk.zip -d ../
 
 	../nacl_sdk/naclsdk update pepper_canary # Downloads the real SDK. This takes a while
 
+setup-nuget:
 	(mkdir -p electron-dotnet/tools/build)
 	(mkdir -p electron-dotnet/tools/build/nuget)
 

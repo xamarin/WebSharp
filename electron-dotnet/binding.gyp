@@ -210,19 +210,19 @@
                   'conditions': 
                   [
                     [
-                      '"<!((pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"!="not_found"',
+                      '"<!((/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"!="not_found"',
                       {
                             'include_dirs': [
-                              '<!@(pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
+                              '<!@(/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
                             ],
                             'link_settings': {
                               'libraries': [
-                                '<!@(pkg-config mono-2 --libs)'
+                                '<!@(/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --libs)'
                               ]
                             }
                       },
-                      '"<!((pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"=="not_found"',
-                      {
+                      '"<!((/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"=="not_found"',
+                      {'
                             'include_dirs': [
                               '<!@(<(DFLT_PKG_CONFIG_PATH) pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
                             ],
