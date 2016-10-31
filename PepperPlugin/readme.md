@@ -64,6 +64,20 @@ cd WebSharp
 WebSharp$ make setup
 ```
 
+> :bulb: A message may be output during the setup that says:
+
+```
+pepper_canary already exists, but has an update available.
+Run update with the --force option to overwrite the existing directory.
+Warning: This will overwrite any modifications you have made within this directory.
+```
+
+The command to run is:
+
+``` bash
+..\nacl_sdk\naclsdk.bat update pepper_canary --force
+```
+
 ### _Building PepperPlugin_
 
 #### *Windows*
