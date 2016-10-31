@@ -1,0 +1,118 @@
+<Type Name="MouseLock" FullName="PepperSharp.MouseLock">
+  <TypeSignature Language="C#" Value="public class MouseLock : PepperSharp.Instance" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MouseLock extends PepperSharp.Instance" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Instance</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected MouseLock (IntPtr handle);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(native int handle) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="handle" Type="System.IntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="handle">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LockMouse">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError LockMouse ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError LockMouse() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             LockMouse() requests the mouse to be locked.
+            
+             While the mouse is locked, the cursor is implicitly hidden from the user.
+             Any movement of the mouse will generate a
+             <code>PPINPUTEVENTTYPE.MOUSEMOVE</code> event. The
+             <code>Position</code> function in <code>InputEvent()</code>
+             reports the last known mouse position just as mouse lock was
+             entered. The <code>Movement</code> function provides relative
+             movement information indicating what the change in position of the mouse
+             would be had it not been locked.
+            
+             The browser may revoke the mouse lock for reasons including (but not
+             limited to) the user pressing the ESC key, the user activating another
+             program using a reserved keystroke (e.g. ALT+TAB), or some other system
+             event.
+             </summary>
+        <returns>Error Code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MouseLocked">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; MouseLocked;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; MouseLocked" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MouseUnLocked">
+      <MemberSignature Language="C#" Value="public event EventHandler MouseUnLocked;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler MouseUnLocked" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="UnlockMouse">
+      <MemberSignature Language="C#" Value="public void UnlockMouse ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void UnlockMouse() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             UnlockMouse causes the mouse to be unlocked, allowing it to track user
+             movement again. This is an asynchronous operation. The module instance
+             will be notified using the EventHandler LostMouseLock interface when it
+             has lost the mouse lock.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

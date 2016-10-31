@@ -1,0 +1,61 @@
+<Type Name="PPAudioSampleRate" FullName="PepperSharp.PPAudioSampleRate">
+  <TypeSignature Language="C#" Value="public enum PPAudioSampleRate" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPAudioSampleRate extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PP_AUDIOSAMPLERATE_44100</code>
+    <code>PP_AUDIOSAMPLERATE_48000</code>
+  </Docs>
+  <Members>
+    <Member MemberName="_44100">
+      <MemberSignature Language="C#" Value="_44100" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioSampleRate _44100 = int32(44100)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_48000">
+      <MemberSignature Language="C#" Value="_48000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioSampleRate _48000 = int32(48000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioSampleRate None = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

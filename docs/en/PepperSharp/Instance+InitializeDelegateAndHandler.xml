@@ -1,0 +1,26 @@
+<Type Name="Instance+InitializeDelegateAndHandler" FullName="PepperSharp.Instance+InitializeDelegateAndHandler">
+  <TypeSignature Language="C#" Value="public delegate void Instance.InitializeDelegateAndHandler(object sender, Instance.InitializeEventArgs args);" />
+  <TypeSignature Language="ILAsm" Value=".class nested public auto ansi sealed Instance/InitializeDelegateAndHandler extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="sender" Type="System.Object" />
+    <Parameter Name="args" Type="PepperSharp.Instance+InitializeEventArgs" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="sender">To be added.</param>
+    <param name="args">To be added.</param>
+    <summary>
+             Event raised to initialize this instance with the provided arguments..
+             </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

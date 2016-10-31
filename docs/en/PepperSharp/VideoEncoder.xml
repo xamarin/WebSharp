@@ -1,0 +1,677 @@
+<Type Name="VideoEncoder" FullName="PepperSharp.VideoEncoder">
+  <TypeSignature Language="C#" Value="public class VideoEncoder : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit VideoEncoder extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public VideoEncoder (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Close">
+      <MemberSignature Language="C#" Value="public void Close ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Close() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Closes the video encoder, and cancels any pending encodes. Any pending
+             callbacks will still run, reporting <code>Aborted</code> . It is
+             not valid to call any encoder functions after a call to this method.
+             <strong>Note:</strong> Destroying the video encoder closes it implicitly,
+             so you are not required to call Close().
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; CloseAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; CloseAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Closes the video encoder asynchronously, and cancels any pending encodes. Any pending
+             callbacks will still run, reporting <code>Aborted</code> . It is
+             not valid to call any encoder functions after a call to this method.
+             <strong>Note:</strong> Destroying the video encoder closes it implicitly,
+             so you are not required to call Close().
+             </summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Encode">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Encode (PepperSharp.PPResource videoFrame, bool forceKeyframe);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Encode(valuetype PepperSharp.PPResource videoFrame, bool forceKeyframe) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="videoFrame" Type="PepperSharp.PPResource" />
+        <Parameter Name="forceKeyframe" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="videoFrame">The <code>VideoFrame</code> to be encoded.</param>
+        <param name="forceKeyframe">A bool specifying whether the encoder
+             should emit a key frame for this video frame.</param>
+        <summary>
+             Encodes a video frame.
+             </summary>
+        <returns>Returns Failed if Initialize() has not successfully completed.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="EncodeAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; EncodeAsync (PepperSharp.PPResource videoFrame, bool forceKeyframe, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; EncodeAsync(valuetype PepperSharp.PPResource videoFrame, bool forceKeyframe, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="videoFrame" Type="PepperSharp.PPResource" />
+        <Parameter Name="forceKeyframe" Type="System.Boolean" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="videoFrame">The <code>VideoFrame</code> to be encoded.</param>
+        <param name="forceKeyframe">A bool specifying whether the encoder
+             should emit a key frame for this video frame.</param>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Encodes a video frame asynchronously.
+             </summary>
+        <returns>Returns Failed if Initialize() has not successfully completed.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FramesRequired">
+      <MemberSignature Language="C#" Value="public int FramesRequired { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 FramesRequired" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the number of input video frames that the encoder may hold while
+             encoding. If the plugin is providing the video frames, it should have at
+             least this many available.  
+             
+             <remarks>If Initialize() has not successfully completed will return an error code</remarks></summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetBitstreamBuffer">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError GetBitstreamBuffer ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError GetBitstreamBuffer() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Gets the next encoded bitstream buffer from the encoder.
+             </summary>
+        <returns>Returns Failed if Initialize() has not successfully completed.
+             Returns InProgress if a prior call to GetBitstreamBuffer() has
+             not completed.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetBitstreamBufferAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.VideoEncoder.BitstreamBufferInfo&gt; GetBitstreamBufferAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.VideoEncoder/BitstreamBufferInfo&gt; GetBitstreamBufferAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.VideoEncoder+BitstreamBufferInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Gets the next encoded bitstream buffer from the encoder asynchronously.
+             </summary>
+        <returns>Returns Failed if Initialize() has not successfully completed.
+             Returns InProgress if a prior call to GetBitstreamBuffer() has
+             not completed.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetFrameCodedSize">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError GetFrameCodedSize (out PepperSharp.PPSize codedSize);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError GetFrameCodedSize(valuetype PepperSharp.PPSize codedSize) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="codedSize" Type="PepperSharp.PPSize&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="codedSize">
+        </param>
+        <summary>
+             Gets the coded size of the video frames required by the encoder. Coded
+             size is the logical size of the input frames, in pixels.  The encoder may
+             have hardware alignment requirements that make this different from
+             |inputVisibleSize|, as requested in the call to Initialize().
+             </summary>
+        <returns>Returns Failed if Initialize has not been called</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSupportedProfiles">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError GetSupportedProfiles ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError GetSupportedProfiles() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Gets an array of supported video encoder profiles.
+             These can be used to choose a profile before calling Initialize().
+             </summary>
+        <returns>If &gt;= 0, the number of supported profiles returned, otherwise an
+             error code.
+             </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSupportedProfilesAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.VideoEncoder.VideoProfileInfo&gt; GetSupportedProfilesAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.VideoEncoder/VideoProfileInfo&gt; GetSupportedProfilesAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.VideoEncoder+VideoProfileInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Gets an array of supported video encoder profiles.
+             These can be used to choose a profile before calling Initialize().
+             </summary>
+        <returns>A VideProfileInfo object <see cref="T:PepperSharp.VideoEncoder.VideoProfileInfo" /></returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetVideoFrame">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError GetVideoFrame ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError GetVideoFrame() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Gets a blank video frame which can be filled with video data and passed
+             to the encoder.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetVideoFrameAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.VideoFrameInfo&gt; GetVideoFrameAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.VideoFrameInfo&gt; GetVideoFrameAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.VideoFrameInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Gets a blank video frame asynchronously which can be filled with video data and passed
+             to the encoder.
+             </summary>
+        <returns>VideoFrameInfo object that contains a blank video frame.  <see cref="T:PepperSharp.VideoFrameInfo" /></returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleBitstreamBuffer">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.VideoEncoder.BitstreamBufferInfo&gt; HandleBitstreamBuffer;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.VideoEncoder/BitstreamBufferInfo&gt; HandleBitstreamBuffer" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.VideoEncoder+BitstreamBufferInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the VideoEncoder issues a GetBitstreamBuffer call.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleClose">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleClose;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleClose" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the VideoEncoder issues Close.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleEncode">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleEncode;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleEncode" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the VideoEncoder issues an Encode call.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleEncoderProbed">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.VideoEncoder.VideoProfileInfo&gt; HandleEncoderProbed;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.VideoEncoder/VideoProfileInfo&gt; HandleEncoderProbed" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.VideoEncoder+VideoProfileInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the VideoEncoder issues a GetSupportedProfiles call.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleInitialize">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleInitialize;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleInitialize" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the VideoEncoder issues an Initialize call.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleVideoFrame">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.VideoFrameInfo&gt; HandleVideoFrame;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.VideoFrameInfo&gt; HandleVideoFrame" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.VideoFrameInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the VideoEncoder issues a GetVideoFrame call.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Initialize">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Initialize (PepperSharp.VideoFrameFormat inputFormat, PepperSharp.PPSize inputVisibleSize, PepperSharp.VideoProfile outputProfile, uint initialBitrate, PepperSharp.HardwareAcceleration acceleration);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Initialize(valuetype PepperSharp.VideoFrameFormat inputFormat, valuetype PepperSharp.PPSize inputVisibleSize, valuetype PepperSharp.VideoProfile outputProfile, unsigned int32 initialBitrate, valuetype PepperSharp.HardwareAcceleration acceleration) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="inputFormat" Type="PepperSharp.VideoFrameFormat" />
+        <Parameter Name="inputVisibleSize" Type="PepperSharp.PPSize" />
+        <Parameter Name="outputProfile" Type="PepperSharp.VideoProfile" />
+        <Parameter Name="initialBitrate" Type="System.UInt32" />
+        <Parameter Name="acceleration" Type="PepperSharp.HardwareAcceleration" />
+      </Parameters>
+      <Docs>
+        <param name="inputFormat">The <code>VideoFrame_Format</code> of the
+             frames which will be encoded.</param>
+        <param name="inputVisibleSize">A <code>Size</code> specifying the
+             dimensions of the visible part of the input frames.</param>
+        <param name="outputProfile">A <code>VideoProfile</code> specifying the
+             codec profile of the encoded output stream.</param>
+        <param name="initialBitrate">The initial bitrate of the encoded output stream</param>
+        <param name="acceleration">A <code>HardwareAcceleration</code> specifying
+             whether to use a hardware accelerated or a software implementation.</param>
+        <summary>
+             Initializes a video encoder resource. This should be called after
+             GetSupportedProfiles() and before any functions below.
+             </summary>
+        <returns>Error code.  Returns NotSupported if video encoding is not available, or the
+             requested codec profile is not supported.
+             Returns NoMemory if frame and bitstream buffers can't be created.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="InitializeAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; InitializeAsync (PepperSharp.VideoFrameFormat inputFormat, PepperSharp.PPSize inputVisibleSize, PepperSharp.VideoProfile outputProfile, uint initialBitrate, PepperSharp.HardwareAcceleration acceleration, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; InitializeAsync(valuetype PepperSharp.VideoFrameFormat inputFormat, valuetype PepperSharp.PPSize inputVisibleSize, valuetype PepperSharp.VideoProfile outputProfile, unsigned int32 initialBitrate, valuetype PepperSharp.HardwareAcceleration acceleration, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="inputFormat" Type="PepperSharp.VideoFrameFormat" />
+        <Parameter Name="inputVisibleSize" Type="PepperSharp.PPSize" />
+        <Parameter Name="outputProfile" Type="PepperSharp.VideoProfile" />
+        <Parameter Name="initialBitrate" Type="System.UInt32" />
+        <Parameter Name="acceleration" Type="PepperSharp.HardwareAcceleration" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="inputFormat">The <code>VideoFrame_Format</code> of the
+             frames which will be encoded.</param>
+        <param name="inputVisibleSize">A <code>Size</code> specifying the
+             dimensions of the visible part of the input frames.</param>
+        <param name="outputProfile">A <code>VideoProfile</code> specifying the
+             codec profile of the encoded output stream.</param>
+        <param name="initialBitrate">The initial bitrate of the encoded output stream</param>
+        <param name="acceleration">A <code>HardwareAcceleration</code> specifying
+             whether to use a hardware accelerated or a software implementation.</param>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Initializes a video encoder resource asynchronously. This should be called after
+             GetSupportedProfiles() and before any functions below.
+             </summary>
+        <returns>Error code.  Returns NotSupported if video encoding is not available, or the
+             requested codec profile is not supported.
+             Returns NoMemory if frame and bitstream buffers can't be created.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnBitstreamBuffer">
+      <MemberSignature Language="C#" Value="protected void OnBitstreamBuffer (PepperSharp.PPError result, PepperSharp.PPBitstreamBuffer bitstreamBuffer);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnBitstreamBuffer(valuetype PepperSharp.PPError result, valuetype PepperSharp.PPBitstreamBuffer bitstreamBuffer) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="bitstreamBuffer" Type="PepperSharp.PPBitstreamBuffer" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="bitstreamBuffer">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnClose">
+      <MemberSignature Language="C#" Value="protected virtual void OnClose (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnClose(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnEncode">
+      <MemberSignature Language="C#" Value="protected void OnEncode (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnEncode(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnEncoderProbed">
+      <MemberSignature Language="C#" Value="protected void OnEncoderProbed (PepperSharp.PPError result, System.Collections.ObjectModel.ReadOnlyCollection&lt;PepperSharp.VideoProfileDescription&gt; entries);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnEncoderProbed(valuetype PepperSharp.PPError result, class System.Collections.ObjectModel.ReadOnlyCollection`1&lt;class PepperSharp.VideoProfileDescription&gt; entries) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="entries" Type="System.Collections.ObjectModel.ReadOnlyCollection&lt;PepperSharp.VideoProfileDescription&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="entries">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnInitialize">
+      <MemberSignature Language="C#" Value="protected virtual void OnInitialize (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnInitialize(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnVideoFrame">
+      <MemberSignature Language="C#" Value="protected void OnVideoFrame (PepperSharp.PPError result, PepperSharp.PPResource videoFrame);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnVideoFrame(valuetype PepperSharp.PPError result, valuetype PepperSharp.PPResource videoFrame) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="videoFrame" Type="PepperSharp.PPResource" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="videoFrame">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RecycleBitstreamBuffer">
+      <MemberSignature Language="C#" Value="public void RecycleBitstreamBuffer (PepperSharp.VideoEncoder.BitstreamBufferInfo bitstreamBuffer);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void RecycleBitstreamBuffer(class PepperSharp.VideoEncoder/BitstreamBufferInfo bitstreamBuffer) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="bitstreamBuffer" Type="PepperSharp.VideoEncoder+BitstreamBufferInfo" />
+      </Parameters>
+      <Docs>
+        <param name="bitstreamBuffer">A <code>BitstreamBufferInfo</code> that is no
+             longer needed by the plugin.</param>
+        <summary>
+             Recycles a bitstream buffer back to the encoder.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RequestEncodingParametersChange">
+      <MemberSignature Language="C#" Value="public void RequestEncodingParametersChange (uint bitRate, uint frameRate);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void RequestEncodingParametersChange(unsigned int32 bitRate, unsigned int32 frameRate) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="bitRate" Type="System.UInt32" />
+        <Parameter Name="frameRate" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="bitRate">The requested new bitrate, in bits per second.</param>
+        <param name="frameRate">The requested new framerate, in frames per second.</param>
+        <summary>
+             Requests a change to encoding parameters. This is only a request,
+             fulfilled on a best-effort basis.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

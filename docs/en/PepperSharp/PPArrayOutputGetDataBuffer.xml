@@ -1,0 +1,32 @@
+<Type Name="PPArrayOutputGetDataBuffer" FullName="PepperSharp.PPArrayOutputGetDataBuffer">
+  <TypeSignature Language="C#" Value="public delegate IntPtr PPArrayOutputGetDataBuffer(IntPtr user_data, uint element_count, uint element_size);" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPArrayOutputGetDataBuffer extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Parameters>
+    <Parameter Name="user_data" Type="System.IntPtr" />
+    <Parameter Name="element_count" Type="System.UInt32" />
+    <Parameter Name="element_size" Type="System.UInt32" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.IntPtr</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="user_data">To be added.</param>
+    <param name="element_count">To be added.</param>
+    <param name="element_size">To be added.</param>
+    <summary>To be added.</summary>
+    <returns>To be added.</returns>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

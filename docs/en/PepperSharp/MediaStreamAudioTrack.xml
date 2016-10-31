@@ -1,0 +1,427 @@
+<Type Name="MediaStreamAudioTrack" FullName="PepperSharp.MediaStreamAudioTrack">
+  <TypeSignature Language="C#" Value="public class MediaStreamAudioTrack : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MediaStreamAudioTrack extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaStreamAudioTrack (PepperSharp.MediaStreamAudioTrack mediaStreamAudioTrack);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.MediaStreamAudioTrack mediaStreamAudioTrack) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="mediaStreamAudioTrack" Type="PepperSharp.MediaStreamAudioTrack" />
+      </Parameters>
+      <Docs>
+        <param name="mediaStreamAudioTrack">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaStreamAudioTrack (PepperSharp.PPResource resource);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype PepperSharp.PPResource resource) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="resource" Type="PepperSharp.PPResource" />
+      </Parameters>
+      <Docs>
+        <param name="resource">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Attributes">
+      <MemberSignature Language="C#" Value="public PepperSharp.MediaStreamAudioTrackAttributes Attributes { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class PepperSharp.MediaStreamAudioTrackAttributes Attributes" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.MediaStreamAudioTrackAttributes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets a MediaStreamAudioTrackAttributes instance with the attributes that the
+             MediaStreamAudioTrack is configured for.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Close">
+      <MemberSignature Language="C#" Value="public void Close ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Close() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; CloseAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; CloseAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Closes the MediaStream video track asynchronously, and disconnects it from video source.
+             After calling <code>Close()</code>, no new frames will be received.
+             </summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Configure">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Configure (PepperSharp.MediaStreamAudioTrackAttributes attributes);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Configure(class PepperSharp.MediaStreamAudioTrackAttributes attributes) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attributes" Type="PepperSharp.MediaStreamAudioTrackAttributes" />
+      </Parameters>
+      <Docs>
+        <param name="attributes">A MediaStreamAudioTrackAttributes instance</param>
+        <summary>
+             Configures underlying buffer buffers for incoming audio samples.
+             If the application doesn't want to drop samples, then the
+             <code>Buffers</code> should be
+             chosen such that inter-buffer processing time variability won't overrun
+             all input buffers. If all buffers are filled, then samples will be
+             dropped. The application can detect this by examining the timestamp on
+             returned buffers. If <code>Configure()</code> is not called, default
+             settings will be used. Calls to Configure while the plugin holds
+             buffers will fail.
+             Example usage from plugin code:
+             <code>
+             var attribs = new MediaStreamAudioTrackAttributes() {
+                 Buffers = 4,
+                 Duration, 10
+                 };
+             track.Configure(attribs);
+             </code></summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConfigureAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; ConfigureAsync (PepperSharp.MediaStreamAudioTrackAttributes attributes, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; ConfigureAsync(class PepperSharp.MediaStreamAudioTrackAttributes attributes, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attributes" Type="PepperSharp.MediaStreamAudioTrackAttributes" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="attributes">A MediaStreamAudioTrackAttributes instance</param>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Configures underlying buffer buffers for incoming audio samples asynchronously.
+             If the application doesn't want to drop samples, then the
+             <code>Buffers</code> should be
+             chosen such that inter-buffer processing time variability won't overrun
+             all input buffers. If all buffers are filled, then samples will be
+             dropped. The application can detect this by examining the timestamp on
+             returned buffers. If <code>Configure()</code> is not called, default
+             settings will be used. Calls to Configure while the plugin holds
+             buffers will fail.
+             Example usage from plugin code:
+             <code>
+             var attribs = new MediaStreamAudioTrackAttributes() {
+                 Buffers = 4,
+                 Duration, 10
+                 };
+             track.Configure(attribs);
+             </code></summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetBuffer">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError GetBuffer ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError GetBuffer() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Gets the next audio buffer from the MediaStream track.
+             If internal processing is slower than the incoming buffer rate,
+             new buffers will be dropped from the incoming stream. Once all buffers
+             are full, audio samples will be dropped until <code>RecycleBuffer()</code>
+             is called to free a spot for another buffer.
+             If there are no audio data in the input buffer,
+             <code>CompletionPending</code> will be returned immediately and the
+             <code>HandleBuffer</code> event handler will be called when a new buffer of audio samples
+             is received or some error happens.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetBufferAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.MediaStreamAudioTrack.AudioBufferInfo&gt; GetBufferAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.MediaStreamAudioTrack/AudioBufferInfo&gt; GetBufferAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.MediaStreamAudioTrack+AudioBufferInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Gets the next audio buffer from the MediaStream track.
+             If internal processing is slower than the incoming buffer rate,
+             new buffers will be dropped from the incoming stream. Once all buffers
+             are full, audio samples will be dropped until <code>RecycleBuffer()</code>
+             is called to free a spot for another buffer.
+             </summary>
+        <returns>AudioBufferInfo instance</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleBuffer">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.MediaStreamAudioTrack.AudioBufferInfo&gt; HandleBuffer;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.MediaStreamAudioTrack/AudioBufferInfo&gt; HandleBuffer" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.MediaStreamAudioTrack+AudioBufferInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the MediaStreamAudioTrack issues GetBuffer.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleClose">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleClose;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleClose" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the MediaStreamAudioTrack issues Close.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleConfigure">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleConfigure;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleConfigure" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the MediaStreamAudioTrack issues a Configure call.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HasEnded">
+      <MemberSignature Language="C#" Value="public bool HasEnded { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool HasEnded" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Checks whether the underlying MediaStream track has ended.
+             Calls to GetBuffer while the track has ended are safe to make and will
+             complete, but will fail.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Id">
+      <MemberSignature Language="C#" Value="public string Id { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Id" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the track ID of the underlying MediaStream audio track.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnClose">
+      <MemberSignature Language="C#" Value="protected virtual void OnClose (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnClose(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnConfigure">
+      <MemberSignature Language="C#" Value="protected void OnConfigure (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnConfigure(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnGetBuffer">
+      <MemberSignature Language="C#" Value="protected void OnGetBuffer (PepperSharp.MediaStreamAudioTrack.AudioBufferInfo audioBufferInfo);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnGetBuffer(class PepperSharp.MediaStreamAudioTrack/AudioBufferInfo audioBufferInfo) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="audioBufferInfo" Type="PepperSharp.MediaStreamAudioTrack+AudioBufferInfo" />
+      </Parameters>
+      <Docs>
+        <param name="audioBufferInfo">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RecycleBuffer">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError RecycleBuffer (PepperSharp.PPResource buffer);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError RecycleBuffer(valuetype PepperSharp.PPResource buffer) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="PepperSharp.PPResource" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">A AudioBuffer returned by <code>GetBuffer()</code>.</param>
+        <summary>
+             Recycles a buffer returned by <code>GetBuffer()</code>, so the track can
+             reuse the buffer. And the buffer will become invalid. The caller should
+             release all references it holds to <code>buffer</code> and not use it
+             anymore.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

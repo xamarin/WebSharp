@@ -1,0 +1,467 @@
+<Type Name="Graphics2D" FullName="PepperSharp.Graphics2D">
+  <TypeSignature Language="C#" Value="public class Graphics2D : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Graphics2D extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Graphics2D (PepperSharp.PPResource resource);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype PepperSharp.PPResource resource) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="resource" Type="PepperSharp.PPResource" />
+      </Parameters>
+      <Docs>
+        <param name="resource">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Graphics2D (PepperSharp.Instance instance, PepperSharp.PPSize size, bool isAlwaysOpaque);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance, valuetype PepperSharp.PPSize size, bool isAlwaysOpaque) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+        <Parameter Name="size" Type="PepperSharp.PPSize" />
+        <Parameter Name="isAlwaysOpaque" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="instance">The instance with which this resource will be associated.</param>
+        <param name="size">The size of the 2D graphics context in the browser, measured in pixels. See <code>Scale</code> for more information.</param>
+        <param name="isAlwaysOpaque">Set the <code>isAlwaysOpaque</code> flag
+             to true if you know that you will be painting only opaque data to this
+             context. This option will disable blending when compositing the module
+             with the web page, which might give higher performance on some computers.
+            
+             If you set <code>isAlwaysOpaque</code>, your alpha channel should
+             always be set to 0xFF or there may be painting artifacts. The alpha values
+             overwrite the destination alpha values without blending when
+             <code>isAlwaysOpaque</code> is true.
+             </param>
+        <summary>
+             A constructor allocating a new 2D graphics context with the given size
+             in the browser, resulting object will be IsEmpty if the allocation
+             failed.
+            
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Flush">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Flush ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Flush() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Flush() flushes any enqueued paint, scroll, and replace commands
+             to the backing store. This actually executes the updates, and causes a
+             repaint of the webpage, assuming this graphics context is bound to a
+             module instance.
+            
+             Flush() runs in asynchronous mode. Subscribe to the Flushed EventHandler
+             which will be invoked when the image has painted to the
+             screen. While you are waiting for a <code>Flush</code> event,
+             additional calls to Flush() will fail.
+            
+             Because the EventHandler Flushed is invoked only when the
+             module's image is actually on the screen, this function provides
+             a way to rate limit animations. By waiting until the image is on the
+             screen before painting the next frame, you can ensure you're not
+             flushing 2D graphics faster than the screen can be updated.
+            
+             <strong>Unbound contexts</strong>
+             If the context is not bound to a module instance, you will
+             still receive events. The event will be invoked after Flush() returns
+             to avoid reentrancy. The callback will not wait until anything is
+             painted to the screen because there will be nothing on the screen. The
+             timing of this callback is not guaranteed and may be deprioritized by
+             the browser because it is not affecting the user experience.
+            
+             <strong>Off-screen instances</strong>
+             If the context is bound to an instance that is
+             currently not visible (for example, scrolled out of view) it will
+             behave like the "unbound context" case.
+            
+             <strong>Detaching a context</strong>
+             If you detach a context from a module instance, any
+             pending flush events will be converted into the "unbound context"
+             case.
+            
+             <strong>Released contexts</strong>
+             A Flushed event may or may not still be received even if you have released all
+             of your references to the context. This can occur if there are internal
+             references to the context that means it has not been internally
+             destroyed (for example, if it is still bound to an instance) or due to
+             other implementation details. As a result, you should be careful to
+             check that flush events are for the context you expect and that
+             you're capable of handling events for context that you may have
+             released your reference to.
+            
+             <strong>Shutdown</strong>
+             If a module instance is removed when a Flush is pending, the
+             event will not be fired.
+             </summary>
+        <returns>PPError code - Returns <code>Ok</code> on success or
+             <code>BadResource</code> if the graphics context is invalid,
+             <code>BadRrgument</code> if the callback is null and
+             flush is being called from the main thread of the module, or
+             <code>InProgress</code> if a flush is already pending that has
+             not issued fired its event yet.  In the failure case, nothing will be
+             updated and no event will be fired.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FlushAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; FlushAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; FlushAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop to execute the command on.</param>
+        <summary>
+             Flushs the context asynchronously.  <see cref="M:PepperSharp.Graphics2D.Flush" /> for more information
+             </summary>
+        <returns>Error code.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Flushed">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; Flushed;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; Flushed" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the Graphics2D issues a Flush on the context.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnFlushed">
+      <MemberSignature Language="C#" Value="protected void OnFlushed (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnFlushed(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaintImageData">
+      <MemberSignature Language="C#" Value="public void PaintImageData (PepperSharp.ImageData image, PepperSharp.PPPoint top_left);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void PaintImageData(class PepperSharp.ImageData image, valuetype PepperSharp.PPPoint top_left) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="image" Type="PepperSharp.ImageData" />
+        <Parameter Name="top_left" Type="PepperSharp.PPPoint" />
+      </Parameters>
+      <Docs>
+        <param name="image">
+        </param>
+        <param name="top_left">
+        </param>
+        <summary>
+             PaintImageData() enqueues a paint command of the given image into
+             the context. This command has no effect until you call Flush(). As a
+             result, what counts is the contents of the bitmap when you call Flush,
+             not when you call this function.
+            
+             The provided image will be placed at <code>top_left</code> from the top
+             left of the context's internal backing store. This version of
+             PaintImageData paints the entire image. Refer to the other version of
+             this function to paint only part of the area.
+            
+             The painted area of the source bitmap must fall entirely within the
+             context. Attempting to paint outside of the context will result in an
+             error.
+            
+             There are two methods most modules will use for painting. The first
+             method is to generate a new <code>ImageData</code> and then paint it.
+             In this case, you'll set the location of your painting to
+             <code>top_left</code> and set <code>src_rect</code> to <code>NULL</code>.
+             The second is that you're generating small invalid regions out of a larger
+             bitmap representing your entire module's image.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaintImageData">
+      <MemberSignature Language="C#" Value="public void PaintImageData (PepperSharp.ImageData image, PepperSharp.PPPoint topLeft, PepperSharp.PPRect srcRect);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void PaintImageData(class PepperSharp.ImageData image, valuetype PepperSharp.PPPoint topLeft, valuetype PepperSharp.PPRect srcRect) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="image" Type="PepperSharp.ImageData" />
+        <Parameter Name="topLeft" Type="PepperSharp.PPPoint" />
+        <Parameter Name="srcRect" Type="PepperSharp.PPRect" />
+      </Parameters>
+      <Docs>
+        <param name="image">The <code>ImageData</code> to be painted.</param>
+        <param name="topLeft">A <code>Point</code> representing the
+             <code>topLeft</code> location where the <code>ImageData</code> will be
+             painted.
+             </param>
+        <param name="srcRect">The rectangular area where the <code>ImageData</code>
+             will be painted.</param>
+        <summary>
+             PaintImageData() enqueues a paint command of the given image into
+             the context. This command has no effect until you call Flush(). As a
+             result, what counts is the contents of the bitmap when you call Flush(),
+             not when you call this function.
+            
+             The provided image will be placed at <code>top_left</code> from the top
+             left of the context's internal backing store. Then the pixels contained
+             in <code>src_rect</code> will be copied into the backing store. This
+             means that the rectangle being painted will be at <code>src_rect</code>
+             offset by <code>top_left</code>.
+            
+             The <code>src_rect</code> is specified in the coordinate system of the
+             image being painted, not the context. For the common case of copying the
+             entire image, you may specify an empty <code>src_rect</code>.
+            
+             The painted area of the source bitmap must fall entirely within the
+             context. Attempting to paint outside of the context will result in an
+             error. However, the source bitmap may fall outside the context, as long
+             as the <code>src_rect</code> subset of it falls entirely within the
+             context.
+            
+             There are two methods most modules will use for painting. The first
+             method is to generate a new <code>ImageData</code> and then paint it. In
+             this case, you'll set the location of your painting to
+             <code>topLeft</code> and set <code>srcRect</code> to <code>NULL</code>.
+             The second is that you're generating small invalid regions out of a larger
+             bitmap representing your entire module. In this case, you would set the
+             location of your image to (0,0) and then set <code>srcRect</code> to the
+             pixels you changed.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReplaceContents">
+      <MemberSignature Language="C#" Value="public void ReplaceContents (PepperSharp.ImageData image);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ReplaceContents(class PepperSharp.ImageData image) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="image" Type="PepperSharp.ImageData" />
+      </Parameters>
+      <Docs>
+        <param name="image">The <code>ImageData</code> to be painted.</param>
+        <summary>
+             ReplaceContents() provides a slightly more efficient way to paint the
+             entire module's image. Normally, calling PaintImageData() requires that
+             the browser copy the pixels out of the image and into the graphics
+             context's backing store. This function replaces the graphics context's
+             backing store with the given image, avoiding the copy.
+            
+             The new image must be the exact same size as this graphics context. If
+             the new image uses a different image format than the browser's native
+             bitmap format (use ImageData::GetNativeImageDataFormat() to retrieve the
+             format), then a conversion will be done inside the browser which may slow
+             the performance a little bit.
+            
+             <strong>Note:</strong> The new image will not be painted until you call
+             Flush().
+            
+             After this call, you should take care to release your references to the
+             image. If you paint to the image after ReplaceContents(), there is the
+             possibility of significant painting artifacts because the page might use
+             partially-rendered data when copying out of the backing store.
+            
+             In the case of an animation, you will want to allocate a new image for
+             the next frame. It is best if you wait until the flush callback has
+             executed before allocating this bitmap. This gives the browser the option
+             of caching the previous backing store and handing it back to you
+             (assuming the sizes match). In the optimal case, this means no bitmaps are
+             allocated during the animation, and the backing store and "front buffer"
+             (which the module is painting into) are just being swapped back and forth.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Scale">
+      <MemberSignature Language="C#" Value="public float Scale { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Scale" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets or Sets the scale factor that will be applied when painting the
+             graphics context onto the output device. Typically, if rendering at device
+             resolution is desired, the context would be created with the width and
+             height scaled up by the view's GetDeviceScale and SetScale called with a
+             scale of 1.0 / GetDeviceScale(). For example, if the view resource passed
+             to DidChangeView has a rectangle of (w=200, h=100) and a device scale of
+             2.0, one would call Create with a size of (w=400, h=200) and then call
+             SetScale with 0.5. One would then treat each pixel in the context as a
+             single device pixel.
+             
+             Default scale factor is 1.0f
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Scroll">
+      <MemberSignature Language="C#" Value="public void Scroll (PepperSharp.PPRect clip, PepperSharp.PPPoint amount);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Scroll(valuetype PepperSharp.PPRect clip, valuetype PepperSharp.PPPoint amount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="clip" Type="PepperSharp.PPRect" />
+        <Parameter Name="amount" Type="PepperSharp.PPPoint" />
+      </Parameters>
+      <Docs>
+        <param name="clip">The clipping rectangle.</param>
+        <param name="amount">The amount the area in the clipping rectangle will be shifted.</param>
+        <summary>
+             Scroll() enqueues a scroll of the context's backing store. This
+             function has no effect until you call Flush(). The data within the
+             provided clipping rectangle will be shifted by (dx, dy) pixels.
+            
+             This function will result in some exposed region which will have
+             undefined contents. The module should call PaintImageData() on
+             these exposed regions to give the correct contents.
+            
+             The scroll can be larger than the area of the clipping rectangle, which
+             means the current image will be scrolled out of the rectangle. This
+             scenario is not an error but will result in a no-op.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetLayerTransform">
+      <MemberSignature Language="C#" Value="public bool SetLayerTransform (float scale, PepperSharp.PPPoint origin, PepperSharp.PPPoint translate);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetLayerTransform(float32 scale, valuetype PepperSharp.PPPoint origin, valuetype PepperSharp.PPPoint translate) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="scale" Type="System.Single" />
+        <Parameter Name="origin" Type="PepperSharp.PPPoint" />
+        <Parameter Name="translate" Type="PepperSharp.PPPoint" />
+      </Parameters>
+      <Docs>
+        <param name="scale">To be added.</param>
+        <param name="origin">To be added.</param>
+        <param name="translate">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Size">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPSize Size { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPSize Size" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPSize</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Function for getting and setting the size of the 2D graphics context.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

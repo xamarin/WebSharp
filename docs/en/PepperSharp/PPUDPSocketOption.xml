@@ -1,0 +1,117 @@
+<Type Name="PPUDPSocketOption" FullName="PepperSharp.PPUDPSocketOption">
+  <TypeSignature Language="C#" Value="public enum PPUDPSocketOption" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPUDPSocketOption extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PPB_UDPSocket</code>
+    <code>SetOption()</code>
+  </Docs>
+  <Members>
+    <Member MemberName="AddressReuse">
+      <MemberSignature Language="C#" Value="AddressReuse" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPUDPSocketOption AddressReuse = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPUDPSocketOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>Bind()</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Broadcast">
+      <MemberSignature Language="C#" Value="Broadcast" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPUDPSocketOption Broadcast = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPUDPSocketOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>Bind()</code>
+      </Docs>
+    </Member>
+    <Member MemberName="MulticastLoop">
+      <MemberSignature Language="C#" Value="MulticastLoop" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPUDPSocketOption MulticastLoop = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPUDPSocketOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>Bind()</code>
+      </Docs>
+    </Member>
+    <Member MemberName="MulticastTtl">
+      <MemberSignature Language="C#" Value="MulticastTtl" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPUDPSocketOption MulticastTtl = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPUDPSocketOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_INT32</code>
+        <code>Bind()</code>
+      </Docs>
+    </Member>
+    <Member MemberName="RecvBufferSize">
+      <MemberSignature Language="C#" Value="RecvBufferSize" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPUDPSocketOption RecvBufferSize = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPUDPSocketOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_INT32</code>
+        <code>Bind()</code>
+        <code>SetOption()</code>
+      </Docs>
+    </Member>
+    <Member MemberName="SendBufferSize">
+      <MemberSignature Language="C#" Value="SendBufferSize" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPUDPSocketOption SendBufferSize = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPUDPSocketOption</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_INT32</code>
+        <code>Bind()</code>
+        <code>SetOption()</code>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

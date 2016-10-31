@@ -1,0 +1,256 @@
+<Type Name="PPURLRequestProperty" FullName="PepperSharp.PPURLRequestProperty">
+  <TypeSignature Language="C#" Value="public enum PPURLRequestProperty" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPURLRequestProperty extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PPB_URLRequestInfo</code>
+  </Docs>
+  <Members>
+    <Member MemberName="Allowcredentials">
+      <MemberSignature Language="C#" Value="Allowcredentials" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Allowcredentials = int32(9)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_Bool</code>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>PP_FALSE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Allowcrossoriginrequests">
+      <MemberSignature Language="C#" Value="Allowcrossoriginrequests" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Allowcrossoriginrequests = int32(8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_Bool</code>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>PP_FALSE</code>
+        <a href="http://www.w3.org/TR/access-control">Cross-Origin Resource
+               * Sharing</a>
+      </Docs>
+    </Member>
+    <Member MemberName="Customcontenttransferencoding">
+      <MemberSignature Language="C#" Value="Customcontenttransferencoding" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Customcontenttransferencoding = int32(10)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_STRING</code>
+        <code>PP_VARTYPE_UNDEFINED</code>
+        <code>URLRequestInfo</code>
+        <code>PP_ERROR_NOACCESS</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Customreferrerurl">
+      <MemberSignature Language="C#" Value="Customreferrerurl" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Customreferrerurl = int32(7)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_STRING)</code>
+        <code>PP_VARTYPE_UNDEFINED</code>
+        <code>URLRequestInfo</code>
+        <code>PP_ERROR_NOACCESS</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Customuseragent">
+      <MemberSignature Language="C#" Value="Customuseragent" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Customuseragent = int32(13)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_STRING</code>
+        <code>PP_VARTYPE_UNDEFINED</code>
+        <code>URLRequestInfo</code>
+        <code>PP_ERROR_NOACCESS</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Followredirects">
+      <MemberSignature Language="C#" Value="Followredirects" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Followredirects = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_Bool</code>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>PP_TRUE</code>
+        <code>PP_FALSE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Headers">
+      <MemberSignature Language="C#" Value="Headers" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Headers = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Method">
+      <MemberSignature Language="C#" Value="Method" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Method = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_STRING</code>
+        <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html">HTTP
+               * Methods</a>
+      </Docs>
+    </Member>
+    <Member MemberName="Prefetchbufferlowerthreshold">
+      <MemberSignature Language="C#" Value="Prefetchbufferlowerthreshold" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Prefetchbufferlowerthreshold = int32(12)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_INT32</code>
+        <code>PP_URLREQUESTPROPERTY_PREFETCHBUFFERUPPERTHRESHOLD</code>
+        <code>PP_URLREQUESTPROPERTY_PREFETCHBUFFERLOWERERTHRESHOLD</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Prefetchbufferupperthreshold">
+      <MemberSignature Language="C#" Value="Prefetchbufferupperthreshold" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Prefetchbufferupperthreshold = int32(11)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Recorddownloadprogress">
+      <MemberSignature Language="C#" Value="Recorddownloadprogress" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Recorddownloadprogress = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_Bool</code>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>PP_FALSE</code>
+        <code>PP_TRUE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Recorduploadprogress">
+      <MemberSignature Language="C#" Value="Recorduploadprogress" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Recorduploadprogress = int32(6)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_Bool</code>
+        <code>PP_FALSE</code>
+        <code>PP_TRUE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Streamtofile">
+      <MemberSignature Language="C#" Value="Streamtofile" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Streamtofile = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_Bool</code>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>PP_FALSE</code>
+        <code>PP_TRUE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Url">
+      <MemberSignature Language="C#" Value="Url" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPURLRequestProperty Url = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPURLRequestProperty</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VARTYPE_STRING</code>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

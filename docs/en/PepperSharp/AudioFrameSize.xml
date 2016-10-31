@@ -1,0 +1,49 @@
+<Type Name="AudioFrameSize" FullName="PepperSharp.AudioFrameSize">
+  <TypeSignature Language="C#" Value="public enum AudioFrameSize" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed AudioFrameSize extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Maximum">
+      <MemberSignature Language="C#" Value="Maximum" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.AudioFrameSize Maximum = int32(32768)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioFrameSize</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Maximum possible frame count
+             </summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Minimum">
+      <MemberSignature Language="C#" Value="Minimum" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.AudioFrameSize Minimum = int32(64)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioFrameSize</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Minimum possible frame count.
+             </summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
