@@ -5,6 +5,7 @@ using System.Text;
 
 using PepperSharp;
 using System.Linq;
+using System.Threading;
 
 namespace FileIO
 {
@@ -26,6 +27,7 @@ namespace FileIO
             Initialize += OnInitialize;
         }
 
+        MessageLoop runloop;
         private void OnInitialize(object sender, InitializeEventArgs args)
         {
 
@@ -35,6 +37,9 @@ namespace FileIO
             // before any FileIO operations execute.
             messageLoop = new MessageLoop(this);
             var startTask = messageLoop.Start();
+
+            runloop = new MessageLoop(this);
+            runloop.Start();
 
             // Set the MessageLoop that the filesystem will run asynchronously with
             // This is not necassary though as the async will run regardless if a 
@@ -91,7 +96,7 @@ namespace FileIO
             else if (command == "list")
             {
                 var dirName = fileName;
-                List(dirName);
+                messageLoop.PostWork<string>(List2,dirName);
             }
             else if (command == "makedir")
             {
@@ -106,9 +111,159 @@ namespace FileIO
             else if (command == "query")
             {
                 var dirName = fileName;
-                Query(fileName);
+                messageLoop.PostWork<string>(Query2, dirName);
+                //Query2(PPError.Ok, dirName);
             }
         }
+
+        int number = 0;
+        private async void List2(PPError result, string dir_name)
+        {
+
+            if (!IsFileSystemReady)
+            {
+                ShowErrorMessage("File system is not open", PPError.Failed);
+                return;
+            }
+
+            using (var fileRef = new FileRef(fileSystem, dir_name))
+            {
+            //var fileRef = new FileRef(fileSystem, dir_name);
+
+            var listResult = await fileRef.ReadDirectoryEntriesAsync();
+
+            if (listResult.Result != PPError.Ok)
+            {
+                ShowErrorMessage("List failed", listResult.Result);
+                return;
+            }
+
+            var entries = new List<string>();
+            foreach (var entry in listResult.Entries)
+            {
+                Console.WriteLine(entry.FileRef.Name);
+                entries.Add(entry.FileRef.Name);
+            }
+
+            PostArrayMessage("LIST", entries.ToArray());
+            ShowStatusMessage($"List success {number++}");
+
+
+            }
+        }
+
+        protected virtual void OnQuery1(PPError result, PPFileInfo fi)
+        {
+            Console.WriteLine("Query callback");
+            if (result != PPError.Ok)
+            {
+                ShowStatusMessage($"Query success {result} - {number}");
+                return;
+            }
+
+            //var fileInfo = new FileInfo(result, fi);
+            //var strInfo = new List<string>();
+            //strInfo.Add($"QueryResult:      {fileInfo.QueryResult}\n");
+            //strInfo.Add($"Size:             {fileInfo.Size}\n");
+            //strInfo.Add($"Type:             {fileInfo.Type}\n");
+            //strInfo.Add($"SystemType:       {fileInfo.SystemType}\n");
+            //strInfo.Add($"CreationTime:     {fileInfo.UTCCreationTime.ToLocalTime()}\n");
+            //strInfo.Add($"LastAccessTime:   {fileInfo.UTCLastAccessTime.ToLocalTime()}\n");
+            //strInfo.Add($"LastModifiedTime: {fileInfo.UTCLastModifiedTime.ToLocalTime()}\n");
+
+            //var ssss = string.Concat(strInfo.ToArray());
+            //Console.WriteLine(ssss);
+        }
+
+        private void FileRef_HandleQuery(object sender, FileInfo fileInfo)
+        {
+            Console.WriteLine("Query callback");
+            var strInfo = new List<string>();
+            strInfo.Add($"QueryResult:      {fileInfo.QueryResult}\n");
+            strInfo.Add($"Size:             {fileInfo.Size}\n");
+            strInfo.Add($"Type:             {fileInfo.Type}\n");
+            strInfo.Add($"SystemType:       {fileInfo.SystemType}\n");
+            strInfo.Add($"CreationTime:     {fileInfo.UTCCreationTime.ToLocalTime()}\n");
+            strInfo.Add($"LastAccessTime:   {fileInfo.UTCLastAccessTime.ToLocalTime()}\n");
+            strInfo.Add($"LastModifiedTime: {fileInfo.UTCLastModifiedTime.ToLocalTime()}\n");
+            var ssss = string.Concat(strInfo.ToArray());
+            Console.WriteLine(ssss);
+            ((FileRef)sender).Dispose();
+
+        }
+        int numSeq = 0;
+        private async void Query2(PPError result, string fileName)
+        {
+            if (!IsFileSystemReady)
+            {
+                ShowErrorMessage("File system is not open", PPError.Failed);
+                return;
+            }
+
+            using (var fileRef = new FileRef(fileSystem, fileName))
+            {
+            //var fileRef = new FileRef(fileSystem, fileName);
+                //Console.WriteLine($"Fileref create {fileref.ppresource} - {Encoding.UTF8.GetBytes(fileName).Length}");
+                //using (var fileRef = new FileRef(fileSystem, fileName))
+                //{
+                var fileInfo = await fileRef.QueryAsync(MessageLoop.BlockingMessageLoop);
+                var resultq = fileInfo.QueryResult;
+                //var ficb = new CompletionCallbackWithOutput<PPFileInfo>(OnQuery1);
+                //var resultq = (PPError)PPBFileRef.Query(fileRef, out ficb.OutputAdapter.output, ficb);
+                //fileRef.HandleQuery += FileRef_HandleQuery;
+                //var fileInfo2 = new PPFileInfo();
+                //var resultq = (PPError)PPBFileRef.Query(fileRef, out fileInfo2,
+                //    new BlockUntilComplete()
+                //);
+                //var fileInfo = new FileInfo(result, fileInfo2);
+
+                var strInfo = new List<string>();
+                strInfo.Add($"QueryResult:      {fileInfo.QueryResult}\n");
+                strInfo.Add($"Size:             {fileInfo.Size}\n");
+                strInfo.Add($"Type:             {fileInfo.Type}\n");
+                strInfo.Add($"SystemType:       {fileInfo.SystemType}\n");
+                strInfo.Add($"CreationTime:     {fileInfo.UTCCreationTime.ToLocalTime()}\n");
+                strInfo.Add($"LastAccessTime:   {fileInfo.UTCLastAccessTime.ToLocalTime()}\n");
+                strInfo.Add($"LastModifiedTime: {fileInfo.UTCLastModifiedTime.ToLocalTime()}\n");
+
+                var ssss = string.Concat(strInfo.ToArray());
+                //Console.WriteLine(ssss);
+
+                //var resultq = fileRef.Query();
+                //Console.WriteLine($"{resultq}");
+                //var fileRef = new FileRef(fileSystem, fileName);
+                //var fileInfo = new PPFileInfo();
+                //var result1 = (PPError)PPBFileRef.Query(fileRef, out fileInfo,
+                //    new BlockUntilComplete()
+                //);
+                //Console.WriteLine($"{resultq}");
+                //protected virtual void OnMakeDirectory(PPError result)
+                //    => HandleMakeDirectory?.Invoke(this, result);
+
+                //    var strInfo = new List<string>();
+                //    strInfo.Add($"QueryResult:      {fileInfo.QueryResult}");
+                //    strInfo.Add($"Size:             {fileInfo.Size}");
+                //    strInfo.Add($"Type:             {fileInfo.Type}");
+                //    strInfo.Add($"SystemType:       {fileInfo.SystemType}");
+                //    strInfo.Add($"CreationTime:     {fileInfo.UTCCreationTime.ToLocalTime()}");
+                //    strInfo.Add($"LastAccessTime:   {fileInfo.UTCLastAccessTime.ToLocalTime()}");
+                //    strInfo.Add($"LastModifiedTime: {fileInfo.UTCLastModifiedTime.ToLocalTime()}");
+
+                //    if (fileInfo.QueryResult != PPError.Ok)
+                //    {
+                //        ShowErrorMessage("Query failed", fileInfo.QueryResult);
+                //        return;
+                //    }
+                //    PostArrayMessage("QUERY", strInfo.ToArray());
+                number++;
+            if (fileRef.IsEmpty || resultq != PPError.Ok)
+                ShowStatusMessage($"Query success {fileRef.Handle} - {number}");
+            //}
+            //fileRef.HandleQuery -= FileRef_HandleQuery;
+            }
+        }
+
+ 
 
         private async Task Delete(string fileName)
         {
@@ -253,7 +408,7 @@ namespace FileIO
                 while (numBytesToRead > 0)
                 {
                     var readResult = await file.ReadAsync(readBuffer, numBytesRead,
-                                readBuffer.Count);
+                                readBuffer.Count, messageLoop);
 
                     if (readResult.EndOfFile)
                         break;
@@ -353,11 +508,12 @@ namespace FileIO
                 return;
             }
 
-            using (var fileRef = new FileRef(fileSystem, dir_name))
-            {
+            //using (var fileRef = new FileRef(fileSystem, dir_name))
+            //{
+            var fileRef = new FileRef(fileSystem, dir_name);
 
-                using (var listResult = await fileRef.ReadDirectoryEntriesAsync(messageLoop))
-                {
+            var listResult = await fileRef.ReadDirectoryEntriesAsync();
+                
                     if (listResult.Result != PPError.Ok)
                     {
                         ShowErrorMessage("List failed", listResult.Result);
@@ -367,14 +523,15 @@ namespace FileIO
                     var entries = new List<string>();
                     foreach (var entry in listResult.Entries)
                     {
+                Console.WriteLine(entry.FileRef.Name);
                         entries.Add(entry.FileRef.Name);
                     }
 
                     PostArrayMessage("LIST", entries.ToArray());
                     ShowStatusMessage("List success");
 
-                }
-            }
+                
+            //}
         }
 
         private async Task Query(string fileName)
