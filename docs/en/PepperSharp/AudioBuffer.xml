@@ -1,0 +1,184 @@
+<Type Name="AudioBuffer" FullName="PepperSharp.AudioBuffer">
+  <TypeSignature Language="C#" Value="public class AudioBuffer : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AudioBuffer extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AudioBuffer (PepperSharp.AudioBuffer other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.AudioBuffer other) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="other" Type="PepperSharp.AudioBuffer" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DataBuffer">
+      <MemberSignature Language="C#" Value="public IntPtr DataBuffer { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance native int DataBuffer" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IntPtr</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the data buffer containing the audio buffer samples.
+            
+             A pointer to the beginning of the data buffer.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DataBufferSize">
+      <MemberSignature Language="C#" Value="public uint DataBufferSize { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int32 DataBufferSize" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the size of data buffer in bytes.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DateTimeStamp">
+      <MemberSignature Language="C#" Value="public DateTime DateTimeStamp { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.DateTime DateTimeStamp" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.DateTime</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets or Sets the timestamp of the audio buffer.  A DateTime containing the timestamp of the audio
+             buffer. Given in seconds since the start of the containing audio stream.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="NumberOfChannels">
+      <MemberSignature Language="C#" Value="public uint NumberOfChannels { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int32 NumberOfChannels" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the number of channels in the audio buffer.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="NumberOfSamples">
+      <MemberSignature Language="C#" Value="public uint NumberOfSamples { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int32 NumberOfSamples" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the number of samples in the audio buffer.
+             For example, at a sampling rate of 44,100 Hz in stereo audio, a buffer
+             containing 4,410 * 2 samples would have a duration of 100 milliseconds.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleRate">
+      <MemberSignature Language="C#" Value="public PepperSharp.AudioBufferSampleRate SampleRate { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.AudioBufferSampleRate SampleRate" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the sample rate of the audio buffer.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleSize">
+      <MemberSignature Language="C#" Value="public PepperSharp.AudioBufferSampleSize SampleSize { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.AudioBufferSampleSize SampleSize" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioBufferSampleSize</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the sample size of the audio buffer.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TimeStamp">
+      <MemberSignature Language="C#" Value="public double TimeStamp { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float64 TimeStamp" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets or Sets the timestamp of the audio buffer.  A Time Delta containing the timestamp of the audio
+             buffer. Given in seconds since the start of the containing audio stream.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

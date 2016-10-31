@@ -1,0 +1,204 @@
+<Type Name="CompletionCallbackWithOutput&lt;T,U&gt;" FullName="PepperSharp.CompletionCallbackWithOutput&lt;T,U&gt;">
+  <TypeSignature Language="C#" Value="public class CompletionCallbackWithOutput&lt;T,U&gt; : IDisposable" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit CompletionCallbackWithOutput`2&lt;T, U&gt; extends System.Object implements class System.IDisposable" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter Name="T" />
+    <TypeParameter Name="U" />
+  </TypeParameters>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <typeparam name="T">To be added.</typeparam>
+    <typeparam name="U">To be added.</typeparam>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public CompletionCallbackWithOutput (PepperSharp.CompletionCallbackWithOutputFunc&lt;T,U&gt; completionCallback, U userData1, Nullable&lt;IntPtr&gt; userData = null, int flags = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.CompletionCallbackWithOutputFunc`2&lt;!T, !U&gt; completionCallback, !U userData1, valuetype System.Nullable`1&lt;native int&gt; userData, int32 flags) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="completionCallback" Type="PepperSharp.CompletionCallbackWithOutputFunc&lt;T,U&gt;" />
+        <Parameter Name="userData1" Type="U" />
+        <Parameter Name="userData" Type="System.Nullable&lt;System.IntPtr&gt;" />
+        <Parameter Name="flags" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="completionCallback">To be added.</param>
+        <param name="userData1">To be added.</param>
+        <param name="userData">To be added.</param>
+        <param name="flags">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Callback">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPCompletionCallback Callback;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype PepperSharp.PPCompletionCallback Callback" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPCompletionCallback</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public void Dispose ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Dispose() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected virtual void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Finalize">
+      <MemberSignature Language="C#" Value="~CompletionCallbackWithOutput`2 ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Finalize() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsDisposed">
+      <MemberSignature Language="C#" Value="protected bool IsDisposed { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsDisposed" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsUserDataFreed">
+      <MemberSignature Language="C#" Value="protected bool IsUserDataFreed { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsUserDataFreed" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static PepperSharp.PPArrayOutput op_Implicit (PepperSharp.CompletionCallbackWithOutput&lt;T,U&gt; completionCallback);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype PepperSharp.PPArrayOutput op_Implicit(class PepperSharp.CompletionCallbackWithOutput`2&lt;!T, !U&gt; completionCallback) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPArrayOutput</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="completionCallback" Type="PepperSharp.CompletionCallbackWithOutput&lt;T,U&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="completionCallback">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static PepperSharp.PPCompletionCallback op_Implicit (PepperSharp.CompletionCallbackWithOutput&lt;T,U&gt; completionCallback);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype PepperSharp.PPCompletionCallback op_Implicit(class PepperSharp.CompletionCallbackWithOutput`2&lt;!T, !U&gt; completionCallback) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPCompletionCallback</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="completionCallback" Type="PepperSharp.CompletionCallbackWithOutput&lt;T,U&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="completionCallback">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OutputAdapter">
+      <MemberSignature Language="C#" Value="public PepperSharp.OutputAdapterBase&lt;T&gt; OutputAdapter { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class PepperSharp.OutputAdapterBase`1&lt;!T&gt; OutputAdapter" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.OutputAdapterBase&lt;T&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

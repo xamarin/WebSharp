@@ -1,0 +1,18 @@
+<Type Name="PPDirectoryEntry" FullName="PepperSharp.PPDirectoryEntry">
+  <TypeSignature Language="C#" Value="public struct PPDirectoryEntry" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit PPDirectoryEntry extends System.ValueType" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PP_DirectoryEntry</code>
+  </Docs>
+  <Members />
+</Type>

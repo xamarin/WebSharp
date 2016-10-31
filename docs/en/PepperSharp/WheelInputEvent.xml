@@ -1,0 +1,124 @@
+<Type Name="WheelInputEvent" FullName="PepperSharp.WheelInputEvent">
+  <TypeSignature Language="C#" Value="public class WheelInputEvent : PepperSharp.InputEvent" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit WheelInputEvent extends PepperSharp.InputEvent" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.InputEvent</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public WheelInputEvent (PepperSharp.InputEvent inputEvent);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.InputEvent inputEvent) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="inputEvent" Type="PepperSharp.InputEvent" />
+      </Parameters>
+      <Docs>
+        <param name="inputEvent">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Delta">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPFloatPoint Delta { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPFloatPoint Delta" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFloatPoint</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter that returns the amount vertically and horizontally the user has
+             requested to scroll by with their mouse wheel. A scroll down or to the
+             right (where the content moves up or left) is represented as positive
+             values, and a scroll up or to the left (where the content moves down or
+             right) is represented as negative values.
+            
+             This amount is system dependent and will take into account the user's
+             preferred scroll sensitivity and potentially also nonlinear acceleration
+             based on the speed of the scrolling.
+            
+             Devices will be of varying resolution. Some mice with large detents will
+             only generate integer scroll amounts. But fractional values are also
+             possible, for example, on some trackpads and newer mice that don't have
+             "clicks".
+            
+             The units are either in pixels (when scroll_by_page is false) or pages (when scroll_by_page is
+             true). For example, y = -3 means scroll up 3 pixels when scroll_by_page
+             is false, and scroll up 3 pages when scroll_by_page is true.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsScrollByPage">
+      <MemberSignature Language="C#" Value="public bool IsScrollByPage { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsScrollByPage" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter that indicates if the scroll delta x/y indicates pages or
+             lines to scroll by.
+            
+             True if the event is a wheel event and the user is scrolling
+             by pages, false if not or if the resource is not a wheel event.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Ticks">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPFloatPoint Ticks { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPFloatPoint Ticks" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFloatPoint</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter that returns the number of "clicks" of the scroll wheel
+             that have produced the event. The value may have system-specific
+             acceleration applied to it, depending on the device. The positive and
+             negative meanings are the same as for GetDelta().
+            
+             If you are scrolling, you probably want to use the delta values.  These
+             tick events can be useful if you aren't doing actual scrolling and don't
+             want or pixel values. An example may be cycling between different items in
+             a game.
+            
+             You may receive fractional values for the wheel ticks if the mouse wheel is high
+             resolution or doesn't have "clicks". If your program wants discrete
+             events (as in the "picking items" example) you should accumulate
+             fractional click values from multiple messages until the total value
+             reaches positive or negative one. This should represent a similar amount
+             of scrolling as for a mouse that has a discrete mouse wheel.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

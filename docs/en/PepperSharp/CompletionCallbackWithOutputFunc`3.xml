@@ -1,0 +1,36 @@
+<Type Name="CompletionCallbackWithOutputFunc&lt;T,U,V&gt;" FullName="PepperSharp.CompletionCallbackWithOutputFunc&lt;T,U,V&gt;">
+  <TypeSignature Language="C#" Value="public delegate void CompletionCallbackWithOutputFunc&lt;T,U,V&gt;(PPError result, T output, U userData1, V userData2);" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed CompletionCallbackWithOutputFunc`3&lt;T, U, V&gt; extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter Name="T" />
+    <TypeParameter Name="U" />
+    <TypeParameter Name="V" />
+  </TypeParameters>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="result" Type="PepperSharp.PPError" />
+    <Parameter Name="output" Type="T" />
+    <Parameter Name="userData1" Type="U" />
+    <Parameter Name="userData2" Type="V" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <typeparam name="T">To be added.</typeparam>
+    <typeparam name="U">To be added.</typeparam>
+    <typeparam name="V">To be added.</typeparam>
+    <param name="result">To be added.</param>
+    <param name="output">To be added.</param>
+    <param name="userData1">To be added.</param>
+    <param name="userData2">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

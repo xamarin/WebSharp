@@ -1,0 +1,63 @@
+<Type Name="AudioSampleRate" FullName="PepperSharp.AudioSampleRate">
+  <TypeSignature Language="C#" Value="public enum AudioSampleRate" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed AudioSampleRate extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="_44100">
+      <MemberSignature Language="C#" Value="_44100" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.AudioSampleRate _44100 = int32(44100)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Sample rate used on CDs
+             </summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_48000">
+      <MemberSignature Language="C#" Value="_48000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.AudioSampleRate _48000 = int32(48000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Sample rate used on DVDs and Digital Audio Tapes
+             </summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.AudioSampleRate None = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

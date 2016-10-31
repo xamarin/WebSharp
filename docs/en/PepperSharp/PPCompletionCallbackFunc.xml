@@ -1,0 +1,29 @@
+<Type Name="PPCompletionCallbackFunc" FullName="PepperSharp.PPCompletionCallbackFunc">
+  <TypeSignature Language="C#" Value="public delegate void PPCompletionCallbackFunc(IntPtr user_data, int result);" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPCompletionCallbackFunc extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Parameters>
+    <Parameter Name="user_data" Type="System.IntPtr" />
+    <Parameter Name="result" Type="System.Int32" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="user_data">To be added.</param>
+    <param name="result">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

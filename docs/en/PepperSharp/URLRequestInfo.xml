@@ -1,0 +1,541 @@
+<Type Name="URLRequestInfo" FullName="PepperSharp.URLRequestInfo">
+  <TypeSignature Language="C#" Value="public class URLRequestInfo : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit URLRequestInfo extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public URLRequestInfo (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">The instance with which this resource will be
+             associated.</param>
+        <summary>
+             Constructs a URLRequestInfo object.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AppendDataToBody">
+      <MemberSignature Language="C#" Value="public bool AppendDataToBody (byte[] data, uint len);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool AppendDataToBody(unsigned int8[] data, unsigned int32 len) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="data" Type="System.Byte[]" />
+        <Parameter Name="len" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="data">A byte array buffer holding the data.</param>
+        <param name="len">The length, in bytes, of the data.</param>
+        <summary>
+             AppendDataToBody() appends data to the request body. A content-length
+             request header will be automatically generated.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AppendFileRangeToBody">
+      <MemberSignature Language="C#" Value="public bool AppendFileRangeToBody (PepperSharp.FileRef fileRef, long startOffset, long length, Nullable&lt;DateTime&gt; utcExpectedLastModifiedTime = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool AppendFileRangeToBody(class PepperSharp.FileRef fileRef, int64 startOffset, int64 length, valuetype System.Nullable`1&lt;valuetype System.DateTime&gt; utcExpectedLastModifiedTime) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fileRef" Type="PepperSharp.FileRef" />
+        <Parameter Name="startOffset" Type="System.Int64" />
+        <Parameter Name="length" Type="System.Int64" />
+        <Parameter Name="utcExpectedLastModifiedTime" Type="System.Nullable&lt;System.DateTime&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="fileRef">A <code>FileRef</code> containing the file
+             reference.</param>
+        <param name="startOffset">An optional starting point offset within the
+             file.</param>
+        <param name="length">An optional number of bytes of the file to
+             be included. If the value is -1, then the sub-range to upload extends
+             to the end of the file.</param>
+        <param name="utcExpectedLastModifiedTime">An optional last
+             modified time stamp used to validate that the file was not modified since
+             the given time before it was uploaded. The upload will fail with an error
+             code of <code>ErrorFilechanged</code> if the file has been modified
+             since the given time. If utcExpectedLastModifiedTime is null, then no
+             validation is performed.</param>
+        <summary>
+             AppendFileRangeToBody() is used to append part or
+             all of a file, to be uploaded, to the request body. A content-length
+             request header will be automatically generated.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AppendFileToBody">
+      <MemberSignature Language="C#" Value="public bool AppendFileToBody (PepperSharp.FileRef fileRef, Nullable&lt;DateTime&gt; utcExpectedLastModifiedTime = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool AppendFileToBody(class PepperSharp.FileRef fileRef, valuetype System.Nullable`1&lt;valuetype System.DateTime&gt; utcExpectedLastModifiedTime) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fileRef" Type="PepperSharp.FileRef" />
+        <Parameter Name="utcExpectedLastModifiedTime" Type="System.Nullable&lt;System.DateTime&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="fileRef">A <code>FileRef</code> containing the file
+             reference.</param>
+        <param name="utcExpectedLastModifiedTime">An optional last
+             modified time stamp used to validate that the file was not modified since
+             the given time before it was uploaded. The upload will fail with an error
+             code of <code>ErrorFilechanged</code> if the file has been modified
+             since the given time. If utcExpectedLastModifiedTime is null, then no
+             validation is performed.</param>
+        <summary>
+             AppendFileToBody() is used to append an entire file, to be uploaded, to
+             the request body. A content-length request header will be automatically
+             generated. 
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetAllowCredentials">
+      <MemberSignature Language="C#" Value="public bool SetAllowCredentials (bool enable);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetAllowCredentials(bool enable) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="enable" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="enable">A boolean containing the property value</param>
+        <summary>
+             SetAllowCredentials() sets the
+             <code>URLRequestProperty.AllowCredentials</code>. The
+             default of the property is false. Whether HTTP credentials are sent with
+             cross-origin requests. If false, no credentials are sent with the request
+             and cookies are ignored in the response. If the request is not
+             cross-origin, this property is ignored.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetAllowCrossOriginRequests">
+      <MemberSignature Language="C#" Value="public bool SetAllowCrossOriginRequests (bool enable);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetAllowCrossOriginRequests(bool enable) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="enable" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="enable">A boolean containing the property value</param>
+        <summary>
+             SetAllowCrossOriginRequests() sets the
+             <code>URLRequestProperty.AllowCrossOriginRequests</code>. The
+             default of the property is false. Whether cross-origin requests are
+             allowed. Cross-origin requests are made using the CORS (Cross-Origin
+             Resource Sharing) algorithm to check whether the request should be
+             allowed. For the complete CORS algorithm, refer to the
+             <a href="http://www.w3.org/TR/access-control">Cross-Origin Resource
+             Sharing</a> documentation. 
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetContentTransferEncoding">
+      <MemberSignature Language="C#" Value="public bool SetContentTransferEncoding (string contentTransferEncoding);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetContentTransferEncoding(string contentTransferEncoding) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="contentTransferEncoding" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="contentTransferEncoding">A string or null containing the property value.</param>
+        <summary>
+             SetContentTransferEncoding() sets the
+             <code>URLRequestProperty.CustomContentTransferEncoding</code>
+             (corresponding to a string or might be set to null). Set it
+             to a string to set a custom content transfer encoding (if empty, the header will
+             be omitted), or to null to use the default if any. Only loaders
+             with universal access (only available on trusted implementations) will
+             accept <code>URLRequestInfo</code> objects that try to set a custom
+             content transfer encoding; if given to a loader without universal access,
+             <code>BadArgument</code> will result.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetCustomReferrerURL">
+      <MemberSignature Language="C#" Value="public bool SetCustomReferrerURL (string url);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetCustomReferrerURL(string url) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="url" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="url">A string or null containing the property value.</param>
+        <summary>
+             SetCustomReferrerURL() sets the
+             <code>URLRequestProperty.CustomReferrerUrl</code>
+             (corresponding to a string or might be set to null). Set it
+             to a string to set a custom referrer (if empty, the referrer header will
+             be omitted), or to null to use the default referrer. Only loaders
+             with universal access (only available on trusted implementations) will
+             accept <code>URLRequestInfo</code> objects that try to set a custom
+             referrer; if given to a loader without universal access,
+             <code>BadArgument</code> will result.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetCustomUserAgent">
+      <MemberSignature Language="C#" Value="public bool SetCustomUserAgent (string userAgent);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetCustomUserAgent(string userAgent) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="userAgent" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="userAgent">A string or null containing the property value.</param>
+        <summary>
+             SetContentTransferEncoding() sets the
+             <code>URLRequestProperty.CustomUserAgent</code>
+             (corresponding to a string or might be set to null). Set it
+             to a string to set a custom user agent header (if empty, the header will
+             be omitted), or to null to use the default if any. Only loaders
+             with universal access (only available on trusted implementations) will
+             accept <code>URLRequestInfo</code> objects that try to set a custom
+             user agent; if given to a loader without universal access,
+             <code>BadArgument</code> will result.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetFollowRedirects">
+      <MemberSignature Language="C#" Value="public bool SetFollowRedirects (bool enable);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetFollowRedirects(bool enable) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="enable" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="enable">A boolean containing the property value</param>
+        <summary>
+             SetFollowRedirects() sets the
+             <code>URLRequestProperty.FollowRedirects</code>. The default of the
+             property is true. Set this value to false if you want to use
+             URLLoader.FollowRedirects() to follow the redirects only after examining
+             redirect headers.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetHeaders">
+      <MemberSignature Language="C#" Value="public bool SetHeaders (string headersString);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetHeaders(string headersString) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="headersString" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="headersString">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetMethod">
+      <MemberSignature Language="C#" Value="public bool SetMethod (string methodString);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetMethod(string methodString) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="methodString" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="methodString">A string containing the property value.</param>
+        <summary>
+             SetMethod() sets the <code>URLRequestProperty.Headers</code>
+             property for the request. This string is either a POST or GET. Refer to
+             the <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html">HTTP
+             Methods</a> documentation for further information.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetPrefetchBufferLowerThreshold">
+      <MemberSignature Language="C#" Value="public bool SetPrefetchBufferLowerThreshold (int size);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetPrefetchBufferLowerThreshold(int32 size) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="size" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="size">An int containing the property value.</param>
+        <summary>
+             SetPrefetchBufferLowerThreshold() sets the
+             <code>URLRequestProperty.PrefetchBufferLowerThreshold</code>. The
+             default is not defined and is set by the browser to a value appropriate
+             for the default
+             <code>URLRequestProperty.PrefetchBufferUpperThreshold</code>.
+             Set it to an integer to set a lower threshold for the prefetched buffer
+             of an asynchronous load. When reached, the browser will resume loading if
+             If <code>URLRequestProperty.PrefetchBufferLowerThreshold</code> had
+             previously been reached.
+             When setting this property,
+             <code>URLRequestProperty.PrefetchBufferUpperThreshold</code> must also
+             be set. Behavior is undefined if the former is greater than or equal to the latter.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetPrefetchBufferUpperThreshold">
+      <MemberSignature Language="C#" Value="public bool SetPrefetchBufferUpperThreshold (int size);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetPrefetchBufferUpperThreshold(int32 size) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="size" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="size">An int containing the property value.</param>
+        <summary>
+             SetPrefetchBufferUpperThreshold() sets the
+             <code>URLRequestProperty.PrefetchBufferUpperThreshold</code>. The
+             default is not defined and is set by the browser possibly depending on
+             system capabilities. Set it to an integer to set an upper threshold for
+             the prefetched buffer of an asynchronous load. When exceeded, the browser
+             will defer loading until
+             <code>URLRequestProperty.PrefetchBufferLowerThreshold</code> is hit,
+             at which time it will begin prefetching again. When setting this
+             property,
+             <code>URLRequestProperty.PrefetchBufferLowerThreshold</code> must
+             also be set. Behavior is undefined if the former is less than or equal to the latter.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetProperty">
+      <MemberSignature Language="C#" Value="public bool SetProperty (PepperSharp.URLRequestProperty property, object value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetProperty(valuetype PepperSharp.URLRequestProperty property, object value) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="property" Type="PepperSharp.URLRequestProperty" />
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="property">A <code>URLRequestProperty</code> identifying the
+             property to set.</param>
+        <param name="value">An <code>Object</code> containing the property value.</param>
+        <summary>
+             SetProperty() sets a request property. The value of the property must be
+             the correct type according to the property being set.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetRecordDownloadProgress">
+      <MemberSignature Language="C#" Value="public bool SetRecordDownloadProgress (bool enable);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetRecordDownloadProgress(bool enable) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="enable" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="enable">A boolean containing the property value</param>
+        <summary>
+             SetRecordDownloadProgress() sets the
+             <code>URLRequestProperty.RecordDownloadProgress</code>. The
+             default of the property is false. Set this value to true if you want to
+             be able to poll the download progress using
+             URLLoader.GetDownloadProgress().
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetRecordUploadProgress">
+      <MemberSignature Language="C#" Value="public bool SetRecordUploadProgress (bool enable);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetRecordUploadProgress(bool enable) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="enable" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="enable">A boolean containing the property value</param>
+        <summary>
+             SetRecordUploadProgress() sets the
+             <code>URLRequestProperty.RecordUploadProgress</code>. The
+             default of the property is false. Set this value to true if you want to
+             be able to poll the upload progress using URLLoader.GetUploadProgress().
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetStreamToFile">
+      <MemberSignature Language="C#" Value="public bool SetStreamToFile (bool enable);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetStreamToFile(bool enable) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="enable" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="enable">A boolean containing the property value</param>
+        <summary>
+             SetStreamToFile() sets the
+             <code>URLRequestProperty.StreamToFile</code>. The default of the
+             property is false. Set this value to true if you want to download the
+             data to a file. Use URLLoader.FinishStreamingToFile() to complete
+             the download.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetURL">
+      <MemberSignature Language="C#" Value="public bool SetURL (string urlString);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool SetURL(string urlString) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="urlString" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="urlString">A string containing the property value.</param>
+        <summary>
+             SetURL() sets the <code>URLRequestProperty.Url</code>
+             property for the request.
+             </summary>
+        <returns>true if successful, false if any of the parameters are invalid.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

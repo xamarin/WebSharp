@@ -1,0 +1,893 @@
+<Type Name="FileIO" FullName="PepperSharp.FileIO">
+  <TypeSignature Language="C#" Value="public class FileIO : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit FileIO extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FileIO (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Close">
+      <MemberSignature Language="C#" Value="public void Close ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Close() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Close cancels any IO that may be pending, and closes the FileIO object.
+	</summary>
+	<remarks>
+	  <para>
+             Any pending callbacks will still run, reporting
+             Aborted if pending IO was interrupted.  It is not
+             valid to call <see cref="M:PepperSharp.FileIO.Open"/> again after a call to this method.
+          </para>
+	  <para>
+             Note: If the FileIO object is destroyed, and it is still
+             open, then it will be implicitly closed, so you are not required to call
+             Close.
+	  </para>
+	</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; CloseAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; CloseAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Close() cancels any IO that may be pending, and closes the FileIO object asynchronously.
+	</summary>
+	<remarks>
+	  <para>
+             Any pending callbacks will still run, reporting
+             Aborted if pending IO was interrupted.  It is not
+             valid to call Open() again after a call to this method.
+          </para>
+	  <para>
+             Note: If the FileIO object is destroyed, and it is still
+             open, then it will be implicitly closed, so you are not required to call
+             Close().
+	  </para>
+	</remarks>
+        <returns>Error code</returns>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Flush">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Flush ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Flush() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Flush() flushes changes to disk.  This call can be very expensive.</summary>
+        <returns>Error code.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FlushAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; FlushAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; FlushAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>Flush() flushes changes to disk asynchronously.  This call can be very expensive.</summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleClose">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleClose;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleClose" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Event raised when the FileIO issues Close on the FileRef.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleFlush">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleFlush;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleFlush" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileIO issues Flush on the FileRef.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleOpen">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleOpen;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleOpen" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileIO issues Open on the FileRef.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleQuery">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.FileInfo&gt; HandleQuery;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.FileInfo&gt; HandleQuery" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.FileInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileIO issues Query on the FileRef.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleReadData">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.FileIOResult&gt; HandleReadData;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.FileIOResult&gt; HandleReadData" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.FileIOResult&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileIO issues Read on the FileRef.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleSetLength">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleSetLength;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleSetLength" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileIO issues SetLength on the FileRef.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleTouch">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleTouch;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleTouch" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileIO issues Touch on the FileRef.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleWriteData">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.FileIOResult&gt; HandleWriteData;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.FileIOResult&gt; HandleWriteData" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.FileIOResult&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileIO issues Write on the FileRef.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnClose">
+      <MemberSignature Language="C#" Value="protected virtual void OnClose (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnClose(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnFlush">
+      <MemberSignature Language="C#" Value="protected virtual void OnFlush (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnFlush(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnOpen">
+      <MemberSignature Language="C#" Value="protected virtual void OnOpen (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnOpen(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnQuery">
+      <MemberSignature Language="C#" Value="protected virtual void OnQuery (PepperSharp.PPError result, PepperSharp.PPFileInfo fileInfo);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnQuery(valuetype PepperSharp.PPError result, valuetype PepperSharp.PPFileInfo fileInfo) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="fileInfo" Type="PepperSharp.PPFileInfo" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="fileInfo">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnReadData">
+      <MemberSignature Language="C#" Value="protected virtual void OnReadData (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnReadData(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnSetLength">
+      <MemberSignature Language="C#" Value="protected void OnSetLength (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnSetLength(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnTouch">
+      <MemberSignature Language="C#" Value="protected virtual void OnTouch (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnTouch(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnWriteData">
+      <MemberSignature Language="C#" Value="protected virtual void OnWriteData (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnWriteData(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Open">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Open (PepperSharp.FileRef fileRef, PepperSharp.FileOpenFlags openFlags);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Open(class PepperSharp.FileRef fileRef, valuetype PepperSharp.FileOpenFlags openFlags) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fileRef" Type="PepperSharp.FileRef" />
+        <Parameter Name="openFlags" Type="PepperSharp.FileOpenFlags" />
+      </Parameters>
+      <Docs>
+        <param name="fileRef">A FileRef instance</param>
+        <param name="openFlags">A bit-mask of <code>FileOpenFlags</code> values.</param>
+        <summary>
+             Open() opens the specified regular file for I/O according to the given
+             open flags, which is a bit-mask of the FileOpenFlags values.  
+	</summary>
+	<remarks>
+	  Upon success, the corresponding file is classified as "in use" by this FileIO object until such time as the FileIO object is closed or destroyed.
+        <returns>Error code</returns>
+      </Docs>
+    </Member>
+    <Member MemberName="OpenAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; OpenAsync (PepperSharp.FileRef fileRef, PepperSharp.FileOpenFlags openFlags, PepperSharp.MessageLoop openLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; OpenAsync(class PepperSharp.FileRef fileRef, valuetype PepperSharp.FileOpenFlags openFlags, class PepperSharp.MessageLoop openLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="fileRef" Type="PepperSharp.FileRef" />
+        <Parameter Name="openFlags" Type="PepperSharp.FileOpenFlags" />
+        <Parameter Name="openLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="fileRef">A FileRef instance</param>
+        <param name="openFlags">A bit-mask of <code>FileOpenFlags</code> values.</param>
+        <param name="openLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Open() opens the specified regular file for I/O according to the given
+             open flags, which is a bit-mask of the FileOpenFlags values.  
+	</summary>
+	<remarks>
+	  Upon
+             success, the corresponding file is classified as "in use" by this FileIO
+             object until such time as the FileIO object is closed or destroyed.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Query">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Query ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Query() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Query() queries info about the file opened by this FileIO object. This
+             function will fail if the FileIO object has not been opened.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="QueryAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.FileInfo&gt; QueryAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.FileInfo&gt; QueryAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.FileInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Query() queries info about the file opened by this FileIO object asynchronously. This
+             function will fail if the FileIO object has not been opened.
+             </summary>
+        <returns>A FileInfo instance see <see cref="T:PepperSharp.FileInfo" /></returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Read">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Read (ArraySegment&lt;byte&gt; buffer, int offset, int bytesToRead);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Read(valuetype System.ArraySegment`1&lt;unsigned int8&gt; buffer, int32 offset, int32 bytesToRead) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ArraySegment&lt;System.Byte&gt;" />
+        <Parameter Name="offset" Type="System.Int32" />
+        <Parameter Name="bytesToRead" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">To be added.</param>
+        <param name="offset">To be added.</param>
+        <param name="bytesToRead">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Read">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Read (byte[] buffer, int offset, int bytesToRead);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Read(unsigned int8[] buffer, int32 offset, int32 bytesToRead) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Byte[]" />
+        <Parameter Name="offset" Type="System.Int32" />
+        <Parameter Name="bytesToRead" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The buffer to hold the specified number of bytes read.</param>
+        <param name="offset">The offset into the file.</param>
+        <param name="bytesToRead">The number of bytes to read from <code>offset</code>.</param>
+        <summary>
+	  <para>
+             Reads from an offset in the file.
+          </para>
+	</summary>
+        <returns>Error code.  If the return value is 0, then end-of-file was
+             reached.</returns>
+        <remarks>
+             The size of the buffer must be large enough to hold the specified number
+             of bytes to read.  This function might perform a partial read, meaning
+             that all the requested bytes might not be returned, even if the end of the
+             file has not been reached.
+            
+             This function reads into a buffer that the caller supplies. This buffer
+             must remain valid as long as the FileIO resource is alive. If you use
+             a completion callback factory and it goes out of scope, it will not issue
+             the callback on your class, BUT the callback factory can NOT cancel
+             the request from the browser's perspective. This means that the browser
+             will still try to write to your buffer even if the callback factory is
+             destroyed!
+            
+             So you must ensure that your buffer outlives the FileIO resource. If you
+             have one class and use the FileIO resource exclusively from that class
+             and never make any copies, this will be fine: the resource will be
+             destroyed when your class is. But keep in mind that copying a pp::FileIO
+             object just creates a second reference to the original resource. For
+             example, if you have a function like this:
+
+<code lang="c#">
+               FileIO MyClass.GetFileIO();
+</code>
+             where a copy of your FileIO resource could outlive your class, the
+             callback will still be pending when your class goes out of scope, creating
+             the possibility of writing into invalid memory. So it's recommended to
+             keep your FileIO resource and any output buffers tightly controlled in
+             the same scope.
+            
+             <strong>Caveat:</strong> This Read() is potentially unsafe if you're using
+             an EventHandler to scope callbacks to the lifetime of your
+             class.  When your class goes out of scope, the native callback factory will not
+             actually cancel the callback, but will rather just skip issuing the
+             callback on your class.  This means that if the FileIO object outlives
+             your class (if you made a copy saved somewhere else, for example), then
+             the browser will still try to write into your buffer when the
+             asynchronous read completes, potentially causing a crash.
+            
+             See the other version of Read() which avoids this problem by writing into
+             ArraySegment, where the output buffer is automatically managed by the native callback.
+	   </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.FileIOResult&gt; ReadAsync (ArraySegment&lt;byte&gt; buffer, int offset, int bytesToRead, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.FileIOResult&gt; ReadAsync(valuetype System.ArraySegment`1&lt;unsigned int8&gt; buffer, int32 offset, int32 bytesToRead, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.FileIOResult&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ArraySegment&lt;System.Byte&gt;" />
+        <Parameter Name="offset" Type="System.Int32" />
+        <Parameter Name="bytesToRead" Type="System.Int32" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">To be added.</param>
+        <param name="offset">To be added.</param>
+        <param name="bytesToRead">To be added.</param>
+        <param name="messageLoop">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.FileIOResult&gt; ReadAsync (byte[] buffer, int offset, int bytesToRead, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.FileIOResult&gt; ReadAsync(unsigned int8[] buffer, int32 offset, int32 bytesToRead, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.FileIOResult&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Byte[]" />
+        <Parameter Name="offset" Type="System.Int32" />
+        <Parameter Name="bytesToRead" Type="System.Int32" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The buffer to hold the specified number of bytes read.</param>
+        <param name="offset">The offset into the file.</param>
+        <param name="bytesToRead">The number of bytes to read from <code>offset</code>.</param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Reads from an offset in the file asynchronously.
+            
+             The size of the buffer must be large enough to hold the specified number
+             of bytes to read.  This function might perform a partial read, meaning
+             that all the requested bytes might not be returned, even if the end of the
+             file has not been reached.
+            
+             This function reads into a buffer that the caller supplies. This buffer
+             must remain valid as long as the FileIO resource is alive. If you use
+             a completion callback factory and it goes out of scope, it will not issue
+             the callback on your class, BUT the callback factory can NOT cancel
+             the request from the browser's perspective. This means that the browser
+             will still try to write to your buffer even if the callback factory is
+             destroyed!
+            
+             So you must ensure that your buffer outlives the FileIO resource. If you
+             have one class and use the FileIO resource exclusively from that class
+             and never make any copies, this will be fine: the resource will be
+             destroyed when your class is. But keep in mind that copying a pp::FileIO
+             object just creates a second reference to the original resource. For
+             example, if you have a function like this:
+               FileIO MyClass.GetFileIO();
+             where a copy of your FileIO resource could outlive your class, the
+             callback will still be pending when your class goes out of scope, creating
+             the possibility of writing into invalid memory. So it's recommended to
+             keep your FileIO resource and any output buffers tightly controlled in
+             the same scope.
+            
+             <strong>Caveat:</strong> This Read() is potentially unsafe if you're using
+             an EventHandler to scope callbacks to the lifetime of your
+             class.  When your class goes out of scope, the native callback factory will not
+             actually cancel the callback, but will rather just skip issuing the
+             callback on your class.  This means that if the FileIO object outlives
+             your class (if you made a copy saved somewhere else, for example), then
+             the browser will still try to write into your buffer when the
+             asynchronous read completes, potentially causing a crash.
+            
+             See the other version of Read() which avoids this problem by writing into
+             ArraySegment, where the output buffer is automatically managed by the native callback.
+            
+             </summary>
+        <returns>
+          <see cref="T:PepperSharp.FileIOResult" />
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetLength">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError SetLength (long length);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError SetLength(int64 length) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="length" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="length">The length of the file to be set.</param>
+        <summary>
+             SetLength() sets the length of the file.  If the file size is extended,
+             then the extended area of the file is zero-filled.  The FileIO object must
+             have been opened with write access.
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetLengthAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; SetLengthAsync (long length, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; SetLengthAsync(int64 length, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="length" Type="System.Int64" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="length">
+        </param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             SetLength() sets the length of the file asynchronously.  If the file size is extended,
+             then the extended area of the file is zero-filled.  The FileIO object must
+             have been opened with write access.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Touch">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Touch (DateTime lastAccessTime, DateTime lastModifiedTime);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Touch(valuetype System.DateTime lastAccessTime, valuetype System.DateTime lastModifiedTime) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="lastAccessTime" Type="System.DateTime" />
+        <Parameter Name="lastModifiedTime" Type="System.DateTime" />
+      </Parameters>
+      <Docs>
+        <param name="lastAccessTime">The last time the file was accessed.</param>
+        <param name="lastModifiedTime">The last time the file was modified.</param>
+        <summary>
+             Touch() Updates time stamps for a file.  You must have write access to the
+             file if it exists in the external filesystem.
+             </summary>
+        <returns>Ok if all went well</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TouchAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; TouchAsync (DateTime lastAccessTime, DateTime lastModifiedTime, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; TouchAsync(valuetype System.DateTime lastAccessTime, valuetype System.DateTime lastModifiedTime, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="lastAccessTime" Type="System.DateTime" />
+        <Parameter Name="lastModifiedTime" Type="System.DateTime" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="lastAccessTime">The last time the file was accessed.</param>
+        <param name="lastModifiedTime">The last time the file was modified.</param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Touch() Updates time stamps for a file asynchronously.  You must have write access to the
+             file if it exists in the external filesystem.
+             </summary>
+        <returns>Ok if all went well</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Write">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Write (byte[] buffer, int offset, int bytesToWrite);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Write(unsigned int8[] buffer, int32 offset, int32 bytesToWrite) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Byte[]" />
+        <Parameter Name="offset" Type="System.Int32" />
+        <Parameter Name="bytesToWrite" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The buffer to hold the specified number of bytes read.</param>
+        <param name="offset">The offset into the file.</param>
+        <param name="bytesToWrite">The number of bytes to write to
+             <code>offset</code>.</param>
+        <summary>
+             Write() writes to an offset in the file.  This function might perform a
+             partial write. The FileIO object must have been opened with write access.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="WriteAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.FileIOResult&gt; WriteAsync (byte[] buffer, int offset, int bytesToWrite, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.FileIOResult&gt; WriteAsync(unsigned int8[] buffer, int32 offset, int32 bytesToWrite, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.FileIOResult&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.Byte[]" />
+        <Parameter Name="offset" Type="System.Int32" />
+        <Parameter Name="bytesToWrite" Type="System.Int32" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">The buffer to hold the specified number of bytes read.</param>
+        <param name="offset">The offset into the file.</param>
+        <param name="bytesToWrite">The number of bytes to write to
+             <code>offset</code>.</param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Write() writes to an offset in the file asynchronously.  This function might perform a
+             partial write. The FileIO object must have been opened with write access.
+             </summary>
+        <returns>
+          <see cref="T:PepperSharp.FileIOResult" />
+        </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

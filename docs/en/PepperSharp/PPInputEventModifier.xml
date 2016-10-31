@@ -1,0 +1,199 @@
+<Type Name="PPInputEventModifier" FullName="PepperSharp.PPInputEventModifier">
+  <TypeSignature Language="C#" Value="public enum PPInputEventModifier" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPInputEventModifier extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Altkey">
+      <MemberSignature Language="C#" Value="Altkey" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Altkey = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Capslockkey">
+      <MemberSignature Language="C#" Value="Capslockkey" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Capslockkey = int32(512)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Controlkey">
+      <MemberSignature Language="C#" Value="Controlkey" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Controlkey = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Isautorepeat">
+      <MemberSignature Language="C#" Value="Isautorepeat" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Isautorepeat = int32(32)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Iskeypad">
+      <MemberSignature Language="C#" Value="Iskeypad" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Iskeypad = int32(16)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Isleft">
+      <MemberSignature Language="C#" Value="Isleft" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Isleft = int32(2048)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Isright">
+      <MemberSignature Language="C#" Value="Isright" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Isright = int32(4096)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Leftbuttondown">
+      <MemberSignature Language="C#" Value="Leftbuttondown" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Leftbuttondown = int32(64)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Metakey">
+      <MemberSignature Language="C#" Value="Metakey" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Metakey = int32(8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Middlebuttondown">
+      <MemberSignature Language="C#" Value="Middlebuttondown" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Middlebuttondown = int32(128)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Numlockkey">
+      <MemberSignature Language="C#" Value="Numlockkey" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Numlockkey = int32(1024)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Rightbuttondown">
+      <MemberSignature Language="C#" Value="Rightbuttondown" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Rightbuttondown = int32(256)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Shiftkey">
+      <MemberSignature Language="C#" Value="Shiftkey" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventModifier Shiftkey = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventModifier</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

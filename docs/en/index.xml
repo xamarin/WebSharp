@@ -1,0 +1,225 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="Xamarin.PepperSharp" Version="1.0.0.0">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Diagnostics.Debuggable(System.Diagnostics.DebuggableAttribute+DebuggingModes.IgnoreSymbolStoreSequencePoints)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCompany("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyConfiguration("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright ©  2016")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyDescription("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyFileVersion("1.0.0.0")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyProduct("PepperSharp")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTitle("PepperSharp")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Reflection.AssemblyTrademark("")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.InteropServices.ComVisible(false)</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.InteropServices.Guid("2f28f1df-56ee-4f9c-8106-a996fd860bb9")</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName>System.Runtime.Versioning.TargetFramework(".NETFramework,Version=v4.5.2", FrameworkDisplayName="")</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>To be added.</Copyright>
+  <Types>
+    <Namespace Name="PepperSharp">
+      <Type Name="APIArgumentAdapter`1" DisplayName="APIArgumentAdapter&lt;T&gt;" Kind="Class" />
+      <Type Name="ArrayOutputAdapterBase`1" DisplayName="ArrayOutputAdapterBase&lt;T&gt;" Kind="Class" />
+      <Type Name="Audio" Kind="Class" />
+      <Type Name="AudioBuffer" Kind="Class" />
+      <Type Name="AudioBufferSampleRate" Kind="Enumeration" />
+      <Type Name="AudioBufferSampleSize" Kind="Enumeration" />
+      <Type Name="AudioConfig" Kind="Class" />
+      <Type Name="AudioFrameSize" Kind="Enumeration" />
+      <Type Name="AudioSampleRate" Kind="Enumeration" />
+      <Type Name="BlockUntilComplete" Kind="Class" />
+      <Type Name="CompletionCallback" Kind="Class" />
+      <Type Name="CompletionCallback`1" DisplayName="CompletionCallback&lt;T&gt;" Kind="Class" />
+      <Type Name="CompletionCallback`2" DisplayName="CompletionCallback&lt;T,U&gt;" Kind="Class" />
+      <Type Name="CompletionCallbackFunc" Kind="Delegate" />
+      <Type Name="CompletionCallbackFunc`1" DisplayName="CompletionCallbackFunc&lt;T&gt;" Kind="Delegate" />
+      <Type Name="CompletionCallbackFunc`2" DisplayName="CompletionCallbackFunc&lt;T,U&gt;" Kind="Delegate" />
+      <Type Name="CompletionCallbackWithOutput`1" DisplayName="CompletionCallbackWithOutput&lt;T&gt;" Kind="Class" />
+      <Type Name="CompletionCallbackWithOutput`2" DisplayName="CompletionCallbackWithOutput&lt;T,U&gt;" Kind="Class" />
+      <Type Name="CompletionCallbackWithOutput`3" DisplayName="CompletionCallbackWithOutput&lt;T,U,V&gt;" Kind="Class" />
+      <Type Name="CompletionCallbackWithOutputFunc`1" DisplayName="CompletionCallbackWithOutputFunc&lt;T&gt;" Kind="Delegate" />
+      <Type Name="CompletionCallbackWithOutputFunc`2" DisplayName="CompletionCallbackWithOutputFunc&lt;T,U&gt;" Kind="Delegate" />
+      <Type Name="CompletionCallbackWithOutputFunc`3" DisplayName="CompletionCallbackWithOutputFunc&lt;T,U,V&gt;" Kind="Delegate" />
+      <Type Name="Core" Kind="Class" />
+      <Type Name="DirectoryEntry" Kind="Class" />
+      <Type Name="FileInfo" Kind="Class" />
+      <Type Name="FileIO" Kind="Class" />
+      <Type Name="FileIOResult" Kind="Class" />
+      <Type Name="FileOpenFlags" Kind="Enumeration" />
+      <Type Name="FileRef" Kind="Class" />
+      <Type Name="FileRef+DirectoryEntries" Kind="Class" />
+      <Type Name="FileSystem" Kind="Class" />
+      <Type Name="FileSystemType" Kind="Enumeration" />
+      <Type Name="FileType" Kind="Enumeration" />
+      <Type Name="GamepadSampleData" Kind="Structure" />
+      <Type Name="GamepadsSampleData" Kind="Structure" />
+      <Type Name="Graphics2D" Kind="Class" />
+      <Type Name="HardwareAcceleration" Kind="Enumeration" />
+      <Type Name="ImageData" Kind="Class" />
+      <Type Name="IMEInputEvent" Kind="Class" />
+      <Type Name="INativeObject" Kind="Interface" />
+      <Type Name="InputEvent" Kind="Class" />
+      <Type Name="Instance" Kind="Class" />
+      <Type Name="Instance+InitializeDelegateAndHandler" Kind="Delegate" />
+      <Type Name="Instance+InitializeEventArgs" Kind="Class" />
+      <Type Name="Instance+KeyboardEventArgs" Kind="Class" />
+      <Type Name="Instance+MouseEventArgs" Kind="Class" />
+      <Type Name="Instance+WheelEventArgs" Kind="Class" />
+      <Type Name="KeyboardInputEvent" Kind="Class" />
+      <Type Name="MakeDirectoryFlags" Kind="Enumeration" />
+      <Type Name="MediaStreamAudioTrack" Kind="Class" />
+      <Type Name="MediaStreamAudioTrack+AudioBufferInfo" Kind="Class" />
+      <Type Name="MediaStreamAudioTrackAttributes" Kind="Class" />
+      <Type Name="MediaStreamVideoTrack" Kind="Class" />
+      <Type Name="MediaStreamVideoTrackAttributes" Kind="Class" />
+      <Type Name="MessageLoop" Kind="Class" />
+      <Type Name="MouseInputEvent" Kind="Class" />
+      <Type Name="MouseLock" Kind="Class" />
+      <Type Name="NativeInstance" Kind="Class" />
+      <Type Name="NetAddress" Kind="Class" />
+      <Type Name="NetAddressFamily" Kind="Enumeration" />
+      <Type Name="NetworkInterface" Kind="Class" />
+      <Type Name="NetworkInterfaceState" Kind="Enumeration" />
+      <Type Name="NetworkInterfaceType" Kind="Enumeration" />
+      <Type Name="NetworkList" Kind="Class" />
+      <Type Name="NetworkListInfo" Kind="Class" />
+      <Type Name="NetworkMonitor" Kind="Class" />
+      <Type Name="NetworkProxy" Kind="Class" />
+      <Type Name="NetworkProxy+ProxyInfo" Kind="Class" />
+      <Type Name="OutputAdapterBase`1" DisplayName="OutputAdapterBase&lt;T&gt;" Kind="Class" />
+      <Type Name="PassRef" Kind="Enumeration" />
+      <Type Name="PPArrayOutput" Kind="Structure" />
+      <Type Name="PPArrayOutputGetDataBuffer" Kind="Delegate" />
+      <Type Name="PPAudioBitstreamBuffer" Kind="Structure" />
+      <Type Name="PPAudioBufferSampleRate" Kind="Enumeration" />
+      <Type Name="PPAudioBufferSampleSize" Kind="Enumeration" />
+      <Type Name="PPAudioFrameSize" Kind="Enumeration" />
+      <Type Name="PPAudioProfile" Kind="Enumeration" />
+      <Type Name="PPAudioProfileDescription" Kind="Structure" />
+      <Type Name="PPAudioSampleRate" Kind="Enumeration" />
+      <Type Name="PPBAudioCallback" Kind="Delegate" />
+      <Type Name="PPBitstreamBuffer" Kind="Structure" />
+      <Type Name="PPBool" Kind="Enumeration" />
+      <Type Name="PPCompletionCallback" Kind="Structure" />
+      <Type Name="PPCompletionCallbackFlag" Kind="Enumeration" />
+      <Type Name="PPCompletionCallbackFunc" Kind="Delegate" />
+      <Type Name="PPDirectoryEntry" Kind="Structure" />
+      <Type Name="PPError" Kind="Enumeration" />
+      <Type Name="PPFileInfo" Kind="Structure" />
+      <Type Name="PPFileOpenFlags" Kind="Enumeration" />
+      <Type Name="PPFileSystemType" Kind="Enumeration" />
+      <Type Name="PPFileType" Kind="Enumeration" />
+      <Type Name="PPFloatPoint" Kind="Structure" />
+      <Type Name="PPFloatRect" Kind="Structure" />
+      <Type Name="PPFloatSize" Kind="Structure" />
+      <Type Name="PPGamepadSampleData" Kind="Structure" />
+      <Type Name="PPGamepadsSampleData" Kind="Structure" />
+      <Type Name="PPHardwareAcceleration" Kind="Enumeration" />
+      <Type Name="PPHostResolverFlag" Kind="Enumeration" />
+      <Type Name="PPHostResolverHint" Kind="Structure" />
+      <Type Name="PPImageDataDesc" Kind="Structure" />
+      <Type Name="PPImageDataFormat" Kind="Enumeration" />
+      <Type Name="PPInputEventCharacter" Kind="Structure" />
+      <Type Name="PPInputEventClass" Kind="Enumeration" />
+      <Type Name="PPInputEventKey" Kind="Structure" />
+      <Type Name="PPInputEventModifier" Kind="Enumeration" />
+      <Type Name="PPInputEventMouse" Kind="Structure" />
+      <Type Name="PPInputEventMouseButton" Kind="Enumeration" />
+      <Type Name="PPInputEventType" Kind="Enumeration" />
+      <Type Name="PPInputEventWheel" Kind="Structure" />
+      <Type Name="PPInstance" Kind="Structure" />
+      <Type Name="PPLogLevel" Kind="Enumeration" />
+      <Type Name="PPMakeDirectoryFlags" Kind="Enumeration" />
+      <Type Name="PPMediaStreamAudioTrackAttrib" Kind="Enumeration" />
+      <Type Name="PPMediaStreamVideoTrackAttrib" Kind="Enumeration" />
+      <Type Name="PPModule" Kind="Structure" />
+      <Type Name="PPMouseCursorType" Kind="Enumeration" />
+      <Type Name="PPNetAddressFamily" Kind="Enumeration" />
+      <Type Name="PPNetAddressIPv4" Kind="Structure" />
+      <Type Name="PPNetAddressIPv6" Kind="Structure" />
+      <Type Name="PPNetworkListState" Kind="Enumeration" />
+      <Type Name="PPNetworkListType" Kind="Enumeration" />
+      <Type Name="PPPoint" Kind="Structure" />
+      <Type Name="PPRect" Kind="Structure" />
+      <Type Name="PPResource" Kind="Structure" />
+      <Type Name="PPSize" Kind="Structure" />
+      <Type Name="PPTCPSocketOption" Kind="Enumeration" />
+      <Type Name="PPTime" Kind="Structure" />
+      <Type Name="PPTimeDelta" Kind="Structure" />
+      <Type Name="PPTimeTicks" Kind="Structure" />
+      <Type Name="PPTouchListType" Kind="Enumeration" />
+      <Type Name="PPTouchPoint" Kind="Structure" />
+      <Type Name="PPUDPSocketOption" Kind="Enumeration" />
+      <Type Name="PPURLRequestProperty" Kind="Enumeration" />
+      <Type Name="PPURLResponseProperty" Kind="Enumeration" />
+      <Type Name="PPVar" Kind="Structure" />
+      <Type Name="PPVarType" Kind="Enumeration" />
+      <Type Name="PPVarValue" Kind="Structure" />
+      <Type Name="PPVideoFrameFormat" Kind="Enumeration" />
+      <Type Name="PPVideoPicture" Kind="Structure" />
+      <Type Name="PPVideoPicture01" Kind="Structure" />
+      <Type Name="PPVideoProfile" Kind="Enumeration" />
+      <Type Name="PPVideoProfileDescription" Kind="Structure" />
+      <Type Name="PPVideoProfileDescription01" Kind="Structure" />
+      <Type Name="PPWebSocketCloseCode" Kind="Enumeration" />
+      <Type Name="PPWebSocketReadyState" Kind="Enumeration" />
+      <Type Name="Resource" Kind="Class" />
+      <Type Name="TouchInputEvent" Kind="Class" />
+      <Type Name="URLLoader" Kind="Class" />
+      <Type Name="URLRequestInfo" Kind="Class" />
+      <Type Name="URLRequestProperty" Kind="Enumeration" />
+      <Type Name="URLResponseInfo" Kind="Class" />
+      <Type Name="URLResponseProperty" Kind="Enumeration" />
+      <Type Name="Var" Kind="Class" />
+      <Type Name="VarArray" Kind="Class" />
+      <Type Name="VarArrayBuffer" Kind="Class" />
+      <Type Name="VarDictionary" Kind="Class" />
+      <Type Name="VideoEncoder" Kind="Class" />
+      <Type Name="VideoEncoder+BitstreamBufferInfo" Kind="Class" />
+      <Type Name="VideoEncoder+VideoProfileInfo" Kind="Class" />
+      <Type Name="VideoFrame" Kind="Class" />
+      <Type Name="VideoFrameFormat" Kind="Enumeration" />
+      <Type Name="VideoFrameInfo" Kind="Class" />
+      <Type Name="VideoProfile" Kind="Enumeration" />
+      <Type Name="VideoProfileDescription" Kind="Class" />
+      <Type Name="View" Kind="Class" />
+      <Type Name="WebSocket" Kind="Class" />
+      <Type Name="WebSocketCloseStatus" Kind="Enumeration" />
+      <Type Name="WebSocketMessageType" Kind="Enumeration" />
+      <Type Name="WebSocketReceiveResult" Kind="Class" />
+      <Type Name="WebSocketState" Kind="Enumeration" />
+      <Type Name="WheelInputEvent" Kind="Class" />
+    </Namespace>
+  </Types>
+  <Title>Xamarin.PepperSharp</Title>
+</Overview>

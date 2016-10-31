@@ -1,0 +1,105 @@
+<Type Name="PPMediaStreamAudioTrackAttrib" FullName="PepperSharp.PPMediaStreamAudioTrackAttrib">
+  <TypeSignature Language="C#" Value="public enum PPMediaStreamAudioTrackAttrib" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPMediaStreamAudioTrackAttrib extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PPB_MediaStreamAudioTrack</code>
+    <code>Configure()</code>
+  </Docs>
+  <Members>
+    <Member MemberName="Buffers">
+      <MemberSignature Language="C#" Value="Buffers" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamAudioTrackAttrib Buffers = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamAudioTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Channels">
+      <MemberSignature Language="C#" Value="Channels" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamAudioTrackAttrib Channels = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamAudioTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Duration">
+      <MemberSignature Language="C#" Value="Duration" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamAudioTrackAttrib Duration = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamAudioTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamAudioTrackAttrib None = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamAudioTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleRate">
+      <MemberSignature Language="C#" Value="SampleRate" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamAudioTrackAttrib SampleRate = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamAudioTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_AudioBuffer_SampleRate</code>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleSize">
+      <MemberSignature Language="C#" Value="SampleSize" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamAudioTrackAttrib SampleSize = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamAudioTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_AudioBuffer_SampleSize</code>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,125 @@
+<Type Name="AudioConfig" FullName="PepperSharp.AudioConfig">
+  <TypeSignature Language="C#" Value="public class AudioConfig : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit AudioConfig extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AudioConfig (PepperSharp.Instance instance, PepperSharp.AudioSampleRate sampleRate, uint sampleFrameCount);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance, valuetype PepperSharp.AudioSampleRate sampleRate, unsigned int32 sampleFrameCount) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+        <Parameter Name="sampleRate" Type="PepperSharp.AudioSampleRate" />
+        <Parameter Name="sampleFrameCount" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="instance">The instance associated with this resource.</param>
+        <param name="sampleRate">The sample rate <see cref="T:PepperSharp.AudioSampleRate" /></param>
+        <param name="sampleFrameCount">A uint frame count returned from the
+             <code>RecommendSampleFrameCount</code> function.</param>
+        <summary>
+             A constructor that creates an audio config based on the given sample rate
+             and frame count. If the rate and frame count aren't supported, the
+             resulting resource will be is_null(). You can pass the result of
+             RecommendSampleFrameCount() as the sample frame count.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RecommendSampleFrameCount">
+      <MemberSignature Language="C#" Value="public static uint RecommendSampleFrameCount (PepperSharp.Instance instance, PepperSharp.AudioSampleRate sampleRate, uint requestedSampleFrameCount);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig unsigned int32 RecommendSampleFrameCount(class PepperSharp.Instance instance, valuetype PepperSharp.AudioSampleRate sampleRate, unsigned int32 requestedSampleFrameCount) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+        <Parameter Name="sampleRate" Type="PepperSharp.AudioSampleRate" />
+        <Parameter Name="requestedSampleFrameCount" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <param name="sampleRate">To be added.</param>
+        <param name="requestedSampleFrameCount">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RecommendSampleRate">
+      <MemberSignature Language="C#" Value="public static PepperSharp.AudioSampleRate RecommendSampleRate (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig valuetype PepperSharp.AudioSampleRate RecommendSampleRate(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleFrameCount">
+      <MemberSignature Language="C#" Value="public uint SampleFrameCount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int32 SampleFrameCount" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter function for returning the internal sample frame count.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleRate">
+      <MemberSignature Language="C#" Value="public PepperSharp.AudioSampleRate SampleRate { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.AudioSampleRate SampleRate" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter function for returning the internal
+             <code>AudioSampleRate</code> enum.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,106 @@
+<Type Name="PPFileOpenFlags" FullName="PepperSharp.PPFileOpenFlags">
+  <TypeSignature Language="C#" Value="public enum PPFileOpenFlags" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPFileOpenFlags extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="FileopenflagAppend">
+      <MemberSignature Language="C#" Value="FileopenflagAppend" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPFileOpenFlags FileopenflagAppend = int32(32)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFileOpenFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_FILEOPENFLAG_WRITE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="FileopenflagCreate">
+      <MemberSignature Language="C#" Value="FileopenflagCreate" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPFileOpenFlags FileopenflagCreate = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFileOpenFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_FILEOPENFLAG_EXCLUSIVE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="FileopenflagExclusive">
+      <MemberSignature Language="C#" Value="FileopenflagExclusive" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPFileOpenFlags FileopenflagExclusive = int32(16)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFileOpenFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_FILEOPENFLAG_CREATE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="FileopenflagRead">
+      <MemberSignature Language="C#" Value="FileopenflagRead" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPFileOpenFlags FileopenflagRead = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFileOpenFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="FileopenflagTruncate">
+      <MemberSignature Language="C#" Value="FileopenflagTruncate" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPFileOpenFlags FileopenflagTruncate = int32(8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFileOpenFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_FILEOPENFLAG_WRITE</code>
+      </Docs>
+    </Member>
+    <Member MemberName="FileopenflagWrite">
+      <MemberSignature Language="C#" Value="FileopenflagWrite" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPFileOpenFlags FileopenflagWrite = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPFileOpenFlags</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_FILEOPENFLAG_READ</code>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

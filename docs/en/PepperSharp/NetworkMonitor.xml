@@ -1,0 +1,132 @@
+<Type Name="NetworkMonitor" FullName="PepperSharp.NetworkMonitor">
+  <TypeSignature Language="C#" Value="public class NetworkMonitor : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit NetworkMonitor extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public NetworkMonitor (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleUpdateNetworkList">
+      <MemberSignature Language="C#" Value="public EventHandler&lt;PepperSharp.NetworkListInfo&gt; HandleUpdateNetworkList;" />
+      <MemberSignature Language="ILAsm" Value=".field public class System.EventHandler`1&lt;class PepperSharp.NetworkListInfo&gt; HandleUpdateNetworkList" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.NetworkListInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the NetworkMonitor issues UpdateNetworkList.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnUpdateNetworkList">
+      <MemberSignature Language="C#" Value="protected void OnUpdateNetworkList (PepperSharp.PPError result, PepperSharp.NetworkList networkList);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnUpdateNetworkList(valuetype PepperSharp.PPError result, class PepperSharp.NetworkList networkList) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="networkList" Type="PepperSharp.NetworkList" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="networkList">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="UpdateNetworkList">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError UpdateNetworkList ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError UpdateNetworkList() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Returns objects that describe the network interfaces.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="UpdateNetworkListAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.NetworkListInfo&gt; UpdateNetworkListAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.NetworkListInfo&gt; UpdateNetworkListAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.NetworkListInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Returns objects that describe the network interfaces asynchronously.
+             </summary>
+        <returns>A NetworkListInfo instance see <see cref="T:PepperSharp.NetworkListInfo" /></returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

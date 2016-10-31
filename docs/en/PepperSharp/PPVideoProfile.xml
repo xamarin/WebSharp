@@ -1,0 +1,213 @@
+<Type Name="PPVideoProfile" FullName="PepperSharp.PPVideoProfile">
+  <TypeSignature Language="C#" Value="public enum PPVideoProfile" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPVideoProfile extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="H264baseline">
+      <MemberSignature Language="C#" Value="H264baseline" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264baseline = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264extended">
+      <MemberSignature Language="C#" Value="H264extended" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264extended = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264high">
+      <MemberSignature Language="C#" Value="H264high" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264high = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264high10profile">
+      <MemberSignature Language="C#" Value="H264high10profile" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264high10profile = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264high422profile">
+      <MemberSignature Language="C#" Value="H264high422profile" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264high422profile = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264high444predictiveprofile">
+      <MemberSignature Language="C#" Value="H264high444predictiveprofile" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264high444predictiveprofile = int32(6)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264main">
+      <MemberSignature Language="C#" Value="H264main" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264main = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264multiviewhigh">
+      <MemberSignature Language="C#" Value="H264multiviewhigh" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264multiviewhigh = int32(10)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264scalablebaseline">
+      <MemberSignature Language="C#" Value="H264scalablebaseline" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264scalablebaseline = int32(7)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264scalablehigh">
+      <MemberSignature Language="C#" Value="H264scalablehigh" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264scalablehigh = int32(8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="H264stereohigh">
+      <MemberSignature Language="C#" Value="H264stereohigh" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile H264stereohigh = int32(9)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Max">
+      <MemberSignature Language="C#" Value="Max" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile Max = int32(12)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Vp8Any">
+      <MemberSignature Language="C#" Value="Vp8Any" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile Vp8Any = int32(11)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Vp9Any">
+      <MemberSignature Language="C#" Value="Vp9Any" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPVideoProfile Vp9Any = int32(12)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPVideoProfile</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

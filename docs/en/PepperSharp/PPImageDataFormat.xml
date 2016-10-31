@@ -1,0 +1,59 @@
+<Type Name="PPImageDataFormat" FullName="PepperSharp.PPImageDataFormat">
+  <TypeSignature Language="C#" Value="public enum PPImageDataFormat" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPImageDataFormat extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PPB_ImageData</code>
+    <code>PP_ImageDataFormat</code>
+    <code>float red = 1.0f;</code>
+    <code>float green = 0.50f;</code>
+    <code>float blue = 0.0f;</code>
+    <code>float alpha = 0.75f;</code>
+    <code>uint8_t image_data_red_premul = (uint8_t)(red * alpha * 255.0f);
+             * </code>
+    <code>uint8_t image_data_green_premul = (uint8_t)(green * alpha * 255.0f);
+             * </code>
+    <code>uint8_t image_data_blue_premul = (uint8_t)(blue * alpha * 255.0f);
+             * </code>
+    <code>uint8_t image_data_alpha_premul = (uint8_t)(alpha * 255.0f);</code>
+    <strong>Note:</strong>
+  </Docs>
+  <Members>
+    <Member MemberName="BgraPremul">
+      <MemberSignature Language="C#" Value="BgraPremul" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPImageDataFormat BgraPremul = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPImageDataFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="RgbaPremul">
+      <MemberSignature Language="C#" Value="RgbaPremul" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPImageDataFormat RgbaPremul = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPImageDataFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

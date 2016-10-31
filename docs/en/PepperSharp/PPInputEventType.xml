@@ -1,0 +1,297 @@
+<Type Name="PPInputEventType" FullName="PepperSharp.PPInputEventType">
+  <TypeSignature Language="C#" Value="public enum PPInputEventType" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPInputEventType extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Char">
+      <MemberSignature Language="C#" Value="Char" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Char = int32(9)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Contextmenu">
+      <MemberSignature Language="C#" Value="Contextmenu" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Contextmenu = int32(10)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ImeCompositionEnd">
+      <MemberSignature Language="C#" Value="ImeCompositionEnd" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType ImeCompositionEnd = int32(13)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ImeCompositionStart">
+      <MemberSignature Language="C#" Value="ImeCompositionStart" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType ImeCompositionStart = int32(11)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ImeCompositionUpdate">
+      <MemberSignature Language="C#" Value="ImeCompositionUpdate" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType ImeCompositionUpdate = int32(12)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ImeText">
+      <MemberSignature Language="C#" Value="ImeText" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType ImeText = int32(14)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Keydown">
+      <MemberSignature Language="C#" Value="Keydown" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Keydown = int32(7)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Keyup">
+      <MemberSignature Language="C#" Value="Keyup" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Keyup = int32(8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Mousedown">
+      <MemberSignature Language="C#" Value="Mousedown" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Mousedown = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Mouseenter">
+      <MemberSignature Language="C#" Value="Mouseenter" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Mouseenter = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Mouseleave">
+      <MemberSignature Language="C#" Value="Mouseleave" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Mouseleave = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Mousemove">
+      <MemberSignature Language="C#" Value="Mousemove" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Mousemove = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Mouseup">
+      <MemberSignature Language="C#" Value="Mouseup" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Mouseup = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Rawkeydown">
+      <MemberSignature Language="C#" Value="Rawkeydown" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Rawkeydown = int32(6)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Touchcancel">
+      <MemberSignature Language="C#" Value="Touchcancel" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Touchcancel = int32(18)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Touchend">
+      <MemberSignature Language="C#" Value="Touchend" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Touchend = int32(17)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Touchmove">
+      <MemberSignature Language="C#" Value="Touchmove" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Touchmove = int32(16)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Touchstart">
+      <MemberSignature Language="C#" Value="Touchstart" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Touchstart = int32(15)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Undefined">
+      <MemberSignature Language="C#" Value="Undefined" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Undefined = int32(-1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Wheel">
+      <MemberSignature Language="C#" Value="Wheel" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPInputEventType Wheel = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

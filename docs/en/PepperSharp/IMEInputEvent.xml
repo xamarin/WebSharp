@@ -1,0 +1,136 @@
+<Type Name="IMEInputEvent" FullName="PepperSharp.IMEInputEvent">
+  <TypeSignature Language="C#" Value="public class IMEInputEvent : PepperSharp.InputEvent" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit IMEInputEvent extends PepperSharp.InputEvent" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.InputEvent</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public IMEInputEvent (PepperSharp.InputEvent inputEvent);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.InputEvent inputEvent) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="inputEvent" Type="PepperSharp.InputEvent" />
+      </Parameters>
+      <Docs>
+        <param name="inputEvent">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSegmentOffset">
+      <MemberSignature Language="C#" Value="public uint GetSegmentOffset (uint index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance unsigned int32 GetSegmentOffset(unsigned int32 index) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.UInt32" />
+      </Parameters>
+      <Docs>
+        <param name="index">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetSelection">
+      <MemberSignature Language="C#" Value="public void GetSelection (out uint start, out uint end);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void GetSelection(unsigned int32 start, unsigned int32 end) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="start" Type="System.UInt32&amp;" RefType="out" />
+        <Parameter Name="end" Type="System.UInt32&amp;" RefType="out" />
+      </Parameters>
+      <Docs>
+        <param name="start">An integer indicating a start offset of selection range.</param>
+        <param name="end">An integer indicating an end offset of selection range.</param>
+        <summary>
+             Obtains the range selected by caret in the composition text.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SegmentNumber">
+      <MemberSignature Language="C#" Value="public uint SegmentNumber { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int32 SegmentNumber" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter that returns the number of segments in the composition text.
+            
+             For events other than COMPOSITION_UPDATE, returns 0.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TargetSegment">
+      <MemberSignature Language="C#" Value="public int TargetSegment { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 TargetSegment" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter that returns the index of the current target segment of composition.
+            
+             When there is no active target segment, or the event is not COMPOSITION_UPDATE,
+             returns -1.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Text">
+      <MemberSignature Language="C#" Value="public string Text { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Text" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter that returns the composition text as a UTF-8 string for the given IME event.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

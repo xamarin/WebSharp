@@ -1,0 +1,22 @@
+<Type Name="PPCompletionCallback" FullName="PepperSharp.PPCompletionCallback">
+  <TypeSignature Language="C#" Value="public struct PPCompletionCallback" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit PPCompletionCallback extends System.ValueType" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PP_CompletionCallback</code>
+    <code>PP_BlockUntilComplete()</code>
+    <code>PP_BlockUntilComplete</code>
+    <code>func</code>
+    <code>pp_error.h</code>
+  </Docs>
+  <Members />
+</Type>

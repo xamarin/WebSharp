@@ -1,0 +1,36 @@
+<Type Name="PPBAudioCallback" FullName="PepperSharp.PPBAudioCallback">
+  <TypeSignature Language="C#" Value="public delegate void PPBAudioCallback(IntPtr sample_buffer, uint buffer_size_in_bytes, double latency, IntPtr user_data);" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPBAudioCallback extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Runtime.InteropServices.UnmanagedFunctionPointer(System.Runtime.InteropServices.CallingConvention.Cdecl)</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Parameters>
+    <Parameter Name="sample_buffer" Type="System.IntPtr" />
+    <Parameter Name="buffer_size_in_bytes" Type="System.UInt32" />
+    <Parameter Name="latency" Type="System.Double" />
+    <Parameter Name="user_data" Type="System.IntPtr" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="sample_buffer">To be added.</param>
+    <param name="buffer_size_in_bytes">To be added.</param>
+    <param name="latency">To be added.</param>
+    <param name="user_data">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PPB_Audio</code>
+    <code>PPB_Audio_Callback</code>
+    <code>PPB_Audio.Create()</code>
+  </Docs>
+</Type>

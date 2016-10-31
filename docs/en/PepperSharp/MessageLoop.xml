@@ -1,0 +1,321 @@
+<Type Name="MessageLoop" FullName="PepperSharp.MessageLoop">
+  <TypeSignature Language="C#" Value="public class MessageLoop : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MessageLoop extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MessageLoop (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AttachToCurrentThread">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError AttachToCurrentThread ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError AttachToCurrentThread() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Sets the given message loop resource as being the associated message loop
+             for the currently running thread.
+            
+             You must call this function exactly once on a thread before making any
+             PPAPI calls. A message loop can only be attached to one thread, and the
+             message loop can not be changed later. The message loop will be attached
+             as long as the thread is running or until you quit with should_destroy
+             set to PP_TRUE.
+            
+             If this function fails, attempting to run the message loop will fail.
+             Note that you can still post work to the message loop: it will get queued
+             up should the message loop eventually be successfully attached and run.
+            
+             </summary>
+        <returns>
+               - PPError.Ok: The message loop was successfully attached to the thread and is
+                 ready to use.
+               - PPError.Badresource: The given message loop resource is invalid.
+               - PPError.Inprogress: The current thread already has a message loop
+                 attached. This will always be the case for the main thread, which has
+                 an implicit system-created message loop attached.
+               - PPError.WrongThread: The current thread type can not have a message
+                 loop attached to it. See the interface level discussion about these
+                 special threads, which include realtime audio threads.
+             </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BlockingMessageLoop">
+      <MemberSignature Language="C#" Value="public static readonly PepperSharp.MessageLoop BlockingMessageLoop;" />
+      <MemberSignature Language="ILAsm" Value=".field public static initonly class PepperSharp.MessageLoop BlockingMessageLoop" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.MessageLoop</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCurrent">
+      <MemberSignature Language="C#" Value="public static PepperSharp.MessageLoop GetCurrent ();" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class PepperSharp.MessageLoop GetCurrent() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.MessageLoop</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary />
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetForMainThread">
+      <MemberSignature Language="C#" Value="public static PepperSharp.MessageLoop GetForMainThread ();" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class PepperSharp.MessageLoop GetForMainThread() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.MessageLoop</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary />
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PostQuit">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError PostQuit (bool shouldDestroy);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError PostQuit(bool shouldDestroy) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shouldDestroy" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="shouldDestroy">Marks the message loop as being in a destroyed
+             state and prevents further posting of messages.</param>
+        <summary>
+             Posts a quit message to the given message loop's work queue. Work posted
+             before that point will be processed before quitting.
+            
+             This may be called on the message loop registered for the current thread,
+             or it may be called on the message loop registered for another thread. It
+             is an error to attempt to quit the main thread loop.
+            
+             If you quit a message loop without setting shouldDestroy, it will still
+             be attached to the thread and you can still run it again by calling Run()
+             again. If you destroy it, it will be detached from the current thread.
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PostWork">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError PostWork (Action&lt;PepperSharp.PPError&gt; action, long delay = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError PostWork(class System.Action`1&lt;valuetype PepperSharp.PPError&gt; action, int64 delay) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="action" Type="System.Action&lt;PepperSharp.PPError&gt;" />
+        <Parameter Name="delay" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="action">An Action that serves as completion callback to execute from the
+             message loop.
+             </param>
+        <param name="delay">The number of milliseconds to delay execution of the given
+             completion callback. Passing 0 means it will get queued normally and
+             executed in order.
+             </param>
+        <summary>
+             Schedules work to run on the given message loop. This may be called from
+             any thread. Posted work will be executed in the order it was posted when
+             the message loop is Run().
+            
+             The completion callback will be called with PPError.Ok as the "result"
+             parameter if it is run normally. It is good practice to check for PP_OK
+             and return early otherwise.
+            
+             The "required" flag on the completion callback is ignored. If there is an
+             error posting your callback, the error will be returned from PostWork and
+             the callback will never be run (because there is no appropriate place to
+             run your callback with an error without causing unexpected threading
+             problems). If you associate memory with the completion callback (for
+             example, you're using the C++ CompletionCallbackFactory), you will need to
+             free this or manually run the callback. See "Desctruction and error
+             handling" above.
+            
+            
+             You can call this function before the message loop has started and the
+             work will get queued until the message loop is run. You can also post
+             work after the message loop has exited as long as should_destroy was
+             false. It will be queued until the next invocation of Run(). 
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PostWork&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError PostWork&lt;T&gt; (Action&lt;PepperSharp.PPError,T&gt; action, T userData, long delay = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError PostWork&lt;T&gt;(class System.Action`2&lt;valuetype PepperSharp.PPError, !!T&gt; action, !!T userData, int64 delay) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T" />
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="action" Type="System.Action&lt;PepperSharp.PPError,T&gt;" />
+        <Parameter Name="userData" Type="T" />
+        <Parameter Name="delay" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="action">To be added.</param>
+        <param name="userData">To be added.</param>
+        <param name="delay">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PostWork&lt;T,U&gt;">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError PostWork&lt;T,U&gt; (Action&lt;PepperSharp.PPError,T,U&gt; action, T userData1, U userData2, long delay = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError PostWork&lt;T, U&gt;(class System.Action`3&lt;valuetype PepperSharp.PPError, !!T, !!U&gt; action, !!T userData1, !!U userData2, int64 delay) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T" />
+        <TypeParameter Name="U" />
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="action" Type="System.Action&lt;PepperSharp.PPError,T,U&gt;" />
+        <Parameter Name="userData1" Type="T" />
+        <Parameter Name="userData2" Type="U" />
+        <Parameter Name="delay" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <typeparam name="U">To be added.</typeparam>
+        <param name="action">To be added.</param>
+        <param name="userData1">To be added.</param>
+        <param name="userData2">To be added.</param>
+        <param name="delay">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Run">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Run ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Run() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Runs the thread message loop. Running the message loop is required for
+             you to get issued completion callbacks on the thread.
+            
+             The message loop identified by the argument must have been previously
+             successfully attached to the current thread.
+            
+             You may not run nested message loops. Since the main thread has an
+             implicit message loop that the system runs, you may not call Run on the
+             main thread.
+            
+             </summary>
+        <returns>
+               - PPError.Ok: The message loop was successfully run. Note that on
+                 success, the message loop will only exit when you call PostQuit().
+               - PPError.Badresource: The given message loop resource is invalid.
+               - PPError.WrongThread: You are attempting to run a message loop that
+                 has not been successfully attached to the current thread. Call
+                 AttachToCurrentThread().
+               - PPError.Inprogress: You are attempting to call Run in a nested
+                 fashion (Run is already on the stack). This will occur if you attempt
+                 to call run on the main thread's message loop (see above).
+             </returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Start">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; Start ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; Start() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

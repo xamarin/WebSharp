@@ -1,0 +1,153 @@
+<Type Name="FileSystem" FullName="PepperSharp.FileSystem">
+  <TypeSignature Language="C#" Value="public class FileSystem : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit FileSystem extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FileSystem (PepperSharp.Instance instance, PepperSharp.FileSystemType type);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance, valuetype PepperSharp.FileSystemType type) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+        <Parameter Name="type" Type="PepperSharp.FileSystemType" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <param name="type">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleOpen">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleOpen;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleOpen" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileSystem issues Open on the FileSystem.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnOpen">
+      <MemberSignature Language="C#" Value="protected void OnOpen (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnOpen(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Open">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Open (long expected_size);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Open(int64 expected_size) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="expected_size" Type="System.Int64" />
+      </Parameters>
+      <Docs>
+        <param name="expected_size">
+             The expected size of the file system.Note that
+             this does not request quota; to do that, you must either invoke
+             requestQuota from JavaScript:
+             http://www.html5rocks.com/en/tutorials/file/filesystem/#toc-requesting-quota
+             or set the unlimitedStorage permission for Chrome Web Store apps:
+             http://code.google.com/chrome/extensions/manifest.html#permissions
+             </param>
+        <summary>
+             Open() opens the file system. A file system must be opened before running
+             any other operation on it.
+             </summary>
+        <returns>A PPError code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OpenAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; OpenAsync (long expected_size, PepperSharp.MessageLoop openLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; OpenAsync(int64 expected_size, class PepperSharp.MessageLoop openLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="expected_size" Type="System.Int64" />
+        <Parameter Name="openLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="expected_size">
+             The expected size of the file system.Note that
+             this does not request quota; to do that, you must either invoke
+             requestQuota from JavaScript:
+             http://www.html5rocks.com/en/tutorials/file/filesystem/#toc-requesting-quota
+             or set the unlimitedStorage permission for Chrome Web Store apps:
+             http://code.google.com/chrome/extensions/manifest.html#permissions
+             </param>
+        <param name="openLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Open() opens the file system asynchronously. A file system must be opened before running
+             any other operation on it.
+             </summary>
+        <returns>A PPError code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
