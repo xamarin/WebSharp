@@ -56,5 +56,6 @@ check:
 
 setup:
 	powershell -executionpolicy bypass -File .\setup.ps1
-
-    ..\nacl_sdk\naclsdk.bat update pepper_canary # Downloads the real SDK. This takes a while
+	
+# Downloads the real SDK. This takes a while
+    ..\nacl_sdk\naclsdk.bat update pepper_canary 
