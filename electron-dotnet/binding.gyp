@@ -156,7 +156,7 @@
     },
     {
       'variables': {
-        'DFLT_PKG_CONFIG_PATH': 'PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig'
+        'MONO_PKG_CONFIG': '/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config'
       },
       'target_name': 'edge_nativeclr',
       'win_delay_load_hook': 'false',
@@ -210,25 +210,25 @@
                   'conditions': 
                   [
                     [
-                      '"<!((/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"!="not_found"',
+                      '"<!((pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"!="not_found"',
                       {
                             'include_dirs': [
-                              '<!@(/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
+                              '<!@(pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
                             ],
                             'link_settings': {
                               'libraries': [
-                                '<!@(/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --libs)'
+                                '<!@(pkg-config mono-2 --libs)'
                               ]
                             }
                       },
-                      '"<!((/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"=="not_found"',
-                      {'
+                      '"<!((pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"=="not_found"',
+                      {
                             'include_dirs': [
-                              '<!@(<(DFLT_PKG_CONFIG_PATH) pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
+                              '<!@(<(MONO_PKG_CONFIG) mono-2 --cflags-only-I | sed s/-I//g)'
                             ],
                             'link_settings': {
                               'libraries': [
-                                '<!@(<(DFLT_PKG_CONFIG_PATH) pkg-config mono-2 --libs)'
+                                '<!@(<(MONO_PKG_CONFIG) mono-2 --libs)'
                               ]
                             }
                       }
