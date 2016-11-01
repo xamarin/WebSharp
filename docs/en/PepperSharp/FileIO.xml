@@ -459,6 +459,7 @@
 	</summary>
 	<remarks>
 	  Upon success, the corresponding file is classified as "in use" by this FileIO object until such time as the FileIO object is closed or destroyed.
+    </remarks>
         <returns>Error code</returns>
       </Docs>
     </Member>
@@ -484,12 +485,11 @@
         <summary>
              Open() opens the specified regular file for I/O according to the given
              open flags, which is a bit-mask of the FileOpenFlags values.  
-	</summary>
-	<remarks>
-	  Upon
-             success, the corresponding file is classified as "in use" by this FileIO
+	      </summary>
+	      <remarks>
+	          Upon success, the corresponding file is classified as "in use" by this FileIO
              object until such time as the FileIO object is closed or destroyed.
-             </summary>
+             </remarks>
         <returns>Error code</returns>
         <remarks>To be added.</remarks>
       </Docs>
