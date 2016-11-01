@@ -44,10 +44,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkMonitor", "..\..\Exa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaStreamAudio", "..\..\Examples\api\MediaStreamAudio\MediaStreamAudio.csproj", "{6617F539-8B9D-4607-84CA-02BEF8299E87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeClient", "..\..\Examples\dotnet\DotNet2Plugin\PipeClient\PipeClient.csproj", "{4749E827-D1DD-4501-A428-9F7D92785C9E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeServerPlugin", "..\..\Examples\dotnet\DotNet2Plugin\PipeServerPlugin\PipeServerPlugin.csproj", "{97674174-AFD7-4665-A5DB-5620985FC1E0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -346,38 +342,6 @@ Global
 		{6617F539-8B9D-4607-84CA-02BEF8299E87}.Release|x64.Build.0 = Release|Any CPU
 		{6617F539-8B9D-4607-84CA-02BEF8299E87}.Release|x86.ActiveCfg = Release|Any CPU
 		{6617F539-8B9D-4607-84CA-02BEF8299E87}.Release|x86.Build.0 = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|x64.Build.0 = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Debug|x86.Build.0 = Debug|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|x64.ActiveCfg = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|x64.Build.0 = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|x86.ActiveCfg = Release|Any CPU
-		{4749E827-D1DD-4501-A428-9F7D92785C9E}.Release|x86.Build.0 = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|x64.Build.0 = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Debug|x86.Build.0 = Debug|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|x64.ActiveCfg = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|x64.Build.0 = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|x86.ActiveCfg = Release|Any CPU
-		{97674174-AFD7-4665-A5DB-5620985FC1E0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -398,7 +362,5 @@ Global
 		{8AFB55CA-0633-48CB-B4BE-84DD52B613F4} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{E3C51A04-3617-49D5-9F09-539AEED77297} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 		{6617F539-8B9D-4607-84CA-02BEF8299E87} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
-		{4749E827-D1DD-4501-A428-9F7D92785C9E} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
-		{97674174-AFD7-4665-A5DB-5620985FC1E0} = {02437F52-2AFC-4B6B-823F-976A55DDF43D}
 	EndGlobalSection
 EndGlobal
