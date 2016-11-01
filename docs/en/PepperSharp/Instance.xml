@@ -1568,7 +1568,7 @@
              </code></example>
       </Docs>
     </Member>
-    <Member MemberName="op_Implicit">
+    <!--Member MemberName="op_Implicit">
       <MemberSignature Language="C#" Value="public static PepperSharp.PPInstance op_Implicit (PepperSharp.Instance instance);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype PepperSharp.PPInstance op_Implicit(class PepperSharp.Instance instance) cil managed" />
       <MemberType>Method</MemberType>
@@ -1590,7 +1590,7 @@
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>
+    </Member-->
     <Member MemberName="PostMessage">
       <MemberSignature Language="C#" Value="public void PostMessage (object message);" />
       <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void PostMessage(object message) cil managed" />
@@ -1793,20 +1793,28 @@
              Sets the given mouse cursor. The mouse cursor will be in effect whenever
              the mouse is over the given instance until it is set again by another
              call.
-             <notes>
+             </summary>
+        <returns>true on success, or false if the instance or cursor type
+             was invalid or if the image was too large.</returns>
+        <remarks>
+           <block subset="none" type="note">           
+          <para>
              You can hide the mouse cursor by setting it to the
              <c>PPMouseCursorType</c> type.
-             </notes>
+          </para>
+
+          <para>
              This function allows setting both system defined mouse cursors and
              custom cursors. To set a system-defined cursor, pass the type you want
              and set the custom image to a default-constructor ImageData object.
              To set a custom cursor, set the type to
              <c>PPMouseCursorType.CUSTOM</c> and specify your image and hot
              spot.
-             </summary>
-        <returns>true on success, or false if the instance or cursor type
-             was invalid or if the image was too large.</returns>
-        <remarks>To be added.</remarks>
+          </para>
+             
+             </block>
+
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="TouchCancel">
