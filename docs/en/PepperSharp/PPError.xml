@@ -1,0 +1,563 @@
+<Type Name="PPError" FullName="PepperSharp.PPError">
+  <TypeSignature Language="C#" Value="public enum PPError" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPError extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Aborted">
+      <MemberSignature Language="C#" Value="Aborted" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Aborted = int32(-3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="AddressInUse">
+      <MemberSignature Language="C#" Value="AddressInUse" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError AddressInUse = int32(-108)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="AddressInvalid">
+      <MemberSignature Language="C#" Value="AddressInvalid" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError AddressInvalid = int32(-106)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="AddressUnreachable">
+      <MemberSignature Language="C#" Value="AddressUnreachable" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError AddressUnreachable = int32(-107)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Badargument">
+      <MemberSignature Language="C#" Value="Badargument" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Badargument = int32(-4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Badresource">
+      <MemberSignature Language="C#" Value="Badresource" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Badresource = int32(-5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="BlocksMainThread">
+      <MemberSignature Language="C#" Value="BlocksMainThread" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError BlocksMainThread = int32(-13)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectionAborted">
+      <MemberSignature Language="C#" Value="ConnectionAborted" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ConnectionAborted = int32(-103)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectionClosed">
+      <MemberSignature Language="C#" Value="ConnectionClosed" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ConnectionClosed = int32(-100)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectionFailed">
+      <MemberSignature Language="C#" Value="ConnectionFailed" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ConnectionFailed = int32(-104)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectionRefused">
+      <MemberSignature Language="C#" Value="ConnectionRefused" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ConnectionRefused = int32(-102)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectionReset">
+      <MemberSignature Language="C#" Value="ConnectionReset" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ConnectionReset = int32(-101)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectionTimedout">
+      <MemberSignature Language="C#" Value="ConnectionTimedout" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ConnectionTimedout = int32(-105)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ContextLost">
+      <MemberSignature Language="C#" Value="ContextLost" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ContextLost = int32(-50)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Failed">
+      <MemberSignature Language="C#" Value="Failed" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Failed = int32(-2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Filechanged">
+      <MemberSignature Language="C#" Value="Filechanged" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Filechanged = int32(-23)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Fileexists">
+      <MemberSignature Language="C#" Value="Fileexists" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Fileexists = int32(-21)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Filenotfound">
+      <MemberSignature Language="C#" Value="Filenotfound" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Filenotfound = int32(-20)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Filetoobig">
+      <MemberSignature Language="C#" Value="Filetoobig" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Filetoobig = int32(-22)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Inprogress">
+      <MemberSignature Language="C#" Value="Inprogress" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Inprogress = int32(-11)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="MalformedInput">
+      <MemberSignature Language="C#" Value="MalformedInput" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError MalformedInput = int32(-14)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="MessageTooBig">
+      <MemberSignature Language="C#" Value="MessageTooBig" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError MessageTooBig = int32(-109)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="NameNotResolved">
+      <MemberSignature Language="C#" Value="NameNotResolved" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError NameNotResolved = int32(-110)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Noaccess">
+      <MemberSignature Language="C#" Value="Noaccess" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Noaccess = int32(-7)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Nointerface">
+      <MemberSignature Language="C#" Value="Nointerface" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Nointerface = int32(-6)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Nomemory">
+      <MemberSignature Language="C#" Value="Nomemory" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Nomemory = int32(-8)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="NoMessageLoop">
+      <MemberSignature Language="C#" Value="NoMessageLoop" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError NoMessageLoop = int32(-51)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Noquota">
+      <MemberSignature Language="C#" Value="Noquota" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Noquota = int32(-10)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Nospace">
+      <MemberSignature Language="C#" Value="Nospace" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Nospace = int32(-9)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Notafile">
+      <MemberSignature Language="C#" Value="Notafile" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Notafile = int32(-24)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Notsupported">
+      <MemberSignature Language="C#" Value="Notsupported" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Notsupported = int32(-12)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="NoUserGesture">
+      <MemberSignature Language="C#" Value="NoUserGesture" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError NoUserGesture = int32(-41)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Ok">
+      <MemberSignature Language="C#" Value="Ok" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Ok = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="OkCompletionpending">
+      <MemberSignature Language="C#" Value="OkCompletionpending" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError OkCompletionpending = int32(-1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ResourceFailed">
+      <MemberSignature Language="C#" Value="ResourceFailed" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError ResourceFailed = int32(-15)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Timedout">
+      <MemberSignature Language="C#" Value="Timedout" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Timedout = int32(-30)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Usercancel">
+      <MemberSignature Language="C#" Value="Usercancel" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError Usercancel = int32(-40)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="WouldBlockThread">
+      <MemberSignature Language="C#" Value="WouldBlockThread" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError WouldBlockThread = int32(-53)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="WrongThread">
+      <MemberSignature Language="C#" Value="WrongThread" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPError WrongThread = int32(-52)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

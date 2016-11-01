@@ -77,10 +77,10 @@ else {
 		const possibleModuleNames = ['electron', 'electron-prebuilt', 'electron-prebuilt-compile'];
 
 		function locateElectronPrebuilt () {
-			let electronPath;
+			var electronPath;
 
 			// Attempt to locate modules by path
-			let foundModule = possibleModuleNames.some((moduleName) => {
+			var foundModule = possibleModuleNames.some((moduleName) => {
 				electronPath = path.join(__dirname, '..', '..', moduleName);
 				return fs.existsSync(electronPath);
 			});
@@ -111,7 +111,7 @@ else {
 			// NB: We assume here that electron-prebuilt is a sibling package of ours
 			pkg = null;
 			try {
-				let pkgJson = path.join(location, 'package.json');
+				var pkgJson = path.join(location, 'package.json');
 
 				pkg = require(pkgJson);
 

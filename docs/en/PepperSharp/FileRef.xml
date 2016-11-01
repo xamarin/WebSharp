@@ -1,0 +1,560 @@
+<Type Name="FileRef" FullName="PepperSharp.FileRef">
+  <TypeSignature Language="C#" Value="public class FileRef : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit FileRef extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FileRef (PepperSharp.FileSystem fileSystem, string path);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.FileSystem fileSystem, string path) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="fileSystem" Type="PepperSharp.FileSystem" />
+        <Parameter Name="path" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="fileSystem">To be added.</param>
+        <param name="path">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Delete">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Delete ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Delete() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Delete() deletes a file or directory. If <code>FileRef</code> refers to
+             a directory, then the directory must be empty. It is an error to delete a
+             file or directory that is in use.  It is not valid to delete a file in
+             the external file system.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DeleteAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; DeleteAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; DeleteAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Delete() deletes a file or directory asynchronously. If <code>FileRef</code> refers to
+             a directory, then the directory must be empty. It is an error to delete a
+             file or directory that is in use.  It is not valid to delete a file in
+             the external file system.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleDelete">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleDelete;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleDelete" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileRef issues Delete on the FileSystem.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleMakeDirectory">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleMakeDirectory;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleMakeDirectory" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileRef issues MakeDirectory on the FileSystem.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleQuery">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.FileInfo&gt; HandleQuery;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.FileInfo&gt; HandleQuery" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.FileInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileRef issues Query on the FileSystem.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleReadDirectoryEntries">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.FileRef.DirectoryEntries&gt; HandleReadDirectoryEntries;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.FileRef/DirectoryEntries&gt; HandleReadDirectoryEntries" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.FileRef+DirectoryEntries&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileRef issues ReadDirectoryEntries on the FileSystem.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleRename">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleRename;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleRename" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileRef issues Rename on the FileSystem.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleTouch">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleTouch;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleTouch" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the FileRef issues Touch on the FileSystem.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MakeDirectoryAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; MakeDirectoryAsync (PepperSharp.MakeDirectoryFlags makeDirectoryFlags, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; MakeDirectoryAsync(valuetype PepperSharp.MakeDirectoryFlags makeDirectoryFlags, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="makeDirectoryFlags" Type="PepperSharp.MakeDirectoryFlags" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="makeDirectoryFlags">A bit-mask of the
+             <code>MakeDirectoryFlags</code> values.</param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             MakeDirectoryAsync() makes a new directory asynchronously in the file system according to the
+             given <code>makeDirectoryFlags</code>, which is a bit-mask of the
+             <code>MakeDirectoryFlags</code> values.  It is not valid to make a
+             directory in the external file system.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the name of the file.
+            
+             The value returned by this property does not include any path components (such as
+             the name of the parent directory, for example). It is just the name of the
+             file. Use Path to get the full file path.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnDelete">
+      <MemberSignature Language="C#" Value="protected virtual void OnDelete (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnDelete(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnMakeDirectory">
+      <MemberSignature Language="C#" Value="protected virtual void OnMakeDirectory (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnMakeDirectory(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnQuery">
+      <MemberSignature Language="C#" Value="protected virtual void OnQuery (PepperSharp.PPError result, PepperSharp.PPFileInfo fileInfo);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnQuery(valuetype PepperSharp.PPError result, valuetype PepperSharp.PPFileInfo fileInfo) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="fileInfo" Type="PepperSharp.PPFileInfo" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="fileInfo">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnReadDirectoryEntries">
+      <MemberSignature Language="C#" Value="protected void OnReadDirectoryEntries (PepperSharp.PPError result, System.Collections.ObjectModel.ReadOnlyCollection&lt;PepperSharp.DirectoryEntry&gt; entries);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnReadDirectoryEntries(valuetype PepperSharp.PPError result, class System.Collections.ObjectModel.ReadOnlyCollection`1&lt;class PepperSharp.DirectoryEntry&gt; entries) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="entries" Type="System.Collections.ObjectModel.ReadOnlyCollection&lt;PepperSharp.DirectoryEntry&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="entries">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnRename">
+      <MemberSignature Language="C#" Value="protected virtual void OnRename (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnRename(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnTouch">
+      <MemberSignature Language="C#" Value="protected virtual void OnTouch (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnTouch(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Parent">
+      <MemberSignature Language="C#" Value="public PepperSharp.FileRef Parent { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class PepperSharp.FileRef Parent" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.FileRef</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the parent directory of this file.  If the FileRef points to the root of the 
+             filesystem, then the root is returned.
+            
+             @return A <code>FileRef</code> containing the parent directory of the
+             file. This function fails if the file system type is
+             <code>PP_FileSystemType_External</code>.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Path">
+      <MemberSignature Language="C#" Value="public string Path { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Path" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the absolute path of the file.  This will fail if the file system type is
+             External.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Query">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Query ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Query() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Query() queries info about a file or directory. You must have access to
+             read this file or directory if it exists in the external filesystem.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="QueryAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.FileInfo&gt; QueryAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.FileInfo&gt; QueryAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.FileInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Query() queries info about a file or directory asynchronously. You must have access to
+             read this file or directory if it exists in the external filesystem.
+             </summary>
+        <returns>A FileInfo instance see <see cref="T:PepperSharp.FileInfo" /></returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReadDirectoryEntriesAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.FileRef.DirectoryEntries&gt; ReadDirectoryEntriesAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.FileRef/DirectoryEntries&gt; ReadDirectoryEntriesAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.FileRef+DirectoryEntries&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             ReadDirectoryEntries() Reads all entries in the directory asynchronously.
+             </summary>
+        <returns>A DirectoryEntries object <see cref="T:PepperSharp.FileRef.DirectoryEntries" /></returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RenameAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; RenameAsync (PepperSharp.FileRef newFileRef, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; RenameAsync(class PepperSharp.FileRef newFileRef, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="newFileRef" Type="PepperSharp.FileRef" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="newFileRef">A <code>FileRef</code> corresponding to a new
+             file reference.
+             </param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Rename() renames a file or directory asynchronously. Argument <code>newFileRef</code>
+             must refer to files in the same file system as in this object. It is an
+             error to rename a file or directory that is in use.  It is not valid to
+             rename a file in the external file system.
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Touch">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Touch (DateTime lastAccessTime, DateTime lastModifiedTime);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Touch(valuetype System.DateTime lastAccessTime, valuetype System.DateTime lastModifiedTime) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="lastAccessTime" Type="System.DateTime" />
+        <Parameter Name="lastModifiedTime" Type="System.DateTime" />
+      </Parameters>
+      <Docs>
+        <param name="lastAccessTime">The last time the file was accessed.</param>
+        <param name="lastModifiedTime">The last time the file was modified.</param>
+        <summary>
+             Touch() Updates time stamps for a file.  You must have write access to the
+             file if it exists in the external filesystem.
+             </summary>
+        <returns>Ok if all went well</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TouchAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; TouchAsync (DateTime lastAccessTime, DateTime lastModifiedTime, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; TouchAsync(valuetype System.DateTime lastAccessTime, valuetype System.DateTime lastModifiedTime, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="lastAccessTime" Type="System.DateTime" />
+        <Parameter Name="lastModifiedTime" Type="System.DateTime" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="lastAccessTime">The last time the file was accessed.</param>
+        <param name="lastModifiedTime">The last time the file was modified.</param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Touch() Updates time stamps for a file asynchronously.  You must have write access to the
+             file if it exists in the external filesystem.
+             </summary>
+        <returns>Ok if all went well</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

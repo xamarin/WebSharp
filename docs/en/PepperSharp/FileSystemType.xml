@@ -1,0 +1,88 @@
+<Type Name="FileSystemType" FullName="PepperSharp.FileSystemType">
+  <TypeSignature Language="C#" Value="public enum FileSystemType" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed FileSystemType extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>FileSystemType</code>
+  </Docs>
+  <Members>
+    <Member MemberName="External">
+      <MemberSignature Language="C#" Value="External" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.FileSystemType External = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.FileSystemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Invalid">
+      <MemberSignature Language="C#" Value="Invalid" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.FileSystemType Invalid = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.FileSystemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Isolated">
+      <MemberSignature Language="C#" Value="Isolated" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.FileSystemType Isolated = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.FileSystemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="LocalPersistent">
+      <MemberSignature Language="C#" Value="LocalPersistent" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.FileSystemType LocalPersistent = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.FileSystemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="LocalTemporary">
+      <MemberSignature Language="C#" Value="LocalTemporary" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.FileSystemType LocalTemporary = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.FileSystemType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

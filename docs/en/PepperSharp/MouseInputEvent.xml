@@ -1,0 +1,119 @@
+<Type Name="MouseInputEvent" FullName="PepperSharp.MouseInputEvent">
+  <TypeSignature Language="C#" Value="public class MouseInputEvent : PepperSharp.InputEvent" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MouseInputEvent extends PepperSharp.InputEvent" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.InputEvent</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MouseInputEvent (PepperSharp.InputEvent inputEvent);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.InputEvent inputEvent) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="inputEvent" Type="PepperSharp.InputEvent" />
+      </Parameters>
+      <Docs>
+        <param name="inputEvent">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Button">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPInputEventMouseButton Button { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPInputEventMouseButton Button" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPInputEventMouseButton</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the mouse button associated with mouse down and up events. This
+             value will be PPInputEventMouseButton.None for mouse move, enter, and leave
+             events, and for all non-mouse events.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ClickCount">
+      <MemberSignature Language="C#" Value="public int ClickCount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 ClickCount" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the number of clicks of the mouse
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Movement">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPPoint Movement { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPPoint Movement" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPPoint</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the change in position of the mouse. When the mouse is locked,
+             although the mouse position doesn't actually change, this function
+             still provides movement information, which indicates what the change in
+             position would be had the mouse not been locked.
+            
+             The change in position of the mouse, relative to the previous
+             position.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Position">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPPoint Position { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPPoint Position" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPPoint</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the pixel location of a mouse input event. When
+             the mouse is locked, it returns the last known mouse position just as
+             mouse lock was entered.
+             
+             The point relative to the upper-left of the instance receiving the event. These values 
+             can be negative for mouse drags. The return value will be (0, 0) for non-mouse events.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

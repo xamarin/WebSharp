@@ -1,0 +1,116 @@
+<Type Name="Audio" FullName="PepperSharp.Audio">
+  <TypeSignature Language="C#" Value="public class Audio : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Audio extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Audio (PepperSharp.Instance instance, PepperSharp.AudioConfig config, Action&lt;byte[],uint,double,object&gt; callbackAction, object userData = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance, class PepperSharp.AudioConfig config, class System.Action`4&lt;unsigned int8[], unsigned int32, float64, object&gt; callbackAction, object userData) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+        <Parameter Name="config" Type="PepperSharp.AudioConfig" />
+        <Parameter Name="callbackAction" Type="System.Action&lt;System.Byte[],System.UInt32,System.Double,System.Object&gt;" />
+        <Parameter Name="userData" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <param name="config">To be added.</param>
+        <param name="callbackAction">To be added.</param>
+        <param name="userData">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Config">
+      <MemberSignature Language="C#" Value="public PepperSharp.AudioConfig Config { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class PepperSharp.AudioConfig Config" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioConfig</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Getter function for returning the internal <code>AudioConfig</code>
+             struct.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="StartPlayback">
+      <MemberSignature Language="C#" Value="public bool StartPlayback ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool StartPlayback() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             StartPlayback() starts playback of audio.
+             </summary>
+        <returns>true if successful, otherwise false.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="StopPlayback">
+      <MemberSignature Language="C#" Value="public bool StopPlayback ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool StopPlayback() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             StopPlayback stops playback of audio.
+             </summary>
+        <returns>true if successful, otherwise false.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

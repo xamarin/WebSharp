@@ -1,0 +1,31 @@
+<Type Name="PassRef" FullName="PepperSharp.PassRef">
+  <TypeSignature Language="C#" Value="public enum PassRef" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PassRef extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="PassRef">
+      <MemberSignature Language="C#" Value="PassRef" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PassRef PassRef = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PassRef</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

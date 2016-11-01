@@ -1,0 +1,131 @@
+<Type Name="MediaStreamVideoTrackAttributes" FullName="PepperSharp.MediaStreamVideoTrackAttributes">
+  <TypeSignature Language="C#" Value="public class MediaStreamVideoTrackAttributes" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MediaStreamVideoTrackAttributes extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+             The MediaStreamVideoTrackAttributes allows setting of the MediaStreamVideoTrack
+             configuration.
+             </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaStreamVideoTrackAttributes ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BufferedFrames">
+      <MemberSignature Language="C#" Value="public int BufferedFrames { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 BufferedFrames" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The maximum number of frames to hold in the input buffer.
+             Note: this is only used as advisory; the browser may allocate more or fewer
+             based on available resources.How many frames to buffer depends on usage -
+             request at least 2 to make sure latency doesn't cause lost frames. If
+             the plugin expects to hold on to more than one frame at a time(e.g.to do
+             multi-frame processing), it should request that many more.
+             If this attribute is not specified or value 0 is specified for this
+             attribute, the default value will be used.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Format">
+      <MemberSignature Language="C#" Value="public PepperSharp.VideoFrameFormat Format { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.VideoFrameFormat Format" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.VideoFrameFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The format of video frames. The attribute value is
+             a <code>VideoFrameFormat</code>. If the specified format is different
+             from the video source (webcam), frames will be converted to specified
+             format.
+             If this attribute is not specified or value
+             <code>Unknown</code> is specified, the orignal frame
+             format of the video track will be used.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Height">
+      <MemberSignature Language="C#" Value="public int Height { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Height" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The height of video frames in pixels.It should be a multiple of 4.
+             If the specified size is different from the video source(webcam),
+             frames will be scaled to specified size.
+             If this attribute is not specified or value 0 is specified, the original
+             frame size of the video track will be used.
+             
+             Maximum value: 4096 (4K resolution).
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Width">
+      <MemberSignature Language="C#" Value="public int Width { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Width" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The width of video frames in pixels. It should be a multiple of 4.
+             If the specified size is different from the video source (webcam),
+             frames will be scaled to specified size.
+             If this attribute is not specified or value 0 is specified, the original
+             frame size of the video track will be used.
+             
+             Maximum value: 4096 (4K resolution).
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

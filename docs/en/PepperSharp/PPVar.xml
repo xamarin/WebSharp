@@ -1,0 +1,20 @@
+<Type Name="PPVar" FullName="PepperSharp.PPVar">
+  <TypeSignature Language="C#" Value="public struct PPVar" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit PPVar extends System.ValueType" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PP_VAR</code>
+    <code>PP_VarType</code>
+    <code>PP_Var</code>
+  </Docs>
+  <Members />
+</Type>

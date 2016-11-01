@@ -1,0 +1,214 @@
+<Type Name="Core" FullName="PepperSharp.Core">
+  <TypeSignature Language="C#" Value="public static class Core" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit Core extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="AddRefResource">
+      <MemberSignature Language="C#" Value="public static void AddRefResource (PepperSharp.Resource resource);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void AddRefResource(class PepperSharp.Resource resource) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="resource" Type="PepperSharp.Resource" />
+      </Parameters>
+      <Docs>
+        <param name="resource">A <code>Resource</code> corresponding to a
+             resource.</param>
+        <summary>
+             AddRefResource() increments the reference count for the provided
+             <code>resource</code>.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CallOnMainThread">
+      <MemberSignature Language="C#" Value="public static void CallOnMainThread (Action&lt;PepperSharp.PPError&gt; action, int delay_in_milliseconds = 0, int result = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CallOnMainThread(class System.Action`1&lt;valuetype PepperSharp.PPError&gt; action, int32 delay_in_milliseconds, int32 result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="action" Type="System.Action&lt;PepperSharp.PPError&gt;" />
+        <Parameter Name="delay_in_milliseconds" Type="System.Int32" />
+        <Parameter Name="result" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="action">To be added.</param>
+        <param name="delay_in_milliseconds">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CallOnMainThread&lt;T&gt;">
+      <MemberSignature Language="C#" Value="public static void CallOnMainThread&lt;T&gt; (Action&lt;PepperSharp.PPError,T&gt; action, T userData1, int delay_in_milliseconds = 0, int result = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CallOnMainThread&lt;T&gt;(class System.Action`2&lt;valuetype PepperSharp.PPError, !!T&gt; action, !!T userData1, int32 delay_in_milliseconds, int32 result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T" />
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="action" Type="System.Action&lt;PepperSharp.PPError,T&gt;" />
+        <Parameter Name="userData1" Type="T" />
+        <Parameter Name="delay_in_milliseconds" Type="System.Int32" />
+        <Parameter Name="result" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <param name="action">To be added.</param>
+        <param name="userData1">To be added.</param>
+        <param name="delay_in_milliseconds">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CallOnMainThread&lt;T,U&gt;">
+      <MemberSignature Language="C#" Value="public static void CallOnMainThread&lt;T,U&gt; (Action&lt;PepperSharp.PPError,T,U&gt; action, T userData1, U userData2, int delay_in_milliseconds = 0, int result = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void CallOnMainThread&lt;T, U&gt;(class System.Action`3&lt;valuetype PepperSharp.PPError, !!T, !!U&gt; action, !!T userData1, !!U userData2, int32 delay_in_milliseconds, int32 result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <TypeParameters>
+        <TypeParameter Name="T" />
+        <TypeParameter Name="U" />
+      </TypeParameters>
+      <Parameters>
+        <Parameter Name="action" Type="System.Action&lt;PepperSharp.PPError,T,U&gt;" />
+        <Parameter Name="userData1" Type="T" />
+        <Parameter Name="userData2" Type="U" />
+        <Parameter Name="delay_in_milliseconds" Type="System.Int32" />
+        <Parameter Name="result" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <typeparam name="T">To be added.</typeparam>
+        <typeparam name="U">To be added.</typeparam>
+        <param name="action">To be added.</param>
+        <param name="userData1">To be added.</param>
+        <param name="userData2">To be added.</param>
+        <param name="delay_in_milliseconds">To be added.</param>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsMainThread">
+      <MemberSignature Language="C#" Value="public static bool IsMainThread { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property bool IsMainThread" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Property that returns true if the current thread is the main pepper
+             thread.
+            
+             This function is useful for implementing sanity checks, and deciding if
+             dispatching using CallOnMainThread() is required.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReleaseResource">
+      <MemberSignature Language="C#" Value="public static void ReleaseResource (PepperSharp.Resource resource);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig void ReleaseResource(class PepperSharp.Resource resource) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="resource" Type="PepperSharp.Resource" />
+      </Parameters>
+      <Docs>
+        <param name="resource">A <code>Resource</code> corresponding to a
+             resource.</param>
+        <summary>
+             ReleaseResource() decrements the reference count for the provided
+             <code>resource</code>. The resource will be deallocated if the
+             reference count reaches zero.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Time">
+      <MemberSignature Language="C#" Value="public static double Time { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property float64 Time" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Property that returns the "wall clock time" according to the
+             browser.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TimeTicks">
+      <MemberSignature Language="C#" Value="public static double TimeTicks { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property float64 TimeTicks" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Property that returns the "tick time" according to the browser.
+             This clock is used by the browser when passing some event times to the
+             module (for example, using the
+             <code>PInputEvent.TimestampSeconds</code> field). It is not
+             correlated to any actual wall clock time (like Core.Time). Because
+             of this, it will not change if the user changes their computer clock.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

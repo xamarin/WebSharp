@@ -1,0 +1,69 @@
+<Type Name="MediaStreamAudioTrack+AudioBufferInfo" FullName="PepperSharp.MediaStreamAudioTrack+AudioBufferInfo">
+  <TypeSignature Language="C#" Value="public class MediaStreamAudioTrack.AudioBufferInfo : EventArgs" />
+  <TypeSignature Language="ILAsm" Value=".class nested public auto ansi beforefieldinit MediaStreamAudioTrack/AudioBufferInfo extends System.EventArgs" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.EventArgs</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>AudioBufferInfo</code>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AudioBufferInfo (PepperSharp.PPError result, PepperSharp.PPResource audioBuffer);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype PepperSharp.PPError result, valuetype PepperSharp.PPResource audioBuffer) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+        <Parameter Name="audioBuffer" Type="PepperSharp.PPResource" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <param name="audioBuffer">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AudioBuffer">
+      <MemberSignature Language="C#" Value="public PepperSharp.AudioBuffer AudioBuffer { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class PepperSharp.AudioBuffer AudioBuffer" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioBuffer</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Result">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Result { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPError Result" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

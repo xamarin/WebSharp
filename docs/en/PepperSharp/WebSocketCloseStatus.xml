@@ -1,0 +1,213 @@
+<Type Name="WebSocketCloseStatus" FullName="PepperSharp.WebSocketCloseStatus">
+  <TypeSignature Language="C#" Value="public enum WebSocketCloseStatus" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed WebSocketCloseStatus extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Empty">
+      <MemberSignature Language="C#" Value="Empty" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus Empty = int32(1005)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="EndpointUnavailable">
+      <MemberSignature Language="C#" Value="EndpointUnavailable" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus EndpointUnavailable = int32(1001)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="InternalServerError">
+      <MemberSignature Language="C#" Value="InternalServerError" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus InternalServerError = int32(1011)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="InvalidMessageType">
+      <MemberSignature Language="C#" Value="InvalidMessageType" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus InvalidMessageType = int32(1003)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="InvalidPayloadData">
+      <MemberSignature Language="C#" Value="InvalidPayloadData" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus InvalidPayloadData = int32(1007)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="MandatoryExtension">
+      <MemberSignature Language="C#" Value="MandatoryExtension" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus MandatoryExtension = int32(1010)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="MessageTooBig">
+      <MemberSignature Language="C#" Value="MessageTooBig" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus MessageTooBig = int32(1009)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="NormalClosure">
+      <MemberSignature Language="C#" Value="NormalClosure" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus NormalClosure = int32(1000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="PolicyViolation">
+      <MemberSignature Language="C#" Value="PolicyViolation" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus PolicyViolation = int32(1008)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="ProtocolError">
+      <MemberSignature Language="C#" Value="ProtocolError" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus ProtocolError = int32(1002)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UserPrivateMax">
+      <MemberSignature Language="C#" Value="UserPrivateMax" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus UserPrivateMax = int32(4999)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UserPrivateMin">
+      <MemberSignature Language="C#" Value="UserPrivateMin" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus UserPrivateMin = int32(4000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UserRegisteredMax">
+      <MemberSignature Language="C#" Value="UserRegisteredMax" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus UserRegisteredMax = int32(3999)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="UserRegisteredMin">
+      <MemberSignature Language="C#" Value="UserRegisteredMin" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.WebSocketCloseStatus UserRegisteredMin = int32(3000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketCloseStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

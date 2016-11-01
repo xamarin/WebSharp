@@ -1,0 +1,18 @@
+<Type Name="PPImageDataDesc" FullName="PepperSharp.PPImageDataDesc">
+  <TypeSignature Language="C#" Value="public struct PPImageDataDesc" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi sealed beforefieldinit PPImageDataDesc extends System.ValueType" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PP_ImageDataDesc</code>
+  </Docs>
+  <Members />
+</Type>

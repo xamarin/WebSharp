@@ -1,0 +1,144 @@
+<Type Name="PPAudioBufferSampleRate" FullName="PepperSharp.PPAudioBufferSampleRate">
+  <TypeSignature Language="C#" Value="public enum PPAudioBufferSampleRate" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPAudioBufferSampleRate extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PPB_AudioBuffer</code>
+  </Docs>
+  <Members>
+    <Member MemberName="_16000">
+      <MemberSignature Language="C#" Value="_16000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _16000 = int32(16000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_192000">
+      <MemberSignature Language="C#" Value="_192000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _192000 = int32(192000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_22050">
+      <MemberSignature Language="C#" Value="_22050" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _22050 = int32(22050)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_32000">
+      <MemberSignature Language="C#" Value="_32000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _32000 = int32(32000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_44100">
+      <MemberSignature Language="C#" Value="_44100" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _44100 = int32(44100)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_48000">
+      <MemberSignature Language="C#" Value="_48000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _48000 = int32(48000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_8000">
+      <MemberSignature Language="C#" Value="_8000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _8000 = int32(8000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="_96000">
+      <MemberSignature Language="C#" Value="_96000" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate _96000 = int32(96000)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Unknown">
+      <MemberSignature Language="C#" Value="Unknown" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPAudioBufferSampleRate Unknown = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPAudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

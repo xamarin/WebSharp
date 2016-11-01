@@ -1,0 +1,78 @@
+<Type Name="CompletionCallback&lt;T&gt;" FullName="PepperSharp.CompletionCallback&lt;T&gt;">
+  <TypeSignature Language="C#" Value="public class CompletionCallback&lt;T&gt;" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit CompletionCallback`1&lt;T&gt; extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter Name="T" />
+  </TypeParameters>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <typeparam name="T">To be added.</typeparam>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public CompletionCallback (PepperSharp.CompletionCallbackFunc&lt;T&gt; callbackFunc, T userData, PepperSharp.PPCompletionCallbackFlag flags = PepperSharp.PPCompletionCallbackFlag.None);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.CompletionCallbackFunc`1&lt;!T&gt; callbackFunc, !T userData, valuetype PepperSharp.PPCompletionCallbackFlag flags) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="callbackFunc" Type="PepperSharp.CompletionCallbackFunc&lt;T&gt;" />
+        <Parameter Name="userData" Type="T" />
+        <Parameter Name="flags" Type="PepperSharp.PPCompletionCallbackFlag" />
+      </Parameters>
+      <Docs>
+        <param name="callbackFunc">To be added.</param>
+        <param name="userData">To be added.</param>
+        <param name="flags">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Callback">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPCompletionCallback Callback { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPCompletionCallback Callback" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPCompletionCallback</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="op_Implicit">
+      <MemberSignature Language="C#" Value="public static PepperSharp.PPCompletionCallback op_Implicit (PepperSharp.CompletionCallback&lt;T&gt; completionCallback);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig specialname valuetype PepperSharp.PPCompletionCallback op_Implicit(class PepperSharp.CompletionCallback`1&lt;!T&gt; completionCallback) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPCompletionCallback</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="completionCallback" Type="PepperSharp.CompletionCallback&lt;T&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="completionCallback">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

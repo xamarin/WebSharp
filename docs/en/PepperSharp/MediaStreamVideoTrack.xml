@@ -1,0 +1,538 @@
+<Type Name="MediaStreamVideoTrack" FullName="PepperSharp.MediaStreamVideoTrack">
+  <TypeSignature Language="C#" Value="public class MediaStreamVideoTrack : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MediaStreamVideoTrack extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaStreamVideoTrack (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaStreamVideoTrack (PepperSharp.PPResource resource);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype PepperSharp.PPResource resource) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="resource" Type="PepperSharp.PPResource" />
+      </Parameters>
+      <Docs>
+        <param name="resource">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Attributes">
+      <MemberSignature Language="C#" Value="public PepperSharp.MediaStreamVideoTrackAttributes Attributes { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class PepperSharp.MediaStreamVideoTrackAttributes Attributes" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.MediaStreamVideoTrackAttributes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets a MediaStreamVideoTrackAttributes instance with the attributes that the
+             MediaStreamVideoTrack is configured for.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Close">
+      <MemberSignature Language="C#" Value="public void Close ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Close() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Closes the MediaStream video track, and disconnects it from video source.
+             After calling <code>Close()</code>, no new frames will be received.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; CloseAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; CloseAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Closes the MediaStream video track asynchronously, and disconnects it from video source.
+             After calling <code>Close()</code>, no new frames will be received.
+             </summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Configure">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Configure (PepperSharp.MediaStreamVideoTrackAttributes attributes);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Configure(class PepperSharp.MediaStreamVideoTrackAttributes attributes) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attributes" Type="PepperSharp.MediaStreamVideoTrackAttributes" />
+      </Parameters>
+      <Docs>
+        <param name="attributes">A MediaStreamVideoTrackAttributes instance</param>
+        <summary>
+             Configures underlying frame buffers for incoming frames.
+             If the application doesn't want to drop frames, then the
+             <code>BufferedFrames</code> should be
+             chosen such that inter-frame processing time variability won't overrun the
+             input buffer. If the buffer is overfilled, then frames will be dropped.
+             The application can detect this by examining the timestamp on returned
+             frames. If some attributes are not specified, default values will be used
+             for those unspecified attributes. If <code>Configure()</code> is not
+             called, default settings will be used.
+             Example usage from plugin code:
+             <code>
+             var attribList = new MediaStreamVideoTrackAttributes()
+             {
+                 BufferedFrames = 4
+             };
+             track.Configure(attribList);
+             </code></summary>
+        <returns>Error code.  Returns <code>InProgress</code> if there is a pending call of
+             <code>Configure()</code> or <code>GetFrame()</code>, or the plugin
+             holds some frames which are not recycled with <code>RecycleFrame()</code>.
+             If an error is returned, all attributes and the underlying buffer will not
+             be changed.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConfigureAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; ConfigureAsync (PepperSharp.MediaStreamVideoTrackAttributes attributes, PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; ConfigureAsync(class PepperSharp.MediaStreamVideoTrackAttributes attributes, class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attributes" Type="PepperSharp.MediaStreamVideoTrackAttributes" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="attributes">A MediaStreamVideoTrackAttributes instance</param>
+        <param name="messageLoop">Optional MessageLoop instance used to run the command on.</param>
+        <summary>
+             Configures underlying frame buffers for incoming frames asynchronously.
+             If the application doesn't want to drop frames, then the
+             <code>BufferedFrames</code> should be
+             chosen such that inter-frame processing time variability won't overrun the
+             input buffer. If the buffer is overfilled, then frames will be dropped.
+             The application can detect this by examining the timestamp on returned
+             frames. If some attributes are not specified, default values will be used
+             for those unspecified attributes. If <code>Configure()</code> is not
+             called, default settings will be used.
+             Example usage from plugin code:
+             <code>
+             var attribList = new MediaStreamVideoTrackAttributes()
+             {
+                 BufferedFrames = 4
+             };
+             await track.ConfigureAsync(attribList);
+             </code></summary>
+        <returns>Error code.  Returns <code>InProgress</code> if there is a pending call of
+             <code>Configure()</code> or <code>GetFrame()</code>, or the plugin
+             holds some frames which are not recycled with <code>RecycleFrame()</code>.
+             If an error is returned, all attributes and the underlying buffer will not
+             be changed.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEmptyFrame">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError GetEmptyFrame ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError GetEmptyFrame() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEmptyFrameAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.VideoFrameInfo&gt; GetEmptyFrameAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.VideoFrameInfo&gt; GetEmptyFrameAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.VideoFrameInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetFrame">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError GetFrame ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError GetFrame() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+             Gets the next video frame from the MediaStream track.
+             If internal processing is slower than the incoming frame rate, new frames
+             will be dropped from the incoming stream. Once the input buffer is full,
+             frames will be dropped until <code>RecycleFrame()</code> is called to free
+             a spot for another frame to be buffered.
+             If there are no frames in the input buffer,
+             <code>OkCompletionPending</code> will be returned immediately and the
+             <code>HandleFrame</code> event handler will be called when a new frame is received or some
+             error happens.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetFrameAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.VideoFrameInfo&gt; GetFrameAsync (PepperSharp.MessageLoop messageLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.VideoFrameInfo&gt; GetFrameAsync(class PepperSharp.MessageLoop messageLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.VideoFrameInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="messageLoop">Optional MessageLoop instance that can be used to post the command to</param>
+        <summary>
+             Gets the next video frame from the MediaStream track asynchronously.
+             If internal processing is slower than the incoming frame rate, new frames
+             will be dropped from the incoming stream. Once the input buffer is full,
+             frames will be dropped until <code>RecycleFrame()</code> is called to free
+             a spot for another frame to be buffered.
+             If there are no frames in the input buffer,
+             <code>OkCompletionPending</code> will be returned immediately.
+             </summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleClose">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleClose;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleClose" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the MediaStreamVideoTrack issues Close.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleConfigure">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; HandleConfigure;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; HandleConfigure" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the MediaStreamVideoTrack issues a Configure call.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleEmptyFrame">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.VideoFrameInfo&gt; HandleEmptyFrame;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.VideoFrameInfo&gt; HandleEmptyFrame" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.VideoFrameInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the MediaStreamVideoTrack issues GetEmptyFrame.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HandleFrame">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.VideoFrameInfo&gt; HandleFrame;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.VideoFrameInfo&gt; HandleFrame" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.VideoFrameInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the MediaStreamVideoTrack issues GetFrame.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HasEnded">
+      <MemberSignature Language="C#" Value="public bool HasEnded { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool HasEnded" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Checks whether the underlying MediaStream track has ended.
+             Calls to GetFrame while the track has ended are safe to make and will
+             complete, but will fail.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Id">
+      <MemberSignature Language="C#" Value="public string Id { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Id" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the track ID of the underlying MediaStream video track.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnClose">
+      <MemberSignature Language="C#" Value="protected virtual void OnClose (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnClose(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnConfigure">
+      <MemberSignature Language="C#" Value="protected void OnConfigure (PepperSharp.PPError result);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnConfigure(valuetype PepperSharp.PPError result) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="result" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="result">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnGetEmptyFrame">
+      <MemberSignature Language="C#" Value="protected virtual void OnGetEmptyFrame (PepperSharp.VideoFrameInfo videoFrame);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnGetEmptyFrame(class PepperSharp.VideoFrameInfo videoFrame) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="videoFrame" Type="PepperSharp.VideoFrameInfo" />
+      </Parameters>
+      <Docs>
+        <param name="videoFrame">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnGetFrame">
+      <MemberSignature Language="C#" Value="protected virtual void OnGetFrame (PepperSharp.VideoFrameInfo videoFrame);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnGetFrame(class PepperSharp.VideoFrameInfo videoFrame) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="videoFrame" Type="PepperSharp.VideoFrameInfo" />
+      </Parameters>
+      <Docs>
+        <param name="videoFrame">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PutFrame">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError PutFrame (PepperSharp.VideoFrame frame);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError PutFrame(class PepperSharp.VideoFrame frame) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="frame" Type="PepperSharp.VideoFrame" />
+      </Parameters>
+      <Docs>
+        <param name="frame">
+        </param>
+        <summary>
+             Sends a frame returned by |GetEmptyFrame()| to the output track.
+             After this function, the |frame| should not be used anymore and the
+             caller should release the reference that it holds.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RecycleFrame">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError RecycleFrame (PepperSharp.VideoFrame frame);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError RecycleFrame(class PepperSharp.VideoFrame frame) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="frame" Type="PepperSharp.VideoFrame" />
+      </Parameters>
+      <Docs>
+        <param name="frame">A VideoFrame returned by <code>GetFrame()</code>.</param>
+        <summary>
+             Recycles a frame returned by <code>GetFrame()</code>, so the track can
+             reuse the underlying buffer of this frame. And the frame will become
+             invalid. The caller should release all references it holds to
+             <code>frame</code> and not use it anymore.
+             </summary>
+        <returns>Error code</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

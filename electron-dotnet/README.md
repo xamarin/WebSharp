@@ -1410,7 +1410,6 @@ npm run jshint
 
 Prerequisities:
 
-* [Homebrew](http://brew.sh/) if pkg-config is not available. 
 * [Mono x64](http://www.mono-project.com/download/#download-mac) and/or [.NET Core](https://dotnet.github.io/getting-started/) - see below  
 * [Node.js x64](http://nodejs.org/) (tested with v6.5.0 and electron v1.4.0) 
 * [Native Abstractions for Node.js](https://github.com/nodejs/nan) 
@@ -1419,28 +1418,6 @@ Prerequisities:
 You can use electron-dotnet.js on OSX with either Mono or .NET Core installed, or both.
 
 If you choose to [install Mono](http://www.mono-project.com/download/#download-mac), select the universal installer to make sure you get the x64 version. Edge.js requires Mono x64.  If you choose to install .NET Core, follow the steps [here](https://www.microsoft.com/net/core#macosx)
-
-#### pkg-config
-When searching for mono to link against, ```pkg-config``` is used.  Check for ```pkg-config``` via ```$ which pkg-config```, if not found you will want to install it:
-
-```bash
-# Install pkg-config
-brew install pkg-config
-```
-
-Then install and build electron-dotnet.js:
-
-```bash
-#
-npm install
-```
-
-**NOTE** if the build process complains about being unable to locate Mono libraries or you want to specify a custom Mono build, you may need to specify the search path explicitly. This may be installation dependent, but in most cases will look like: 
-
-```bash
-PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig \
-  npm install
-```
 
 If you installed both Mono and .NET Core, by default ```electron-dotnet``` will use Mono. You opt in to using .NET Core with the `EDGE_USE_CORECLR` environment variable: 
 

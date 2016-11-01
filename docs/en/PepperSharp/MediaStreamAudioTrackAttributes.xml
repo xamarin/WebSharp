@@ -1,0 +1,135 @@
+<Type Name="MediaStreamAudioTrackAttributes" FullName="PepperSharp.MediaStreamAudioTrackAttributes">
+  <TypeSignature Language="C#" Value="public class MediaStreamAudioTrackAttributes" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit MediaStreamAudioTrackAttributes extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+             The MediaStreamAudioTrackAttributes allows setting of the MediaStreamAudioTrack
+             configuration.
+             </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MediaStreamAudioTrackAttributes ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Buffers">
+      <MemberSignature Language="C#" Value="public int Buffers { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Buffers" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The maximum number of buffers to hold audio samples.
+             Note: this is only used as advisory; the browser may allocate more or fewer
+             based on available resources.How many buffers depends on usage -
+             request at least 2 to make sure latency doesn't cause lost samples. If
+             the plugin expects to hold on to more than one buffer at a time(e.g.to do
+             multi-buffer processing), it should request that many more.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Channels">
+      <MemberSignature Language="C#" Value="public int Channels { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Channels" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The number of channels in audio buffers.
+            
+             Supported values: 1, 2
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Duration">
+      <MemberSignature Language="C#" Value="public int Duration { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Duration" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The duration of an audio buffer in milliseconds.
+             
+             Valid range: 10 to 10000
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleRate">
+      <MemberSignature Language="C#" Value="public PepperSharp.AudioBufferSampleRate SampleRate { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.AudioBufferSampleRate SampleRate" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioBufferSampleRate</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The sample rate of audio data in buffers. The attribute value is a
+             <code>AudioBufferSampleRate</code>.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SampleSize">
+      <MemberSignature Language="C#" Value="public PepperSharp.AudioBufferSampleSize SampleSize { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.AudioBufferSampleSize SampleSize" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.AudioBufferSampleSize</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             The sample size of audio data in buffers in bytes. The attribute value is a
+             <code>AudioBufferSampleSize</code>.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

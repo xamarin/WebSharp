@@ -1,0 +1,91 @@
+<Type Name="PPMediaStreamVideoTrackAttrib" FullName="PepperSharp.PPMediaStreamVideoTrackAttrib">
+  <TypeSignature Language="C#" Value="public enum PPMediaStreamVideoTrackAttrib" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPMediaStreamVideoTrackAttrib extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+    <code>PPB_MediaStreamVideoTrack</code>
+    <code>Configure()</code>
+  </Docs>
+  <Members>
+    <Member MemberName="BufferedFrames">
+      <MemberSignature Language="C#" Value="BufferedFrames" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamVideoTrackAttrib BufferedFrames = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamVideoTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Format">
+      <MemberSignature Language="C#" Value="Format" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamVideoTrackAttrib Format = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamVideoTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <code>PP_VideoFrame_Format</code>
+        <code>PP_VIDEOFRAME_FORMAT_UNKNOWN</code>
+      </Docs>
+    </Member>
+    <Member MemberName="Height">
+      <MemberSignature Language="C#" Value="Height" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamVideoTrackAttrib Height = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamVideoTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="None">
+      <MemberSignature Language="C#" Value="None" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamVideoTrackAttrib None = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamVideoTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Width">
+      <MemberSignature Language="C#" Value="Width" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPMediaStreamVideoTrackAttrib Width = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPMediaStreamVideoTrackAttrib</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

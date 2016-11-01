@@ -1,0 +1,59 @@
+<Type Name="PPTouchListType" FullName="PepperSharp.PPTouchListType">
+  <TypeSignature Language="C#" Value="public enum PPTouchListType" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed PPTouchListType extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="TouchlistTypeChangedtouches">
+      <MemberSignature Language="C#" Value="TouchlistTypeChangedtouches" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPTouchListType TouchlistTypeChangedtouches = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPTouchListType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TouchlistTypeTargettouches">
+      <MemberSignature Language="C#" Value="TouchlistTypeTargettouches" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPTouchListType TouchlistTypeTargettouches = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPTouchListType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TouchlistTypeTouches">
+      <MemberSignature Language="C#" Value="TouchlistTypeTouches" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype PepperSharp.PPTouchListType TouchlistTypeTouches = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPTouchListType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

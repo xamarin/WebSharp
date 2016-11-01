@@ -1,0 +1,553 @@
+<Type Name="WebSocket" FullName="PepperSharp.WebSocket">
+  <TypeSignature Language="C#" Value="public class WebSocket : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit WebSocket extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public WebSocket (PepperSharp.Instance instance);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+      </Parameters>
+      <Docs>
+        <param name="instance">The instance with which this resource will be
+             associated.</param>
+        <summary>
+             Constructs a WebSocket object.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="BufferedAmount">
+      <MemberSignature Language="C#" Value="public ulong BufferedAmount { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance unsigned int64 BufferedAmount" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.UInt64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Returns the number of bytes of text and binary
+             messages that have been queued for the WebSocket connection to send, but
+             have not been transmitted to the network yet.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Close">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Close (PepperSharp.WebSocketCloseStatus closeCode, string reason = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Close(valuetype PepperSharp.WebSocketCloseStatus closeCode, string reason) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="closeCode" Type="PepperSharp.WebSocketCloseStatus" />
+        <Parameter Name="reason" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="closeCode">The WebSocket close status</param>
+        <param name="reason">A description of the close status.</param>
+        <summary>
+             Closes the connection to the WebSocket server
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; CloseAsync (PepperSharp.WebSocketCloseStatus closeCode, string reason = null, PepperSharp.MessageLoop closeLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; CloseAsync(valuetype PepperSharp.WebSocketCloseStatus closeCode, string reason, class PepperSharp.MessageLoop closeLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="closeCode" Type="PepperSharp.WebSocketCloseStatus" />
+        <Parameter Name="reason" Type="System.String" />
+        <Parameter Name="closeLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="closeCode">The WebSocket close status</param>
+        <param name="reason">A description of the close status.</param>
+        <param name="closeLoop">To be added.</param>
+        <summary>
+             Closes the connection to the WebSocket server asynchronously
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Closed">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; Closed;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; Closed" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the websocket issues a Close to a WebSocket instance.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseStatus">
+      <MemberSignature Language="C#" Value="public Nullable&lt;PepperSharp.WebSocketCloseStatus&gt; CloseStatus { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;valuetype PepperSharp.WebSocketCloseStatus&gt; CloseStatus" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;PepperSharp.WebSocketCloseStatus&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the reason why the close handshake was initiated on WebSocket instance.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CloseStatusDescription">
+      <MemberSignature Language="C#" Value="public string CloseStatusDescription { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string CloseStatusDescription" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets a description of the reason why the WebSocket instance was closed.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Connect">
+      <MemberSignature Language="C#" Value="public void Connect (string url, string[] protocols = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Connect(string url, string[] protocols) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="url" Type="System.String" />
+        <Parameter Name="protocols" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="url">String representation of the of the WebSocket server to connect to.</param>
+        <param name="protocols">
+        </param>
+        <summary>
+             Connects to the specified WebSocket server
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Connect">
+      <MemberSignature Language="C#" Value="public void Connect (Uri url, string[] protocols = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Connect(class System.Uri url, string[] protocols) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="url" Type="System.Uri" />
+        <Parameter Name="protocols" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="url">The URI of the WebSocket server to connect to.</param>
+        <param name="protocols">
+        </param>
+        <summary>
+             Connects to the specified WebSocket server
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; ConnectAsync (Uri url, PepperSharp.MessageLoop messageLoop, string[] protocols = null, PepperSharp.MessageLoop connectLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; ConnectAsync(class System.Uri url, class PepperSharp.MessageLoop messageLoop, string[] protocols, class PepperSharp.MessageLoop connectLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="url" Type="System.Uri" />
+        <Parameter Name="messageLoop" Type="PepperSharp.MessageLoop" />
+        <Parameter Name="protocols" Type="System.String[]" />
+        <Parameter Name="connectLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="url">The URI of the WebSocket server to connect to.</param>
+        <param name="messageLoop">To be added.</param>
+        <param name="protocols">
+        </param>
+        <param name="connectLoop">To be added.</param>
+        <summary>
+             Connects asynchronously to the specified WebSocket server
+             </summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Connection">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.PPError&gt; Connection;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;valuetype PepperSharp.PPError&gt; Connection" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the websocket issues a Connect to the remote URI.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="protected override void Dispose (bool disposing);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Dispose(bool disposing) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="disposing" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="disposing">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Extensions">
+      <MemberSignature Language="C#" Value="public string Extensions { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Extensions" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the extensions selected by the server for the
+             specified WebSocket connection.
+            
+             If called before the connection is established, the data is an empty
+             string. Returns an empty string if called on an Invalid resource. Currently 
+             the data for valid resources are always an empty string.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsCloseWasClean">
+      <MemberSignature Language="C#" Value="public bool IsCloseWasClean { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsCloseWasClean" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Returns if the connection was closed cleanly for the
+             specified WebSocket connection.
+            
+             Returns <code>false</code> if called before the connection is
+             closed, called on an invalid resource, or closed for abnormal reasons.
+             Otherwise, returns <code>true</code> if the connection was closed
+             cleanly. 
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnClose">
+      <MemberSignature Language="C#" Value="protected void OnClose (PepperSharp.PPError error);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnClose(valuetype PepperSharp.PPError error) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="error" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="error">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnConnect">
+      <MemberSignature Language="C#" Value="protected void OnConnect (PepperSharp.PPError error);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig instance void OnConnect(valuetype PepperSharp.PPError error) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="error" Type="PepperSharp.PPError" />
+      </Parameters>
+      <Docs>
+        <param name="error">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnReceiveData">
+      <MemberSignature Language="C#" Value="protected virtual void OnReceiveData (PepperSharp.PPError error, ArraySegment&lt;byte&gt; buffer);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance void OnReceiveData(valuetype PepperSharp.PPError error, valuetype System.ArraySegment`1&lt;unsigned int8&gt; buffer) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="error" Type="PepperSharp.PPError" />
+        <Parameter Name="buffer" Type="System.ArraySegment&lt;System.Byte&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="error">To be added.</param>
+        <param name="buffer">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Protocol">
+      <MemberSignature Language="C#" Value="public string Protocol { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Protocol" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the sub-protocol chosen by the server for the
+             specified WebSocket connection.
+            
+             If called before the connection is established, the return is an empty string. 
+             Returns an empty string if called on an invalid resource.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Receive">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Receive (ArraySegment&lt;byte&gt; buffer);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Receive(valuetype System.ArraySegment`1&lt;unsigned int8&gt; buffer) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ArraySegment&lt;System.Byte&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">An ArraySegment of byte that was returned</param>
+        <summary>
+             Receive a message from the WebSocket server.
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReceiveAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.WebSocketReceiveResult&gt; ReceiveAsync (ArraySegment&lt;byte&gt; buffer, PepperSharp.MessageLoop receiveLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class PepperSharp.WebSocketReceiveResult&gt; ReceiveAsync(valuetype System.ArraySegment`1&lt;unsigned int8&gt; buffer, class PepperSharp.MessageLoop receiveLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.WebSocketReceiveResult&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ArraySegment&lt;System.Byte&gt;" />
+        <Parameter Name="receiveLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">An ArraySegment of byte that was returned</param>
+        <param name="receiveLoop">To be added.</param>
+        <summary>
+             Receive a message from the WebSocket server asynchronously.
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ReceiveData">
+      <MemberSignature Language="C#" Value="public event EventHandler&lt;PepperSharp.WebSocketReceiveResult&gt; ReceiveData;" />
+      <MemberSignature Language="ILAsm" Value=".event class System.EventHandler`1&lt;class PepperSharp.WebSocketReceiveResult&gt; ReceiveData" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.EventHandler&lt;PepperSharp.WebSocketReceiveResult&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Event raised when the websocket Receives data.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Send">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPError Send (ArraySegment&lt;byte&gt; buffer, PepperSharp.WebSocketMessageType messageType);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance valuetype PepperSharp.PPError Send(valuetype System.ArraySegment`1&lt;unsigned int8&gt; buffer, valuetype PepperSharp.WebSocketMessageType messageType) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPError</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ArraySegment&lt;System.Byte&gt;" />
+        <Parameter Name="messageType" Type="PepperSharp.WebSocketMessageType" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">An ArraySegment of bytes that will be sent to the WebSocket server.</param>
+        <param name="messageType">This is the message type to send Binary or Text</param>
+        <summary>
+             Sends a message to the WebSocket server
+             </summary>
+        <returns>Ok or an error</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SendAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt; SendAsync (ArraySegment&lt;byte&gt; buffer, PepperSharp.WebSocketMessageType messageType, PepperSharp.MessageLoop sendLoop = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;valuetype PepperSharp.PPError&gt; SendAsync(valuetype System.ArraySegment`1&lt;unsigned int8&gt; buffer, valuetype PepperSharp.WebSocketMessageType messageType, class PepperSharp.MessageLoop sendLoop) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;PepperSharp.PPError&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="buffer" Type="System.ArraySegment&lt;System.Byte&gt;" />
+        <Parameter Name="messageType" Type="PepperSharp.WebSocketMessageType" />
+        <Parameter Name="sendLoop" Type="PepperSharp.MessageLoop" />
+      </Parameters>
+      <Docs>
+        <param name="buffer">An ArraySegment of bytes that will be sent to the WebSocket server.</param>
+        <param name="messageType">This is the message type to send Binary or Text</param>
+        <param name="sendLoop">To be added.</param>
+        <summary>
+             Sends a message to the WebSocket server asynchronously
+             </summary>
+        <returns>Ok or an error</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="State">
+      <MemberSignature Language="C#" Value="public PepperSharp.WebSocketState State { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.WebSocketState State" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.WebSocketState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Returns the state of the WebSocket
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="URL">
+      <MemberSignature Language="C#" Value="public string URL { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string URL" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the URL associated with specified WebSocket connection.
+            
+             If called before the connection is established, the return is an empty string. 
+             Returns an empty string if called on an invalid resource.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

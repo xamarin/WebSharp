@@ -1,0 +1,102 @@
+<Type Name="PPVarValue" FullName="PepperSharp.PPVarValue">
+  <TypeSignature Language="C#" Value="public struct PPVarValue" />
+  <TypeSignature Language="ILAsm" Value=".class public ansi sealed beforefieldinit PPVarValue extends System.ValueType" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="as_bool">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPBool as_bool;" />
+      <MemberSignature Language="ILAsm" Value=".field public valuetype PepperSharp.PPBool as_bool" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPBool</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+        <code>type</code>
+        <code>PP_VARTYPE_BOOL</code>
+        <code>as_bool</code>
+        <code>PP_Var</code>
+        <code>PP_Bool</code>
+      </Docs>
+    </Member>
+    <Member MemberName="as_double">
+      <MemberSignature Language="C#" Value="public double as_double;" />
+      <MemberSignature Language="ILAsm" Value=".field public float64 as_double" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+        <code>type</code>
+        <code>PP_VARTYPE_DOUBLE</code>
+        <code>as_double</code>
+        <code>PP_Var</code>
+        <code>double</code>
+      </Docs>
+    </Member>
+    <Member MemberName="as_id">
+      <MemberSignature Language="C#" Value="public long as_id;" />
+      <MemberSignature Language="ILAsm" Value=".field public int64 as_id" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int64</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+        <code>type</code>
+        <code>PP_VARTYPE_STRING</code>
+        <code>PP_VARTYPE_OBJECT</code>
+        <code>PP_VARTYPE_ARRAY</code>
+        <code>PP_VARTYPE_DICTIONARY</code>
+        <code>PP_VARTYPE_ARRAY_BUFFER</code>
+        <code>PP_VARTYPE_RESOURCE</code>
+        <code>as_id</code>
+        <code>PP_Var</code>
+      </Docs>
+    </Member>
+    <Member MemberName="as_int">
+      <MemberSignature Language="C#" Value="public int as_int;" />
+      <MemberSignature Language="ILAsm" Value=".field public int32 as_int" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+        <code>type</code>
+        <code>PP_VARTYPE_INT32</code>
+        <code>as_int</code>
+        <code>PP_Var</code>
+        <code>int32_t</code>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

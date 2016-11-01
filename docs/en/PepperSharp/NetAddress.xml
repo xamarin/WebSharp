@@ -1,0 +1,128 @@
+<Type Name="NetAddress" FullName="PepperSharp.NetAddress">
+  <TypeSignature Language="C#" Value="public class NetAddress : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit NetAddress extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public NetAddress (PepperSharp.Instance instance, ushort port, byte[] address = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance, unsigned int16 port, unsigned int8[] address) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+        <Parameter Name="port" Type="System.UInt16" />
+        <Parameter Name="address" Type="System.Byte[]" />
+      </Parameters>
+      <Docs>
+        <param name="instance">To be added.</param>
+        <param name="port">To be added.</param>
+        <param name="address">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Description">
+      <MemberSignature Language="C#" Value="public string Description { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Description" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the string description
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DescriptionWithPort">
+      <MemberSignature Language="C#" Value="public string DescriptionWithPort { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string DescriptionWithPort" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the string description appended with the prot
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Family">
+      <MemberSignature Language="C#" Value="public PepperSharp.NetAddressFamily Family { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.NetAddressFamily Family" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.NetAddressFamily</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the address family
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IPv4">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPNetAddressIPv4 IPv4 { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPNetAddressIPv4 IPv4" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPNetAddressIPv4</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Returns an IPv4 NetAddress
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IPv6">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPNetAddressIPv6 IPv6 { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPNetAddressIPv6 IPv6" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPNetAddressIPv6</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Returns an IPv6 NetAddress
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

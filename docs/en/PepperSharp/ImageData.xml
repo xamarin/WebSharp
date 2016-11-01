@@ -1,0 +1,240 @@
+<Type Name="ImageData" FullName="PepperSharp.ImageData">
+  <TypeSignature Language="C#" Value="public class ImageData : PepperSharp.Resource" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ImageData extends PepperSharp.Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Xamarin.PepperSharp</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>PepperSharp.Resource</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ImageData (PepperSharp.ImageData other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.ImageData other) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="other" Type="PepperSharp.ImageData" />
+      </Parameters>
+      <Docs>
+        <param name="other">The other image data</param>
+        <summary>
+             The copy constructor for <code>ImageData</code>. This constructor
+             produces an <code>ImageData</code> object that shares the underlying
+             <code>Image</code> resource with <code>other</code>.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ImageData (PepperSharp.PassRef passRef, PepperSharp.PPResource resource);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(valuetype PepperSharp.PassRef passRef, valuetype PepperSharp.PPResource resource) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="passRef" Type="PepperSharp.PassRef" />
+        <Parameter Name="resource" Type="PepperSharp.PPResource" />
+      </Parameters>
+      <Docs>
+        <param name="passRef">Marker to pass reference</param>
+        <param name="resource">A PPResource corresponding to image data.</param>
+        <summary>
+             A constructor used when you have received a <code>PP_Resource</code> as a
+             return value that has already been reference counted.
+            
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ImageData (PepperSharp.Instance instance, PepperSharp.PPImageDataFormat format, PepperSharp.PPSize size, bool init_to_zero);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class PepperSharp.Instance instance, valuetype PepperSharp.PPImageDataFormat format, valuetype PepperSharp.PPSize size, bool init_to_zero) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="instance" Type="PepperSharp.Instance" />
+        <Parameter Name="format" Type="PepperSharp.PPImageDataFormat" />
+        <Parameter Name="size" Type="PepperSharp.PPSize" />
+        <Parameter Name="init_to_zero" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="instance">The instance with which this resource will be
+             associated.
+             </param>
+        <param name="format">A PP_ImageDataFormat containing desired image format.
+             PP_ImageDataFormat is an enumeration of the different types of
+             image data formats.
+             </param>
+        <param name="size">the image size.</param>
+        <param name="init_to_zero">A bool used to determine transparency at
+             creation. Set the <code>init_to_zero</code> flag if you want the bitmap
+             initialized to transparent during the creation process. If this flag is
+             not set, the current contents of the bitmap will be undefined, and the
+             module should be sure to set all the pixels.
+             </param>
+        <summary>
+             A constructor that allocates a new <code>ImageData</code> in the browser
+             with the provided parameters. The resulting object will be IsEmpty if
+             the allocation failed.
+             </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Data">
+      <MemberSignature Language="C#" Value="public IntPtr Data { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance native int Data" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IntPtr</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+              Returns a raw pointer to the image pixels.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Format">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPImageDataFormat Format { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPImageDataFormat Format" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPImageDataFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the current format for images.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetAddr32">
+      <MemberSignature Language="C#" Value="public IntPtr GetAddr32 (PepperSharp.PPPoint coord);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance native int GetAddr32(valuetype PepperSharp.PPPoint coord) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IntPtr</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="coord" Type="PepperSharp.PPPoint" />
+      </Parameters>
+      <Docs>
+        <param name="coord">A <code>PPPoint</code> representing the x and y
+             coordinates for a specific pixel.
+             </param>
+        <summary>
+             This function is used retrieve the address of the given pixel for 32-bit
+             pixel formats.
+             </summary>
+        <returns>The IntPtr for the pixel.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsImageDataFormatSupported">
+      <MemberSignature Language="C#" Value="public static bool IsImageDataFormatSupported (PepperSharp.PPImageDataFormat format);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsImageDataFormatSupported(valuetype PepperSharp.PPImageDataFormat format) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="format" Type="PepperSharp.PPImageDataFormat" />
+      </Parameters>
+      <Docs>
+        <param name="format">Image data format.</param>
+        <summary>
+             IsImageDataFormatSupported() returns <code>true</code> if the supplied
+             format is supported by the browser. Note:
+             <code>BGRA_PREMUL</code> and
+             <code>RGBA_PREMUL</code> formats are always supported.
+             Other image formats do not make this guarantee, and should be checked
+             first with IsImageDataFormatSupported() before using.
+             </summary>
+        <returns />
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="NativeImageDataFormat">
+      <MemberSignature Language="C#" Value="public static PepperSharp.PPImageDataFormat NativeImageDataFormat { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property valuetype PepperSharp.PPImageDataFormat NativeImageDataFormat" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPImageDataFormat</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             NativeImageDataFormat determines the browser's preferred format for
+             images. Using this format guarantees no extra conversions will occur when
+             painting.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Size">
+      <MemberSignature Language="C#" Value="public PepperSharp.PPSize Size { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype PepperSharp.PPSize Size" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>PepperSharp.PPSize</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the current image size.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Stride">
+      <MemberSignature Language="C#" Value="public int Stride { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Stride" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+             Gets the row width in bytes.
+             </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
