@@ -40,7 +40,7 @@ We have written a Yeoman generator to help get you started. Install Yeoman and t
 npm install -g yo path-to-WebSharp-directory\Tools\generator-electron-dotnet
 yo electron-dotnet
 ```
-You will be presented with three different project types. For this example, we will pick `electron-dotnet.js: .NET and Node.js in-process with PepperPlugin`.  
+You will be presented with three different project types. For this example, we will pick `Node.js .NET Scripting and Node.js in-process and PepperPlugin: Native Client`.  
 
 ![The electron-dotnet generator](./screenshots/yogen.PNG)
 
@@ -486,12 +486,34 @@ cd ..
   * The `-s path-to-WebSharp/electron-dotnet/tools/build/nuget` in the `restore` is the nuget source where the `Xamarin.PepperSharp.xxx.nupkg` can be found.
      * On Windows if a Local Package source is setup then the source will be search so you will not need to provide this parameter.
      * On Mac it seems that the `restore` does not work for Local Package sources right now.  Your mileage may vary but this is the surefire way to get the dependencies restored correctly.
+     > :buld: See information about [Package Sources](./vsc-package-sources.md) for more information.
   * The `Xamarin.PepperSharp.xxxx.nupkg` dependency is built during the Electron DotNet build process.
 * Build the source `hello-world.cs` implementation by typing `dotnet build`.
   * The `build` command will compile the source file based on the definition found in the `project.json`
 * Make the assemblies available for use by typing `dotnet publish`.
   * This will copy the implementation as well as the `Xamarin.PepperSharp.dll` from the nuget package available to be loaded.
   * The `PepperPlugin` does not support loading from a nuget package so the `publish` will make all the dependencies available in one place so they can be loaded.
+
+> :bulb: For more information on the publish command see the [dotnet publish documentation](https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-publish)
+
+### DotNet Publish output folder
+
+``` bash
+.
+|--- src                                             // sources
+     |--- bin                                        // 
+         |--- Debug
+               |--- net451            
+                    |--- (runtime)                   // This folder contains the [framework]/[runtime] output as per Dot Net docs.
+                    |--- hello-world.dll
+                    |--- Xamarin.PepperSharp.dll                         
+     |--- obj                                        // object folder
+     |--- hello-world.cs                             // PepperPlugin implementation
+     |--- hello-world.js                             // C# code implementation
+     |--- project.json                               // Defines compilation information 
+
+```
+
 
 ## Running the application
 
