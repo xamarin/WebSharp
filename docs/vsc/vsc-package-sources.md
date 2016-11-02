@@ -30,7 +30,7 @@ To manage package sources:
 
 7. Use the up and down arrow buttons to change the priority order of the package sources.
 
-## MAc Xamarin Studio
+## Mac OSX Xamarin Studio
 
 
 
@@ -81,7 +81,7 @@ To manage package sources:
 <add key="LocalWebSharp" value="Path-To-WebSharp\WebSharp\electron-dotnet\tools\build\nuget" />
 ```
 
-### dontnet resture nuget.config
+### dontnet restore nuget.config
 
 ``` bash
 # Windows
