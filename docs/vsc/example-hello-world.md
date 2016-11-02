@@ -560,6 +560,10 @@ Q. I get the following screen when running from windows:
 
 A: Mono could not be found in your %PATH%.
 
+  * Option 1:
+
+    * Use mono's ```setmonopath.bat``` batch command before starting the electron application:
+
       * x64
         ```
         > "c:\Program Files\Mono\bin\setmonopath.bat"
@@ -572,14 +576,15 @@ A: Mono could not be found in your %PATH%.
 
   * Option 2:
     * Custom path environment variable set to the correct mono before starting the electron application.
-    ```
+    
+    ``` 
     SET PATH=%PATH%;c:\path\to\mono
     ```
 
   * Option 3:
     * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions.
     
-      ```js
+      ``` js
         if (process.platform === 'win32')
         {
             if (process.arch === 'x64')
@@ -595,11 +600,13 @@ A: Mono could not be found in your %PATH%.
       * Click Environment Variables. ...
       * In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable.
         * x64
-          ```
+	
+          ``` bash
           "c:\Program Files\Mono\bin;"
           ```
         * x86
-          ```  
+	
+          ``` bash
           "c:\Program Files (x86)\Mono\bin;"
           ```
      
