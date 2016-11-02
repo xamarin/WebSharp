@@ -540,9 +540,15 @@ HelloWorld$ npm install path-to-WebSharp/electron-dotnet
 HelloWorld$ npm start 
 ```
 
+## Hello World !!!
 
+You should be presented with the following screen:
 
+![Hello World application](./screenshots/hello-world.png)
 
+The Scripting and PepperSharp Plugin write their output to the Console.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
+
+![Hello World application console](./screenshots/hello-world-console.png)
 
 
 

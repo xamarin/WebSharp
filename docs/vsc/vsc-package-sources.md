@@ -81,7 +81,7 @@ To manage package sources:
 <add key="LocalWebSharp" value="Path-To-WebSharp\WebSharp\electron-dotnet\tools\build\nuget" />
 ```
 
-### dontnet restore nuget.config
+### dotnet restore nuget.config
 
 ``` bash
 # Windows
