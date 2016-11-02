@@ -487,7 +487,7 @@ cd ..
      * On Windows if a Local Package source is setup then the source will be search so you will not need to provide this parameter.
      * On Mac it seems that the `restore` does not work for Local Package sources right now.  Your mileage may vary but this is the surefire way to get the dependencies restored correctly.
      
-     > :buld: See information about [Package Sources](./vsc-package-sources.md) for more information.
+     > :bulb: See information about [Package Sources](./vsc-package-sources.md) for more information.
      
   * The `Xamarin.PepperSharp.xxxx.nupkg` dependency is built during the Electron DotNet build process.
 * Build the source `hello-world.cs` implementation by typing `dotnet build`.
