@@ -552,3 +552,60 @@ The Scripting and PepperSharp Plugin write their output to the Console.  To see 
 
 
 
+## Trouble Shooting
+
+Q. I get the following screen when running from windows:
+
+![mono required](./screenshots/mono-required.png)
+
+A: Mono could not be found in your %PATH%.
+
+      * x64
+        ```
+        > "c:\Program Files\Mono\bin\setmonopath.bat"
+        ```
+
+      * x86
+        ```
+        > "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
+        ```
+
+  * Option 2:
+    * Custom path environment variable set to the correct mono before starting the electron application.
+    ```
+    SET PATH=%PATH%;c:\path\to\mono
+    ```
+
+  * Option 3:
+    * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions.
+    
+      ```js
+        if (process.platform === 'win32')
+        {
+            if (process.arch === 'x64')
+                process.env.PATH = "c:\\Program Files\\Mono\\bin;" + process.env.PATH;
+            else
+                process.env.PATH = "c:\\\Program Files (x86)\\\Mono\\bin;" + process.env.PATH;
+        }
+      ```
+  * Option 4: 
+    * Set the path on Windows 10 and Windows 8
+      * In Search, search for and then select: System (Control Panel)
+      * Click the Advanced system settings link.
+      * Click Environment Variables. ...
+      * In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable.
+        * x64
+          ```
+          "c:\Program Files\Mono\bin;"
+          ```
+        * x86
+          ```  
+          "c:\Program Files (x86)\Mono\bin;"
+          ```
+     
+     > :exclamation: Option 4 is not very flexible
+
+     
+
+
+
