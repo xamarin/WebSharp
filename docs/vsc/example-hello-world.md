@@ -552,6 +552,15 @@ The Scripting and PepperSharp Plugin write their output to the Console.  To see 
 
 
 
+## Debugging
+
+You can now move on to [Debugging](./vsc-debug.md) your `Electron` application.
+
+
+
+---
+
+
 ## Trouble Shooting
 
 Q. I get the following screen when running from windows:
