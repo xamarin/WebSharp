@@ -175,7 +175,7 @@ Because `Electron` is launched differently on different operating systems we hav
 
 To set a breakpoint in `main.js`, put the editor cursor on the first line and press F9 or simply click in the editor left gutter next to the line numbers. A red circle will appear in the gutter.
 
-![main breakpoint](./screenshots/main-js-breakpoint.png)
+![main breakpoint](./screenshots/main-js-breakpoint.PNG)
 
 We now need to select the debugger configuration. Select the Debug View in the Side Bar:
 
