@@ -181,7 +181,7 @@ We now need to select the debugger configuration. Select the Debug View in the S
 
 ![main breakpoint](./screenshots/nodejs_debugicon.png)
 
-Select the `Debug Windows Main` if your debugging from a windows machine or `Debug Mac Main` if your debugging from a Mac OSX machine from the Debug Configuration Drop Down.
+Select the `Debug Windows Main` if you are debugging from a windows machine or `Debug Mac Main` if you are debugging from a Mac OSX machine from the Debug Configuration Drop Down.
 
 ![Debug Windows Main](./screenshots/debug-drop-down.png)
 
