@@ -64,7 +64,7 @@ After running, the generated application should have the following structure:
 |--- .eslintrc.json
 |--- .gitignore
 |--- .vscode                           // VS Code integration
-     |--- launch.json
+     |--- launch.json                  // Launch Configurations
      |--- settings.json
 |--- .vscodeignore
 |--- electron-dotnet-quickstart.md
@@ -447,7 +447,7 @@ At the bottom of our [index.html](#showing-information-indexhtml) we require `re
 
 
 ### Miscellaneous files
-* .vscode/launch.json - Defines Debugger launching targets. 
+* .vscode/launch.json - [Defines Debugger launching targets](./vsc-debug.md). 
 * .vscode/settings.json - Place your settings in this file to overwrite default and user settings, by default specifies the typescript server. If you are receiving a *TypeScript tsserver error* you can install this into your project's local node_modules by exectuing `npm i typescript`.
 * .gitignore - Tells Git version control which patterns to ignore.
 * README.md - README file describing your application.
