@@ -560,6 +560,8 @@ Q. I get the following screen when running from windows:
 
 A: Mono could not be found in your %PATH%.
 
+Mono must be in your %PATH% for mono support to be built and also during the application execution.
+
   * Option 1:
 
     * Use mono's ```setmonopath.bat``` batch command before starting the electron application:
