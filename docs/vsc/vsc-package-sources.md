@@ -10,25 +10,25 @@ The NuGet Package Manager UI allows you to easily switch between package sources
 
 To manage package sources:
 
-1. Click on the Settings icon in the Package Manager UI outlined below or use the Tools > Options command. and scroll to NuGet Package Manager.
+1) Click on the Settings icon in the Package Manager UI outlined below or use the Tools > Options command. and scroll to NuGet Package Manager.
 
 ![Visual Studio Package Source Settings](./screenshots/PackageSourceSettings.png)
 
-2. Select the Package Sources node:
+2) Select the Package Sources node:
 
 ![Visual Studio Package Source LocalWebSharp](./screenshots/PackageSourceLocalWebSharp.png)
 
-3. To add a source, click the + button, edit the name, enter the URL or path in the Source control, and click Update. This will make it appear in the selector drop-down.
+3) To add a source, click the + button, edit the name, enter the URL or path in the Source control, and click Update. This will make it appear in the selector drop-down.
 
 ![Visual Studio Package Source LocalWebSharp](./screenshots/PackageSourceLocalWebSharpSelect.png)
 
-4. To change a package source, select it, make edits in the Name and Source boxes, and click Update.
+4) To change a package source, select it, make edits in the Name and Source boxes, and click Update.
 
-5. To disable a package source, uncheck the box to the left of the name in the list.
+5) To disable a package source, uncheck the box to the left of the name in the list.
 
-6. To remove a package source, select it and click the X button.
+6) To remove a package source, select it and click the X button.
 
-7. Use the up and down arrow buttons to change the priority order of the package sources.
+7) Use the up and down arrow buttons to change the priority order of the package sources.
 
 ## Mac OSX Xamarin Studio
 
@@ -37,11 +37,11 @@ To manage package sources:
 
 ## NuGet.Config Visual Studio Code
 
-1. In the `src` directory, create a new file named `nuget.config`.
+1) In the `src` directory, create a new file named `nuget.config`.
 
 ![VSC NuGet Config](./screenshots/exampe-nuget-config.png)
 
-2. Copy the following source to the newly created file:
+2) Copy the following source to the newly created file:
 
 ``` json
 <?xml version="1.0" encoding="utf-8"?>
@@ -75,7 +75,7 @@ To manage package sources:
 
 ```
 
-3. Change the path reference value in the `LocalWebSharp` key to point to the local directory:
+3) Change the path reference value in the `LocalWebSharp` key to point to the local directory:
 
 ``` json
 <add key="LocalWebSharp" value="Path-To-WebSharp\WebSharp\electron-dotnet\tools\build\nuget" />
@@ -83,6 +83,7 @@ To manage package sources:
 
 ### dotnet restore nuget.config
 
+Now when you use `dotnet restore` you can pass the config file as a parameter with `--configfile`.
 ``` bash
 # Windows
 cd src
