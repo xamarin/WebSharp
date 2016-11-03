@@ -17,19 +17,28 @@
       <para>
         An instance may have a dimension of width = 0 and height = 0, meaning that the instance does not have any visible component on the web page.
         </para>
-        <para>
+      <para>
         An instance is created by including an <c>&lt;embed&gt;&lt;/embed&gt;</c> element in a web page.
         </para>
-    <list type="bullet">
-        <item><term><para>
+      <list type="bullet">
+        <item>
+          <term>
+            <para>
         The <c>&lt;embed&gt;&lt;/embed&gt;</c> element references a Dot Net class that implements the PepperSharp API and loads the appropriate version of the PepperPlugin module.
-        </para></term></item>
-        <item><term><para>
+        </para>
+          </term>
+        </item>
+        <item>
+          <term>
+            <para>
         A PepperPlugin module may be included in a web page multiple times by using multiple <c>&lt;embed&gt;&lt;/embed&gt;</c> elements that refer to the class implementation; in this case the Native Client runtime system loads the module once and creates multiple instances that are managed by the module.
-        </para></term></item>
-        </list>
+        </para>
+          </term>
+        </item>
+      </list>
     </remarks>
-    <example><code lang="C#">
+    <example>
+      <code lang="C#">
              using System;
              
              using PepperSharp;
@@ -49,7 +58,8 @@
                     }
                 }
              }
-             </code></example>
+             </code>
+    </example>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -111,21 +121,21 @@
           <para>             
              The contents of this device is what will be displayed in the instance's area on the web page. 
              The device must be a 2D or a 3D device.
-          </para>  
+          </para>
           <para>             
              You can pass an IsNull (default constructed) Graphics2D as the device parameter to unbind all 
              devices from the given instance. The instance will then appear transparent. Re-binding the same 
              device will return true and will do nothing.
-          </para>  
+          </para>
           <para>             
              Any previously-bound device will be released. It is an error to bind a device when it is already
              bound to another instance. If you want to move a device between instances, first unbind it from 
              the old one, and then rebind it to the new one.
-          </para>  
+          </para>
           <para>             
              Binding a device will invalidate that portion of the web page to flush the contents of the new 
              device to the screen.
-          </para>  
+          </para>
         </remarks>
       </Docs>
     </Member>
@@ -147,18 +157,17 @@
         <summary>
              Requests that input events corresponding to the given input classes no longer be delivered to the instance.
         </summary>
-        <remarks> 
+        <remarks>
           <para>            
              By default, no input events are delivered.If you have previously requested input events using 
              RequestInputEvents() or RequestFilteringInputEvents(), this function will unregister handling 
              for the given instance.This will allow greater browser performance for those events.
-          </para>            
-           <para> 
-           <block subset="none" type="note">           
+          </para>
+          <para>
+            <block subset="none" type="note">           
              You may still get some input events after clearing the flag if they were dispatched before the request was cleared. For example, if there are 3 mouse move events waiting to be delivered, and you clear the mouse event class during the processing of the first one, you'll still receive the next two. You just won't get more events generated.
              </block>
-          </para>            
-             
+          </para>
         </remarks>
       </Docs>
     </Member>
@@ -398,26 +407,24 @@
              Getter and Setter that checks whether the module instance is currently in
              fullscreen mode or sets the instance to full screen mode.
              </summary>
-        <value>A <see cref="T:System.Boolean">bool</see>  that specifies whether the module instance is currently in
+        <value>A <see cref="T:System.Boolean" />  that specifies whether the module instance is currently in
              fullscreen mode or sets the instance to full screen mode.</value>
         <remarks>
           <para>                     
              The setter switches the module instance to and from fullscreen
              mode.
-          </para>                     
-             
+          </para>
           <para>                     
              The transition to and from fullscreen mode is asynchronous. During the
              transition, IsFullscreen() will return the previous value and
              no 2D or 3D device can be bound. The transition ends at DidChangeView()
              when IsFullscreen() returns the new value. You might receive other
              DidChangeView() calls while in transition.
-          </para>                     
-            
+          </para>
           <para>                     
              The transition to fullscreen mode can only occur while the browser is
-             processing a user gesture, even if <see langword="true"/> is returned.
-          </para>                     
+             processing a user gesture, even if <see langword="true" /> is returned.
+          </para>
         </remarks>
         <exception cref="T:System.InvalidOperationException">Throws InvalidOperationException if there was an error transitioning to or from
              fullscreen mode.</exception>
@@ -496,10 +503,8 @@
         <param name="value">The managed object to log.</param>
         <summary>
              Logs the given message to the JavaScript console associated with the given plugin instance with the given logging level.
-             
-             The name of the plugin issuing the log message will be automatically prepended to the message.The value may be any type of <see cref="T:PepperSharp.Var"></see>.
              </summary>
-        <remarks>To be added.</remarks>
+        <remarks>             The name of the plugin issuing the log message will be automatically prepended to the message.The value may be any type of <see cref="T:PepperSharp.Var" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="LogToConsoleWithSource">
@@ -524,10 +529,11 @@
         <summary>
              Logs a message to the console with the given source information rather than using the internal PPAPI plugin name.
              
+             </summary>
+        <remarks>
              The regular log function will automatically prepend the name of your plugin to the message as the "source" of the message.  
              Some plugins may wish to override this. 
-             </summary>
-        <remarks>To be added.</remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MouseDown">
@@ -646,7 +652,7 @@
           <para>             
              You will always get the normal mouse events. For example, you may see OnMouseDown, OnContextMenu, OnMouseUp or OnMouseDown, OnMouseUp, OnContextMenu.
            </para>
-           <para>             
+          <para>             
              The return value from the event handler determines if the context menu event will be passed to the page when you are using filtered input events(via RequestFilteringInputEvents()). In non-filtering mode the event will never be propagated and no context menu will be displayed.If you are handling mouse events in filtering mode, you may want to return true from this event even if you do not support a context menu to suppress the default one.
           </para>
           <para>              
@@ -655,9 +661,10 @@
           <para> 
              The OnContextMenu method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
-          </para>              
-             </remarks>
-        <example><code lang="C#">
+          </para>
+        </remarks>
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -669,7 +676,8 @@
                 ContextMenu += HandleMouseEvents;
                 RequestInputEvents(PPInputEventClass.Mouse);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnFocusChanged">
@@ -704,8 +712,8 @@
              The OnFocusChanged method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
           </para>
-        <para>
-             <block subset="none" type="note">
+          <para>
+            <block subset="none" type="note">
              Clicks on instances will give focus only if you handle the click event. 
              Return true from HandleInputEvent in InputEvent (or use unfiltered events) to signal that the 
              click event was handled. Otherwise, the browser will bubble the event and give focus to the element 
@@ -713,7 +721,7 @@
              you're either requesting them via RequestInputEvents() (which implicitly marks all input events as 
              consumed) or via RequestFilteringInputEvents() and returning true from your event handler.
              </block>
-             </para>
+          </para>
         </remarks>
       </Docs>
     </Member>
@@ -742,17 +750,19 @@
         <remarks>
              The OnHandleMessage method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
-        <para>
+          <para>
              PostMessage() in the JavaScript interface is asynchronous, meaning JavaScript execution 
              will not be blocked while OnRecieveMessage is processing the message.
-        </para>
-        <para>     
-             Note: When converting JavaScript arrays, any object properties whose name is not an array index are 
+          </para>
+          <para>     
+             <block subset="none" type="note">
+             When converting JavaScript arrays, any object properties whose name is not an array index are 
              ignored.  When passing arrays and objects, the entire reference graph will be converted and 
              transferred.  If the reference graph has cycles, the message will not be sent and an error will 
              be logged to the console.
+             </block>
              </para>
-             </remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="OnIMECompositionEnd">
@@ -791,7 +801,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.IME);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnIMECompositionStart">
@@ -830,7 +841,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.IME);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnIMECompositionUpdate">
@@ -858,7 +870,8 @@
              The OnIMECompositionUpdate method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -869,7 +882,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.IME);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnIMEText">
@@ -897,7 +911,8 @@
              The OnIMEText method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -908,7 +923,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.IME);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnInitialize">
@@ -1018,7 +1034,8 @@
              The OnKeyChar method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1029,7 +1046,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.Keyboard);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnKeyDown">
@@ -1059,7 +1077,8 @@
              The OnKeyDown method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1070,7 +1089,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.Keyboard);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnKeyUp">
@@ -1098,7 +1118,8 @@
              The OnKeyUp method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1108,7 +1129,8 @@
                 RawKeyDown += HandleKeyboardEvents;
                 RequestFilteringInputEvents(PPInputEventClass.Keyboard);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnMouseDown">
@@ -1136,7 +1158,8 @@
              The OnMouseDown method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1148,7 +1171,8 @@
                 ContextMenu += HandleMouseEvents;
                 RequestInputEvents(PPInputEventClass.Mouse);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnMouseEnter">
@@ -1176,7 +1200,8 @@
              The OnMouseEnter method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1188,7 +1213,8 @@
                 ContextMenu += HandleMouseEvents;
                 RequestInputEvents(PPInputEventClass.Mouse);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnMouseLeave">
@@ -1216,7 +1242,8 @@
              The OnMouseLeave method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1228,7 +1255,8 @@
                 ContextMenu += HandleMouseEvents;
                 RequestInputEvents(PPInputEventClass.Mouse);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnMouseMove">
@@ -1256,7 +1284,8 @@
              The OnMouseMove method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1268,7 +1297,8 @@
                 ContextMenu += HandleMouseEvents;
                 RequestInputEvents(PPInputEventClass.Mouse);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnMouseUp">
@@ -1296,7 +1326,8 @@
              The OnMouseUp method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1308,7 +1339,8 @@
                 ContextMenu += HandleMouseEvents;
                 RequestInputEvents(PPInputEventClass.Mouse);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnRawKeyDown">
@@ -1336,7 +1368,8 @@
              The OnRawKeyDown method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1347,7 +1380,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.Keyboard);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnTouchCancel">
@@ -1375,7 +1409,8 @@
              The OnTouchCancel method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1386,7 +1421,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.Touch);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnTouchEnd">
@@ -1414,7 +1450,8 @@
              The OnTouchEnd method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1425,7 +1462,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.Touch);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnTouchMove">
@@ -1453,7 +1491,8 @@
              The OnTouchMove method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1464,7 +1503,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.Touch);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnTouchStart">
@@ -1492,7 +1532,8 @@
              The OnTouchStart method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
             
@@ -1503,7 +1544,8 @@
                 
                 RequestFilteringInputEvents(PPInputEventClass.Touch);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <Member MemberName="OnViewChanged">
@@ -1559,13 +1601,15 @@
              The OnWheel method also enables derived classes to handle the event without attaching 
              a delegate. This is the preferred technique for handling the event in a derived class.
              </remarks>
-        <example><code lang="C#">
+        <example>
+          <code lang="C#">
              public InputEventInstance(IntPtr handle) : base(handle)
              {
                 Wheel += HandleWheel;
                 RequestInputEvents(PPInputEventClass.Wheel);
              }
-             </code></example>
+             </code>
+        </example>
       </Docs>
     </Member>
     <!--Member MemberName="op_Implicit">
@@ -1681,16 +1725,14 @@
              they can be bubbled up to the DOM.In this case, register for those classes of events using this 
              function instead of RequestInputEvents(). Keyboard events must always be registered in filtering 
              mode.
-          </para>             
-             
+          </para>
           <para>             
              Filtering input events requires significantly more overhead than just delivering them to the 
              instance. As such, you should only request filtering in those cases where it's absolutely
              necessary. The reason is that it requires the browser to stop and block for the instance to 
              handle the input event, rather than sending the input event asynchronously. This can have 
              significant overhead.
-          </para>             
-        
+          </para>
         </remarks>
       </Docs>
     </Member>
@@ -1719,22 +1761,19 @@
              interested in to have them be delivered to the instance. Calling this function will override any 
              previous setting for each specified class of input events(for example, if you previously called 
              RequestFilteringInputEvents(), this function will set those events to non-filtering mode).
-          </para>             
-             
+          </para>
           <para>             
              Input events may have high overhead, so you should only request input events that your plugin will 
              actually handle.For example, the browser may do optimizations for scroll or touch events that can
              be processed substantially faster if it knows there are no non-default receivers for that message. 
              Requesting that such messages be delivered, even if they are processed very quickly, may have a 
              noticeable effect on the performance of the page.
-          </para>             
-             
+          </para>
           <para>             
              When requesting input events through this function, the events will be delivered and not bubbled 
              to the page.This means that even if you aren't interested in the message, no other parts of the 
              page will get the message.
-          </para>             
-        
+          </para>
         </remarks>
       </Docs>
     </Member>
@@ -1797,13 +1836,12 @@
         <returns>true on success, or false if the instance or cursor type
              was invalid or if the image was too large.</returns>
         <remarks>
-           <block subset="none" type="note">           
-          <para>
+          <block subset="none" type="note">
+            <para>
              You can hide the mouse cursor by setting it to the
              <c>PPMouseCursorType</c> type.
           </para>
-
-          <para>
+            <para>
              This function allows setting both system defined mouse cursors and
              custom cursors. To set a system-defined cursor, pass the type you want
              and set the custom image to a default-constructor ImageData object.
@@ -1811,9 +1849,7 @@
              <c>PPMouseCursorType.CUSTOM</c> and specify your image and hot
              spot.
           </para>
-             
-             </block>
-
+          </block>
         </remarks>
       </Docs>
     </Member>
