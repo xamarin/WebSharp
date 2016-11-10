@@ -42,7 +42,7 @@ namespace PepperSharp
 
             Callback = new PPCompletionCallback();
             Callback.func = OnCallBack;
-            GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
+            GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Normal);
             Callback.user_data = (IntPtr)userHandle;
             
             Callback.flags = flags;
@@ -139,7 +139,7 @@ namespace PepperSharp
 
             Callback = new PPCompletionCallback();
             Callback.func = OnCallBack;
-            GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
+            GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Normal);
             Callback.user_data = (IntPtr)userHandle;
             Callback.flags = flags;
 

@@ -19,7 +19,7 @@ namespace PepperSharp
         public ArrayOutputAdapterBase() : base()
         {
             arrayOutput.GetDataBuffer = GetDataBufferThunk;
-            arrayOutput.user_data = (IntPtr)GCHandle.Alloc(this, GCHandleType.Pinned);
+            arrayOutput.user_data = (IntPtr)GCHandle.Alloc(this, GCHandleType.Normal);
         }
 
         internal virtual IntPtr GetDataBuffer(uint element_count,

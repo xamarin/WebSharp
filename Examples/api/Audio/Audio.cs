@@ -46,7 +46,7 @@ namespace Audio
             // Ask the device for an appropriate sample count size.
             SampleFrameCount = AudioConfig.RecommendSampleFrameCount(this, AudioSampleRate._44100, SAMPLE_FRAME_COUNT);
 
-            var thisHandle = (IntPtr)(GCHandle.Alloc(this, GCHandleType.Pinned));
+            var thisHandle = (IntPtr)(GCHandle.Alloc(this, GCHandleType.Normal));
 
             audio = new PepperSharp.Audio(this, new AudioConfig(this,
                     AudioSampleRate._44100, SampleFrameCount),

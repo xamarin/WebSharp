@@ -27,13 +27,13 @@ namespace PepperSharp
                     this.userData = IntPtr.Zero;
                 else
                 {
-                    GCHandle userDataHandle = GCHandle.Alloc(userData, GCHandleType.Pinned);
+                    GCHandle userDataHandle = GCHandle.Alloc(userData, GCHandleType.Normal);
                     this.userData = (IntPtr)userDataHandle;
                 }
                 var ourCallback = new PPCompletionCallback();
                 ourCallback.func = OnCallBack;
                 ourCallback.flags = (int)PPCompletionCallbackFlag.None;
-                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
+                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Normal);
                 ourCallback.user_data = (IntPtr)userHandle;
                 Callback = ourCallback;
             }
@@ -49,7 +49,7 @@ namespace PepperSharp
                 var ourCallback = new PPCompletionCallback();
                 ourCallback.func = OnCallBack;
                 ourCallback.flags = (int)flags;
-                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
+                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Normal);
                 ourCallback.user_data = (IntPtr)userHandle;
                 Callback = ourCallback;
             }
@@ -131,13 +131,13 @@ namespace PepperSharp
                     this.userDataHandle = IntPtr.Zero;
                 else
                 {
-                    GCHandle userDataHandle = GCHandle.Alloc(userData, GCHandleType.Pinned);
+                    GCHandle userDataHandle = GCHandle.Alloc(userData, GCHandleType.Normal);
                     this.userDataHandle = (IntPtr)userDataHandle;
                 }
                 var ourCallback = new PPCompletionCallback();
                 ourCallback.func = OnCallBack;
                 ourCallback.flags = (int)flags;
-                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
+                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Normal);
                 ourCallback.user_data = (IntPtr)userHandle;
                 Callback = ourCallback;
             }
@@ -189,20 +189,20 @@ namespace PepperSharp
                     this.userDataHandle = IntPtr.Zero;
                 else
                 {
-                    GCHandle userDataHandle = GCHandle.Alloc(userData1, GCHandleType.Pinned);
+                    GCHandle userDataHandle = GCHandle.Alloc(userData1, GCHandleType.Normal);
                     this.userDataHandle = (IntPtr)userDataHandle;
                 }
                 if (userData2 == null)
                     this.userDataHandle2 = IntPtr.Zero;
                 else
                 {
-                    GCHandle userDataHandle2 = GCHandle.Alloc(userData2, GCHandleType.Pinned);
+                    GCHandle userDataHandle2 = GCHandle.Alloc(userData2, GCHandleType.Normal);
                     this.userDataHandle2 = (IntPtr)userDataHandle2;
                 }
                 var ourCallback = new PPCompletionCallback();
                 ourCallback.func = OnCallBack;
                 ourCallback.flags = (int)PPCompletionCallbackFlag.None;
-                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Pinned);
+                GCHandle userHandle = GCHandle.Alloc(this, GCHandleType.Normal);
                 ourCallback.user_data = (IntPtr)userHandle;
                 Callback = ourCallback;
             }

@@ -34,9 +34,9 @@ namespace PepperSharp
         {
             this.config = config;
             callbackDelegate = callbackAction;
-            meBePinned = (IntPtr)(GCHandle.Alloc(this, GCHandleType.Pinned));
+            meBePinned = (IntPtr)(GCHandle.Alloc(this, GCHandleType.Normal));
             if (userData != null)
-                userDataHandle = (IntPtr)(GCHandle.Alloc(userData, GCHandleType.Pinned));
+                userDataHandle = (IntPtr)(GCHandle.Alloc(userData, GCHandleType.Normal));
             handle = PPBAudio.Create(instance, config, audioCallback, meBePinned);
         }
 
