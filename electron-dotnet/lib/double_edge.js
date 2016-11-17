@@ -21,7 +21,7 @@ catch (e) {
 process.env['EDGE_NATIVE'] = process.env['EDGE_NATIVE'] ||
     __dirname + (process.arch === 'x64' ? '\\x64\\edge_nativeclr.node' : '\\x86\\edge_nativeclr.node');
 
-var edge = require('./edge.js');
+var edge = require('./electron-dotnet.js');
 
 var initialize = edge.func({
     assemblyFile: __dirname + '\\..\\EdgeJs.dll',

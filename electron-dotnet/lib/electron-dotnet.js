@@ -1,7 +1,6 @@
 var fs = require('fs')
     , path = require('path')
     , builtEdge = path.resolve(__dirname, '../build/Release/' + (process.env.EDGE_USE_CORECLR || !fs.existsSync(path.resolve(__dirname, '../build/Release/edge_nativeclr.node')) ? 'edge_coreclr.node' : 'edge_nativeclr.node'))
-    , whereis = require(path.resolve(__dirname, '../tools/whereis.js'))
     , edge;
 
 var versionMap = [
@@ -19,6 +18,26 @@ function determineVersion() {
         '. You must build a custom version of edge.node. Please refer to https://github.com/websharp/electron-dotnet ' +
         'for building instructions.');
 }
+
+function whereis () {
+    var pathSep = process.platform === 'win32' ? ';' : ':';
+
+    var directories = process.env.PATH.split(pathSep);
+
+    for (var i = 0; i < directories.length; i++) {
+    	for (var j = 0; j < arguments.length; j++) {
+    		var filename = arguments[j];
+	        var filePath = path.join(directories[i], filename);
+
+	        if (fs.existsSync(filePath)) {
+	            return filePath;
+	        }
+	    }
+    }
+
+    return null;
+}
+
 var edgeNative;
 if (process.platform === 'win32' && process.env.EDGE_USE_MONOCLR === '1') {
     if (!whereis("mono.exe"))
