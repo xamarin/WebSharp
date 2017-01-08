@@ -196,3 +196,25 @@ exports.func = function(language, options) {
 
     return edge.initializeClrFunc(options);
 };
+
+var initialize = exports.func({
+    assemblyFile: __dirname + '/bin/WebSharpJs.dll',
+    typeName: 'WebSharpJs.WebSharp',
+    methodName: 'InitializeInternal'
+});
+
+var compileFunc = function (data, callback) {
+    var wrapper = '(function () { ' + data + ' })';
+    var funcFactory = eval(wrapper);
+    var func = funcFactory();
+    if (typeof func !== 'function') {
+        throw new Error('Node.js code must return an instance of a JavaScript function. '
+            + 'Please use `return` statement to return a function.');
+    }
+
+    callback(null, func);
+};
+
+initialize(compileFunc, function (error, data) {
+    if (error) throw error;
+});
