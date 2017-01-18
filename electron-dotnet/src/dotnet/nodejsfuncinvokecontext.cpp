@@ -135,7 +135,7 @@ void NodejsFuncInvokeContext::CompleteWithResult(v8::Local<v8::Value> result)
     DBG("NodejsFuncInvokeContext::CompleteWithResult");
     try 
     {
-        this->result = ClrFunc::MarshalV8ToCLR(result);
+        this->result = ClrFunc::MarshalV8ToCLR(result, MAX_RECURSION_DEPTH);
         Task::Run(gcnew System::Action(this, &NodejsFuncInvokeContext::Complete));
     }
     catch (System::Exception^ e)

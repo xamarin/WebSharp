@@ -13,7 +13,7 @@ NAN_METHOD(v8FuncCallback)
     else 
     {
         // TODO add support for exceptions during marshaling:
-        MonoObject* result = ClrFunc::MarshalV8ToCLR(info[1]);
+        MonoObject* result = ClrFunc::MarshalV8ToCLR(info[1], MAX_RECURSION_DEPTH);
         context->Complete(NULL, result);
     }
     info.GetReturnValue().SetUndefined();
@@ -55,6 +55,7 @@ void NodejsFuncInvokeContext::CallFuncOnV8Thread(MonoObject* _this, NodejsFunc* 
         
         if (callbackFactory.IsEmpty())
         {
+			DBG("NodejsFuncInvokeContext::CallFuncOnV8Thread - IsEmpty()");
             v8::Local<v8::Function> v8FuncCallbackFunction = Nan::New<v8::FunctionTemplate>(v8FuncCallback)->GetFunction();
             callbackFunction.Reset(v8FuncCallbackFunction);
             v8::Local<v8::String> code = Nan::New<v8::String>(

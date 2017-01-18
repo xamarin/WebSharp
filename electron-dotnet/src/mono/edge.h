@@ -10,6 +10,10 @@
 #include "mono/metadata/object.h"
 #include "mono/metadata/appdomain.h"
 
+// Specifies the number of times to recurse while converting the object. 
+// This is useful while converting large complicated objects. 
+const int MAX_RECURSION_DEPTH = 5;
+
 typedef int GCHandle;
 
 v8::Local<v8::String> stringCLR2V8(MonoString* text);
@@ -129,7 +133,7 @@ public:
     v8::Local<v8::Value> Call(v8::Local<v8::Value> payload, v8::Local<v8::Value> callback);
     static v8::Local<v8::Value> MarshalCLRToV8(MonoObject* netdata, MonoException** exc);
     static v8::Local<v8::Value> MarshalCLRExceptionToV8(MonoException* exception);
-    static MonoObject* MarshalV8ToCLR(v8::Local<v8::Value> jsdata);    
+    static MonoObject* MarshalV8ToCLR(v8::Local<v8::Value> jsdata, int depth);    
 };
 
 typedef struct clrFuncWrap {

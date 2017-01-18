@@ -45,7 +45,7 @@ void ClrFuncInvokeContext::InitializeAsyncOperation()
     // Create a uv_edge_async instance representing V8 async operation that will complete 
     // when the CLR function completes. The ClrActionContext is used to ensure the ClrFuncInvokeContext
     // remains GC-rooted while the CLR function executes.
-
+	DBG("ClrFuncInvokeContext::InitializeAsyncOperation");
     static MonoMethod* getAction = NULL;
     if (!getAction)
         getAction = mono_class_get_method_from_name(
@@ -78,6 +78,7 @@ void ClrFuncInvokeContext::CompleteOnCLRThread(ClrFuncInvokeContext *_this, Mono
 
 void ClrFuncInvokeContext::CompleteOnV8ThreadAsynchronous(ClrFuncInvokeContext *_this)
 {
+	DBG("ClrFuncInvokeContext::CompleteOnV8ThreadAsynchronous");
     Nan::HandleScope scope;
     _this->CompleteOnV8Thread(false);
 }

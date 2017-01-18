@@ -109,8 +109,7 @@ NAN_METHOD(ClrFunc::Initialize)
                 throw gcnew System::InvalidOperationException(
                     "Unable to access the CompileFunc method of the EdgeCompiler class in the edge.js compiler assembly.");
             }
-
-            System::Object^ parameters = ClrFunc::MarshalV8ToCLR(options);
+            System::Object^ parameters = ClrFunc::MarshalV8ToCLR(options, MAX_RECURSION_DEPTH);
             System::Func<System::Object^,Task<System::Object^>^>^ func =
                 (System::Func<System::Object^,Task<System::Object^>^>^)compileFunc->Invoke(
                     compilerInstance, gcnew array<System::Object^> { parameters });
@@ -388,9 +387,17 @@ v8::Local<v8::Object> ClrFunc::MarshalCLRObjectToV8(System::Object^ netdata)
     return scope.Escape(result);
 }
 
-System::Object^ ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata)
+System::Object^ ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata, int depth)
 {
     Nan::HandleScope scope;
+
+	if (depth < 0)
+	{
+		DBG("ClrFunc::MarshalV8ToCLR max recursion depth reached %d", depth);
+		return nullptr;
+	}
+	else
+		DBG("ClrFunc::MarshalV8ToCLR recursion depth %d", depth);
 
     if (jsdata->IsFunction())
     {
@@ -419,7 +426,7 @@ System::Object^ ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata)
         cli::array<System::Object^>^ netarray = gcnew cli::array<System::Object^>(jsarray->Length());
         for (unsigned int i = 0; i < jsarray->Length(); i++)
         {
-            netarray[i] = ClrFunc::MarshalV8ToCLR(jsarray->Get(i));
+			netarray[i] = ClrFunc::MarshalV8ToCLR(jsarray->Get(i), depth - 1);
         }
 
         return netarray;
@@ -442,7 +449,7 @@ System::Object^ ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata)
             v8::Local<v8::String> name = v8::Local<v8::String>::Cast(propertyNames->Get(i));
             v8::String::Utf8Value utf8name(name);
             System::String^ netname = gcnew System::String(*utf8name);
-            System::Object^ netvalue = ClrFunc::MarshalV8ToCLR(jsobject->Get(name));
+            System::Object^ netvalue = ClrFunc::MarshalV8ToCLR(jsobject->Get(name), depth - 1);
             netobject->Add(netname, netvalue);
         }
 
@@ -486,7 +493,7 @@ v8::Local<v8::Value> ClrFunc::Call(v8::Local<v8::Value> payload, v8::Local<v8::V
     try
     {
         ClrFuncInvokeContext^ context = gcnew ClrFuncInvokeContext(callback);
-        context->Payload = ClrFunc::MarshalV8ToCLR(payload);
+        context->Payload = ClrFunc::MarshalV8ToCLR(payload, MAX_RECURSION_DEPTH);
         Task<System::Object^>^ task = this->func(context->Payload);
         if (task->IsCompleted)
         {

@@ -44,6 +44,7 @@ void NodejsFunc::Release(NodejsFunc* _this)
 
 MonoObject* NodejsFunc::GetFunc()
 {
+	DBG("NodejsFunc::GetFunc");
     static MonoMethod* method;
 
     if (!method)
@@ -57,6 +58,7 @@ MonoObject* NodejsFunc::GetFunc()
 
 void  NodejsFunc::ExecuteActionOnV8Thread(MonoObject* action)
 {
+	DBG("NodejsFunc::ExecuteActionOnV8Thread");
     ClrActionContext* data = new ClrActionContext;
     data->action = mono_gchandle_new(action, FALSE); // released in ClrActionContext::ActionCallback
     uv_edge_async_t* uv_edge_async = V8SynchronizationContext::RegisterAction(ClrActionContext::ActionCallback, data);

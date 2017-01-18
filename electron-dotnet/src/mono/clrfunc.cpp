@@ -110,7 +110,7 @@ NAN_METHOD(ClrFunc::Initialize)
         {
             // exception
         }
-        MonoObject* parameters = ClrFunc::MarshalV8ToCLR(options);
+        MonoObject* parameters = ClrFunc::MarshalV8ToCLR(options, MAX_RECURSION_DEPTH);
         MonoArray* methodInfoParams = mono_array_new(mono_domain_get(), mono_get_object_class(), 1);
         mono_array_setref(methodInfoParams, 0, parameters);
         void* params[2];
@@ -450,10 +450,18 @@ v8::Local<v8::Object> ClrFunc::MarshalCLRObjectToV8(MonoObject* netdata, MonoExc
     return scope.Escape(result);
 }
 
-MonoObject* ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata)
+MonoObject* ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata, int depth)
 {
     DBG("ClrFunc::MarshalV8ToCLR");
     Nan::HandleScope scope;
+
+	if (depth < 0)
+	{
+		DBG("ClrFunc::MarshalV8ToCLR max recursion depth reached %d", depth);
+		return NULL;
+	}
+	else
+		DBG("ClrFunc::MarshalV8ToCLR recursion depth %d", depth);
 
     if (jsdata->IsFunction())
     {
@@ -476,7 +484,7 @@ MonoObject* ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata)
         MonoArray* netarray = mono_array_new(mono_domain_get(), mono_get_object_class(), jsarray->Length());
         for (unsigned int i = 0; i < jsarray->Length(); i++)
         {
-            mono_array_setref(netarray, i, ClrFunc::MarshalV8ToCLR(jsarray->Get(i)));
+            mono_array_setref(netarray, i, ClrFunc::MarshalV8ToCLR(jsarray->Get(i), depth - 1));
         }
 
         return (MonoObject*)netarray;
@@ -496,7 +504,7 @@ MonoObject* ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata)
         {
             v8::Local<v8::String> name = v8::Local<v8::String>::Cast(propertyNames->Get(i));
             v8::String::Utf8Value utf8name(name);
-            Dictionary::Add(netobject, *utf8name, ClrFunc::MarshalV8ToCLR(jsobject->Get(name)));
+            Dictionary::Add(netobject, *utf8name, ClrFunc::MarshalV8ToCLR(jsobject->Get(name), depth - 1));
         }
 
         return netobject;
@@ -543,7 +551,7 @@ v8::Local<v8::Value> ClrFunc::Call(v8::Local<v8::Value> payload, v8::Local<v8::V
     MonoException* exc = NULL;
 
     ClrFuncInvokeContext* c = new ClrFuncInvokeContext(callback);
-    c->Payload(ClrFunc::MarshalV8ToCLR(payload));
+    c->Payload(ClrFunc::MarshalV8ToCLR(payload, MAX_RECURSION_DEPTH));
 
     MonoObject* func = mono_gchandle_get_target(this->func);
     void* params[1];

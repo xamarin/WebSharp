@@ -25,14 +25,14 @@ namespace WebSharpJs
             return Task<object>.FromResult((object)null);
         }
 
-        public static async Task<Func<object, Task<object>>> CreateJavaFunction(string code)
+        public static async Task<Func<object, Task<object>>> CreateJavaScriptFunction(string code)
         {
 
             if (compileFunc == null)
             {
                 throw new InvalidOperationException("WebSharpJs.CreateJavaFunction cannot be used after WebSharpJs.Close had been called.");
             }
-            Console.WriteLine("WebSharp: Promise");
+            Console.WriteLine("WebSharpJs: CreateJavaScriptFunction");
             return (Func<object, Task<object>>)await compileFunc(code);
         }
 

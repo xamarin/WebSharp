@@ -24,6 +24,10 @@
 #using <system.dll>
 #using <system.web.extensions.dll>
 
+// Specifies the number of times to recurse while converting the object. 
+// This is useful while converting large complicated objects. 
+const int MAX_RECURSION_DEPTH = 5;
+
 using namespace System::Collections::Generic;
 using namespace System::Reflection;
 using namespace System::Threading::Tasks;
@@ -138,7 +142,7 @@ public:
     v8::Local<v8::Value> Call(v8::Local<v8::Value> payload, v8::Local<v8::Value> callback);
     static v8::Local<v8::Value> MarshalCLRToV8(System::Object^ netdata);
     static v8::Local<v8::Value> MarshalCLRExceptionToV8(System::Exception^ exception);
-    static System::Object^ MarshalV8ToCLR(v8::Local<v8::Value> jsdata);    
+    static System::Object^ MarshalV8ToCLR(v8::Local<v8::Value> jsdata, int depth);    
 };
 
 typedef struct clrFuncWrap {
