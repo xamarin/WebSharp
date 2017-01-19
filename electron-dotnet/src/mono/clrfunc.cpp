@@ -499,7 +499,7 @@ MonoObject* ClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata, int depth)
     {
         MonoObject* netobject = MonoEmbedding::CreateExpandoObject();
         v8::Local<v8::Object> jsobject = v8::Local<v8::Object>::Cast(jsdata);
-        v8::Local<v8::Array> propertyNames = jsobject->GetPropertyNames();
+        v8::Local<v8::Array> propertyNames = jsobject->GetOwnPropertyNames();
         for (unsigned int i = 0; i < propertyNames->Length(); i++)
         {
             v8::Local<v8::String> name = v8::Local<v8::String>::Cast(propertyNames->Get(i));

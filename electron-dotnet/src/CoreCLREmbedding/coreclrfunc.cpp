@@ -396,7 +396,7 @@ void CoreClrFunc::MarshalV8ToCLR(v8::Local<v8::Value> jsdata, void** marshalData
 		V8ObjectData* objectData = new V8ObjectData();
 
 		v8::Local<v8::Object> jsobject = v8::Local<v8::Object>::Cast(jsdata);
-		v8::Local<v8::Array> propertyNames = jsobject->GetPropertyNames();
+		v8::Local<v8::Array> propertyNames = jsobject->GetOwnPropertyNames();
 
 		objectData->propertiesCount = propertyNames->Length();
 		objectData->propertyData = new void*[objectData->propertiesCount];
