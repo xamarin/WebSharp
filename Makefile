@@ -13,6 +13,14 @@ build: check
 	(cd PepperSharp; xbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Release /p:Platform=AnyCPU)
 	(cd PepperSharp; xbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Debug /p:Platform=AnyCPU)
 	(cd electron-dotnet/tools; mono ./build/nuget.exe pack ./nuget/Xamarin.PepperSharp.nuspec -outputdirectory ./build/nuget -properties Configuration=Release -basepath ../../PepperSharp)
+	make websharpjs
+
+websharpjs:
+	(cd electron-dotnet/src/websharpjs/WebSharp.js; dotnet restore; dotnet build --configuration Release --framework netstandard1.6; dotnet pack --configuration Release --no-build)
+	# copy nuget to local nuget repo
+	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/*.nupkg electron-dotnet/tools/build/nuget)
+	# make the .dll available to websharp
+	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/netstandard1.6/*.dll electron-dotnet/lib/bin/)
 
 check:
 	@if test ! -x $(NACLSDK_TOOL); then echo "You need to install the nacl_sdk on the parent directory, https://developer.chrome.com/native-client/sdk/download#installing-the-sdk"; exit 1; fi
