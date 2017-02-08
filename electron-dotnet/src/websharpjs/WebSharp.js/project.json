@@ -41,7 +41,7 @@
       "buildOptions": {
         "allowUnsafe": true,
         "compile": {
-          "exclude": "dotnet/*.cs"
+          "include": "dotnet/*.cs"
         }
       }
     }
