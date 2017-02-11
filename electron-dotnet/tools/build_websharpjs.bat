@@ -16,13 +16,13 @@ if not exist "%SELF%\build\nuget.exe" (
 	"%SELF%\build\nuget.exe" update -self
 )
 
-csc /out:"%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net40\WebSharpJs.dll" /target:library "%SELF%\..\src\websharpjs\WebSharp.js\dotnet\WebSharpJs.cs"
+csc /out:"%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net451\WebSharpJs.dll" /target:library "%SELF%\..\src\websharpjs\WebSharp.js\dotnet\WebSharpJs.cs"
 if %ERRORLEVEL% neq 0 exit /b -1
 
 cd "%SELF%\..\src\websharpjs\WebSharp.js"
 dotnet restore
 if %ERRORLEVEL% neq 0 exit /b -1
-dotnet build --configuration Release --framework netstandard1.6
+dotnet build --configuration Release
 if %ERRORLEVEL% neq 0 exit /b -1
 dotnet pack --configuration Release --no-build
 
@@ -35,7 +35,7 @@ if %ERRORLEVEL% neq 0 (
 cd "%SELF%"
 copy /y "%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\*.nupkg" "%SELF%\build\nuget"
 rem Make it available to the electron-dotnet module
-copy /y "%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net40\*.dll" "%SELF%\..\lib\bin"
+copy /y "%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net451\*.dll" "%SELF%\..\lib\bin"
 echo SUCCESS. Nuget package at %SELF%\build\nuget
 
 exit /b 0
