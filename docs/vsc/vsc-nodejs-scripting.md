@@ -1,10 +1,12 @@
-# Example Hello World
+# Example Scripting Nodejs from Electron CLR Application
 
-## Your First `Electron Dotnet` Application
+## ScriptingJS Application
 
-This document will take you through creating your first `Electron Dotnet` application for VS Code ("Hello World") and will explain the basic `Electron` integration points to add C# code and Plugins to your `Electron` application.
+This document will take you through creating an `Electron Dotnet` application for VS Code ("ScriptingJS") and will explain the basic `Nodejs` integration points from C# code to interact with `Nodejs` from your `Electron` application.
 
-In this walkthrough, you'll add a C# and a new Plugin to an Electron application which will display a simple "Hello" message from them both. Later in the walkthrough, you'll see how we can debug the different `Electron` processes, Main and Renderer.
+In this walkthrough, you'll begin with setting up a basic `Electron Dotnet` application that calls a C# routing from JavaScript code.  The C# function that is generated from the template formats a string and returns that formatted string back to the calling javascript function to be written out to the console from JavaScript code.
+
+Once this is up and running we will begin modifying the application to script `NodeJs` functions directly from the C# application instead.  
 
 ## Prerequisites
 You need [node.js](https://nodejs.org/en/) installed and available in your $PATH.
@@ -42,7 +44,7 @@ yo electron-dotnet
 ```
 You will be presented with three different project types. For this example, we will pick `Node.js .NET Scripting`.  
 
-![The electron-dotnet generator](./screenshots/yogen-mac.PNG)
+![The electron-dotnet generator](./screenshots/yogen-mac.png)ß
 
 Once the type of application project is selected the generator will present you with a series of questions so that the generator can generate the application for you.  Fill in the answers as shown in the following screen shot.
 
@@ -50,7 +52,7 @@ Once the type of application project is selected the generator will present you 
 
 Hit enter to start generating the application structure.
 
-![The electron-dotnet generator install](./screenshots/yogen-mac-install.PNG)
+![The electron-dotnet generator install](./screenshots/yogen-mac-install.png)
 
 This will install the dependencies automatically and when done you will have the application generated.
 
@@ -313,7 +315,7 @@ scriptingjs$ npm install path-to-WebSharp/electron-dotnet
 scriptingjs$ npm start 
 ```
 
-## Hello World !!!
+## Welcome
 
 You should be presented with the following screen:
 
@@ -322,6 +324,22 @@ You should be presented with the following screen:
 The ScriptingJS program writes output to the Console.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
 
 ![ScriptingJS application console](./screenshots/scriptingjs-console.png)
+
+## Scripting NodeJs
+
+What the actual [scripting.js](#electron-dotnetjs-net-and-nodejs-in-process-implementation-scriptingjsjs) code does is call a C# function to format a string using the string `Electron` as a parameter to call the function.  Once the C# function formats the string it will be returned back to the calling JavaScript function and printed out using the JavaScript function `console.log`.  What we will be doing in the following exercise is instead of returning the formatted string back to the JavaScript code to be written to the console is to write that string directly from the C# program itself by scripting the `console.log` function itself and using it from the C# program.
+
+### Adding new program sources
+
+From a command line you will creating a new `.cs` source file and `project.json` file.
+
+``` bash
+.
+|--- src                              // sources
+     |--- Library.cs                  // C# implementation 
+     |--- project.json                // Defines compilation information 
+     |--- scripting.js                // javascript code implementation
+```
 
 
 
