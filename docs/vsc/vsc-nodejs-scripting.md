@@ -613,7 +613,7 @@ Mac OSX can reference the `scripting.dll` directly that was built using the the 
 
 The two ways to reference the assemblyFile.
 
-    * Reference the `scriptingjs.dll` directly from the framework directory 
+* Reference the `scriptingjs.dll` directly from the framework directory 
 
 ``` js
 
@@ -624,7 +624,7 @@ The two ways to reference the assemblyFile.
     }); 
 ```
 
-    * Reference the `scriptingjs.dll` directly from the [framework]/[runtime] directory 
+* Reference the `scriptingjs.dll` directly from the [framework]/[runtime] directory 
 
 ``` js
     var hello = dotnet.func({
