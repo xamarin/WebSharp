@@ -429,7 +429,7 @@ Open the file and replace the existing implemenation text with the following:
 using System;
 using System.Threading.Tasks;
 
-// Reference WebSharpJs 
+// Reference WebSharpJs
 using WebSharpJs;
 
 namespace ScriptingJs
@@ -438,8 +438,12 @@ namespace ScriptingJs
     {
         public async Task<object> SayHello(object input)
         {
-            var consoleLog = await console.log();
-
+           Func<object, Task<object>> consoleLog = await WebSharp.CreateJavaScriptFunction(@"
+                                return function (data, callback) {
+                                    console.log(data);
+                                    callback(null, null);
+                                }
+                            ");
             try
             {
                 consoleLog($"Scripting Node.js from CLR welcomes {input}!!!");
@@ -451,27 +455,77 @@ namespace ScriptingJs
         }
     }
 
-    public class console
-    {
-        public static async Task<Func<object, Task<object>>> log()
-        {
-            return await WebSharp.CreateJavaScriptFunction(@"
-                                 return function (data, callback) {
-                                     console.warn(data);
-                                     callback(null, null);
-                                 }
-                             ");
-        }
-
-    }
 }
 
 ```
 
+Let's now take a look at the code.
 
+- Using section
 
+    Add a reference to the `WebSharpJs` assembly.
 
-### Compiling scriptingjs code
+    ``` csharp
+    using System;
+    using System.Threading.Tasks;
+
+    // Reference WebSharpJs 
+    using WebSharpJs;
+    ```
+
+    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  This managed assembly exposes the static function `CreateJavaScriptFunction`.  More info below in the implementation.
+
+- Class `Hello` implementation
+
+    ``` csharp
+    namespace ScriptingJs
+    {
+        public class Hello
+        {
+            public async Task<object> SayHello(object input)
+            {
+                // Implementation here
+                return null;
+            }
+        }
+
+    }
+
+    ```
+
+    The `SayHello` method follows the `Func<object,Task<object>>` delegate signature.  This is the method that will be referenced from the `scriptingjs.js` file implementation.
+
+- Implementing the `consoleLog` function.
+
+    ``` csharp
+           Func<object, Task<object>> consoleLog = await WebSharp.CreateJavaScriptFunction(@"
+                                return function (data, callback) {
+                                    console.log(data);
+                                    callback(null, null);
+                                }
+                            ");
+    ```
+
+    The workhorse in the above code is the static function `WebSharp.CreateJavaScriptFunction` that the `WebSharp.js` managed assembly makes available to developers.  
+    
+    The `CreateJavaScriptFunction` accepts a string containing code in `Nodejs`, compiles it and returns a `JavaScript` function callable from the C# implementation.  The `JavaScript` function must have the following signature:
+
+    - It must accept one parameter and a callback.  `return function (data, callback)`
+    - The callback must be called with an error and one return value.  `callback(null, null);`
+
+    The following is the pattern when scripting `Nodejs` functions:
+
+    ``` javascript
+        return function (data, callback) {
+        
+            //...... Your implementation code here .......
+
+            callback(null, null);
+        }
+
+    ```
+
+### Compiling `scriptingjs.cs` code
 Before running our application we will need to compile our library code ```scriptingjs.cs```.
 
 The compile target uses [Dotnet Core](https://www.microsoft.com/net/core) with one of the dependencies for the `WebSharp.js` delivered as a NuGet package.
