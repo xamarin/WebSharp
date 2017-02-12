@@ -510,8 +510,8 @@ Let's now take a look at the code.
     
     The `CreateJavaScriptFunction` accepts a string containing code in `Nodejs`, compiles it and returns a `JavaScript` function callable from the C# implementation.  The `JavaScript` function must have the following signature:
 
-    - It must accept one parameter and a callback.  `return function (data, callback)`
-    - The callback must be called with an error and one return value.  `callback(null, null);`
+    * It must accept one parameter and a callback.  `return function (data, callback)`
+    * The callback must be called with an error and one return value.  `callback(null, null);`
 
     The following is the pattern when scripting `Nodejs` functions:
 
@@ -585,7 +585,101 @@ cd ..
 
 ```
 
-"Uncaught System.IO.FileNotFoundException: Could not load file or assembly 'System.Runtime, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' or one of its dependencies.
+### Bringing it all together
+
+We should now have our library implementation complete and all that is left to do is execute it to bring this all together.
+
+Open the `scriptingjs.js` file that was automatically generated from the template when creating the project.
+
+``` js
+var dotnet = require('electron-dotnet');
+
+var hello = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');
+
+//Make method externaly visible this will be referenced in the renderer.js file
+exports.sayHello = arg => {
+	hello('Electron', function (error, result) {
+		if (error) throw error;
+		console.log(result);
+	});
+}
+```
+
+What we need to do is call into our `scriptingjs` library code that was created in the previous steps.
+
+So let us replace the `var hello = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');`.
+
+
+For Mac OSX can reference directly the `scripting.dll` that was built using the the `dotnet` CLI in the previous step.
+
+There are two ways to reference the assemblyFile.
+
+    * Reference the `scriptingjs.dll` directly from the framework directory 
+
+``` js
+
+    var hello = dotnet.func({
+        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/scriptingjs.dll',
+        typeName: 'ScriptingJs.Hello',
+        methodName: 'SayHello' // This must be Func<object,Task<object>>
+    }); 
+```
+
+    * Reference the `scriptingjs.dll` directly from the [framework]/[runtime] directory 
+
+``` js
+    var hello = dotnet.func({
+        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/osx.10.12-x64/publish/scriptingjs.dll',
+        typeName: 'ScriptingJs.Hello',
+        methodName: 'SayHello' // This must be Func<object,Task<object>>
+    });
+```
+
+Either way works for OSX but Windows can only be run from the [framework]/[runtime] directory.  So for Windows we will need to use the following:
+
+``` js
+    var hello = dotnet.func({
+        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/win10-x64/publish/scriptingjs.dll',
+        typeName: 'ScriptingJs.Hello',
+        methodName: 'SayHello' // This must be Func<object,Task<object>>
+    });
+```
+
+> :bulb: Windows will throw something like the following `"Uncaught System.IO.FileNotFoundException: Could not load file or assembly 'System.Runtime ...' or one of its dependencies.` if not called with the `[framework]/[runtime]` path.
+
+## Running the application
+
+To run the application we will need to install 'electron-dotnet' module which provides all of the ```Node.js``` implemenation for running within ```Electron```.
+
+> :bulb: This project dependency will be automatic in the future once the project workflow has been defined and will be installed with the template in the future.
+
+But right now we will have to do this install manually from the command line.
+
+``` bash
+# Windows
+scriptingjs\src> cd ..
+scriptingjs> npm install path-to-WebSharp\electron-dotnet   
+scriptingjs> npm start 
+```
+
+
+``` bash
+# Mac OSX
+scriptingjs/src$ cd ..
+scriptingjs$ npm install path-to-WebSharp/electron-dotnet   
+scriptingjs$ npm start 
+```
+
+## Scripting Node.js from CLR welcomes Electron!!!
+
+You should be presented with the same screen as when we first started the application above:
+
+![ScriptingJS application](./screenshots/scriptingjs.png)
+
+The ScriptingJS program will write the output to the Console as specified by the `console.log` JavaScript function.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
+
+![ScriptingJS application console log](./screenshots/scriptingjs-console2.png)
+
 
 ## Debugging
 
