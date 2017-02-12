@@ -662,7 +662,6 @@ scriptingjs> npm install path-to-WebSharp\electron-dotnet
 scriptingjs> npm start 
 ```
 
-
 ``` bash
 # Mac OSX
 scriptingjs/src$ cd ..
