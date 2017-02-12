@@ -472,7 +472,7 @@ Let's now take a look at the code.
     using WebSharpJs;
     ```
 
-    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  This managed assembly exposes the static function `CreateJavaScriptFunction`.  More info below in the implementation.
+    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  This managed assembly exposes the static function `CreateJavaScriptFunction` which will be detailed more below.
 
 - Class `Hello` implementation
 
@@ -609,9 +609,9 @@ What we need to do is call into our `scriptingjs` library code that was created 
 So let us replace the `var hello = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');`.
 
 
-For Mac OSX can reference directly the `scripting.dll` that was built using the the `dotnet` CLI in the previous step.
+Mac OSX can reference the `scripting.dll` directly that was built using the the `dotnet` CLI in the previous step or using [framework]/[runtime] directory.
 
-There are two ways to reference the assemblyFile.
+The two ways to reference the assemblyFile.
 
     * Reference the `scriptingjs.dll` directly from the framework directory 
 
@@ -648,7 +648,7 @@ Either way works for OSX but Windows can only be run from the [framework]/[runti
 
 ## Running the application
 
-To run the application we will need to install 'electron-dotnet' module which provides all of the ```Node.js``` implemenation for running within ```Electron```.
+To run the application we will need to install `electron-dotnet` module which provides all of the ```Node.js``` implemenation for running within ```Electron```.
 
 > :bulb: This project dependency will be automatic in the future once the project workflow has been defined and will be installed with the template in the future.
 
