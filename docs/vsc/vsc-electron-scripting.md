@@ -1,12 +1,12 @@
-# Example Scripting Nodejs from Electron CLR Application
+# Example Scripting Electron from CLR Application
 
-## ScriptingJS Application
+## ScriptingElectron Application
 
-This document will take you through creating an `Electron Dotnet` application for VS Code ("ScriptingJS") and will explain the basic `Nodejs` integration points from C# code to interact with `Nodejs` from your `Electron` application.
+This document will take you through creating an `Electron Dotnet` application for VS Code ("ScriptingElectron") and will explain the basic `Nodejs` integration points from C# code to interact with `Electron` from your CLR application.
 
 In this walkthrough, you'll begin with setting up a basic `Electron Dotnet` application that calls a C# routine from JavaScript code.  The C# function that is generated from the template formats a string and returns that formatted string back to the calling javascript function to be written out to the console from JavaScript code.
 
-Once this is up and running we will begin modifying the application to script `NodeJs` functions directly from the C# application instead.  
+Once this is up and running we will begin modifying the application to script `Electron` functions directly from the C# application instead.  
 
 ## Prerequisites
 You need [node.js](https://nodejs.org/en/) installed and available in your $PATH.
@@ -47,15 +47,15 @@ You will be presented with three different project types. For this example, we w
 
 Once the type of application project is selected the generator will present you with a series of questions so that the generator can generate the application for you.  Fill in the answers as shown in the following screen shot.
 
-![The electron-dotnet generator questions](./screenshots/yogen-mac-ask.PNG)
+![The electron-dotnet generator questions](./screenshots/yogen-mac-ask-electron.PNG)
 
 Hit enter to start generating the application structure.
 
-![The electron-dotnet generator install](./screenshots/yogen-mac-install.png)
+![The electron-dotnet generator install](./screenshots/yogen-mac-install-electron.png)
 
 This will install the dependencies automatically and when done you will have the application generated.
 
-![The electron-dotnet generator finish](./screenshots/yogen-mac-finish.PNG)
+![The electron-dotnet generator finish](./screenshots/yogen-mac-finish-electron.PNG)
 
 
 ## The Structure of an application
@@ -79,7 +79,7 @@ After running, the generated application should have the following structure:
 |--- README.md
 |--- renderer.js                      // Required in index.html and executed in the renderer process for that window 
 |--- src                              // sources
-     |--- scriptingjs.js              // javascript code implementation
+     |--- scriptingelectron.js              // javascript code implementation
 
 ```
 
@@ -94,9 +94,9 @@ The format of `package.json` is exactly the same as that of [Node’s modules](h
 
 ``` json
 {
-    "name": "scriptingjs",
-    "displayName": "ScriptingJS",
-    "description": "Example of scripting node.js from Electron",
+    "name": "scriptingelectron",
+    "displayName": "ScriptingElectron",
+    "description": "Example Scripting Electron from CLR Application",
     "version": "0.0.1",
     "publisher": "Xamarin",
     "main": "main.js",
@@ -189,10 +189,10 @@ The static html file is just a normal file containing html elements that will be
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>ScriptingJS</title>
+    <title>ScriptingElectron</title>
   </head>
   <body>
-    <h1>ScriptingJS</h1>
+    <h1>ScriptingElectron</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
     We are using node <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
@@ -217,12 +217,12 @@ In normal browsers, web pages usually run in a sandboxed environment and are not
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
-var hello = require("./src/scriptingjs.js");
+var hello = require("./src/scriptingelectron.js");
 
 hello.sayHello();
 ```
 
-We require the electron-dotnet.js generated file `"./src/scriptingjs.js"` which is the .NET and Node.js in-process implementation. To print out the `Hello` message we will execute the exported method from that file `sayHello` which displays the message to the console.
+We require the electron-dotnet.js generated file `"./src/scriptingelectron.js"` which is the .NET and Node.js in-process implementation. To print out the `Hello` message we will execute the exported method from that file `sayHello` which displays the message to the console.
 
 When we get to debugging you will see why it is broken up this way.
 
@@ -236,10 +236,10 @@ The generated application's code is in the `src` directory.  Depending on the pr
 ``` bash
 .
 |--- src                              // sources
-     |--- scriptingjs.js                // javascript code implementation
+     |--- scriptingelectron.js                // javascript code implementation
 ```
 
-#### electron-dotnet.js: .NET and Node.js in-process implementation: scriptingjs.js
+#### electron-dotnet.js: .NET and Node.js in-process implementation: scriptingelectron.js
 
 ``` js
 var dotnet = require('electron-dotnet');
@@ -302,29 +302,29 @@ But right now we will have to do this install manually from the command line.
 
 ``` bash
 # Windows
-scriptingjs> npm install path-to-WebSharp\electron-dotnet   
-scriptingjs> npm start 
+scriptingelectron> npm install path-to-WebSharp\electron-dotnet   
+scriptingelectron> npm start 
 ```
 
 ``` bash
 # Mac OSX
-scriptingjs$ npm install path-to-WebSharp/electron-dotnet   
-scriptingjs$ npm start 
+scriptingelectron$ npm install path-to-WebSharp/electron-dotnet   
+scriptingelectron$ npm start 
 ```
 
 ## Welcome
 
 You should be presented with the following screen:
 
-![ScriptingJS application](./screenshots/scriptingjs.png)
+![ScriptingElectron application](./screenshots/scriptingelectron.png)
 
-The ScriptingJS program writes output to the Console.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
+The ScriptingElectron program writes output to the Console.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
 
-![ScriptingJS application console](./screenshots/scriptingjs-console.png)
+![ScriptingElectron application console](./screenshots/scriptingelectron-console.png)
 
-## Scripting NodeJs
+## Scripting Electron
 
-What the actual [scripting.js](#electron-dotnetjs-net-and-nodejs-in-process-implementation-scriptingjsjs) code does is call a C# function to format a string using the string `Electron` as a parameter to call the function.  Once the C# function formats the string it will be returned back to the calling JavaScript function and printed out using the JavaScript function `console.log`.  What we will be doing in the following exercise is instead of returning the formatted string back to the JavaScript code to be written to the console is to write that string directly from the C# program itself by scripting the `console.log` function itself and using it from the C# program.
+What the actual [scripting.js](#electron-dotnetjs-net-and-nodejs-in-process-implementation-scriptingelectronjs) code does is call a C# function to format a string using the string `Electron` as a parameter to call the function.  Once the C# function formats the string it will be returned back to the calling JavaScript function and printed out using the JavaScript function `console.log`.  What we will be doing in the following exercise is instead of returning the formatted string back to the JavaScript code to be written to the console is to write that string directly from the C# program itself by scripting the `console.log` function itself and using it from the C# program.
 
 ### Writing the library
 
@@ -333,9 +333,9 @@ From a command line you will creating a new `.cs` source file and `project.json`
 ``` bash
 .
 |--- src                              // sources
-     |--- scriptingjs.cs              // C# implementation 
+     |--- scriptingelectron.cs              // C# implementation 
      |--- project.json                // Defines compilation information 
-     |--- scriptingjs.js              // javascript code implementation
+     |--- scriptingelectron.js              // javascript code implementation
 ```
 
 Using the [.NET Core.](https://www.microsoft.com/net/core) SDK create a new library source project.
@@ -344,13 +344,13 @@ Using the [.NET Core.](https://www.microsoft.com/net/core) SDK create a new libr
 # Windows
 cd src
 \src> dotnet new -t Lib
-\src> rename Library.cs scriptingjs.cs
+\src> rename Library.cs scriptingelectron.cs
 ```
 
 ``` bash
 # Mac OSX
 \src$ dotnet new -t Lib
-\src$ mv Library.cs scriptingjs.cs
+\src$ mv Library.cs scriptingelectron.cs
 ```
 
 > :bulb: Notice the use of `-t Lib` as the parameter to the `dotnet new` command.  This specifies to the `Net Core` CLI command to create a 'library' template.  More information about the 'dotnet new' and its options can be found [here](https://github.com/dotnet/docs/blob/master/docs/core/tools/dotnet-new.md#options). 
@@ -361,12 +361,12 @@ Before we can compile our code we will need to make a couple of modifications to
 
 Open the `package.json` file in Visual Studio Code and make sure it looks as follows:
 
-- Add a line to the `"buildoptions"` to set the `outputName` of the generated library to `scriptingjs`.  This will be the name of our `.dll` that will be referenced from our `scriptingjs.js` file.
+- Add a line to the `"buildoptions"` to set the `outputName` of the generated library to `scriptingelectron`.  This will be the name of our `.dll` that will be referenced from our `ScriptingElectron.js` file.
 
     ``` json
     "buildOptions": {
         "debugType": "portable",
-        "outputName": "scriptingjs"
+        "outputName": "scriptingelectron"
     },
     ```
 
@@ -398,7 +398,7 @@ For you convenience the full `package.json` file can be copied from below.
   "version": "1.0.0-*",
   "buildOptions": {
     "debugType": "portable",
-    "outputName": "scriptingjs"
+    "outputName": "scriptingelectron"
   },
   "runtimes": {
     "win10-x64": {},
@@ -419,7 +419,7 @@ For you convenience the full `package.json` file can be copied from below.
 
 ### Writing the implementation code
 
-We now need to write the implementation code of our `scriptingjs.cs`.
+We now need to write the implementation code of our `scriptingelectron.cs`.
 
 Open the file and replace the existing implemenation text with the following:
 
@@ -431,21 +431,56 @@ using System.Threading.Tasks;
 // Reference WebSharpJs
 using WebSharpJs;
 
-namespace ScriptingJs
+namespace ScriptingElectron
 {
-    public class Hello
+    public class ContextMenu
     {
-        public async Task<object> SayHello(object input)
+        public async Task<object> AddContextMenu(object input)
         {
-           Func<object, Task<object>> consoleLog = await WebSharp.CreateJavaScriptFunction(@"
+            Func<object, Task<object>> consoleLog = await WebSharp.CreateJavaScriptFunction(@"
                                 return function (data, callback) {
                                     console.log(data);
                                     callback(null, null);
                                 }
                             ");
+
+           Func<object, Task<object>> contextMenu = await WebSharp.CreateJavaScriptFunction(@"
+                                return function (contextMenuCallBacks, callback) {
+                                    const {remote} = require('electron')
+                                    const {Menu, MenuItem} = remote
+
+                                    const menu = new Menu()
+
+                                    menu.append(new MenuItem({label: 'MenuItem1', click() { contextMenuCallBacks.item1click(null, null); }}))
+                                    menu.append(new MenuItem({type: 'separator'}))
+                                    menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true, click() { contextMenuCallBacks.item2click(null, null); }}))
+
+                                    window.addEventListener('contextmenu', (e) => {
+                                        e.preventDefault()
+                                        menu.popup(remote.getCurrentWindow())
+                                    }, false)                                                     
+                                    
+                                    callback(null, null);
+                                }
+                            ");
             try
             {
-                consoleLog($"Scripting Node.js from CLR welcomes {input}!!!");
+
+                var contextMenuCallBacks = new
+                {
+                    item1click = (Func<object, Task<object>>)(async (commands) =>
+                    {
+                        consoleLog($"C# callback: Item 1 Clicked");
+                        return null;
+                    }),
+                    item2click= (Func<object, Task<object>>)(async (commands) =>
+                    {
+                        consoleLog($"C# callback: Item 2 Clicked");
+                        return null;
+                    })
+                };
+
+                contextMenu(contextMenuCallBacks);
             }
             catch (Exception exc) { consoleLog($"Exception: {exc.Message}"); }
 
@@ -453,8 +488,11 @@ namespace ScriptingJs
 
         }
     }
-
 }
+
+
+
+
 
 ```
 
@@ -477,11 +515,11 @@ Let's now take a look at the code.
 - Class `Hello` implementation
 
     ``` csharp
-    namespace ScriptingJs
+    namespace ScriptingElectron
     {
-        public class Hello
+        public class ContextMenu
         {
-            public async Task<object> SayHello(object input)
+            public async Task<object> AddContextMenu(object input)
             {
                 // Implementation here
                 return null;
@@ -492,7 +530,7 @@ Let's now take a look at the code.
 
     ```
 
-    The `SayHello` method follows the `Func<object,Task<object>>` delegate signature.  This is the method that will be referenced from the `scriptingjs.js` file implementation.
+    The `AddContextMenu` method follows the `Func<object,Task<object>>` delegate signature.  This is the method that will be referenced from the `scriptingelectron.js` file implementation.
 
 - Implementing the `consoleLog` function.
 
@@ -514,7 +552,7 @@ Let's now take a look at the code.
 
     The following is the pattern when scripting `Nodejs` functions:
 
-    ``` javascript
+``` javascript
         return function (data, callback) {
         
             //...... Your implementation code here .......
@@ -522,28 +560,135 @@ Let's now take a look at the code.
             callback(null, null);
         }
 
+```
+
+- Implementing the `contextMenu` scripting function.
+
+``` csharp
+            Func<object, Task<object>> contextMenu = await WebSharp.CreateJavaScriptFunction(@"
+                                return function (contextMenuCallBacks, callback) {
+                                    const {remote} = require('electron')
+                                    const {Menu, MenuItem} = remote
+
+                                    const menu = new Menu()
+
+                                    menu.append(new MenuItem({label: 'MenuItem1', click() { contextMenuCallBacks.item1click(null, null); }}))
+                                    menu.append(new MenuItem({type: 'separator'}))
+                                    menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true, click() { contextMenuCallBacks.item2click(null, null); }}))
+
+                                    window.addEventListener('contextmenu', (e) => {
+                                        e.preventDefault()
+                                        menu.popup(remote.getCurrentWindow())
+                                    }, false)                                                     
+                                    
+                                    callback(null, null);
+                                }
+                            ");
+```
+
+The code above can be viewed from the `Electron` documentation of the [Menu Class](https://github.com/electron/electron/blob/master/docs/api/menu.md#menubuildfromtemplatetemplate).
+
+When creating the function we follow the same pattern as the `consoleLog`
+
+
+``` javascript
+        return function (contextMenuCallBacks, callback) {
+        
+            //...... Your implementation code here .......
+
+            callback(null, null);
+        }
+
+```
+
+* Require electron 
+    ``` js
+    const {remote} = require('electron')
     ```
 
-### Compiling `scriptingjs.cs` code
-Before running our application we will need to compile our library code ```scriptingjs.cs```.
+* Reference the `Menu` and `MenuItem` classes
+
+    ``` js
+    const {Menu, MenuItem} = remote
+    ```
+
+* Create a new Menu class
+
+    ``` js
+    const menu = new Menu()
+    ```    
+
+* Append new menu items
+
+    ``` js
+        menu.append(new MenuItem({label: 'MenuItem1', click() { contextMenuCallBacks.item1click(null, null); }}))
+        menu.append(new MenuItem({type: 'separator'}))
+        menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true, click() { contextMenuCallBacks.item2click(null, null); }}))
+    ```    
+
+    - The menu `click()` functions will call back into the C# code using callback functions passed through the `contextMenuCallBacks` parameter.
+
+        -  menu.append(new MenuItem({label: 'MenuItem1', click() { contextMenuCallBacks.item1click(null, null); }}))
+        -  menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true, click() { contextMenuCallBacks.item2click(null, null); }}))
+
+* Add an event listener to the `window` that will show the popup context menu.
+
+    ``` js
+    window.addEventListener('contextmenu', (e) => {
+        e.preventDefault()
+        menu.popup(remote.getCurrentWindow())
+    }, false)           
+    ```
+
+* Define a `contextMenuCallBacks` object to be passed as a parameter to the scripted `contextMenu` function. 
+
+``` csharp
+            var contextMenuCallBacks = new
+            {
+                item1click = (Func<object, Task<object>>)(async (commands) =>
+                {
+                    consoleLog($"C# callback: Item 1 Clicked");
+                    return null;
+                }),
+                item2click= (Func<object, Task<object>>)(async (commands) =>
+                {
+                    consoleLog($"C# callback: Item 2 Clicked");
+                    return null;
+                })
+            };
+```
+
+- The `item1click` and `item2click` function delegates are referened in the scripted menu items.
+
+    -  menu.append(new MenuItem({label: 'MenuItem1', click() { `contextMenuCallBacks.item1click`(null, null); }}))
+    -  menu.append(new MenuItem({label: 'MenuItem2', type: 'checkbox', checked: true, click() { `contextMenuCallBacks.item2click`(null, null); }}))
+
+- Call the `contextMenu` function passing the `contextMenuCallBacks` object as a parameter.
+
+``` csharp
+        contextMenu(contextMenuCallBacks);
+```
+
+### Compiling `scriptingelectron.cs` code
+Before running our application we will need to compile our library code ```scriptingelectron.cs```.
 
 The compile target uses [Dotnet Core](https://www.microsoft.com/net/core) with one of the dependencies for the `WebSharp.js` delivered as a NuGet package.
 
 ``` bash
 # Windows
-cd src
-scriptingjs\src> dotnet restore -s path-to-WebSharp\electron-dotnet\tools\build\nuget
-scriptingjs\src> dotnet build
-scriptingjs\src> dotnet publish
+scriptingelectron> cd src
+scriptingelectron\src> dotnet restore -s path-to-WebSharp\electron-dotnet\tools\build\nuget
+scriptingelectron\src> dotnet build
+scriptingelectron\src> dotnet publish
 cd ..
 ```
 
 ``` bash
 # Mac OSX
-cd src
-scriptingjs\src$ dotnet restore -s path-to-WebSharp/electron-dotnet/tools/build/nuget
-scriptingjs\src$ dotnet build
-scriptingjs\src$ dotnet publish
+scriptingelectron$ cd src
+scriptingelectron\src$ dotnet restore -s path-to-WebSharp/electron-dotnet/tools/build/nuget
+scriptingelectron\src$ dotnet build
+scriptingelectron\src$ dotnet publish
 cd ..
 ```
 
@@ -560,7 +705,7 @@ cd ..
      > :bulb: See information about [Package Sources](./vsc-package-sources.md) for more information.
      
   * The `WebSharp.js.xxxx.nupkg` dependency is built during the Electron DotNet build process.
-* Build the source `scripting.cs` implementation by typing `dotnet build`.
+* Build the source `scriptingelectron.cs` implementation by typing `dotnet build`.
   * The `build` command will compile the source file based on the definition found in the `project.json`
 * Make the assemblies available for use by typing `dotnet publish`.
   * This will copy the implementation as well as the `WebSharp.js.dll` from the nuget package available to be loaded.
@@ -576,10 +721,10 @@ cd ..
          |--- Debug
                |--- netstandard1.6            
                     |--- (runtime)                   // This folder contains the [framework]/[runtime] output as per Dot Net docs.
-                    |--- scriptingjs.dll
+                    |--- scriptingelectron.dll
      |--- obj                                        // object folder
-     |--- scriptingjs.cs                             // C# implementation
-     |--- scriptingjs.js                             // javascript code implementation
+     |--- scriptingelectron.cs                             // C# implementation
+     |--- scriptingelectron.js                             // javascript code implementation
      |--- project.json                               // Defines compilation information 
 
 ```
@@ -588,7 +733,7 @@ cd ..
 
 We should now have our library implementation complete and all that is left to do is execute it to bring this all together.
 
-Open the `scriptingjs.js` file that was automatically generated from the template when creating the project.
+Open the `scriptingelectron.js` file that was automatically generated from the template when creating the project.
 
 ``` js
 var dotnet = require('electron-dotnet');
@@ -604,7 +749,7 @@ exports.sayHello = arg => {
 }
 ```
 
-What we need to do is call into our `scriptingjs` library code that was created in the previous steps.
+What we need to do is call into our `scriptingelectron` library code that was created in the previous steps.
 
 So let us replace the `var hello = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');`.
 
@@ -613,38 +758,62 @@ Mac OSX can reference the `scripting.dll` directly that was built using the the 
 
 The two ways to reference the assemblyFile.
 
-* Reference the `scriptingjs.dll` directly from the framework directory 
+* Reference the `scriptingelectron.dll` directly from the framework directory 
 
 ``` js
 
-    var hello = dotnet.func({
-        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/scriptingjs.dll',
-        typeName: 'ScriptingJs.Hello',
-        methodName: 'SayHello' // This must be Func<object,Task<object>>
-    }); 
+    var addContextMenu = dotnet.func({
+        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/scriptingelectron.dll',
+        typeName: 'ScriptingElectron.ContextMenu',
+        methodName: 'AddContextMenu' // This must be Func<object,Task<object>>
+    });
 ```
 
-* Reference the `scriptingjs.dll` directly from the [framework]/[runtime] directory 
+* Reference the `scriptingelectron.dll` directly from the [framework]/[runtime] directory 
 
 ``` js
-    var hello = dotnet.func({
-        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/osx.10.12-x64/publish/scriptingjs.dll',
-        typeName: 'ScriptingJs.Hello',
-        methodName: 'SayHello' // This must be Func<object,Task<object>>
+    var addContextMenu = dotnet.func({
+        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/osx.10.12-x64/publish/scriptingelectron.dll',
+        typeName: 'ScriptingElectron.ContextMenu',
+        methodName: 'AddContextMenu' // This must be Func<object,Task<object>>
     });
 ```
 
 Either way works for OSX but Windows can only be run from the [framework]/[runtime] directory.  So for Windows we will need to use the following:
 
 ``` js
-    var hello = dotnet.func({
-        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/win10-x64/publish/scriptingjs.dll',
-        typeName: 'ScriptingJs.Hello',
-        methodName: 'SayHello' // This must be Func<object,Task<object>>
+    var addContextMenu = dotnet.func({
+        assemblyFile: __dirname + '/bin/Debug/netstandard1.6/win10-x64/publish/scriptingelectron.dll',
+        typeName: 'ScriptingElectron.ContextMenu',
+        methodName: 'AddContextMenu' // This must be Func<object,Task<object>>
     });
 ```
 
 > :bulb: Windows will throw something like the following `"Uncaught System.IO.FileNotFoundException: Could not load file or assembly 'System.Runtime ...' or one of its dependencies.` if not called with the `[framework]/[runtime]` path.
+
+* Change our exported variable from `sayHello` to `addContextMenu`
+
+``` js
+    //Make method externaly visible this will be referenced in the renderer.js file
+    exports.addContextMenu = arg => {
+        addContextMenu("", function (error, result) {
+            if (error) throw error;
+            console.log(result);
+        });
+    } 
+```
+
+* We will also have to change our call from the `renderer.js` definition.
+
+``` js
+    // This file is required by the index.html file and will
+    // be executed in the renderer process for that window.
+    // All of the Node.js APIs are available in this process.
+    var contextMenu = require("./src/scriptingelectron.js");
+
+    contextMenu.addContextMenu();
+
+```
 
 ## Running the application
 
@@ -656,97 +825,36 @@ But right now we will have to do this install manually from the command line.
 
 ``` bash
 # Windows
-scriptingjs\src> cd ..
-scriptingjs> npm install path-to-WebSharp\electron-dotnet   
-scriptingjs> npm start 
+scriptingelectron\src> cd ..
+scriptingelectron> npm install path-to-WebSharp\electron-dotnet   
+scriptingelectron> npm start 
 ```
 
 ``` bash
 # Mac OSX
-scriptingjs/src$ cd ..
-scriptingjs$ npm install path-to-WebSharp/electron-dotnet   
-scriptingjs$ npm start 
+scriptingelectron/src$ cd ..
+scriptingelectron$ npm install path-to-WebSharp/electron-dotnet   
+scriptingelectron$ npm start 
 ```
 
-## Scripting Node.js from CLR welcomes Electron!!!
+## Scripting Electron from CLR Context Menu
 
 You should be presented with the same screen as when we first started the application above:
 
-![ScriptingJS application](./screenshots/scriptingjs.png)
+![ScriptingJS application](./screenshots/scriptingelectron.png)
 
-The ScriptingJS program will write the output to the Console as specified by the `console.log` JavaScript function.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
+To see the console when the menu items are selected open the `Developer Tools` by selecting `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
 
-![ScriptingJS application console log](./screenshots/scriptingjs-console2.png)
+![ScriptingJS application console log](./screenshots/scriptingelectron-console2.png)
 
-## Access to Nodejs modules
+Right click on the application menu to show the context menu.
 
-So far we have only seen the scripting of a basic command.  Let's take this a little further and see some actual `Nodejs` code.  What we are going to do here is probably not something that one would think about using since we have the full power of .Net available to us as developers but is more to show that accessing `Nodejs`'s functions are also possible.
+![ScriptingJS application console log](./screenshots/scriptingelectron-console3.png)
 
-### Nodejs server scripting
+Selecting any of the menu items from the context menu will execute the corresponding callback function into the C# code.
 
-* Open the `scriptingjs.cs` module and add another scripted variable right after the `consoleLog` definition.  This will define a basic http server using `Nodejs`'s `http` module. 
+![ScriptingJS application console log](./screenshots/scriptingelectron-menuitem-clicked.png)
 
-``` csharp
-           Func<object, Task<object>> nodeServer = await WebSharp.CreateJavaScriptFunction(@"
-                                 return function (data, callback) {
-
-                                    // Load the http module to create an http server.
-                                    var http = require('http');
-
-                                    // Configure our HTTP server to respond with Hello World to all requests.
-                                    var server = http.createServer(function (request, response) {
-                                        response.writeHead(200, {'Content-Type': 'text/plain'});
-                                        response.end(data + '\n');
-                                    });
-
-                                    // Listen on port 8000, IP defaults to 127.0.0.1
-                                    server.listen(8000);
-
-                                    // Put a friendly message on the terminal
-                                    console.log('Server running at http://127.0.0.1:8000/');
-
-                                     callback(null, null);
-                                 }
-                             ");     
-```    
-
-> :bulb: Notice the use of `Nodejs`'s `require` command to load the `http` module `var http = require('http');`.  All of `Nodejs`'s modules are available including any extra modules installed.
-
-
-* Call the `nodeServer` function with the response string passed as a parameter.
-
-``` csharp
-           try
-            {
-                consoleLog($"Scripting Node.js from CLR welcomes {input}!!!");
-                nodeServer($"Scripting Node.js from CLR welcomes {input}!!!");
-            }
-            catch (Exception exc) { consoleLog($"Exception: {exc.Message}"); }
-```
-
-### Build and Run the application
-
-The application will need to be compiled and publish again so follow the steps outlined above [Compiling scriptingjs.cs code](#compiling-scriptingjscs-code).
-
-## Server Scripting Node.js from CLR welcomes Electron!!!
-
-You should be presented with the same screen as when we first started the application above:
-
-![ScriptingJS application](./screenshots/scriptingjs.png)
-
-The ScriptingJS program will write the output to the Console as specified by the `console.log` JavaScript function.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
-
-![ScriptingJS application server log](./screenshots/scriptingjs-console3.png)
-
-> :bulb: Notice the new line printed to the console `Server running at http://127.0.0.1:8000/`
-
-## Serving up Scripting Node.js from CLR welcomes Electron!!!
-
-Point a browser to the following address [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
-
-You should be presented with the following screen:
-
-![ScriptingJS application served](./screenshots/scriptingjs-browser.png)
 
 ## Debugging
 
