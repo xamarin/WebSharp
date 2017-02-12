@@ -484,7 +484,7 @@ cd ..
   * You'll see a new project.lock.json file in your project folder.
   * This file contains information about your project's dependencies to make subsequent restores quicker.
   * The `-s path-to-WebSharp/electron-dotnet/tools/build/nuget` in the `restore` is the nuget source where the `Xamarin.PepperSharp.xxx.nupkg` can be found.
-     * On Windows if a Local Package source is setup then the source will be search so you will not need to provide this parameter.
+     * On Windows if a Local Package source is setup then the source will be searched so you will not need to provide this parameter.
      * On Mac it seems that the `restore` does not work for Local Package sources right now.  Your mileage may vary but this is the surefire way to get the dependencies restored correctly.
      
      > :bulb: See information about [Package Sources](./vsc-package-sources.md) for more information.

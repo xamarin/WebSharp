@@ -4,7 +4,7 @@
 
 This document will take you through creating an `Electron Dotnet` application for VS Code ("ScriptingJS") and will explain the basic `Nodejs` integration points from C# code to interact with `Nodejs` from your `Electron` application.
 
-In this walkthrough, you'll begin with setting up a basic `Electron Dotnet` application that calls a C# routing from JavaScript code.  The C# function that is generated from the template formats a string and returns that formatted string back to the calling javascript function to be written out to the console from JavaScript code.
+In this walkthrough, you'll begin with setting up a basic `Electron Dotnet` application that calls a C# routine from JavaScript code.  The C# function that is generated from the template formats a string and returns that formatted string back to the calling javascript function to be written out to the console from JavaScript code.
 
 Once this is up and running we will begin modifying the application to script `NodeJs` functions directly from the C# application instead.  
 
@@ -237,7 +237,7 @@ The generated application's code is in the `src` directory.  Depending on the pr
 ``` bash
 .
 |--- src                              // sources
-     |--- scripting.js                // javascript code implementation
+     |--- scriptingjs.js                // javascript code implementation
 ```
 #### electron-dotnet.js: .NET and Node.js in-process implementation: scriptingjs.js
 
@@ -329,19 +329,209 @@ The ScriptingJS program writes output to the Console.  To see this you can selec
 
 What the actual [scripting.js](#electron-dotnetjs-net-and-nodejs-in-process-implementation-scriptingjsjs) code does is call a C# function to format a string using the string `Electron` as a parameter to call the function.  Once the C# function formats the string it will be returned back to the calling JavaScript function and printed out using the JavaScript function `console.log`.  What we will be doing in the following exercise is instead of returning the formatted string back to the JavaScript code to be written to the console is to write that string directly from the C# program itself by scripting the `console.log` function itself and using it from the C# program.
 
-### Adding new program sources
+### Writing the library
 
 From a command line you will creating a new `.cs` source file and `project.json` file.
 
 ``` bash
 .
 |--- src                              // sources
-     |--- Library.cs                  // C# implementation 
+     |--- scriptingjs.cs              // C# implementation 
      |--- project.json                // Defines compilation information 
-     |--- scripting.js                // javascript code implementation
+     |--- scriptingjs.js              // javascript code implementation
+```
+
+Using the [.NET Core.](https://www.microsoft.com/net/core) SDK create a new library source project.
+
+``` bash
+# Windows
+cd src
+\src> dotnet new --t Lib
+\src> rename Library.cs scriptingjs.cs
+```
+
+``` bash
+# Mac OSX
+\src$ dotnet new --t Lib
+\src$ mv Library.cs scriptingjs.cs
+```
+
+Afterwards, you should have the same structure above in the `src` directory.
+
+Before we can compile our code we will need to make a couple of modifications to the `package.json` file.
+
+Open the `package.json` file in Visual Studio Code and make sure it looks as follows:
+
+- Add a line to the `"buildoptions"` to set the `outputName` of the generated library to `scriptingjs`.  This will be the name of our `.dll` that will be referenced from our `scriptingjs.js` file.
+
+    ``` json
+    "buildOptions": {
+        "debugType": "portable",
+        "outputName": "scriptingjs"
+    },
+    ```
+
+- Add a dependency to `WebSharp.js` package that will allow the C# program to script `NodeJs` functions.
+
+    ``` json
+    "dependencies": {
+        "WebSharp.js" : { "version": "*"}
+    },
+    ```
+
+- Create a runtimes section in your project.json file that defines the platforms your app targets, and specify the runtime identifier of each platform that you target. See Runtime IDentifier catalog for a list of runtime identifiers. For example, the following runtimes section indicates that the app runs on 64-bit Windows 10 operating systems and the 64-bit OS X Version 10.12 operating system.
+
+    ``` json
+    "runtimes": {
+        "win10-x64": {},
+        "osx.10.12-x64": {}
+    },
+    ```
+
+> :bulb: Depending on which runtime you are compiling for you may have some `Unable to resolve` warnings output in the next section.
+
+More information about the [.NET Standard](https://blogs.msdn.microsoft.com/dotnet/2016/09/26/introducing-net-standard/)
+
+For you convenience the full `package.json` file can be copied from below.
+
+``` json
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+    "outputName": "scriptingjs"
+  },
+  "runtimes": {
+    "win10-x64": {},
+    "osx.10.12-x64": {}
+  },  
+  "dependencies": {
+      "WebSharp.js" : { "version": "*"}
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  }
+}
+```
+
+### Writing the implementation code
+
+We now need to write the implementation code of our `scriptingjs.cs`.
+
+Open the file and replace the existing implemenation text with the following:
+
+``` csharp
+
+using System;
+using System.Threading.Tasks;
+
+// Reference WebSharpJs 
+using WebSharpJs;
+
+namespace ScriptingJs
+{
+    public class Hello
+    {
+        public async Task<object> SayHello(object input)
+        {
+            var consoleLog = await console.log();
+
+            try
+            {
+                consoleLog($"Scripting Node.js from CLR welcomes {input}!!!");
+            }
+            catch (Exception exc) { consoleLog($"Exception: {exc.Message}"); }
+
+            return null;
+
+        }
+    }
+
+    public class console
+    {
+        public static async Task<Func<object, Task<object>>> log()
+        {
+            return await WebSharp.CreateJavaScriptFunction(@"
+                                 return function (data, callback) {
+                                     console.warn(data);
+                                     callback(null, null);
+                                 }
+                             ");
+        }
+
+    }
+}
+
 ```
 
 
+
+
+### Compiling scriptingjs code
+Before running our application we will need to compile our library code ```scriptingjs.cs```.
+
+The compile target uses [Dotnet Core](https://www.microsoft.com/net/core) with one of the dependencies for the `WebSharp.js` delivered as a NuGet package.
+
+``` bash
+# Windows
+cd src
+scriptingjs\src> dotnet restore -s path-to-WebSharp\electron-dotnet\tools\build\nuget
+scriptingjs\src> dotnet build
+scriptingjs\src> dotnet publish
+cd ..
+```
+
+``` bash
+# Mac OSX
+cd src
+scriptingjs\src$ dotnet restore -s path-to-WebSharp/electron-dotnet/tools/build/nuget
+scriptingjs\src$ dotnet build
+scriptingjs\src$ dotnet publish
+cd ..
+```
+
+#### What do the commands above do?
+
+* Resolve the build assets by typing `dotnet restore`.
+  * Running `restore` pulls down the required packages declared in the project.json file.
+  * You'll see a new project.lock.json file in your project folder.
+  * This file contains information about your project's dependencies to make subsequent restores quicker.
+  * The `-s path-to-WebSharp/electron-dotnet/tools/build/nuget` in the `restore` is the nuget source where the `WebSharp.js.xxx.nupkg` can be found.
+     * On Windows if a Local Package source is setup then the source will be search so you will not need to provide this parameter.
+     * On Mac it seems that the `restore` does not work for Local Package sources right now.  Your mileage may vary but this is the surefire way to get the dependencies restored correctly.
+     
+     > :bulb: See information about [Package Sources](./vsc-package-sources.md) for more information.
+     
+  * The `WebSharp.js.xxxx.nupkg` dependency is built during the Electron DotNet build process.
+* Build the source `scripting.cs` implementation by typing `dotnet build`.
+  * The `build` command will compile the source file based on the definition found in the `project.json`
+* Make the assemblies available for use by typing `dotnet publish`.
+  * This will copy the implementation as well as the `WebSharp.js.dll` from the nuget package available to be loaded.
+
+> :bulb: For more information on the publish command see the [dotnet publish documentation](https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-publish)
+
+#### DotNet Publish output folder
+
+``` bash
+.
+|--- src                                             // sources
+     |--- bin                                        // 
+         |--- Debug
+               |--- netstandard1.6            
+                    |--- (runtime)                   // This folder contains the [framework]/[runtime] output as per Dot Net docs.
+                    |--- scriptingjs.dll
+     |--- obj                                        // object folder
+     |--- scriptingjs.cs                             // C# implementation
+     |--- scriptingjs.js                             // javascript code implementation
+     |--- project.json                               // Defines compilation information 
+
+```
+
+"Uncaught System.IO.FileNotFoundException: Could not load file or assembly 'System.Runtime, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' or one of its dependencies.
 
 ## Debugging
 
