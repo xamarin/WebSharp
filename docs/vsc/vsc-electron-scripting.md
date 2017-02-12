@@ -512,7 +512,7 @@ Let's now take a look at the code.
 
     The `WebSharpJs` assembly provides the interaction with `Nodejs`.  This managed assembly exposes the static function `CreateJavaScriptFunction` which will be detailed more below.
 
-- Class `Hello` implementation
+- Class `ContextMenu` implementation
 
     ``` csharp
     namespace ScriptingElectron
@@ -813,6 +813,28 @@ Either way works for OSX but Windows can only be run from the [framework]/[runti
 
     contextMenu.addContextMenu();
 
+```
+
+#### scriptingelectronjs full source
+
+The full code for `scriptingelectron.js` is available here for your copying convenience.
+
+``` js
+var dotnet = require('electron-dotnet');
+
+var addContextMenu = dotnet.func({
+    assemblyFile: __dirname + '/bin/Debug/netstandard1.6/scriptingelectron.dll',
+    typeName: 'ScriptingElectron.ContextMenu',
+    methodName: 'AddContextMenu' // This must be Func<object,Task<object>>
+});
+
+//Make method externaly visible this will be referenced in the renderer.js file
+exports.addContextMenu = arg => {
+	addContextMenu("", function (error, result) {
+		if (error) throw error;
+		if (result) console.log(result);
+	});
+}
 ```
 
 ## Running the application
