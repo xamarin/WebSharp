@@ -232,13 +232,14 @@ When we get to debugging you will see why it is broken up this way.
 
 ### Generated Code
 
-The generated application's code is in the `src` directory.  Depending on the project template selected there is an implementation of each type of application integration point generated.  When we selected the `electron-dotnet.js: .NET and Node.js in-process with PepperPlugin` we will have a total of two src files:
+The generated application's code is in the `src` directory.  Depending on the project template selected there is an implementation of each type of application integration point generated.  When we selected the `Node.js .NET Scripting` we will have a total of one src file:
 
 ``` bash
 .
 |--- src                              // sources
      |--- scriptingjs.js                // javascript code implementation
 ```
+
 #### electron-dotnet.js: .NET and Node.js in-process implementation: scriptingjs.js
 
 ``` js
@@ -356,7 +357,9 @@ cd src
 \src$ mv Library.cs scriptingjs.cs
 ```
 
-Afterwards, you should have the same structure above in the `src` directory.
+> :bulb: Notice the use of `--t Lib` as the parameter to the `dotnet new` command.  This specifies to the `Net Core` CLI command to create a 'library' template.  More information about the 'dotnet new' and its options can be found [here](https://github.com/dotnet/docs/blob/master/docs/core/tools/dotnet-new.md#options). 
+
+Afterwards, you should have the same structure mentioned above in the `src` directory.
 
 Before we can compile our code we will need to make a couple of modifications to the `package.json` file.
 
@@ -379,7 +382,7 @@ Open the `package.json` file in Visual Studio Code and make sure it looks as fol
     },
     ```
 
-- Create a runtimes section in your project.json file that defines the platforms your app targets, and specify the runtime identifier of each platform that you target. See Runtime IDentifier catalog for a list of runtime identifiers. For example, the following runtimes section indicates that the app runs on 64-bit Windows 10 operating systems and the 64-bit OS X Version 10.12 operating system.
+- Create a ```runtimes``` section in your `project.json` file that defines the platforms your app targets, and specify the runtime identifier of each platform that you target. See Runtime IDentifier catalog for a list of runtime identifiers. For example, the following runtimes section indicates that the app runs on `64-bit Windows 10` operating systems and the `64-bit OS X Version 10.12` operating system.
 
     ``` json
     "runtimes": {
@@ -388,7 +391,7 @@ Open the `package.json` file in Visual Studio Code and make sure it looks as fol
     },
     ```
 
-> :bulb: Depending on which runtime you are compiling for you may have some `Unable to resolve` warnings output in the next section.
+> :bulb: Depending on which runtime you are targeting, you may have some `Unable to resolve` warnings output in the compiling section.
 
 More information about the [.NET Standard](https://blogs.msdn.microsoft.com/dotnet/2016/09/26/introducing-net-standard/)
 
@@ -679,6 +682,75 @@ The ScriptingJS program will write the output to the Console as specified by the
 
 ![ScriptingJS application console log](./screenshots/scriptingjs-console2.png)
 
+## Access to Nodejs modules
+
+So far we have only seen the scripting of a basic command.  Let's take this a little further and see some actual `Nodejs` code.  What we are going to do here is probably not something that one would think about using since we have the full power of .Net available to us as developers but is more to show that accessing `Nodejs`'s functions are also possible.
+
+### Nodejs server scripting
+
+* Open the `scriptingjs.cs` module and add another scripted variable right after the `consoleLog` definition.  This will define a basic http server using `Nodejs`'s `http` module. 
+
+``` csharp
+           Func<object, Task<object>> nodeServer = await WebSharp.CreateJavaScriptFunction(@"
+                                 return function (data, callback) {
+
+                                    // Load the http module to create an http server.
+                                    var http = require('http');
+
+                                    // Configure our HTTP server to respond with Hello World to all requests.
+                                    var server = http.createServer(function (request, response) {
+                                        response.writeHead(200, {'Content-Type': 'text/plain'});
+                                        response.end(data + '\n');
+                                    });
+
+                                    // Listen on port 8000, IP defaults to 127.0.0.1
+                                    server.listen(8000);
+
+                                    // Put a friendly message on the terminal
+                                    console.log('Server running at http://127.0.0.1:8000/');
+
+                                     callback(null, null);
+                                 }
+                             ");     
+```    
+
+> :bulb: Notice the use of `Nodejs`'s `require` command to load the `http` module `var http = require('http');`.  All of `Nodejs`'s modules are available including any extra modules installed.
+
+
+* Call the `nodeServer` function with the response string passed as a parameter.
+
+``` csharp
+           try
+            {
+                consoleLog($"Scripting Node.js from CLR welcomes {input}!!!");
+                nodeServer($"Scripting Node.js from CLR welcomes {input}!!!");
+            }
+            catch (Exception exc) { consoleLog($"Exception: {exc.Message}"); }
+```
+
+### Build and Run the application
+
+The application will need to be compiled and publish again so follow the steps outlined above [Compiling scriptingjs.cs code](#compiling-scriptingjscs-code).
+
+## Server Scripting Node.js from CLR welcomes Electron!!!
+
+You should be presented with the same screen as when we first started the application above:
+
+![ScriptingJS application](./screenshots/scriptingjs.png)
+
+The ScriptingJS program will write the output to the Console as specified by the `console.log` JavaScript function.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
+
+![ScriptingJS application server log](./screenshots/scriptingjs-console3.png)
+
+> :bulb: Notice the new line printed to the console `Server running at http://127.0.0.1:8000/`
+
+## Serving up Scripting Node.js from CLR welcomes Electron!!!
+
+Point a browser to the following address [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+
+You should be presented with the following screen:
+
+![ScriptingJS application served](./screenshots/scriptingjs-browser.png)
 
 ## Debugging
 
