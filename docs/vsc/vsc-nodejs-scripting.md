@@ -10,9 +10,8 @@ Once this is up and running we will begin modifying the application to script `N
 
 ## Prerequisites
 You need [node.js](https://nodejs.org/en/) installed and available in your $PATH.
-   * Plugins require [Mono](http://www.mono-project.com/download/) installed and available in your $PATH.
-      
-      > :bulb: Windows will need both the x86 and x64 bit versions installed and [available in your $PATH](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#setting-mono-path).
+   * Plugins will not be used in this example.
+
    * `electron-dotnet` needs to be built.  The easiest way is to use the provided `make` files available in the WebSharp base directory.  
    
       * [Windows Prerequisites](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#building-on-windows)
@@ -306,9 +305,6 @@ But right now we will have to do this install manually from the command line.
 scriptingjs> npm install path-to-WebSharp\electron-dotnet   
 scriptingjs> npm start 
 ```
-
-> :bulb: Windows users need to make sure that mono is [available in their $PATH](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#setting-mono-path).  If not then a runtime error is generated.
-
 
 ``` bash
 # Mac OSX
