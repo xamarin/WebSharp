@@ -1,6 +1,6 @@
 # notifications README
 
-A sample that demonstrates Electron's Notification API using Electron DotNet's WebSharpJs interace. 
+A sample that demonstrates Electron's Notification API using Electron DotNet's WebSharpJs interface. 
 
 More information about the Notification API can be found [here](https://notifications.spec.whatwg.org/#api).
 
@@ -70,8 +70,7 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
      make build
      ```
 
-## The Structure of an application
-After running, the generated application should have the following structure:
+## The Structure of the application
 
 ```
 .
@@ -102,8 +101,6 @@ After running, the generated application should have the following structure:
 Notifications interface may not be complete.  May need some fixing up before used in an actual application.
 
 ## Release Notes
-
-Users appreciate release notes as you update your application.
 
 ### 0.0.1
 
