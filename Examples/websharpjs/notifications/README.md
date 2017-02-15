@@ -45,7 +45,7 @@ Interaction with Electrons's Notification API from a C# program.
 
 * Demonstrates one approach for interacting with the DOM objects from the C# progarm, in this specific scenario it is attaching a click delegate to the button existing in the DOM which calls back into C# program.
 
-[notifications](images/notifications.gif)
+![notifications](images/notifications.gif)
 
 > Note: Implementation presented here may not be complete and only serves as an example for how one could approach the mapping.
 
