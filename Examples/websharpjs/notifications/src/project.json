@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+    "outputName": "notifications"
+  },
+"runtimes": {
+    "win10-x64": {},
+    "osx.10.12-x64": {}
+  },  
+  "dependencies": {
+      "WebSharp.js" : { "version": "*"}
+  },
+  "frameworks": {
+    "net451": {}
+  }
+}

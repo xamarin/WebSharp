@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>notifications</title>
+  </head>
+  <body>
+    <h1>notifications</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using node <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+
+    <p>This sample demonstrates the use of the Notifications API. Use buttons below to create various different notifications.</p>
+		<div class="sample">
+			<button id="basic">Basic Notification</button>
+			<span>Basic notification: default icon, title, and message. </span>
+		</div>
+		<div class="sample">
+			<button id="image">Image Notification</button>
+			<span>Image notification: icon, title, image, and message.</span>
+		</div>
+
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>
