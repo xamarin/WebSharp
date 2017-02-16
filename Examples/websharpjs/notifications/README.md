@@ -1,6 +1,6 @@
 # notifications README
 
-A sample that demonstrates Electron's Notification API using Electron DotNet's WebSharpJs interace. 
+A sample that demonstrates Electron's Notification API using Electron DotNet's WebSharpJs interface. 
 
 More information about the Notification API can be found [here](https://notifications.spec.whatwg.org/#api).
 
@@ -45,7 +45,7 @@ Interaction with Electrons's Notification API from a C# program.
 
 * Demonstrates one approach for interacting with the DOM objects from the C# progarm, in this specific scenario it is attaching a click delegate to the button existing in the DOM which calls back into C# program.
 
-[notifications](images/notifications.gif)
+![notifications](images/notifications.gif)
 
 > Note: Implementation presented here may not be complete and only serves as an example for how one could approach the mapping.
 
@@ -70,8 +70,7 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
      make build
      ```
 
-## The Structure of an application
-After running, the generated application should have the following structure:
+## The Structure of the application
 
 ```
 .
@@ -102,8 +101,6 @@ After running, the generated application should have the following structure:
 Notifications interface may not be complete.  May need some fixing up before used in an actual application.
 
 ## Release Notes
-
-Users appreciate release notes as you update your application.
 
 ### 0.0.1
 
