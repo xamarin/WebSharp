@@ -4,7 +4,7 @@ set argc=0
 for %%x in (%*) do Set /A argc+=1
 
 if /I "%argc%" LSS "2" (
-    echo Usage: argc build.bat debug^|release target "{version} {version}" ...
+    echo Usage: build.bat debug^|release target "{version} {version}" ...
     echo e.g. build.bat release 1.4.0 6.5.0
     echo e.g. build.bat release 1.5.0 7.0.0
     echo e.g. build.bat release 1.6.0 7.4.0

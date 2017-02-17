@@ -1261,7 +1261,7 @@ You must have Visual Studio 2015 toolset, Python 2.7.x, and node-gyp installed f
 To build one of the versions of `Node.js` officially released by [Node.js](http://nodejs.org/dist), targeting a version of `Electron`, do the following:
 
 ```
-Usage: argc build.bat debug|release target "{version} {version}" ...
+Usage: build.bat debug|release target "{version} {version}" ...
 e.g. build.bat release 1.4.0 6.5.0
 e.g. build.bat release 1.5.0 7.0.0
 e.g. build.bat release 1.6.0 7.4.0
