@@ -3,9 +3,29 @@ var fs = require('fs')
     , builtEdge = path.resolve(__dirname, '../build/Release/' + (process.env.EDGE_USE_CORECLR || !fs.existsSync(path.resolve(__dirname, '../build/Release/edge_nativeclr.node')) ? 'edge_coreclr.node' : 'edge_nativeclr.node'))
     , edge;
 
+var targetMap = [
+    [ /^1\.4/, '1.4.0' ],
+    [ /^1\.5/, '1.5.0' ],
+    [ /^1\.6/, '1.6.0' ],    
+];
+
+function determineTarget() {
+    for (var i in targetMap) {
+        if (process.versions.electron.match(targetMap[i][0])) {
+            return targetMap[i][1];
+        }
+    }
+
+    throw new Error('The edge module has not been pre-compiled for Electron version ' + process.versions.electron +
+        '. You must build a custom version of edge.node. Please refer to https://github.com/websharp/electron-dotnet ' +
+        'for building instructions.');
+}
+
+
 var versionMap = [
     [ /^6\./, '6.5.0' ],
-    [ /^7\./, '7.0.0' ],
+    [ /^7\.[0-3]/, '7.0.0' ],
+    [ /^7\.4/, '7.4.0' ],
 ];
 
 function determineVersion() {
@@ -48,9 +68,9 @@ if (process.platform === 'win32' && process.env.EDGE_USE_MONOCLR === '1') {
         ' Please refer to https://github.com/websharp/electron-dotnet for building instructions.');
     }
     
-    process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + 'edge_monoclr');
+    process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineTarget() + '/' + determineVersion() + '/' + 'edge_monoclr');
 }
-//process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + 'edge_monoclr');
+
 if (process.env.EDGE_NATIVE) {
     edgeNative = process.env.EDGE_NATIVE;
 }
@@ -58,7 +78,7 @@ else if (fs.existsSync(builtEdge)) {
     edgeNative = builtEdge;
 }
 else if (process.platform === 'win32') {
-    edgeNative = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + (process.env.EDGE_USE_CORECLR ? 'edge_coreclr' : 'edge_nativeclr'));
+    edgeNative = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineTarget() + '/' + determineVersion() + '/' + (process.env.EDGE_USE_CORECLR ? 'edge_coreclr' : 'edge_nativeclr'));
 }
 else {
     throw new Error('The edge native module is not available at ' + builtEdge 

@@ -7,7 +7,7 @@ if /I "%argc%" LSS "2" (
     echo Usage: argc build.bat debug^|release target "{version} {version}" ...
     echo e.g. build.bat release 1.4.0 6.5.0
     echo e.g. build.bat release 1.5.0 7.0.0
-    echo e.g. build.bat release 1.6.0 7.0.0
+    echo e.g. build.bat release 1.6.0 7.4.0
     exit /b -1
 )
 
@@ -56,7 +56,7 @@ exit /b 0
 
 :build
 
-set DESTDIR=%DESTDIRROOT%\%1\%3
+set DESTDIR=%DESTDIRROOT%\%1\%TARGET%\%3
 if exist "%DESTDIR%\node.exe" goto gyp
 if not exist "%DESTDIR%\NUL" mkdir "%DESTDIR%"
 echo Downloading node.exe %2 %3...
