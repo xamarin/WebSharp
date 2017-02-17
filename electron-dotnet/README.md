@@ -1272,13 +1272,13 @@ cd tools
 build.bat release 1.4.0 6.5.0
 ```
 
-> Note: the `Node.j`s version number you provide must be a version number corresponding to one of the subdirectories of http://nodejs.org/dist. The command will build both x32 and x64 architectures (assuming you use x64 machine). The command will also copy the edge\_\*.node executables to appropriate locations under `lib\native` directory where they are looked up from at runtime. The `npm install` step copies the C standard library shared DLL to the location of the edge\_\*.node files for the component to be ready to go.
+> Note: the `Node.js` version number you provide must be a version number corresponding to one of the subdirectories of http://nodejs.org/dist. The command will build both `x32/ia32` and `x64` architectures (assuming you use a `x64` machine). The command will also copy the `edge\_\*.node` executables to appropriate locations under `lib\native` directory where they are looked up from at runtime. The `npm install` step copies the C standard library shared DLL to the location of the edge\_\*.node files for the component to be ready to go.
 
-For example:
+#### Windows Build Example
 
 `Electron` target `1.5.0` is built against `Nodejs` version `7.0.0` but the `1.5.1` target needs to be built against the `7.4.0` version of `Nodejs`.
 
-To support these types of scenarios the directory structure of the native compilations for the different versions the native output directory now includes the Electron version for both x86 and x64 platforms.
+To support these types of scenarios the directory structure of the native builds, for the different target/versions, have the following structure.  The native output directory will include the `Electron` target for both `x32/ia32` and `x64` platforms.
 
 ```
 .
