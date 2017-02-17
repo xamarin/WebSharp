@@ -1258,24 +1258,78 @@ You must have Visual Studio 2015 toolset, Python 2.7.x, and node-gyp installed f
 
 > :bulb: If building the mono clr you will need both a 32 bit and a 64 bit version of mono installed see [Building with Mono support on Windows](#building-with-mono) below.
 
-To build and test the project against all supported versions of Node.js in x86 and x64 flavors, run the following:
+To build one of the versions of `Node.js` officially released by [Node.js](http://nodejs.org/dist), targeting a version of `Electron`, do the following:
 
 ```
-tools\buildall.bat
-test\testall.bat
-npm run jshint
+Usage: argc build.bat debug|release target "{version} {version}" ...
+e.g. build.bat release 1.4.0 6.5.0
+e.g. build.bat release 1.5.0 7.0.0
+e.g. build.bat release 1.6.0 7.4.0
 ```
-
-To build one of the versions of Node.js officially released by [Node.js](http://nodejs.org/dist), do the following:
 
 ```
 cd tools
-build.bat release 6.5.0
+build.bat release 1.4.0 6.5.0
 ```
 
-Note: the Node.js version number you provide must be version number corresponding to one of the subdirectories of http://nodejs.org/dist. The command will build both x32 and x64 architectures (assuming you use x64 machine). The command will also copy the edge\_\*.node executables to appropriate locations under lib\native directory where they are looked up from at runtime. The `npm install` step copies the C standard library shared DLL to the location of the edge\_\*.node files for the component to be ready to go.
+> Note: the `Node.j`s version number you provide must be a version number corresponding to one of the subdirectories of http://nodejs.org/dist. The command will build both x32 and x64 architectures (assuming you use x64 machine). The command will also copy the edge\_\*.node executables to appropriate locations under `lib\native` directory where they are looked up from at runtime. The `npm install` step copies the C standard library shared DLL to the location of the edge\_\*.node files for the component to be ready to go.
 
-To build the C++\CLI native extension using the version of Node.js installed on your machine, issue the following command:
+For example:
+
+`Electron` target `1.5.0` is built against `Nodejs` version `7.0.0` but the `1.5.1` target needs to be built against the `7.4.0` version of `Nodejs`.
+
+To support these types of scenarios the directory structure of the native compilations for the different versions the native output directory now includes the Electron version for both x86 and x64 platforms.
+
+```
+.
+|--- lib
+     |--- native
+          |--- win32
+               |--- ia32
+                    |--- target electron
+                         |--- version nodejs
+               |--- x64
+                    |--- target electron
+                         |--- version nodejs
+```                         
+
+To use `build.bat` in the scenario above one would issue the command as follows:
+
+```
+WebSharp\electron-dotnet\tools>build.bat release 1.5.0 7.0.0 7.4.0
+```
+
+Starting with 1.4.0 - 1.6.0 of Electron here are the following commands:
+
+```
+WebSharp\electron-dotnet\tools>build.bat release 1.4.0 6.5
+WebSharp\electron-dotnet\tools>build.bat release 1.5.0 7.0.0 7.4.0
+WebSharp\electron-dotnet\tools>build.bat release 1.6.0 7.4.0
+```
+
+The `electron-dotnet.js` source also needs to be updated so that the correct native `Nodejs` node module version can be looked up and loaded.
+
+The `targetMap` needs to be modified for the supported `Electron` targets.
+
+``` js
+var targetMap = [
+    [ /^1\.4/, '1.4.0' ],
+    [ /^1\.5/, '1.5.0' ],
+    [ /^1\.6/, '1.6.0' ],    
+];
+``` 
+
+As well as the `versionMap` for the `Nodejs` versions.
+
+``` js
+var versionMap = [
+    [ /^6\./, '6.5.0' ],
+    [ /^7\.[0-3]/, '7.0.0' ],
+    [ /^7\.4/, '7.4.0' ],
+];
+```
+
+To build the C++\CLI native extension using the version of `Node.js` installed on your machine, issue the following command:
 
 ```
 npm install -g node-gyp
@@ -1285,21 +1339,21 @@ node-gyp build --debug
 
 Additional requirements and install instructions can be found [node-gyp windows install](https://github.com/nodejs/node-gyp#installation)
 
-You can then set the `EDGE_NATIVE` environment variable to the fully qualified file name of the built edge_\*.node binary (edge\_nativeclr.node if you're using the native CLR runtime or edge\_coreclr.node if you're using .NET Core). It is useful during development, for example:
+You can then set the `EDGE_NATIVE` environment variable to the fully qualified file name of the built edge_\*.node binary (`edge\_nativeclr.node` if you're using the `native CLR runtime` or `edge\_coreclr.node` if you're using `.NET Core` or `edge\_monoclr.node` if you are using `Mono` ). It is useful during development, for example:
 
 ```
-set EDGE_NATIVE=C:\projects\edge\build\Debug\edge_nativeclr.node
+set EDGE_NATIVE=C:\projects\WebSharp\electron-dotnet\build\Debug\edge_nativeclr.node
 ``` 
 
 You can also set the `EDGE_DEBUG` environment variable to 1 to have the edge module generate debug traces to the console when it runs.
 
 ### Building with Mono
 
-To build ```electron-dotnet``` with Mono support you will need to have both a x86 and x64 bit mono installation.  The ```build.bat``` section mentioned above will automatically detect if ```Mono``` is in the windows execution path and execute the build process for both x86 and x64 architectures.
+To build ```electron-dotnet``` with `Mono` support you will need to have both a `x86` and `x64` bit mono installation.  The ```build.bat``` section mentioned above will automatically detect if ```Mono``` is in the windows execution path and execute the build process for both `x86` and `x64` architectures.
 
 A generated node called ```edge_monoclr.node``` will be available for use. 
 
-If ```Mono``` support is built and ```Mono``` is installed, by default electron-dotnet will use window's native .Net support, you can opt in to using ```Mono``` by setting the ```EDGE_USE_MONOCLR``` environment variable:
+If ```Mono``` support is built and ```Mono``` is installed, by default `electron-dotnet` will use window's native .Net support, you can opt in to using ```Mono``` by setting the ```EDGE_USE_MONOCLR``` environment variable to `1`:
 
 ```
 # tells electron-dotnet to load the mono clr version
@@ -1308,11 +1362,11 @@ set EDGE_USE_MONOCLR=1
 
 #### Setting mono path
 
-Mono must be in your %PATH% for mono support to be built and also during the application execution.
+`Mono` must be in your %PATH% for mono support to be built and also during the application execution.
 
   * Option 1:
 
-    * Use mono's ```setmonopath.bat``` batch command before starting the electron application:
+    * Use Mono's ```setmonopath.bat``` batch command before starting the electron application:
 
       * x64
         ```
