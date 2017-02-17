@@ -2,10 +2,10 @@
 set SELF=%~dp0
 
 mkdir "%SELF%\build\nuget\content\websharp" > nul 2>&1
-mkdir "%SELF%\build\nuget\lib\net40" > nul 2>&1
+mkdir "%SELF%\build\nuget\lib\net451" > nul 2>&1
 mkdir "%SELF%\build\nuget\lib\netstandard1.6" > nul 2>&1
 mkdir "%SELF%\build\nuget\tools" > nul 2>&1
-mkdir "%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net40" > nul 2>&1
+mkdir "%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net451" > nul 2>&1
 
 if not exist "%SELF%\build\download.exe" (
 	csc /out:"%SELF%\build\download.exe" "%SELF%\download.cs"
