@@ -1,14 +1,36 @@
 @echo off
 set SELF=%~dp0
-if "%1" equ "" (
-    echo Usage: build.bat debug^|release "{version} {version}" ...
-    echo e.g. build.bat release "0.8.22 0.10.0"
+set argc=0
+for %%x in (%*) do Set /A argc+=1
+
+if /I "%argc%" LSS "2" (
+    echo Usage: argc build.bat debug^|release target "{version} {version}" ...
+    echo e.g. build.bat release 1.4.0 6.5.0
+    echo e.g. build.bat release 1.5.0 7.0.0
+    echo e.g. build.bat release 1.6.0 7.0.0
     exit /b -1
 )
 
-SET FLAVOR=%1
-shift
+if /I "%argc%" geq "3" (
+    set FLAVOR=%1
+    set TARGET=%2
+    shift
+    shift
+)
+
+if /I "%argc%" equ "2" (
+    set FLAVOR=release
+    set TARGET=%1
+    shift
+)
+
 if "%FLAVOR%" equ "" set FLAVOR=release
+
+echo building using the following:
+echo FLAVOR = %FLAVOR%
+echo TARGET = %TARGET% 
+echo VERSION = %1
+
 for %%i in (node.exe) do set NODEEXE=%%~$PATH:i
 if not exist "%NODEEXE%" (
     echo Cannot find node.exe
@@ -24,7 +46,7 @@ if "%1" neq "" (
     shift
     goto :harvestVersions
 )
-if "%VERSIONS%" equ "" set VERSIONS=0.10.0
+if "%VERSIONS%" equ "" set VERSIONS=6.5.0
 pushd %SELF%\..
 for %%V in (%VERSIONS%) do call :build ia32 x86 %%V 
 for %%V in (%VERSIONS%) do call :build x64 x64 %%V 
@@ -54,7 +76,7 @@ if not exist "%GYP%" (
     exit /b -1
 )
 
-"%NODEEXE%" "%GYP%" configure --%FLAVOR% build --target=1.4.0 --dist-url=https://atom.io/download/atom-shell --msvs_version=2015
+"%NODEEXE%" "%GYP%" configure --%FLAVOR% build --target=%TARGET% --dist-url=https://atom.io/download/atom-shell --msvs_version=2015
 if %ERRORLEVEL% neq 0 (
     echo Error building edge.node %FLAVOR% for node.js %2 v%3
     exit /b -1

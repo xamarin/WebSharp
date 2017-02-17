@@ -5,6 +5,7 @@ var fs = require('fs')
 
 var versionMap = [
     [ /^6\./, '6.5.0' ],
+    [ /^7\./, '7.0.0' ],
 ];
 
 function determineVersion() {
@@ -49,6 +50,7 @@ if (process.platform === 'win32' && process.env.EDGE_USE_MONOCLR === '1') {
     
     process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + 'edge_monoclr');
 }
+//process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineVersion() + '/' + 'edge_monoclr');
 if (process.env.EDGE_NATIVE) {
     edgeNative = process.env.EDGE_NATIVE;
 }
