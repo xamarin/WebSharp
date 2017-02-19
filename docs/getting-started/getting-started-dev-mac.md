@@ -7,7 +7,6 @@ Developers may be coming from different backgrounds and may not be familiar with
 We will not be discussing installing any of the `Requirements` here only getting a `WebSharp` development environment ready to go and referencing `WebSharp` in your projects.  There are plenty of guides available for installing the `Requirements`.
 
 ## Content
----
 
 &nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements)  
 &nbsp;&nbsp;&nbsp;&nbsp;[WebSharp Source](#websharp-source-code)  
@@ -22,7 +21,6 @@ We will not be discussing installing any of the `Requirements` here only getting
 
 
 ## Requirements
----
 
 - [XCode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12). Apple’s XCode development software is used to build Mac and iOS apps, but it also includes the tools you need to compile software for use on your Mac. XCode is free and you can find it in the [Apple App Store](https://itunes.apple.com/us/app/xcode/id497799835?mt=12).
 - [nodejs](http://nodejs.org/).  Head over to [http://nodejs.org/](http://nodejs.org/) and click the install button to download the latest package.
@@ -30,7 +28,6 @@ We will not be discussing installing any of the `Requirements` here only getting
 - [Native Client SDK](https://developer.chrome.com/native-client).  Native Client is a sandbox for running compiled C and C++ code in the browser efficiently and securely, independent of the user’s operating system.  No need to do anything here as it will be installed during the [Environment Setup](#environment-setup) step below. 
 
 ## WebSharp Source Code
----
 
 We first need to compile WebSharp.
 
@@ -77,7 +74,6 @@ You should now have the following directory structure
 This will be your entry point for development.
 
 ## Building WebSharp
----
 
 To make things easier to get started we have provided a `makefile` that provides two targets.
 
@@ -108,9 +104,8 @@ make setup - sets up the environment for you
 ```
 
 ### Environment setup
----
 
-Setting up your environment is the first thing that needs to be done.  This will step will download the [Native Client SDK](https://developer.chrome.com/native-client) dependencies for building the PepperPlugin native interface and a version of NuGet that will be used in the `build` target.
+Setting up your environment is the first thing that needs to be done.  This step will download the [Native Client SDK](https://developer.chrome.com/native-client) dependencies for building the PepperPlugin native interface and a version of NuGet that will be used in the `build` target.
 
 From the terminal type the following:
 
@@ -175,7 +170,6 @@ Update successful.
 A more detailed explanation of the setup process can be found in the [PepperPlugin README](https://github.com/xamarin/WebSharp/tree/master/PepperPlugin).
 
 ### Build
----
 
 The `build` step builds all the components of the `WebSharp` project from one command, which includes the following.
 
@@ -208,7 +202,6 @@ The command to run from the `WebSharp` repo directory is:
 ```
 
 ## Referencing `electron-dotnet`
----
 
 During the development process there are two ways to reference `electron-dotnet` in your `Electron` applications.
 
@@ -216,7 +209,6 @@ During the development process there are two ways to reference `electron-dotnet`
 * Installing `electron-dotnet` directly in your project using `npm install`.
 
 ### Symlink `electron-dotnet`
----
 
 Right now `WebSharp` is going through development and is still in transition.  Maybe you want to help with the effort or make some private changes to the repo for personal use.  Either way the `npm link` command is a fast way to allow you to make changes while working on an application or `WebSharp` directly.
 
@@ -249,7 +241,6 @@ some-other-project$ npm unlink electron-dotnet # dereference the `electron-dotne
 
 
 #### Gotchas using symlink method 
----
 
 `WebSharp` uses native modules internally for both the `PepperPlugin` and `electron-dotnet` implementations.  If you are testing the different versions of `Electron` and symlinking instead of `npm install`ing you may run into the following `NODE_MODULE_VERSION` mismatch error.
 
@@ -272,7 +263,6 @@ When it is finished you should see the message: `✔ Rebuild Complete`
 
 
 ### Install `electron-dotnet`
----
 
 Instead of using the symlink suggestion above you may prefer to install `electron-dotnet` directly from the local `WebSharp` build.
 
@@ -290,7 +280,6 @@ some-other-project$ npm install --save-dev path-to-WebSharp/electron-dotnet/    
 During the install into the project the native modules of `WebSharp` will automatically be rebuilt.
 
 #### Gotchas using npm install
----
 
 You will still get the `NODE_MODULE_VERSION` mismatch error as described above when using symlink.
 
