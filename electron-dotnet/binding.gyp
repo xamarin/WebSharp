@@ -213,22 +213,22 @@
                       '"<!((pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"!="not_found"',
                       {
                             'include_dirs': [
-                              '<!@(pkg-config mono-2 --cflags-only-I | sed s/-I//g)'
+                              '<!@(pkg-config mono-2, glib-2.0 --cflags-only-I | sed s/-I//g)'
                             ],
                             'link_settings': {
                               'libraries': [
-                                '<!@(pkg-config mono-2 --libs)'
+                                '<!@(pkg-config mono-2, glib-2.0 --libs)'
                               ]
                             }
                       },
                       '"<!((pkg-config mono-2 --libs 2>/dev/null) || echo not_found)"=="not_found"',
                       {
                             'include_dirs': [
-                              '<!@(<(MONO_PKG_CONFIG) mono-2 --cflags-only-I | sed s/-I//g)'
+                              '<!@(<(MONO_PKG_CONFIG) mono-2, glib-2.0 --cflags-only-I | sed s/-I//g)'
                             ],
                             'link_settings': {
                               'libraries': [
-                                '<!@(<(MONO_PKG_CONFIG) mono-2 --libs)'
+                                '<!@(<(MONO_PKG_CONFIG) mono-2, glib-2.0 --libs)'
                               ]
                             }
                       }
