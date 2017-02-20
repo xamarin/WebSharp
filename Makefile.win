@@ -20,6 +20,7 @@ buildRelease:
 	
 	build_peppersharp.bat Release
 
+	build_websharpjs.bat
 
 buildDebug: 
 	@$(MAKE) /f ./Makefile.win buildx64Debug
@@ -29,6 +30,8 @@ buildDebug:
 	cd .\electron-dotnet\tools\ 
 	
 	build_peppersharp.bat Debug
+
+	build_websharpjs.bat	
 
 buildx64:
 	cd .\PepperPlugin\src 
