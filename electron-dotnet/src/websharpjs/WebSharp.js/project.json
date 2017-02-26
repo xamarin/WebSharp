@@ -23,7 +23,8 @@
       "buildOptions": {
         "allowUnsafe": true,
         "compile": {
-          "include": "dotnet/*.cs"
+          "include": [ "dotnet/*.cs", "dotnet/WebSharpJs.Browser/*.cs" ]
+
         }
       }
     }

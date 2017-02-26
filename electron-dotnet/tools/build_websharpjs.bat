@@ -16,7 +16,7 @@ if not exist "%SELF%\build\nuget.exe" (
 	"%SELF%\build\nuget.exe" update -self
 )
 
-csc /out:"%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net451\WebSharpJs.dll" /target:library "%SELF%\..\src\websharpjs\WebSharp.js\dotnet\WebSharpJs.cs"
+csc /out:"%SELF%\..\src\websharpjs\WebSharp.js\bin\Release\net451\WebSharpJs.dll" /target:library "%SELF%\..\src\websharpjs\WebSharp.js\dotnet\*.cs" "%SELF%\..\src\websharpjs\WebSharp.js\dotnet\WebSharpJs.Browser\*.cs"
 if %ERRORLEVEL% neq 0 exit /b -1
 
 cd "%SELF%\..\src\websharpjs\WebSharp.js"
