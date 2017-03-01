@@ -78,18 +78,19 @@ namespace WebSharpJs.Browser
 
         #region Supporting classes
 
-        protected virtual object TryInvoke(string name, object[] parameters)
+        protected virtual object TryInvoke(string name, params object[] parameters)
         {
             if (javascriptFunctionProxy != null)
             {
+                
                 Task<object> to = Task.Run<object>(async () =>
                 {
-                    var parms = new
+                    var parms2 = new
                     {
                         function = name,
-                        args = parameters
+                        args = ScriptObjectUtilities.WrapScriptParms(parameters)
                     };
-                    return await JavaScriptProxy.websharp_invoke(parms);
+                    return await JavaScriptProxy.websharp_invoke(parms2);
                 });
 
                 return to.Result;

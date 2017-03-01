@@ -79,11 +79,41 @@ namespace WebSharpJs.Browser
         }
 
         static readonly string createScript = @"
-                                return function (options, callback) {
+                                return function (data, callback) {
+                                    const dotnet = require('./electron-dotnet');
+                                    const websharpjs = dotnet.WebSharpJs;
+
                                     
+                                    const {remote} = require('electron')
+                                    const {Menu, MenuItem} = remote
+
+                                    let options = [];
+                                    if (data) {
+                                        var arrayLength = data.length;
+                                        for (var i = 0; i < arrayLength; i++) {
+                                                    
+                                            let parm = data[i];
+                                            switch (parm.Category)
+                                            {
+                                                case 1:
+                                                    options.push(websharpjs.GetScriptableObject(parm.Value));
+                                                    break;
+                                                case 2:
+                                                    options.push(parm.Value);
+                                                    break;
+                                                default:
+                                                    options.push(parm.Value);
+                                            }
+                                        }
+                                    }
+
+
                                     let wrapScriptObject = function (objToWrap)
                                     {
+                                        let id = websharpjs.RegisterScriptableObject(objToWrap);  
                                         let proxy = {};
+
+                                        proxy.websharp_id = id;
                                         proxy.websharp_get_property = function (prop, cb) {
                                             //console.log('prop -> ' + prop + ' has property ' + objToWrap.hasOwnProperty(prop)  + ' [ ' + objToWrap[prop] + ' ]');
                                             cb(null, objToWrap[prop]);
@@ -118,13 +148,39 @@ namespace WebSharpJs.Browser
                                             cb(null, result);
                                         }
                                         proxy.websharp_invoke = function (parms, cb) {
-                                            console.log('invoking -> ' + parms.function + ' has function ' + (typeof objToWrap[parms.function] === 'function')  + ' args [ ' + objToWrap[parms.args] + ' ]');
+                                            console.log('invoking -> ' + parms.function + ' has function ' + (typeof objToWrap[parms.function] === 'function')  + ' args [ ' + parms.args + ' ]');
                                             let invokeResult;
-                                            if (typeof objToWrap[parms.function] === 'function')
-                                            {
-                                                invokeResult = objToWrap[parms.function](parms.args);
+
+                                            if (typeof objToWrap[parms.function] === 'function') {
+
+                                                let args = [];
+                                                if (parms.args) {
+                                                    var arrayLength = parms.args.length;
+                                                    for (var i = 0; i < arrayLength; i++) {
+                                                    
+                                                        let parm = parms.args[i];
+                                                        //console.log(parm)
+                                                        switch (parm.Category)
+                                                        {
+                                                            case 1:
+                                                                args.push(websharpjs.GetScriptableObject(parm.Value));
+                                                                break;
+                                                            case 2:
+                                                                args.push(parm.Value);
+                                                                break;
+                                                            default:
+                                                                args.push(parm.Value);
+                                                        }
+                                                    }
+                                                }
+
+
+                                                invokeResult = objToWrap[parms.function].apply(objToWrap, args);
+                                                cb(null, invokeResult);
                                             }
-                                            cb(null, invokeResult);
+                                            else
+                                                cb('Function ' + parm.function + ' does not exist. ', invokeResult);
+
                                         }
 
                                         proxy.websharp_addEventListener = function (eventCallback, cb) {
@@ -136,25 +192,31 @@ namespace WebSharpJs.Browser
                                         }
                                         
                                         proxy.websharp_proxied_object = function (data, cb) {
-                                            console.log('proxied -> ' + objToWrap);
-                                            return objToWrap;
+                                            cb(null, proxy.websharp_id);
+
                                         }
+
                                         return proxy;
                                     }
-
                                     let wsObj = $$$$javascriptObject$$$$
-                                    //console.log(wsObj)
-                                    let proxy = wrapScriptObject(wsObj);
 
+                                    let proxy = wrapScriptObject(wsObj);
+                                      
                                     callback(null, proxy);
                                 }
                             ";
 
-        protected async Task CreateScriptObject(string javascriptObject, object args)
+        protected async Task CreateScriptObject(string javascriptObject, params object[] args)
         {
-            Func<object, Task<object>> scriptProxy = await WebSharp.CreateJavaScriptFunction(createScript.Replace("$$$$javascriptObject$$$$", javascriptObject));
+            object[] parms = args;
 
-            JavaScriptProxy = await scriptProxy(args);
+            if (args != null)
+            {
+                parms = ScriptObjectUtilities.WrapScriptParms(args);
+            }
+
+            Func<object, Task<object>> scriptProxy = await WebSharp.CreateJavaScriptFunction(createScript.Replace("$$$$javascriptObject$$$$", javascriptObject));
+            JavaScriptProxy = await scriptProxy(parms);
 
         }
  
