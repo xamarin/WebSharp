@@ -320,6 +320,15 @@ namespace WebSharpJs.Browser
                 return base.SetProperty(name, value);
         }
 
+        public override async Task<bool> SetPropertyAsync(string name, object value)
+        {
+            Property property = null;
+            if (cachedPropertyInfo.TryGetValue(name, out property))
+                return await base.TrySetPropertyAsync(property.ScriptAlias, value, property.CreateIfNotExists, property.HasOwnProperty);
+            else
+                return await base.SetPropertyAsync(name, value);
+        }
+
         public override object GetProperty(string name)
         {
             Property property = null;
@@ -333,6 +342,15 @@ namespace WebSharpJs.Browser
         {
             object o = GetProperty(name);
             return (T)o;
+        }
+
+        public override Task<T> GetPropertyAsync<T>(string name)
+        {
+            Property property = null;
+            if (cachedPropertyInfo.TryGetValue(name, out property))
+                return base.GetPropertyAsync<T>(property.ScriptAlias);
+            else
+                return base.GetPropertyAsync<T>(name);
         }
 
         public override object Invoke(string name, params object[] args)
@@ -350,6 +368,23 @@ namespace WebSharpJs.Browser
                 }
             }
             return base.Invoke(scriptAlias, args);
+        }
+
+        public override Task<T> InvokeAsync<T>(string name, params object[] args)
+        {
+            var scriptAlias = name;
+
+            var mi = InstanceType.GetMethod(name, BindingFlags.Instance | BindingFlags.Public);
+
+            if (mi != null)
+            {
+                if (mi.IsDefined(typeof(ScriptableMemberAttribute), false))
+                {
+                    var att = mi.GetCustomAttribute<ScriptableMemberAttribute>(false);
+                    scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                }
+            }
+            return base.InvokeAsync<T>(scriptAlias, args);
         }
     }
 

@@ -58,6 +58,14 @@ namespace WebSharpJs.Browser
             return TrySetProperty(name, value);
         }
 
+        public virtual async Task<bool> SetPropertyAsync(string name, object value)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            return await TrySetPropertyAsync(name, value);
+        }
+
         public virtual object GetProperty(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -68,12 +76,24 @@ namespace WebSharpJs.Browser
             return result;
         }
 
+        public virtual async Task<T> GetPropertyAsync<T>(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            return await TryGetPropertyAsync<T>(name);
+        }
+
         public virtual object Invoke(string name, params object[] args)
         {
             object result = TryInvoke(name, args);
             return result;
         }
 
+        public virtual async Task<T> InvokeAsync<T>(string name, params object[] args)
+        {
+            return await TryInvokeAsync<T>(name, args);
+        }
         #endregion
 
         #region Supporting classes
@@ -85,18 +105,35 @@ namespace WebSharpJs.Browser
                 
                 Task<object> to = Task.Run<object>(async () =>
                 {
-                    var parms2 = new
+                    var parms = new
                     {
                         function = name,
                         args = ScriptObjectUtilities.WrapScriptParms(parameters)
                     };
-                    return await JavaScriptProxy.websharp_invoke(parms2);
+                    return await JavaScriptProxy.websharp_invoke(parms);
                 });
 
                 return to.Result;
             }
 
             return null;
+        }
+
+        protected virtual async Task<T> TryInvokeAsync<T>(string name, params object[] parameters)
+        {
+            if (javascriptFunctionProxy != null)
+            {
+
+                var parms = new
+                {
+                    function = name,
+                    args = ScriptObjectUtilities.WrapScriptParms(parameters)
+                };
+                return await JavaScriptProxy.websharp_invoke(parms);
+
+            }
+
+            return default(T);
         }
 
         protected virtual bool TryGetProperty(string name, out object result)
@@ -115,6 +152,17 @@ namespace WebSharpJs.Browser
             }
 
             return false;
+        }
+
+        protected virtual async Task<T> TryGetPropertyAsync<T>(string name)
+        {
+
+            if (javascriptFunctionProxy != null)
+            {
+                return await JavaScriptProxy.websharp_get_property(name);
+            }
+            else
+                return default(T);
         }
 
         protected virtual bool TrySetProperty(string name, object value, bool createIfNotExists = true, bool hasOwnProperty = false)
@@ -142,6 +190,26 @@ namespace WebSharpJs.Browser
             return false;
         }
 
+        protected virtual async Task<bool> TrySetPropertyAsync(string name, object value, bool createIfNotExists = true, bool hasOwnProperty = false)
+        {
+            try
+            {
+                if (javascriptFunctionProxy != null)
+                {
+                    var parms = new
+                    {
+                        property = name,
+                        value = value,
+                        createIfNotExists = createIfNotExists,
+                        hasOwnProperty = hasOwnProperty
+                    };
+                    return await JavaScriptProxy.websharp_set_property(parms);
+               }
+            }
+            catch { }
+
+            return false;
+        }
         #endregion
 
 
