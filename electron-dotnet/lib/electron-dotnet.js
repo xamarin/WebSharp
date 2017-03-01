@@ -101,6 +101,7 @@ process.env.EDGE_NATIVE = edgeNative;
 edge = require(edgeNative);
 exports.Register = require("./register.js")
 exports.Embed = require("./embed.js")
+exports.WebSharpJs = require("./websharpjs.js")
 exports.func = function(language, options) {
     if (!options) {
         options = language;
