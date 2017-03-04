@@ -16,8 +16,9 @@ namespace WebSharpJs.Browser
     internal enum ScriptParmCategory
     {
         ScriptObject = 1,
-        ScriptType = 2,
-        ScriptValue = 3
+        ScriptableType = 2,
+        ScriptValue = 3,
+        ScriptCallback = 4
     }
     
 }

@@ -159,7 +159,7 @@ namespace WebSharpJs.Browser
 
             if (javascriptFunctionProxy != null)
             {
-                return await JavaScriptProxy.websharp_get_property(name);
+                return await JavaScriptProxy.websharp_get_property(name) ?? default(T);
             }
             else
                 return default(T);
