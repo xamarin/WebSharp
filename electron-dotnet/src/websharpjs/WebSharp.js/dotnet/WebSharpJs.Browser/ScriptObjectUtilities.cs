@@ -128,30 +128,34 @@ namespace WebSharpJs.Browser
                             var properties = parmType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
                             for (int i = 0; i < properties.Length; i++)
                             {
+
                                 var propertyInfo = properties[i];
-                                scriptAlias = propertyInfo.Name;
-                                if (propertyInfo.IsDefined(typeof(ScriptableMemberAttribute), false))
+                                if (propertyInfo.GetIndexParameters().Length == 0 && propertyInfo.GetMethod != null)
                                 {
-                                    var att = propertyInfo.GetCustomAttribute<ScriptableMemberAttribute>(false);
-                                    scriptAlias = (att.ScriptAlias ?? scriptAlias);
-                                }
-                                
-                                if (IsCallbackFunction(propertyInfo.PropertyType))
-                                {
-                                    
-                                    var cbv = propertyInfo.GetValue(parm);
-                                    if (cbv != null)
+                                    scriptAlias = propertyInfo.Name;
+                                    if (propertyInfo.IsDefined(typeof(ScriptableMemberAttribute), false))
                                     {
-                                        var scriptCallback = Cast(cbv, propertyInfo.PropertyType);
-                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", Value = scriptCallback }); 
+                                        var att = propertyInfo.GetCustomAttribute<ScriptableMemberAttribute>(false);
+                                        scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                                    }
+
+                                    if (IsCallbackFunction(propertyInfo.PropertyType))
+                                    {
+
+                                        var cbv = propertyInfo.GetValue(parm);
+                                        if (cbv != null)
+                                        {
+                                            var scriptCallback = Cast(cbv, propertyInfo.PropertyType);
+                                            fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", Value = scriptCallback });
+                                        }
+                                        else
+                                        {
+                                            fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
+                                        }
                                     }
                                     else
-                                    {
                                         fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
-                                    }
                                 }
-                                else
-                                    fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
                             }
                             parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptableType, Type = "ScriptableType", Value = fieldMappings };
                         }
