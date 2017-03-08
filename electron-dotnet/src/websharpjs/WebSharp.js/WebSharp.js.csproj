@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>With WebSharp.js you can script Node.js in a .NET application. WebSharp.js allows you to run Node.js and .NET code in one process. You can call Node.js functions from .NET and .NET functions from Node.js. WebSharp.js takes care of marshalling data between CLR and V8. WebSharp.js also reconciles threading models of single threaded V8 and multi-threaded CLR. WebSharp.js ensures correct lifetime of objects on V8 and CLR heaps. This WebSharp.js NuGet package supports scripting Node.js v6.5.0.</Description>
+    <Summary>This WebSharp.js NuGet package supports scripting Node.js v6.5.0.</Summary>
+    <Copyright>Copyright 2016 Xamarin</Copyright>
+    <VersionPrefix>6.5.1</VersionPrefix>
+    <TargetFrameworks>net451;netstandard1.6</TargetFrameworks>
+    <AssemblyName>WebSharpJs</AssemblyName>
+    <PackageId>WebSharp.js</PackageId>
+    <PackageTags>node.js;node;.net;edge;edge.js;v8;clr;coreclr;mono;interop;javascript;websharp;websharp.js</PackageTags>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/xamarin/WebSharp/master/LICENSE</PackageLicenseUrl>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.6' ">1.6.0</NetStandardImplicitPackageVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="Edge.js" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="backup\**" />
+    <EmbeddedResource Remove="backup\**" />
+    <None Remove="backup\**" />
+  </ItemGroup>
+
+</Project>
