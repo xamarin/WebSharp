@@ -10,6 +10,7 @@
     var RegisterScriptableObject = function (meta)
     {
         let id = v8Util.getHiddenValue(meta, 'websharpId');
+        // We indiscriminately replace the object that is there.
         if (id) {
             websharpObjectCache.set(id, meta);
         }
@@ -64,7 +65,10 @@
                 {
                     var args = Array.from(arguments);
                     for (var i = 0; i < args.length; i++) {
-                        callbackData.push(args[i]);
+                        if (v8Util.getHiddenValue(args[i], 'websharpId'))
+                            callbackData.push(ObjectToScriptObject(args[i]));
+                        else
+                            callbackData.push(args[i]);
                     }
                 }
 
@@ -161,20 +165,35 @@
         }
 
         proxy.websharp_addEventListener = function (eventCallback, cb) {
-            console.log('addEventListener -> ' + eventCallback.onEvent);
+            //console.log('addEventListener -> ' + eventCallback.onEvent);
             objToWrap.addEventListener(eventCallback.onEvent, 
                 function () {
                 
                     // We need to preserver arity of the function callback parameters.
                     let callbackData = [];
-                    // If we get called with arguments then we loop over them to create on object to be passed back
-                    // as our callback data.  Func<object, Task<object>>
-                    // We only receive one object in our managed code.
-                    if (arguments)
-                    {
-                        var args = Array.from(arguments);
-                        for (var i = 0; i < args.length; i++) {
-                            callbackData.push(args[i]);
+                    // we will only attach event information if it was asked for
+                    if (eventCallback.handlerType) {
+                        // If we get called with arguments then we loop over them to create on object to be passed back
+                        // as our callback data.  Func<object, Task<object>>
+                        // We only receive one object in our managed code.
+                        if (arguments) {
+                            var args = Array.from(arguments);
+                            for (var i = 0; i < args.length; i++) {
+                                //console.log(typeof args[i]);
+                                var type = args[i].type;
+                                if (args[i] instanceof Event) {
+                                    //console.log('Event be definfed ');
+                                    var event = {};
+                                    event['eventType'] = args[i].type;
+                                    DOMEventProps.forEach(function (element) {
+                                        event[element] = args[i][element];
+                                    });
+                                    callbackData.push(event);
+
+                                }
+                                else
+                                    callbackData.push(args[i]);
+                            }
                         }
                     }
 
@@ -186,7 +205,8 @@
                     catch (ex) { ErrorHandler.Exception(ex); }
                 
                 }, false);
-            cb(null, null);
+           
+            cb(null, true);
         }
 
         proxy.websharp_proxied_object = function (data, cb) {
@@ -196,6 +216,37 @@
 
         return proxy;
     }
+
+
+    var DOMEventProps = ["altKey",
+        "bubbles",
+        "cancelable",
+        "changedTouches",
+        "ctrlKey",
+        "detail",
+        "eventPhase",
+        "metaKey",
+        "pageX",
+        "pageY",
+        "shiftKey",
+        "view",
+	    "char",
+        "charCode",
+        "key",
+        "keyCode",
+        "button",
+        "buttons",
+        "clientX",
+        "clientY",
+        "offsetX",
+        "offsetY",
+        "pointerId",
+        "pointerType",
+        "screenX",
+        "screenY",
+        "targetTouches",
+        "toElement",
+        "touches"]
 
     module.exports = { RegisterScriptableObject, GetScriptableObject, UnRegisterScriptableObject, WrapEvent, UnwrapArgs, ObjectToScriptObject };
 

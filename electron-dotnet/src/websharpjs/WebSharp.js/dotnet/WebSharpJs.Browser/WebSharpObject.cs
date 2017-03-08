@@ -20,15 +20,15 @@ namespace WebSharpJs.Browser
         /// <summary>
         /// Cached type of the instance
         /// </summary>
-        Type InstanceType;
+        protected Type InstanceType;
 
-        PropertyBag CachedPropertyInfo
+        ScriptMemberBag CachedPropertyInfo
         {
             get
             {
                 if (cachedPropertyInfo == null)
                 {
-                    var props = new PropertyBag();
+                    var props = new ScriptMemberBag();
                     var scriptAlias = string.Empty;
                     bool createIfNotExists;
                     bool hasOwnProperty;
@@ -45,7 +45,21 @@ namespace WebSharpJs.Browser
                             createIfNotExists = att.CreateIfNotExists;
                             hasOwnProperty = att.HasOwnProperty;
                         }
-                        props[prop.Name] = new Property(scriptAlias, createIfNotExists, hasOwnProperty);
+                        props[prop.Name] = new ScriptMemberInfo(scriptAlias, createIfNotExists, hasOwnProperty);
+                    }
+                    foreach (var prop in InstanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
+                    {
+                        scriptAlias = prop.Name;
+                        createIfNotExists = true;
+                        hasOwnProperty = false;
+                        if (prop.IsDefined(typeof(ScriptableMemberAttribute), false))
+                        {
+                            var att = prop.GetCustomAttribute<ScriptableMemberAttribute>(false);
+                            scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                            createIfNotExists = att.CreateIfNotExists;
+                            hasOwnProperty = att.HasOwnProperty;
+                        }
+                        props[prop.Name] = new ScriptMemberInfo(scriptAlias, createIfNotExists, hasOwnProperty);
                     }
                     return props;
                 }
@@ -57,7 +71,7 @@ namespace WebSharpJs.Browser
         /// <summary>
         /// Cached property info used for scriptAlias lookup for Properties
         /// </summary>
-        PropertyBag cachedPropertyInfo;
+        ScriptMemberBag cachedPropertyInfo;
 
         static WebSharpObject()
         {
@@ -106,9 +120,7 @@ namespace WebSharpJs.Browser
             {
                 parms = ScriptObjectUtilities.WrapScriptParms(args);
             }
-            Console.WriteLine("before create");
             Func<object, Task<object>> scriptProxy = await WebSharp.CreateJavaScriptFunction(createScript.Replace("$$$$javascriptObject$$$$", javascriptObject));
-            Console.WriteLine("After create");
             await CreateScriptObject(scriptProxy, args);
             return scriptProxy;
         }
@@ -131,14 +143,19 @@ namespace WebSharpJs.Browser
 
         EventHandlerBag EventHandlers = new EventHandlerBag();
 
-        public bool AttachEvent(string eventName, EventHandler handler)
+        class EventHandlerTBag : GrabBag<WebSharpEvent>
+        { }
+
+        EventHandlerTBag EventTHandlers = new EventHandlerTBag();
+
+        public async Task<bool> AttachEventAsync(string eventName, EventHandler handler)
         {
             if (string.IsNullOrEmpty(eventName))
-                throw new ArgumentNullException("eventName");
+                throw new ArgumentNullException(nameof(eventName));
 
             if (handler == null)
             {
-                throw new ArgumentNullException("handler");
+                throw new ArgumentNullException(nameof(handler));
             }
 
             var scriptAlias = eventName;
@@ -154,34 +171,31 @@ namespace WebSharpJs.Browser
             }
 
             WebSharpEvent websharpEvent;
+            var result = false;
             if (!EventHandlers.TryGetValue(scriptAlias, out websharpEvent))
             {
-                
+
                 websharpEvent = new WebSharpEvent(this, scriptAlias);
                 if (JavaScriptProxy != null)
                 {
-                    Task<object> to = Task.Run<object>(async () =>
+                    var eventCallback = new
                     {
-                        var eventCallback = new
-                        {
-                            onEvent = scriptAlias,
-                            callback = websharpEvent.EventCallbackFunction
-                        };
-                        return await JavaScriptProxy.websharp_addEventListener(eventCallback);
-                    });
-                    var result = to.Result;
+                        onEvent = scriptAlias,
+                        callback = websharpEvent.EventCallbackFunction
+                    };
+                    result = await JavaScriptProxy.websharp_addEventListener(eventCallback);
                 }
                 EventHandlers[scriptAlias] = websharpEvent;
             }
             websharpEvent.AddEventHandler(handler);
-            return true;
+            return result;
         }
 
-        public bool AttachEvent(string eventName)
+        public async Task<bool> AttachEventAsync(string eventName)
         {
             if (string.IsNullOrEmpty(eventName))
-                throw new ArgumentNullException("eventName");
-
+                throw new ArgumentNullException(nameof(eventName));
+            
             WebSharpEvent websharpEvent;
 
             var scriptAlias = eventName;
@@ -196,31 +210,28 @@ namespace WebSharpJs.Browser
                 scriptAlias = (att.ScriptAlias ?? scriptAlias);
             }
 
+            var result = false;
+
             if (!EventHandlers.TryGetValue(eventName, out websharpEvent))
             {
-
                 websharpEvent = new WebSharpEvent(this, eventName);
                 if (JavaScriptProxy != null)
                 {
-                    Task<object> to = Task.Run<object>(async () =>
+                    var eventCallback = new
                     {
-                        var eventCallback = new
-                        {
-                            onEvent = scriptAlias,
-                            callback = websharpEvent.EventCallbackFunction
-                        };
-                        return await JavaScriptProxy.websharp_addEventListener(eventCallback);
-                    });
-                    var result = to.Result;
+                        onEvent = scriptAlias,
+                        callback = websharpEvent.EventCallbackFunction
+                    };
+                    result = await JavaScriptProxy.websharp_addEventListener(eventCallback);
                 }
                 EventHandlers[eventName] = websharpEvent;
             }
-            return true;
+            return result;
         }
 
         public override bool SetProperty(string name, object value)
         {
-            Property property = null;
+            ScriptMemberInfo property = null;
             if (cachedPropertyInfo.TryGetValue(name, out property))
                 return base.TrySetProperty(property.ScriptAlias, value, property.CreateIfNotExists, property.HasOwnProperty);
             else
@@ -229,7 +240,7 @@ namespace WebSharpJs.Browser
 
         public override async Task<bool> SetPropertyAsync(string name, object value)
         {
-            Property property = null;
+            ScriptMemberInfo property = null;
             if (cachedPropertyInfo.TryGetValue(name, out property))
                 return await base.TrySetPropertyAsync(property.ScriptAlias, value, property.CreateIfNotExists, property.HasOwnProperty);
             else
@@ -238,7 +249,7 @@ namespace WebSharpJs.Browser
 
         public override object GetProperty(string name)
         {
-            Property property = null;
+            ScriptMemberInfo property = null;
             if (cachedPropertyInfo.TryGetValue(name, out property))
                 return base.GetProperty(property.ScriptAlias);
             else
@@ -253,7 +264,7 @@ namespace WebSharpJs.Browser
 
         public override Task<T> GetPropertyAsync<T>(string name)
         {
-            Property property = null;
+            ScriptMemberInfo property = null;
             if (cachedPropertyInfo.TryGetValue(name, out property))
                 return base.GetPropertyAsync<T>(property.ScriptAlias);
             else
@@ -301,17 +312,17 @@ namespace WebSharpJs.Browser
     internal class CachedBag : GrabBag<WeakReference>
     { }
 
-    internal class PropertyBag : GrabBag<Property>
+    internal class ScriptMemberBag : GrabBag<ScriptMemberInfo>
     { }
 
 
-    internal class Property
+    internal class ScriptMemberInfo
     {
         public string ScriptAlias { get; set; }
         public bool CreateIfNotExists { get; set; }
         public bool HasOwnProperty { get; set; }
 
-        public Property(string scriptAlias, bool createIfNotExists, bool hasOwnProperty)
+        public ScriptMemberInfo(string scriptAlias, bool createIfNotExists, bool hasOwnProperty)
         {
             ScriptAlias = scriptAlias;
             CreateIfNotExists = createIfNotExists;

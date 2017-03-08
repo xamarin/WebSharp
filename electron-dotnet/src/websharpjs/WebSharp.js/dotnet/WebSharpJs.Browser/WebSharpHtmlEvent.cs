@@ -1,39 +1,47 @@
 ﻿//
-// WebSharpEvent.cs
+// WebSharpHtmEvent.cs
 //
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
 namespace WebSharpJs.Browser
 {
-    internal class WebSharpEvent
+    internal class WebSharpHtmlEvent
     {
         WebSharpObject Source { get; set; }
 
         string EventName { get; set; }
 
-        EventHandler EventHandlers { get; set; }
+        EventHandler<HtmlEventArgs> EventHandlers { get; set; }
 
         internal Func<object, Task<object>> EventCallbackFunction { get; private set; }
 
-        internal WebSharpEvent(WebSharpObject eventSource, string eventName)
+        internal WebSharpHtmlEvent(WebSharpObject eventSource, string eventName)
         {
             Source = eventSource;
             EventName = eventName;
 
             EventCallbackFunction = (async (evt) =>
             {
-                
-                Invoke(new object[] { EventArgs.Empty });
+                Invoke(evt);
                 return null;
             });
         }
 
-        internal object Invoke(object[] args)
+        internal object Invoke(object evt)
         {
-            EventHandlers?.Invoke(this.Source, EventArgs.Empty);
+
+            var eventArgs = new HtmlEventArgs();
+            if (evt != null)
+            {
+                var dict = (IDictionary<string, object>)((object[])evt)[0];
+                ScriptObjectHelper.DictionaryToScriptableType(dict, eventArgs);
+            }
+
+            EventHandlers?.Invoke(this.Source, eventArgs);
 
             if (EventHandlers == null)
             {
@@ -51,12 +59,13 @@ namespace WebSharpJs.Browser
             return null;
         }
 
-        internal void AddEventHandler(EventHandler handler)
+        internal void AddEventHandler(EventHandler<HtmlEventArgs> handler)
         {
+
             EventHandlers += handler;
         }
 
-        internal void RemoveEventHandler(EventHandler handler)
+        internal void RemoveEventHandler(EventHandler<HtmlEventArgs> handler)
         {
             if (EventHandlers != null)
             {
@@ -65,5 +74,4 @@ namespace WebSharpJs.Browser
         }
 
     }
-
 }
