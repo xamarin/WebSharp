@@ -41,7 +41,7 @@ We first need to compile WebSharp.
     * For SSH
 
     ``` bash
-    // Mac Terminal
+    # Mac Terminal
     $ mkdir projects
     $ cd projects
     projects$
@@ -51,7 +51,7 @@ We first need to compile WebSharp.
     * For HTTPS 
 
     ``` bash
-    // Mac Terminal
+    # Mac Terminal
     $ mkdir projects
     $ cd projects
     projects$
@@ -60,7 +60,7 @@ We first need to compile WebSharp.
 
 You should now have the following directory structure
 
-``` bash
+```
 .
 |--- projects                           
      |--- WebSharp 
@@ -115,13 +115,13 @@ Setting up your environment is the first thing that needs to be done.  This step
 
 From the terminal type the following:
 
-``` bash
+```
 WebSharp$ make setup
 ```
 
 You will be presented with output similar to the following:
 
-``` bash
+```
 curl -O 'http://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip'
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -193,7 +193,7 @@ WebSharp$ make build
 
 Then sit back and wait.  When it has finished everything should be built and available to start developing.
 
-> :bulb: During the `build` process you make get a warning similar to:
+> :bulb: During the `build` process you may get a warning similar to:
 
 ```
 pepper_canary already exists, but has an update available.
