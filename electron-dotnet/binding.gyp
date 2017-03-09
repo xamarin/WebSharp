@@ -482,7 +482,7 @@
                     {
                       'action_name': 'restore_bootstrap_packages',
                       'inputs': [
-                        'lib/bootstrap/project.json'
+                        'lib/bootstrap/bootstrap.csproj'
                       ],
                       'outputs': [
                         'lib/bootstrap/project.lock.json'
@@ -490,7 +490,7 @@
                       'action': [
                         'bash',
                         '-c',
-                        'cd lib/bootstrap && dotnet restore'
+                        'cd lib/bootstrap && dotnet restore bootstrap.csproj /p:Configuration=$(BUILDTYPE)'
                       ]
                     },
                     {
@@ -504,7 +504,7 @@
                       'action': [
                         'bash',
                         '-c',
-                        'cd lib/bootstrap && dotnet build --configuration $(BUILDTYPE)'
+                        'cd lib/bootstrap && dotnet build /p:Configuration=$(BUILDTYPE)'
                       ]
                     }
                   ]

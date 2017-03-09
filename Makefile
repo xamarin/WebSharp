@@ -16,7 +16,7 @@ build: check
 	make websharpjs
 
 websharpjs:
-	(cd electron-dotnet/src/websharpjs/WebSharp.js; dotnet restore; dotnet build --configuration Release; dotnet pack --configuration Release --no-build)
+	(cd electron-dotnet/src/websharpjs/WebSharp.js; dotnet restore; dotnet build /p:TargetFramework=netstandard1.6 /p:Configuration=Release ; dotnet pack /p:Configuration=Release /p:TargetFramework=netstandard1.6 --no-build)
 	# copy nuget to local nuget repo
 	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/*.nupkg electron-dotnet/tools/build/nuget)
 	# make the .dll available to websharp
