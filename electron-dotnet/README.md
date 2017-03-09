@@ -1437,49 +1437,7 @@ npm run jshint
 
 See [Getting started on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md) for setting up a development environment.
 
-If you installed both Mono and .NET Core, by default ```electron-dotnet``` will use Mono. You opt in to using .NET Core with the `EDGE_USE_CORECLR` environment variable: 
-
-```bash
-EDGE_USE_CORECLR=1 node myapp.js
-```
-
-#### Building on OSX (electron)
-
-There is a makefile provided to build electron-dotnet that can be used to build all requirements for Electron.  The makefile will, by default, build electron-dotnet, PepperPlugin and PepperSharp bindings.
-
-```bash
-# Make sure you are in the WebSharp directory.
-cd WebSharp
-# Execute the setup target of the the make file.  This is only needed the first time you are building.  This will download all requirements to build.
-make setup
-# Execute the build target of the make file.
-make build
-```
-The install process will try to work out the correct build configuration based on the version of electron that is installed but it may need a little help.
-
 #### Building on OSX advanced (electron)
-
-To target a specific version of electron the developer can install the version of electron pre-built before executing the ```npm install``` above.
-
-```bash
-# The version to build against is verions 1.4.0
-npm install electron@1.4.0
-# Install electron-dotnet
-npm install
-```
-
-In the process above the install script will try to work out the best it can which Native Abstraction to build against.
-
-If you do not want to install the version of electron then you may need to build against a specific version by specifying the target on the build.
-
-To build electron-dotnet against a specific version of electron.
-
-```bash
-# Install electron-dotnet
-npm install
-# Rebuild the native modules against a specific electon version.  In this case version 1.4.0
-node-gyp configure build --target=1.4.0 --disturl=https://atom.io/download/atom-shell
-```
 
 To build a debug build instead of release, you need to:
 
