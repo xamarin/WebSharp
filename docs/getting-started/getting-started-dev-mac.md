@@ -24,8 +24,14 @@ We will not be discussing installing any of the `Requirements` here only getting
 
 - [XCode](https://itunes.apple.com/us/app/xcode/id497799835?mt=12). Apple’s XCode development software is used to build Mac and iOS apps, but it also includes the tools you need to compile software for use on your Mac. XCode is free and you can find it in the [Apple App Store](https://itunes.apple.com/us/app/xcode/id497799835?mt=12).
 - [nodejs](http://nodejs.org/).  Head over to [http://nodejs.org/](http://nodejs.org/) and click the install button to download the latest package.
+- [Native Abstractions for Node.js](https://github.com/nodejs/nan) 
 - [mono embedding](http://www.mono-project.com/docs/advanced/embedding/) is being used so an installation of [mono](http://www.mono-project.com/download/) needs to be installed.
 - [Native Client SDK](https://developer.chrome.com/native-client).  Native Client is a sandbox for running compiled C and C++ code in the browser efficiently and securely, independent of the user’s operating system.  No need to do anything here as it will be installed during the [Environment Setup](#environment-setup) step below. 
+- [.NET Core](https://www.microsoft.com/net/core) _*[optional]*_.  Version >= 1.0.1 - You can use electron-dotnet.js on OSX with either `Mono` or `.NET Core `installed, or both.  During the build if `.Net Core` is detected then the CoreCLR module will be built as well.  by default ```electron-dotnet``` will use `Mono`. You opt in to using `.NET Core` with the `EDGE_USE_CORECLR` environment variable: 
+
+```bash
+        EDGE_USE_CORECLR=1
+```   
 
 ## WebSharp Source Code
 

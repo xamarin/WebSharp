@@ -189,35 +189,7 @@ If you want to use ```Mono```, read [Building with Mono support on Windows](#bui
 
 For now we install electron-dotnet from a directory until the workflow for delivering is worked out.
 
-One scenario is to install electron-dotnet into your application node modules.
-
-```bash
-# Install the version of electron that you will using.  Version 1.4.0 in this example.
-npm install electron@1.4.0
-# Now install electron-dotnet
-npm install path-to-electron-dotnet/electron-dotnet
-```
-
-Then ```require('electron-dotnet)``` as follows:
-
-```js
-// Reference electron-dotnet module that is installed in the application
-var dotnet = require('electron-dotnet');
-
-var hellolambda = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');
-``` 
-
-A second scenario, such as development or as you may see in our samples, is to reference the electron-dotnet via an absolute file reference instead of installing directly in the application.  To do this you will need to have installed and built electron-dotnet as described by [Building on OSX](#building-on-osx) 
-
-```js
-// Reference the electron-dotnet module via a file reference.  You may see this in our samples.
-var dotnet = require('../../../electron-dotnet/lib/electron-dotnet.js');
-
-var hellolambda = dotnet.func('async (input) => { return ".NET welcomes " + input.ToString(); }');
-
-``` 
-
-
+See [Getting started on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md) for setting up a development environment.
 
 ![image](https://cloud.githubusercontent.com/assets/822369/2808046/8f4ce378-cd0b-11e3-95dc-ef0842c28821.png)
 
@@ -1463,16 +1435,7 @@ npm run jshint
 
 ### Building on OSX
 
-Prerequisities:
-
-* [Mono x64](http://www.mono-project.com/download/#download-mac) and/or [.NET Core](https://dotnet.github.io/getting-started/) - see below  
-* [Node.js x64](http://nodejs.org/) (tested with v6.5.0 and electron v1.4.0) 
-* [Native Abstractions for Node.js](https://github.com/nodejs/nan) 
-* [pkg-config](http://brewformulas.org/pkg-config) Normally this is installed/required during the install of mono.
-
-You can use electron-dotnet.js on OSX with either Mono or .NET Core installed, or both.
-
-If you choose to [install Mono](http://www.mono-project.com/download/#download-mac), select the universal installer to make sure you get the x64 version. Edge.js requires Mono x64.  If you choose to install .NET Core, follow the steps [here](https://www.microsoft.com/net/core#macosx)
+See [Getting started on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md) for setting up a development environment.
 
 If you installed both Mono and .NET Core, by default ```electron-dotnet``` will use Mono. You opt in to using .NET Core with the `EDGE_USE_CORECLR` environment variable: 
 
