@@ -149,7 +149,7 @@
             cb(null, result);
         }
         proxy.websharp_invoke = function (parms, cb) {
-            console.log('invoking -> ' + parms.function + ' has function ' + (typeof objToWrap[parms.function] === 'function') + ' args [ ' + parms.args + ' ]');
+            //console.log('invoking -> ' + parms.function + ' has function ' + (typeof objToWrap[parms.function] === 'function') + ' args [ ' + parms.args + ' ]');
             let invokeResult;
 
             if (typeof objToWrap[parms.function] === 'function') {
