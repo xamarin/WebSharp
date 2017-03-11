@@ -157,7 +157,13 @@
                 let args = UnwrapArgs(parms.args);
 
                 invokeResult = objToWrap[parms.function].apply(objToWrap, args);
-                cb(null, invokeResult);
+                if (parms.scriptObject)
+                {
+                    let returnSO = ObjectToScriptObject(invokeResult);
+                    cb(null, returnSO);
+                }
+                else
+                    cb(null, invokeResult);
             }
             else
                 cb('Function ' + parm.function + ' does not exist. ', invokeResult);

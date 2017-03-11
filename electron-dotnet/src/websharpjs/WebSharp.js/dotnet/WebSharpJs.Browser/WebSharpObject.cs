@@ -12,7 +12,7 @@ namespace WebSharpJs.Browser
 {
 
 
-    public partial class WebSharpObject : ScriptObject
+    public class WebSharpObject : ScriptObject
     {
 
         static CachedBag cachedObjects;
@@ -78,11 +78,19 @@ namespace WebSharpJs.Browser
             cachedObjects = new CachedBag();
         }
 
-        private WebSharpObject(object obj) : base(obj)
+        protected WebSharpObject(object obj) : base()
         {
             InstanceType = GetType();
             if (cachedPropertyInfo == null)
                 cachedPropertyInfo = CachedPropertyInfo;
+
+            var dict = obj as IDictionary<string, object>;
+
+            // The key `websharp_id` represents a wrapped proxy object
+            if (dict != null && dict.ContainsKey("websharp_id"))
+            {
+                JavaScriptProxy = obj;
+            }
         }
 
         public WebSharpObject()

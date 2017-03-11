@@ -12,7 +12,7 @@ namespace WebSharpJs.Browser
 {
 
 
-    public partial class HtmlObject : WebSharpObject
+    public class HtmlObject : WebSharpObject
     {
 
         class EventHandlerBag : GrabBag<WebSharpHtmlEvent>
@@ -101,7 +101,8 @@ namespace WebSharpJs.Browser
             return result;
         }
 
-
+        protected HtmlObject() : base() { }
+        protected HtmlObject(object obj) : base(obj) { }
     }
 
 

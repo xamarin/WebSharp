@@ -6,24 +6,23 @@ using System.Threading.Tasks;
 
 namespace WebSharpJs.Browser
 {
-    public class HtmlElement : HtmlObject
+    public sealed class HtmlElement : HtmlObject
     {
-        static Func<object, Task<object>> scriptProxy;
 
-        public static async Task<HtmlElement> Instance()
+        private HtmlElement() : base() { }
+        private HtmlElement(object obj) : base(obj) { }
+
+        public async Task<string> GetId()
         {
-            var proxy = new HtmlElement();
-            await proxy.Initialize();
-            return proxy;
+            return await GetPropertyAsync<string>("id");
         }
 
-        private async Task Initialize()
-        {
+        [ScriptableMember(ScriptAlias = "click")]
+        public event EventHandler OnClick;
 
-            if (scriptProxy == null)
-                scriptProxy = await CreateScriptObject("document;");
-            else
-                await CreateScriptObject(scriptProxy);
+        public async Task<object> Focus()
+        {
+            return await InvokeAsync<object>("focus");
         }
     }
 }

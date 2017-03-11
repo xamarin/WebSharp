@@ -60,6 +60,10 @@ namespace WebSharpJs.Browser
             return default(Location);
         }
 
+        public async Task<HtmlElement> GetElementById(string id)
+        {
+            return await InvokeAsync<HtmlElement>("getElementById", id); ;
+        }
     }
 
     [ScriptableType]

@@ -6,6 +6,7 @@ using System;
 using System.Dynamic;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace WebSharpJs.Browser
 {
@@ -124,12 +125,27 @@ namespace WebSharpJs.Browser
             if (javascriptFunctionProxy != null)
             {
 
+                var isScriptObject = false;
+                Type type = typeof(T);
+                if (type.GetIsSubclassOf(typeof(ScriptObject)))
+                {
+                    isScriptObject = true;
+                }
+
                 var parms = new
                 {
                     function = name,
+                    scriptObject = isScriptObject,
                     args = ScriptObjectUtilities.WrapScriptParms(parameters)
                 };
-                return await JavaScriptProxy.websharp_invoke(parms);
+
+                if (isScriptObject)
+                {
+                    var result = await JavaScriptProxy.websharp_invoke(parms);
+                    return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null); ;
+                }
+                else
+                    return await JavaScriptProxy.websharp_invoke(parms);
 
             }
 

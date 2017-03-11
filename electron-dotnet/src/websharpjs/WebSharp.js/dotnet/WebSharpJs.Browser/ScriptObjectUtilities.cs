@@ -51,6 +51,11 @@ namespace WebSharpJs.Browser
         {
             return type.GetTypeInfo().GetGenericArguments();
         }
+
+        public static bool GetIsSubclassOf(this Type type, Type subtype)
+        {
+            return type.GetTypeInfo().IsSubclassOf(subtype);
+        }
         #endregion
 
         public static bool IsDelegate(Type type)
