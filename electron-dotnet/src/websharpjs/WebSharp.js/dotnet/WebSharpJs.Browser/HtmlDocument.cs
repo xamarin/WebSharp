@@ -8,7 +8,7 @@ namespace WebSharpJs.Browser
 {
     public sealed class HtmlDocument : WebSharpObject
     {
-        static Func<object, Task<object>> scriptProxy;
+        static DOMObjectProxy scriptProxy;
 
         public static async Task<HtmlDocument> Instance()
         {
@@ -19,11 +19,14 @@ namespace WebSharpJs.Browser
 
         private async Task Initialize()
         {
-
             if (scriptProxy == null)
-                scriptProxy = await CreateScriptObject("document;");
-            else
-                await CreateScriptObject(scriptProxy);
+            {
+                scriptProxy = new DOMObjectProxy("document");
+            }
+
+            await scriptProxy.GetProxyObject();
+            ScriptObjectProxy = scriptProxy;
+
         }
 
 

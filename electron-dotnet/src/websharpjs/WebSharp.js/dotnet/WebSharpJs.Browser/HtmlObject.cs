@@ -48,14 +48,14 @@ namespace WebSharpJs.Browser
             {
 
                 websharpEvent = new WebSharpHtmlEvent(this, scriptAlias);
-                if (JavaScriptProxy != null)
+                if (ScriptObjectProxy != null)
                 {
                     var eventCallback = new
                     {
                         onEvent = scriptAlias,
                         callback = websharpEvent.EventCallbackFunction
                     };
-                    result = await JavaScriptProxy.websharp_addEventListener(eventCallback);
+                    result = await ScriptObjectProxy.AddEventListener(eventCallback);
                 }
                 EventHandlers[scriptAlias] = websharpEvent;
             }
@@ -87,14 +87,14 @@ namespace WebSharpJs.Browser
             if (!EventHandlers.TryGetValue(eventName, out websharpEvent))
             {
                 websharpEvent = new WebSharpHtmlEvent(this, eventName);
-                if (JavaScriptProxy != null)
+                if (ScriptObjectProxy != null)
                 {
                     var eventCallback = new
                     {
                         onEvent = scriptAlias,
                         callback = websharpEvent.EventCallbackFunction
                     };
-                    result = await JavaScriptProxy.websharp_addEventListener(eventCallback);
+                    result = await ScriptObjectProxy.AddEventListener(eventCallback);
                 }
                 EventHandlers[eventName] = websharpEvent;
             }
@@ -102,7 +102,16 @@ namespace WebSharpJs.Browser
         }
 
         protected HtmlObject() : base() { }
-        protected HtmlObject(object obj) : base(obj) { }
+        protected HtmlObject(object obj) : base(obj)
+        {
+            var dict = obj as IDictionary<string, object>;
+
+            // The key `websharp_id` represents a wrapped proxy object
+            if (dict != null && dict.ContainsKey("websharp_id"))
+            {
+                ScriptObjectProxy = new DOMObjectProxy(obj);
+            }
+        }
     }
 
 

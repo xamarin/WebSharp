@@ -83,14 +83,6 @@ namespace WebSharpJs.Browser
             InstanceType = GetType();
             if (cachedPropertyInfo == null)
                 cachedPropertyInfo = CachedPropertyInfo;
-
-            var dict = obj as IDictionary<string, object>;
-
-            // The key `websharp_id` represents a wrapped proxy object
-            if (dict != null && dict.ContainsKey("websharp_id"))
-            {
-                JavaScriptProxy = obj;
-            }
         }
 
         public WebSharpObject()
@@ -98,52 +90,6 @@ namespace WebSharpJs.Browser
             InstanceType = GetType();
             if (cachedPropertyInfo == null)
                 cachedPropertyInfo = CachedPropertyInfo;
-        }
-
-        static readonly string createScript = @"
-                                return function (data, callback) {
-                                    const dotnet = require('./electron-dotnet');
-                                    const websharpjs = dotnet.WebSharpJs;
-
-                                    
-                                    const {remote} = require('electron')
-                                    const {Menu, MenuItem} = remote
-
-                                    let options = websharpjs.UnwrapArgs(data);
-
-
-                                    let wsObj = $$$$javascriptObject$$$$
-
-                                    let proxy = websharpjs.ObjectToScriptObject(wsObj);
-                                      
-                                    callback(null, proxy);
-                                }
-                            ";
-                
-        protected async Task<Func<object, Task<object>>> CreateScriptObject(string javascriptObject, params object[] args)
-        {
-            object[] parms = args;
-
-            if (args != null)
-            {
-                parms = ScriptObjectUtilities.WrapScriptParms(args);
-            }
-            Func<object, Task<object>> scriptProxy = await WebSharp.CreateJavaScriptFunction(createScript.Replace("$$$$javascriptObject$$$$", javascriptObject));
-            await CreateScriptObject(scriptProxy, args);
-            return scriptProxy;
-        }
-
-        protected async Task CreateScriptObject(Func<object, Task<object>> scriptProxy, params object[] args)
-        {
-            object[] parms = args;
-
-            if (args != null)
-            {
-                parms = ScriptObjectUtilities.WrapScriptParms(args);
-            }
-
-            JavaScriptProxy = await scriptProxy(parms);
-
         }
 
         class EventHandlerBag : GrabBag<WebSharpEvent>
@@ -184,14 +130,15 @@ namespace WebSharpJs.Browser
             {
 
                 websharpEvent = new WebSharpEvent(this, scriptAlias);
-                if (JavaScriptProxy != null)
+                
+                if (ScriptObjectProxy != null)
                 {
                     var eventCallback = new
                     {
                         onEvent = scriptAlias,
                         callback = websharpEvent.EventCallbackFunction
                     };
-                    result = await JavaScriptProxy.websharp_addEventListener(eventCallback);
+                    result = await ScriptObjectProxy.AddEventListener(eventCallback);
                 }
                 EventHandlers[scriptAlias] = websharpEvent;
             }
@@ -223,27 +170,18 @@ namespace WebSharpJs.Browser
             if (!EventHandlers.TryGetValue(eventName, out websharpEvent))
             {
                 websharpEvent = new WebSharpEvent(this, eventName);
-                if (JavaScriptProxy != null)
+                if (ScriptObjectProxy != null)
                 {
                     var eventCallback = new
                     {
                         onEvent = scriptAlias,
                         callback = websharpEvent.EventCallbackFunction
                     };
-                    result = await JavaScriptProxy.websharp_addEventListener(eventCallback);
+                    result = await ScriptObjectProxy.AddEventListener(eventCallback);
                 }
                 EventHandlers[eventName] = websharpEvent;
             }
             return result;
-        }
-
-        public override bool SetProperty(string name, object value)
-        {
-            ScriptMemberInfo property = null;
-            if (cachedPropertyInfo.TryGetValue(name, out property))
-                return base.TrySetProperty(property.ScriptAlias, value, property.CreateIfNotExists, property.HasOwnProperty);
-            else
-                return base.SetProperty(name, value);
         }
 
         public override async Task<bool> SetPropertyAsync(string name, object value)
@@ -255,21 +193,6 @@ namespace WebSharpJs.Browser
                 return await base.SetPropertyAsync(name, value);
         }
 
-        public override object GetProperty(string name)
-        {
-            ScriptMemberInfo property = null;
-            if (cachedPropertyInfo.TryGetValue(name, out property))
-                return base.GetProperty(property.ScriptAlias);
-            else
-                return base.GetProperty(name);
-        }
-
-        public T GetProperty<T>(string name)
-        {
-            object o = GetProperty(name);
-            return (T)o;
-        }
-
         public override Task<T> GetPropertyAsync<T>(string name)
         {
             ScriptMemberInfo property = null;
@@ -279,22 +202,6 @@ namespace WebSharpJs.Browser
                 return base.GetPropertyAsync<T>(name);
         }
 
-        public override object Invoke(string name, params object[] args)
-        {
-            var scriptAlias = name;
-
-            var mi = InstanceType.GetMethod(name, BindingFlags.Instance | BindingFlags.Public);
-
-            if (mi != null)
-            {
-                if (mi.IsDefined(typeof(ScriptableMemberAttribute), false))
-                {
-                    var att = mi.GetCustomAttribute<ScriptableMemberAttribute>(false);
-                    scriptAlias = (att.ScriptAlias ?? scriptAlias);
-                }
-            }
-            return base.Invoke(scriptAlias, args);
-        }
 
         public override Task<T> InvokeAsync<T>(string name, params object[] args)
         {

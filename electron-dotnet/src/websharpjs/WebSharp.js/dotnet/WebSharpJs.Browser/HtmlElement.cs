@@ -24,5 +24,15 @@ namespace WebSharpJs.Browser
         {
             return await InvokeAsync<object>("focus");
         }
+
+        public async Task<object> GetStyleAttribute()
+        {
+            return await GetPropertyAsync<object>("style");
+        }
+
+        public async Task<object> GetNodeType()
+        {
+            return await GetPropertyAsync<object>("style");
+        }
     }
 }

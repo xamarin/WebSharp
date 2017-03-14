@@ -118,8 +118,8 @@ namespace WebSharpJs.Browser
                     var so = parm as ScriptObject;
                     if (so != null)
                     {
-                        if (so.JavaScriptProxy != null)
-                            parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = "ScriptObject", Value = so.JavaScriptProxy.websharp_id };
+                        if (so.ScriptObjectProxy != null)
+                            parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = "ScriptObject", Value = so.ScriptObjectProxy.Handle };
                         else
                             parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = so.GetType().ToString(), Value = so };
                     }

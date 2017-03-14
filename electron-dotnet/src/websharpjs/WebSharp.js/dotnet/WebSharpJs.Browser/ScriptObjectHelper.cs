@@ -113,17 +113,17 @@ namespace WebSharpJs.Browser
             return map;
         }
 
-        public static ScriptObject AnonymousObjectToScriptObject(dynamic source)
-        {
-            IDictionary<string, object> dict = source;
+        //public static ScriptObject AnonymousObjectToScriptObject(dynamic source)
+        //{
+        //    IDictionary<string, object> dict = source;
 
-            // The key `websharp_id` represents a wrapped proxy object
-            if (dict.ContainsKey("websharp_id"))
-            {
-                return new ScriptObject() { JavaScriptProxy = source };
-            }
-            return null;
-        }
+        //    // The key `websharp_id` represents a wrapped proxy object
+        //    if (dict.ContainsKey("websharp_id"))
+        //    {
+        //        return new ScriptObject() { JavaScriptProxy = source };
+        //    }
+        //    return null;
+        //}
 
         public static bool DictionaryToScriptableType(IDictionary<string, object> parm, object obj)
         {

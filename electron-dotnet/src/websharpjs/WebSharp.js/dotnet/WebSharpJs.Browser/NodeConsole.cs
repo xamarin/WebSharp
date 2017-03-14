@@ -8,7 +8,7 @@ namespace WebSharpJs.Browser
 {
     public class NodeConsole : WebSharpObject
     {
-        static Func<object, Task<object>> scriptProxy;
+        static NodeObjectProxy scriptProxy;
 
         public static async Task<NodeConsole> Instance()
         {
@@ -19,11 +19,14 @@ namespace WebSharpJs.Browser
 
         private async Task Initialize()
         {
-
             if (scriptProxy == null)
-                scriptProxy = await CreateScriptObject("console;");
-            else
-                await CreateScriptObject(scriptProxy);
+            {
+                scriptProxy = new NodeObjectProxy("console", "");
+            }
+
+            await scriptProxy.GetProxyObject();
+            ScriptObjectProxy = scriptProxy;
+
         }
 
         public async Task<object> Log(object message)
