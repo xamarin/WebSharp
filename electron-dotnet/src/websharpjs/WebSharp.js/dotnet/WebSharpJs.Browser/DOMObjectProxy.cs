@@ -10,8 +10,6 @@ namespace WebSharpJs.Browser
     
     public class DOMObjectProxy : ScriptObjectProxy
     {
-        //Func<object, Task<object>> scriptProxy;
-
         static readonly string createScript = @"
                                 return function (data, callback) {
                                     const dotnet = require('./electron-dotnet');

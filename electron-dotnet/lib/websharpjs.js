@@ -148,6 +148,18 @@
             }
             cb(null, result);
         }
+
+        proxy.websharp_get_attribute = function (prop, cb) {
+            //console.log('attribute -> ' + prop + ' [ ' + objToWrap.getAttribute(prop) + ' ]');
+            cb(null, objToWrap.getAttribute(prop));
+        }
+
+        proxy.websharp_set_attribute = function (prop, cb) {
+            //console.log('set attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
+            objToWrap.setAttribute(prop.name, prop.value);
+            cb(null, true);
+        }
+
         proxy.websharp_invoke = function (parms, cb) {
             //console.log('invoking -> ' + parms.function + ' has function ' + (typeof objToWrap[parms.function] === 'function') + ' args [ ' + parms.args + ' ]');
             let invokeResult;

@@ -39,7 +39,7 @@ namespace WebSharpJs.Browser
         public virtual string ScriptObject { get; protected set; }
 
         public int Handle => javascriptFunctionProxy.websharp_id;
-        public dynamic JavascriptFunctionProxy { get => javascriptFunctionProxy; protected set => javascriptFunctionProxy = value; }
+        public dynamic JavascriptFunctionProxy { get => javascriptFunctionProxy; set => javascriptFunctionProxy = value; }
 
         public virtual async Task GetProxyObject(params object[] args)
         {
