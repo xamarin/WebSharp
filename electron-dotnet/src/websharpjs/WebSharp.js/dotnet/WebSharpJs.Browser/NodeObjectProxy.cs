@@ -12,26 +12,31 @@ namespace WebSharpJs.Browser
     {
 
         static readonly string createScript = @"
-                                return function (data, callback) {
-                                    const dotnet = require('./electron-dotnet');
-                                    const websharpjs = dotnet.WebSharpJs;
+                                        return function (data, callback) {
+                                            const dotnet = require('./electron-dotnet');
+                                            const websharpjs = dotnet.WebSharpJs;
 
-                                    $$$$nodeRequires$$$$
+                                            $$$$nodeRequires$$$$
 
-                                    let options = websharpjs.UnwrapArgs(data);
+                                            let options = websharpjs.UnwrapArgs(data);
 
+                                            let wsObj = $$$$javascriptObject$$$$;
 
-                                    let wsObj = $$$$javascriptObject$$$$;
+                                            let proxy = websharpjs.ObjectToScriptObject(wsObj);
 
-                                    let proxy = websharpjs.ObjectToScriptObject(wsObj);
+                                            callback(null, proxy);
+ 
+                                        }
+                                    ";
 
-                                    callback(null, proxy);
-                                }
-                            ";
+        public NodeObjectProxy(ScriptObjectProxy sop)
+        {
+            JavascriptFunctionProxy = sop.JavascriptFunctionProxy;
+        }
 
         public NodeObjectProxy(dynamic proxy)
         {
-            javascriptFunctionProxy = proxy;
+            JavascriptFunctionProxy = proxy;
         }
 
         public string Requires { get; private set; }

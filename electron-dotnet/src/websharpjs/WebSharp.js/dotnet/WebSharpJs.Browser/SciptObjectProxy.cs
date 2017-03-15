@@ -10,7 +10,7 @@ namespace WebSharpJs.Browser
     {
 
         Func<object, Task<object>> scriptProxy;
-        protected dynamic javascriptFunctionProxy;
+        private dynamic javascriptFunctionProxy;
 
         static readonly string createScript = @"
                                 return function (data, callback) {
@@ -38,6 +38,9 @@ namespace WebSharpJs.Browser
         protected virtual string ScriptFunction => createScript.Replace("$$$$javascriptObject$$$$", ScriptObject);
         public virtual string ScriptObject { get; protected set; }
 
+        public int Handle => javascriptFunctionProxy.websharp_id;
+        public dynamic JavascriptFunctionProxy { get => javascriptFunctionProxy; protected set => javascriptFunctionProxy = value; }
+
         public virtual async Task GetProxyObject(params object[] args)
         {
             object[] parms = args;
@@ -49,13 +52,12 @@ namespace WebSharpJs.Browser
 
             if (scriptProxy == null)
             {
+                //Console.WriteLine(ScriptFunction);
                 scriptProxy = await WebSharp.CreateJavaScriptFunction(ScriptFunction);
             }
 
             javascriptFunctionProxy = await scriptProxy(parms);
         }
-
-        public int Handle => javascriptFunctionProxy.websharp_id;
 
         public async Task<T> GetProperty<T>(string name)
         {

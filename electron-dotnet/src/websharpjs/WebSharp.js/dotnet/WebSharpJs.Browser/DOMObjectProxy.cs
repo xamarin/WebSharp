@@ -30,7 +30,7 @@ namespace WebSharpJs.Browser
 
         public DOMObjectProxy(dynamic proxy) 
         {
-            javascriptFunctionProxy = proxy;
+            JavascriptFunctionProxy = proxy;
         }
 
         public DOMObjectProxy(string scriptObject)
