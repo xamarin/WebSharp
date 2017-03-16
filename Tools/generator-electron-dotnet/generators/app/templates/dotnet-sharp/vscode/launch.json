@@ -14,7 +14,7 @@
       ],
       "stopOnEntry": false,
       "env": {
-          "NODE-ENV": "devlopment"
+          "NODE_ENV": "development"
       },
       "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
       "sourceMaps": false,
@@ -32,7 +32,7 @@
       ],
       "stopOnEntry": false,
       "env": {
-          "NODE-ENV": "devlopment"
+          "NODE_ENV": "development"
       },
       "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
       "sourceMaps": false,
@@ -51,7 +51,7 @@
       "webRoot": "${workspaceRoot}",
       "stopOnEntry": false,
       "env": {
-          "NODE-ENV": "devlopment"
+          "NODE_ENV": "development"
       },
       "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
       "sourceMaps": false,
@@ -70,7 +70,7 @@
       "webRoot": "${workspaceRoot}",
       "stopOnEntry": false,
       "env": {
-          "NODE-ENV": "devlopment"
+          "NODE_ENV": "development"
       },
       "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
       "sourceMaps": false,
