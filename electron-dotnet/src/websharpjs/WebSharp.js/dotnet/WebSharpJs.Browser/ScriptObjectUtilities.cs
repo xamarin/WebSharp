@@ -60,7 +60,7 @@ namespace WebSharpJs.Browser
 
         public static bool IsDelegate(Type type)
         {
-            return typeof(MulticastDelegate).IsAssignableFrom(type.BaseType());
+            return typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type.BaseType());
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace WebSharpJs.Browser
         /// <returns></returns>
         public static bool IsCallbackFunction(Type type)
         {
-            if (!typeof(MulticastDelegate).IsAssignableFrom(type.BaseType()))
+            if (!typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type.BaseType()))
                 return false;
             return (type.GetTypeInfo().IsGenericType
-                && typeof(Func<,>).IsAssignableFrom(type.GetGenericTypeDefinition())
-                && typeof(Task<object>).IsAssignableFrom(type.GetGenericArguments()[1]));
+                && typeof(Func<,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
+                && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[1]));
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace WebSharpJs.Browser
                         {
                             var fieldMappings = new Dictionary<string, ScriptParm>();
                             var scriptAlias = string.Empty;
-                            var properties = parmType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                            var properties = parmType.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public);
                             for (int i = 0; i < properties.Length; i++)
                             {
 

@@ -47,7 +47,7 @@ namespace WebSharpJs.Browser
             {
                 try
                 {
-                    var eventDelegate = (MulticastDelegate)Source.GetType().GetField(EventName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(Source);
+                    var eventDelegate = (MulticastDelegate)Source.GetType().GetTypeInfo().GetField(EventName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(Source);
                     eventDelegate.DynamicInvoke(new object[] { Source, EventArgs.Empty });
                 }
                 catch (Exception exc)

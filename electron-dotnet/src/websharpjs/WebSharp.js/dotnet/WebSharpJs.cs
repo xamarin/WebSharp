@@ -1,10 +1,4 @@
 using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebSharpJs
@@ -14,7 +8,6 @@ namespace WebSharpJs
         static bool initialized;
         static Func<object, Task<object>> compileFunc;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public Task<object> InitializeInternal(object input)
         {
             if (!initialized)

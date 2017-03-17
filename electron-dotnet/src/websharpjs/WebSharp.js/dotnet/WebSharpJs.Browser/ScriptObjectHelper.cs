@@ -21,7 +21,7 @@ namespace WebSharpJs.Browser
             {
                 
                 var scriptAlias = string.Empty;
-                var properties = parmType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+                var properties = parmType.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public);
                 for (int i = 0; i < properties.Length; i++)
                 {
                     var propertyInfo = properties[i];
@@ -55,7 +55,7 @@ namespace WebSharpJs.Browser
             var scriptAlias = string.Empty;
 
             // add properties
-            foreach (PropertyInfo pi in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
+            foreach (PropertyInfo pi in type.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
             {
                 if (pi.IsSpecialName)
                     continue;
@@ -74,7 +74,7 @@ namespace WebSharpJs.Browser
             }
 
             // add events
-            foreach (EventInfo ei in type.GetEvents())
+            foreach (EventInfo ei in type.GetTypeInfo().GetEvents())
             {
                 if (ei.IsSpecialName)
                     continue;
@@ -93,7 +93,7 @@ namespace WebSharpJs.Browser
             }
 
             // add methods
-            foreach (MethodInfo mi in type.GetMethods())
+            foreach (MethodInfo mi in type.GetTypeInfo().GetMethods())
             {
                 if (mi.IsSpecialName)
                     continue;
@@ -138,7 +138,7 @@ namespace WebSharpJs.Browser
                 {
                     if (mappings.ContainsKey(key))
                     {
-                        var pi = parmType.GetProperty(mappings[key]);
+                        var pi = parmType.GetTypeInfo().GetProperty(mappings[key]);
                         if (pi.SetMethod != null)
                         {
                             pi.SetValue(obj, parm[key]);

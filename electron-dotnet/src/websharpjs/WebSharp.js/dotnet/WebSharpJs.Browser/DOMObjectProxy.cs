@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebSharpJs.Browser
+﻿namespace WebSharpJs.Browser
 {
-    
+
     public class DOMObjectProxy : ScriptObjectProxy
     {
         static readonly string createScript = @"

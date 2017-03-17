@@ -31,7 +31,7 @@ namespace WebSharpJs.Browser
             }
 
             var scriptAlias = eventName;
-            var ei = InstanceType.GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
+            var ei = InstanceType.GetTypeInfo().GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
 
             if (ei != null)
             {
@@ -71,7 +71,7 @@ namespace WebSharpJs.Browser
             WebSharpHtmlEvent websharpEvent;
 
             var scriptAlias = eventName;
-            var ei = InstanceType.GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
+            var ei = InstanceType.GetTypeInfo().GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
 
             if (ei == null)
                 return false;

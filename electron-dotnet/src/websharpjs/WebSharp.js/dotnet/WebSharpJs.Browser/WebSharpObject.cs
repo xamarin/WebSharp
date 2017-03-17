@@ -33,7 +33,7 @@ namespace WebSharpJs.Browser
                     bool createIfNotExists;
                     bool hasOwnProperty;
 
-                    foreach (var prop in InstanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
+                    foreach (var prop in InstanceType.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
                     {
                         scriptAlias = prop.Name;
                         createIfNotExists = true;
@@ -47,7 +47,7 @@ namespace WebSharpJs.Browser
                         }
                         props[prop.Name] = new ScriptMemberInfo(scriptAlias, createIfNotExists, hasOwnProperty);
                     }
-                    foreach (var prop in InstanceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
+                    foreach (var prop in InstanceType.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly))
                     {
                         scriptAlias = prop.Name;
                         createIfNotExists = true;
@@ -113,7 +113,7 @@ namespace WebSharpJs.Browser
             }
 
             var scriptAlias = eventName;
-            var ei = InstanceType.GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
+            var ei = InstanceType.GetTypeInfo().GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
 
             if (ei != null)
             {
@@ -154,7 +154,7 @@ namespace WebSharpJs.Browser
             WebSharpEvent websharpEvent;
 
             var scriptAlias = eventName;
-            var ei = InstanceType.GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
+            var ei = InstanceType.GetTypeInfo().GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
 
             if (ei == null)
                 return false;
@@ -207,7 +207,7 @@ namespace WebSharpJs.Browser
         {
             var scriptAlias = name;
 
-            var mi = InstanceType.GetMethod(name, BindingFlags.Instance | BindingFlags.Public);
+            var mi = InstanceType.GetTypeInfo().GetMethod(name, BindingFlags.Instance | BindingFlags.Public);
 
             if (mi != null)
             {
