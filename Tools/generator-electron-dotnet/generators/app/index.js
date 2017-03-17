@@ -66,6 +66,10 @@ module.exports = yeoman.generators.Base.extend({
                     {
                         name: 'Node.js .NET Scripting and PepperPlugin: Native Client',
                         value: 'dotnet-sharp-plugin'
+                    },
+                   {
+                        name: 'WebSharp Electron Application',
+                        value: 'dotnet-websharp'
                     }
                 ]
             }, function (typeAnswer) {
@@ -130,7 +134,23 @@ module.exports = yeoman.generators.Base.extend({
                 done();
             }.bind(this));
         },
+        askForWSClassName: function () {
+            var done = this.async();
+            if (['dotnet-websharp'].indexOf(this.applicationConfig.type) === -1) {
+                done();
+                return;
+            }
 
+            this.prompt({
+                type: 'input',
+                name: 'wsClassName',
+                message: 'What\'s the name of your class?',
+                default: this.applicationConfig.displayName.replace(/[^a-zA-Z0-9]/g, '_'),
+            }, function (classAnswer) {
+                this.applicationConfig.wsClassName = classAnswer.wsClassName;
+                done();
+            }.bind(this));
+        },
         // Ask for application description
         askForApplicationDescription: function () {
             var done = this.async();
@@ -161,7 +181,7 @@ module.exports = yeoman.generators.Base.extend({
 
         askForGit: function () {
             var done = this.async();
-            if (['dotnet-sharp', 'dotnet-plugin', 'dotnet-sharp-plugin'].indexOf(this.applicationConfig.type) === -1) {
+            if (['dotnet-sharp', 'dotnet-plugin', 'dotnet-sharp-plugin', 'dotnet-websharp'].indexOf(this.applicationConfig.type) === -1) {
                 done();
                 return;
             }
@@ -193,6 +213,9 @@ module.exports = yeoman.generators.Base.extend({
                 break;
             case 'dotnet-sharp-plugin':
                 this._writingDotNetSharpPlugin();
+                break;
+            case 'dotnet-websharp':
+                this._writingDotNetWebSharp();
                 break;
             default:
                 //unknown project type
@@ -271,6 +294,30 @@ module.exports = yeoman.generators.Base.extend({
 
         this.applicationConfig.installDependencies = true;
     },
+    // Write DotNet WebSharp app with source code project file
+    _writingDotNetWebSharp: function () {
+        var context = this.applicationConfig;
+
+        this.directory(this.sourceRoot() + '/vscode', './.vscode');
+        //this.directory(this.sourceRoot() + '/test', './test');
+
+        this.copy(this.sourceRoot() + '/vscodeignore', './.vscodeignore');
+        this.copy(this.sourceRoot() + '/gitignore', './.gitignore');
+        this.template(this.sourceRoot() + '/README.md', './README.md', context);
+        this.template(this.sourceRoot() + '/electron-dotnet-quickstart.md', './electron-dotnet-quickstart.md', context);
+        this.copy(this.sourceRoot() + '/jsconfig.json', './jsconfig.json');
+
+        this.template(this.sourceRoot() + '/src/websharp.js', './src/' + context.name + '.js', context);
+        this.template(this.sourceRoot() + '/src/websharp.cs', './src/' + context.wsClassName + '/' + context.wsClassName + '.cs', context);
+        this.template(this.sourceRoot() + '/src/websharp.csproj', './src/' + context.wsClassName + '/' + context.wsClassName + '.csproj', context);
+        this.template(this.sourceRoot() + '/index.html', './index.html', context);
+        this.template(this.sourceRoot() + '/main.js', './main.js', context);
+        this.template(this.sourceRoot() + '/package.json', './package.json', context);
+        this.template(this.sourceRoot() + '/renderer.js', './renderer.js', context);
+        this.template(this.sourceRoot() + '/.eslintrc.json', './.eslintrc.json', context);
+
+        this.applicationConfig.installDependencies = true;
+    },
 
     // Installation
     install: function () {
@@ -297,7 +344,7 @@ module.exports = yeoman.generators.Base.extend({
         this.log('');
         this.log('To start editing with Visual Studio Code, use the following commands:');
         this.log('');
-        this.log('     cd to directory path');
+        this.log('     cd to '  + this.applicationConfig.name );
         this.log('     code .');
         this.log('');
         this.log('Open electron-dotnet-quickstart.md inside the new application for further instructions');
