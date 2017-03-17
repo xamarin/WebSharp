@@ -160,6 +160,17 @@
             cb(null, true);
         }
 
+        proxy.websharp_get_style_attribute = function (prop, cb) {
+            //console.log('style attribute -> ' + prop + ' [ ' + objToWrap.style[prop] + ' ]');
+            cb(null, objToWrap.style[prop]);
+        }
+
+        proxy.websharp_set_style_attribute = function (prop, cb) {
+            //console.log('set style attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
+            objToWrap.style[prop.name] = prop.value;
+            cb(null, true);
+        }
+
         proxy.websharp_invoke = function (parms, cb) {
             //console.log('invoking -> ' + parms.function + ' has function ' + (typeof objToWrap[parms.function] === 'function') + ' args [ ' + parms.args + ' ]');
             let invokeResult;
@@ -183,10 +194,10 @@
         }
 
         proxy.websharp_addEventListener = function (eventCallback, cb) {
-            //console.log('addEventListener -> ' + eventCallback.onEvent);
+            console.log('addEventListener -> ' + eventCallback.onEvent);
             objToWrap.addEventListener(eventCallback.onEvent, 
                 function () {
-                
+                    console.log('we be eventing');
                     // We need to preserver arity of the function callback parameters.
                     let callbackData = [];
                     // we will only attach event information if it was asked for

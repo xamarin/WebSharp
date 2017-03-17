@@ -78,5 +78,37 @@ namespace WebSharpJs.Browser
             }
             return false;
         }
+
+        public async Task<string> GetStyleAttribute(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var jsfp = ScriptObjectProxy.JavascriptFunctionProxy;
+            if (jsfp != null)
+            {
+                return await jsfp.websharp_get_style_attribute(name);
+            }
+            else
+                return string.Empty;
+        }
+
+        public async Task<bool> SetStyleAttribute(string name, string value)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            var jsfp = ScriptObjectProxy.JavascriptFunctionProxy;
+            if (jsfp != null)
+            {
+                var parm = new
+                {
+                    name = name,
+                    value = value
+                };
+                return await jsfp.websharp_set_style_attribute(parm);
+            }
+            return false;
+        }
     }
 }
