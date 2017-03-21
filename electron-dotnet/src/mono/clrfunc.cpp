@@ -94,7 +94,10 @@ NAN_METHOD(ClrFunc::Initialize)
 
         String::Utf8Value compilerFile(options->Get(Nan::New<v8::String>("compiler").ToLocalChecked()));
         MonoAssembly *assembly = mono_domain_assembly_open (mono_domain_get(), *compilerFile);
-        MonoClass* compilerClass = mono_class_from_name(mono_assembly_get_image(assembly), "", "EdgeCompiler");
+
+		String::Utf8Value compilerClassName(options->Get(Nan::New<v8::String>("compilerClass").ToLocalChecked()));
+        MonoClass* compilerClass = mono_class_from_name(mono_assembly_get_image(assembly), "", *compilerClassName);
+
         MonoObject* compilerInstance = mono_object_new(mono_domain_get(), compilerClass);
         MonoMethod* ctor = mono_class_get_method_from_name(compilerClass, ".ctor", 0);
         mono_runtime_invoke(ctor, compilerInstance, NULL, (MonoObject**)&exc);

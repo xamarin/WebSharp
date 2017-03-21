@@ -140,32 +140,46 @@ exports.func = function(language, options) {
         throw new Error('The first argument must be a string identifying the language compiler to use.');
     }
     else if (!options.assemblyFile) {
-        var compilerName = 'edge-' + language.toLowerCase();
-        var compiler;
-        try {
-            compiler = require(compilerName);
+        
+        // use the internal websharp-cs module for C# modules.
+        if (language !== 'cs' || !fs.existsSync(path.resolve(__dirname, '../lib/bin/websharp-cs/websharp-cs.dll')))
+        {
+            var compilerName = 'edge-' + language.toLowerCase();
+            var compiler;
+            try {
+                compiler = require(compilerName);
+            }
+            catch (e) {
+                throw new Error("Unsupported language '" + language + "'. To compile script in language '" + language +
+                    "' an npm module '" + compilerName + "' must be installed.");
+            }
+
+            try {
+                options.compiler = compiler.getCompiler();
+            }
+            catch (e) {
+                throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
+                    "does not contain getCompiler() function.");
+            }
+        
+            if (typeof options.compiler !== 'string') {
+                throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
+                    "did not specify correct compiler package name or assembly.");
+            }
+
+            if (process.env.EDGE_USE_CORECLR) {
+                options.bootstrapDependencyManifest = compiler.getBootstrapDependencyManifest();
+            }
+            // Set the Class name to load from the compiler assembly
+            options.compilerClass = 'EdgeCompiler'
         }
-        catch (e) {
-            throw new Error("Unsupported language '" + language + "'. To compile script in language '" + language +
-                "' an npm module '" + compilerName + "' must be installed.");
+        else {
+            // We set the compiler to our internal websharp-cs.dll
+            options.compiler = path.resolve(__dirname, '../lib/bin/websharp-cs/websharp-cs.dll');
+            // Set the Class name to load from the compiler assembly
+            options.compilerClass = 'WebSharpCompiler';
         }
 
-        try {
-            options.compiler = compiler.getCompiler();
-        }
-        catch (e) {
-            throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
-                "does not contain getCompiler() function.");
-        }
-
-        if (typeof options.compiler !== 'string') {
-            throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
-                "did not specify correct compiler package name or assembly.");
-        }
-
-        if (process.env.EDGE_USE_CORECLR) {
-            options.bootstrapDependencyManifest = compiler.getBootstrapDependencyManifest();
-        }
     }
 
     if (!options.assemblyFile && !options.source) {

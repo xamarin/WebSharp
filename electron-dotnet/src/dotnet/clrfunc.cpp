@@ -92,6 +92,7 @@ NAN_METHOD(ClrFunc::Initialize)
                     wrap, &ClrFuncReflectionWrap::Call));
         }
         else {
+
             // reference .NET code throgh embedded source code that needs to be compiled
             v8::String::Value compilerFile(options->Get(Nan::New<v8::String>("compiler").ToLocalChecked()));
             cli::array<unsigned char>^ buffer = gcnew cli::array<unsigned char>(compilerFile.length() * 2);
@@ -100,8 +101,17 @@ NAN_METHOD(ClrFunc::Initialize)
                 buffer[k * 2] = (*compilerFile)[k] & 255;
                 buffer[k * 2 + 1] = (*compilerFile)[k] >> 8;
             }
-            assembly = Assembly::UnsafeLoadFrom(System::Text::Encoding::Unicode->GetString(buffer));
-            System::Type^ compilerType = assembly->GetType("EdgeCompiler", true, true);
+
+			v8::String::Value compilerClass(options->Get(Nan::New<v8::String>("compilerClass").ToLocalChecked()));
+			cli::array<unsigned char>^ buffer2 = gcnew cli::array<unsigned char>(compilerClass.length() * 2);
+			for (int k = 0; k < compilerClass.length(); k++)
+			{
+				buffer2[k * 2] = (*compilerClass)[k] & 255;
+				buffer2[k * 2 + 1] = (*compilerClass)[k] >> 8;
+			}
+
+			assembly = Assembly::UnsafeLoadFrom(System::Text::Encoding::Unicode->GetString(buffer));
+            System::Type^ compilerType = assembly->GetType(System::Text::Encoding::Unicode->GetString(buffer2), true, true);
             System::Object^ compilerInstance = System::Activator::CreateInstance(compilerType, false);
             MethodInfo^ compileFunc = compilerType->GetMethod("CompileFunc", BindingFlags::Instance | BindingFlags::Public);
             if (compileFunc == nullptr)

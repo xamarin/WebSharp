@@ -33,4 +33,17 @@ rem Make it available to the electron-dotnet module
 copy /y "%SELF%\..\src\websharpjs\WebSharp.js\bin\%FLAVOR%\net451\*.dll" "%SELF%\..\lib\bin"
 echo SUCCESS. Nuget package at %SELF%\build\nuget
 
+echo Building Language Compilers
+cd "%SELF%\..\src\websharp-cs\src\websharp-cs"
+dotnet build websharp-cs.sln /p:Configuration=%FLAVOR% /p:Platform="Any CPU"
+
+if %ERRORLEVEL% neq 0 (
+	echo Failure building Language Compiler for C-Sharp
+	cd "%SELF%"
+	exit /b -1
+)
+
+cd "%SELF%"
+echo SUCCESS. Language Compiler for C-Sharp
+
 exit /b 0
