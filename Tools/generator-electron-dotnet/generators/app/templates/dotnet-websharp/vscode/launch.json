@@ -16,8 +16,11 @@
       ],
       "env": {
           "NODE_ENV": "development",
-          "EDGE_USE_MONOCLR": "0",
-          "EDGE_DEBUG": "0"
+          "EDGE_USE_MONOCLR": "",
+          "EDGE_DEBUG": "",
+          "WEBSHARP_CS_DEBUG": "",
+          "WEBSHARP_CS_DEBUG_SELF": "",
+          "WEBSHARP_CS_CACHE": ""
       },
       "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
       "protocol": "legacy"
