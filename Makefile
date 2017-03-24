@@ -16,11 +16,13 @@ build: check
 	make websharpjs
 
 websharpjs:
-	(cd electron-dotnet/src/websharpjs/WebSharp.js; dotnet restore; dotnet build /p:TargetFramework=netstandard1.6 /p:Configuration=Release ; dotnet pack /p:Configuration=Release /p:TargetFramework=netstandard1.6 --no-build)
+	(cd electron-dotnet/src/websharpjs/WebSharp.js; dotnet restore WebSharp.js.sln ; dotnet build WebSharp.js.sln /p:TargetFramework=netstandard1.6 /p:Configuration=Release)
+	(cd electron-dotnet/src/websharpjs/WebSharp.js; xbuild WebSharp.js_macosx.sln /p:Configuration=Release)
+	(cd electron-dotnet/src/websharpjs/WebSharp.js; mono ../../../tools/build/nuget.exe pack WebSharp.js.nuspec -OutputDirectory ./bin/Release)
 	# copy nuget to local nuget repo
 	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/*.nupkg electron-dotnet/tools/build/nuget)
 	# make the .dll available to websharp
-	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/netstandard1.6/*.dll electron-dotnet/lib/bin/)
+	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/net451/*.dll electron-dotnet/lib/bin/)
 
 check:
 	@if test ! -x $(NACLSDK_TOOL); then echo "You need to install the nacl_sdk on the parent directory, https://developer.chrome.com/native-client/sdk/download#installing-the-sdk"; exit 1; fi

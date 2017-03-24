@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>WebSharp.js</id>
+    <version>6.5.1</version>
+    <authors>WebSharpJs</authors>
+    <owners>WebSharpJs</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://raw.githubusercontent.com/xamarin/WebSharp/master/LICENSE</licenseUrl>
+    <summary>This WebSharp.js NuGet package supports scripting Node.js >v6.5.0.</summary>
+    <description>With WebSharp.js you can script Node.js in a .NET application. WebSharp.js allows you to run Node.js and .NET code in one process. You can call Node.js functions from .NET and .NET functions from Node.js. WebSharp.js takes care of marshalling data between CLR and V8. WebSharp.js also reconciles threading models of single threaded V8 and multi-threaded CLR. WebSharp.js ensures correct lifetime of objects on V8 and CLR heaps.</description>
+    <copyright>Copyright 2016 Xamarin</copyright>
+    <tags>node.js node .net edge edge.js v8 clr coreclr mono interop javascript websharp websharp.js</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5.1" />
+      <group targetFramework=".NETStandard1.6">
+        <dependency id="NETStandard.Library" version="1.6.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.CSharp" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="./bin/Release/netstandard1.6/WebSharpJs.dll" target="lib/netstandard1.6/WebSharpJs.dll" />
+    <file src="./bin/Release/net451/WebSharpJs.dll" target="lib/net451/WebSharpJs.dll" />
+  </files>
+</package>
