@@ -76,6 +76,7 @@ NAN_METHOD(ClrFunc::Initialize)
     v8::Local<v8::Value> jsassemblyFile = options->Get(Nan::New<v8::String>("assemblyFile").ToLocalChecked());
     if (jsassemblyFile->IsString())
     {
+        DBG("ClrFunc::Initialize MethodInfo wrapper: CLR Assembly");
         // reference .NET code through pre-compiled CLR assembly 
         String::Utf8Value assemblyFile(jsassemblyFile);
         String::Utf8Value nativeTypeName(options->Get(Nan::New<v8::String>("typeName").ToLocalChecked()));
@@ -89,6 +90,7 @@ NAN_METHOD(ClrFunc::Initialize)
     }
     else
     {
+        DBG("ClrFunc::Initialize MethodInfo wrapper: compile code");
         //// reference .NET code throgh embedded source code that needs to be compiled
         MonoException* exc = NULL;
 
@@ -391,6 +393,8 @@ v8::Local<v8::Object> ClrFunc::MarshalCLRObjectToV8(MonoObject* netdata, MonoExc
     void* iter = NULL;
     *exc = NULL;
 
+    // This is no longer valid for checking the stack overflow reliably after recent updated to the mono SDK.
+    // We will leave it here for now and exit early below.  This needs to be revisited.
     if ((0 == strcmp(mono_class_get_name(klass), "MonoType")
         && 0 == strcmp(mono_class_get_namespace(klass), "System"))
         || 0 == strcmp(mono_class_get_namespace(klass), "System.Reflection"))
@@ -447,7 +451,9 @@ v8::Local<v8::Object> ClrFunc::MarshalCLRObjectToV8(MonoObject* netdata, MonoExc
 
     if (*exc) 
     {
-        return scope.Escape(v8::Local<v8::Object>::Cast(ClrFunc::MarshalCLRExceptionToV8(*exc)));
+        // As per comments above this needs to be revisited at a later time for a recursion stack overflow.
+        //return scope.Escape(v8::Local<v8::Object>::Cast(ClrFunc::MarshalCLRExceptionToV8(*exc)));
+        return scope.Escape(result);
     }
 
     return scope.Escape(result);

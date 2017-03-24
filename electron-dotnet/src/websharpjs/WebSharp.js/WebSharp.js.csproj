@@ -25,7 +25,6 @@
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="Microsoft.CSharp" Version="*" />
-    <!--PackageReference Include="Edge.js" Version="*" /-->
   </ItemGroup>
 
   <ItemGroup>
