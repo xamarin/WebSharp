@@ -7,13 +7,20 @@ all:
 	@echo    make setup 	- sets up the environment for you
 
 build: check
+	make electron-dotnet
+	make peppersharp
+	make websharpjs
+	make websharp-cs
+	make generator
+
+electron-dotnet:
 	(cd electron-dotnet; npm install electron; npm install)
-	(cd Tools/generator-electron-dotnet; npm install)
+
+peppersharp:
 	(cd PepperPlugin/src; export NACL_SDK_ROOT=../../../nacl_sdk/pepper_canary/; make)
 	(cd PepperSharp; xbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Release /p:Platform=AnyCPU)
 	(cd PepperSharp; xbuild PepperSharp.csproj /t:Rebuild /p:Configuration=Debug /p:Platform=AnyCPU)
 	(cd electron-dotnet/tools; mono ./build/nuget.exe pack ./nuget/Xamarin.PepperSharp.nuspec -outputdirectory ./build/nuget -properties Configuration=Release -basepath ../../PepperSharp)
-	make websharpjs
 
 websharpjs:
 	(cd electron-dotnet/src/websharpjs/WebSharp.js; dotnet restore WebSharp.js.sln ; dotnet build WebSharp.js.sln /p:TargetFramework=netstandard1.6 /p:Configuration=Release)
@@ -23,6 +30,13 @@ websharpjs:
 	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/*.nupkg electron-dotnet/tools/build/nuget)
 	# make the .dll available to websharp
 	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/net451/*.dll electron-dotnet/lib/bin/)
+
+websharp-cs:
+	(cd electron-dotnet/src/websharp-cs/src/websharp-cs;mono ../../../../tools/build/nuget.exe restore websharp-cs_macosx.sln)
+	(cd electron-dotnet/src/websharp-cs/src/websharp-cs;xbuild websharp-cs_macosx.sln /p:Configuration=Release /p:TargeFramework="Any Cpu")
+
+generator:
+	(cd Tools/generator-electron-dotnet; npm install)
 
 check:
 	@if test ! -x $(NACLSDK_TOOL); then echo "You need to install the nacl_sdk on the parent directory, https://developer.chrome.com/native-client/sdk/download#installing-the-sdk"; exit 1; fi
