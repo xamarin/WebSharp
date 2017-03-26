@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 using WebSharpJs.Browser;
 
-namespace <%- wsClassName %>
-{
+//namespace <%- wsClassName %>
+//{
     public class Startup
     {
 
@@ -31,4 +31,4 @@ namespace <%- wsClassName %>
 
         }
     }
-}
+//}
