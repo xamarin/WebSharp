@@ -5,7 +5,7 @@ var hello = dotnet.func("./src/<%- wsClassName %>/<%- wsClassName %>.cs");
 
 //Make method externaly visible this will be referenced in the renderer.js file
 exports.sayHello = arg => {
-	hello('Electron', function (error, result) {
+	hello('<%- wsClassName %>', function (error, result) {
 		if (error) throw error;
 		if (result) console.log(result);
 	});
