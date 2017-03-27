@@ -88,14 +88,6 @@ else {
 if (process.env.EDGE_DEBUG) {
     console.log('Load edge native library from: ' + edgeNative);
 }
-if (edgeNative.match(/edge_coreclr\.node$/i)) {
-    // Propagate the choice between desktop and coreclr to edge-cs; this is used in deciding
-    // how to compile literal C# at https://github.com/tjanczuk/edge-cs/blob/master/lib/edge-cs.js
-    process.env.EDGE_USE_CORECLR = 1;
-}
-if (process.env.EDGE_USE_CORECLR && !process.env.EDGE_BOOTSTRAP_DIR && fs.existsSync(path.join(__dirname, 'bootstrap', 'bin', 'Release', 'netcoreapp1.0', 'bootstrap.dll'))) {
-    process.env.EDGE_BOOTSTRAP_DIR = path.join(__dirname, 'bootstrap', 'bin', 'Release', 'netcoreapp1.0');
-}
 
 process.env.EDGE_NATIVE = edgeNative;
 edge = require(edgeNative);
