@@ -304,7 +304,7 @@ module.exports = yeoman.generators.Base.extend({
         this.copy(this.sourceRoot() + '/vscodeignore', './.vscodeignore');
         this.copy(this.sourceRoot() + '/gitignore', './.gitignore');
         this.template(this.sourceRoot() + '/README.md', './README.md', context);
-        this.template(this.sourceRoot() + '/electron-dotnet-quickstart.md', './electron-dotnet-quickstart.md', context);
+        this.template(this.sourceRoot() + '/websharp-quickstart.md', context.name + '-quickstart.md', context);
         this.copy(this.sourceRoot() + '/jsconfig.json', './jsconfig.json');
 
         this.template(this.sourceRoot() + '/src/websharp.js', './src/' + context.name + '.js', context);
