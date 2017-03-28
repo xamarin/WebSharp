@@ -7,7 +7,6 @@
 #include <dlfcn.h>
 #include <libgen.h>
 #else
-//#include <Pathcch.h>
 #include <Shlwapi.h>
 #pragma comment(lib, "Shlwapi.lib")
 #endif
@@ -44,16 +43,16 @@ void MonoEmbedding::Initialize()
 
 
 // Construct the absolute file path to MonoEmbedding.exe assuming
-// it is located next to edge.node
+// it is located next to websharp.node
 std::string MonoEmbedding::GetMonoEmbeddingPath()
 {
 #ifdef EDGE_PLATFORM_WINDOWS
 
 	TCHAR szPath[MAX_PATH];
 
-	if (!GetModuleFileName(GetModuleHandle("edge_monoclr.node"), szPath, MAX_PATH))
+	if (!GetModuleFileName(GetModuleHandle("websharp_monoclr.node"), szPath, MAX_PATH))
 	{
-		DBG("\nMonoEmbedding::GetMonoEmbeddingPath: Cannot find module edge_monoclr.node (%d)\n", GetLastError());
+		DBG("\nMonoEmbedding::GetMonoEmbeddingPath: Cannot find module websharp_monoclr.node (%d)\n", GetLastError());
 	}
 
 	// We should probably move to Pathccw routines.

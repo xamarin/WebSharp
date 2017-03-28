@@ -68,7 +68,7 @@ if %ERRORLEVEL% neq 0 (
 
 :gyp
 
-echo Building edge.node %FLAVOR% for node.js %2 v%3
+echo Building websharp.node %FLAVOR% for node.js %2 v%3
 set NODEEXE=%DESTDIR%\node.exe
 set GYP=%APPDATA%\npm\node_modules\node-gyp\bin\node-gyp.js
 if not exist "%GYP%" (
@@ -78,14 +78,14 @@ if not exist "%GYP%" (
 
 "%NODEEXE%" "%GYP%" configure --%FLAVOR% build --target=%TARGET% --dist-url=https://atom.io/download/atom-shell --msvs_version=2015
 if %ERRORLEVEL% neq 0 (
-    echo Error building edge.node %FLAVOR% for node.js %2 v%3
+    echo Error building websharp.node %FLAVOR% for node.js %2 v%3
     exit /b -1
 )
 
 echo %DESTDIR%
-copy /y .\build\%FLAVOR%\edge_*.node "%DESTDIR%"
+copy /y .\build\%FLAVOR%\websharp_*.node "%DESTDIR%"
 if %ERRORLEVEL% neq 0 (
-    echo Error copying edge.node %FLAVOR% for node.js %2 v%3
+    echo Error copying websharp.node %FLAVOR% for node.js %2 v%3
     exit /b -1
 )
 
@@ -102,4 +102,4 @@ REM     echo Error copying msvcr120.dll %FLAVOR% to %DESTDIR%
 REM     exit /b -1
 REM )
 
-echo Success building edge.node %FLAVOR% for node.js %2 v%3
+echo Success building websharp.node %FLAVOR% for node.js %2 v%3

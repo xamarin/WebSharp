@@ -18,9 +18,17 @@
   'targets': [
     {
       'variables': {
-        'MONO_PKG_CONFIG': '/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config'
+        'MONO_PKG_CONFIG': '/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config',
+        'conditions': [
+          ['target_arch=="ia32"', {
+            'DEFAULT_MONO_ROOT': 'C:\Program Files %28x86%29\Mono'
+          }],
+          ['target_arch=="x64"', {
+            'DEFAULT_MONO_ROOT': 'C:\Program Files\Mono'
+          }],
+        ],
       },
-      'target_name': 'edge_nativeclr',
+      'target_name': 'websharp_monoclr',
       'win_delay_load_hook': 'false',
       'include_dirs': [
         "<!(node -e \"require('nan')\")"
@@ -37,17 +45,29 @@
         [
           'OS=="win"',
           {
-            'sources+': [
-              'src/dotnet/utils.cpp',
-              'src/dotnet/clrfunc.cpp',
-              'src/dotnet/clrfuncinvokecontext.cpp',
-              'src/dotnet/nodejsfunc.cpp',
-              'src/dotnet/nodejsfuncinvokecontext.cpp',
-              'src/dotnet/persistentdisposecontext.cpp',
-              'src/dotnet/clrfuncreflectionwrap.cpp',
-              'src/dotnet/clractioncontext.cpp',
-              'src/common/v8synchronizationcontext.cpp',
-              'src/common/edge.cpp'
+            'conditions': [
+              [
+                '"<!(node -e \"require(\'./tools/gyp-whereis.js\')(\'mono.exe\')\")"!="null"',
+                {
+
+                    'include_dirs+': [
+                      '<(DEFAULT_MONO_ROOT)\include\mono-2.0'
+                    ],
+                    'sources+': [
+                        'src/mono/clractioncontext.cpp',
+                        'src/mono/clrfunc.cpp',
+                        'src/mono/clrfuncinvokecontext.cpp',
+                        'src/mono/monoembedding.cpp',
+                        'src/mono/task.cpp',
+                        'src/mono/dictionary.cpp',
+                        'src/mono/nodejsfunc.cpp',
+                        'src/mono/nodejsfuncinvokecontext.cpp',
+                        'src/mono/utils.cpp',
+                        'src/common/v8synchronizationcontext.cpp',
+                        'src/common/edge.cpp'
+                    ]
+                }
+              ]
             ]
           },
           {
@@ -102,109 +122,6 @@
                 }
               ]
             ]
-          }
-        ]
-      ],
-      'configurations': {
-        'Release': {
-          'msvs_settings': {
-            'VCCLCompilerTool': {
-              # this is out of range and will generate a warning and skip adding RuntimeLibrary property:
-              'RuntimeLibrary': -1,
-              # this is out of range and will generate a warning and skip adding RuntimeTypeInfo property:
-              'RuntimeTypeInfo': -1,
-              'BasicRuntimeChecks': -1,
-              'ExceptionHandling': '0',
-              'AdditionalOptions': [
-                '/clr',
-                '/wd4506',
-                '/DHAVE_NATIVECLR'
-              ]
-            },
-            'VCLinkerTool': {
-              'AdditionalOptions': [
-                '/ignore:4248'
-              ]
-            }
-          }
-        },
-        'Debug': {
-          'msvs_settings': {
-            'VCCLCompilerTool': {
-              # this is out of range and will generate a warning and skip adding RuntimeLibrary property:
-              'RuntimeLibrary': 3,
-              # this is out of range and will generate a warning and skip adding RuntimeTypeInfo property:
-              'RuntimeTypeInfo': -1,
-              'BasicRuntimeChecks': -1,
-              'ExceptionHandling': '0',
-              'AdditionalOptions': [
-                '/clr',
-                '/wd4506',
-                '/DHAVE_NATIVECLR',
-				'/MDd'
-              ]
-            },
-            'VCLinkerTool': {
-              'AdditionalOptions': [
-                '/ignore:4248'
-              ]
-            }
-          }
-        }
-      }
-    },
-    {
-      'variables': {
-        'conditions': [
-          ['target_arch=="ia32"', {
-            'DEFAULT_MONO_ROOT': 'C:\Program Files %28x86%29\Mono'
-          }],
-          ['target_arch=="x64"', {
-            'DEFAULT_MONO_ROOT': 'C:\Program Files\Mono'
-          }],
-        ],
-      },
-      'target_name': 'edge_monoclr',
-      'win_delay_load_hook': 'false',
-      'include_dirs': [
-        "<!(node -e \"require('nan')\")",
-		    '<(DEFAULT_MONO_ROOT)\include\mono-2.0'
-      ],
-      'cflags+': [
-        '-DHAVE_NATIVECLR -std=c++11'
-      ],
-      'xcode_settings': {
-        'OTHER_CFLAGS': [
-          '-DHAVE_NATIVECLR'
-        ]
-      },
-      'conditions': [
-        [
-          'OS=="win"',
-          {
-			'conditions': [
-              [
-                '"<!(node -e \"require(\'./tools/gyp-whereis.js\')(\'mono.exe\')\")"!="null"',
-                {
-					'sources+': [
-						   'src/mono/clractioncontext.cpp',
-							'src/mono/clrfunc.cpp',
-							'src/mono/clrfuncinvokecontext.cpp',
-						   'src/mono/monoembedding.cpp',
-						   'src/mono/task.cpp',
-						   'src/mono/dictionary.cpp',
-						   'src/mono/nodejsfunc.cpp',
-						   'src/mono/nodejsfuncinvokecontext.cpp',
-						   'src/mono/utils.cpp',
-							'src/common/v8synchronizationcontext.cpp',
-							'src/common/edge.cpp'
-					]
-				},
-        {
-                  'type': 'none'
-                }
-			  ]
-			]
           }
         ]
       ],
@@ -278,7 +195,7 @@
       'target_name': 'build_managed',
       'type': 'none',
       'dependencies': [
-        'edge_nativeclr'
+        'websharp_monoclr'
       ],
       'conditions': [
         [

@@ -1,7 +1,7 @@
 var fs = require('fs')
     , path = require('path')
-    , builtEdge = path.resolve(__dirname, '../build/Release/' + (process.env.EDGE_USE_CORECLR || !fs.existsSync(path.resolve(__dirname, '../build/Release/edge_nativeclr.node')) ? 'edge_coreclr.node' : 'edge_nativeclr.node'))
-    , edge;
+    , builtWebSharp = path.resolve(__dirname, '../build/Release/' + 'websharp_monoclr.node')
+    , websharp;
 
 var targetMap = [
     [ /^1\.4/, '1.4.0' ],
@@ -35,8 +35,8 @@ function determineVersion() {
         }
     }
 
-    throw new Error('The edge module has not been pre-compiled for node.js version ' + process.version +
-        '. You must build a custom version of edge.node. Please refer to https://github.com/websharp/electron-dotnet ' +
+    throw new Error('The websharp module has not been pre-compiled for node.js version ' + process.version +
+        '. You must build a custom version of websharp.node. Please refer to https://github.com/websharp/electron-dotnet ' +
         'for building instructions.');
 }
 
@@ -59,38 +59,38 @@ function whereis () {
     return null;
 }
 
-var edgeNative;
-if (process.platform === 'win32' && process.env.EDGE_USE_MONOCLR === '1') {
+var websharpNative;
+if (process.platform === 'win32') {
     if (!whereis("mono.exe"))
     {
-        throw new Error('The edge module for using mono embedding has been specified but mono can not be found' +
+        throw new Error('The websharp module for using mono embedding has been specified but mono can not be found' +
         '. You must build a custom version of edge.node for using mono embedding or make sure that mono is in your %PATH%.' +
         ' Please refer to https://github.com/websharp/electron-dotnet for building instructions.');
     }
     
-    process.env.EDGE_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineTarget() + '/' + determineVersion() + '/' + 'edge_monoclr');
+    process.env.WEBSHARP_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineTarget() + '/' + determineVersion() + '/' + 'websharp_monoclr');
 }
 
-if (process.env.EDGE_NATIVE) {
-    edgeNative = process.env.EDGE_NATIVE;
+if (process.env.WEBSHARP_NATIVE) {
+    websharpNative = process.env.WEBSHARP_NATIVE;
 }
-else if (fs.existsSync(builtEdge)) {
-    edgeNative = builtEdge;
+else if (fs.existsSync(builtWebSharp)) {
+    websharpNative = builtWebSharp;
 }
 else if (process.platform === 'win32') {
-    edgeNative = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineTarget() + '/' + determineVersion() + '/' + (process.env.EDGE_USE_CORECLR ? 'edge_coreclr' : 'edge_nativeclr'));
+    websharpNative = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineTarget() + '/' + determineVersion() + '/' + 'websharp_monoclr');
 }
 else {
-    throw new Error('The edge native module is not available at ' + builtEdge 
-        + '. You can use EDGE_NATIVE environment variable to provide alternate location of edge.node. '
-        + 'If you need to build edge.node, follow build instructions for your platform at https://github.com/tjanczuk/edge');
+    throw new Error('The websharp native module is not available at ' + builtWebSharp 
+        + '. You can use WEBSHARP_NATIVE environment variable to provide alternate location of websharp.node. '
+        + 'If you need to build websharp.node, follow build instructions for your platform at https://github.com/tjanczuk/edge');
 }
-if (process.env.EDGE_DEBUG) {
-    console.log('Load edge native library from: ' + edgeNative);
+if (process.env.WEBSHARP_DEBUG) {
+    console.log('Load websharp native library from: ' + websharpNative);
 }
 
-process.env.EDGE_NATIVE = edgeNative;
-edge = require(edgeNative);
+process.env.WEBSHARP_NATIVE = websharpNative;
+websharp = require(websharpNative);
 exports.Register = require("./register.js")
 exports.Embed = require("./embed.js")
 exports.WebSharpJs = require("./websharpjs.js")
@@ -159,9 +159,6 @@ exports.func = function(language, options) {
                     "did not specify correct compiler package name or assembly.");
             }
 
-            if (process.env.EDGE_USE_CORECLR) {
-                options.bootstrapDependencyManifest = compiler.getBootstrapDependencyManifest();
-            }
             // Set the Class name to load from the compiler assembly
             options.compilerClass = 'EdgeCompiler'
         }
@@ -223,7 +220,7 @@ exports.func = function(language, options) {
         options.methodName = 'Invoke';
     }
 
-    return edge.initializeClrFunc(options);
+    return websharp.initializeClrFunc(options);
 };
 
 var initialize = exports.func({

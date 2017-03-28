@@ -44,7 +44,8 @@ NAN_METHOD(initializeClrFunc)
 #endif
 NAN_MODULE_INIT(init)
 {
-    debugMode = HasEnvironmentVariable("EDGE_DEBUG");
+
+	debugMode = HasEnvironmentVariable("WEBSHARP_DEBUG");
     DBG("edge::init");
 
     V8SynchronizationContext::Initialize();
