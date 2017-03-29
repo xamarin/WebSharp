@@ -228,7 +228,7 @@ When we get to debugging you will see why it is broken up this way.
 
 The generated application's code is in the `src` directory.  Depending on the project template selected there is an implementation of each type of application integration point generated.  When we selected the `WebSharp Electron Application` option we will have a total of one src file:
 
-``` bash
+```
 .
 |--- src                              // sources
      |--- hello.js                    // javascript code implementation
@@ -399,11 +399,11 @@ Let's now take a look at the code.
 
 ## Running the application
 
-To run the application we will need to install 'electron-dotnet' module which provides all of the ```Node.js``` implemenation for running within ```Electron```.
+To run the application we will need to reference the `electron-dotnet` module which provides all of the ```Node.js``` implementation for running within ```Electron```.
 
 > :bulb: This project dependency will be automatic in the future once the project workflow has been defined and will be installed with the template in the future.
 
-But right now we will have to do this install manually from the command line.
+But right now we will have to manually reference `electron-dotnet` from the command line.
 
 ### Referencing electron-dotnet
 
@@ -413,23 +413,36 @@ See the relevent information in the documents below:
 )
 * [Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md#referencing-electron-dotnet)
 
+After setting up the reference, do the following from the command line.
+
+``` bash
+# Windows
+> npm start 
+```
+
+``` bash
+# Mac OSX
+$ npm start 
+```
+
 ## Hello
 
 You should be presented with the following screen:
 
-![Hello application](./screenshots/helloworld.png)
+![Hello application](./screenshots/hello-world.png)
 
-The ScriptingJS program writes output to the Console.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
+The `World.cs` program writes output to the Console.  To see this you can select `View` -> `Toggle Developer Tools` which will show the console of the Developer Tools.
 
-![Hello application console](./screenshots/helloworld-console.png)
+![Hello application console](./screenshots/hello-world-console.png)
 
-## Scripting NodeJs
+## Summary
 
-What the actual [scripting.js](#electron-dotnetjs-net-and-nodejs-in-process-implementation-scriptingjsjs) code does is call a C# function to format a string using the string `Electron` as a parameter to call the function.  Once the C# function formats the string it will be returned back to the calling JavaScript function and printed out using the JavaScript function `console.log`.  What we will be doing in the following exercise is instead of returning the formatted string back to the JavaScript code to be written to the console is to write that string directly from the C# program itself by scripting the `console.log` function itself and using it from the C# program.
+In this document we have looked at creating a project and the layout of the application structure.  
 
-### Compiling `World.cs` code
-Before running our application we will need to compile our library code ```World.cs```.
+We also touched breifly on the purpose of the most important files.  Then moved on to referencing the `electron-dotnet` node module that provides the bridge between JavaScript and managed code. 
 
-## Debugging
+To finish off we then ran the electron application and saw that it was possible to reference the console log from managed code.
 
-You can now move on to [Debugging](./vsc-debug.md) your `Electron` application.
+By default the application compiles the `World.cs` code on the fly, which may not be the best scenario depending on the application.
+
+If you prefer to pre-compile your C# sources to a CLR assembly then the section on [Compiling Code]() will interest you.
