@@ -407,17 +407,11 @@ But right now we will have to do this install manually from the command line.
 
 ### Referencing electron-dotnet
 
-``` bash
-# Windows
-scriptingjs> npm install path-to-WebSharp\electron-dotnet   
-scriptingjs> npm start 
-```
+See the relevent information in the documents below:
 
-``` bash
-# Mac OSX
-scriptingjs$ npm install path-to-WebSharp/electron-dotnet   
-scriptingjs$ npm start 
-```
+* [Windows]((https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md#referencing-electron-dotnet)
+)
+* [Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md#referencing-electron-dotnet)
 
 ## Hello
 
