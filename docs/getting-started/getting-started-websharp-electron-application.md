@@ -14,11 +14,6 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
    
       * [See Getting Started on Windows](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md)
    
-     ``` bash
-     # Windows Visual Studio 2015 Command Line Prompt 
-     nmake /f Makefile.win buildRelease
-     ```
-
       * [See Getting Started on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md)
     
 ## Generate a `WebSharp Electron` Application
