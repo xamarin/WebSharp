@@ -31,6 +31,9 @@ echo FLAVOR = %FLAVOR%
 echo TARGET = %TARGET% 
 echo VERSION = %1
 
+if "%MONO_ROOT_X86%" equ "" set MONO_ROOT_X86="C:\Program Files (x86)\Mono"
+if "%MONO_ROOT_X64%" equ "" set MONO_ROOT_X64="C:\Program Files\Mono"
+
 for %%i in (node.exe) do set NODEEXE=%%~$PATH:i
 if not exist "%NODEEXE%" (
     echo Cannot find node.exe
@@ -48,6 +51,7 @@ if "%1" neq "" (
 )
 if "%VERSIONS%" equ "" set VERSIONS=6.5.0
 pushd %SELF%\..
+
 for %%V in (%VERSIONS%) do call :build ia32 x86 %%V 
 for %%V in (%VERSIONS%) do call :build x64 x64 %%V 
 popd
@@ -58,7 +62,7 @@ exit /b 0
 
 set DESTDIR=%DESTDIRROOT%\%1\%TARGET%\%3
 if exist "%DESTDIR%\node.exe" goto gyp
-if not exist "%DESTDIR%\NUL" mkdir "%DESTDIR%"
+if exist "%DESTDIR%\NUL" mkdir "%DESTDIR%"
 echo Downloading node.exe %2 %3...
 node "%SELF%\download.js" %2 %3 "%DESTDIR%"
 if %ERRORLEVEL% neq 0 (

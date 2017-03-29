@@ -21,10 +21,10 @@
         'MONO_PKG_CONFIG': '/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config',
         'conditions': [
           ['target_arch=="ia32"', {
-            'DEFAULT_MONO_ROOT': 'C:\Program Files %28x86%29\Mono'
+            'DEFAULT_MONO_ROOT': '<!(echo %MONO_ROOT_X86:"=%)'
           }],
           ['target_arch=="x64"', {
-            'DEFAULT_MONO_ROOT': 'C:\Program Files\Mono'
+            'DEFAULT_MONO_ROOT': '<!(echo %MONO_ROOT_X64:"=%)'
           }],
         ],
       },
@@ -45,30 +45,23 @@
         [
           'OS=="win"',
           {
-            'conditions': [
-              [
-                '"<!(node -e \"require(\'./tools/gyp-whereis.js\')(\'mono.exe\')\")"!="null"',
-                {
-
-                    'include_dirs+': [
-                      '<(DEFAULT_MONO_ROOT)\include\mono-2.0'
-                    ],
-                    'sources+': [
-                        'src/mono/clractioncontext.cpp',
-                        'src/mono/clrfunc.cpp',
-                        'src/mono/clrfuncinvokecontext.cpp',
-                        'src/mono/monoembedding.cpp',
-                        'src/mono/task.cpp',
-                        'src/mono/dictionary.cpp',
-                        'src/mono/nodejsfunc.cpp',
-                        'src/mono/nodejsfuncinvokecontext.cpp',
-                        'src/mono/utils.cpp',
-                        'src/common/v8synchronizationcontext.cpp',
-                        'src/common/edge.cpp'
-                    ]
-                }
+              'include_dirs+': [
+                '<(DEFAULT_MONO_ROOT)\include\mono-2.0'
+              ],
+              'sources+': [
+                  'src/mono/clractioncontext.cpp',
+                  'src/mono/clrfunc.cpp',
+                  'src/mono/clrfuncinvokecontext.cpp',
+                  'src/mono/monoembedding.cpp',
+                  'src/mono/task.cpp',
+                  'src/mono/dictionary.cpp',
+                  'src/mono/nodejsfunc.cpp',
+                  'src/mono/nodejsfuncinvokecontext.cpp',
+                  'src/mono/utils.cpp',
+                  'src/common/v8synchronizationcontext.cpp',
+                  'src/common/edge.cpp'
               ]
-            ]
+
           },
           {
             'conditions': [
@@ -145,7 +138,7 @@
             'VCLinkerTool': {
 			  'AdditionalDependencies' :
 			  [
-				'mono-2.0.lib'
+				'monosgen-2.0.lib'
 			  ],
 			  'AdditionalLibraryDirectories' :
 			  [
@@ -177,7 +170,7 @@
             'VCLinkerTool': {
 			  'AdditionalDependencies' :
 			  [
-				'mono-2.0.lib'
+				'monosgen-2.0.lib'
 			  ],
 			  'AdditionalLibraryDirectories' :
 			  [

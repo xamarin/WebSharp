@@ -7,7 +7,7 @@
     <owners>WebSharpJs</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://raw.githubusercontent.com/xamarin/WebSharp/master/LICENSE</licenseUrl>
-    <summary>This WebSharp.js NuGet package supports scripting Node.js >v6.5.0.</summary>
+    <summary>This WebSharp.js NuGet package supports scripting Node.js >= v6.5.0.</summary>
     <description>With WebSharp.js you can script Node.js in a .NET application. WebSharp.js allows you to run Node.js and .NET code in one process. You can call Node.js functions from .NET and .NET functions from Node.js. WebSharp.js takes care of marshalling data between CLR and V8. WebSharp.js also reconciles threading models of single threaded V8 and multi-threaded CLR. WebSharp.js ensures correct lifetime of objects on V8 and CLR heaps.</description>
     <copyright>Copyright 2016 Xamarin</copyright>
     <tags>node.js node .net edge edge.js v8 clr coreclr mono interop javascript websharp websharp.js</tags>
