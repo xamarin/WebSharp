@@ -24,7 +24,7 @@ This is a work in progress, and we are only getting started.   This means that t
 workflow for .NET code is not finalized, nor is the API that is exposed to .NET code running
 on Electron.
 
-With that being said, check the [GettingStarted](./GettingStarted) document for the basics.
+With that being said, check the [GettingStarted](./docs/getting-started) documents for the basics.
 
 # Future Work
 

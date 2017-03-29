@@ -12,7 +12,7 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
 
    * `electron-dotnet` needs to be built.  The easiest way is to use the provided `make` files available in the WebSharp base directory.  
    
-      * [Windows Prerequisites](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#building-on-windows)
+      * [See Getting Started on Windows](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md)
    
      ``` bash
      # Windows Visual Studio 2015 Command Line Prompt 
@@ -445,4 +445,4 @@ To finish off we then ran the electron application and saw that it was possible 
 
 By default the application compiles the `World.cs` code on the fly, which may not be the best scenario depending on the application.
 
-If you prefer to pre-compile your C# sources to a CLR assembly then the section on [Compiling Code]() will interest you.
+If you prefer to pre-compile your C# sources to a CLR assembly then the section on [Building Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) will interest you.
