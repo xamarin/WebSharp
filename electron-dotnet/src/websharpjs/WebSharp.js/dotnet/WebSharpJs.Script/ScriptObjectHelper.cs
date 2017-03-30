@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace WebSharpJs.Browser
+namespace WebSharpJs.Script
 {
 
     public static class ScriptObjectHelper

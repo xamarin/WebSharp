@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace WebSharpJs.Browser
+namespace WebSharpJs.Script
 {
 
     public static class ScriptObjectUtilities

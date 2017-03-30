@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 
-namespace WebSharpJs.Browser
+namespace WebSharpJs.Script
 {
 
 

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebSharpJs.Browser
+using WebSharpJs.Script;
+
+namespace WebSharpJs.DOM
 {
     public sealed class HtmlElement : HtmlObject
     {

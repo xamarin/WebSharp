@@ -1,4 +1,6 @@
-﻿namespace WebSharpJs.Browser
+﻿using WebSharpJs.Script;
+
+namespace WebSharpJs.DOM
 {
 
     public class DOMObjectProxy : ScriptObjectProxy

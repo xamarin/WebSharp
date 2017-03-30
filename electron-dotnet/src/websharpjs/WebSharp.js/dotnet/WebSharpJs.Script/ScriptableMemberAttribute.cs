@@ -4,7 +4,7 @@
 
 using System;
 
-namespace WebSharpJs.Browser
+namespace WebSharpJs.Script
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Event)]
     public sealed class ScriptableMemberAttribute : Attribute

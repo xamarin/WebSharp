@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace WebSharpJs.Browser
+namespace WebSharpJs.Script
 {
 
     public class ScriptObject : IDynamicMetaObjectProvider

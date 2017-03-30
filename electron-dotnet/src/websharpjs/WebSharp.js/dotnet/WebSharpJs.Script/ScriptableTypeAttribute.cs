@@ -4,7 +4,7 @@
 
 using System;
 
-namespace WebSharpJs.Browser
+namespace WebSharpJs.Script
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
     public sealed class ScriptableTypeAttribute : Attribute

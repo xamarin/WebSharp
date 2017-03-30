@@ -8,7 +8,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 
 
-namespace WebSharpJs.Browser
+using WebSharpJs.Script;
+
+namespace WebSharpJs.DOM
 {
 
 

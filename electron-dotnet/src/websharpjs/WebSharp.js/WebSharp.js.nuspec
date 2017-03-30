@@ -13,14 +13,9 @@
     <tags>node.js node .net edge edge.js v8 clr coreclr mono interop javascript websharp websharp.js</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5.1" />
-      <group targetFramework=".NETStandard1.6">
-        <dependency id="NETStandard.Library" version="1.6.0" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.CSharp" version="4.3.0" exclude="Build,Analyzers" />
-      </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="./bin/Release/netstandard1.6/WebSharpJs.dll" target="lib/netstandard1.6/WebSharpJs.dll" />
     <file src="./bin/Release/net451/WebSharpJs.dll" target="lib/net451/WebSharpJs.dll" />
   </files>
 </package>

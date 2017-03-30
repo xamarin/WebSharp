@@ -3,7 +3,7 @@
 //
 
 
-namespace WebSharpJs.Browser
+namespace WebSharpJs.Script
 {
 
     internal struct ScriptParm

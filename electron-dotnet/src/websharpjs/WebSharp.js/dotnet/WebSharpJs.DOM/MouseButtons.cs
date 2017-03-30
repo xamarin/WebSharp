@@ -5,7 +5,9 @@
 
 using System;
 
-namespace WebSharpJs.Browser
+using WebSharpJs.Script;
+
+namespace WebSharpJs.DOM
 {
 
     [Flags]
