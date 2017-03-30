@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using WebSharpJs.Browser;
+using WebSharpJs.NodeJs;
 
 //namespace <%- wsClassName %>
 //{

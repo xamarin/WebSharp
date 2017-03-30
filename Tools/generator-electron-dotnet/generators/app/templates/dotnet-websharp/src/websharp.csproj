@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net451</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netstandard1.6</TargetFrameworks>
+    <TargetFrameworks>net451</TargetFrameworks>
     <OutputPath>.\bin\$(Configuration)\</OutputPath>
     <OutDir>$(OutputPath)</OutDir>
   </PropertyGroup>

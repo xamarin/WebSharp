@@ -26,7 +26,7 @@ This folder contains all of the files necessary for your application.
      |--- <%- wsClassName %>
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
-          |--- World_macosx.csproj    // MacOSX project  
+          |--- <%- wsClassName %>_macosx.csproj    // MacOSX project  
           |--- <%- wsClassName %>.cs               // Application Implementation
           |--- <%- wsClassName %>.csproj           // Windows project          
 
