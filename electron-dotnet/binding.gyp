@@ -20,13 +20,22 @@
       'variables': {
         'MONO_PKG_CONFIG': '/Library/Frameworks/Mono.framework/Versions/Current/bin/pkg-config',
         'conditions': [
-          ['target_arch=="ia32"', {
-            'DEFAULT_MONO_ROOT': '<!(echo %MONO_ROOT_X86:"=%)'
-          }],
-          ['target_arch=="x64"', {
-            'DEFAULT_MONO_ROOT': '<!(echo %MONO_ROOT_X64:"=%)'
-          }],
-        ],
+        [
+          'OS=="win"',
+          {
+            'conditions': [
+              ['target_arch=="ia32"', {
+                'DEFAULT_MONO_ROOT': '<!(echo %MONO_ROOT_X86:"=%)'
+              }],
+              ['target_arch=="x64"', {
+                'DEFAULT_MONO_ROOT': '<!(echo %MONO_ROOT_X64:"=%)'
+              }]],
+          },
+          'OS!="win"',
+          {
+            'DEFAULT_MONO_ROOT': ''
+          }
+        ]]
       },
       'target_name': 'websharp_monoclr',
       'win_delay_load_hook': 'false',
