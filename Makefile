@@ -25,7 +25,6 @@ peppersharp: check
 	(cd electron-dotnet/tools; mono ./build/nuget.exe pack ./nuget/Xamarin.PepperSharp.nuspec -outputdirectory ./build/nuget -properties Configuration=Release -basepath ../../PepperSharp)
 
 websharpjs:
-	(cd electron-dotnet/src/websharpjs/WebSharp.js; dotnet restore WebSharp.js.sln ; dotnet build WebSharp.js.sln /p:TargetFramework=netstandard1.6 /p:Configuration=Release)
 	(cd electron-dotnet/src/websharpjs/WebSharp.js; xbuild WebSharp.js_macosx.sln /p:Configuration=Release)
 	(cd electron-dotnet/src/websharpjs/WebSharp.js; mono ../../../tools/build/nuget.exe pack WebSharp.js.nuspec -OutputDirectory ./bin/Release)
 	# copy nuget to local nuget repo
