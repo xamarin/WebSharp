@@ -31,6 +31,7 @@ echo FLAVOR = %FLAVOR%
 echo TARGET = %TARGET% 
 echo VERSION = %1
 
+setlocal
 if "%MONO_ROOT_X86%" equ "" set MONO_ROOT_X86="C:\Program Files (x86)\Mono"
 if "%MONO_ROOT_X64%" equ "" set MONO_ROOT_X64="C:\Program Files\Mono"
 
@@ -52,8 +53,16 @@ if "%1" neq "" (
 if "%VERSIONS%" equ "" set VERSIONS=6.5.0
 pushd %SELF%\..
 
-for %%V in (%VERSIONS%) do call :build ia32 x86 %%V 
-for %%V in (%VERSIONS%) do call :build x64 x64 %%V 
+if not exist %MONO_ROOT_X86% (
+    echo Skipping build of websharp.node %FLAVOR% for node.js ia32 x86.  Path %MONO_ROOT_X86% can not be found. 
+) else (
+    for %%V in (%VERSIONS%) do call :build ia32 x86 %%V 
+)
+if not exist %MONO_ROOT_X64% (
+    echo Skipping build of websharp.node %FLAVOR% for node.js x64 x64.  Path %MONO_ROOT_X64% can not be found. 
+) else (
+    for %%V in (%VERSIONS%) do call :build x64 x64 %%V 
+)
 popd
 
 exit /b 0
