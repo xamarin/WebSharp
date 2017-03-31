@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>78d38f4f-2ce1-4fbb-931c-4e4469155186</ProjectGuid>
+    <ProjectGuid>{43515016-8D9A-4A2D-999C-F529EFEF1AE3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WebSharpJs</RootNamespace>
