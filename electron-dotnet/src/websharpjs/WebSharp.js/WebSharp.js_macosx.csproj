@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.props" Condition="Exists('packages\NuGet.Build.Packaging.0.1.157-dev\build\NuGet.Build.Packaging.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,6 +9,7 @@
     <RootNamespace>WebSharp.js_macosx</RootNamespace>
     <AssemblyName>WebSharpJs</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <ReleaseVersion>6.5.1</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,27 +34,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dotnet\WebSharpJs.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\DOMObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\HtmlDocument.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\HtmlElement.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\HtmlEventArgs.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\HtmlObject.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\HtmlPage.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\IScriptObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\MouseButtons.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\NodeConsole.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\NodeJsObject.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\NodeObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\SciptObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\ScriptObject.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\ScriptObjectHelper.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\ScriptObjectUtilities.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\ScriptParm.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\ScriptableMemberAttribute.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\ScriptableTypeAttribute.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\WebSharpEvent.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\WebSharpHtmlEvent.cs" />
-    <Compile Include="dotnet\WebSharpJs.Browser\WebSharpObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\IScriptObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\SciptObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptObjectHelper.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptObjectUtilities.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptParm.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptableMemberAttribute.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptableTypeAttribute.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\WebSharpEvent.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\WebSharpObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJs\NodeConsole.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJs\NodeJsObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJs\NodeObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\DOMObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlDocument.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlElement.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlEventArgs.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlPage.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\MouseButtons.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\WebSharpHtmlEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
