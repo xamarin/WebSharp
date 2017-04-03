@@ -256,6 +256,8 @@ The first line enables scripting C# from Node.js.
 
 The next two lines creates a C# `hello` function for us.  By default the first line is commented out with the second line specifying the source code file of the generated class.  This will compile the `.cs` module on the fly.  The commented out first line can be used if on the fly compiling is not desirable allowing a generated assembly of the source to be specified.  More on that later.
 
+The provided `func` accepts a reference to C# code and returns a `Node.js` function which acts as a JavaScript proxy to the Func<object,Task<object>> .NET delegate
+
 For more detailed information about scripting C# from a Node.js process please reference the [How to: integrate C# code into Node.js code](
 https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#how-to-integrate-c-code-into-nodejs-code
 ) section of the documentation.
@@ -285,13 +287,27 @@ At the bottom of our [index.html](#showing-information-indexhtml) we require `re
 
 #### WebSharp: .NET implementation: World.cs
 
+The generator also created a directory with the same name as the class, `World`, that was supplied in the template definition questions.  The layout of the subdirectory is shown here.
+
+```
+|--- src                              // sources
+     |--- World
+          |--- nuget.config           // Configuring NuGet behavior
+          |--- packages.config        // Used to track installed packages
+          |--- World_macosx.csproj    // MacOSX project  
+          |--- World.cs               // Application Implementation
+          |--- World.csproj           // Windows project 
+```
+
+This directory contains additional files to help in creating an assembly for the different platforms.  We will go into more detail about these files and their uses in the section [Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) but for now lets just focus on the `World.cs` source file.
+
 The .Net implementation `World.cs` is executed from the exported `sayHello` function mentioned above. 
 
 ``` cs
 using System;
 using System.Threading.Tasks;
 
-using WebSharpJs.Browser;
+using WebSharpJs.NodeJs;
 
 //namespace World
 //{
@@ -335,11 +351,10 @@ Let's now take a look at the code.
     using System;
     using System.Threading.Tasks;
 
-    // Reference WebSharpJs 
-    using WebSharpJs.Browser;
+    using WebSharpJs.NodeJs;
     ```
 
-    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  This managed assembly exposes the static function `CreateJavaScriptFunction` which will be detailed more below.
+    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  In this example we will be using the `NodeConsole` object to log our message to the console. 
 
 - Class `World` implementation
 
@@ -376,13 +391,65 @@ Let's now take a look at the code.
 
     ```
     
-    By default the `namespace` is commented commented out.  The reason for this that we use on the fly compiling.  If the module is compiled into an assembly then a `namespace` is required and those lines can be uncommented.
+    By default the `namespace` is commented commented out.  The reason for this that we use on the fly compiling and by convention, the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature.
+
+    > :bulb: When you specify C# source code this way the `WebSharp.js` assembly is automatically made available during the compile so there is no need to specify a reference to the assembly. 
 
     The code creates a reference to `NodeConsole` function that defines the console logging functions.
 
     The next lines will format the string passed and log it to the console, `Hello:  World` in this case.
 
     Any exceptions will be logged to the console in the `catch` block.
+
+    If you prefer to pre-compile your C# sources to a CLR assembly, or if your C# component is already pre-compiled, you can reference a CLR assembly from your Node.js code.  See the next section [Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) for more information.
+
+### Alternate means of providing source code
+
+There are multiple ways to supply source code to be included in your application.  One way as described above is by supplying a source code module with the extension `.cs` or `.csx`.
+
+We could just as easily have provided the class implementation as a `function` with a `body` contained within a multi-line comment as follows.
+
+```
+var hello = dotnet.func(function() {/*
+
+using System;
+using System.Threading.Tasks;
+
+using WebSharpJs.NodeJs;
+
+public class Startup
+{
+
+	static NodeConsole console;
+
+	/// <summary>
+	/// Default entry into managed code.
+	/// </summary>
+	/// <param name="input"></param>
+	/// <returns></returns>
+	public async Task<object> Invoke(object input)
+	{
+		if (console == null)
+			console = await NodeConsole.Instance();
+
+		try
+		{
+			console.Log($"Hello:  {input}");
+		}
+		catch (Exception exc) { console.Log($"extension exception:  {exc.Message}"); }
+
+		return null;
+
+
+	}
+}
+
+*/})
+
+```
+
+Just remember that the the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature
+
 
 ### Miscellaneous files
 * .vscode/launch.json - [Defines Debugger launching targets](./vsc-debug.md). 
@@ -438,6 +505,6 @@ We also touched breifly on the purpose of the most important files.  Then moved 
 
 To finish off we then ran the electron application and saw that it was possible to reference the console log from managed code.
 
-By default the application compiles the `World.cs` code on the fly, which may not be the best scenario depending on the application.
+By default the application compiles the `World.cs` code on the fly, which may not be the best scenario depending on the application.  Just remember that when specifying source code that the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature
 
 If you prefer to pre-compile your C# sources to a CLR assembly then the section on [Building Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) will interest you.

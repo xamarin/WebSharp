@@ -30,9 +30,19 @@ To manage package sources:
 
 7) Use the up and down arrow buttons to change the priority order of the package sources.
 
-## Mac OSX Xamarin Studio
+## Mac OSX Visual Studio Mac
 
+In Visual Studio Mac, navigate to Visual Studio > Preferences > NuGet > Sources to view and edit the list of package sources. 
 
+![VSM NuGet Preferences](./screenshots/NuGetSourcePreferences-VSM.png)
+
+Click Add to set-up a new source.
+
+![VSM NuGet Source Add](./screenshots/NuGetSourceAddPackage-VSM.png)
+
+Click Add Source to finish the set-up.
+
+![VSM NuGet Sources](./screenshots/NuGetSources-VSM.png)
 
 
 ## NuGet.Config Visual Studio Code
