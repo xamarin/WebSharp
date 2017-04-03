@@ -18,7 +18,8 @@ We will not be discussing installing any of the `Requirements` here only getting
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Gotchas using symlink method](#gotchas-using-symlink-method)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Install `electron-dotnet`](#install-electron-dotnet)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Gotchas using install method](#gotchas-using-symlink-method)  
-
+&nbsp;&nbsp;&nbsp;&nbsp;[Potential Issues](#potential-issues)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Setting mono path](#setting-mono-path)  
 
 ## Requirements
 
@@ -308,12 +309,12 @@ some-other-project$ npm unlink electron-dotnet # dereference the `electron-dotne
 
 #### Gotchas using symlink method 
 
-`WebSharp` uses native modules internally for both the `PepperPlugin` and `electron-dotnet` implementations.  If you are testing the different versions of `Electron` and symlinking instead of `npm install`ing you may run into the following `NODE_MODULE_VERSION` mismatch error.
+`WebSharp` uses native modules internally for both the `PepperPlugin` and `electron-dotnet` implementations.  If you are testing the different versions of `Electron` and symlinking instead of `npm install`ing you may run into the following error.
 
 >"Uncaught Error: Cannot find module 'WebSharp\el
 ectron-dotnet\lib\native\win32\x64\1.6.0\7.4.0\websharp_monoclr'"
 
-Make sure you build a version of `electron-dotnet` that corresponds to version outlined in the error.
+Make sure you build a version of `electron-dotnet` that corresponds to the version outlined in the error.
 
 ### Install `electron-dotnet`
 
@@ -334,7 +335,7 @@ some-other-project> npm install --save-dev path-to-WebSharp/electron-dotnet/    
 
 #### Gotchas using npm install
 
-You will still get the `NODE_MODULE_VERSION` mismatch error as described above when using symlink.
+You will still get the `Cannot find module ...` mismatch error as described above when using symlink.
 
 >"Uncaught Error: Cannot find module 'el
 ectron-dotnet\lib\native\win32\x64\1.6.0\7.4.0\websharp_monoclr'"
@@ -346,4 +347,66 @@ You have only one choice here.
 * Uninstall `electron-dotnet`, build a version for the Electron and Node.js version and then reinstall it.  
 
 
+## Potential Issues
+
+When using windows the user may get the following error:
+
+>Uncaught Error: The websharp module for using mono embedding has been specified but mono can not be found. You must build a custom version of websharp.node for using mono embedding or make sure that mono is in your %PATH%. Please refer to https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md for building instructions.
+
+To get around this the user may need to add `Mono` to their %PATH%
+
+### Setting mono path
+
+`Mono` must be in the developers %PATH% for mono support to be built and also in the users %PATH% during the application execution.
+
+The following options can be used.
+
+  * Option 1:
+
+    * Use Mono's ```setmonopath.bat``` batch command before starting the electron application:
+
+      * x64
+        ```
+        > "c:\Program Files\Mono\bin\setmonopath.bat"
+        ```
+
+      * x86
+        ```
+        > "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
+        ```
+
+  * Option 2:
+    * Custom path environment variable set to the correct mono before starting the electron application.
+    ```
+    SET PATH=%PATH%;c:\path\to\mono
+    ```
+
+  * Option 3:
+    * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions.
+    
+      ```js
+        if (process.platform === 'win32')
+        {
+            if (process.arch === 'x64')
+                process.env.PATH = "c:\\Program Files\\Mono\\bin;" + process.env.PATH;
+            else
+                process.env.PATH = "c:\\\Program Files (x86)\\\Mono\\bin;" + process.env.PATH;
+        }
+      ```
+  * Option 4: 
+    * Set the path on Windows 10 and Windows 8
+      * In Search, search for and then select: System (Control Panel)
+      * Click the Advanced system settings link.
+      * Click Environment Variables. ...
+      * In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable.
+        * x64
+          ```
+          "c:\Program Files\Mono\bin;"
+          ```
+        * x86
+          ```  
+          "c:\Program Files (x86)\Mono\bin;"
+          ```
+     
+     > :exclamation: Option 4 is not very flexible
 

@@ -16,8 +16,8 @@ function determineTarget() {
         }
     }
 
-    throw new Error('The edge module has not been pre-compiled for Electron version ' + process.versions.electron +
-        '. You must build a custom version of edge.node. Please refer to https://github.com/websharp/electron-dotnet ' +
+    throw new Error('The websharp module has not been pre-compiled for Electron version ' + process.versions.electron +
+        '. You must build a custom version of websharp.node. Please refer to your platform at https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md for MacOSX or https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md for Windows. ' +
         'for building instructions.');
 }
 
@@ -36,7 +36,7 @@ function determineVersion() {
     }
 
     throw new Error('The websharp module has not been pre-compiled for node.js version ' + process.version +
-        '. You must build a custom version of websharp.node. Please refer to https://github.com/websharp/electron-dotnet ' +
+        '. You must build a custom version of websharp.node. Please refer to your platform at https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md for MacOSX or https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md for Windows. ' +
         'for building instructions.');
 }
 
@@ -64,8 +64,8 @@ if (process.platform === 'win32') {
     if (!whereis("mono.exe"))
     {
         throw new Error('The websharp module for using mono embedding has been specified but mono can not be found' +
-        '. You must build a custom version of edge.node for using mono embedding or make sure that mono is in your %PATH%.' +
-        ' Please refer to https://github.com/websharp/electron-dotnet for building instructions.');
+        '. You must build a custom version of websharp.node for using mono embedding or make sure that mono is in your %PATH%.' +
+        ' Please refer to https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md for building instructions.');
     }
     
     process.env.WEBSHARP_NATIVE = path.resolve(__dirname, './native/' + process.platform + '/' + process.arch + '/' + determineTarget() + '/' + determineVersion() + '/' + 'websharp_monoclr');
@@ -83,7 +83,7 @@ else if (process.platform === 'win32') {
 else {
     throw new Error('The websharp native module is not available at ' + builtWebSharp 
         + '. You can use WEBSHARP_NATIVE environment variable to provide alternate location of websharp.node. '
-        + 'If you need to build websharp.node, follow build instructions for your platform at https://github.com/tjanczuk/edge');
+        + 'If you need to build websharp.node, follow build instructions for your platform at https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md for MacOSX or https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md for Windows.');
 }
 if (process.env.WEBSHARP_DEBUG) {
     console.log('Load websharp native library from: ' + websharpNative);

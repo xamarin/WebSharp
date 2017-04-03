@@ -108,9 +108,6 @@ Listen to the [Edge.js podcast on Herdingcode](http://herdingcode.com/herding-co
 &nbsp;&nbsp;&nbsp;&nbsp;[How to: debugging](#how-to-debugging)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Performance](#performance)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on Windows](#building-on-windows)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Build Example on Windows](#windows-build-example)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Building with Mono support on Windows](#building-with-mono)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Setting Mono Path on Windows](#setting-mono-path)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on OSX](#building-on-osx)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on Linux](#building-on-linux)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Running tests](#running-tests)  
@@ -168,8 +165,6 @@ Edge.js runs on Windows, Linux, and OSX and requires Node.js 6.x, 5.x, 4.x, 0.12
 * to use F#, read [Dave Thomas blog post](http://7sharpnine.com/blog/2013-05-05-i-node-something/)
 
 If you have both desktop CLR and .NET Core installed, read [using .NET Core](#using-net-core) for how to configure Edge to use one or the other. 
-
-If you want to use ```Mono```, read [Building with Mono support on Windows](#building-with-mono) and [Setting Mono Path on Windows](#setting-mono-path) for how to configure Edge to use ```Mono``` instead of native windows support.
 
 ![image](https://cloud.githubusercontent.com/assets/822369/2808066/3707f37c-cd0d-11e3-9b4e-7257ffc27c9c.png)
 
@@ -1319,73 +1314,6 @@ set EDGE_NATIVE=C:\projects\WebSharp\electron-dotnet\build\Debug\edge_nativeclr.
 ``` 
 
 You can also set the `EDGE_DEBUG` environment variable to 1 to have the edge module generate debug traces to the console when it runs.
-
-### Building with Mono
-
-To build ```electron-dotnet``` with `Mono` support you will need to have both a `x86` and `x64` bit mono installation.  The ```build.bat``` section mentioned above will automatically detect if ```Mono``` is in the windows execution path and execute the build process for both `x86` and `x64` architectures.
-
-A generated node called ```edge_monoclr.node``` will be available for use. 
-
-If ```Mono``` support is built and ```Mono``` is installed, by default `electron-dotnet` will use window's native .Net support, you can opt in to using ```Mono``` by setting the ```EDGE_USE_MONOCLR``` environment variable to `1`:
-
-```
-# tells electron-dotnet to load the mono clr version
-set EDGE_USE_MONOCLR=1
-``` 
-
-#### Setting mono path
-
-`Mono` must be in your %PATH% for mono support to be built and also during the application execution.
-
-  * Option 1:
-
-    * Use Mono's ```setmonopath.bat``` batch command before starting the electron application:
-
-      * x64
-        ```
-        > "c:\Program Files\Mono\bin\setmonopath.bat"
-        ```
-
-      * x86
-        ```
-        > "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
-        ```
-
-  * Option 2:
-    * Custom path environment variable set to the correct mono before starting the electron application.
-    ```
-    SET PATH=%PATH%;c:\path\to\mono
-    ```
-
-  * Option 3:
-    * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions.
-    
-      ```js
-        if (process.platform === 'win32')
-        {
-            if (process.arch === 'x64')
-                process.env.PATH = "c:\\Program Files\\Mono\\bin;" + process.env.PATH;
-            else
-                process.env.PATH = "c:\\\Program Files (x86)\\\Mono\\bin;" + process.env.PATH;
-        }
-      ```
-  * Option 4: 
-    * Set the path on Windows 10 and Windows 8
-      * In Search, search for and then select: System (Control Panel)
-      * Click the Advanced system settings link.
-      * Click Environment Variables. ...
-      * In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable.
-        * x64
-          ```
-          "c:\Program Files\Mono\bin;"
-          ```
-        * x86
-          ```  
-          "c:\Program Files (x86)\Mono\bin;"
-          ```
-     
-     > :exclamation: Option 4 is not very flexible
-
 
 ### Running tests
 
