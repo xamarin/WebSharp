@@ -13,6 +13,7 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 &nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Windows](#requirements-windows)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MacOSX](#requirements-macosx)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Preparing code](#preparing-code-world-cs)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Over view of the Support Files](#over-view-of-the-support-files)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on Windows](#building-on-windows)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[msbuild](#windows-msbuild)  
@@ -52,9 +53,9 @@ Let's take a brief look at them.
 
 The `nuget.config` file is a project specific file.  It allows control over settings as they apply to this project.  NuGet uses multiple files to configure how NuGet packages can be consumed.  We will not go into all those possibilities here but a good overview is here: [Configuring NuGet behavior](https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior)
 
-> :bilb:Since we do not have `WebSharp.js` available in the NuGet main repository yet we will be using a local repo from our build.
+> :bulb:Since we do not have `WebSharp.js` available in the NuGet main repository yet we will be using a local repo from our build.
 
-To setup a local `WebSharp` repository take a look at the following [Setting up Package Source](https://github.com/xamarin/WebSharp/blob/master/docs/vsc/vsc-package-sources.md)
+To setup a local `WebSharp` repository take a look at the following [Setting up Package Sources](https://github.com/xamarin/WebSharp/blob/master/docs/vsc/vsc-package-sources.md)
 
 If for some reason the local `WebSharp` package source is not working for your operating system you can use this file to set the package repository path for `WebSharp.js` on the project level.  
 
@@ -91,9 +92,9 @@ Defines a windows specific project that creates a .net library assembly.
 
 Defines a Mac OSX specific project that creates a .net library assembly.
 
-## Code: World.cs
+## Preparing Code: World.cs
 
-The first thing we will need to do is modify the `World.cs` source to make sure it conforms to the assembly reference convention.
+The first thing we will need to do is modify the `World.cs` source to make sure it conforms to how asseblies are referenced.
 
 As was mentioned when compiling the source code on the fly the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature. 
 
