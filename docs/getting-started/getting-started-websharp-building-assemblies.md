@@ -213,9 +213,9 @@ The assembly should now be found in in the `bin\Debug\` folder.
 
 ### Windows: Visual Studio IDE
 
-You will need to have the `Visual Studio 2015 or greater` installed.
+You will need to have `Visual Studio 2015 or greater` installed.  Community Editions work fine.
 
-This is probably the easiest way to build the assembly.  From Visual Studio click on *File > Open > Project/Solution*, once the dialog shows up navigate to you project source and select the `World.csproj` file and click `Open`.  This will add a new solution as well as the project file.
+This is probably the easiest way to build the assembly.  From Visual Studio click on *File > Open > Project/Solution*, once the dialog shows up navigate to the project source, select the `World.csproj` file and click `Open`.  This will add a new solution as well as the project file.
 
 Compile the solution to create the assembly.  This will also restore the `WebSharp.js` package automatically before compiling.
 
@@ -259,7 +259,7 @@ The following is a sample of the output after the restore.
       C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
 ```
 
-Then we build with the `msbuild` command.
+Then we build with the `dotnet build` command.
 
 ```
 \src\World>dotnet build World.csproj /p:Configuration=Debug
