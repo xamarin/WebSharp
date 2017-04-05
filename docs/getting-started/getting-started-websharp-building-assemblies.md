@@ -22,7 +22,7 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on MacOSX](#building-on-macosx)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[xbuild](#macosx-xbuild)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#macosx-vs)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[.Net Core](#macosx-net-core)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[msbuild](#macosx-msbuild)  
 
 ## Requirements
 
@@ -321,3 +321,55 @@ Then we build with the `xbuild` command.
 
 The assembly should now be found in in the `bin\Debug\` folder.
 
+### MacOSX: Visual Studio IDE
+
+You will need to have `Visual Studio for Mac` installed.
+
+This is probably the easiest way to build the assembly.  From Visual Studio click on *File > Open*, once the dialog shows up navigate to the project source, select the `World_macosx.csproj` file and click `Open`.  This will add a new solution as well as the project file.
+
+Compile the solution to create the assembly.  This will also restore the `WebSharp.js` package automatically before compiling.
+
+### MacOSX: MSBuild
+
+You will need to have a terminal open and positioned to the application `src\World` directory. 
+
+Once opened you will need to change into `Hello`'s src directory. 
+
+``` bash
+$ cd Path-to-application/src/World
+```
+
+Do a restore of the NuGet packages.
+
+``` bash
+/src/World> nuget restore World_macosx.csproj
+```
+
+The following is a sample of the output after the restore.
+
+```
+HelloWorldApplication/src/World/packages'
+
+NuGet Config files used:
+    /projects/WebSharp/websharpjs/HelloWorldApplication/src/World/nuget.config
+    /Users/Jimmy/.config/NuGet/NuGet.Config
+
+Feeds used:
+    /Users/Jimmy/.nuget/packages/
+    https://nuget.org/api/v2/
+    https://www.nuget.org/api/v2/
+    /projects/WebSharp/electron-dotnet/tools/build/nuget
+
+Installed:
+    1 package(s) to packages.config projects
+```
+
+> :bulb: If the `WebSharp.js` package is not restored take a look at [Configuring NuGet behavior](#configuring-nuget-behavior-nugetconfig).
+
+Then we build with the `msbuild` command.
+
+```
+/src/World$ msbuild World_macosx.csproj 
+```
+
+The assembly should now be found in in the `bin\Debug\` folder.
