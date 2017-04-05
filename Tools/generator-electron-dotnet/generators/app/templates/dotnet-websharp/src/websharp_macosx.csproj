@@ -29,7 +29,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="WebSharpJs">
-      <HintPath>packages\WebSharp.js.6.5.1\lib\net451\WebSharpJs.dll</HintPath>
+      <HintPath>packages\WebSharp.js.1.0.0\lib\net451\WebSharpJs.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

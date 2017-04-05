@@ -13,12 +13,16 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 &nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Windows](#requirements-windows)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MacOSX](#requirements-macosx)  
-&nbsp;&nbsp;&nbsp;&nbsp;[Preparing code](#preparing-code-world-cs)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Preparing code](#preparing-code-worldcs)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Over view of the Support Files](#over-view-of-the-support-files)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on Windows](#building-on-windows)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[msbuild](#windows-msbuild)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#windows-vs)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[.Net Core](#windows-net-core)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Building on MacOSX](#building-on-macosx)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[xbuild](#macosx-xbuild)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#macosx-vs)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[.Net Core](#macosx-net-core)  
 
 ## Requirements
 
@@ -32,6 +36,7 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 
 - [Visual Studio for Mac](https://www.visualstudio.com/vs/visual-studio-mac/) allows building using `xbuild` from the terminal as well as via the IDE.
 - [.Net Core](https://www.microsoft.com/net/download/core) allows building from the command line.  This is optional but does provide a consistant build interface between platforms.
+- [NuGet CLI >= 3.5](https://docs.microsoft.com/en-us/nuget/guides/install-nuget#nuget-cli) for restoring NuGet packages.
 
 ## Over view of the support files
 
@@ -267,7 +272,52 @@ Then we build with the `dotnet build` command.
 
 The assembly should now be found in in the `bin\Debug\` folder. 
 
+## Building on MacOSX
 
+This section will show multiple ways to use the extra files to create an assembly on windows.
 
+### MacOSX: XBuild
 
+You will need to have a terminal open and positioned to the application `src\World` directory. 
+
+Once opened you will need to change into `Hello`'s src directory. 
+
+``` bash
+$ cd Path-to-application/src/World
+```
+
+Do a restore of the NuGet packages.
+
+``` bash
+/src/World> nuget restore World_macosx.csproj
+```
+
+The following is a sample of the output after the restore.
+
+```
+HelloWorldApplication/src/World/packages'
+
+NuGet Config files used:
+    /projects/WebSharp/websharpjs/HelloWorldApplication/src/World/nuget.config
+    /Users/Jimmy/.config/NuGet/NuGet.Config
+
+Feeds used:
+    /Users/Jimmy/.nuget/packages/
+    https://nuget.org/api/v2/
+    https://www.nuget.org/api/v2/
+    /projects/WebSharp/electron-dotnet/tools/build/nuget
+
+Installed:
+    1 package(s) to packages.config projects
+```
+
+> :bulb: If the `WebSharp.js` package is not restored take a look at [Configuring NuGet behavior](#configuring-nuget-behavior-nugetconfig).
+
+Then we build with the `xbuild` command.
+
+```
+/src/World$ xbuild World_macosx.csproj 
+```
+
+The assembly should now be found in in the `bin\Debug\` folder.
 
