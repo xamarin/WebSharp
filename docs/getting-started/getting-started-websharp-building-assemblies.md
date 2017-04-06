@@ -29,14 +29,14 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 ### Requirements Windows
 
 - [Visual Studio 2017](https://www.visualstudio.com/downloads/) community editions work just fine.  This will allow building using `msbuild` command line as well as via the IDE.
-- [.Net Core 1.1](https://www.microsoft.com/net/download/core) allows building from the command line.  This is optional but does provide a consistant build interface between platforms.
-- [Package Sources](https://github.com/xamarin/WebSharp/blob/master/docs/vsc/vsc-package-sources.md) because the application references the `WebSharp.js` package.  > :bulb:This can also be set in the `nuget.config` file described below.
+- [.Net Core 1.1](https://www.microsoft.com/net/download/core) allows building from the command line.  This provides an optional way to build the assembly.
+- [Package Sources](https://github.com/xamarin/WebSharp/blob/master/docs/vsc/vsc-package-sources.md) because the application references the `WebSharp.js` package. :bulb:This can also be set in the `nuget.config` file described below.
 
 ### Requirements MacOSX
 
 - [Visual Studio for Mac](https://www.visualstudio.com/vs/visual-studio-mac/) allows building using `xbuild` from the terminal as well as via the IDE.
-- [.Net Core](https://www.microsoft.com/net/download/core) allows building from the command line.  This is optional but does provide a consistant build interface between platforms.
 - [NuGet CLI >= 3.5](https://docs.microsoft.com/en-us/nuget/guides/install-nuget#nuget-cli) for restoring NuGet packages.
+- [Package Sources](https://github.com/xamarin/WebSharp/blob/master/docs/vsc/vsc-package-sources.md) because the application references the `WebSharp.js` package. :bulb:This can also be set in the `nuget.config` file described below.
 
 ## Over view of the support files
 
