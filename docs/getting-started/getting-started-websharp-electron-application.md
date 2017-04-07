@@ -354,17 +354,17 @@ Let's now take a look at the code.
     using WebSharpJs.NodeJs;
     ```
 
-    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  In this example we will be using the `NodeConsole` object to log our message to the console. 
+    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  In this example we will be using the `WebSharpJs.NodeJS.Console` object to log our message to the console. 
 
 - Class `World` implementation
 
-    ``` cs
+``` cs
     //namespace World
     //{
         public class Startup
         {
 
-            static NodeConsole console;
+            static WebSharpJs.NodeJS.Console console;
 
             /// <summary>
             /// Default entry into managed code.
@@ -374,7 +374,7 @@ Let's now take a look at the code.
             public async Task<object> Invoke(object input)
             {
                 if (console == null)
-                    console = await NodeConsole.Instance();
+                    console = await WebSharpJs.NodeJS.Console.Instance();
 
                 try
                 {
@@ -388,14 +388,13 @@ Let's now take a look at the code.
             }
         }
     //}
-
     ```
     
     By default the `namespace` is commented commented out.  The reason for this that we use on the fly compiling and by convention, the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature.
 
     > :bulb: When you specify C# source code this way the `WebSharp.js` assembly is automatically made available during the compile so there is no need to specify a reference to the assembly. 
 
-    The code creates a reference to `NodeConsole` function that defines the console logging functions.
+    The code creates a reference to `WebSharpJs.NodeJS.Console` function that defines the console logging functions.
 
     The next lines will format the string passed and log it to the console, `Hello:  World` in this case.
 

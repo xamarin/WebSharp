@@ -40,29 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dotnet\WebSharpJs.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\DOMObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\HtmlDocument.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\HtmlElement.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\HtmlEventArgs.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\HtmlObject.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\HtmlPage.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\MouseButtons.cs" />
-    <Compile Include="dotnet\WebSharpJs.DOM\WebSharpHtmlEvent.cs" />
-    <Compile Include="dotnet\WebSharpJs.NodeJs\NodeConsole.cs" />
-    <Compile Include="dotnet\WebSharpJs.NodeJs\EventEmitter.cs" />
-    <Compile Include="dotnet\WebSharpJs.NodeJs\NodeJsObject.cs" />
-    <Compile Include="dotnet\WebSharpJs.NodeJs\NodeObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\IScriptObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\SciptObjectProxy.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\ScriptableMemberAttribute.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\ScriptableTypeAttribute.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\ScriptObject.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\ScriptObjectHelper.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\ScriptObjectUtilities.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\ScriptParm.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\WebSharpEvent.cs" />
-    <Compile Include="dotnet\WebSharpJs.Script\WebSharpObject.cs" />
+    <Compile Include="dotnet\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

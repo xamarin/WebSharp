@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using WebSharpJs.Script;
 
-namespace WebSharpJs.NodeJs
+namespace WebSharpJs.NodeJS
 {
     public class NodeJsObject : WebSharpObject
     {

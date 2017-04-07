@@ -105,42 +105,36 @@ As was mentioned when compiling the source code on the fly the class must be nam
 
 When compiling to an assembly a `namespace` is required.  Edit the file and make sure the `namespace` is uncommented and saved before moving on to the building the assembly sections following.
 
-``` csharp
-
-using System;
-using System.Threading.Tasks;
-
-using WebSharpJs.NodeJs;
-
-namespace World
-{
-    public class Startup
+``` cs
+    namespace World
     {
-
-        static NodeConsole console;
-
-        /// <summary>
-        /// Default entry into managed code.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public async Task<object> Invoke(object input)
+        public class Startup
         {
-            if (console == null)
-                console = await NodeConsole.Instance();
 
-            try
+            static WebSharpJs.NodeJS.Console console;
+
+            /// <summary>
+            /// Default entry into managed code.
+            /// </summary>
+            /// <param name="input"></param>
+            /// <returns></returns>
+            public async Task<object> Invoke(object input)
             {
-                console.Log($"Hello:  {input}");
+                if (console == null)
+                    console = await WebSharpJs.NodeJS.Console.Instance();
+
+                try
+                {
+                    console.Log($"Hello:  {input}");
+                }
+                catch (Exception exc) { console.Log($"extension exception:  {exc.Message}"); }
+
+                return null;
+
+
             }
-            catch (Exception exc) { console.Log($"extension exception:  {exc.Message}"); }
-
-            return null;
-
-
         }
     }
-}
 
 ```
 

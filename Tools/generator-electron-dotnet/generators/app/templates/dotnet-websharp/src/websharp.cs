@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using WebSharpJs.NodeJs;
+using WebSharpJs.NodeJS;
 
 //namespace <%- wsClassName %>
 //{
     public class Startup
     {
 
-        static NodeConsole console;
+        static WebSharpJs.NodeJS.Console console;
 
         /// <summary>
         /// Default entry into managed code.
@@ -18,7 +18,7 @@ using WebSharpJs.NodeJs;
         public async Task<object> Invoke(object input)
         {
             if (console == null)
-                console = await NodeConsole.Instance();
+                console = await WebSharpJs.NodeJS.Console.Instance();
 
             try
             {

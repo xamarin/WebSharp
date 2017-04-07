@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 
-namespace WebSharpJs.NodeJs
+namespace WebSharpJs.NodeJS
 {
-    public class NodeConsole : NodeJsObject
+    public class Console : NodeJsObject
     {
         static NodeObjectProxy scriptProxy;
 
-        public static async Task<NodeConsole> Instance()
+        public static async Task<Console> Instance()
         {
-            var proxy = new NodeConsole();
+            var proxy = new Console();
             await proxy.Initialize();
             return proxy;
         }

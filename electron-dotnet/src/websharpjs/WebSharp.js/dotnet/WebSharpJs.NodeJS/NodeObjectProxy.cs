@@ -1,6 +1,6 @@
 ﻿using WebSharpJs.Script;
 
-namespace WebSharpJs.NodeJs
+namespace WebSharpJs.NodeJS
 {
 
     public class NodeObjectProxy : ScriptObjectProxy
