@@ -31,5 +31,6 @@ namespace WebSharpJs.DOM
             ScriptObject = scriptObject;
         }
 
+        protected override string ScriptFunction => createScript.Replace("$$$$javascriptObject$$$$", ScriptObject);
     }
 }

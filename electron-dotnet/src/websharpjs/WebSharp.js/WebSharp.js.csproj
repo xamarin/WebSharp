@@ -50,6 +50,7 @@
     <Compile Include="dotnet\WebSharpJs.DOM\MouseButtons.cs" />
     <Compile Include="dotnet\WebSharpJs.DOM\WebSharpHtmlEvent.cs" />
     <Compile Include="dotnet\WebSharpJs.NodeJs\NodeConsole.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJs\EventEmitter.cs" />
     <Compile Include="dotnet\WebSharpJs.NodeJs\NodeJsObject.cs" />
     <Compile Include="dotnet\WebSharpJs.NodeJs\NodeObjectProxy.cs" />
     <Compile Include="dotnet\WebSharpJs.Script\IScriptObjectProxy.cs" />
