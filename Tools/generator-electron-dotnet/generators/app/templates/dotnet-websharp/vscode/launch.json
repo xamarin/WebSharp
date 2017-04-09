@@ -16,8 +16,7 @@
       ],
       "env": {
           "NODE_ENV": "development",
-          "EDGE_USE_MONOCLR": "",
-          "EDGE_DEBUG": "",
+          //"WEBSHARP_DEBUG": "",
           "WEBSHARP_CS_DEBUG": "",
           "WEBSHARP_CS_DEBUG_SELF": "",
           "WEBSHARP_CS_CACHE": ""
