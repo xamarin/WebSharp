@@ -14,9 +14,12 @@ namespace WebSharpJs.NodeJS
             return proxy;
         }
 
-        private EventEmitter() : base() { }
+        protected EventEmitter() : base() { }
 
-        private EventEmitter(ScriptObjectProxy scriptObject) : base(scriptObject)
+        protected EventEmitter(object scriptObject) : base(scriptObject)
+        { }
+
+        public EventEmitter(ScriptObjectProxy scriptObject) : base(scriptObject)
         { }
 
         public static explicit operator EventEmitter(ScriptObjectProxy sop)
@@ -25,7 +28,7 @@ namespace WebSharpJs.NodeJS
         }
 
         static NodeObjectProxy scriptProxy;
-        private async Task Initialize()
+        protected async Task Initialize()
         {
 
             if (scriptProxy == null)
@@ -68,6 +71,11 @@ namespace WebSharpJs.NodeJS
             return await InvokeAsync<object[]>("listeners", eventName);
         }
 
+        public async Task<EventEmitter> On(string eventName, Func<object, Task<object>> listener)
+        {
+            return await InvokeAsync<EventEmitter>("on", eventName, listener);
+        }
+
         public async Task<object> Once(string eventName, Func<object, Task<object>> listener)
         {
             return await InvokeAsync<object>("once", eventName, listener);
@@ -93,9 +101,9 @@ namespace WebSharpJs.NodeJS
             return await InvokeAsync<object>("removeListener", eventName, listener);
         }
 
-        public async Task<object> SetMaxListeners(int n)
+        public async Task<EventEmitter> SetMaxListeners(int n)
         {
-            return await InvokeAsync<object>("setMaxListeners", n);
+            return await InvokeAsync<EventEmitter>("setMaxListeners", n);
         }
 
     }
