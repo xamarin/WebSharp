@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 
 using WebSharpJs.Script;
+using WebSharpJs.NodeJS;
 
-namespace WebSharpJs.NodeJS
+namespace WebSharpJs.Electron
 {
     public class IpcRenderer : EventEmitter
     {
