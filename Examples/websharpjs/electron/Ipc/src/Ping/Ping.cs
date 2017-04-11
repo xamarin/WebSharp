@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-using WebSharpJs.NodeJS;
+using WebSharpJs.Electron;
 
 //namespace Ping
 //{
