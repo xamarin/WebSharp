@@ -22,9 +22,9 @@ using WebSharpJs.NodeJS;
 
             try
             {
-                console.Log($"Hello:  {input}");
+                await console.Log($"Hello:  {input}");
             }
-            catch (Exception exc) { console.Log($"extension exception:  {exc.Message}"); }
+            catch (Exception exc) { await console.Log($"extension exception:  {exc.Message}"); }
 
             return null;
 
