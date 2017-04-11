@@ -7,6 +7,10 @@ namespace WebSharpJs.NodeJS
 {
     public class EventEmitter : NodeJsObject
     {
+
+        protected override string ScriptProxy => @"new events.EventEmitter();";
+        protected override string Requires => @"var events = require('events');";
+
         public static async Task<EventEmitter> Create()
         {
             var proxy = new EventEmitter();
@@ -27,23 +31,9 @@ namespace WebSharpJs.NodeJS
             return new EventEmitter(sop);
         }
 
-        static NodeObjectProxy scriptProxy;
-        protected async Task Initialize()
+        public async Task<EventEmitter> AddListener(string eventName, Func<object, Task<object>> listener)
         {
-
-            if (scriptProxy == null)
-            {
-                scriptProxy = new NodeObjectProxy(@"new events.EventEmitter();",
-                                                    @"var events = require('events');");
-            }
-
-            await scriptProxy.GetProxyObject();
-            ScriptObjectProxy = scriptProxy;
-        }
-        
-        public async Task<object> AddListener(string eventName, Func<object, Task<object>> listener)
-        {
-            return await InvokeAsync<object>("addListener", eventName, listener);
+            return await InvokeAsync<EventEmitter>("addListener", eventName, listener);
         }
 
         public async Task<bool> Emit(string eventName, params object[] args)
@@ -51,9 +41,9 @@ namespace WebSharpJs.NodeJS
             return await InvokeAsync<bool>("emit", eventName, args);
         }
 
-        public async Task<object[]> EventNames()
+        public async Task<string[]> EventNames()
         {
-            return await InvokeAsync<object[]>("eventNames");
+            return await InvokeAsync<string[]>("eventNames");
         }
 
         public async Task<int> GetMaxListeners()
@@ -76,29 +66,29 @@ namespace WebSharpJs.NodeJS
             return await InvokeAsync<EventEmitter>("on", eventName, listener);
         }
 
-        public async Task<object> Once(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> Once(string eventName, Func<object, Task<object>> listener)
         {
-            return await InvokeAsync<object>("once", eventName, listener);
+            return await InvokeAsync<EventEmitter>("once", eventName, listener);
         }
 
-        public async Task<object> PrependListener(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> PrependListener(string eventName, Func<object, Task<object>> listener)
         {
-            return await InvokeAsync<object>("prependListener", eventName, listener);
+            return await InvokeAsync<EventEmitter>("prependListener", eventName, listener);
         }
 
-        public async Task<object> PrependOnceListener(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> PrependOnceListener(string eventName, Func<object, Task<object>> listener)
         {
-            return await InvokeAsync<object>("prependOnceListener", eventName, listener);
+            return await InvokeAsync<EventEmitter>("prependOnceListener", eventName, listener);
         }
 
-        public async Task<object> RemoveAllListeners(string eventName)
+        public async Task<EventEmitter> RemoveAllListeners(string eventName)
         {
-            return await InvokeAsync<object>("removeAllListeners", eventName);
+            return await InvokeAsync<EventEmitter>("removeAllListeners", eventName);
         }
 
-        public async Task<object> RemoveListener(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> RemoveListener(string eventName, Func<object, Task<object>> listener)
         {
-            return await InvokeAsync<object>("removeListener", eventName, listener);
+            return await InvokeAsync<EventEmitter>("removeListener", eventName, listener);
         }
 
         public async Task<EventEmitter> SetMaxListeners(int n)

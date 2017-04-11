@@ -33,5 +33,25 @@ namespace WebSharpJs.NodeJS
             return new NodeJsObject(sop);
         }
 
+        protected virtual string ScriptProxy => string.Empty;
+        protected virtual string Requires => string.Empty;
+
+        static NodeObjectProxy scriptProxy;
+        protected async Task Initialize()
+        {
+            await Initialize(ScriptProxy, Requires);
+        }
+
+        protected async Task Initialize(string scriptObject, string requires)
+        {
+
+            if (scriptProxy == null)
+            {
+                scriptProxy = new NodeObjectProxy(scriptObject, requires);
+            }
+
+            await scriptProxy.GetProxyObject();
+            ScriptObjectProxy = scriptProxy;
+        }
     }
 }

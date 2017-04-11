@@ -65,7 +65,7 @@
                 {
                     var args = Array.from(arguments);
                     for (var i = 0; i < args.length; i++) {
-                        if (v8Util.getHiddenValue(args[i], 'websharpId'))
+                        if (args[i] === Object(args[i]) && !v8Util.getHiddenValue(args[i], 'websharpId'))
                             callbackData.push(ObjectToScriptObject(args[i]));
                         else
                             callbackData.push(args[i]);
