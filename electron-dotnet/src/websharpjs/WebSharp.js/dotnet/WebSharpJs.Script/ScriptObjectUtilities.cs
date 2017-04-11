@@ -166,7 +166,10 @@ namespace WebSharpJs.Script
                         }
                         else
                         {
-                            parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = parm.GetType().ToString(), Value = parm };
+                            if (IsCallbackFunction(parm.GetType()))
+                                parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", Value = parm };
+                            else
+                                parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = parm.GetType().ToString(), Value = parm };
                         }
                     }
 
