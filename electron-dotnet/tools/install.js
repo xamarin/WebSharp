@@ -53,21 +53,7 @@ if (process.platform === 'win32') {
 	// 	dest64dirs.forEach(copyFile(dll64bit, dllname));
 	// });
 
-	var dotnetPath = whereis('dotnet', 'dotnet.exe');
-
-	if (dotnetPath) {
-		spawn(dotnetPath, ['restore'], { stdio: 'inherit', cwd: path.resolve(__dirname, '..', 'lib', 'bootstrap') })
-			.on('close', function() {
-				spawn(dotnetPath, ['build', '--configuration', 'Release'], { stdio: 'inherit', cwd: path.resolve(__dirname, '..', 'lib', 'bootstrap') })
-					.on('close', function() {
-						require('./checkplatform');
-					});
-			});
-	}
-
-	else {
-		require('./checkplatform');
-	}
+	require('./checkplatform');
 } 
 
 else {
