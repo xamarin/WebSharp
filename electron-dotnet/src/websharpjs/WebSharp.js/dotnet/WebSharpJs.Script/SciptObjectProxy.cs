@@ -59,7 +59,7 @@ namespace WebSharpJs.Script
             javascriptFunctionProxy = await scriptProxy(parms);
         }
 
-        public async Task<T> GetProperty<T>(string name)
+        public async Task<T> GetProperty<T>(dynamic name)
         {
 
             if (javascriptFunctionProxy != null)

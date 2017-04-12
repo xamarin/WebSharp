@@ -10,7 +10,7 @@ namespace WebSharpJs.Script
     {
         
         int Handle { get; }
-        Task<T> GetProperty<T>(string name);
+        Task<T> GetProperty<T>(dynamic name);
         Task<bool> SetProperty(string name, object value, bool createIfNotExists = true, bool hasOwnProperty = false);
         Task<object> TryInvokeAsync(dynamic parameters);
         Task<bool> AddEventListener(object callback);

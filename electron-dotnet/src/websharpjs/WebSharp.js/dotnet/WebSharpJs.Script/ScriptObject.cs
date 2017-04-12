@@ -95,8 +95,8 @@ namespace WebSharpJs.Script
 
                 if (isScriptObject)
                 {
-                    var result = await scriptObjectProxy.TryInvokeAsync(parms);// JavaScriptProxy.websharp_invoke(parms);
-                    return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null); ;
+                    var result = await scriptObjectProxy.TryInvokeAsync(parms);
+                    return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
                 }
                 else
                 {
@@ -112,7 +112,27 @@ namespace WebSharpJs.Script
         {
             if (scriptObjectProxy != null)
             {
-                return await scriptObjectProxy.GetProperty<T>(name);
+                
+                var isScriptObject = false;
+                Type type = typeof(T);
+                if (type.GetIsSubclassOf(typeof(ScriptObject)))
+                {
+                    isScriptObject = true;
+                }
+
+                var parms = new
+                {
+                    name = name,
+                    scriptObject = isScriptObject,
+                };
+
+                if (isScriptObject)
+                {
+                    var result = await scriptObjectProxy.GetProperty<object>(parms);
+                    return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
+                }
+                else
+                    return (T)(await scriptObjectProxy.GetProperty<T>(parms));
             }
             else
                 return default(T);

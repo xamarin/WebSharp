@@ -121,8 +121,14 @@
 
         proxy.websharp_id = id;
         proxy.websharp_get_property = function (prop, cb) {
-            //console.log('prop -> ' + prop + ' has property ' + objToWrap.hasOwnProperty(prop)  + ' [ ' + objToWrap[prop] + ' ]');
-            cb(null, objToWrap[prop]);
+            //console.log('prop -> ' + prop.name + ' has property ' + objToWrap.hasOwnProperty(prop.name)  + ' [ ' + objToWrap[prop.name] + ' ]');
+            if (prop.scriptObject && objToWrap[prop.name] != null )
+            {
+                let returnSO = ObjectToScriptObject(objToWrap[prop.name]);
+                cb(null, returnSO);
+            }
+            else
+                cb(null, objToWrap[prop.name]);
         }
 
         proxy.websharp_set_property = function (parms, cb) {

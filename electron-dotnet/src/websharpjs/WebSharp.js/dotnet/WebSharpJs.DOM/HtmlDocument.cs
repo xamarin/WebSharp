@@ -53,6 +53,11 @@ namespace WebSharpJs.DOM
             return await GetPropertyAsync<string>("URI");
         }
 
+        public async Task<HtmlElement> GetDocumentElement()
+        {
+            return await GetPropertyAsync<HtmlElement>("documentElement");
+        }
+
         public async Task<Location> GetLocation()
         {
             var location = await GetPropertyAsync<object>("location");

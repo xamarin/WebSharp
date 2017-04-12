@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 
 using WebSharpJs.NodeJS;
@@ -129,11 +129,8 @@ namespace WebSharpJs.Electron
 
         public async Task<string[]> AvailableFormats(ClipboardType type = ClipboardType.None)
         {
-            var result = await InvokeAsync<object>("availableFormats", type == ClipboardType.Selection ? "selection" : string.Empty);
-            return (result == null ? new string[] { } : ((System.Collections.IEnumerable)result)
-                                                          .Cast<object>()
-                                                          .Select(x => x.ToString())
-                                                          .ToArray());
+            var result = await InvokeAsync<object[]>("availableFormats", type == ClipboardType.Selection ? "selection" : string.Empty);
+            return (result == null ? new string[] { } : Array.ConvertAll(result, item => item.ToString()));
         }
 
         public async Task<bool> Has(string format, ClipboardType type = ClipboardType.None)
