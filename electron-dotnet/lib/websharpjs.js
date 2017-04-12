@@ -186,7 +186,7 @@
                 let args = UnwrapArgs(parms.args);
 
                 invokeResult = objToWrap[parms.function].apply(objToWrap, args);
-                if (parms.scriptObject)
+                if (parms.scriptObject && invokeResult != null)
                 {
                     let returnSO = ObjectToScriptObject(invokeResult);
                     cb(null, returnSO);

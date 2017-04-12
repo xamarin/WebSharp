@@ -96,7 +96,10 @@ namespace WebSharpJs.Script
                 if (isScriptObject)
                 {
                     var result = await scriptObjectProxy.TryInvokeAsync(parms);
-                    return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
+                    if (result == null)
+                        return default(T);
+                    else
+                        return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
                 }
                 else
                 {
@@ -129,7 +132,10 @@ namespace WebSharpJs.Script
                 if (isScriptObject)
                 {
                     var result = await scriptObjectProxy.GetProperty<object>(parms);
-                    return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
+                    if (result == null)
+                        return default(T);
+                    else
+                        return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
                 }
                 else
                     return (T)(await scriptObjectProxy.GetProperty<T>(parms));
