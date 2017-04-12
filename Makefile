@@ -25,7 +25,7 @@ peppersharp: check
 	(cd electron-dotnet/tools; mono ./build/nuget.exe pack ./nuget/Xamarin.PepperSharp.nuspec -outputdirectory ./build/nuget -properties Configuration=Release -basepath ../../PepperSharp)
 
 websharpjs:
-	(cd electron-dotnet/src/websharpjs/WebSharp.js; xbuild WebSharp.js_macosx.sln /p:Configuration=Release)
+	(cd electron-dotnet/src/websharpjs/WebSharp.js; msbuild WebSharp.js_macosx.sln /p:Configuration=Release)
 	(cd electron-dotnet/src/websharpjs/WebSharp.js; mono ../../../tools/build/nuget.exe pack WebSharp.js.nuspec -OutputDirectory ./bin/Release)
 	# copy nuget to local nuget repo
 	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/*.nupkg electron-dotnet/tools/build/nuget)
@@ -34,7 +34,7 @@ websharpjs:
 
 websharp-cs:
 	(cd electron-dotnet/src/websharp-cs/src/websharp-cs;mono ../../../../tools/build/nuget.exe restore websharp-cs_macosx.sln)
-	(cd electron-dotnet/src/websharp-cs/src/websharp-cs;xbuild websharp-cs_macosx.sln /p:Configuration=Release /p:TargeFramework="Any Cpu")
+	(cd electron-dotnet/src/websharp-cs/src/websharp-cs; msbuild websharp-cs_macosx.sln /p:Configuration=Release /p:TargeFramework="Any Cpu")
 
 generator:
 	(cd Tools/generator-electron-dotnet; npm install)
