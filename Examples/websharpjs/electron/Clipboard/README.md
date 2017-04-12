@@ -19,6 +19,10 @@ Referencing the `Clipboard` instance.
 
 ![screen shot windows](images/Clipper-windows.png)
 
+![screen shot mac](images/Clipper-mac.png)
+
+More information can be found in the [clipboard documentation](https://github.com/electron/electron/blob/master/docs/api/clipboard.md)
+
 ## Requirements
 
    * `electron-dotnet` needs to be built.  The easiest way is to use the provided `make` files available in the WebSharp base directory.  
