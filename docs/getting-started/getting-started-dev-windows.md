@@ -20,6 +20,7 @@ We will not be discussing installing any of the `Requirements` here only getting
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Gotchas using install method](#gotchas-using-symlink-method)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Potential Issues](#potential-issues)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Setting mono path](#setting-mono-path)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Building against Mono 4.8](#building-against-mono-48)  
 
 ## Requirements
 
@@ -409,4 +410,30 @@ The following options can be used.
           ```
      
      > :exclamation: Option 4 is not very flexible
+
+## Building against Mono 4.8
+
+There seems to have been a small regression building with Mono 4.8 and `glib.h`.
+
+You may see something like:
+
+>C:\Program Files\Mono\include\mono-2.0\mono/metadata/exception.h(4): fatal error C1083: Cannot open include file: 'glib
+.h': No such file or directory [c:\WebSharp\electron-dotnet\build\websharp_monoclr.vcxproj]
+
+To get around this build error you can create a new file called `glib.h` with the following content.
+
+``` C++
+#define gpointer void *
+#define g_assert(x) assert(x)
+```
+
+Once created you can copy this to the `Mono` install `include` folders.
+
+* x64
+  - C:\Program Files\Mono\include\mono-2.0
+
+* x86
+  - C:\Program Files (x86)\Mono\include\mono-2.0
+
+> :bulb: This will be fixed in the next release see [PR 4240](https://github.com/mono/mono/pull/4240/)
 
