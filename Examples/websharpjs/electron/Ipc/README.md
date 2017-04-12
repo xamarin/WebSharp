@@ -17,6 +17,9 @@ Inside `Ping.cs` you will find:
 
 ![screen shot windows](images/Ipc-windows.png)
 
+
+![screen shot mac](images/Ipc-mac.png)
+
 More information can be found in the [ipcRenderer documentation](https://github.com/electron/electron/blob/master/docs/api/ipc-renderer.md)
 
 
