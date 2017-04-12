@@ -258,6 +258,12 @@ ModelManifest.xml
 /Tools/binding/*.sln
 /Tools/binding/api2
 
+# Support files
+/electron-dotnet/tools/download.exe
+
+# NACL SDK
+nacl_sdk.zip
+
 # User Data Directories created and used by Electron when started up
 **/user-data-dir
 
