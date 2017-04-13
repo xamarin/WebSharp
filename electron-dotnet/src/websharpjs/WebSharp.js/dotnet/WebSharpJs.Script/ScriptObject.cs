@@ -51,31 +51,31 @@ namespace WebSharpJs.Script
 
         #region Public interface
 
-        public virtual async Task<bool> SetPropertyAsync(string name, object value)
+        public virtual async Task<bool> SetProperty(string name, object value)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            return await TrySetPropertyAsync(name, value);
+            return await TrySetProperty(name, value);
         }
 
-        public virtual async Task<T> GetPropertyAsync<T>(string name)
+        public virtual async Task<T> GetProperty<T>(string name)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            return await TryGetPropertyAsync<T>(name);
+            return await TryGetProperty<T>(name);
         }
 
-        public virtual async Task<T> InvokeAsync<T>(string name, params object[] args)
+        public virtual async Task<T> Invoke<T>(string name, params object[] args)
         {
-            return await TryInvokeAsync<T>(name, args);
+            return await TryInvoke<T>(name, args);
         }
         #endregion
 
         #region Supporting classes
 
-        protected virtual async Task<T> TryInvokeAsync<T>(string name, params object[] parameters)
+        protected virtual async Task<T> TryInvoke<T>(string name, params object[] parameters)
         {
             if (scriptObjectProxy != null)
             {
@@ -111,7 +111,7 @@ namespace WebSharpJs.Script
             return default(T);
         }
 
-        protected virtual async Task<T> TryGetPropertyAsync<T>(string name)
+        protected virtual async Task<T> TryGetProperty<T>(string name)
         {
             if (scriptObjectProxy != null)
             {
@@ -144,7 +144,7 @@ namespace WebSharpJs.Script
                 return default(T);
         }
 
-        protected virtual async Task<bool> TrySetPropertyAsync(string name, object value, bool createIfNotExists = true, bool hasOwnProperty = false)
+        protected virtual async Task<bool> TrySetProperty(string name, object value, bool createIfNotExists = true, bool hasOwnProperty = false)
         {
             try
             {

@@ -34,7 +34,7 @@ namespace WebSharpJs.DOM
 
         public async Task<string> GetReadyState()
         {
-            return await GetPropertyAsync<string>("readyState");
+            return await GetProperty<string>("readyState");
         }
 
         public async Task<bool> GetIsReady()
@@ -50,17 +50,17 @@ namespace WebSharpJs.DOM
 
         public async Task<string> GetDocumentUri()
         {
-            return await GetPropertyAsync<string>("URI");
+            return await GetProperty<string>("URI");
         }
 
         public async Task<HtmlElement> GetDocumentElement()
         {
-            return await GetPropertyAsync<HtmlElement>("documentElement");
+            return await GetProperty<HtmlElement>("documentElement");
         }
 
         public async Task<Location> GetLocation()
         {
-            var location = await GetPropertyAsync<object>("location");
+            var location = await GetProperty<object>("location");
             if (location != null)
             {
                 var loc = new Location();
@@ -72,7 +72,7 @@ namespace WebSharpJs.DOM
 
         public async Task<HtmlElement> GetElementById(string id)
         {
-            return await InvokeAsync<HtmlElement>("getElementById", id); ;
+            return await Invoke<HtmlElement>("getElementById", id); ;
         }
     }
 

@@ -27,17 +27,17 @@ namespace WebSharpJs.NodeJS
 
         public async Task<object> Log(object message)
         {
-            return await InvokeAsync<object>("log", message);
+            return await Invoke<object>("log", message);
         }
             
         public async Task<object> Warn(object message)
         {
-            return await InvokeAsync<object>("warn", message);
+            return await Invoke<object>("warn", message);
         }
 
         public async Task<object> Error(object message)
         {
-            return await InvokeAsync<object>("error", message);
+            return await Invoke<object>("error", message);
         }
     }
 }

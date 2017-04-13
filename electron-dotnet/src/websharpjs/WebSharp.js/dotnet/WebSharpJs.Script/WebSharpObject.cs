@@ -184,26 +184,26 @@ namespace WebSharpJs.Script
             return result;
         }
 
-        public override async Task<bool> SetPropertyAsync(string name, object value)
+        public override async Task<bool> SetProperty(string name, object value)
         {
             ScriptMemberInfo property = null;
             if (cachedPropertyInfo.TryGetValue(name, out property))
-                return await base.TrySetPropertyAsync(property.ScriptAlias, value, property.CreateIfNotExists, property.HasOwnProperty);
+                return await base.TrySetProperty(property.ScriptAlias, value, property.CreateIfNotExists, property.HasOwnProperty);
             else
-                return await base.SetPropertyAsync(name, value);
+                return await base.SetProperty(name, value);
         }
 
-        public override Task<T> GetPropertyAsync<T>(string name)
+        public override Task<T> GetProperty<T>(string name)
         {
             ScriptMemberInfo property = null;
             if (cachedPropertyInfo.TryGetValue(name, out property))
-                return base.GetPropertyAsync<T>(property.ScriptAlias);
+                return base.GetProperty<T>(property.ScriptAlias);
             else
-                return base.GetPropertyAsync<T>(name);
+                return base.GetProperty<T>(name);
         }
 
 
-        public override Task<T> InvokeAsync<T>(string name, params object[] args)
+        public override Task<T> Invoke<T>(string name, params object[] args)
         {
             var scriptAlias = name;
 
@@ -217,7 +217,7 @@ namespace WebSharpJs.Script
                     scriptAlias = (att.ScriptAlias ?? scriptAlias);
                 }
             }
-            return base.InvokeAsync<T>(scriptAlias, args);
+            return base.Invoke<T>(scriptAlias, args);
         }
     }
 

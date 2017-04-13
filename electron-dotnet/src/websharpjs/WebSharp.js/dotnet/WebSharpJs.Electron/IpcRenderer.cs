@@ -33,12 +33,12 @@ namespace WebSharpJs.Electron
 
         public async Task<object> Send(string eventName, params object[] args)
         {
-            return await InvokeAsync<object>("send", eventName, args);
+            return await Invoke<object>("send", eventName, args);
         }
 
         public async Task<object> SendSync(string eventName, params object[] args)
         {
-            return await InvokeAsync<object>("sendSync", eventName, args);
+            return await Invoke<object>("sendSync", eventName, args);
         }
 
     }

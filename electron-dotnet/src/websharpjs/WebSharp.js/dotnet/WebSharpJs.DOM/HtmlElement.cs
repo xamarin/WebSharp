@@ -16,17 +16,17 @@ namespace WebSharpJs.DOM
 
         public async Task<string> GetId()
         {
-            return await GetPropertyAsync<string>("id");
+            return await GetProperty<string>("id");
         }
 
         public async Task<string> GetTagName()
         {
-            return await GetPropertyAsync<string>("tagName");
+            return await GetProperty<string>("tagName");
         }
 
         public async Task<HtmlElement> GetParent()
         {
-            return await GetPropertyAsync<HtmlElement>("parentElement");
+            return await GetProperty<HtmlElement>("parentElement");
         }
 
         [ScriptableMember(ScriptAlias = "click")]
@@ -34,19 +34,19 @@ namespace WebSharpJs.DOM
 
         public async Task<object> Focus()
         {
-            return await InvokeAsync<object>("focus");
+            return await Invoke<object>("focus");
         }
 
 
 
         public async Task<object> GetStyleAttribute()
         {
-            return await GetPropertyAsync<object>("style");
+            return await GetProperty<object>("style");
         }
 
         public async Task<object> GetNodeType()
         {
-            return await GetPropertyAsync<object>("style");
+            return await GetProperty<object>("style");
         }
 
         public async Task<string> GetAttribute (string name)

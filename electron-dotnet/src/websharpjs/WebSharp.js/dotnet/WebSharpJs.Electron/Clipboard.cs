@@ -69,37 +69,37 @@ namespace WebSharpJs.Electron
 
         public async Task<string> ReadText(ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<string>("readText", type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<string>("readText", type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<object> WriteText(string text, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<object>("writeText", text, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<object>("writeText", text, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<string> ReadHTML(ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<string>("readHTML", type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<string>("readHTML", type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<object> WriteHTML(string markup, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<object>("writeHTML", markup, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<object>("writeHTML", markup, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<string> ReadRTF(ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<string>("readRTF", type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<string>("readRTF", type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<object> WriteRTF(string markup, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<object>("writeRTF", markup, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<object>("writeRTF", markup, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<Bookmark> ReadBookmark(ClipboardType type = ClipboardType.None)
         {
-            var result = await InvokeAsync<object>("readBookmark", type == ClipboardType.Selection ? "selection" : string.Empty);
+            var result = await Invoke<object>("readBookmark", type == ClipboardType.Selection ? "selection" : string.Empty);
             var bm = new Bookmark();
             if (result != null)
                 ScriptObjectHelper.DictionaryToScriptableType((System.Collections.Generic.IDictionary<string, object>)result, bm);
@@ -109,43 +109,43 @@ namespace WebSharpJs.Electron
 
         public async Task<object> WriteBookmark(string title, string url, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<object>("writeBookmark", title, url, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<object>("writeBookmark", title, url, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<string> ReadFindText(ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<string>("readFindText", type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<string>("readFindText", type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<object> WriteFindText(string text, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<object>("writeFindText", text, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<object>("writeFindText", text, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<object> Clear(ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<object>("clear", type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<object>("clear", type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<string[]> AvailableFormats(ClipboardType type = ClipboardType.None)
         {
-            var result = await InvokeAsync<object[]>("availableFormats", type == ClipboardType.Selection ? "selection" : string.Empty);
+            var result = await Invoke<object[]>("availableFormats", type == ClipboardType.Selection ? "selection" : string.Empty);
             return (result == null ? new string[] { } : Array.ConvertAll(result, item => item.ToString()));
         }
 
         public async Task<bool> Has(string format, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<bool>("has", format, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<bool>("has", format, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<string> Read(string format, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<string>("read", format, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<string>("read", format, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<object> Write(ClipboardData data, ClipboardType type = ClipboardType.None)
         {
-            return await InvokeAsync<object>("write", data, type == ClipboardType.Selection ? "selection" : string.Empty);
+            return await Invoke<object>("write", data, type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
     }
