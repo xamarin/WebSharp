@@ -144,7 +144,7 @@
                     }
                 }
                 else {
-                    returnSO = ObjectToScriptObject(objToWrap);
+                    returnSO = ObjectToScriptObject(objProp);
                 }
                 cb(null, returnSO);
 
@@ -210,7 +210,26 @@
                 invokeResult = objToWrap[parms.function].apply(objToWrap, args);
                 if (parms.category > 0 && invokeResult != null)
                 {
-                    let returnSO = ObjectToScriptObject(invokeResult);
+                    let returnSO;
+                    if (parms.category === 5) // ScriptObjectCollection
+                    {
+                        // https://www.w3.org/TR/dom/#htmlcollection
+                        // We need to have a special consideration for htmlcollection.
+                        // From docs HTMLCollection is an historical artifact we cannot rid the web of.
+                        // It is not an array either so will not be handled by the native code interface.
+                        // * Note * : This test here works for Chrome but may not be compatible for other
+                        // javascript runtimes.
+                        if (({}).toString.call(invokeResult) === '[object HTMLCollection]')
+                        {
+                            returnSO = [];
+                            for (var i = 0; i < invokeResult.length; i++) {
+                                returnSO.push(ObjectToScriptObject(invokeResult[i]));
+                            }
+                        }
+                    }
+                    else {
+                        returnSO = ObjectToScriptObject(invokeResult);
+                    }
                     cb(null, returnSO);
                 }
                 else

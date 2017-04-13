@@ -104,7 +104,7 @@ namespace WebSharpJs.Script
 
                 if (parmCategory != ScriptParmCategory.None)
                 {
-                    var result = await scriptObjectProxy.GetProperty<object>(parms);
+                    var result = await scriptObjectProxy.TryInvokeAsync(parms);
                     if (result == null)
                         return default(T);
                     else if (parmCategory == ScriptParmCategory.ScriptObjectCollection)
