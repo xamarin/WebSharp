@@ -65,7 +65,7 @@
                 {
                     var args = Array.from(arguments);
                     for (var i = 0; i < args.length; i++) {
-                        if (args[i] === Object(args[i]) && !v8Util.getHiddenValue(args[i], 'websharpId'))
+                        if (args[i] === Object(args[i]))
                             callbackData.push(ObjectToScriptObject(args[i]));
                         else
                             callbackData.push(args[i]);
@@ -122,13 +122,35 @@
         proxy.websharp_id = id;
         proxy.websharp_get_property = function (prop, cb) {
             //console.log('prop -> ' + prop.name + ' has property ' + objToWrap.hasOwnProperty(prop.name)  + ' [ ' + objToWrap[prop.name] + ' ]');
-            if (prop.scriptObject && objToWrap[prop.name] != null )
+            let objProp = objToWrap[prop.name];
+
+            if (prop.category > 0 && objProp != null )
             {
-                let returnSO = ObjectToScriptObject(objToWrap[prop.name]);
+                let returnSO;
+                if (prop.category === 5) // ScriptObjectCollection
+                {
+                    // https://www.w3.org/TR/dom/#htmlcollection
+                    // We need to have a special consideration for htmlcollection.
+                    // From docs HTMLCollection is an historical artifact we cannot rid the web of.
+                    // It is not an array either so will not be handled by the native code interface.
+                    // * Note * : This test here works for Chrome but may not be compatible for other
+                    // javascript runtimes.
+                    if (({}).toString.call(objProp) === '[object HTMLCollection]')
+                    {
+                        returnSO = [];
+                        for (var i = 0; i < objProp.length; i++) {
+                            returnSO.push(ObjectToScriptObject(objProp[i]));
+                        }
+                    }
+                }
+                else {
+                    returnSO = ObjectToScriptObject(objToWrap);
+                }
                 cb(null, returnSO);
+
             }
             else
-                cb(null, objToWrap[prop.name]);
+                cb(null, objProp);
         }
 
         proxy.websharp_set_property = function (parms, cb) {
@@ -186,7 +208,7 @@
                 let args = UnwrapArgs(parms.args);
 
                 invokeResult = objToWrap[parms.function].apply(objToWrap, args);
-                if (parms.scriptObject && invokeResult != null)
+                if (parms.category > 0 && invokeResult != null)
                 {
                     let returnSO = ObjectToScriptObject(invokeResult);
                     cb(null, returnSO);
@@ -200,10 +222,10 @@
         }
 
         proxy.websharp_addEventListener = function (eventCallback, cb) {
-            console.log('addEventListener -> ' + eventCallback.onEvent);
+            //console.log('addEventListener -> ' + eventCallback.onEvent);
             objToWrap.addEventListener(eventCallback.onEvent, 
                 function () {
-                    console.log('we be eventing');
+                    //console.log('event triggered');
                     // We need to preserver arity of the function callback parameters.
                     let callbackData = [];
                     // we will only attach event information if it was asked for

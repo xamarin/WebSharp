@@ -13,6 +13,9 @@ namespace WebSharpJs.Script
 
     public class ScriptObject : IDynamicMetaObjectProvider
     {
+
+        static readonly Type ScriptObjectType = typeof(ScriptObject);
+
         /// <summary>
         /// scriptObject instance
         /// </summary>
@@ -79,25 +82,53 @@ namespace WebSharpJs.Script
         {
             if (scriptObjectProxy != null)
             {
-                var isScriptObject = false;
+                var parmCategory = ScriptParmCategory.None;
+
                 Type type = typeof(T);
-                if (type.GetIsSubclassOf(typeof(ScriptObject)))
+
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ScriptObjectCollection<>))
                 {
-                    isScriptObject = true;
+                    parmCategory = ScriptParmCategory.ScriptObjectCollection;
+                }
+                else if (type.IsSubclassOf(ScriptObjectType))
+                {
+                    parmCategory = ScriptParmCategory.ScriptObject;
                 }
 
                 var parms = new
                 {
                     function = name,
-                    scriptObject = isScriptObject,
+                    category = (int)parmCategory,
                     args = ScriptObjectUtilities.WrapScriptParms(parameters)
                 };
 
-                if (isScriptObject)
+                if (parmCategory != ScriptParmCategory.None)
                 {
-                    var result = await scriptObjectProxy.TryInvokeAsync(parms);
+                    var result = await scriptObjectProxy.GetProperty<object>(parms);
                     if (result == null)
                         return default(T);
+                    else if (parmCategory == ScriptParmCategory.ScriptObjectCollection)
+                    {
+                        var objArray = result as object[];
+                        if (objArray == null)
+                            return default(T);
+
+                        try
+                        {
+                            var array = Array.CreateInstance(type.GetGenericArguments()[0], objArray.Length);
+                            for (int a = 0; a < array.Length; a++)
+                            {
+                                array.SetValue(Activator.CreateInstance(type.GetGenericArguments()[0], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { objArray[a] }, null), a);
+                            }
+                            return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { array }, null);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            return default(T);
+                        }
+
+                    }
                     else
                         return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
                 }
@@ -115,25 +146,53 @@ namespace WebSharpJs.Script
         {
             if (scriptObjectProxy != null)
             {
-                
-                var isScriptObject = false;
+
+                var parmCategory = ScriptParmCategory.None;
+
                 Type type = typeof(T);
-                if (type.GetIsSubclassOf(typeof(ScriptObject)))
+
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ScriptObjectCollection<>))
                 {
-                    isScriptObject = true;
+                    parmCategory = ScriptParmCategory.ScriptObjectCollection;
+                }
+                else if (type.IsSubclassOf(ScriptObjectType))
+                {
+                    parmCategory = ScriptParmCategory.ScriptObject;
                 }
 
                 var parms = new
                 {
                     name = name,
-                    scriptObject = isScriptObject,
+                    category = (int)parmCategory,
                 };
 
-                if (isScriptObject)
+                if (parmCategory != ScriptParmCategory.None)
                 {
                     var result = await scriptObjectProxy.GetProperty<object>(parms);
                     if (result == null)
                         return default(T);
+                    else if (parmCategory == ScriptParmCategory.ScriptObjectCollection)
+                    {
+                        var objArray = result as object[];
+                        if (objArray == null)
+                            return default(T);
+
+                        try
+                        {
+                            var array = Array.CreateInstance(type.GetGenericArguments()[0], objArray.Length);
+                            for (int a = 0; a < array.Length; a++)
+                            {
+                                array.SetValue(Activator.CreateInstance(type.GetGenericArguments()[0], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { objArray[a] }, null), a);
+                            }
+                            return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { array }, null);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            return default(T);
+                        }
+
+                    }
                     else
                         return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
                 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using WebSharpJs.Script;
@@ -73,6 +71,62 @@ namespace WebSharpJs.DOM
         public async Task<HtmlElement> GetElementById(string id)
         {
             return await Invoke<HtmlElement>("getElementById", id); ;
+        }
+
+        public async Task<object> Submit()
+        {
+            // Posts user data from the FORM element in the browser's Document Object Model (DOM) to the server.
+
+            //Remarks
+            //If an HTML page has multiple FORM elements, this overload posts user data from the first FORM element to the server
+            
+            // First we need to get all the FORM elements that the page has.
+            var forms = await GetProperty<ScriptObjectCollection<HtmlElement>>("forms");
+
+            if (forms == null)
+                return null;
+
+            // Even if there is more than one on the page we will only
+            // submit the first one that is found.
+            await forms[0].Invoke<object>("submit");
+            
+            return null;
+        }
+
+        public async Task<object> Submit(string formId)
+        {
+
+            if (string.IsNullOrEmpty(formId))
+                throw new ArgumentException($"Null or Empty is not valid for {nameof(formId)}");
+            // Posts user data from the specified FORM element to the server.
+
+            // Remarks
+            // This overload posts user data from an HTML FORM element that is 
+            // identified by the formId parameter.
+            // For example, if your HTML document has an element defined as 
+            // < form id = "xyz" />, you can submit its user data by calling 
+            // HtmlDocument.Submit("xyz").
+
+            // First we need to get all the FORM elements on the page
+            var forms = await GetProperty<ScriptObjectCollection<HtmlElement>>("forms");
+
+            if (forms == null)
+                return null;
+
+            // now lets iterate over all of the forms until we find the one we need.
+            foreach(var form in forms)
+            {
+                var id = await form.GetId();
+
+                if (id == formId)
+                {
+                    await form.Invoke<object>("submit");
+                    break;
+                }
+
+            }
+
+            return null;
         }
     }
 

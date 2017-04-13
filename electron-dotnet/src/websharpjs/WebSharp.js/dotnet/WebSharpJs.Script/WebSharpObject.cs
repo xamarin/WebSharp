@@ -102,7 +102,7 @@ namespace WebSharpJs.Script
 
         EventHandlerTBag EventTHandlers = new EventHandlerTBag();
 
-        public async Task<bool> AttachEventAsync(string eventName, EventHandler handler)
+        public async Task<bool> AttachEvent(string eventName, EventHandler handler)
         {
             if (string.IsNullOrEmpty(eventName))
                 throw new ArgumentNullException(nameof(eventName));
@@ -146,7 +146,7 @@ namespace WebSharpJs.Script
             return result;
         }
 
-        public async Task<bool> AttachEventAsync(string eventName)
+        public async Task<bool> AttachEvent(string eventName)
         {
             if (string.IsNullOrEmpty(eventName))
                 throw new ArgumentNullException(nameof(eventName));

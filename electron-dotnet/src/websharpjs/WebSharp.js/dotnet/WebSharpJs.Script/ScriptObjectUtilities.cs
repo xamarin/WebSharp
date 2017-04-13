@@ -52,16 +52,7 @@ namespace WebSharpJs.Script
             return type.GetTypeInfo().GetGenericArguments();
         }
 
-        public static bool GetIsSubclassOf(this Type type, Type subtype)
-        {
-            return type.GetTypeInfo().IsSubclassOf(subtype);
-        }
         #endregion
-
-        public static bool IsDelegate(Type type)
-        {
-            return typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type.BaseType());
-        }
 
         /// <summary>
         /// Checks if the Func is of the pattern Func<,Task<object>> which represents the callback bridge pattern

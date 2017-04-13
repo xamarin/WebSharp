@@ -15,10 +15,12 @@ namespace WebSharpJs.Script
 
     internal enum ScriptParmCategory
     {
+        None = 0,
         ScriptObject = 1,
         ScriptableType = 2,
         ScriptValue = 3,
-        ScriptCallback = 4
+        ScriptCallback = 4,
+        ScriptObjectCollection = 5,
     }
     
 }

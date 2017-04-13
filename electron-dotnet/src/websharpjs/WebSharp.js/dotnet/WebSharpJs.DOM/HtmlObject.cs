@@ -22,7 +22,7 @@ namespace WebSharpJs.DOM
 
         EventHandlerBag EventHandlers = new EventHandlerBag();
 
-        public async Task<bool> AttachEventAsync(string eventName, EventHandler<HtmlEventArgs> handler)
+        public async Task<bool> AttachEvent(string eventName, EventHandler<HtmlEventArgs> handler)
         {
             if (string.IsNullOrEmpty(eventName))
                 throw new ArgumentNullException("eventName");
@@ -65,7 +65,7 @@ namespace WebSharpJs.DOM
             return result;
         }
 
-        public async Task<bool> AttachEventAsync<HtmlEventArgs>(string eventName)
+        public async Task<bool> AttachEvent<HtmlEventArgs>(string eventName)
         {
             if (string.IsNullOrEmpty(eventName))
                 throw new ArgumentNullException("eventName");
