@@ -57,7 +57,7 @@ namespace WebSharpJs.Script
         public virtual async Task<bool> SetProperty(string name, object value)
         {
             if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentException($"Argument: {nameof(name)} Can not be null or empty");
 
             return await TrySetProperty(name, value);
         }
@@ -65,35 +65,77 @@ namespace WebSharpJs.Script
         public virtual async Task<T> GetProperty<T>(string name)
         {
             if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentException($"Argument: {nameof(name)} Can not be null or empty");
 
             return await TryGetProperty<T>(name);
         }
 
         public virtual async Task<T> Invoke<T>(string name, params object[] args)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException($"Argument: {nameof(name)} Can not be null or empty");
+
             return await TryInvoke<T>(name, args);
         }
         #endregion
 
-        #region Supporting classes
+        #region Supporting methods
+
+        T GetReturnValue<T> (ScriptParmCategory parmCategory, object result)
+        {
+            Type type = typeof(T);
+
+            if (result == null)
+                return default(T);
+
+            else if (parmCategory == ScriptParmCategory.ScriptObjectCollection)
+            {
+                var objArray = result as object[];
+                if (objArray == null)
+                    return default(T);
+
+                try
+                {
+                    var array = Array.CreateInstance(type.GetGenericArguments()[0], objArray.Length);
+                    for (int a = 0; a < array.Length; a++)
+                    {
+                        array.SetValue(Activator.CreateInstance(type.GetGenericArguments()[0], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { objArray[a] }, null), a);
+                    }
+                    return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { array }, null);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return default(T);
+                }
+
+            }
+            else
+                return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
+        }
+
+        ScriptParmCategory GetParmCategory<T>()
+        {
+            Type type = typeof(T);
+
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ScriptObjectCollection<>))
+            {
+                return ScriptParmCategory.ScriptObjectCollection;
+            }
+            else if (type.IsSubclassOf(ScriptObjectType))
+            {
+                return ScriptParmCategory.ScriptObject;
+            }
+
+            return ScriptParmCategory.None;
+        }
+
 
         protected virtual async Task<T> TryInvoke<T>(string name, params object[] parameters)
         {
             if (scriptObjectProxy != null)
             {
-                var parmCategory = ScriptParmCategory.None;
-
-                Type type = typeof(T);
-
-                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ScriptObjectCollection<>))
-                {
-                    parmCategory = ScriptParmCategory.ScriptObjectCollection;
-                }
-                else if (type.IsSubclassOf(ScriptObjectType))
-                {
-                    parmCategory = ScriptParmCategory.ScriptObject;
-                }
+                var parmCategory = GetParmCategory<T>();
 
                 var parms = new
                 {
@@ -102,40 +144,8 @@ namespace WebSharpJs.Script
                     args = ScriptObjectUtilities.WrapScriptParms(parameters)
                 };
 
-                if (parmCategory != ScriptParmCategory.None)
-                {
-                    var result = await scriptObjectProxy.TryInvokeAsync(parms);
-                    if (result == null)
-                        return default(T);
-                    else if (parmCategory == ScriptParmCategory.ScriptObjectCollection)
-                    {
-                        var objArray = result as object[];
-                        if (objArray == null)
-                            return default(T);
-
-                        try
-                        {
-                            var array = Array.CreateInstance(type.GetGenericArguments()[0], objArray.Length);
-                            for (int a = 0; a < array.Length; a++)
-                            {
-                                array.SetValue(Activator.CreateInstance(type.GetGenericArguments()[0], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { objArray[a] }, null), a);
-                            }
-                            return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { array }, null);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                            return default(T);
-                        }
-
-                    }
-                    else
-                        return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
-                }
-                else
-                {
-                    return (T)(await scriptObjectProxy.TryInvokeAsync(parms));
-                }
+                var result = await scriptObjectProxy.TryInvoke(parms);
+                return (parmCategory == ScriptParmCategory.None) ? (T)result : GetReturnValue<T>(parmCategory, result);
 
             }
 
@@ -147,18 +157,7 @@ namespace WebSharpJs.Script
             if (scriptObjectProxy != null)
             {
 
-                var parmCategory = ScriptParmCategory.None;
-
-                Type type = typeof(T);
-
-                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ScriptObjectCollection<>))
-                {
-                    parmCategory = ScriptParmCategory.ScriptObjectCollection;
-                }
-                else if (type.IsSubclassOf(ScriptObjectType))
-                {
-                    parmCategory = ScriptParmCategory.ScriptObject;
-                }
+                var parmCategory = GetParmCategory<T>();
 
                 var parms = new
                 {
@@ -166,38 +165,9 @@ namespace WebSharpJs.Script
                     category = (int)parmCategory,
                 };
 
-                if (parmCategory != ScriptParmCategory.None)
-                {
-                    var result = await scriptObjectProxy.GetProperty<object>(parms);
-                    if (result == null)
-                        return default(T);
-                    else if (parmCategory == ScriptParmCategory.ScriptObjectCollection)
-                    {
-                        var objArray = result as object[];
-                        if (objArray == null)
-                            return default(T);
+                var result = await scriptObjectProxy.GetProperty<object>(parms);
+                return (parmCategory == ScriptParmCategory.None) ? (T)result : GetReturnValue<T>(parmCategory, result);
 
-                        try
-                        {
-                            var array = Array.CreateInstance(type.GetGenericArguments()[0], objArray.Length);
-                            for (int a = 0; a < array.Length; a++)
-                            {
-                                array.SetValue(Activator.CreateInstance(type.GetGenericArguments()[0], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { objArray[a] }, null), a);
-                            }
-                            return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { array }, null);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                            return default(T);
-                        }
-
-                    }
-                    else
-                        return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
-                }
-                else
-                    return (T)(await scriptObjectProxy.GetProperty<T>(parms));
             }
             else
                 return default(T);
@@ -210,7 +180,7 @@ namespace WebSharpJs.Script
                 if (scriptObjectProxy != null)
                 {
                     return await scriptObjectProxy.SetProperty(name, value, createIfNotExists, hasOwnProperty);
-               }
+                }
             }
             catch { }
 

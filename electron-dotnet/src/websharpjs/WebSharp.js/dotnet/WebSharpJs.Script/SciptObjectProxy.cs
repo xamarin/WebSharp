@@ -91,7 +91,7 @@ namespace WebSharpJs.Script
             return false;
         }
 
-        public async Task<object> TryInvokeAsync(dynamic parms)
+        public async Task<object> TryInvoke(dynamic parms)
         {
             if (javascriptFunctionProxy != null)
             {

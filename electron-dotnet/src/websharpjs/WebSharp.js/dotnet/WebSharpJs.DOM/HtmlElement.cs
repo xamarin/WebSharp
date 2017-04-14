@@ -29,6 +29,11 @@ namespace WebSharpJs.DOM
             return await GetProperty<HtmlElement>("parentElement");
         }
 
+        public async Task<ScriptObjectCollection<HtmlElement>> GetChildren()
+        {
+            return await GetProperty<ScriptObjectCollection<HtmlElement>>("children");
+        }
+
         [ScriptableMember(ScriptAlias = "click")]
         public event EventHandler OnClick;
 
@@ -37,7 +42,15 @@ namespace WebSharpJs.DOM
             return await Invoke<object>("focus");
         }
 
+        public async Task<string> GetCssClass()
+        {
+            return await GetProperty<string>("className");
+        }
 
+        public async Task<object> SetCssClass(string className)
+        {
+            return await SetProperty("className", className ?? string.Empty);
+        }
 
         public async Task<object> GetStyleAttribute()
         {
@@ -46,7 +59,7 @@ namespace WebSharpJs.DOM
 
         public async Task<object> GetNodeType()
         {
-            return await GetProperty<object>("style");
+            return await GetProperty<object>("nodeType");
         }
 
         public async Task<string> GetAttribute (string name)
@@ -112,5 +125,6 @@ namespace WebSharpJs.DOM
             }
             return false;
         }
+
     }
 }
