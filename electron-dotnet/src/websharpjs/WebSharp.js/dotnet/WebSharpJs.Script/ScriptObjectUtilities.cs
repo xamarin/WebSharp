@@ -16,7 +16,7 @@ namespace WebSharpJs.Script
 
         static readonly Type CallbackResultType = typeof(Task<object>);
 
-        #region .NET Core extension helper methods
+        #region Reflection extension helper methods
         public static bool IsAttributeDefined<TAttribute>(this MemberInfo memberInfo)
         {
             return memberInfo.IsAttributeDefined(typeof(TAttribute));
@@ -34,22 +34,7 @@ namespace WebSharpJs.Script
 
         public static bool IsAttributeDefined(this Type type, Type attributeType, bool inherited = true)
         {
-            return type.GetTypeInfo().GetCustomAttribute(attributeType) != null;
-        }
-
-        public static Type BaseType(this Type type)
-        {
-            return type.GetTypeInfo().BaseType;
-        }
-
-        public static Type GetGenericTypeDefinition(this Type type)
-        {
-            return type.GetTypeInfo().GetGenericTypeDefinition();
-        }
-
-        public static Type[] GetGenericArguments( this Type type)
-        {
-            return type.GetTypeInfo().GetGenericArguments();
+            return type.GetCustomAttribute(attributeType) != null;
         }
 
         #endregion
@@ -62,7 +47,7 @@ namespace WebSharpJs.Script
         /// <returns></returns>
         public static bool IsCallbackFunction(Type type)
         {
-            if (!typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type.BaseType()))
+            if (!typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type.BaseType))
                 return false;
             return (type.GetTypeInfo().IsGenericType
                 && typeof(Func<,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
@@ -150,7 +135,29 @@ namespace WebSharpJs.Script
                                         }
                                     }
                                     else
-                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
+                                    {
+                                        // This handles simple arrays of ScriptableTypes.
+                                        // We may need to re visit this in the future if they become more complicated.
+                                        if (propertyInfo.PropertyType.IsArray && propertyInfo.PropertyType.GetElementType().IsAttributeDefined<ScriptableTypeAttribute>(false))
+                                        {
+                                            var propArray = (Array)propertyInfo.GetValue(parm);
+                                            
+                                            if (propArray == null || propArray.Length == 0)
+                                                fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propArray });
+                                            else
+                                            {
+                                                // We will loop through this ourselves instead of bringing LINQ and Casting into this.
+                                                var dynDic = new object[propArray.Length];
+                                                for (int x = 0; x < propArray.Length; x++)
+                                                {
+                                                    dynDic[x] = ScriptObjectHelper.ScriptableTypeToDictionary(propArray.GetValue(x));
+                                                }
+                                                fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = dynDic });
+                                            }
+                                        }
+                                        else
+                                            fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
+                                    }
                                 }
                             }
                             parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptableType, Type = "ScriptableType", Value = fieldMappings };
