@@ -57,27 +57,85 @@
             return function () {
                 
                 // We need to preserver arity of the function callback parameters.
-                let callbackData = [];
+                let callbackData;
                 // If we get called with arguments then we loop over them to create on object to be passed back
                 // as our callback data.  Func<object, Task<object>>
                 // We only receive one object in our managed code.
                 if (arguments)
                 {
-                    var args = Array.from(arguments);
-                    for (var i = 0; i < args.length; i++) {
-                        if (args[i] === Object(args[i]))
-                            callbackData.push(ObjectToScriptObject(args[i]));
+                    if (arguments.length === 1)
+                    {
+                        let args = arguments;
+                        if (Array.isArray(args[0]))
+                        {
+                            let argArray = []
+                            for (var ai = 0; ai < args[0].length; ai++)
+                            {
+                                if (args[0][ai] === Object(args[0][ai]))
+                                    argArray.push(ObjectToScriptObject(args[ai]));
+                                else
+                                    argArray.push(args[ai]);
+                            }
+                            callbackData = argArray;
+                            try {
+                                // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
+                                // later.
+                                func.Value.apply(this, callbackData);
+                            }
+                            catch (ex) { ErrorHandler.Exception(ex); }
+                        }
                         else
-                            callbackData.push(args[i]);
+                        {
+                            if (args[0] === Object(args[0]))
+                                callbackData = ObjectToScriptObject(args[0]);
+                            else
+                                callbackData = args[0];
+                            try {
+                                // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
+                                // later.
+                                func.Value.apply(this, [callbackData]);
+                            }
+                            catch (ex) { ErrorHandler.Exception(ex); }
+                        }
                     }
-                }
+                    else
+                    {
+                        callbackData = [];
+                        var args = Array.from(arguments);
+                        for (var i = 0; i < args.length; i++) {
+                            if (Array.isArray(args[i]))
+                            {
+                                let argArray = []
+                                for (var ai = 0; ai < args[i].length; ai++)
+                                {
+                                    if (args[i][ai] === Object(args[i][ai]))
+                                        argArray.push(ObjectToScriptObject(args[i][ai]));
+                                    else
+                                        argArray.push(args[i][ai]);
+                                }
+                                callbackData.push(argArray);
+                            }
+                            else if (args[i] === Object(args[i]))
+                                callbackData.push(ObjectToScriptObject(args[i]));
+                            else
+                                callbackData.push(args[i]);
+                        }
+                        try {
+                            // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
+                            // later.
+                            func.Value.apply(this, [callbackData]);
+                        }
+                        catch (ex) { ErrorHandler.Exception(ex); }
+                        }
 
-                try {
-                    // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
-                    // later.
-                    func.Value.apply(this, [callbackData]);
                 }
-                catch (ex) { ErrorHandler.Exception(ex); }
+                else
+                    try {
+                        // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
+                        // later.
+                        func.Value.apply(this);
+                    }
+                    catch (ex) { ErrorHandler.Exception(ex); }
                 
             };
 
