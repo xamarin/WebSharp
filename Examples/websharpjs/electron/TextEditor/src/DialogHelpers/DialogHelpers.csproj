@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net451</TargetFrameworks>
+    <OutputPath>.\bin\$(Configuration)\</OutputPath>
+    <OutDir>$(OutputPath)</OutDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\WebSharp\electron-dotnet\src\websharpjs\WebSharp.js\WebSharp.js.csproj" />
+  </ItemGroup>
+
+</Project>
