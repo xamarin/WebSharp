@@ -90,7 +90,7 @@ namespace WebSharpJs.Electron
         public int DefaultId { get; set; }
         [ScriptableMember(ScriptAlias = "title")]
         public string Title { get; set; }
-        [ScriptableMember(ScriptAlias = "title")]
+        [ScriptableMember(ScriptAlias = "message")]
         public string Message { get; set; }
         [ScriptableMember(ScriptAlias = "detail")]
         public string Detail { get; set; }
@@ -124,7 +124,7 @@ namespace WebSharpJs.Electron
             }
 
         }
-        public OpenDialogProperties PropertyFlags { get; set; }
+        
     }
 
 
