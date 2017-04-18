@@ -10,7 +10,7 @@ namespace WebSharpJs.DOM
     {
         static DOMObjectProxy scriptProxy;
 
-        public static async Task<HtmlDocument> Instance()
+        internal static async Task<HtmlDocument> Instance()
         {
             var proxy = new HtmlDocument();
             await proxy.Initialize();
