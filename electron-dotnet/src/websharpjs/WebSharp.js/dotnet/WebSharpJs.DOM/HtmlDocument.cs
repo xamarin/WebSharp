@@ -133,6 +133,14 @@ namespace WebSharpJs.DOM
 
             return null;
         }
+
+        public async Task<HtmlElement> CreateElement(string tagName)
+        {
+            if (string.IsNullOrEmpty(tagName))
+                throw new ArgumentException($"Null or Empty is not valid for {nameof(tagName)}");
+
+            return await Invoke<HtmlElement>("createElement", tagName);
+        }
     }
 
     [ScriptableType]

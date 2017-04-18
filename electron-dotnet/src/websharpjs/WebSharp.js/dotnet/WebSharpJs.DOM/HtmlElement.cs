@@ -126,5 +126,15 @@ namespace WebSharpJs.DOM
             return false;
         }
 
+        public async Task AppendChild(HtmlElement element)
+        {
+            await Invoke<object>("appendChild", element);
+        }
+
+        public async Task RemoveChild(HtmlElement element)
+        {
+            await Invoke<object>("removeChild", element);
+        }
+
     }
 }
