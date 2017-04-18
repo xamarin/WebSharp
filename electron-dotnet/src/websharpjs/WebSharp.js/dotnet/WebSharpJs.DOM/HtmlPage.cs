@@ -43,7 +43,8 @@ namespace WebSharpJs.DOM
                                         browserInfo['appVersion'] = navigator.appVersion;
                                         browserInfo['userAgent'] = navigator.userAgent;
                                         browserInfo['platform'] = navigator.platform;
-                                        browserInfo['cookiesEnabled'] = navigator.cookiesEnabled;
+                                        browserInfo['cookieEnabled'] = navigator.cookieEnabled;
+                                        browserInfo['appCodeName'] = navigator.appCodeName;
                                         callback(null, browserInfo);
                                     } catch (e) { callback(e, null); }
                                     
