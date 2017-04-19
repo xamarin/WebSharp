@@ -19,17 +19,15 @@ namespace WebSharpJs.DOM
         public async Task<HtmlDocument> GetDocument()
         {
             if (htmlDocument == null)
-                return await HtmlDocument.Instance();
-            else
-                return htmlDocument;
+                htmlDocument = await HtmlDocument.Instance();
+            return htmlDocument;
         }
 
         public async Task<HtmlWindow> GetWindow()
         {
             if (htmlWindow == null)
-                return await HtmlWindow.Instance();
-            else
-                return htmlWindow;
+                htmlWindow = await HtmlWindow.Instance();
+            return htmlWindow;
         }
 
         public async Task<BrowserInformation> GetBrowserInformation()

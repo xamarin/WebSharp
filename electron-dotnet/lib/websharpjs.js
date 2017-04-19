@@ -316,14 +316,16 @@
                                 //console.log(typeof args[i]);
                                 var type = args[i].type;
                                 if (args[i] instanceof Event) {
-                                    //console.log('Event be definfed ');
+                                    //console.log('Event be defined ');
                                     var event = {};
                                     event['eventType'] = args[i].type;
+                                    event['preventDefault'] = args[i].preventDefault;
+                                    event['stopPropogation'] = args[i].stopPropogation;
                                     DOMEventProps.forEach(function (element) {
                                         event[element] = args[i][element];
                                     });
                                     callbackData.push(event);
-
+                                    
                                 }
                                 else
                                     callbackData.push(args[i]);

@@ -129,15 +129,30 @@ namespace WebSharpJs.DOM
 
         }
 
-
-        public async Task PreventDefault()
+        [ScriptableMember(ScriptAlias = "preventDefault")]
+        public Func<object, Task<object>> preventDefault
         {
-            return;
+            get;
+            internal set;
         }
 
-        public async Task StopPropagation()
+        public void PreventDefault()
         {
-            return;
+            var func = preventDefault;
+            func?.Invoke(null);
+        }
+
+        [ScriptableMember(ScriptAlias = "stopPropogation")]
+        public Func<object, Task<object>> stopPropogation
+        {
+            get;
+            internal set;
+        }
+
+        public void StopPropagation()
+        {
+            var func = stopPropogation;
+            func?.Invoke(null);
         }
     }
     
