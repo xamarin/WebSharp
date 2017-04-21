@@ -26,6 +26,7 @@ namespace WebSharpJs.NodeJS
 
         public NodeObjectProxy(ScriptObjectProxy sop)
         {
+            JavascriptFuncion = sop.JavascriptFuncion;
             JavascriptFunctionProxy = sop.JavascriptFunctionProxy;
         }
 

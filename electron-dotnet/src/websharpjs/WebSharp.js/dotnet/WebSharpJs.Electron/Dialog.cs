@@ -82,7 +82,7 @@ namespace WebSharpJs.Electron
     [ScriptableType]
     public struct MessageBoxOptions
     {
-
+        [ScriptableMember(ScriptAlias = "type", EnumValue = ConvertEnum.ToLower)]
         public MessageBoxType MessageBoxType { get; set; }
         [ScriptableMember(ScriptAlias = "buttons")]
         public string[] Buttons { get; set; }
@@ -100,30 +100,7 @@ namespace WebSharpJs.Electron
         public bool NoLink { get; set; }
         //[ScriptableMember(ScriptAlias = "icon")]
         //public NativeImage Icon { get; set; }
-
-        [ScriptableMember(ScriptAlias = "type")]
-        public string Type
-        {
-            get
-            {
-                switch (MessageBoxType)
-                {
-                    case MessageBoxType.None:
-                        return "none";
-                    case MessageBoxType.Info:
-                        return "info";
-                    case MessageBoxType.Error:
-                        return "error";
-                    case MessageBoxType.Question:
-                        return "question";
-                    case MessageBoxType.Warning:
-                        return "warning";
-                }
-
-                return string.Empty;
-            }
-
-        }
+        
         
     }
 
@@ -137,10 +114,9 @@ namespace WebSharpJs.Electron
         static readonly string mainRequire = @"const {dialog} = require('electron')";
         static readonly string remoteRequire = @"const {dialog} = require('electron').remote";
 
-
         static Dialog proxy;
 
-        public static async Task<Dialog> Main()
+        public static async Task<Dialog> InstanceMain()
         {
             if (proxy == null)
             {
@@ -149,9 +125,10 @@ namespace WebSharpJs.Electron
                 await proxy.Initialize();
             }
             return proxy;
+
         }
 
-        public static async Task<Dialog> Remote()
+        public static async Task<Dialog> InstanceRemote()
         {
             if (proxy == null)
             {

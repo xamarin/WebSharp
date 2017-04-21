@@ -9,7 +9,7 @@ namespace WebSharpJs.Script
     public class ScriptObjectProxy : IScriptObjectProxy
     {
 
-        Func<object, Task<object>> scriptProxy;
+        Func<object, Task<object>> javascriptFunction;
         private dynamic javascriptFunctionProxy;
 
         static readonly string createScript = @"
@@ -41,22 +41,23 @@ namespace WebSharpJs.Script
         public int Handle => javascriptFunctionProxy.websharp_id;
 		public dynamic JavascriptFunctionProxy { get { return javascriptFunctionProxy; } set { javascriptFunctionProxy = value; } }
 
+        public Func<object, Task<object>> JavascriptFuncion { get => javascriptFunction; set => javascriptFunction = value; }
+
         public virtual async Task GetProxyObject(params object[] args)
         {
             object[] parms = args;
 
-            if (args != null)
+            if (args != null && args.Length > 0)
             {
                 parms = ScriptObjectUtilities.WrapScriptParms(args);
             }
-
-            if (scriptProxy == null)
+            
+            if (JavascriptFuncion == null)
             {
-                //Console.WriteLine(ScriptFunction);
-                scriptProxy = await WebSharp.CreateJavaScriptFunction(ScriptFunction);
+                JavascriptFuncion = await WebSharp.CreateJavaScriptFunction(ScriptFunction);
             }
 
-            javascriptFunctionProxy = await scriptProxy(parms);
+            javascriptFunctionProxy = await JavascriptFuncion(parms);
         }
 
         public async Task<T> GetProperty<T>(dynamic name)

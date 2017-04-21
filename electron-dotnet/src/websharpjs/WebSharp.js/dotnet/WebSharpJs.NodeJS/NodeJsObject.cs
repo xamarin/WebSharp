@@ -36,22 +36,22 @@ namespace WebSharpJs.NodeJS
         protected virtual string ScriptProxy => string.Empty;
         protected virtual string Requires => string.Empty;
 
-        static NodeObjectProxy scriptProxy;
-        protected async Task Initialize()
+        protected async Task<NodeObjectProxy> Initialize(params object[] parameters)
         {
-            await Initialize(ScriptProxy, Requires);
+            return await Initialize(ScriptProxy, Requires, parameters);
         }
 
-        protected async Task Initialize(string scriptObject, string requires)
+        protected async Task<NodeObjectProxy> Initialize(string scriptObject, string requires, params object[] parameters)
         {
-
+            var scriptProxy = ScriptObjectProxy as NodeObjectProxy;
             if (scriptProxy == null)
-            {
                 scriptProxy = new NodeObjectProxy(scriptObject, requires);
-            }
+            else
+                scriptProxy = new NodeObjectProxy(scriptProxy);
 
-            await scriptProxy.GetProxyObject();
+            await scriptProxy.GetProxyObject(parameters);
             ScriptObjectProxy = scriptProxy;
+            return scriptProxy;
         }
     }
 }

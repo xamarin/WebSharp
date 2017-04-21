@@ -200,6 +200,13 @@
                             returnSO.push(ObjectToScriptObject(objProp[i]));
                         }
                     }
+                    else
+                    {
+                        returnSO = [];
+                        for (var i=0; i < objProp.length; i++) {
+                            returnSO.push(ObjectToScriptObject(objProp[i]));
+                        }
+                    }
                 }
                 else {
                     returnSO = ObjectToScriptObject(objProp);
@@ -294,7 +301,7 @@
                     cb(null, invokeResult);
             }
             else
-                cb('Function ' + parm.function + ' does not exist. ', invokeResult);
+                cb('Function \'' + parms.function + '\' does not exist. ', invokeResult);
 
         }
 

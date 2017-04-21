@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace WebSharpJs.Script
@@ -15,5 +12,6 @@ namespace WebSharpJs.Script
         Task<object> TryInvoke(dynamic parameters);
         Task<bool> AddEventListener(object callback);
         dynamic JavascriptFunctionProxy { get; set; }
+        Func<object, Task<object>> JavascriptFuncion { get; set; }
     }
 }

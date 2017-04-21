@@ -106,6 +106,8 @@ namespace WebSharpJs.Script
                         {
                             var fieldMappings = new Dictionary<string, ScriptParm>();
                             var scriptAlias = string.Empty;
+                            var enumConversionType = ConvertEnum.Default;
+
                             var properties = parmType.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public);
                             for (int i = 0; i < properties.Length; i++)
                             {
@@ -118,6 +120,7 @@ namespace WebSharpJs.Script
                                     {
                                         var att = propertyInfo.GetCustomAttribute<ScriptableMemberAttribute>(false);
                                         scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                                        enumConversionType = att.EnumValue;
                                     }
 
                                     if (IsCallbackFunction(propertyInfo.PropertyType))
@@ -141,7 +144,7 @@ namespace WebSharpJs.Script
                                         if (propertyInfo.PropertyType.IsArray && propertyInfo.PropertyType.GetElementType().IsAttributeDefined<ScriptableTypeAttribute>(false))
                                         {
                                             var propArray = (Array)propertyInfo.GetValue(parm);
-                                            
+
                                             if (propArray == null || propArray.Length == 0)
                                                 fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propArray });
                                             else
@@ -156,7 +159,29 @@ namespace WebSharpJs.Script
                                             }
                                         }
                                         else
-                                            fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
+                                        {
+                                            if (propertyInfo.PropertyType.IsEnum)
+                                            {
+                                                switch (enumConversionType)
+                                                {
+                                                    case ConvertEnum.ToLower:
+                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm).ToString().ToLower() });
+                                                        break;
+                                                    case ConvertEnum.ToUpper:
+                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm).ToString().ToUpper() });
+                                                        break;
+                                                    case ConvertEnum.Numeric:
+                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = (int)Enum.Parse(propertyInfo.PropertyType, propertyInfo.GetValue(parm).ToString()) });
+                                                        break;
+                                                    default:
+                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
+                                                        break;
+                                                }
+
+                                            }
+                                            else
+                                                fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
+                                        }
                                     }
                                 }
                             }

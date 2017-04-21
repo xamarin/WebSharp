@@ -60,6 +60,9 @@ public class WebSharpCompiler
                 fileName = source;
             }
 
+            if (debuggingSelfEnabled)
+                Console.WriteLine($"Reading from source file: {Path.GetFullPath(fileName)}");
+
             source = File.ReadAllText(source);
         }
 
@@ -121,7 +124,9 @@ public class WebSharpCompiler
         // try to compile source code as a class library
         Assembly assembly;
         string errorsClass;
-        if (!this.TryCompile(lineDirective + source, references, out errorsClass, out assembly))
+        if (!this.TryCompile(lineDirective + source, 
+                            references, 
+                            out errorsClass, out assembly, fileName))
         {
             // try to compile source code as an async lambda expression
 
@@ -151,7 +156,6 @@ public class WebSharpCompiler
             if (debuggingSelfEnabled)
             {
                 Console.WriteLine("WebSharp-cs trying to compile async lambda expression:");
-                Console.WriteLine(source);
             }
 
             if (!TryCompile(source, references, out errorsLambda, out assembly))
@@ -202,13 +206,16 @@ public class WebSharpCompiler
         return result;
     }
 
-    bool TryCompile(string source, List<string> references, out string errors, out Assembly assembly)
+    bool TryCompile(string source, List<string> references, out string errors, out Assembly assembly, string path = null)
     {
         bool result = false;
         assembly = null;
         errors = null;
+        var srcPath = (debuggingEnabled && !string.IsNullOrEmpty(path)) ? Path.GetFullPath(path) : string.Empty;
+        if (debuggingSelfEnabled)
+            Console.WriteLine($"Adding source path to parse: {srcPath}");
 
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source);
+        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source, path: srcPath, encoding: System.Text.Encoding.UTF8 );
 
         string assemblyName = Path.GetRandomFileName();
 
@@ -245,6 +252,10 @@ public class WebSharpCompiler
         //{
         //    parameters.TempFiles = new TempFileCollection(Environment.GetEnvironmentVariable("EDGE_CS_TEMP_DIR"));
         //}
+        if (debuggingSelfEnabled)
+        {
+            Console.WriteLine($"OptimizationLevel: {((debuggingEnabled) ? OptimizationLevel.Debug : OptimizationLevel.Release)}");
+        }
         var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
             .WithOptimizationLevel((debuggingEnabled) ? OptimizationLevel.Debug : OptimizationLevel.Release);
 
@@ -269,6 +280,7 @@ public class WebSharpCompiler
                     if (errors == null)
                     {
                         errors = $"{diagnostic.Id}: {diagnostic.GetMessage()}";
+                        //Console.WriteLine(errors);
                     }
                     else
                     {
