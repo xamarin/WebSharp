@@ -30,7 +30,7 @@ public class Startup
         {
             // Since we are executing from the Renderer process we have to use
             // dialog remote process.
-            dialog = await Dialog.Remote();
+            dialog = await Dialog.InstanceRemote();
 
             var page = new HtmlPage();
             document = await page.GetDocument();
