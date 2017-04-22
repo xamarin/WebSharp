@@ -13,8 +13,8 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 &nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Windows](#requirements-windows)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[MacOSX](#requirements-macosx)  
-&nbsp;&nbsp;&nbsp;&nbsp;[Preparing code](#preparing-code-worldcs)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Over view of the Support Files](#over-view-of-the-support-files)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Preparing code](#preparing-code-worldcs)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on Windows](#building-on-windows)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[msbuild](#windows-msbuild)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#windows-visual-studio-ide)  
@@ -23,6 +23,7 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[xbuild](#macosx-xbuild)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#macosx-visual-studio-ide)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[msbuild](#macosx-msbuild)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Referencing Assembly](#referencing-assembly-worlddll)  
 
 ## Requirements
 
@@ -367,3 +368,49 @@ Then we build with the `msbuild` command.
 ```
 
 The assembly should now be found in in the `bin\Debug\` folder.
+
+## Referencing Assembly: World.dll
+
+Now that the assembly is built we need to reference the assembly.
+
+Open the `hello.js` file in the `src` directory.
+
+``` javascript
+
+var dotnet = require('electron-dotnet');
+
+//var hello = dotnet.func("./src/World/bin/Debug/World.dll");
+var hello = dotnet.func("./src/World/World.cs");
+
+//Make method externaly visible this will be referenced in the renderer.js file
+exports.sayHello = arg => {
+	hello('World', function (error, result) {
+		if (error) throw error;
+		if (result) console.log(result);
+	});
+}
+
+```
+
+By default the line that specifies the assembly reference is commented out so we will need to switch out the line that specifies the source file with the assembly reference.
+
+``` javascript
+
+var dotnet = require('electron-dotnet');
+
+var hello = dotnet.func("./src/World/bin/Debug/World.dll");
+//var hello = dotnet.func("./src/World/World.cs");
+
+//Make method externaly visible this will be referenced in the renderer.js file
+exports.sayHello = arg => {
+	hello('World', function (error, result) {
+		if (error) throw error;
+		if (result) console.log(result);
+	});
+}
+
+```
+
+Everything should be setup to run with the assembly and you can start the application again to see it in action.
+
+
