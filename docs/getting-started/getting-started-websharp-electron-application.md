@@ -522,8 +522,8 @@ But right now we will have to manually reference `electron-dotnet` from the comm
 
 See the relevent information in the documents below:
 
-* [Windows]((https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md#referencing-electron-dotnet)
-)
+* [Windows](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md#referencing-electron-dotnet)
+
 * [Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md#referencing-electron-dotnet)
 
 After setting up the reference, do the following from the command line.
