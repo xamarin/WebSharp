@@ -254,7 +254,7 @@ exports.sayHello = arg => {
 
 The first line enables scripting C# from Node.js.
 
-The next two lines creates a C# `hello` function for us.  By default the first line is commented out with the second line specifying the source code file of the generated class.  This will compile the `.cs` module on the fly.  The commented out first line can be used if on the fly compiling is not desirable allowing a generated assembly of the source to be specified.  More on that later.
+The next two lines creates a C# `hello` function for us.  By default the first line is commented out with the second line specifying the source code file of the generated class.  This will compile the `.cs` module on the fly.  The commented out first line can be used if on the fly compiling is not desirable allowing a generated assembly of the source to be specified.  More info about [Building Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md).
 
 The provided `func` accepts a reference to C# code and returns a `Node.js` function which acts as a JavaScript proxy to the Func<object,Task<object>> .NET delegate
 
@@ -307,14 +307,14 @@ The .Net implementation `World.cs` is executed from the exported `sayHello` func
 using System;
 using System.Threading.Tasks;
 
-using WebSharpJs.NodeJs;
+using WebSharpJs.NodeJS;
 
 //namespace World
 //{
     public class Startup
     {
 
-        static NodeConsole console;
+        static WebSharpJs.NodeJS.Console console;
 
         /// <summary>
         /// Default entry into managed code.
@@ -324,13 +324,13 @@ using WebSharpJs.NodeJs;
         public async Task<object> Invoke(object input)
         {
             if (console == null)
-                console = await NodeConsole.Instance();
+                console = await WebSharpJs.NodeJS.Console.Instance();
 
             try
             {
-                console.Log($"Hello:  {input}");
+                await console.Log($"Hello:  {input}");
             }
-            catch (Exception exc) { console.Log($"extension exception:  {exc.Message}"); }
+            catch (Exception exc) { await console.Log($"extension exception:  {exc.Message}"); }
 
             return null;
 
@@ -354,7 +354,7 @@ Let's now take a look at the code.
     using WebSharpJs.NodeJs;
     ```
 
-    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  In this example we will be using the `WebSharpJs.NodeJS.Console` object to log our message to the console. 
+    The `WebSharpJs` assembly provides the interaction with `Nodejs`.  In this example we will be using the `Console` object from the `NodeJS` namespace to log our message to the console. 
 
 - Class `World` implementation
 
@@ -378,9 +378,9 @@ Let's now take a look at the code.
 
                 try
                 {
-                    console.Log($"Hello:  {input}");
+                    await console.Log($"Hello:  {input}");
                 }
-                catch (Exception exc) { console.Log($"extension exception:  {exc.Message}"); }
+                catch (Exception exc) { await console.Log($"extension exception:  {exc.Message}"); }
 
                 return null;
 
@@ -388,25 +388,76 @@ Let's now take a look at the code.
             }
         }
     //}
-    ```
+
+```
     
-    By default the `namespace` is commented commented out.  The reason for this that we use on the fly compiling and by convention, the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature.
+By default the `namespace` is commented out.  The reason for this that we use on the fly compiling and by convention, the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature.
 
-    > :bulb: When you specify C# source code this way the `WebSharp.js` assembly is automatically made available during the compile so there is no need to specify a reference to the assembly. 
+> :bulb: When you specify C# source code this way the `WebSharp.js` assembly is automatically made available during the compile so there is no need to specify a reference to the assembly. 
 
-    The code creates a reference to `WebSharpJs.NodeJS.Console` function that defines the console logging functions.
+The code creates a reference to the `NodeJS` `Console` instance that defines the console logging functions.
 
-    The next lines will format the string passed and log it to the console, `Hello:  World` in this case.
+The next lines will format the string passed and log it to the console, `Hello:  World` in this case.
 
-    Any exceptions will be logged to the console in the `catch` block.
+Any exceptions will be logged to the console in the `catch` block.
 
-    If you prefer to pre-compile your C# sources to a CLR assembly, or if your C# component is already pre-compiled, you can reference a CLR assembly from your Node.js code.  See the next section [Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) for more information.
+If you prefer to pre-compile your C# sources to a CLR assembly, or if your C# component is already pre-compiled, you can reference a CLR assembly from your Node.js code.  See the next section [Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) for more information.
 
-### Alternate means of providing source code
+### How to: integrate C# code into Node.js code
 
-There are multiple ways to supply source code to be included in your application.  One way as described above is by supplying a source code module with the extension `.cs` or `.csx`.
+`electron-dotnet` provides several ways to integrate C# code into a `Node.js` application. Regardless of the way you choose, the entry point into the `.NET` code is normalized to a `Func<object,Task<object>>` delegate. This allows `Node.js` code to call `.NET` asynchronously and avoid blocking the `Node.js` event loop. 
 
-We could just as easily have provided the class implementation as a `function` with a `body` contained within a multi-line comment as follows.
+`electron-dotnet` provides a function that accepts a reference to C# code in one of the supported representations, and returns a `Node.js` function which acts as a JavaScript proxy to the `Func<object,Task<object>>` `.NET` delegate:
+
+```javascript
+var dotnet = require('electron-dotnet');
+
+var myFunction = dotnet.func(...);
+```
+
+The function proxy can then be called from `Node.js` like any asynchronous function:
+
+```javascript
+myFunction('Some input', function (error, result) {
+    //...
+});
+```
+
+Alternatively, if you know the C# implementation will complete synchronously given the circumstances, you can call this function as any synchronous JavaScript function as follows:
+
+```javascript
+var result = myFunction('Some input', true);
+```
+
+The `true` parameter instead of a callback indicates that `Node.js` expects the C# implementation to complete synchronously. If the CLR function implementation does not complete synchronously, the call above will result in an exception. 
+
+One representation of CLR code that `electon-dot.js` accepts is C# source code. You can embed C# literal representing a `.NET` async lambda expression implementing the `Func<object,Task<object>>` delegate directly inside `Node.js` code:
+
+```javascript
+var add7 = dotnet.func('async (input) => { return (int)input + 7; }');
+``` 
+
+In another representation, you can embed multi-line C# source code by providing a function with a body containing a multi-line comment. `electron-dotnet` extracts the C# code from the function body using regular expressions:
+
+```javascript
+var add7 = dotnet.func(function() {/*
+    async (input) => {
+        return (int)input + 7;
+    }
+*/});
+```
+
+Or if you use ES6 you can use [template strings](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings) to define a multiline string:
+
+```javascript
+var add7 = dotnet.func(`
+    async (input) => {
+        return (int)input + 7;
+    }
+`);
+```
+
+We could just as easily have provided the `World.cs` class implementation as a `function` with a `body` contained within a multi-line comment as follows.
 
 ```
 var hello = dotnet.func(function() {/*
@@ -414,41 +465,42 @@ var hello = dotnet.func(function() {/*
 using System;
 using System.Threading.Tasks;
 
-using WebSharpJs.NodeJs;
+using WebSharpJs.NodeJS;
 
 public class Startup
 {
 
-	static NodeConsole console;
+    static WebSharpJs.NodeJS.Console console;
 
-	/// <summary>
-	/// Default entry into managed code.
-	/// </summary>
-	/// <param name="input"></param>
-	/// <returns></returns>
-	public async Task<object> Invoke(object input)
-	{
-		if (console == null)
-			console = await NodeConsole.Instance();
+    /// <summary>
+    /// Default entry into managed code.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns></returns>
+    public async Task<object> Invoke(object input)
+    {
+        if (console == null)
+            console = await WebSharpJs.NodeJS.Console.Instance();
 
-		try
-		{
-			console.Log($"Hello:  {input}");
-		}
-		catch (Exception exc) { console.Log($"extension exception:  {exc.Message}"); }
+        try
+        {
+            await console.Log($"Hello:  {input}");
+        }
+        catch (Exception exc) { await console.Log($"extension exception:  {exc.Message}"); }
 
-		return null;
+        return null;
 
 
-	}
+    }
 }
 
 */})
 
 ```
 
-Just remember that the the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature
+This would replace the `var hello = dotnet.func("./src/World/World.cs");` definition in the `hello.js` file.
 
+Just remember that when using on the fly compile option that the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature
 
 ### Miscellaneous files
 * .vscode/launch.json - [Defines Debugger launching targets](./vsc-debug.md). 
@@ -502,8 +554,10 @@ In this document we have looked at creating a project and the layout of the appl
 
 We also touched breifly on the purpose of the most important files.  Then moved on to referencing the `electron-dotnet` node module that provides the bridge between JavaScript and managed code. 
 
-To finish off we then ran the electron application and saw that it was possible to reference the console log from managed code.
+By default the application compiles the `World.cs` code on the fly, which may not be the best scenario depending on the application.  Just remember that when specifying source code that the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature.
 
-By default the application compiles the `World.cs` code on the fly, which may not be the best scenario depending on the application.  Just remember that when specifying source code that the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature
+There are several ways to integrate C# code 
+
+To finish off we then ran the electron application and saw that it was possible to reference the console log from managed code.
 
 If you prefer to pre-compile your C# sources to a CLR assembly then the section on [Building Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) will interest you.
