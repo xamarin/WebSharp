@@ -129,6 +129,7 @@ namespace WebSharpJs.Script
         {
 
             var parmType = obj.GetType();
+            var success = false;
 
             if (parmType.IsAttributeDefined<ScriptableTypeAttribute>(false))
             {
@@ -142,13 +143,14 @@ namespace WebSharpJs.Script
                         if (pi.SetMethod != null)
                         {
                             pi.SetValue(obj, parm[key]);
+                            success = true;
                         }
                     }
                 }
 
             }
 
-            return true;
+            return success;
         }
     }
 }
