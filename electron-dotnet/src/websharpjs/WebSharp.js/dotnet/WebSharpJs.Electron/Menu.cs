@@ -50,7 +50,7 @@ namespace WebSharpJs.Electron
 
         }
 
-        public static async Task<Menu> BuildFromTemplate(dynamic template)
+        public static async Task<Menu> BuildFromTemplate(MenuItemOptions[] template)
         {
             var proxy = new Menu();
             proxy.require = remoteRequire;
