@@ -26,7 +26,7 @@ namespace WebSharpJs.Electron
                                 return nativeImage.createEmpty(); 
                         }()";
 
-        protected override string Requires => @"const {nativeImage} = require('electron')";
+        protected override string Requires => @"const {nativeImage} = websharpjs.IsRenderer() ? require('electron').remote : require('electron');";
 
         // Save off the ScriptObjectProxy implementation to cut down on bridge calls.
         static NodeObjectProxy scriptProxy;

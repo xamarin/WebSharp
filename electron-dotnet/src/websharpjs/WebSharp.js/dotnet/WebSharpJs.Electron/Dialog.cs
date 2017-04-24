@@ -108,35 +108,19 @@ namespace WebSharpJs.Electron
     public class Dialog : NodeJsObject
     {
         protected override string ScriptProxy => @"dialog;";
-        protected override string Requires => require;
-
-        string require = string.Empty;
-        static readonly string mainRequire = @"const {dialog} = require('electron')";
-        static readonly string remoteRequire = @"const {dialog} = require('electron').remote";
+        protected override string Requires => @"const {dialog} = websharpjs.IsRenderer() ? require('electron').remote : require('electron');";
 
         static Dialog proxy;
 
-        public static async Task<Dialog> InstanceMain()
+        public static async Task<Dialog> Instance()
         {
             if (proxy == null)
             {
                 proxy = new Dialog();
-                proxy.require = mainRequire;
                 await proxy.Initialize();
             }
             return proxy;
 
-        }
-
-        public static async Task<Dialog> InstanceRemote()
-        {
-            if (proxy == null)
-            {
-                proxy = new Dialog();
-                proxy.require = remoteRequire;
-                await proxy.Initialize();
-            }
-            return proxy;
         }
 
         protected Dialog() : base() { }

@@ -11,37 +11,20 @@ namespace WebSharpJs.Electron
     {
 
         protected override string ScriptProxy => @"new MenuItem(options[0])";
-        protected override string Requires => require;
-
-        string require = string.Empty;
-        static readonly string mainRequire = @"const {MenuItem} = require('electron')";
-        static readonly string remoteRequire = @"const {MenuItem} = require('electron').remote;";
+        protected override string Requires => @"const {MenuItem} = websharpjs.IsRenderer() ? require('electron').remote : require('electron');";
 
         // Save off the ScriptObjectProxy implementation to cut down on bridge calls.
         static NodeObjectProxy scriptProxy;
 
-        public static async Task<MenuItem> CreateMain(MenuItemOptions options)
+        public static async Task<MenuItem> Create(MenuItemOptions options)
         {
             var proxy = new MenuItem();
-            proxy.require = mainRequire;
             if (scriptProxy != null)
                 proxy.ScriptObjectProxy = scriptProxy;
 
             scriptProxy = await proxy.Initialize(options);
             return proxy;
 
-        }
-
-        public static async Task<MenuItem> CreateRemote(MenuItemOptions options)
-        {
-            var proxy = new MenuItem();
-            proxy.require = remoteRequire;
-            if (scriptProxy != null)
-                proxy.ScriptObjectProxy = scriptProxy;
-
-            await proxy.Initialize(options);
-            scriptProxy = (NodeObjectProxy)proxy.ScriptObjectProxy;
-            return proxy;
         }
 
         private MenuItem() : base() { }
@@ -165,10 +148,27 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "sublabel")]
         public string SubLabel { get; set; }
 
+        [ScriptableMember(ScriptAlias = "icon")]
+        public object IconPathOrNativeImage
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(IconPath))
+                    return IconPath;
+                if (IconImage != null)
+                    return IconImage;
+                return null;
+            }
+        }
+
         //accelerator Accelerator(optional)
         //icon(NativeImage | String) (optional)
-        [ScriptableMember(ScriptAlias = "icon")]
-        public string Icon { get; set; }
+        public string IconPath { get; set; }
+
+        //accelerator Accelerator(optional)
+        //icon(NativeImage | String) (optional)
+        //[ScriptableMember(ScriptAlias = "icon")]
+        public NativeImage IconImage { get; set; }
 
         //enabled Boolean(optional) - If false, the menu item will be greyed out and unclickable.
         [ScriptableMember(ScriptAlias = "enabled")]
@@ -184,6 +184,9 @@ namespace WebSharpJs.Electron
         public bool Checked { get; set; }
 
         //submenu(MenuItemConstructorOptions[] | Menu) (optional) - Should be specified for submenu type menu items.If submenu is specified, the type: 'submenu' can be omitted.If the value is not a Menu then it will be automatically converted to one using Menu.buildFromTemplate.
+        //public 
+
+
         //id String(optional) - Unique within a single menu.If defined then it can be used as a reference to this item by the position attribute.
         [ScriptableMember(ScriptAlias = "id")]
         public string Id { get; set; }

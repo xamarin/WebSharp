@@ -7,6 +7,20 @@
     const websharpObjectCache = v8Util.createIDWeakMap();
     let websharpObjId = 0;
 
+    // https://github.com/jprichardson/is-electron-renderer
+    function IsRenderer () {
+        // running in a web browser
+        if (typeof process === 'undefined') return true
+
+        // node-integration is disabled
+        if (!process) return true
+
+        // We're in node.js somehow
+        if (!process.type) return false
+
+        return process.type === 'renderer'
+    }
+
     var RegisterScriptableObject = function (meta)
     {
         let id = v8Util.getHiddenValue(meta, 'websharpId');
@@ -272,7 +286,13 @@
 
                 let args = UnwrapArgs(parms.args);
 
-                invokeResult = objToWrap[parms.function].apply(objToWrap, args);
+                try{
+                    invokeResult = objToWrap[parms.function].apply(objToWrap, args);
+                }
+                catch (ex)
+                {
+                    cb(ex.message, null);
+                }
                 if (parms.category > 0 && invokeResult != null)
                 {
                     let returnSO;
@@ -391,6 +411,6 @@
         "toElement",
         "touches"]
 
-    module.exports = { RegisterScriptableObject, GetScriptableObject, UnRegisterScriptableObject, WrapEvent, UnwrapArgs, ObjectToScriptObject };
+    module.exports = { RegisterScriptableObject, GetScriptableObject, UnRegisterScriptableObject, WrapEvent, UnwrapArgs, ObjectToScriptObject, IsRenderer };
 
 })();

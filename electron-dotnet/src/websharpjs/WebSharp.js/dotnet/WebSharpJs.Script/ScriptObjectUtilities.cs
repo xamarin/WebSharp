@@ -180,7 +180,24 @@ namespace WebSharpJs.Script
 
                                             }
                                             else
-                                                fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
+                                            {
+                                                var propValue = propertyInfo.GetValue(parm);
+                                                so = propValue as ScriptObject;
+                                                if (so != null)
+                                                {
+                                                    if (so.ScriptObjectProxy != null)
+                                                    {
+                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = "ScriptObject", Value = so.ScriptObjectProxy.Handle });
+                                                    }
+                                                    else
+                                                    {
+                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = so.GetType().ToString(), Value = propValue });
+                                                    }
+
+                                                }
+                                                else
+                                                    fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propValue });
+                                            }
                                         }
                                     }
                                 }

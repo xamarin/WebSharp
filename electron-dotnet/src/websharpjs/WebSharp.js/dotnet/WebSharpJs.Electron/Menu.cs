@@ -16,32 +16,15 @@ namespace WebSharpJs.Electron
                             else
                                 return new Menu(); 
                         }()";
-        protected override string Requires => require;
 
-        string require = string.Empty;
-        static readonly string mainRequire = @"const {Menu} = require('electron')";
-        static readonly string remoteRequire = @"const {remote} = require('electron');
-                                                const { Menu} = remote;"; 
+        protected override string Requires => @"const {Menu} = websharpjs.IsRenderer() ? require('electron').remote : require('electron');";
 
         // Save off the ScriptObjectProxy implementation to cut down on bridge calls.
         static NodeObjectProxy scriptProxy;
 
-        public static async Task<Menu> CreateMain()
+        public static async Task<Menu> Create()
         {
             var proxy = new Menu();
-            proxy.require = mainRequire;
-            if (scriptProxy != null)
-                proxy.ScriptObjectProxy = scriptProxy;
-
-            scriptProxy = await proxy.Initialize();
-            return proxy;
-
-        }
-
-        public static async Task<Menu> CreateRemote()
-        {
-            var proxy = new Menu();
-            proxy.require = remoteRequire;
             if (scriptProxy != null)
                 proxy.ScriptObjectProxy = scriptProxy;
 
@@ -53,7 +36,6 @@ namespace WebSharpJs.Electron
         public static async Task<Menu> BuildFromTemplate(MenuItemOptions[] template)
         {
             var proxy = new Menu();
-            proxy.require = remoteRequire;
             if (scriptProxy != null)
                 proxy.ScriptObjectProxy = scriptProxy;
 
