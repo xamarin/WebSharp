@@ -6,9 +6,37 @@ Interacts with Electron&#39; Clipboard through C# to perform copy and paste oper
 
 ## Features
 
-Perform copy and paste operations on the system clipboard.
+Perform copy and paste operations on the system clipboard.  Of note is that if there is an image on the clipboard when the application load it will be read from the clipboard and displayed in-line with the Html content.
 
 Inside `Clipper.cs` you will find:
+
+- Accessing the DOM using WebSharpJs.DOM name space.
+
+    - Creating an HtmlPage object that gives us access to the DOM.
+
+    ``` cs
+            // Get access to the DOM
+            var page = new HtmlPage();
+    ```
+    - Obtaining a reference to the underlying `HtmlDocument`.
+
+    ``` cs
+           document = await page.GetDocument();
+    ```
+    - Using the `HtmlDocument` to obtain references to `HtmlElements` by their `id`
+    ``` cs
+            // Get a reference to the img element
+            var imageElement = await document.GetElementById("image");
+    ```
+    - Setting `src` property on an `image` HtmlElement.
+
+    ``` cs
+            if (imageElement != null)
+            {
+                  // set the src property to the data string of the image/
+                  await imageElement.SetProperty("src", await image.ToDataURL());
+            }
+    ```
 
 Referencing the `Clipboard` instance.
 - Sending and reading back information to/from the system clipbard.
@@ -39,7 +67,9 @@ More information can be found in the [clipboard documentation](https://github.co
 
 ## Release Notes
 
+### 1.0.1
 
+Add `ReadImage` 
 
 ### 1.0.0
 

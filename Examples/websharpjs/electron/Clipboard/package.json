@@ -2,7 +2,7 @@
     "name": "clipboard",
     "displayName": "Clipboard",
     "description": "Example of Electron's Clipboard ",
-    "version": "0.0.1",
+    "version": "1.0.1",
     "publisher": "Xamarin",
     "main": "main.js",
     "scripts": {

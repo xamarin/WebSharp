@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using WebSharpJs.NodeJS;
 using WebSharpJs.Electron;
+using WebSharpJs.DOM;
 
 //namespace Clipper
 //{
@@ -25,6 +26,35 @@ using WebSharpJs.Electron;
             {
                var clipboard = await Clipboard.Instance();
 
+                await console.Log("Available Formats");
+                var formats = await clipboard.AvailableFormats();
+                for (int f = 0; f < formats.Length; f++)
+                    await console.Log(formats[f]);
+
+                // if we have an image format on the clipboard the we need to readit and set the image's
+                // source element.
+                if (formats.Length == 1 && formats[0] == "image/png")
+                {
+                    // Read the clipboard Image
+                    var image = await clipboard.ReadImage();
+
+                    // If we have the image
+                    if (image != null)
+                    {
+                        // Get access to the DOM
+                        var page = new HtmlPage();
+                        var document = await page.GetDocument();
+
+                        // Get a referenc to the img element
+                        var imageElement = await document.GetElementById("image");
+                        if (imageElement != null)
+                        {
+                            // set the src property to the data string of the image/
+                            await imageElement.SetProperty("src", await image.ToDataURL());
+                        }
+                    }
+                }
+
                 await clipboard.WriteText("Example String copied to clipboard");
                 await console.Log($"Clipboard text read: {await clipboard.ReadText()}");
 
@@ -32,7 +62,7 @@ using WebSharpJs.Electron;
                 await clipboard.Clear();
 
                 await console.Log("Available Formats");
-                var formats = await clipboard.AvailableFormats(ClipboardType.Selection);
+                formats = await clipboard.AvailableFormats(ClipboardType.Selection);
                 for (int f = 0; f < formats.Length; f++)
                     await console.Log(formats[f]);
 
