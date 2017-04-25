@@ -107,6 +107,16 @@ namespace WebSharpJs.Electron
             return bm;
         }
 
+        public async Task<object> WriteImage(NativeImage image, ClipboardType type = ClipboardType.None)
+        {
+            return await Invoke<object>("writeImage", image, type == ClipboardType.Selection ? "selection" : string.Empty);
+        }
+
+        public async Task<NativeImage> ReadImage(ClipboardType type = ClipboardType.None)
+        {
+            return await Invoke<NativeImage>("readImage", type == ClipboardType.Selection ? "selection" : string.Empty);
+        }
+
         public async Task<object> WriteBookmark(string title, string url, ClipboardType type = ClipboardType.None)
         {
             return await Invoke<object>("writeBookmark", title, url, type == ClipboardType.Selection ? "selection" : string.Empty);

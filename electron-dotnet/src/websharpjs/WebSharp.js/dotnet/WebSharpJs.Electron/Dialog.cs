@@ -98,8 +98,8 @@ namespace WebSharpJs.Electron
         public int CancelId { get; set; }
         [ScriptableMember(ScriptAlias = "noLink")]
         public bool NoLink { get; set; }
-        //[ScriptableMember(ScriptAlias = "icon")]
-        //public NativeImage Icon { get; set; }
+        [ScriptableMember(ScriptAlias = "icon")]
+        public NativeImage Icon { get; set; }
         
         
     }
