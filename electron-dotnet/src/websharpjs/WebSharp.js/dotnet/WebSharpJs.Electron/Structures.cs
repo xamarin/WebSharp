@@ -9,6 +9,11 @@ namespace WebSharpJs.Electron
         public string Name { get; set; }
         [ScriptableMember(ScriptAlias = "extensions")]
         public string[] Extensions { get; set; }
+
+        public override string ToString()
+        {
+            return $"FileFilter {{ Name: {Name} Extenstions: {Extensions} }}";
+        }
     }
 
     [ScriptableType]
@@ -17,15 +22,43 @@ namespace WebSharpJs.Electron
         public static readonly Size Empty = new Size();
 
         [ScriptableMember(ScriptAlias = "width")]
-        public float Width { get; set; }
+        public int Width { get; set; }
         [ScriptableMember(ScriptAlias = "height")]
-        public float Height { get; set; }
+        public int Height { get; set; }
 
         public Size(dynamic obj)
         {
             var dict = obj as System.Collections.Generic.IDictionary<string, object>;
+            Width = System.Convert.ToInt32(dict["width"]);
+            Height = System.Convert.ToInt32(dict["height"]);
+        }
+
+        public override string ToString()
+        {
+            return $"Size {{ Width: {Width} Height: {Height} }}";
+        }
+    }
+
+    [ScriptableType]
+    public struct SizeF
+    {
+        public static readonly SizeF Empty = new SizeF();
+
+        [ScriptableMember(ScriptAlias = "width")]
+        public float Width { get; set; }
+        [ScriptableMember(ScriptAlias = "height")]
+        public float Height { get; set; }
+
+        public SizeF(dynamic obj)
+        {
+            var dict = obj as System.Collections.Generic.IDictionary<string, object>;
             Width = System.Convert.ToSingle(dict["width"]);
             Height = System.Convert.ToSingle(dict["height"]);
+        }
+
+        public override string ToString()
+        {
+            return $"Size {{ Width: {Width} Height: {Height} }}";
         }
     }
 
@@ -35,15 +68,15 @@ namespace WebSharpJs.Electron
         public static readonly Rectangle Empty = new Rectangle(0,0);
 
         [ScriptableMember(ScriptAlias = "x")]
-        public float X { get; set; }
+        public int X { get; set; }
         [ScriptableMember(ScriptAlias = "y")]
-        public float Y { get; set; }
+        public int Y { get; set; }
         [ScriptableMember(ScriptAlias = "width")]
-        public float Width { get; set; }
+        public int Width { get; set; }
         [ScriptableMember(ScriptAlias = "height")]
-        public float Height { get; set; }
+        public int Height { get; set; }
 
-        public Rectangle(float x, float y, float width = 0, float height = 0)
+        public Rectangle(int x, int y, int width = 0, int height = 0)
         {
             X = x;
             Y = y;
@@ -55,10 +88,111 @@ namespace WebSharpJs.Electron
         public Rectangle(dynamic obj)
         {
             var dict = obj as System.Collections.Generic.IDictionary<string, object>;
+            X = System.Convert.ToInt32(dict["x"]);
+            Y = System.Convert.ToInt32(dict["y"]);
+            Width = System.Convert.ToInt32(dict["width"]);
+            Height = System.Convert.ToInt32(dict["height"]);
+        }
+
+        public override string ToString()
+        {
+            return $"Rect {{ X: {X} Y: {Y} Width: {Width} Height: {Height} }}";
+        }
+    }
+
+    [ScriptableType]
+    public struct RectangleF
+    {
+        public static readonly RectangleF Empty = new RectangleF(0, 0);
+
+        [ScriptableMember(ScriptAlias = "x")]
+        public float X { get; set; }
+        [ScriptableMember(ScriptAlias = "y")]
+        public float Y { get; set; }
+        [ScriptableMember(ScriptAlias = "width")]
+        public float Width { get; set; }
+        [ScriptableMember(ScriptAlias = "height")]
+        public float Height { get; set; }
+
+        public RectangleF(float x, float y, float width = 0, float height = 0)
+        {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+        }
+
+
+        public RectangleF(dynamic obj)
+        {
+            var dict = obj as System.Collections.Generic.IDictionary<string, object>;
             X = System.Convert.ToSingle(dict["x"]);
             Y = System.Convert.ToSingle(dict["y"]);
             Width = System.Convert.ToSingle(dict["width"]);
             Height = System.Convert.ToSingle(dict["height"]);
+        }
+
+        public override string ToString()
+        {
+            return $"Rect {{ X: {X} Y: {Y} Width: {Width} Height: {Height} }}";
+        }
+    }
+
+    [ScriptableType]
+    public struct Point
+    {
+        public static readonly Point Empty = new Point();
+
+        [ScriptableMember(ScriptAlias = "x")]
+        public int X { get; set; }
+        [ScriptableMember(ScriptAlias = "y")]
+        public int Y { get; set; }
+
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public Point(dynamic obj)
+        {
+            var dict = obj as System.Collections.Generic.IDictionary<string, object>;
+            X = System.Convert.ToInt32(dict["x"]);
+            Y = System.Convert.ToInt32(dict["y"]);
+        }
+
+        public override string ToString()
+        {
+            return $"Point {{ X: {X} Y: {Y} }}";
+        }
+    }
+
+    [ScriptableType]
+    public struct PointF
+    {
+        public static readonly PointF Empty = new PointF();
+
+        [ScriptableMember(ScriptAlias = "x")]
+        public float X { get; set; }
+        [ScriptableMember(ScriptAlias = "y")]
+        public float Y { get; set; }
+
+        public PointF(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public PointF(dynamic obj)
+        {
+            var dict = obj as System.Collections.Generic.IDictionary<string, object>;
+            X = System.Convert.ToSingle(dict["x"]);
+            Y = System.Convert.ToSingle(dict["y"]);
+        }
+
+        public override string ToString()
+        {
+            return $"Point {{ X: {X} Y: {Y} }}";
         }
     }
 

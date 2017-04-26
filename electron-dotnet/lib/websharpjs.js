@@ -186,6 +186,45 @@
         return options;
     }
 
+    var WrapResult = function (result, parm) {
+
+        const resultToObjectCollection = function (result) {
+            let returnCollection = [];
+            // https://www.w3.org/TR/dom/#htmlcollection
+            // We need to have a special consideration for htmlcollection.
+            // From docs HTMLCollection is an historical artifact we cannot rid the web of.
+            // It is not an array either so will not be handled by the native code interface.
+            // * Note * : This test here works for Chrome but may not be compatible for other
+            // javascript runtimes.
+            if (({}).toString.call(result) === '[object HTMLCollection]')
+            {
+                for (var i = 0; i < result.length; i++) {
+                    returnCollection.push(ObjectToScriptObject(result[i]));
+                }
+            }
+            else
+            {
+                for (var i=0; i < result.length; i++) {
+                    returnCollection.push(ObjectToScriptObject(result[i]));
+                }
+            }
+
+            return returnCollection;
+        }
+
+        let returnSO;
+        if (result) {
+            if (parm.category === 5) // ScriptObjectCollection
+            {
+                returnSO = resultToObjectCollection(result);
+            }
+            else {
+                returnSO = ObjectToScriptObject(result);
+            }            
+        }
+        return returnSO;
+    }
+
     var ObjectToScriptObject = function (objToWrap)
     {
         let id = RegisterScriptableObject(objToWrap);
@@ -198,33 +237,7 @@
 
             if (prop.category > 0 && objProp != null )
             {
-                let returnSO;
-                if (prop.category === 5) // ScriptObjectCollection
-                {
-                    // https://www.w3.org/TR/dom/#htmlcollection
-                    // We need to have a special consideration for htmlcollection.
-                    // From docs HTMLCollection is an historical artifact we cannot rid the web of.
-                    // It is not an array either so will not be handled by the native code interface.
-                    // * Note * : This test here works for Chrome but may not be compatible for other
-                    // javascript runtimes.
-                    if (({}).toString.call(objProp) === '[object HTMLCollection]')
-                    {
-                        returnSO = [];
-                        for (var i = 0; i < objProp.length; i++) {
-                            returnSO.push(ObjectToScriptObject(objProp[i]));
-                        }
-                    }
-                    else
-                    {
-                        returnSO = [];
-                        for (var i=0; i < objProp.length; i++) {
-                            returnSO.push(ObjectToScriptObject(objProp[i]));
-                        }
-                    }
-                }
-                else {
-                    returnSO = ObjectToScriptObject(objProp);
-                }
+                let resultSO = WrapResult(objProp, prop);
                 cb(null, returnSO);
 
             }
@@ -291,37 +304,20 @@
                 }
                 catch (ex)
                 {
-                    cb(ex.message, null);
+                    console.error(ex.message);
+                    throw ex;
                 }
+                
                 if (parms.category > 0 && invokeResult != null)
                 {
-                    let returnSO;
-                    if (parms.category === 5) // ScriptObjectCollection
-                    {
-                        // https://www.w3.org/TR/dom/#htmlcollection
-                        // We need to have a special consideration for htmlcollection.
-                        // From docs HTMLCollection is an historical artifact we cannot rid the web of.
-                        // It is not an array either so will not be handled by the native code interface.
-                        // * Note * : This test here works for Chrome but may not be compatible for other
-                        // javascript runtimes.
-                        if (({}).toString.call(invokeResult) === '[object HTMLCollection]')
-                        {
-                            returnSO = [];
-                            for (var i = 0; i < invokeResult.length; i++) {
-                                returnSO.push(ObjectToScriptObject(invokeResult[i]));
-                            }
-                        }
-                    }
-                    else {
-                        returnSO = ObjectToScriptObject(invokeResult);
-                    }
+                    let returnSO = WrapResult(invokeResult, parms);
                     cb(null, returnSO);
                 }
                 else
                     cb(null, invokeResult);
             }
             else
-                cb('Function \'' + parms.function + '\' does not exist. ', invokeResult);
+                cb('Invoke error: Function \'' + parms.function + '\' not found when. ', invokeResult);
 
         }
 
