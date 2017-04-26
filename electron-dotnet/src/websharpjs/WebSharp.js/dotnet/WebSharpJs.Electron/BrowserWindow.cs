@@ -911,6 +911,27 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "title")]
         public string Title { get; set; }
 
+        [ScriptableMember(ScriptAlias = "icon")]
+        public object Icon
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(IconPath))
+                    return IconPath;
+                if (IconImage != null)
+                    return IconImage;
+                return null;
+            }
+        }
+        /**
+        * The window icon, when omitted on Windows the executable’s icon would be used as window icon.
+        */
+        //icon?: NativeImage|string;
+        public string IconPath { get; set; }
+
+        public NativeImage IconImage { get; set; }
+
+
         /**
          * Whether window should be shown when created.
          * Default: true.
