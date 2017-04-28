@@ -49,9 +49,19 @@ namespace WebSharpJs.Script
         {
             if (!typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type.BaseType))
                 return false;
-            return (type.GetTypeInfo().IsGenericType
-                && typeof(Func<,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
-                && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[1]));
+            return (type.GetTypeInfo().IsGenericType &&
+                 (
+                 typeof(Func<,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[1]))
+                 || (type.GetTypeInfo().IsGenericType
+                 && typeof(Func<,,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[2]))
+                 || (type.GetTypeInfo().IsGenericType
+                 && typeof(Func<,,,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[3]))
+                 || (type.GetTypeInfo().IsGenericType
+                 && typeof(Func<,,,,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[4])));
         }
 
         /// <summary>

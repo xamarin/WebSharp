@@ -196,4 +196,27 @@ namespace WebSharpJs.Electron
         }
     }
 
+    [ScriptableType]
+    public struct DesktopCapturerSource
+    {
+        [ScriptableMember(ScriptAlias = "id")]
+        public string Id { get; set; }
+        [ScriptableMember(ScriptAlias = "name")]
+        public string Name { get; set; }
+        [ScriptableMember(ScriptAlias = "thumbnail")]
+        public NativeImage Thumbnail { get; set; }
+
+    }
+
+    [ScriptableType]
+    public class Error
+    {
+        [ScriptableMember(ScriptAlias = "name")]
+        public string Name { get; set; }
+        [ScriptableMember(ScriptAlias = "message")]
+        public string Message { get; set; }
+        [ScriptableMember(ScriptAlias = "stack")]
+        public string Stack { get; set; }
+    }
+
 }

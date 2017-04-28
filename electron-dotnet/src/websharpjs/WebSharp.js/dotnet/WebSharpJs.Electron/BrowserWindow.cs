@@ -120,6 +120,11 @@ namespace WebSharpJs.Electron
             return new BrowserWindow(sop);
         }
 
+        public async Task<WebContents> GetWebContents()
+        {
+            return await GetProperty<WebContents>("webContents");
+        }
+
         public async Task<int> GetId()
         {
             return await GetProperty<int>("id");
@@ -684,7 +689,7 @@ namespace WebSharpJs.Electron
 
             switch (type)
             {
-                case VibrancyType.AppearnceBased:
+                case VibrancyType.AppearanceBased:
                     vType = "appearance-based";
                     break;
                 case VibrancyType.MediumLight:
@@ -707,7 +712,7 @@ namespace WebSharpJs.Electron
     //| 'menu' | 'popover' | 'sidebar' | 'medium-light' | 'ultra-dark';
     public enum VibrancyType
     {
-        AppearnceBased,
+        AppearanceBased,
         Light,
         Dark,
         Titlebar,
@@ -1060,7 +1065,7 @@ namespace WebSharpJs.Electron
 
                 switch (Vibrancy)
                 {
-                    case VibrancyType.AppearnceBased:
+                    case VibrancyType.AppearanceBased:
                         return "appearance-based";
                     case VibrancyType.MediumLight:
                         return "medium-light";

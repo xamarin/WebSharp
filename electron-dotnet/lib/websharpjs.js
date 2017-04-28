@@ -67,6 +67,25 @@
 
     var UnwrapArgs = function (args) {
 
+        const callbackArg = function(arg)
+        {
+            // We will treat Error differently
+            if (arg instanceof Error)
+            {
+                let scriptableType = {};
+                Object.getOwnPropertyNames(arg).forEach(function (k) {
+                    scriptableType[k] = arg[k];
+                });
+                
+                return scriptableType;
+            }
+
+            if (arg === Object(arg))
+                return ObjectToScriptObject(arg);
+            else
+                return arg;
+        }
+
         const parmToCallback = function (func) {
             return function () {
                 
@@ -85,10 +104,7 @@
                             let argArray = []
                             for (var ai = 0; ai < args[0].length; ai++)
                             {
-                                if (args[0][ai] === Object(args[0][ai]))
-                                    argArray.push(ObjectToScriptObject(args[ai]));
-                                else
-                                    argArray.push(args[ai]);
+                                argArray.push(callbackArg(args[0][ai]));
                             }
                             callbackData = argArray;
                             try {
@@ -100,10 +116,7 @@
                         }
                         else
                         {
-                            if (args[0] === Object(args[0]))
-                                callbackData = ObjectToScriptObject(args[0]);
-                            else
-                                callbackData = args[0];
+                            callbackData = callbackArg(args[0]);
                             try {
                                 // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
                                 // later.
@@ -122,17 +135,14 @@
                                 let argArray = []
                                 for (var ai = 0; ai < args[i].length; ai++)
                                 {
-                                    if (args[i][ai] === Object(args[i][ai]))
-                                        argArray.push(ObjectToScriptObject(args[i][ai]));
-                                    else
-                                        argArray.push(args[i][ai]);
+                                    argArray.push(callbackArg(args[i][ai]));
                                 }
                                 callbackData.push(argArray);
                             }
-                            else if (args[i] === Object(args[i]))
-                                callbackData.push(ObjectToScriptObject(args[i]));
                             else
+                            {
                                 callbackData.push(args[i]);
+                            }
                         }
                         try {
                             // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
@@ -227,6 +237,7 @@
 
     var ObjectToScriptObject = function (objToWrap)
     {
+
         let id = RegisterScriptableObject(objToWrap);
         let proxy = {};
 
@@ -238,7 +249,7 @@
             if (prop.category > 0 && objProp != null )
             {
                 let resultSO = WrapResult(objProp, prop);
-                cb(null, returnSO);
+                cb(null, resultSO);
 
             }
             else
@@ -307,7 +318,7 @@
                     console.error(ex.message);
                     throw ex;
                 }
-                
+
                 if (parms.category > 0 && invokeResult != null)
                 {
                     let returnSO = WrapResult(invokeResult, parms);
