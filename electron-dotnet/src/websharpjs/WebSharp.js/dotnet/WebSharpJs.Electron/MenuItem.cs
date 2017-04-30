@@ -80,7 +80,6 @@ namespace WebSharpJs.Electron
 
     public enum MenuItemRole
     {
-        None,
         Undo,
         Redo,
         Cut,
@@ -126,19 +125,19 @@ namespace WebSharpJs.Electron
         {
             get
             {
-                if (Role == MenuItemRole.None)
+                if (Role == null || !Role.HasValue)
                     return string.Empty;
 
-                return Role.ToString().ToLower();
+                return Role.Value.ToString().ToLower();
             }
         }
 
         //role String(optional) - Define the action of the menu item, when specified the click property will be ignored.
-        public MenuItemRole Role { get; set; }
+        public MenuItemRole? Role { get; set; }
 
         //type String (optional) - Can be normal, separator, submenu, checkbox or radio.
         [ScriptableMember(ScriptAlias = "type", EnumValue = ConvertEnum.ToLower)]
-        public MenuItemType Type { get; set; }
+        public MenuItemType? Type { get; set; }
 
         //label String - (optional)
         [ScriptableMember(ScriptAlias = "label")]
@@ -167,7 +166,6 @@ namespace WebSharpJs.Electron
 
         //accelerator Accelerator(optional)
         //icon(NativeImage | String) (optional)
-        //[ScriptableMember(ScriptAlias = "icon")]
         public NativeImage IconImage { get; set; }
 
         //enabled Boolean(optional) - If false, the menu item will be greyed out and unclickable.
@@ -183,8 +181,24 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "checked")]
         public bool Checked { get; set; }
 
+        [ScriptableMember(ScriptAlias = "submenu")]
+        public object SubMenuMenuOrOptions
+        {
+            get
+            {
+                if (SubMenuOptions != null && SubMenuOptions.Length > 0)
+                    return SubMenuOptions;
+                if (SubMenu != null)
+                    return SubMenu;
+                return null;
+            }
+        }
+
         //submenu(MenuItemConstructorOptions[] | Menu) (optional) - Should be specified for submenu type menu items.If submenu is specified, the type: 'submenu' can be omitted.If the value is not a Menu then it will be automatically converted to one using Menu.buildFromTemplate.
-        //public 
+        public MenuItemOptions[] SubMenuOptions { get; set; }
+
+        //submenu(MenuItemConstructorOptions[] | Menu) (optional) - Should be specified for submenu type menu items.If submenu is specified, the type: 'submenu' can be omitted.If the value is not a Menu then it will be automatically converted to one using Menu.buildFromTemplate.
+        public Menu SubMenu { get; set; }
 
 
         //id String(optional) - Unique within a single menu.If defined then it can be used as a reference to this item by the position attribute.

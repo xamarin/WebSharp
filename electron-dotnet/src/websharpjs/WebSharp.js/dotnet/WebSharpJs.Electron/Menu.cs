@@ -46,15 +46,15 @@ namespace WebSharpJs.Electron
 
 
         [ScriptableMember(ScriptAlias = "append")]
-        public async void Append(MenuItem menuItem)
+        public async Task<object> Append(MenuItem menuItem)
         {
-            await Invoke<object>("Append", menuItem);
+            return await Invoke<object>("Append", menuItem);
         }
 
         [ScriptableMember(ScriptAlias = "insert")]
-        public async void Insert(int pos, MenuItem menuItem)
+        public async Task<object> Insert(int pos, MenuItem menuItem)
         {
-            await Invoke<object>("Insert", pos, menuItem);
+            return await Invoke<object>("Insert", pos, menuItem);
         }
 
         public async Task<ScriptObjectCollection<MenuItem>> Items()
@@ -62,18 +62,9 @@ namespace WebSharpJs.Electron
             return await GetProperty<ScriptObjectCollection<MenuItem>>("items"); ;
         }
 
-        //[ScriptableMember(ScriptAlias = "items")]
-        public object[] Itemss
+        public async Task<object> Popup()
         {
-            get
-            {
-                return new object[0];// GetProperty<object[]>("Items");
-            }
-        }
-
-        public async void Popup()
-        {
-            await Invoke<object>("popup");
+            return await Invoke<object>("popup");
         }
     }
 }
