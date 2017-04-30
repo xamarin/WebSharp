@@ -25,6 +25,7 @@ namespace WebSharpJs.Script
                 for (int i = 0; i < properties.Length; i++)
                 {
                     var propertyInfo = properties[i];
+                    var enumConversionType = ConvertEnum.Default;
 
                     if (propertyInfo.GetIndexParameters().Length == 0 && propertyInfo.GetMethod != null)
                     {
@@ -33,9 +34,32 @@ namespace WebSharpJs.Script
                         {
                             var att = propertyInfo.GetCustomAttribute<ScriptableMemberAttribute>(false);
                             scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                            enumConversionType = att.EnumValue;
                         }
 
-                        propertyMappings.Add(scriptAlias, propertyInfo.GetValue(value));
+                        if (propertyInfo.PropertyType.IsEnum)
+                        {
+                            switch (enumConversionType)
+                            {
+                                case ConvertEnum.ToLower:
+                                    propertyMappings.Add(scriptAlias, propertyInfo.GetValue(value).ToString().ToLower());
+                                    break;
+                                case ConvertEnum.ToUpper:
+                                    propertyMappings.Add(scriptAlias, propertyInfo.GetValue(value).ToString().ToUpper());
+                                    break;
+                                case ConvertEnum.Numeric:
+                                    propertyMappings.Add(scriptAlias, (int)Enum.Parse(propertyInfo.PropertyType, propertyInfo.GetValue(value).ToString()));
+                                    break;
+                                default:
+                                    propertyMappings.Add(scriptAlias, propertyInfo.GetValue(value));
+                                    break;
+                            }
+
+                        }
+                        else
+                        {
+                            propertyMappings.Add(scriptAlias, propertyInfo.GetValue(value));
+                        }
                     }
                 }
             }

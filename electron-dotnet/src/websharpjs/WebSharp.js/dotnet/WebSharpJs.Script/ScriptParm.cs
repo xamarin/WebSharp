@@ -21,6 +21,7 @@ namespace WebSharpJs.Script
         ScriptValue = 3,
         ScriptCallback = 4,
         ScriptObjectCollection = 5,
+        ScriptableTypeArray = 6,
     }
     
 }

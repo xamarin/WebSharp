@@ -47,7 +47,7 @@ namespace WebSharpJs.Script
         /// <returns></returns>
         public static bool IsCallbackFunction(Type type)
         {
-            if (!typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type.BaseType))
+            if (!typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type?.BaseType))
                 return false;
             return (type.GetTypeInfo().IsGenericType &&
                  (
@@ -62,6 +62,27 @@ namespace WebSharpJs.Script
                  || (type.GetTypeInfo().IsGenericType
                  && typeof(Func<,,,,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
                  && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[4])));
+        }
+
+        static bool IsScriptObject(object meta)
+        {
+            return (meta as ScriptObject) != null;
+        }
+
+        static bool IsScriptableType(object meta)
+        {
+            return meta.GetType().IsAttributeDefined<ScriptableTypeAttribute>(false);
+
+        }
+
+        static bool IsCallback(object meta)
+        {
+            return IsCallbackFunction(meta?.GetType());
+        }
+
+        static bool IsArrayOfScriptableType (object meta)
+        {
+            return meta != null && meta.GetType().IsArray && meta.GetType().GetElementType().IsAttributeDefined<ScriptableTypeAttribute>(false);
         }
 
         /// <summary>
@@ -91,6 +112,119 @@ namespace WebSharpJs.Script
             return Expression.Lambda(delegateType, call, param).Compile();
         }
 
+        static ScriptParm ScriptObjectToMeta(ScriptObject meta)
+        {
+            ScriptParm scriptParm;
+            if (meta.ScriptObjectProxy != null)
+                scriptParm = new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = "ScriptObject", Value = meta.ScriptObjectProxy.Handle };
+            else
+                scriptParm = new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = meta.GetType().ToString(), Value = meta };
+
+            return scriptParm;
+        }
+
+        static ScriptParm CallBackToMeta(object meta)
+        {
+            
+            if (meta != null)
+            {
+                var scriptCallback = Cast(meta, meta.GetType());
+                return new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", Value = scriptCallback };
+            }
+            else
+            {
+                return new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = meta.GetType().ToString(), Value = meta };
+            }
+        }
+
+        static ScriptParm EnumToMeta(object meta, ConvertEnum enumConversionType)
+        {
+
+            switch (enumConversionType)
+            {
+                case ConvertEnum.ToLower:
+                    return new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = meta.GetType().ToString(), Value = meta.ToString().ToLower() };
+                case ConvertEnum.ToUpper:
+                    return new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = meta.GetType().ToString(), Value = meta.ToString().ToUpper() };
+                case ConvertEnum.Numeric:
+                    return new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = meta.GetType().ToString(), Value = (int)Enum.Parse(meta.GetType(), meta.ToString()) };
+                default:
+                    return new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = meta.GetType().ToString(), Value = meta };
+            }
+        }
+
+        static ScriptParm ScriptableTypeArrayToMeta(object meta)
+        {
+            var propArray = (Array)meta;
+
+            if (propArray == null || propArray.Length == 0)
+                return new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = meta.GetType().ToString(), Value = propArray };
+            else
+            {
+                // We will loop through this ourselves instead of bringing LINQ and Casting into this.
+                var dynDic = new object[propArray.Length];
+                for (int x = 0; x < propArray.Length; x++)
+                {
+                    dynDic[x] = ParmToMetaData(propArray.GetValue(x));  //ScriptObjectHelper.ScriptableTypeToDictionary(propArray.GetValue(x));
+                }
+                return new ScriptParm { Category = (int)ScriptParmCategory.ScriptableTypeArray, Type = meta.GetType().ToString(), Value = dynDic };
+            }
+        }
+
+        static ScriptParm ScriptableTypeToMeta(object meta)
+        {
+            var parmType = meta.GetType();
+            var fieldMappings = new Dictionary<string, ScriptParm>();
+            var scriptAlias = string.Empty;
+            var enumConversionType = ConvertEnum.Default;
+
+            var properties = parmType.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            for (int i = 0; i < properties.Length; i++)
+            {
+
+                var propertyInfo = properties[i];
+                if (propertyInfo.GetIndexParameters().Length == 0 && propertyInfo.GetMethod != null)
+                {
+                    scriptAlias = propertyInfo.Name;
+                    if (propertyInfo.IsDefined(typeof(ScriptableMemberAttribute), false))
+                    {
+                        var att = propertyInfo.GetCustomAttribute<ScriptableMemberAttribute>(false);
+                        scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                        enumConversionType = att.EnumValue;
+                    }
+
+                    var propValue = propertyInfo.GetValue(meta);
+                    fieldMappings.Add(scriptAlias, ParmToMetaData(propValue, enumConversionType));
+                }
+            }
+            return new ScriptParm { Category = (int)ScriptParmCategory.ScriptableType, Type = "ScriptableType", Value = fieldMappings };
+
+        }
+
+
+        static ScriptParm ParmToMetaData(object parm, ConvertEnum enumConversionType = ConvertEnum.Default)
+        {
+            ScriptParm scriptParm;
+
+            // Let's handle null parameters
+            // example of this is BrowserWindow.SetMenu(null) so the menu does not show
+            if (parm == null)
+                scriptParm = new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = "null", Value = parm };
+            else if (IsScriptObject(parm))
+                scriptParm = ScriptObjectToMeta((ScriptObject)parm);
+            else if (IsScriptableType(parm))
+                scriptParm = ScriptableTypeToMeta(parm);
+            else if (IsCallback(parm))
+                scriptParm = CallBackToMeta(parm);
+            else if (IsArrayOfScriptableType(parm))
+                scriptParm = ScriptableTypeArrayToMeta(parm);
+            else if (parm.GetType().IsEnum)
+                scriptParm = EnumToMeta(parm, enumConversionType);
+            else
+                scriptParm = new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = parm.GetType().ToString(), Value = parm };
+            return scriptParm;
+        }
+
         public static object[] WrapScriptParms(object [] args)
         {
             object[] parms = null;
@@ -101,133 +235,8 @@ namespace WebSharpJs.Script
 
                 foreach (var parm in args)
                 {
-                    var so = parm as ScriptObject;
-                    if (so != null)
-                    {
-                        if (so.ScriptObjectProxy != null)
-                            parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = "ScriptObject", Value = so.ScriptObjectProxy.Handle };
-                        else
-                            parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = so.GetType().ToString(), Value = so };
-                    }
-                    else
-                    {
-                        var parmType = parm.GetType();
-                        if (parmType.IsAttributeDefined<ScriptableTypeAttribute>(false))
-                        {
-                            var fieldMappings = new Dictionary<string, ScriptParm>();
-                            var scriptAlias = string.Empty;
-                            var enumConversionType = ConvertEnum.Default;
-
-                            var properties = parmType.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public);
-                            for (int i = 0; i < properties.Length; i++)
-                            {
-
-                                var propertyInfo = properties[i];
-                                if (propertyInfo.GetIndexParameters().Length == 0 && propertyInfo.GetMethod != null)
-                                {
-                                    scriptAlias = propertyInfo.Name;
-                                    if (propertyInfo.IsDefined(typeof(ScriptableMemberAttribute), false))
-                                    {
-                                        var att = propertyInfo.GetCustomAttribute<ScriptableMemberAttribute>(false);
-                                        scriptAlias = (att.ScriptAlias ?? scriptAlias);
-                                        enumConversionType = att.EnumValue;
-                                    }
-
-                                    if (IsCallbackFunction(propertyInfo.PropertyType))
-                                    {
-
-                                        var cbv = propertyInfo.GetValue(parm);
-                                        if (cbv != null)
-                                        {
-                                            var scriptCallback = Cast(cbv, propertyInfo.PropertyType);
-                                            fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", Value = scriptCallback });
-                                        }
-                                        else
-                                        {
-                                            fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
-                                        }
-                                    }
-                                    else
-                                    {
-                                        // This handles simple arrays of ScriptableTypes.
-                                        // We may need to re visit this in the future if they become more complicated.
-                                        if (propertyInfo.PropertyType.IsArray && propertyInfo.PropertyType.GetElementType().IsAttributeDefined<ScriptableTypeAttribute>(false))
-                                        {
-                                            var propArray = (Array)propertyInfo.GetValue(parm);
-
-                                            if (propArray == null || propArray.Length == 0)
-                                                fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propArray });
-                                            else
-                                            {
-                                                // We will loop through this ourselves instead of bringing LINQ and Casting into this.
-                                                var dynDic = new object[propArray.Length];
-                                                for (int x = 0; x < propArray.Length; x++)
-                                                {
-                                                    dynDic[x] = ScriptObjectHelper.ScriptableTypeToDictionary(propArray.GetValue(x));
-                                                }
-                                                fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = dynDic });
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (propertyInfo.PropertyType.IsEnum)
-                                            {
-                                                switch (enumConversionType)
-                                                {
-                                                    case ConvertEnum.ToLower:
-                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm).ToString().ToLower() });
-                                                        break;
-                                                    case ConvertEnum.ToUpper:
-                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm).ToString().ToUpper() });
-                                                        break;
-                                                    case ConvertEnum.Numeric:
-                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = (int)Enum.Parse(propertyInfo.PropertyType, propertyInfo.GetValue(parm).ToString()) });
-                                                        break;
-                                                    default:
-                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propertyInfo.GetValue(parm) });
-                                                        break;
-                                                }
-
-                                            }
-                                            else
-                                            {
-                                                var propValue = propertyInfo.GetValue(parm);
-                                                so = propValue as ScriptObject;
-                                                if (so != null)
-                                                {
-                                                    if (so.ScriptObjectProxy != null)
-                                                    {
-                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = "ScriptObject", Value = so.ScriptObjectProxy.Handle });
-                                                    }
-                                                    else
-                                                    {
-                                                        fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptObject, Type = so.GetType().ToString(), Value = propValue });
-                                                    }
-
-                                                }
-                                                else
-                                                    fieldMappings.Add(scriptAlias, new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = propertyInfo.PropertyType.ToString(), Value = propValue });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptableType, Type = "ScriptableType", Value = fieldMappings };
-                        }
-                        else
-                        {
-                            if (IsCallbackFunction(parm.GetType()))
-                                parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", Value = parm };
-                            else
-                                parms[p] = new ScriptParm { Category = (int)ScriptParmCategory.ScriptValue, Type = parm.GetType().ToString(), Value = parm };
-                        }
-                    }
-
-                    //Console.WriteLine(parms[p]);
-                    p++;
+                    parms[p++] = ParmToMetaData(parm);
                 }
-
-
             }
             return parms;
         }

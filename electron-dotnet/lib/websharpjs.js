@@ -141,7 +141,7 @@
                             }
                             else
                             {
-                                callbackData.push(args[i]);
+                                callbackData.push(callbackArg(args[i]));
                             }
                         }
                         try {
@@ -179,6 +179,17 @@
                         return scriptableType;
                     case 4:
                         return parmToCallback(value);
+                    case 6:
+                        let stpArray = value.Value;
+                        let scriptableTypeArray = [];
+                        for (var ai = 0; ai < stpArray.length; ai++)
+                        {
+                            scriptableTypeArray.push(parmToMeta(stpArray[ai]));
+                        }
+                        // Object.getOwnPropertyNames(stp).forEach(function (k) {
+                        //     scriptableType[k] = parmToMeta(stp[k]);
+                        // });
+                        return scriptableTypeArray;
                     default:
                         return value.Value;
                 }
