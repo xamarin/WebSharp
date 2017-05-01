@@ -375,7 +375,7 @@ namespace WebSharpJs.Electron
         public async Task<object> OpenDevTools (DevToolsMode? mode = null)
         {
             if (mode != null && mode.HasValue)
-                return await Invoke<object>("openDevTools", mode.ToString().ToLower());
+                return await Invoke<object>("openDevTools", new { mode = mode.ToString().ToLower() });
             else
                 return await Invoke<object>("openDevTools");
         }
