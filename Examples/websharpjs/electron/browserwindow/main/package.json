@@ -1,0 +1,14 @@
+{
+    "name": "mainbrowserwindow",
+    "displayName": "MainBrowserWindow",
+    "description": "Example of creating a new BrowserWindow ",
+    "version": "1.0.0",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}
