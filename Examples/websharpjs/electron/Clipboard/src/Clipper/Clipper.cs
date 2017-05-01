@@ -45,7 +45,7 @@ using WebSharpJs.DOM;
                         var page = new HtmlPage();
                         var document = await page.GetDocument();
 
-                        // Get a referenc to the img element
+                        // Get a reference to the img element
                         var imageElement = await document.GetElementById("image");
                         if (imageElement != null)
                         {

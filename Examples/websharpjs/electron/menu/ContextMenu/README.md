@@ -110,7 +110,7 @@ By passing the `DevToolsMode` you can control the dock state of how the developm
 
 ``` 
 
-> :bulb> Notice the way to specify submenu items from the `View` menu item.  Use `SubMenuOptions` to specify an array of `MenuItemOptions[]` or `SubMenuMenu` to specify an already created `Menu` instance.
+> :bulb: Notice the way to specify submenu items from the `View` menu item.  Use `SubMenuOptions` to specify an array of `MenuItemOptions[]` or `SubMenuMenu` to specify an already created `Menu` instance.
 
 Setting up and calling the create method is done through the `main.js` javascript file that creates the application.
 
