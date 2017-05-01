@@ -1,0 +1,14 @@
+{
+    "name": "contextmenu",
+    "displayName": "ContextMenu",
+    "description": "Example of context menu using Menu and MenuItem",
+    "version": "1.0.0",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}
