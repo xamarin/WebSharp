@@ -1,0 +1,95 @@
+# webContents
+
+## Methods
+
+- [x] `webContents.getAllWebContents()`
+- [x] `webContents.getFocusedWebContents()`
+- [x] `webContents.fromId(id)`
+
+- [x] `contents.loadURL(url[, options])`
+- [x] `contents.downloadURL(url)`
+- [x] `contents.getURL()`
+- [x] `contents.getTitle()`
+- [x] `contents.isDestroyed()`
+- [x] `contents.isFocused()`
+- [x] `contents.isLoading()`
+- [x] `contents.isLoadingMainFrame()`
+- [x] `contents.isWaitingForResponse()`
+- [x] `contents.stop()`
+- [x] `contents.reload()`
+- [x] `contents.reloadIgnoringCache()`
+- [x] `contents.canGoBack()`
+- [x] `contents.canGoForward()`
+- [x] `contents.canGoToOffset(offset)`
+- [x] `contents.clearHistory()`
+- [x] `contents.goBack()`
+- [x] `contents.goForward()`
+- [x] `contents.goToIndex(index)`
+- [x] `contents.goToOffset(offset)`
+- [x] `contents.isCrashed()`
+- [x] `contents.setUserAgent(userAgent)`
+- [x] `contents.getUserAgent()`
+- [x] `contents.insertCSS(css)`
+- [] `contents.executeJavaScript(code[, userGesture, callback])`
+- [x] `contents.setAudioMuted(muted)`
+- [x] `contents.isAudioMuted()`
+- [x] `contents.setZoomFactor(factor)`
+- [x] `contents.getZoomFactor(callback)`
+- [x] `contents.setZoomLevel(level)`
+- [x] `contents.getZoomLevel(callback)`
+- [x] `contents.setZoomLevelLimits(minimumLevel, maximumLevel)`
+- [x] `contents.setVisualZoomLevelLimits(minimumLevel, maximumLevel)`
+- [x] `contents.setLayoutZoomLevelLimits(minimumLevel, maximumLevel)`
+- [x] `contents.undo()`
+- [x] `contents.redo()`
+- [x] `contents.cut()`
+- [x] `contents.copy()`
+- [x] `contents.copyImageAt(x, y)`
+- [x] `contents.paste()`
+- [x] `contents.pasteAndMatchStyle()`
+- [x] `contents.delete()`
+- [x] `contents.selectAll()`
+- [x] `contents.unselect()`
+- [x] `contents.replace(text)`
+- [x] `contents.replaceMisspelling(text)`
+- [x] `contents.insertText(text)`
+- [x] `contents.findInPage(text[, options])`
+- [x] `contents.stopFindInPage(action)`
+- [ ] `contents.capturePage([rect, ]callback)`
+- [x] `contents.hasServiceWorker(callback)`
+- [x] `contents.unregisterServiceWorker(callback)`
+- [ ] `contents.print([options])`
+- [ ] `contents.printToPDF(options, callback)`
+- [x] `contents.addWorkSpace(path)`
+- [x] `contents.removeWorkSpace(path)`
+- [x] `contents.openDevTools([options])`
+- [x] `contents.closeDevTools()`
+- [x] `contents.isDevToolsOpened()`
+- [x] `contents.isDevToolsFocused()`
+- [x] `contents.toggleDevTools()`
+- [x] `contents.inspectElement(x, y)`
+- [x] `contents.inspectServiceWorker()`
+- [x] `contents.send(channel[, arg1][, arg2][, ...])`
+- [x] `contents.enableDeviceEmulation(parameters)`
+- [x] `contents.disableDeviceEmulation()`
+- [ ] `contents.sendInputEvent(event)`
+- [ ] `contents.beginFrameSubscription([onlyDirty ,]callback)`
+- [ ] `contents.endFrameSubscription()`
+- [ ] `contents.startDrag(item)`
+- [ ] `contents.savePage(fullPath, saveType, callback)`
+- [x] `contents.showDefinitionForSelection()` _macOS_
+- [ ] `contents.setSize(options)`
+- [x] `contents.isOffscreen()`
+- [x] `contents.startPainting()`
+- [x] `contents.stopPainting()`
+- [x] `contents.isPainting()`
+- [x] `contents.setFrameRate(fps)`
+- [x] `contents.getFrameRate()`
+- [x] `contents.invalidate()`
+- [ ] `contents.getWebRTCIPHandlingPolicy()`
+- [ ] `contents.setWebRTCIPHandlingPolicy(policy)`
+- [x] `contents.id`
+- [ ] `contents.session`
+- [x] `contents.hostWebContents`
+- [x] `contents.devToolsWebContents`
+- [ ] `contents.debugger`
