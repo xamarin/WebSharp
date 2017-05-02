@@ -2,9 +2,9 @@
 
 ## ScriptingJS Application
 
-This document will take you through creating an `Electron Dotnet` application for VS Code ("ScriptingJS") and will explain the basic `Nodejs` integration points from C# code to interact with `Nodejs` from your `Electron` application.
+This document will take you through creating an `WebSharp Electron` application for VS Code ("ScriptingJS") and will explain the basic `Nodejs` integration points from C# code to interact with `Nodejs` from your `Electron` application.
 
-In this walkthrough, you'll begin with setting up a basic `Electron Dotnet` application that calls a C# routine from JavaScript code.  The C# function that is generated from the template formats a string and returns that formatted string back to the calling javascript function to be written out to the console from JavaScript code.
+In this walkthrough, you'll begin with setting up a basic `WebSharp Electron` application that calls a C# routine from JavaScript code.  The C# function that is generated from the template formats a string and returns that formatted string back to the calling javascript function to be written out to the console from JavaScript code.
 
 Once this is up and running we will begin modifying the application to script `NodeJs` functions directly from the C# application instead.  
 
@@ -21,19 +21,15 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
      nmake /f Makefile.win buildRelease
      ```
 
-      * [Mac Prerequisites](https://github.com/xamarin/WebSharp/tree/master/electron-dotnet#building-on-osx)
-     ``` bash
-     # Mac OSX terminal with XCode tools available for build.
-     make setup  # only needs to be run the first time
-     make build
-     ```
+      * [Getting Started on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md)
+    
      
 ## Getting Started      
   * Install [.NET Core.](https://www.microsoft.com/net/core)
   * Install the [C# extension from the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp).
 
-## Generate a `Electron Dotnet` Application
-The simplest way to add a new `Electron DotNet` application for VS Code consumption is through adding a project. A project will have all the boot strap files available to run the `Electron` application.  For more details you can look at the [Electron Quick Start](https://github.com/electron/electron-quick-start).
+## Generate a `WebSharp Electron` Application
+The simplest way to add a new `WebSharp Electron` application for consumption is through adding a project. A project will have all the boot strap files available to run the `Electron` application.  For more details you can look at the [Electron Quick Start](https://github.com/electron/electron-quick-start).
 
 We have written a Yeoman generator to help get you started. Install Yeoman and the Yeoman Electron Dotnet generator that provides different templates for creating new applications:
 
@@ -41,7 +37,7 @@ We have written a Yeoman generator to help get you started. Install Yeoman and t
 npm install -g yo path-to-WebSharp-directory\Tools\generator-electron-dotnet
 yo electron-dotnet
 ```
-You will be presented with three different project types. For this example, we will pick `Node.js .NET Scripting`.  
+You will be presented with different project types. For this example, we will pick `WebSharp Electron Application`.  
 
 ![The electron-dotnet generator](./screenshots/yogen-mac.png)ß
 
