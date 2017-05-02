@@ -1,34 +1,34 @@
 ### Modules for the Main Process:
 
-* [app](api/app.md)
-* [autoUpdater](api/auto-updater.md)
-* [BrowserWindow](api/browser-window.md)
-* [contentTracing](api/content-tracing.md)
-* [dialog](api/dialog.md)
-* [globalShortcut](api/global-shortcut.md)
-* [ipcMain](api/ipc-main.md)
-* [Menu](api/menu.md)
-* [MenuItem](api/menu-item.md)
-* [net](api/net.md)
-* [powerMonitor](api/power-monitor.md)
-* [powerSaveBlocker](api/power-save-blocker.md)
-* [protocol](api/protocol.md)
-* [session](api/session.md)
-* [systemPreferences](api/system-preferences.md)
-* [Tray](api/tray.md)
-* [webContents](api/web-contents.md)
+* [app](api/app.md) :exclamation:
+* [autoUpdater](api/auto-updater.md) :exclamation:
+* [BrowserWindow](api/browser-window.md) :exclamation:
+* [contentTracing](api/content-tracing.md) :exclamation:
+* [dialog](api/dialog.md) :running:
+* [globalShortcut](api/global-shortcut.md) :exclamation:
+* [ipcMain](api/ipc-main.md) :exclamation:
+* [Menu](api/menu.md) :running:
+* [MenuItem](api/menu-item.md) :running:
+* [net](api/net.md) :exclamation:
+* [powerMonitor](api/power-monitor.md) :exclamation:
+* [powerSaveBlocker](api/power-save-blocker.md) :exclamation:
+* [protocol](api/protocol.md) :exclamation:
+* [session](api/session.md) :exclamation:
+* [systemPreferences](api/system-preferences.md) :exclamation:
+* [Tray](api/tray.md) :exclamation:
+* [webContents](api/web-contents.md) :running:
 
 ### Modules for the Renderer Process (Web Page):
 
 * [desktopCapturer](api/desktop-capturer.md)
-* [ipcRenderer](api/ipc-renderer.md)
-* [remote](api/remote.md)
-* [webFrame](api/web-frame.md)
+* [ipcRenderer](api/ipc-renderer.md) :muscle:
+* [remote](api/remote.md) :exclamation:
+* [webFrame](api/web-frame.md) :exclamation:
 
 ### Modules for Both Processes:
 
-* [clipboard](api/clipboard.md)
-* [crashReporter](api/crash-reporter.md)
-* [nativeImage](api/native-image.md)
-* [screen](api/screen.md)
-* [shell](api/shell.md)
+* [clipboard](api/clipboard.md) :muscle:
+* [crashReporter](api/crash-reporter.md) :exclamation:
+* [nativeImage](api/native-image.md) :muscle:
+* [screen](api/screen.md) :exclamation:
+* [shell](api/shell.md) :exclamation:
