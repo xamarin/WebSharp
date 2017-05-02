@@ -1,0 +1,52 @@
+# app
+
+## Methods
+
+- [x] `app.quit()`
+- [x] `app.exit([exitCode])`
+- [ ] `app.relaunch([options])`
+- [x] `app.isReady()`
+- [x] `app.focus()`
+- [x] `app.hide()` _macOS_
+- [x] `app.show()` _macOS_
+- [x] `app.getAppPath()`
+- [x] `app.getPath(name)`
+- [ ] `app.getFileIcon(path[, options], callback)`
+- [x] `app.setPath(name, path)`
+- [x] `app.getVersion()`
+- [x] `app.getName()`
+- [x] `app.setName(name)`
+- [x] `app.getLocale()`
+- [x] `app.addRecentDocument(path)` _macOS_ _Windows_
+- [x] `app.clearRecentDocuments()` _macOS_ _Windows_
+- [x] `app.setAsDefaultProtocolClient(protocol[, path, args])` _macOS_ _Windows_
+- [x] `app.removeAsDefaultProtocolClient(protocol[, path, args])` _macOS_ _Windows_
+- [x] `app.isDefaultProtocolClient(protocol[, path, args])` _macOS_ _Windows_
+- [ ] `app.setUserTasks(tasks)` _Windows_
+- [ ] `app.getJumpListSettings()` _Windows_
+- [ ] `app.setJumpList(categories)` _Windows_
+- [ ] `app.makeSingleInstance(callback)`
+- [ ] `app.releaseSingleInstance()`
+- [ ] `app.setUserActivity(type, userInfo[, webpageURL])` _macOS_
+- [ ] `app.getCurrentActivityType()` _macOS_
+- [x] `app.setAppUserModelId(id)` _Windows_
+- [ ] `app.importCertificate(options, callback)` _LINUX_
+- [ ] `app.disableHardwareAcceleration()`
+- [ ] `app.setBadgeCount(count)` _Linux_ _macOS_
+- [ ] `app.getBadgeCount()` _Linux_ _macOS_
+- [x] `app.isUnityRunning()` _Linux_
+- [x] `app.getLoginItemSettings([options])` _macOS_ _Windows_
+- [x] `app.setLoginItemSettings(settings[, path, args])` _macOS_ _Windows_
+- [x] `app.isAccessibilitySupportEnabled()` _macOS_ _Windows_
+- [x] `app.setAboutPanelOptions(options)` _macOS_
+- [ ] `app.commandLine.appendArgument(value)`
+- [ ] `app.dock.bounce([type])` _macOS_
+- [ ] `app.dock.cancelBounce(id)` _macOS_
+- [ ] `app.dock.downloadFinished(filePath)` _macOS_
+- [ ] `app.dock.setBadge(text)` _macOS_
+- [ ] `app.dock.getBadge()` _macOS_
+- [ ] `app.dock.hide()` _macOS_
+- [ ] `app.dock.show()` _macOS_
+- [ ] `app.dock.isVisible()` _macOS_
+- [ ] `app.dock.setMenu(menu)` _macOS_
+- [ ] `app.dock.setIcon(image)` _macOS_
