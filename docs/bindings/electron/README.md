@@ -1,6 +1,6 @@
 ### Modules for the Main Process:
 
-* [app](api/app.md) :exclamation:
+* [app](api/app.md) :running:
 * [autoUpdater](api/auto-updater.md) :exclamation:
 * [BrowserWindow](api/browser-window.md) :exclamation:
 * [contentTracing](api/content-tracing.md) :exclamation:
@@ -21,7 +21,7 @@
 ### Modules for the Renderer Process (Web Page):
 
 * [desktopCapturer](api/desktop-capturer.md)
-* [ipcRenderer](api/ipc-renderer.md) :muscle:
+* [ipcRenderer](api/ipc-renderer.md) :running:
 * [remote](api/remote.md) :exclamation:
 * [webFrame](api/web-frame.md) :exclamation:
 
