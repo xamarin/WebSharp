@@ -54,11 +54,13 @@ namespace WebSharpJs.DOM
                 {
                     var eventCallback = new
                     {
+                        handle = Handle,
                         onEvent = scriptAlias,
                         callback = websharpEvent.EventCallbackFunction,
                         handlerType = "HtmlEventArgs"
                     };
-                    result = await ScriptObjectProxy.AddEventListener(eventCallback);
+                    
+                    result = await WebSharp.Bridge.AddEventListener(eventCallback);
                 }
                 EventHandlers[scriptAlias] = websharpEvent;
             }
@@ -94,11 +96,12 @@ namespace WebSharpJs.DOM
                 {
                     var eventCallback = new
                     {
+                        handle = Handle,
                         onEvent = scriptAlias,
                         callback = websharpEvent.EventCallbackFunction,
                         handlerType = "HtmlEventArgs"
                     };
-                    result = await ScriptObjectProxy.AddEventListener(eventCallback);
+                    result = await WebSharp.Bridge.AddEventListener(eventCallback);
                 }
                 EventHandlers[eventName] = websharpEvent;
             }

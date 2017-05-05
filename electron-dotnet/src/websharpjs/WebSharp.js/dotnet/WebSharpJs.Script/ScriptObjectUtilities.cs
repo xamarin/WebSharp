@@ -112,6 +112,35 @@ namespace WebSharpJs.Script
             return Expression.Lambda(delegateType, call, param).Compile();
         }
 
+        public static Delegate CastFunctionAsExpression(object callbackFunction)
+        {
+            var type = callbackFunction.GetType();
+            var funcTypes = type.GetGenericArguments();
+
+            var numParms = funcTypes.Length - 1;
+            var parameters = new ParameterExpression[numParms];
+            var parmExpressions = new Expression[numParms];
+            for (int fi = 0; fi < numParms; fi++)
+            {
+                parameters[fi] = Expression.Parameter(funcTypes[fi]);
+                parmExpressions[fi] = Expression.Convert(parameters[fi], funcTypes[fi]);
+            }
+
+            // Based loosely on http://stackoverflow.com/questions/16590685/using-expression-to-cast-funcobject-object-to-funct-tret?answertab=active#tab-top
+            var func = (MulticastDelegate)callbackFunction;
+
+            // This is gnarly... If a func contains a closure, then even though its static, its first
+            // param is used to carry the closure, so its as if it is not a static method, so we need
+            // to check for that param and call the func with it if it has one...
+            Expression call;
+            call = Expression.Convert(
+                func.Target == null
+                ? Expression.Call(func.GetMethodInfo(), parmExpressions)
+                : Expression.Call(Expression.Constant(func.Target), func.GetMethodInfo(), parmExpressions), CallbackResultType);
+
+            return Expression.Lambda(type, call, parameters).Compile();
+        }
+
         static ScriptParm ScriptObjectToMeta(ScriptObject meta)
         {
             ScriptParm scriptParm;
@@ -129,7 +158,9 @@ namespace WebSharpJs.Script
             if (meta != null)
             {
                 var scriptCallback = Cast(meta, meta.GetType());
-                return new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", Value = scriptCallback };
+                var typesToMap = meta.GetType().GetGenericArguments();
+                int[] mappings = TypeMappings(typesToMap);
+                return new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", CallbackMapping = mappings,   Value = scriptCallback};
             }
             else
             {
@@ -240,5 +271,58 @@ namespace WebSharpJs.Script
             }
             return parms;
         }
+
+        public static int[] TypeMappings(Type[] typesToMap, bool includeLast = false)
+        {
+            int numTypes = includeLast ? typesToMap.Length : typesToMap.Length - 1;
+            var mappings = new int[numTypes * 2];
+            int gi = 0, cm = 0;
+            for (; gi < numTypes; gi++, cm = cm + 2)
+            {
+                var gt = typesToMap[gi];
+                mappings[cm + 1] = gt.IsArray ? 1 : 0;
+                if (gt.IsGenericType && typeof(ScriptObjectCollection<>).IsAssignableFrom(gt.GetGenericTypeDefinition()))
+                {
+                    mappings[cm] = (int)ScriptParmCategory.ScriptObjectCollection;
+                }
+                if (gt.IsSubclassOf(typeof(ScriptObject)))
+                {
+                    mappings[cm] = (int)ScriptParmCategory.ScriptObject;
+                }
+                else if (gt.IsDefined(typeof(ScriptableTypeAttribute), false))
+                {
+                    mappings[cm] = (int)ScriptParmCategory.ScriptableType;
+
+                }
+                else if (gt.IsArray && gt.GetElementType().IsDefined(typeof(ScriptableTypeAttribute), false))
+                {
+                    mappings[cm] = (int)ScriptParmCategory.ScriptableTypeArray;
+                }
+                else
+                {
+                    mappings[cm] = (int)ScriptParmCategory.ScriptValue;
+                }
+
+            }
+            return mappings;
+        }
+
+        internal static object MapToType(ScriptParmCategory category, int arrayFlag, object toMap, Type type = null)
+        {
+            if (toMap == null)
+                return null;
+
+            switch (category)
+            {
+                case ScriptParmCategory.ScriptableType:
+                    return ScriptObjectHelper.AnonymousObjectToScriptableType(type, toMap);
+                case ScriptParmCategory.ScriptObject:
+                    return ScriptObjectHelper.AnonymousObjectToScriptObjectProxy(toMap);
+                default:
+                    return toMap;
+
+            }
+        }
+
     }
 }

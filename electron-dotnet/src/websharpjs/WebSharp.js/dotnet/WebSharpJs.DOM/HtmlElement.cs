@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using WebSharpJs.Script;
@@ -67,13 +64,7 @@ namespace WebSharpJs.DOM
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            var jsfp = ScriptObjectProxy.JavascriptFunctionProxy;
-            if (jsfp != null)
-            {
-                return await jsfp.websharp_get_attribute(name);
-            }
-            else
-                return string.Empty;
+            return await WebSharp.Bridge.JavaScriptBridge.websharp_get_attribute(name);
         }
 
         public async Task<bool> SetAttribute(string name, string value)
@@ -81,17 +72,12 @@ namespace WebSharpJs.DOM
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            var jsfp = ScriptObjectProxy.JavascriptFunctionProxy;
-            if (jsfp != null)
+            var parm = new
             {
-                var parm = new
-                {
-                    name = name,
-                    value = value
-                };
-                return await jsfp.websharp_set_attribute(parm) ;
-            }
-            return false;
+                name = name,
+                value = value
+            };
+            return await WebSharp.Bridge.JavaScriptBridge.websharp_set_attribute(parm);
         }
 
         public async Task<string> GetStyleAttribute(string name)
@@ -99,13 +85,7 @@ namespace WebSharpJs.DOM
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            var jsfp = ScriptObjectProxy.JavascriptFunctionProxy;
-            if (jsfp != null)
-            {
-                return await jsfp.websharp_get_style_attribute(name);
-            }
-            else
-                return string.Empty;
+            return await WebSharp.Bridge.JavaScriptBridge.websharp_get_style_attribute(name);
         }
 
         public async Task<bool> SetStyleAttribute(string name, string value)
@@ -113,17 +93,12 @@ namespace WebSharpJs.DOM
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            var jsfp = ScriptObjectProxy.JavascriptFunctionProxy;
-            if (jsfp != null)
+            var parm = new
             {
-                var parm = new
-                {
-                    name = name,
-                    value = value
-                };
-                return await jsfp.websharp_set_style_attribute(parm);
-            }
-            return false;
+                name = name,
+                value = value
+            };
+            return await WebSharp.Bridge.JavaScriptBridge.websharp_set_style_attribute(parm);
         }
 
         public async Task AppendChild(HtmlElement element)

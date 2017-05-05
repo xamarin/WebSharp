@@ -49,10 +49,14 @@ namespace WebSharpJs.Script
         public IScriptObjectProxy ScriptObjectProxy
         {
             get { return scriptObjectProxy; }
-            set { scriptObjectProxy = value; }
+            set { scriptObjectProxy = value;  handle = scriptObjectProxy.Handle; }
         }
 
         #region Public interface
+
+        internal int handle;
+
+        public int Handle => handle;
 
         public virtual async Task<bool> SetProperty(string name, object value)
         {
@@ -139,12 +143,13 @@ namespace WebSharpJs.Script
 
                 var parms = new
                 {
+                    handle = Handle,
                     function = name,
                     category = (int)parmCategory,
                     args = ScriptObjectUtilities.WrapScriptParms(parameters)
                 };
 
-                var result = await scriptObjectProxy.TryInvoke(parms);
+                var result = await WebSharp.Bridge.TryInvoke(parms);
                 return (parmCategory == ScriptParmCategory.None) ? (T)result : GetReturnValue<T>(parmCategory, result);
 
             }
@@ -154,33 +159,32 @@ namespace WebSharpJs.Script
 
         protected virtual async Task<T> TryGetProperty<T>(string name)
         {
-            if (scriptObjectProxy != null)
+            var parmCategory = GetParmCategory<T>();
+
+            var parms = new
             {
+                handle = Handle,
+                name = name,
+                category = (int)parmCategory,
+            };
 
-                var parmCategory = GetParmCategory<T>();
-
-                var parms = new
-                {
-                    name = name,
-                    category = (int)parmCategory,
-                };
-
-                var result = await scriptObjectProxy.GetProperty<object>(parms);
-                return (parmCategory == ScriptParmCategory.None) ? (T)result : GetReturnValue<T>(parmCategory, result);
-
-            }
-            else
-                return default(T);
+            var result = await WebSharp.Bridge.GetProperty<object>(parms);
+            return (parmCategory == ScriptParmCategory.None) ? (T)result : GetReturnValue<T>(parmCategory, result);
         }
 
         protected virtual async Task<bool> TrySetProperty(string name, object value, bool createIfNotExists = true, bool hasOwnProperty = false)
         {
             try
             {
-                if (scriptObjectProxy != null)
+                var parms = new
                 {
-                    return await scriptObjectProxy.SetProperty(name, value, createIfNotExists, hasOwnProperty);
-                }
+                    handle = Handle,
+                    property = name,
+                    value = value,
+                    createIfNotExists = createIfNotExists,
+                    hasOwnProperty = hasOwnProperty
+                };
+                var result = await WebSharp.Bridge.SetProperty(parms);
             }
             catch { }
 

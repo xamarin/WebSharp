@@ -67,14 +67,17 @@
 
     var UnwrapArgs = function (args) {
 
-        const callbackArg = function(arg)
+        const callbackArg = function(arg, type = 3, isarray = 0)
         {
             // We will treat Error differently
-            if (arg instanceof Error)
+            if (type === 2)
             {
                 let scriptableType = {};
                 Object.getOwnPropertyNames(arg).forEach(function (k) {
-                    scriptableType[k] = arg[k];
+                    if (v8Util.getHiddenValue(arg[k], 'websharpId'))
+                       scriptableType[k] = ObjectToScriptObject(arg[k]);
+                    else
+                        scriptableType[k] = arg[k];
                 });
                 
                 return scriptableType;
@@ -116,7 +119,7 @@
                         }
                         else
                         {
-                            callbackData = callbackArg(args[0]);
+                            callbackData = callbackArg(args[0], func.CallbackMapping[0], func.CallbackMapping[1]);
                             try {
                                 // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
                                 // later.
@@ -253,9 +256,26 @@
         let proxy = {};
 
         proxy.websharp_id = id;
-        proxy.websharp_get_property = function (prop, cb) {
-            //console.log('prop -> ' + prop.name + ' has property ' + objToWrap.hasOwnProperty(prop.name)  + ' [ ' + objToWrap[prop.name] + ' ]');
-            let objProp = objToWrap[prop.name];
+
+        return proxy;
+    }
+
+    var BridgeProxy = function (objToWrap)
+    {
+
+        let id = RegisterScriptableObject(objToWrap);
+        let bridge = {};
+
+        bridge.name = "Bridge";
+        bridge.websharp_id = id;
+        bridge.websharp_get_property = function (prop, cb) {
+            let so = GetScriptableObject(prop.handle);
+            if (so === 'undefined')
+                 cb('Set Property error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
+
+            //console.log('get prop -> ' + prop.name + ' has property ' + so.hasOwnProperty(prop.name)  + ' [ ' + so[prop.name] + ' ]');
+
+            let objProp = so[prop.name];
 
             if (prop.category > 0 && objProp != null )
             {
@@ -267,23 +287,29 @@
                 cb(null, objProp);
         }
 
-        proxy.websharp_set_property = function (parms, cb) {
+        bridge.websharp_set_property = function (parms, cb) {
+            let so = GetScriptableObject(parms.handle);
+            if (so === 'undefined')
+                 cb('Set Property error: Object with handle id \'' + parms.handle + '\' may have already been garbage collected.', null);
+            
+            //console.log('set prop -> ' + parms.property + ' has property ' + so.hasOwnProperty(parms.property)  + ' [ ' + so[parms.property] + ' ]');
+
             let result = false;
 
             if (parms.createIfNotExists === true) {
-                objToWrap[parms.property] = parms.value;
+                so[parms.property] = parms.value;
                 result = true;
             }
             else {
                 result = false;
                 if (parms.hasOwnProperty === true) {
-                    if (objToWrap.hasOwnProperty(parms.property)) {
-                        objToWrap[parms.property] = parms.value;
+                    if (so.hasOwnProperty(parms.property)) {
+                        so[parms.property] = parms.value;
                         result = true;
                     }
                 }
                 else {
-                    objToWrap[parms.property] = parms.value;
+                    so[parms.property] = parms.value;
                     result = true;
                 }
 
@@ -291,38 +317,60 @@
             cb(null, result);
         }
 
-        proxy.websharp_get_attribute = function (prop, cb) {
+        bridge.websharp_get_attribute = function (prop, cb) {
+            let so = GetScriptableObject(prop.handle);
+            if (so === 'undefined')
+                 cb('Get Attribute error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
+
             //console.log('attribute -> ' + prop + ' [ ' + objToWrap.getAttribute(prop) + ' ]');
-            cb(null, objToWrap.getAttribute(prop));
+            cb(null, so.getAttribute(prop));
         }
 
-        proxy.websharp_set_attribute = function (prop, cb) {
+        bridge.websharp_set_attribute = function (prop, cb) {
+            let so = GetScriptableObject(prop.handle);
+            if (so === 'undefined')
+                 cb('Set Attribute error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
+
             //console.log('set attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
-            objToWrap.setAttribute(prop.name, prop.value);
+            so.setAttribute(prop.name, prop.value);
             cb(null, true);
         }
 
-        proxy.websharp_get_style_attribute = function (prop, cb) {
+        bridge.websharp_get_style_attribute = function (prop, cb) {
+            let so = GetScriptableObject(prop.handle);
+            if (so === 'undefined')
+                 cb('Get Style error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
+
             //console.log('style attribute -> ' + prop + ' [ ' + objToWrap.style[prop] + ' ]');
-            cb(null, objToWrap.style[prop]);
+            cb(null, so.style[prop.attribute]);
         }
 
-        proxy.websharp_set_style_attribute = function (prop, cb) {
+        bridge.websharp_set_style_attribute = function (prop, cb) {
+            let so = GetScriptableObject(prop.handle);
+            if (so === 'undefined')
+                 cb('Set Style error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
+
             //console.log('set style attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
-            objToWrap.style[prop.name] = prop.value;
+            so.style[prop.name] = prop.value;
             cb(null, true);
         }
 
-        proxy.websharp_invoke = function (parms, cb) {
-            //console.log('invoking -> ' + parms.function + ' has function ' + (typeof objToWrap[parms.function] === 'function') + ' args [ ' + parms.args + ' ]');
+        bridge.websharp_invoke = function (parms, cb) {
+
+            let so = GetScriptableObject(parms.handle);
+            if (so === 'undefined')
+                 cb('Invoke error: Object with handle id \'' + parms.handle + '\' may have already been garbage collected.', null);
+
+            //console.log('invoking -> ' + parms.function + ' on handle ' + parms.handle + ' has function ' + (typeof so[parms.function] === 'function') + ' args [ ' + parms.args + ' ]');
+
             let invokeResult;
 
-            if (typeof objToWrap[parms.function] === 'function') {
+            if (typeof so[parms.function] === 'function') {
 
                 let args = UnwrapArgs(parms.args);
 
                 try{
-                    invokeResult = objToWrap[parms.function].apply(objToWrap, args);
+                    invokeResult = so[parms.function].apply(so, args);
                 }
                 catch (ex)
                 {
@@ -343,9 +391,14 @@
 
         }
 
-        proxy.websharp_addEventListener = function (eventCallback, cb) {
+        bridge.websharp_addEventListener = function (eventCallback, cb) {
+
+            let so = GetScriptableObject(eventCallback.handle);
+            if (so === 'undefined')
+                 cb('Invoke error: Object with handle id \'' + parms.handle + '\' may have already been garbage collected.', null);
+
             //console.log('addEventListener -> ' + eventCallback.onEvent);
-            objToWrap.addEventListener(eventCallback.onEvent, 
+            so.addEventListener(eventCallback.onEvent, 
                 function () {
                     //console.log('event triggered');
                     // We need to preserver arity of the function callback parameters.
@@ -390,14 +443,8 @@
             cb(null, true);
         }
 
-        proxy.websharp_proxied_object = function (data, cb) {
-            cb(null, proxy.websharp_id);
-
-        }
-
-        return proxy;
+        return bridge;
     }
-
 
     var DOMEventProps = ["altKey",
         "bubbles",
@@ -429,6 +476,6 @@
         "toElement",
         "touches"]
 
-    module.exports = { RegisterScriptableObject, GetScriptableObject, UnRegisterScriptableObject, WrapEvent, UnwrapArgs, ObjectToScriptObject, IsRenderer };
+    module.exports = { RegisterScriptableObject, GetScriptableObject, UnRegisterScriptableObject, WrapEvent, UnwrapArgs, ObjectToScriptObject, IsRenderer, BridgeProxy };
 
 })();

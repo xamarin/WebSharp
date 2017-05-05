@@ -39,9 +39,10 @@ namespace WebSharpJs.Script
         public virtual string ScriptObject { get; protected set; }
 
         public int Handle => javascriptFunctionProxy.websharp_id;
+
 		public dynamic JavascriptFunctionProxy { get { return javascriptFunctionProxy; } set { javascriptFunctionProxy = value; } }
 
-        public Func<object, Task<object>> JavascriptFuncion { get => javascriptFunction; set => javascriptFunction = value; }
+        public Func<object, Task<object>> JavascriptFunction { get => javascriptFunction; set => javascriptFunction = value; }
 
         public virtual async Task GetProxyObject(params object[] args)
         {
@@ -52,64 +53,13 @@ namespace WebSharpJs.Script
                 parms = ScriptObjectUtilities.WrapScriptParms(args);
             }
             
-            if (JavascriptFuncion == null)
+            if (JavascriptFunction == null)
             {
-                JavascriptFuncion = await WebSharp.CreateJavaScriptFunction(ScriptFunction);
+                JavascriptFunction = await WebSharp.CreateJavaScriptFunction(ScriptFunction);
             }
 
-            javascriptFunctionProxy = await JavascriptFuncion(parms);
+            javascriptFunctionProxy = await JavascriptFunction(parms);
         }
 
-        public async Task<T> GetProperty<T>(dynamic name)
-        {
-
-            if (javascriptFunctionProxy != null)
-            {
-                return await javascriptFunctionProxy.websharp_get_property(name) ?? default(T);
-            }
-            else
-                return default(T);
-        }
-
-        public async Task<bool> SetProperty(string name, object value, bool createIfNotExists = true, bool hasOwnProperty = false)
-        {
-            try
-            {
-                if (javascriptFunctionProxy != null)
-                {
-                    var parms = new
-                    {
-                        property = name,
-                        value = value,
-                        createIfNotExists = createIfNotExists,
-                        hasOwnProperty = hasOwnProperty
-                    };
-                    return await javascriptFunctionProxy.websharp_set_property(parms);
-                }
-            }
-            catch { }
-
-            return false;
-        }
-
-        public async Task<object> TryInvoke(dynamic parms)
-        {
-            if (javascriptFunctionProxy != null)
-            {
-                return await javascriptFunctionProxy.websharp_invoke(parms);
-            }
-            return null;
-
-        }
-
-        public async Task<bool> AddEventListener(object eventCallback)
-        {
-            if (javascriptFunctionProxy != null)
-            {
-                return await javascriptFunctionProxy.websharp_addEventListener(eventCallback);
-            }
-
-            return false;
-        }
     }
 }

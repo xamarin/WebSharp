@@ -10,6 +10,7 @@ namespace WebSharpJs.Script
     {
         public int Category;
         public string Type;
+        public int[] CallbackMapping;
         public object Value;
     }
 

@@ -1,4 +1,6 @@
-﻿using WebSharpJs.Script;
+﻿using System;
+using System.Threading.Tasks;
+using WebSharpJs.Script;
 
 namespace WebSharpJs.Electron
 {
@@ -217,6 +219,16 @@ namespace WebSharpJs.Electron
         public string Message { get; set; }
         [ScriptableMember(ScriptAlias = "stack")]
         public string Stack { get; set; }
+    }
+
+    [ScriptableType]
+    public class Event
+    {
+        [ScriptableMember(ScriptAlias = "preventDefault")]
+        public Func<object, Task<object>> PreventDefault { get; set; }
+        [ScriptableMember(ScriptAlias = "sender")]
+        public NodeJS.EventEmitter Sender { get; set; }
+
     }
 
 }

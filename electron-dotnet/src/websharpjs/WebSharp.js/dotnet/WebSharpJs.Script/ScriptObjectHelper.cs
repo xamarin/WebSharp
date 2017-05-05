@@ -176,5 +176,34 @@ namespace WebSharpJs.Script
 
             return success;
         }
+
+        public static T AnonymousObjectToScriptableType<T>(object obj)
+        {
+            var typeOfT = typeof(T);
+            var st = typeOfT.IsValueType ? (T)Activator.CreateInstance(typeOfT) : default(T);
+            var dic = obj as IDictionary<string, object>;
+            if (dic == null)
+            {
+                return st;
+            }
+
+            DictionaryToScriptableType(dic, st);
+            return st;
+
+        }
+
+        public static object AnonymousObjectToScriptableType(Type type, object obj)
+        {
+            var st = Activator.CreateInstance(type);
+            var dic = obj as IDictionary<string, object>;
+            if (dic == null)
+            {
+                return st;
+            }
+
+            DictionaryToScriptableType(dic, st);
+            return st;
+
+        }
     }
 }

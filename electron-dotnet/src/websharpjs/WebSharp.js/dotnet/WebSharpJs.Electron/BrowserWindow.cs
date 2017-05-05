@@ -558,7 +558,7 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("blurWebView");
         }
 
-        public async Task<object> CapturePage(Rectangle? rect = null, Func<object, Task<object>> callback = null)
+        public async Task<object> CapturePage(Rectangle? rect = null, Func<NativeImage, Task<object>> callback = null)
         {
             if (rect != null && rect.HasValue)
                 return await Invoke<object>("capturePage", rect.Value, callback);

@@ -244,3 +244,28 @@ var compileFunc = function (data, callback) {
 initialize(compileFunc, function (error, data) {
     if (error) throw error;
 });
+
+var initializeBridge = exports.func({
+   assemblyFile: __dirname + '/bin/WebSharpJs.dll',
+   typeName: 'WebSharpJs.WebSharp',
+   methodName: 'InitializeBridge'
+});
+
+var compileBridge = function (data, callback) {
+    var wrapper = '(function () { ' + data + ' })';
+    var funcFactory = eval(wrapper);
+    var func = funcFactory();
+    return func;
+};
+
+initializeBridge(compileBridge("return function (data, callback) { \
+const dotnet = require('./electron-dotnet'); \
+const websharpjs = dotnet.WebSharpJs; \
+let wsObj = {}; \
+let bridge = websharpjs.BridgeProxy(wsObj); \
+callback(null, bridge); \
+\
+}"), function (error, data) {
+    if (error) throw error;
+});
+
