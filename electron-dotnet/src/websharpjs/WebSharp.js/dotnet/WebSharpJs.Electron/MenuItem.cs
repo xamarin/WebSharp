@@ -118,7 +118,7 @@ namespace WebSharpJs.Electron
         /// Will be called with click(menuItem, browserWindow, event) when the menu item is clicked.
         /// </summary>
         [ScriptableMember(ScriptAlias = "click")]
-        public Func<object[], Task<object>> Click { get; set; }
+        public ScriptObjectCallback<MenuItem, BrowserWindow, Event> Click { get; set; }
 
         [ScriptableMember(ScriptAlias = "role")]
         public string RoleDescription

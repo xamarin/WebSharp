@@ -15,6 +15,8 @@ namespace WebSharpJs.Script
     {
 
         static readonly Type CallbackResultType = typeof(Task<object>);
+        static readonly Type ScriptObjectCallbackType = typeof(IScriptObjectCallback);
+        static readonly Type ScriptObject = typeof(ScriptObject);
 
         #region Reflection extension helper methods
         public static bool IsAttributeDefined<TAttribute>(this MemberInfo memberInfo)
@@ -45,23 +47,39 @@ namespace WebSharpJs.Script
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static bool IsCallbackFunction(Type type)
+        internal static bool IsCallbackFunction(Type type)
         {
-            if (!typeof(MulticastDelegate).GetTypeInfo().IsAssignableFrom(type?.BaseType))
+            if (!typeof(MulticastDelegate).IsAssignableFrom(type?.BaseType))
                 return false;
-            return (type.GetTypeInfo().IsGenericType &&
+            return (type.IsGenericType &&
                  (
-                 typeof(Func<,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
-                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[1]))
-                 || (type.GetTypeInfo().IsGenericType
-                 && typeof(Func<,,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
-                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[2]))
-                 || (type.GetTypeInfo().IsGenericType
-                 && typeof(Func<,,,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
-                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[3]))
-                 || (type.GetTypeInfo().IsGenericType
-                 && typeof(Func<,,,,>).GetTypeInfo().IsAssignableFrom(type.GetGenericTypeDefinition())
-                 && typeof(Task<object>).GetTypeInfo().IsAssignableFrom(type.GetGenericArguments()[4])));
+                 typeof(Func<,>).IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).IsAssignableFrom(type.GetGenericArguments()[1]))
+                 || (type.IsGenericType
+                 && typeof(Func<,,>).IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).IsAssignableFrom(type.GetGenericArguments()[2]))
+                 || (type.IsGenericType
+                 && typeof(Func<,,,>).IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).IsAssignableFrom(type.GetGenericArguments()[3]))
+                 || (type.IsGenericType
+                 && typeof(Func<,,,,>).IsAssignableFrom(type.GetGenericTypeDefinition())
+                 && typeof(Task<object>).IsAssignableFrom(type.GetGenericArguments()[4])));
+        }
+
+        /// <summary>
+        /// Checks if the type is ScriptObjectCallback which represents the callback bridge pattern
+        /// used between JavaScript <> Managed code.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal static bool IsScriptObjectCallback(Type type)
+        {
+            return ScriptObjectCallbackType.IsAssignableFrom(type);
+        }
+
+        internal static bool IsScriptObject(Type type)
+        {
+            return ScriptObjectCallbackType.IsAssignableFrom(type);
         }
 
         static bool IsScriptObject(object meta)
@@ -69,15 +87,19 @@ namespace WebSharpJs.Script
             return (meta as ScriptObject) != null;
         }
 
+        internal static bool IsScriptableType(Type type)
+        {
+            return type.IsAttributeDefined<ScriptableTypeAttribute>(false);
+        }
+
         static bool IsScriptableType(object meta)
         {
-            return meta.GetType().IsAttributeDefined<ScriptableTypeAttribute>(false);
-
+            return IsScriptableType(meta.GetType());
         }
 
         static bool IsCallback(object meta)
         {
-            return IsCallbackFunction(meta?.GetType());
+            return IsScriptObjectCallback(meta?.GetType()) || IsCallbackFunction(meta?.GetType());
         }
 
         static bool IsArrayOfScriptableType (object meta)
@@ -157,10 +179,18 @@ namespace WebSharpJs.Script
             
             if (meta != null)
             {
-                var scriptCallback = Cast(meta, meta.GetType());
-                var typesToMap = meta.GetType().GetGenericArguments();
-                int[] mappings = TypeMappings(typesToMap);
-                return new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", CallbackMapping = mappings,   Value = scriptCallback};
+                var scriptCallbackProxy = meta as IScriptObjectCallbackProxy;
+                if (scriptCallbackProxy != null)
+                {
+                    return new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", MetaMapping = scriptCallbackProxy.TypeMappings, Value = scriptCallbackProxy.CallbackProxy };
+                }
+                else
+                {
+                    var scriptCallback = Cast(meta, meta.GetType());
+                    var typesToMap = meta.GetType().GetGenericArguments();
+                    var mappings = GenerateMetaData(typesToMap);
+                    return new ScriptParm { Category = (int)ScriptParmCategory.ScriptCallback, Type = "ScriptCallback", MetaMapping = mappings, Value = scriptCallback };
+                }
             }
             else
             {
@@ -272,40 +302,95 @@ namespace WebSharpJs.Script
             return parms;
         }
 
-        public static int[] TypeMappings(Type[] typesToMap, bool includeLast = false)
+        internal static MetaData[] GenerateMetaData(Type[] metaTypes, bool includeLast = false)
         {
-            int numTypes = includeLast ? typesToMap.Length : typesToMap.Length - 1;
-            var mappings = new int[numTypes * 2];
+            int numTypes = includeLast ? metaTypes.Length : metaTypes.Length - 1;
+            var mappings = new MetaData[numTypes];
             int gi = 0, cm = 0;
-            for (; gi < numTypes; gi++, cm = cm + 2)
+            for (; gi < numTypes; gi++, cm++)
             {
-                var gt = typesToMap[gi];
-                mappings[cm + 1] = gt.IsArray ? 1 : 0;
+                var gt = metaTypes[gi];
+                mappings[cm].IsArray = gt.IsArray ? 1 : 0;
                 if (gt.IsGenericType && typeof(ScriptObjectCollection<>).IsAssignableFrom(gt.GetGenericTypeDefinition()))
                 {
-                    mappings[cm] = (int)ScriptParmCategory.ScriptObjectCollection;
+                    mappings[cm].Category = (int)ScriptParmCategory.ScriptObjectCollection;
                 }
                 if (gt.IsSubclassOf(typeof(ScriptObject)))
                 {
-                    mappings[cm] = (int)ScriptParmCategory.ScriptObject;
+                    mappings[cm].Category = (int)ScriptParmCategory.ScriptObject;
                 }
                 else if (gt.IsDefined(typeof(ScriptableTypeAttribute), false))
                 {
-                    mappings[cm] = (int)ScriptParmCategory.ScriptableType;
+                    mappings[cm].Category = (int)ScriptParmCategory.ScriptableType;
+                    mappings[cm].ScriptableMapping = GenerateScriptableMap(gt);
 
                 }
                 else if (gt.IsArray && gt.GetElementType().IsDefined(typeof(ScriptableTypeAttribute), false))
                 {
-                    mappings[cm] = (int)ScriptParmCategory.ScriptableTypeArray;
+                    mappings[cm].Category = (int)ScriptParmCategory.ScriptableTypeArray;
+                    mappings[cm].ScriptableMapping = GenerateScriptableMap(gt);
                 }
                 else
                 {
-                    mappings[cm] = (int)ScriptParmCategory.ScriptValue;
+                    mappings[cm].Category = (int)ScriptParmCategory.ScriptValue;
                 }
 
             }
             return mappings;
         }
+
+        public static IDictionary<string, int> GenerateScriptableMap(Type type)
+        {
+
+            var metaMapping = new Dictionary<string, int>();
+
+            var scriptAlias = string.Empty;
+            PropertyInfo[] properties;
+
+            if (type.IsArray)
+                properties = type.GetElementType().GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            else
+                properties = type.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+            for (int i = 0; i < properties.Length; i++)
+            {
+                var propertyInfo = properties[i];
+
+                if (propertyInfo.GetIndexParameters().Length == 0 && propertyInfo.GetMethod != null)
+                {
+                    var propType = propertyInfo.PropertyType;
+                    scriptAlias = propertyInfo.Name;
+                    if (propertyInfo.IsDefined(typeof(ScriptableMemberAttribute), false))
+                    {
+                        var att = propertyInfo.GetCustomAttribute<ScriptableMemberAttribute>(false);
+                        scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                    }
+                    if (propType.IsGenericType && typeof(ScriptObjectCollection<>).IsAssignableFrom(propType.GetGenericTypeDefinition()))
+                    {
+                        metaMapping.Add(scriptAlias, (int)ScriptParmCategory.ScriptObjectCollection);
+                    }
+                    if (propType.IsSubclassOf(typeof(ScriptObject)))
+                    {
+                        metaMapping.Add(scriptAlias, (int)ScriptParmCategory.ScriptObject);
+                    }
+                    else if (propType.IsDefined(typeof(ScriptableTypeAttribute), false))
+                    {
+                        metaMapping.Add(scriptAlias, (int)ScriptParmCategory.ScriptableType);
+                    }
+                    else if (propType.IsArray && propType.GetElementType().IsDefined(typeof(ScriptableTypeAttribute), false))
+                    {
+                        metaMapping.Add(scriptAlias, (int)ScriptParmCategory.ScriptableTypeArray);
+                    }
+                    else
+                    {
+                        metaMapping.Add(scriptAlias, (int)ScriptParmCategory.ScriptValue);
+                    }
+                }
+            }
+
+            return metaMapping;
+        }
+
 
         internal static object MapToType(ScriptParmCategory category, int arrayFlag, object toMap, Type type = null)
         {
@@ -317,7 +402,24 @@ namespace WebSharpJs.Script
                 case ScriptParmCategory.ScriptableType:
                     return ScriptObjectHelper.AnonymousObjectToScriptableType(type, toMap);
                 case ScriptParmCategory.ScriptObject:
-                    return ScriptObjectHelper.AnonymousObjectToScriptObjectProxy(toMap);
+                    return ScriptObjectHelper.AnonymousObjectToScriptObjectType(type, toMap);
+                case ScriptParmCategory.ScriptableTypeArray:
+                    try
+                    {
+                        var objArray = toMap as object[];
+                        var arrayType = type.GetElementType();
+                        var array = Array.CreateInstance(arrayType, objArray.Length);
+                        for (int a = 0; a < array.Length; a++)
+                        {
+                            array.SetValue(ScriptObjectHelper.AnonymousObjectToScriptableType(arrayType, objArray[a]), a);
+                        }
+                        return array;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    return toMap;
                 default:
                     return toMap;
 

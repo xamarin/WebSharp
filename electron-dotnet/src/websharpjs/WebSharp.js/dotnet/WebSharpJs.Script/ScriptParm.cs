@@ -3,6 +3,8 @@
 //
 
 
+using System.Collections.Generic;
+
 namespace WebSharpJs.Script
 {
 
@@ -10,8 +12,15 @@ namespace WebSharpJs.Script
     {
         public int Category;
         public string Type;
-        public int[] CallbackMapping;
+        public MetaData[] MetaMapping;
         public object Value;
+    }
+
+    internal struct MetaData
+    {
+        public int Category;
+        public int IsArray;
+        public IDictionary<string, int> ScriptableMapping;
     }
 
     internal enum ScriptParmCategory

@@ -136,7 +136,7 @@ namespace WebSharpJs.Electron
             return new Dialog(sop);
         }
 
-        public async Task<string[]> ShowOpenDialog(OpenDialogOptions options, Func<object, Task<object>> callback = null)
+        public async Task<string[]> ShowOpenDialog(OpenDialogOptions options, ScriptObjectCallback<string[]> callback = null)
         {
             object[] result;
             if (callback == null)
@@ -148,7 +148,7 @@ namespace WebSharpJs.Electron
             return (result == null ? new string[] { } : Array.ConvertAll(result, item => item.ToString()));
         }
 
-        public async Task<string> ShowSaveDialog(SaveDialogOptions options, Func<object, Task<object>> callback = null)
+        public async Task<string> ShowSaveDialog(SaveDialogOptions options, ScriptObjectCallback<string[]> callback = null)
         {
             if (callback == null)
             {
@@ -158,7 +158,7 @@ namespace WebSharpJs.Electron
                 return await Invoke<string>("showSaveDialog", options, callback);
         }
 
-        public async Task<int> ShowMessageBox(MessageBoxOptions options, Func<object, Task<object>> callback = null)
+        public async Task<int> ShowMessageBox(MessageBoxOptions options, ScriptObjectCallback<string[]> callback = null)
         {
             if (callback == null)
             {

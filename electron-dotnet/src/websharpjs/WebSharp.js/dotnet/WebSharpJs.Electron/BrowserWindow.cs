@@ -508,7 +508,7 @@ namespace WebSharpJs.Electron
             return await Invoke<byte[]>("getNativeWindowHandle");
         }
 
-        public async Task<object> HookWindowMessage(int message, Func<object, Task<object>> callback)
+        public async Task<object> HookWindowMessage(int message, ScriptObjectCallback callback)
         {
             return await Invoke<object>("hookWindowMessage", message, callback);
         }
@@ -558,7 +558,7 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("blurWebView");
         }
 
-        public async Task<object> CapturePage(Rectangle? rect = null, Func<NativeImage, Task<object>> callback = null)
+        public async Task<object> CapturePage(Rectangle? rect = null, ScriptObjectCallback<NativeImage> callback = null)
         {
             if (rect != null && rect.HasValue)
                 return await Invoke<object>("capturePage", rect.Value, callback);

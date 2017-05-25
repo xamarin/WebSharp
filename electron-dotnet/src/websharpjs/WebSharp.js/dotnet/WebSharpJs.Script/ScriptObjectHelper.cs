@@ -149,6 +149,16 @@ namespace WebSharpJs.Script
             return null;
         }
 
+        public static object AnonymousObjectToScriptObjectType(Type type, dynamic source)
+        {
+            var proxy = AnonymousObjectToScriptObjectProxy(source);
+            if (proxy != null)
+                return Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { proxy }, null);
+            else
+                return null;
+
+        }
+
         public static bool DictionaryToScriptableType(IDictionary<string, object> parm, object obj)
         {
 
@@ -163,10 +173,22 @@ namespace WebSharpJs.Script
                 {
                     if (mappings.ContainsKey(key))
                     {
-                        var pi = parmType.GetTypeInfo().GetProperty(mappings[key]);
+                        var pi = parmType.GetProperty(mappings[key]);
                         if (pi.SetMethod != null)
                         {
-                            pi.SetValue(obj, parm[key]);
+                            var scriptObject = parm[key] as IDictionary<string, object>;
+                            if (scriptObject != null)
+                            {
+                                if (scriptObject.ContainsKey("websharp_id"))
+                                {
+                                    pi.SetValue(obj, AnonymousObjectToScriptObjectType(pi.PropertyType, parm[key]));
+                                }
+
+                            }
+                            else
+                            {
+                                pi.SetValue(obj, parm[key]);
+                            }
                             success = true;
                         }
                     }

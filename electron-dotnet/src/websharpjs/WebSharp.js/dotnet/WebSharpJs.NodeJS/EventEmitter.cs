@@ -31,7 +31,7 @@ namespace WebSharpJs.NodeJS
             return new EventEmitter(sop);
         }
 
-        public async Task<EventEmitter> AddListener(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> AddListener(string eventName, IScriptObjectCallback listener)
         {
             return await Invoke<EventEmitter>("addListener", eventName, listener);
         }
@@ -61,22 +61,22 @@ namespace WebSharpJs.NodeJS
             return await Invoke<object[]>("listeners", eventName);
         }
 
-        public async Task<EventEmitter> On(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> On(string eventName, IScriptObjectCallback listener)
         {
             return await Invoke<EventEmitter>("on", eventName, listener);
         }
 
-        public async Task<EventEmitter> Once(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> Once(string eventName, IScriptObjectCallback listener)
         {
             return await Invoke<EventEmitter>("once", eventName, listener);
         }
 
-        public async Task<EventEmitter> PrependListener(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> PrependListener(string eventName, IScriptObjectCallback listener)
         {
             return await Invoke<EventEmitter>("prependListener", eventName, listener);
         }
 
-        public async Task<EventEmitter> PrependOnceListener(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> PrependOnceListener(string eventName, IScriptObjectCallback listener)
         {
             return await Invoke<EventEmitter>("prependOnceListener", eventName, listener);
         }
@@ -86,7 +86,7 @@ namespace WebSharpJs.NodeJS
             return await Invoke<EventEmitter>("removeAllListeners", eventName);
         }
 
-        public async Task<EventEmitter> RemoveListener(string eventName, Func<object, Task<object>> listener)
+        public async Task<EventEmitter> RemoveListener(string eventName, IScriptObjectCallback listener)
         {
             return await Invoke<EventEmitter>("removeListener", eventName, listener);
         }

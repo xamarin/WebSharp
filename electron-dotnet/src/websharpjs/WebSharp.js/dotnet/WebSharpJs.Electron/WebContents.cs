@@ -201,7 +201,7 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("setZoomFactor", factor);
         }
 
-        public async Task<object> GetZoomFactor(Func<object, Task<object>> callback)
+        public async Task<object> GetZoomFactor(ScriptObjectCallback<float> callback)
         {
             return await Invoke<object>("getZoomFactor", callback);
         }
@@ -211,7 +211,7 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("setZoomLevel", level);
         }
 
-        public async Task<object> GetZoomLevel(Func<object, Task<object>> callback)
+        public async Task<object> GetZoomLevel(ScriptObjectCallback<float> callback)
         {
             return await Invoke<object>("getZoomLevel", callback);
         }
@@ -322,12 +322,12 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("stopFindInPage", aType);
         }
 
-        public async Task<object> HasServiceWorker(Func<object, Task<object>> hasServiceWorker)
+        public async Task<object> HasServiceWorker(ScriptObjectCallback<bool> hasServiceWorker)
         {
             return await Invoke<object>("hasServiceWorker", hasServiceWorker);
         }
 
-        public async Task<object> UnregisterServiceWorker(Func<object, Task<object>> fullfilled)
+        public async Task<object> UnregisterServiceWorker(ScriptObjectCallback<bool> fullfilled)
         {
             return await Invoke<object>("unregisterServiceWorker", fullfilled);
         }
@@ -476,12 +476,12 @@ namespace WebSharpJs.Electron
             return await GetProperty<int>("id");
         }
 
-        public async Task<object> CapturePage(Func<object, Task<object>> image)
+        public async Task<object> CapturePage(ScriptObjectCallback<NativeImage> image)
         {
             return await Invoke<object>("capturePage", image);
         }
 
-        public async Task<object> CapturePage(Rectangle rect, Func<object, Task<object>> image)
+        public async Task<object> CapturePage(Rectangle rect, ScriptObjectCallback<NativeImage> image)
         {
             return await Invoke<object>("capturePage", rect, image);
         }

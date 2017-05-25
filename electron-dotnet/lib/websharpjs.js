@@ -67,15 +67,54 @@
 
     var UnwrapArgs = function (args) {
 
-        const callbackArg = function(arg, type = 3, isarray = 0)
+        const callbackArg = function(arg, metaMap = { Category : 3, IsArray : 0 })
         {
-            // We will treat Error differently
-            if (type === 2)
+            if (metaMap.Category === 6 && arg != null) // ScriptableTypeArray - an array of ScriptableTypes
+            {
+                let arrayElementMeta = metaMap;
+                arrayElementMeta.Category = 2;
+                if (Array.isArray(arg))
+                {
+                    let argArray = []
+                    for (var ai = 0; ai < arg.length; ai++)
+                    {
+                        argArray.push(callbackArg(arg[ai], arrayElementMeta));
+                    }
+                    return argArray;
+                }
+                else
+                {
+                    return callbackArg(arg, metaMap);
+                }
+            }
+            else if (metaMap.Category === 2 && arg !== null) // ScriptableType
             {
                 let scriptableType = {};
                 Object.getOwnPropertyNames(arg).forEach(function (k) {
-                    if (v8Util.getHiddenValue(arg[k], 'websharpId'))
-                       scriptableType[k] = ObjectToScriptObject(arg[k]);
+                    // if the propery for the given key is an object
+                    // we need to handle it special.
+                    if (arg[k] === Object(arg[k]))
+                    {
+                        // if we have a scriptobject already then use it
+                        if (v8Util.getHiddenValue(arg[k], 'websharpId'))
+                            scriptableType[k] = ObjectToScriptObject(arg[k]);
+                        else
+                        {
+                            // check our type mappings
+                            if (metaMap.ScriptableMapping !== null && k in metaMap.ScriptableMapping)
+                            {
+                                // if it exists in the type mappings and it is specifically a ScriptObject category
+                                // that we have not seen before then we generate a new ScriptObject Handle
+                                let category = metaMap.ScriptableMapping[k];
+                                if (category === 1) // ScriptObject
+                                    scriptableType[k] = ObjectToScriptObject(arg[k]);
+                                else
+                                    scriptableType[k] = arg[k];
+                            }
+                            else
+                                scriptableType[k] = arg[k];
+                        }
+                    }
                     else
                         scriptableType[k] = arg[k];
                 });
@@ -83,7 +122,7 @@
                 return scriptableType;
             }
 
-            if (arg === Object(arg))
+            if (arg === Object(arg) && v8Util.getHiddenValue(arg, 'websharpId'))
                 return ObjectToScriptObject(arg);
             else
                 return arg;
@@ -99,62 +138,18 @@
                 // We only receive one object in our managed code.
                 if (arguments)
                 {
-                    if (arguments.length === 1)
+                    callbackData = [];
+                    var args = Array.from(arguments);
+                    for (var i = 0; i < args.length; i++) 
                     {
-                        let args = arguments;
-                        if (Array.isArray(args[0]))
-                        {
-                            let argArray = []
-                            for (var ai = 0; ai < args[0].length; ai++)
-                            {
-                                argArray.push(callbackArg(args[0][ai]));
-                            }
-                            callbackData = argArray;
-                            try {
-                                // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
-                                // later.
-                                func.Value.apply(this, callbackData);
-                            }
-                            catch (ex) { ErrorHandler.Exception(ex); }
-                        }
-                        else
-                        {
-                            callbackData = callbackArg(args[0], func.CallbackMapping[0], func.CallbackMapping[1]);
-                            try {
-                                // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
-                                // later.
-                                func.Value.apply(this, [callbackData]);
-                            }
-                            catch (ex) { ErrorHandler.Exception(ex); }
-                        }
+                        callbackData.push(callbackArg(args[i], func.MetaMapping[i]));
                     }
-                    else
-                    {
-                        callbackData = [];
-                        var args = Array.from(arguments);
-                        for (var i = 0; i < args.length; i++) {
-                            if (Array.isArray(args[i]))
-                            {
-                                let argArray = []
-                                for (var ai = 0; ai < args[i].length; ai++)
-                                {
-                                    argArray.push(callbackArg(args[i][ai]));
-                                }
-                                callbackData.push(argArray);
-                            }
-                            else
-                            {
-                                callbackData.push(callbackArg(args[i]));
-                            }
-                        }
-                        try {
-                            // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
-                            // later.
-                            func.Value.apply(this, [callbackData]);
-                        }
-                        catch (ex) { ErrorHandler.Exception(ex); }
-                        }
-
+                    try {
+                        // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
+                        // later.
+                        func.Value.apply(this, [callbackData]);
+                    }
+                    catch (ex) { ErrorHandler.Exception(ex); }
                 }
                 else
                     try {
@@ -189,9 +184,6 @@
                         {
                             scriptableTypeArray.push(parmToMeta(stpArray[ai]));
                         }
-                        // Object.getOwnPropertyNames(stp).forEach(function (k) {
-                        //     scriptableType[k] = parmToMeta(stp[k]);
-                        // });
                         return scriptableTypeArray;
                     default:
                         return value.Value;
