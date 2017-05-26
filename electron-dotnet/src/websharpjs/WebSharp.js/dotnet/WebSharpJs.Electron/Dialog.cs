@@ -148,7 +148,7 @@ namespace WebSharpJs.Electron
             return (result == null ? new string[] { } : Array.ConvertAll(result, item => item.ToString()));
         }
 
-        public async Task<string> ShowSaveDialog(SaveDialogOptions options, ScriptObjectCallback<string[]> callback = null)
+        public async Task<string> ShowSaveDialog(SaveDialogOptions options, ScriptObjectCallback<string> callback = null)
         {
             if (callback == null)
             {
@@ -158,7 +158,7 @@ namespace WebSharpJs.Electron
                 return await Invoke<string>("showSaveDialog", options, callback);
         }
 
-        public async Task<int> ShowMessageBox(MessageBoxOptions options, ScriptObjectCallback<string[]> callback = null)
+        public async Task<int> ShowMessageBox(MessageBoxOptions options, ScriptObjectCallback<int> callback = null)
         {
             if (callback == null)
             {
