@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using WebSharpJs.Electron;
 using WebSharpJs.NodeJS;
+using WebSharpJs.Script;
 
 //namespace MainWindow
 //{
@@ -37,13 +38,12 @@ using WebSharpJs.NodeJS;
                 );
 
                 // Emitted when the window is closed.
-                await mainWindow.On("closed", async (evt) => 
+                await mainWindow.On("closed", new ScriptObjectCallback<Event>(async (evt) => 
                 {
                     await console.Log("Received closed event");
                     System.Console.WriteLine("Received closed event");
                     mainWindow = null;
-                    return null;
-                });
+                }));
 
                 await console.Log($"Loading: file://{__dirname}/index.html");
             }
