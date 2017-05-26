@@ -38,37 +38,41 @@ using WebSharpJs.Script;
                             var webContents = t.Result;
 
                             // Subscribe to the "context-menu" event on the WebContents
-                            webContents?.On("context-menu", async (cmevt) => 
+                            webContents?.On("context-menu",
+                            new ScriptObjectCallback(async (cmevt) =>
                             {
                                 // if we have not created the menu then do it now
                                 if (menu == null)
                                 {
                                     menu = await Menu.Create();
-                                    await menu.Append(await MenuItem.Create(new MenuItemOptions() { Label = "Hello", Click = MenuItemClicked }));
+                                    await menu.Append(await MenuItem.Create(new MenuItemOptions() { Label = "Hello", Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event>(MenuItemClicked) }));
                                     await menu.Append(await MenuItem.Create(new MenuItemOptions() { Type = MenuItemType.Separator }));
                                     await menu.Append(await MenuItem.Create(
-                                                        new MenuItemOptions() {Label = "View",
-                                                                SubMenuOptions = new MenuItemOptions[]
+                                                        new MenuItemOptions()
+                                                        {
+                                                            Label = "View",
+                                                            SubMenuOptions = new MenuItemOptions[]
                                                                 {
-                                                                    new MenuItemOptions() {Role = MenuItemRole.Reload},
-                                                                    new MenuItemOptions() {Role = MenuItemRole.ToggleDevTools},
-                                                                    new MenuItemOptions() {Type = MenuItemType.Separator},
-                                                                    new MenuItemOptions() {Role = MenuItemRole.ResetZoom},
-                                                                    new MenuItemOptions() {Role = MenuItemRole.ZoomIn},
-                                                                    new MenuItemOptions() {Role = MenuItemRole.ZoomOut},
-                                                                    new MenuItemOptions() {Type = MenuItemType.Separator},
-                                                                    new MenuItemOptions() {Role = MenuItemRole.ToggleFullScreen},
+                                                                        new MenuItemOptions() {Role = MenuItemRole.Reload},
+                                                                        new MenuItemOptions() {Role = MenuItemRole.ToggleDevTools},
+                                                                        new MenuItemOptions() {Type = MenuItemType.Separator},
+                                                                        new MenuItemOptions() {Role = MenuItemRole.ResetZoom},
+                                                                        new MenuItemOptions() {Role = MenuItemRole.ZoomIn},
+                                                                        new MenuItemOptions() {Role = MenuItemRole.ZoomOut},
+                                                                        new MenuItemOptions() {Type = MenuItemType.Separator},
+                                                                        new MenuItemOptions() {Role = MenuItemRole.ToggleFullScreen},
                                                                 }
                                                         }
                                     ));
                                     await menu.Append(await MenuItem.Create(new MenuItemOptions() { Type = MenuItemType.Separator }));
-                                    await menu.Append(await MenuItem.Create(new MenuItemOptions() { Label = "WebSharp", Type = MenuItemType.Checkbox, Checked = true, Click = MenuItemClicked }));
+                                    await menu.Append(await MenuItem.Create(new MenuItemOptions() { Label = "WebSharp", Type = MenuItemType.Checkbox, Checked = true, Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event>(MenuItemClicked) }));
                                 }
 
                                 // popup our menu here
-                                menu.Popup();
-                                return null;
-                            } );
+                                await menu.Popup();
+                                //return null;
+                            }));
+
 
                             // Open the DevTools
                             webContents?.OpenDevTools(DevToolsMode.Bottom);    
@@ -76,13 +80,12 @@ using WebSharpJs.Script;
                 );
 
                 // Emitted when the window is closed.
-                await mainWindow.On("closed", async (evt) => 
+                await mainWindow.On("closed", new ScriptObjectCallback<Event>(async (evt) => 
                 {
                     await console.Log("Received closed event");
                     System.Console.WriteLine("Received closed event");
                     mainWindow = null;
-                    return null;
-                });
+                }));
 
                 await console.Log($"Loading: file://{__dirname}/index.html");
             }
@@ -91,19 +94,19 @@ using WebSharpJs.Script;
             return await mainWindow.GetId();
         }
 
-        async Task<object> MenuItemClicked (object[] mi)
+        async Task MenuItemClicked(ICallbackResult result)
         {
             try
             {
-                var menuItemSelected = (MenuItem)(ScriptObjectHelper.AnonymousObjectToScriptObjectProxy(mi[0]));
-                console.Log($"MenuItem: {await menuItemSelected.GetLabel()} was selected and the item is checked {await menuItemSelected.GetChecked()}");
+                var state = (object[])result.CallbackState;
+                var menuItemSelected = (MenuItem)state[0];
+                await console.Log($"MenuItem: {await menuItemSelected.GetLabel()} was selected and the item is checked {await menuItemSelected.GetChecked()}");
             }
             catch (Exception exc)
             {
                 System.Console.WriteLine(exc);
             }
 
-            return null;
         }
     }
 //}
