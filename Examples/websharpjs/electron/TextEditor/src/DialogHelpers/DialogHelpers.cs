@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text;
 
-using WebSharpJs.NodeJS;
 using WebSharpJs.DOM;
 using WebSharpJs.Electron;
+using WebSharpJs.Script;
 
 //namespace DialogHelpers
 //{
@@ -28,8 +28,7 @@ public class Startup
 
         try
         {
-            // Since we are executing from the Renderer process we have to use
-            // dialog remote process.
+            // Obtain a reference to a Dialog instance.
             dialog = await Dialog.Instance();
 
             var page = new HtmlPage();
@@ -39,29 +38,33 @@ public class Startup
             var openFile = await document.GetElementById("openFile");
 
             // Attach a "click" event handler to the openFile HtmlElement
-            await openFile.AttachEvent("click", new EventHandler(async (sender, evt) =>
-            {
-                // Create an OpenDialogOptions reference with custom FileFilters
-                var openOptions = new OpenDialogOptions()
+            await openFile.AttachEvent("click", 
+                new EventHandler(async (sender, evt) =>
                 {
-                    Filters = new FileFilter[]
-                    {
-                        new FileFilter() { Name = "text", Extensions = new string[] {"txt"}},
-                        new FileFilter() { Name = "All Files", Extensions = new string[] {"*"} }
-                    }
-                };
 
-                // Now show the open dialog passing in the options created previously
-                // and a call back function when a file is selected.
-                // If a call back function is not specified then the ShowOpenDialog function
-                // will return an array of the selected file(s) or an empty array if no
-                // files are selected.
-                await dialog.ShowOpenDialog(
-                    openOptions,
-                    openFileCallback
-                );
-            }
-            ));
+
+                    // Create an OpenDialogOptions reference with custom FileFilters
+                    var openOptions = new OpenDialogOptions()
+                    {
+                        Filters = new FileFilter[]
+                        {
+                            new FileFilter() { Name = "text", Extensions = new string[] {"txt"}},
+                            new FileFilter() { Name = "All Files", Extensions = new string[] {"*"} }
+                        }
+                    };
+
+                    // Now show the open dialog passing in the options created previously
+                    // and a call back function when a file is selected.
+                    // If a call back function is not specified then the ShowOpenDialog function
+                    // will return an array of the selected file(s) or an empty array if no
+                    // files are selected.
+                    await dialog.ShowOpenDialog(
+                        openOptions,
+                        new ScriptObjectCallback<string[]> (openFileCallback)
+                    );
+            
+                })
+            );
 
             // Get the HtmlElement with the id of "saveFile"
             var saveFile = await document.GetElementById("saveFile");
@@ -85,7 +88,7 @@ public class Startup
                 // will return a string or an empty string if no file was specified.
                 await dialog.ShowSaveDialog(
                     saveOptions,
-                    saveFileCallback
+                    new ScriptObjectCallback<string> (saveFileCallback)
                 );
             }
             ));
@@ -103,14 +106,14 @@ public class Startup
     /// </summary>
     /// <param name="files">File(s) selected</param>
     /// <returns>null</returns>
-    async Task<object> openFileCallback(object files)
+    async Task openFileCallback(ICallbackResult ar)
     {
- 
+        
         // See if we have any file(s) selected
-        var fileNames = files as object[];
+        var fileNames = ar.CallbackState as object[];
 
         if (fileNames == null || fileNames.Length == 0)
-            return null;
+            return;
 
         // Grab the first file name specified
         var fileName = (string)fileNames[0];
@@ -129,15 +132,13 @@ public class Startup
         // and set it's "value" property to the text that was read from the file
         await editor.SetProperty("value", System.Text.Encoding.ASCII.GetString(result));
 
-        // return null to end the task.
-        return null;
     }
 
-    async Task<object> saveFileCallback(object fileName)
+    async Task saveFileCallback(ICallbackResult ar)
     {
-
+        var fileName = ar.CallbackState;
         if (fileName == null || string.IsNullOrEmpty((string)fileName))
-            return null;
+            return;
 
         // Get a reference to the "editor" HtmlElement
         var editor = await document.GetElementById("editor");
@@ -168,8 +169,6 @@ public class Startup
             await dialog.ShowErrorBox("There was an error saving the file.", exc.Message);
         }
 
-        // return null to end the task.
-        return null;
     }
 }
 //}
