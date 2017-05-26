@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 
 using WebSharpJs.Electron;
+using WebSharpJs.Script;
 
 //namespace Ping
 //{
@@ -26,11 +27,10 @@ using WebSharpJs.Electron;
 
                 await console.Log(await ipcRenderer.SendSync("synchronous-message", "synchronous ping")); // prints "pong"
 
-                ipcRenderer.On("asynchronous-reply", (async (args) =>
+                ipcRenderer.On("asynchronous-reply", new ScriptObjectCallback<Event, object>(async (args) =>
                 {
-                    var argsArray = args as object[];
+                    var argsArray = args.CallbackState as object[];
                     await console.Log(argsArray[1]); // prints "pong"
-                    return null;
                 }));
                 await ipcRenderer.Send("asynchronous-message", "asynchronous ping");
 
