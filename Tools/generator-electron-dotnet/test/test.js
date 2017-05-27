@@ -151,7 +151,7 @@ describe('test electron-dotnet generator', function () {
                         "electron": env.electronVersion
                     }
                 };
-                assert.file(['package.json', 'README.md', '.vscodeignore', 'index.html', 'main.js', 'renderer.js' , './src/Bridge/Bridge.cs', './src/Bridge/Bridge.csproj', './src/testCom.js', '.gitignore' ]);
+                assert.file(['package.json', 'README.md', '.vscodeignore', 'index.html', 'main.js', 'renderer.js' , './src/Main/MainWindow.cs', './src/Main/MainWindow.csproj', './src/Bridge/Bridge.cs', './src/Bridge/Bridge.csproj', './src/testCom.js', '.gitignore' ]);
 
                 var body = fs.readFileSync('package.json', 'utf8');
 

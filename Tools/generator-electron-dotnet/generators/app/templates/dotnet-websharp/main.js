@@ -6,23 +6,25 @@ const {app, BrowserWindow} = require('electron')
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
 
+var dotnet = require('electron-dotnet');
+//var main = dotnet.func("./src/Main/bin/Debug/MainWindow.dll");
+var main = dotnet.func("./src/Main/MainWindow.cs");
+
 function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 600, height: 400})
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`)
-
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
+    main(__dirname, function (error, result) {
+        if (error) throw error;
+        if (result) {
+            mainWindow = BrowserWindow.fromId(result);
+            // Emitted when the window is closed.
+            mainWindow.on('closed', function () {
+              // Dereference the window object, usually you would store windows
+              // in an array if your app supports multi windows, this is the time
+              // when you should delete the corresponding element.
+              mainWindow = null
+            })
+            
+        }
+      });
 }
 
 // This method will be called when Electron has finished
