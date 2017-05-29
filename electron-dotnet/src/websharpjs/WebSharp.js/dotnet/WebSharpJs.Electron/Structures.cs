@@ -231,4 +231,21 @@ namespace WebSharpJs.Electron
 
     }
 
+    [ScriptableType]
+    public class IpcMainEvent
+    {
+        [ScriptableMember(ScriptAlias = "returnValue")]
+        public object ReturnValue { get; set; } = string.Empty;
+        [ScriptableMember(ScriptAlias = "sender")]
+        public WebContents Sender { get; set; }
+
+    }
+
+    [ScriptableType]
+    public class IpcRendererEvent
+    {
+        [ScriptableMember(ScriptAlias = "sender")]
+        public IpcRenderer Sender { get; set; }
+    }
+
 }

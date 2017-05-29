@@ -55,6 +55,12 @@ namespace WebSharpJs.Script
         {
             Callback = callbackDelegate;
             argumentTypes = this.GetType().GetGenericArguments();
+            // if their are no generic arguments on the class then this could be
+            // an object that extends one of the ScripObjectCallback<,> classes
+            // so we will also try that.
+            if (argumentTypes == null || argumentTypes.Length == 0)
+                argumentTypes = this.GetType().BaseType.GetGenericArguments();
+
             mappings = ScriptObjectUtilities.GenerateMetaData(argumentTypes, true);
             callbackProxy = (async (evt) =>
             {

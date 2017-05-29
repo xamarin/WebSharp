@@ -5,6 +5,13 @@ using WebSharpJs.NodeJS;
 
 namespace WebSharpJs.Electron
 {
+
+    public class IpcRendererEventListener : ScriptObjectCallback<IpcRendererEvent, object[]>
+    {
+        public IpcRendererEventListener(ScriptObjectCallbackDelegate callbackDelegate) : base(callbackDelegate)
+        { }
+    }
+
     public class IpcRenderer : EventEmitter
     {
 
@@ -39,6 +46,31 @@ namespace WebSharpJs.Electron
         public async Task<object> SendSync(string eventName, params object[] args)
         {
             return await Invoke<object>("sendSync", eventName, args);
+        }
+
+        public async Task<EventEmitter> On(string eventName, IpcMainEventListener listener)
+        {
+            return await Invoke<EventEmitter>("on", eventName, listener);
+        }
+
+        public async Task<IpcMain> Once(string eventName, IpcMainEventListener listener)
+        {
+            return await Invoke<IpcMain>("once", eventName, listener);
+        }
+
+        public async Task<IpcRenderer> AddListener(string eventName, IpcRendererEventListener listener)
+        {
+            return await Invoke<IpcRenderer>("addListener", eventName, listener);
+        }
+
+        public async Task<IpcRenderer> RemoveListener(string eventName, IpcRendererEventListener listener)
+        {
+            return await Invoke<IpcRenderer>("removeListener", eventName, listener);
+        }
+
+        public async new Task<IpcRenderer> RemoveAllListeners(string eventName)
+        {
+            return await Invoke<IpcRenderer>("removeAllListeners", eventName);
         }
 
     }
