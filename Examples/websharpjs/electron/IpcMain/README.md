@@ -4,6 +4,8 @@ Example of IPC Communications between Renderer (uses IpcRenderer) and Main (uses
 
 Communicate asynchronously from a renderer process to the main process.
 
+## Features
+
 The `IpcMain` module is an instance of the `EventEmitter` class. When used in the main process, it handles asynchronous and synchronous messages sent from a renderer process (web page). Messages sent from a renderer will be emitted to this module.
 
 Inside `MainWindow.cs` you will find:
