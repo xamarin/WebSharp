@@ -89,6 +89,11 @@ More information can be found in the [ipcRenderer documentation](https://github.
 
 View warning note in the Electron documentation for IpcRenderer:  https://electron.atom.io/docs/api/ipc-renderer/#ipcrenderersendsyncchannel-arg1-arg2-
 
+More information on synchronous and asynchronous communications:
+https://github.com/electron/electron/issues/5750
+
+
+
 ## Known Issues
 
 
