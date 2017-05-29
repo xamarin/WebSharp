@@ -21,14 +21,14 @@ This folder contains all of the files necessary for your application.
 |--- package.json                     // Various project metadata
 |--- README.md
 |--- renderer.js                      // Required in index.html and executed in the renderer process for that window 
-|--- Main                             
-    |--- nuget.config                 // Configuring NuGet behavior
-    |--- packages.config              // Used to track installed packages
-    |--- MainWindow_macosx.csproj     // MacOSX project  
-    |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
-    |--- MainWindow.csproj            // Windows project          
 |--- src                              // sources
      |--- <%- name %>.js                    // javascript code implementation
+     |--- Main                             
+          |--- nuget.config                 // Configuring NuGet behavior
+          |--- packages.config              // Used to track installed packages
+          |--- MainWindow_macosx.csproj     // MacOSX project  
+          |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
+          |--- MainWindow.csproj            // Windows project          
      |--- <%- wsClassName %>
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
