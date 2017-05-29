@@ -1,0 +1,14 @@
+{
+    "name": "ipcmain",
+    "displayName": "IpcMain",
+    "description": "Example of IPC Communications between Renderer (uses IpcRenderer) and Main (uses IpcMain) Processes.",
+    "version": "1.0.0",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}
