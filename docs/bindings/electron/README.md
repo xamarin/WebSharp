@@ -6,7 +6,7 @@
 * [contentTracing](api/content-tracing.md) :exclamation:
 * [dialog](api/dialog.md) :running:
 * [globalShortcut](api/global-shortcut.md) :exclamation:
-* [ipcMain](api/ipc-main.md) :exclamation:
+* [ipcMain](api/ipc-main.md) :muscle:
 * [Menu](api/menu.md) :running:
 * [MenuItem](api/menu-item.md) :running:
 * [net](api/net.md) :exclamation:
