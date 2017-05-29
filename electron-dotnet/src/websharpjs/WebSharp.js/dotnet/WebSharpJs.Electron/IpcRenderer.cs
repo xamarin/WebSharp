@@ -48,6 +48,11 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("sendSync", eventName, args);
         }
 
+        public async Task<object> SendToHost(string eventName, params object[] args)
+        {
+            return await Invoke<object>("sendToHost", eventName, args);
+        }
+
         public async Task<EventEmitter> On(string eventName, IpcMainEventListener listener)
         {
             return await Invoke<EventEmitter>("on", eventName, listener);

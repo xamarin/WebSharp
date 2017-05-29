@@ -21,7 +21,7 @@
 ### Modules for the Renderer Process (Web Page):
 
 * [desktopCapturer](api/desktop-capturer.md)  :exclamation:
-* [ipcRenderer](api/ipc-renderer.md) :running:
+* [ipcRenderer](api/ipc-renderer.md) :muscle:
 * [remote](api/remote.md) :exclamation:
 * [webFrame](api/web-frame.md) :exclamation:
 

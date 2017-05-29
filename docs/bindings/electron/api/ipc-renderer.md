@@ -8,4 +8,4 @@
 - [x] `ipcRenderer.removeAllListeners([channel])`
 - [x] `ipcRenderer.send(channel[, arg1][, arg2][, ...])`
 - [x] `ipcRenderer.sendSync(channel[, arg1][, arg2][, ...])`
-- [ ] `ipcRenderer.sendToHost(channel[, arg1][, arg2][, ...])`
+- [x] `ipcRenderer.sendToHost(channel[, arg1][, arg2][, ...])`
