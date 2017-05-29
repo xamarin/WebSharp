@@ -1,0 +1,14 @@
+{
+    "name": "desktopcapturer",
+    "displayName": "DesktopCapturer",
+    "description": "Example shows how to capture video from a desktop windows using Electron DesktopCapturer. ",
+    "version": "1.0.0",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}
