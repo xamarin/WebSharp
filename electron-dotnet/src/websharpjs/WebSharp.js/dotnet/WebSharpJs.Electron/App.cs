@@ -186,6 +186,16 @@ namespace WebSharpJs.Electron
         {
             return await Invoke<object>("setAboutPanelOptions", options);
         }
+
+        public async Task<bool> MakeSingleInstance(ScriptObjectCallback<string[], string> callback)
+        {
+            return await Invoke<bool>("makeSingleInstance", callback);
+        }
+
+        public async Task<object> ReleaseSingleInstance()
+        {
+            return await Invoke<object>("releaseSingleInstance");
+        }
     }
 
     public enum AppPathName

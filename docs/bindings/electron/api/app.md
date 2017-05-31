@@ -25,8 +25,8 @@
 - [ ] `app.setUserTasks(tasks)` _Windows_
 - [ ] `app.getJumpListSettings()` _Windows_
 - [ ] `app.setJumpList(categories)` _Windows_
-- [ ] `app.makeSingleInstance(callback)`
-- [ ] `app.releaseSingleInstance()`
+- [x] `app.makeSingleInstance(callback)`
+- [x] `app.releaseSingleInstance()`
 - [ ] `app.setUserActivity(type, userInfo[, webpageURL])` _macOS_
 - [ ] `app.getCurrentActivityType()` _macOS_
 - [x] `app.setAppUserModelId(id)` _Windows_
