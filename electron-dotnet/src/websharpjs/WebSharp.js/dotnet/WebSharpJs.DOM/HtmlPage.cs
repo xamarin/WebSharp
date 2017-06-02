@@ -38,7 +38,8 @@ namespace WebSharpJs.DOM
                                     try { 
                                         let browserInfo = {}; 
                                         browserInfo['appName'] = navigator.appName;
-                                        browserInfo['appVersion'] = navigator.appVersion;
+                                        //browserInfo['appVersion'] = navigator.appVersion;
+                                        browserInfo['appVersion'] = process.versions.chrome;
                                         browserInfo['userAgent'] = navigator.userAgent;
                                         browserInfo['platform'] = navigator.platform;
                                         browserInfo['cookieEnabled'] = navigator.cookieEnabled;
