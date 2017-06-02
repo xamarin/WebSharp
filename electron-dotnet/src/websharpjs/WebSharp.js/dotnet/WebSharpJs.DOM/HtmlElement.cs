@@ -111,5 +111,15 @@ namespace WebSharpJs.DOM
             await Invoke<object>("removeChild", element);
         }
 
+        public async Task<HtmlElement> QuerySelector(string tagName)
+        {
+            return await Invoke<HtmlElement>("querySelector", tagName); ;
+        }
+
+        public async Task<ScriptObjectCollection<HtmlElement>> QuerySelectorAll(string tagName)
+        {
+            return await Invoke<ScriptObjectCollection<HtmlElement>>("querySelectorAll", tagName); ;
+        }
+
     }
 }

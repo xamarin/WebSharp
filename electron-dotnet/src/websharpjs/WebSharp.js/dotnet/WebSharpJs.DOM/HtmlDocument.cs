@@ -78,6 +78,17 @@ namespace WebSharpJs.DOM
             return await Invoke<ScriptObjectCollection<HtmlElement>>("getElementsByTagName", tagName); ;
         }
 
+        public async Task<HtmlElement> QuerySelector(string tagName)
+        {
+            return await Invoke<HtmlElement>("querySelector", tagName); ;
+        }
+
+        public async Task<ScriptObjectCollection<HtmlElement>> QuerySelectorAll(string tagName)
+        {
+            return await Invoke<ScriptObjectCollection<HtmlElement>>("querySelectorAll", tagName); ;
+        }
+
+
         public async Task<object> Submit()
         {
             // Posts user data from the FORM element in the browser's Document Object Model (DOM) to the server.
