@@ -18,6 +18,34 @@ Besides the differences the developer will still work with managed objects in th
 | HtmlElement | Represents an HTML element in the page DOM.  There exists a full range of manipulation methods to interact with an `HtmlElement`  | 
 | HtmlWindow | Represents an `Electron` window object in managed code via `Electron`'s BrowserWindowProxy.  Notice that this is not a normal `JavaScript` window as `Electron` intercepts the object and provides their own implementation.  For instance the `Prompt` method of the this object will fail as `Electron` does not provide an implementation at this time nor will they as per the documentation.   |
 
+## HTMLPage: Gateway to DOM
+
+Whenever you need access to the DOM the first thing you will need to do is create an `HtmlPage`.
+
+```cs
+    var page = new HtmlPage();
+```
+
+It is that simple.  From the page object you then have access to the following methods.
+
+| Class | How To |
+| --- | --- |
+| HtmlDocument | var document = await page.GetDocument(); |
+| HtmlWindow | var window = await page.GetWindow() |
+| BrowserInformation | var info = await page.GetBrowserInformation() |
+
+So for example we want to get the `BrowserInformation` we would have the following:
+
+```cs
+    var page = new HtmlPage();
+    var info = await page.GetBrowswerInformation();
+   
+    var infoText = $"Name: {info.Name}<br />Browser Version: {info.BrowserVersion}<br />Platform: {info.Platform}<br />Cookies Enabled: {info.CookiesEnabled}<br />User Agent: {info.UserAgent}";
+
+    // other code following to update the DOM to display the infoText in the page.
+```
+
+![browser info](screenshots/browserinformation.png)
 
 
 
