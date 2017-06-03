@@ -38,14 +38,16 @@ So for example we want to get the `BrowserInformation` we would have the followi
 
 ```cs
     var page = new HtmlPage();
-    var info = await page.GetBrowswerInformation();
+    var info = await page.GetBrowserInformation();
    
     var infoText = $"Name: {info.Name}<br />Browser Version: {info.BrowserVersion}<br />Platform: {info.Platform}<br />Cookies Enabled: {info.CookiesEnabled}<br />User Agent: {info.UserAgent}";
 
     // other code following to update the DOM to display the infoText in the page.
 ```
 
-![browser info](screenshots/browserinformation.png)
+![browser info](./browserinfo/images/browserinformation.png)
+
+See the [BrowserInformation source code](./browserinfo)
 
 
 
