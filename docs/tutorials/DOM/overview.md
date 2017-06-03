@@ -45,7 +45,11 @@ So for example we want to get the `BrowserInformation` we would have the followi
     // other code following to update the DOM to display the infoText in the page.
 ```
 
-![browser info](./browserinfo/images/browserinformation.png)
+* Mac
+![browser info mac](./browserinfo/images/browserinformation.png)
+
+* Windows
+![browser info windows](./browserinfo/images/browserinformation-win.png)
 
 See the [BrowserInformation source code](./browserinfo)
 

@@ -4,7 +4,11 @@ Show the information returned from `HtmlPage.GetBrowserInformation()`.
 
 ## Features
 
+* Mac
 ![screen shot mac](images/browserinformation.png)
+
+* Windows
+![screen shot windows](images/browserinformation-win.png)
 
 More information can be found in the [DOM Overview](../overview.md#htmlpage-gateway-to-dom)
 
