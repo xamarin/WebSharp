@@ -46,9 +46,11 @@ So for example we want to get the `BrowserInformation` we would have the followi
 ```
 
 * Mac
+
 ![browser info mac](./browserinfo/images/browserinformation.png)
 
 * Windows
+
 ![browser info windows](./browserinfo/images/browserinformation-win.png)
 
 See the [BrowserInformation source code](./browserinfo)
