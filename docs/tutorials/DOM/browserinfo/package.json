@@ -1,0 +1,14 @@
+{
+    "name": "browserinformation",
+    "displayName": "BrowserInformation",
+    "description": "Show the information returned from HtmlPage.BrowserInformation",
+    "version": "1.0.0",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}
