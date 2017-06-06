@@ -21,6 +21,7 @@ public class WebSharpCompiler
     static Dictionary<string, Dictionary<string, Assembly>> referencedAssemblies = new Dictionary<string, Dictionary<string, Assembly>>();
     static Dictionary<string, Func<object, Task<object>>> funcCache = new Dictionary<string, Func<object, Task<object>>>();
     static readonly string websharpLocation = Directory.GetParent(Path.GetDirectoryName(typeof(WebSharpCompiler).Assembly.Location)).FullName + Path.DirectorySeparatorChar + "WebSharpJs.dll";
+    static readonly string frameworkPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
 
     static WebSharpCompiler()
     {
@@ -58,10 +59,8 @@ public class WebSharpCompiler
             if (debuggingEnabled)
             {
                 fileName = source;
-            }
-
-            if (debuggingSelfEnabled)
                 Console.WriteLine($"Reading from source file: {Path.GetFullPath(fileName)}");
+            }
 
             source = File.ReadAllText(source);
         }
@@ -91,16 +90,29 @@ public class WebSharpCompiler
         object v;
         if (parameters.TryGetValue("references", out v))
         {
+            if (debuggingSelfEnabled)
+            {
+                Console.WriteLine($"Additional references were specified.");
+            }
+
             foreach (object reference in (object[])v)
             {
+                if (debuggingSelfEnabled)
+                {
+                    Console.WriteLine($"Adding reference : {reference} ");
+                }
                 references.Add((string)reference);
             }
         }
 
         // add assembly references provided in code as [//]#r "assemblyname" lines
         Match match = referenceRegex.Match(source);
+        if (debuggingSelfEnabled && match.Success)
+            Console.WriteLine($"Assembly references provided in code.");
         while (match.Success)
         {
+            if (debuggingSelfEnabled)
+                Console.WriteLine($"Adding reference: {match.Groups[1].Value}");
             references.Add(match.Groups[1].Value);
             source = source.Substring(0, match.Index) + source.Substring(match.Index + match.Length);
             match = referenceRegex.Match(source);
@@ -239,12 +251,35 @@ public class WebSharpCompiler
         {
             try
             {
-
                 metadataReferences.Add(MetadataReference.CreateFromFile(reference));
             }
             catch
             {
-                // empty - best effort
+                // Try to load from assembly name
+                if (debuggingSelfEnabled)
+                    System.Console.WriteLine($"Could not find: {reference}.  Trying to load from AssemblyName.");
+
+                try
+                {
+                    metadataReferences.Add(MetadataReference.CreateFromFile(Assembly.Load(new AssemblyName(reference)).Location));
+                }
+                catch {
+                    // Try to load from runtime directory
+                    if (debuggingSelfEnabled)
+                        System.Console.WriteLine($"Could not find: {reference}.  Trying to load from runtime library.");
+
+                    try
+                    {
+                        var frameworkLib = Path.Combine(frameworkPath, reference);
+                        metadataReferences.Add(MetadataReference.CreateFromFile(frameworkLib));
+                    }
+                    catch (Exception exc)
+                    {
+                        if (debuggingSelfEnabled)
+                            System.Console.WriteLine($"Could not load reference {reference}.  Message: {exc.Message}");
+                    }
+
+                }
             }
         }
 
