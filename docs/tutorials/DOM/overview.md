@@ -8,6 +8,14 @@ There are some differences though because of the different integration technolig
 
 Besides the differences the developer will still work with managed objects in their code.  These objects are managed via the `WebSharp.js` assembly and can be passed back and forth between managed code and `Node.js/Electron`.
 
+## Content
+
+&nbsp;&nbsp;&nbsp;&nbsp;[Key Classes](#the-key-classes-of-the-websharpjsdom-namespace)  
+&nbsp;&nbsp;&nbsp;&nbsp;[HTML Page](#html-page-gateway-to-dom)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[BrowserInformation](#browserinformation)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Window](#html-window)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Interaction with script code](#interaction-with-script-code)  
+
 ## The key classes of the WebSharpJs.DOM namespace
 
 | Class | Description |
@@ -19,7 +27,7 @@ Besides the differences the developer will still work with managed objects in th
 | HtmlWindow | Represents an `Electron` window object in managed code via `Electron`'s BrowserWindowProxy.  Notice that this is not a normal `JavaScript` window as `Electron` intercepts the object and provides their own implementation.  For instance the `Prompt` method of the this object will fail as `Electron` does not provide an implementation at this time nor will they as per the documentation.   |
 | HttpUtility | Provides static methods for encoding and decoding HTML and URL strings. |
 
-## HTMLPage: Gateway to DOM
+## HTML Page: Gateway to DOM
 
 Whenever you need access to the DOM the first thing you will need to do is create an `HtmlPage`.
 
@@ -34,6 +42,8 @@ It is that simple.  From the page object you then have access to the following m
 | HtmlDocument | var document = await page.GetDocument(); |
 | HtmlWindow | var window = await page.GetWindow() |
 | BrowserInformation | var info = await page.GetBrowserInformation() |
+
+### BrowserInformation
 
 So for example we want to get the `BrowserInformation` we would have the following:
 
@@ -57,7 +67,63 @@ So for example we want to get the `BrowserInformation` we would have the followi
 See the [BrowserInformation source code](./browserinfo)
 
 
+### HTML Window
 
+The Html Window provides very limited access to the window.  Most of the time using the `BrowserWindow` objects of `Electron` will be more desirable.  `Electron` actually intercepts some of the functionality to provide their own implementation (See [BrowserWindowProxy](https://github.com/electron/electron/blob/master/docs/api/browser-window-proxy.md)) or throw an error as for `Prompt`. 
 
+To obtain a reference to the HtmlWindow object use the following.
+
+```cs
+    var win = await page.GetWindow();
+```
+
+Let's briefly look at the information that can be obtained via the `HtmlWindow` object.
+
+| Method | Description |
+| --- | --- |
+| Alert | Displays a dialog box that contains an application-defined message. | 
+| Confirm | Displays a confirmation dialog box that contains an optional message as well as OK and Cancel buttons.  This method will return a `true\false` value.  This method will also block the UI so be careful. | 
+| Eval | Evaluates a string that contains arbitrary JavaScript code. | 
+| Prompt | This method will actually throw an error `prompt() is and will not be supported.`  Use `Electron`'s `Dialog` objects. | 
+
+#### Interaction with script code
+
+One interesting function that can be achieved with the `HtmlWindow` object is interacting with code that is defined in the page.
+
+Start by defining a `<script>` within the `<head>` section of of the page's html.
+
+```html
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+
+    <script type="text/javascript">
+        function SayHello(text) {
+            var helloElement = document.getElementById("hello");
+            helloElement.innerHTML = 'Hello: ' + text;
+        }
+    </script>
+
+  </head>
+
+```
+
+The above code starts by searching for an element with a name of `hello` so define a `<p>` element somewhere in the `<body>` section of the page's html.
+
+```html
+    <p id="hello"></p>
+```
+
+The function will then update the `innerHTML` of that element with the text that is passed in.
+
+Now from your managed code you can call this function by using the `Invoke` method of the `HtmlWindow` object.
+
+```cs
+            var win = await page.GetWindow();
+            await win.Invoke<object>("SayHello", " from HtmlWindow.");
+```
+
+If all is defined correctly you should see the `Hello: from HtmlWindow.` text displayed on your screen.
 
 
