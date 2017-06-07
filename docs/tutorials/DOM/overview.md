@@ -15,6 +15,7 @@ Besides the differences the developer will still work with managed objects in th
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[BrowserInformation](#browserinformation)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Window](#html-window)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Interaction with script code](#interaction-with-script-code)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Document](#html-document)  
 
 ## The key classes of the WebSharpJs.DOM namespace
 
@@ -71,13 +72,13 @@ See the [BrowserInformation source code](./browserinfo)
 
 The Html Window provides very limited access to the window.  Most of the time using the `BrowserWindow` objects of `Electron` will be more desirable.  `Electron` actually intercepts some of the functionality to provide their own implementation (See [BrowserWindowProxy](https://github.com/electron/electron/blob/master/docs/api/browser-window-proxy.md)) or throw an error as for `Prompt`. 
 
-To obtain a reference to the HtmlWindow object use the following.
+To obtain a reference to the `HtmlWindow` object use the following.
 
 ```cs
     var win = await page.GetWindow();
 ```
 
-Let's briefly look at the information that can be obtained via the `HtmlWindow` object.
+Let's briefly look at the functionality of the `HtmlWindow` object.
 
 | Method | Description |
 | --- | --- |
@@ -88,7 +89,7 @@ Let's briefly look at the information that can be obtained via the `HtmlWindow` 
 
 #### Interaction with script code
 
-One interesting function that can be achieved with the `HtmlWindow` object is interacting with code that is defined in the page.
+One interesting function that one can do with the `HtmlWindow` object is interacting with code that is defined in the page.
 
 Start by defining a `<script>` within the `<head>` section of of the page's html.
 
@@ -126,4 +127,4 @@ Now from your managed code you can call this function by using the `Invoke` meth
 
 If all is defined correctly you should see the `Hello: from HtmlWindow.` text displayed on your screen.
 
-
+### HTML Document

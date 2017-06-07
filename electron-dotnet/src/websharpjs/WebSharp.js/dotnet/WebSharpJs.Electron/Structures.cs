@@ -248,4 +248,16 @@ namespace WebSharpJs.Electron
         public IpcRenderer Sender { get; set; }
     }
 
+    [ScriptableType]
+    public struct BalloonOptions
+    {
+        [ScriptableMember(ScriptAlias = "icon")]
+        public NativeImage Icon { get; set; }
+        [ScriptableMember(ScriptAlias = "title")]
+        public string Title { get; set; }
+        [ScriptableMember(ScriptAlias = "content")]
+        public string Content { get; set; }
+
+    }
+
 }

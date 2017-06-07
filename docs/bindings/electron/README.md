@@ -15,7 +15,7 @@
 * [protocol](api/protocol.md) :exclamation:
 * [session](api/session.md) :exclamation:
 * [systemPreferences](api/system-preferences.md) :exclamation:
-* [Tray](api/tray.md) :exclamation:
+* [Tray](api/tray.md) :muscle:
 * [webContents](api/web-contents.md) :running:
 
 ### Modules for the Renderer Process (Web Page):
