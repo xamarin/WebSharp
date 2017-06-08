@@ -225,10 +225,10 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isFullScreen");
         }
 
-        public async Task<object> SetAspectRatio(float aspect, Size? size = null)
+        public async Task<object> SetAspectRatio(float aspect, Size size = null)
         {
-            if (size != null && size.HasValue)
-                return await Invoke<object>("setAspectRatio", aspect, size.Value );
+            if (size != null)
+                return await Invoke<object>("setAspectRatio", aspect, size );
             else
                 return await Invoke<object>("setAspectRatio", aspect );
         }
@@ -558,10 +558,10 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("blurWebView");
         }
 
-        public async Task<object> CapturePage(Rectangle? rect = null, ScriptObjectCallback<NativeImage> callback = null)
+        public async Task<object> CapturePage(Rectangle rect = null, ScriptObjectCallback<NativeImage> callback = null)
         {
-            if (rect != null && rect.HasValue)
-                return await Invoke<object>("capturePage", rect.Value, callback);
+            if (rect != null)
+                return await Invoke<object>("capturePage", rect, callback);
             else
                 return await Invoke<object>("capturePage", callback);
         }

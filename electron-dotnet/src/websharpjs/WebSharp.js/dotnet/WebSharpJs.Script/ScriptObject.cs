@@ -116,7 +116,6 @@ namespace WebSharpJs.Script
             }
             else if (parmCategory == ScriptParmCategory.ScriptableType)
             {
-                
                 return ScriptObjectHelper.AnonymousObjectToScriptableType<T>(result);
             }
             else

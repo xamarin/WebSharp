@@ -19,7 +19,7 @@ namespace WebSharpJs.Electron
     }
 
     [ScriptableType]
-    public struct Size
+    public class Size
     {
         public static readonly Size Empty = new Size();
 
@@ -27,6 +27,15 @@ namespace WebSharpJs.Electron
         public int Width { get; set; }
         [ScriptableMember(ScriptAlias = "height")]
         public int Height { get; set; }
+
+        public Size()
+        { }
+
+        public Size(int width, int height)
+        {
+            Width = width;
+            Height = height;
+        }
 
         public Size(dynamic obj)
         {
@@ -42,7 +51,7 @@ namespace WebSharpJs.Electron
     }
 
     [ScriptableType]
-    public struct SizeF
+    public class SizeF
     {
         public static readonly SizeF Empty = new SizeF();
 
@@ -50,6 +59,15 @@ namespace WebSharpJs.Electron
         public float Width { get; set; }
         [ScriptableMember(ScriptAlias = "height")]
         public float Height { get; set; }
+
+        public SizeF()
+        { }
+
+        public SizeF(float width, float height)
+        {
+            Width = width;
+            Height = height;
+        }
 
         public SizeF(dynamic obj)
         {
@@ -65,7 +83,7 @@ namespace WebSharpJs.Electron
     }
 
     [ScriptableType]
-    public struct Rectangle
+    public class Rectangle
     {
         public static readonly Rectangle Empty = new Rectangle(0,0);
 
@@ -77,6 +95,8 @@ namespace WebSharpJs.Electron
         public int Width { get; set; }
         [ScriptableMember(ScriptAlias = "height")]
         public int Height { get; set; }
+
+        public Rectangle() { }
 
         public Rectangle(int x, int y, int width = 0, int height = 0)
         {
@@ -103,9 +123,9 @@ namespace WebSharpJs.Electron
     }
 
     [ScriptableType]
-    public struct RectangleF
+    public class RectangleF
     {
-        public static readonly RectangleF Empty = new RectangleF(0, 0);
+        public static readonly RectangleF Empty = new RectangleF();
 
         [ScriptableMember(ScriptAlias = "x")]
         public float X { get; set; }
@@ -115,6 +135,8 @@ namespace WebSharpJs.Electron
         public float Width { get; set; }
         [ScriptableMember(ScriptAlias = "height")]
         public float Height { get; set; }
+
+        public RectangleF() { }
 
         public RectangleF(float x, float y, float width = 0, float height = 0)
         {
@@ -141,14 +163,16 @@ namespace WebSharpJs.Electron
     }
 
     [ScriptableType]
-    public struct Point
+    public class Point
     {
-        public static readonly Point Empty = new Point();
+        public static readonly Point Empty = new Point(0,0);
 
         [ScriptableMember(ScriptAlias = "x")]
         public int X { get; set; }
         [ScriptableMember(ScriptAlias = "y")]
         public int Y { get; set; }
+
+        public Point() { }
 
         public Point(int x, int y)
         {
@@ -170,9 +194,9 @@ namespace WebSharpJs.Electron
     }
 
     [ScriptableType]
-    public struct PointF
+    public class PointF
     {
-        public static readonly PointF Empty = new PointF();
+        public static readonly PointF Empty = new PointF(0,0);
 
         [ScriptableMember(ScriptAlias = "x")]
         public float X { get; set; }
@@ -258,6 +282,27 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "content")]
         public string Content { get; set; }
 
+    }
+
+    [ScriptableType]
+    public class Display
+    {
+        [ScriptableMember(ScriptAlias = "id")]
+        public uint Id { get; set; }
+        [ScriptableMember(ScriptAlias = "bounds")]
+        public Rectangle Bounds { get; set; }
+        [ScriptableMember(ScriptAlias = "workArea")]
+        public Rectangle WorkArea { get; set; }
+        [ScriptableMember(ScriptAlias = "size")]
+        public Size Size { get; set; }
+        [ScriptableMember(ScriptAlias = "workAreaSize")]
+        public Size WorkAreaSize { get; set; }
+        [ScriptableMember(ScriptAlias = "scaleFactor")]
+        public float ScaleFactor { get; set; }
+        [ScriptableMember(ScriptAlias = "rotation")]
+        public float Rotation { get; set; }
+        [ScriptableMember(ScriptAlias = "touchSupport", EnumValue = ConvertEnum.ToLower)]
+        public TouchSupport TouchSupport { get; set; }
     }
 
 }

@@ -588,17 +588,17 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "screenPosition", EnumValue = ConvertEnum.ToLower)]
         public ScreenPosition? ScreenPosition { get; set; }
         [ScriptableMember(ScriptAlias = "screenSize")]
-        public Size? ScreenSize { get; set; }
+        public Size ScreenSize { get; set; }
         [ScriptableMember(ScriptAlias = "viewPosition")]
-        public Point? ViewPosition { get; set; }
+        public Point ViewPosition { get; set; }
         [ScriptableMember(ScriptAlias = "deviceScaleFactor")]
-        public float? DeviceScaleFactor { get; set; }
+        public float DeviceScaleFactor { get; set; }
         [ScriptableMember(ScriptAlias = "viewSize")]
-        public Size? ViewSize { get; set; }
+        public Size ViewSize { get; set; }
         [ScriptableMember(ScriptAlias = "fitToView")]
         public bool? FitToView { get; set; }
         [ScriptableMember(ScriptAlias = "offset")]
-        public Point? Offset { get; set; }
+        public Point Offset { get; set; }
         [ScriptableMember(ScriptAlias = "scale")]
         public float? Scale { get; set; }
     }

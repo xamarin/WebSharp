@@ -176,18 +176,34 @@ namespace WebSharpJs.Script
                         var pi = parmType.GetProperty(mappings[key]);
                         if (pi.SetMethod != null)
                         {
-                            var scriptObject = parm[key] as IDictionary<string, object>;
-                            if (scriptObject != null)
+                            if (pi.PropertyType.IsEnum)
                             {
-                                if (scriptObject.ContainsKey("websharp_id"))
+                                // Try to map enum string values to their enum types.
+                                var lowerKey = parm[key].ToString().ToLower();
+                                foreach (var ev in Enum.GetNames(pi.PropertyType))
                                 {
-                                    pi.SetValue(obj, AnonymousObjectToScriptObjectType(pi.PropertyType, parm[key]));
+                                    if (ev.ToLower() == lowerKey)
+                                        pi.SetValue(obj, Enum.Parse(pi.PropertyType, ev));
                                 }
-
                             }
                             else
                             {
-                                pi.SetValue(obj, parm[key]);
+                                var scriptObject = parm[key] as IDictionary<string, object>;
+                                if (scriptObject != null)
+                                {
+                                    if (scriptObject.ContainsKey("websharp_id"))
+                                    {
+                                        pi.SetValue(obj, AnonymousObjectToScriptObjectType(pi.PropertyType, parm[key]));
+                                    }
+                                    else
+                                    {
+                                        pi.SetValue(obj, AnonymousObjectToScriptableType(pi.PropertyType, parm[key]));
+                                    }
+                                }
+                                else
+                                {
+                                    pi.SetValue(obj, parm[key]);
+                                }
                             }
                             success = true;
                         }
@@ -195,14 +211,13 @@ namespace WebSharpJs.Script
                 }
 
             }
-
             return success;
         }
 
-        public static T AnonymousObjectToScriptableType<T>(object obj)
+        public static T AnonymousObjectToScriptableType<T>(object obj) 
         {
             var typeOfT = typeof(T);
-            var st = typeOfT.IsValueType ? (T)Activator.CreateInstance(typeOfT) : default(T);
+            var st = (T)Activator.CreateInstance(typeOfT);
             var dic = obj as IDictionary<string, object>;
             if (dic == null)
             {

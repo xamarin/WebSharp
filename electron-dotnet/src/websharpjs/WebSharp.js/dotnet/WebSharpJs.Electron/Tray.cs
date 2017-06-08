@@ -98,9 +98,9 @@ namespace WebSharpJs.Electron
             await Invoke<object>("displayBalloon", options);
         }
 
-        public async Task PopUpContextMenu(Menu menu = null, Point? position = null)
+        public async Task PopUpContextMenu(Menu menu = null, Point position = null)
         {
-            await Invoke<object>("popUpContextMenu", menu, position.HasValue ? position.Value : Point.Empty);
+            await Invoke<object>("popUpContextMenu", menu, position == null ? position : Point.Empty);
         }
 
         public async Task SetContextMenu(Menu menu)
