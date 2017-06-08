@@ -110,10 +110,7 @@ namespace WebSharpJs.Electron
 
         public async Task<Rectangle> GetBounds()
         {
-            var result = await Invoke<object>("getBounds");
-            var bounds = new Rectangle();
-            return ScriptObjectHelper.AnonymousObjectToScriptableType<Rectangle>(bounds);
-
+            return await Invoke<Rectangle>("getBounds");
         }
 
         public async Task<bool> IsDestroyed()
