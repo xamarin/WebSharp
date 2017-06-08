@@ -118,6 +118,25 @@ namespace WebSharpJs.Script
             {
                 return ScriptObjectHelper.AnonymousObjectToScriptableType<T>(result);
             }
+            else if (parmCategory == ScriptParmCategory.ScriptableTypeArray)
+            {
+                try
+                {
+                    var objArray = result as object[];
+                    var arrayType = type.GetElementType();
+                    var array = Array.CreateInstance(arrayType, objArray.Length);
+                    for (int a = 0; a < array.Length; a++)
+                    {
+                        array.SetValue(ScriptObjectHelper.AnonymousObjectToScriptableType(arrayType, objArray[a]), a);
+                    }
+                    return (T)(object)array; 
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
+            }
             else
                 return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
         }
@@ -136,8 +155,11 @@ namespace WebSharpJs.Script
             }
             else if (type.IsAttributeDefined<ScriptableTypeAttribute>(false))
             {
-                
                 return ScriptParmCategory.ScriptableType;
+            }
+            else if (type.IsArray && type.GetElementType().IsAttributeDefined<ScriptableTypeAttribute>(false))
+            {
+                return ScriptParmCategory.ScriptableTypeArray;
             }
 
             return ScriptParmCategory.None;

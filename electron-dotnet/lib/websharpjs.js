@@ -241,6 +241,20 @@
                     returnSO[k] = result[k]; // We may need to pass more meta data in the future
                 });
             }
+            else if (parm.category === 6) // ScriptableTypeArray
+            {
+                returnSO = [];
+                for (var ai = 0; ai < result.length; ai++) {
+                    let arraySO = {};
+                    let wrkObj = result[ai];
+                    Object.getOwnPropertyNames(wrkObj).forEach(function (k) {
+                        arraySO[k] = wrkObj[k]; // We may need to pass more meta data in the future
+                    });
+
+                    returnSO.push(arraySO);
+                }
+                return returnSO;
+            }
             else {
                 returnSO = ObjectToScriptObject(result);
             }            
