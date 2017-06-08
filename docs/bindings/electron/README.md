@@ -30,5 +30,5 @@
 * [clipboard](api/clipboard.md) :muscle:
 * [crashReporter](api/crash-reporter.md) :exclamation:
 * [nativeImage](api/native-image.md) :muscle:
-* [screen](api/screen.md) :exclamation:
+* [screen](api/screen.md) :muscle:
 * [shell](api/shell.md) :exclamation:
