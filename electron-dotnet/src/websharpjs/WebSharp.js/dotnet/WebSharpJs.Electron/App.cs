@@ -170,10 +170,7 @@ namespace WebSharpJs.Electron
 
         public async Task<LoginItemSettings> GetLoginItemSettings()
         {
-            var settings = await Invoke<object>("getLoginItemSettings");
-            var lis = new LoginItemSettings();
-            ScriptObjectHelper.DictionaryToScriptableType((System.Collections.Generic.IDictionary<string, object>)settings, lis);
-            return lis;
+            return await Invoke<LoginItemSettings>("getLoginItemSettings");
         }
 
         public async Task<object> SetLoginItemSettings(LoginItemSettings settings)

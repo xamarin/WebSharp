@@ -99,12 +99,7 @@ namespace WebSharpJs.Electron
 
         public async Task<Bookmark> ReadBookmark(ClipboardType type = ClipboardType.None)
         {
-            var result = await Invoke<object>("readBookmark", type == ClipboardType.Selection ? "selection" : string.Empty);
-            var bm = new Bookmark();
-            if (result != null)
-                ScriptObjectHelper.DictionaryToScriptableType((System.Collections.Generic.IDictionary<string, object>)result, bm);
-
-            return bm;
+            return await Invoke<Bookmark>("readBookmark", type == ClipboardType.Selection ? "selection" : string.Empty);
         }
 
         public async Task<object> WriteImage(NativeImage image, ClipboardType type = ClipboardType.None)

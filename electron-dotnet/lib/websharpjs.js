@@ -234,6 +234,13 @@
             {
                 returnSO = resultToObjectCollection(result);
             }
+            else if (parm.category === 2) // ScriptableType
+            {
+                returnSO = {};
+                Object.getOwnPropertyNames(result).forEach(function (k) {
+                    returnSO[k] = result[k]; // We may need to pass more meta data in the future
+                });
+            }
             else {
                 returnSO = ObjectToScriptObject(result);
             }            

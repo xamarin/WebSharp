@@ -175,11 +175,5 @@ namespace WebSharpJs.DOM
         public string Protocol { get; internal set; }
         [ScriptableMember(ScriptAlias = "search")]
         public string Search { get; internal set; }
-
-
-
-
-
-
     }
 }

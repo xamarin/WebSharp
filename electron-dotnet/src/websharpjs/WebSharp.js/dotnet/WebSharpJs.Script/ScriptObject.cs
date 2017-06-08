@@ -114,6 +114,11 @@ namespace WebSharpJs.Script
                 }
 
             }
+            else if (parmCategory == ScriptParmCategory.ScriptableType)
+            {
+                
+                return ScriptObjectHelper.AnonymousObjectToScriptableType<T>(result);
+            }
             else
                 return (T)Activator.CreateInstance(type, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, new object[] { result }, null);
         }
@@ -129,6 +134,11 @@ namespace WebSharpJs.Script
             else if (type.IsSubclassOf(ScriptObjectType))
             {
                 return ScriptParmCategory.ScriptObject;
+            }
+            else if (type.IsAttributeDefined<ScriptableTypeAttribute>(false))
+            {
+                
+                return ScriptParmCategory.ScriptableType;
             }
 
             return ScriptParmCategory.None;
