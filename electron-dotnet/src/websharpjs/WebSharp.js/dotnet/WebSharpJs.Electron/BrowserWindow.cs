@@ -589,7 +589,7 @@ namespace WebSharpJs.Electron
 
         public async Task<object> SetOverlayIcon(NativeImage overlay, string description)
         {
-            return await Invoke<object>("setOverlayIcon", overlay, description);
+            return await Invoke<object>("setOverlayIcon", overlay, description ?? string.Empty);
         }
 
         public async Task<object> SetHasShadow(bool hasShadow)
@@ -708,8 +708,6 @@ namespace WebSharpJs.Electron
 
     }
 
-    //type VibrancyType = 'appearance-based' | 'light' | 'dark' | 'titlebar' | 'selection'
-    //| 'menu' | 'popover' | 'sidebar' | 'medium-light' | 'ultra-dark';
     public enum VibrancyType
     {
         AppearanceBased,

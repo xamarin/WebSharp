@@ -158,6 +158,16 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("setAppUserModelId", id);
         }
 
+        public async Task<bool> SetBadgeCount(int count)
+        {
+            return await Invoke<bool>("setBadgeCount", count);
+        }
+
+        public async Task<int> GetBadgeCount()
+        {
+            return await Invoke<int>("getBadgeCount");
+        }
+
         public async Task<bool> IsUnityRunning()
         {
             return await Invoke<bool>("isUnityRunning");
@@ -193,6 +203,12 @@ namespace WebSharpJs.Electron
         {
             return await Invoke<object>("releaseSingleInstance");
         }
+
+        public async Task<Dock> Dock()
+        {
+            return await GetProperty<Dock>("dock");
+        }
+
     }
 
     public enum AppPathName
