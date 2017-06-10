@@ -32,21 +32,21 @@
 - [x] `app.setAppUserModelId(id)` _Windows_
 - [ ] `app.importCertificate(options, callback)` _LINUX_
 - [ ] `app.disableHardwareAcceleration()`
-- [ ] `app.setBadgeCount(count)` _Linux_ _macOS_
-- [ ] `app.getBadgeCount()` _Linux_ _macOS_
+- [x] `app.setBadgeCount(count)` _Linux_ _macOS_
+- [x] `app.getBadgeCount()` _Linux_ _macOS_
 - [x] `app.isUnityRunning()` _Linux_
 - [x] `app.getLoginItemSettings([options])` _macOS_ _Windows_
 - [x] `app.setLoginItemSettings(settings[, path, args])` _macOS_ _Windows_
 - [x] `app.isAccessibilitySupportEnabled()` _macOS_ _Windows_
 - [x] `app.setAboutPanelOptions(options)` _macOS_
 - [ ] `app.commandLine.appendArgument(value)`
-- [ ] `app.dock.bounce([type])` _macOS_
-- [ ] `app.dock.cancelBounce(id)` _macOS_
-- [ ] `app.dock.downloadFinished(filePath)` _macOS_
-- [ ] `app.dock.setBadge(text)` _macOS_
-- [ ] `app.dock.getBadge()` _macOS_
-- [ ] `app.dock.hide()` _macOS_
-- [ ] `app.dock.show()` _macOS_
-- [ ] `app.dock.isVisible()` _macOS_
-- [ ] `app.dock.setMenu(menu)` _macOS_
-- [ ] `app.dock.setIcon(image)` _macOS_
+- [x] `app.dock.bounce([type])` _macOS_
+- [x] `app.dock.cancelBounce(id)` _macOS_
+- [x] `app.dock.downloadFinished(filePath)` _macOS_
+- [x] `app.dock.setBadge(text)` _macOS_
+- [x] `app.dock.getBadge()` _macOS_
+- [x] `app.dock.hide()` _macOS_
+- [x] `app.dock.show()` _macOS_
+- [x] `app.dock.isVisible()` _macOS_
+- [x] `app.dock.setMenu(menu)` _macOS_
+- [x] `app.dock.setIcon(image)` _macOS_
