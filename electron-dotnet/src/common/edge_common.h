@@ -62,9 +62,6 @@ extern BOOL debugMode;
 extern BOOL enableScriptIgnoreAttribute;
 extern BOOL enableMarshalEnumAsInt;
 
-extern FILE *fpasdf;
-
-//#define DBG(...) if (debugMode) { fprintf(fpasdf, __VA_ARGS__); fprintf(fpasdf, "\n"); }
 #define DBG(...) if (debugMode) { printf(__VA_ARGS__); printf("\n"); }
 
 typedef void (*uv_async_edge_cb)(void* data);

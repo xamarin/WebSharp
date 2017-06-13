@@ -23,8 +23,6 @@ BOOL debugMode;
 BOOL enableScriptIgnoreAttribute;
 BOOL enableMarshalEnumAsInt;
 
-FILE *fpasdf;
-
 NAN_METHOD(initializeClrFunc)
 {
 #ifdef HAVE_NATIVECLR
@@ -46,33 +44,32 @@ NAN_METHOD(initializeClrFunc)
 #endif
 NAN_MODULE_INIT(init)
 {
-	fpasdf = fopen("C:\\test\\websharpjslog.txt", "w");
 
 	debugMode = HasEnvironmentVariable("WEBSHARP_DEBUG");
-	DBG("edge::init");
+    DBG("edge::init");
 
-	V8SynchronizationContext::Initialize();
+    V8SynchronizationContext::Initialize();
 
 #ifdef HAVE_CORECLR
-	if (FAILED(CoreClrEmbedding::Initialize(debugMode)))
+    if (FAILED(CoreClrEmbedding::Initialize(debugMode)))
 	{
 		DBG("Error occurred during CoreCLR initialization");
 		return;
 	}
 #else
 #ifndef EDGE_PLATFORM_WINDOWS
-	MonoEmbedding::Initialize();
+    MonoEmbedding::Initialize();
 #endif
 #ifdef HAVE_MONO
 	MonoEmbedding::Initialize();
 #endif
 #endif
 
-	enableScriptIgnoreAttribute = HasEnvironmentVariable("EDGE_ENABLE_SCRIPTIGNOREATTRIBUTE");
-	enableMarshalEnumAsInt = HasEnvironmentVariable("EDGE_MARSHAL_ENUM_AS_INT");
-	Nan::Set(target,
-		Nan::New<v8::String>("initializeClrFunc").ToLocalChecked(),
-		Nan::New<v8::FunctionTemplate>(initializeClrFunc)->GetFunction());
+    enableScriptIgnoreAttribute = HasEnvironmentVariable("EDGE_ENABLE_SCRIPTIGNOREATTRIBUTE");
+    enableMarshalEnumAsInt = HasEnvironmentVariable("EDGE_MARSHAL_ENUM_AS_INT");
+    Nan::Set(target,
+        Nan::New<v8::String>("initializeClrFunc").ToLocalChecked(),
+        Nan::New<v8::FunctionTemplate>(initializeClrFunc)->GetFunction());
 }
 
 #ifdef EDGE_PLATFORM_WINDOWS
@@ -81,9 +78,9 @@ NAN_MODULE_INIT(init)
 bool HasEnvironmentVariable(const char* variableName)
 {
 #ifdef EDGE_PLATFORM_WINDOWS
-	return 0 < GetEnvironmentVariable(variableName, NULL, 0);
+    return 0 < GetEnvironmentVariable(variableName, NULL, 0);
 #else
-	return getenv(variableName) != NULL;
+    return getenv(variableName) != NULL;
 #endif
 }
 
