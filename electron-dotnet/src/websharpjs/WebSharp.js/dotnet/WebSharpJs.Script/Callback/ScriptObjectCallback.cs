@@ -81,10 +81,9 @@ namespace WebSharpJs.Script
                     parms = new object[evt.Length];
                     for (int mi = 0; mi < evt.Length; mi++)
                     {
-                        Console.WriteLine(argumentTypes[mi] + " / " + (ScriptParmCategory)(mappings[mi].Category));
                         if (mi < argumentTypes.Length)
-                            parms[mi] = ScriptObjectUtilities.MapToType((ScriptParmCategory)(mappings[mi].Category), mappings[mi].IsArray,
-                                evt[mi], argumentTypes[mi]);
+                        parms[mi] = ScriptObjectUtilities.MapToType((ScriptParmCategory)(mappings[mi].Category), mappings[mi].IsArray,
+                            evt[mi], argumentTypes[mi]);
                     }
                 }
                 catch (Exception ex)
