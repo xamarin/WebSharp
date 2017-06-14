@@ -126,4 +126,17 @@ namespace WebSharpJs.Electron
         Always,
         Never
     }
+
+    [ScriptableType]
+    public class Modifiers
+    {
+        [ScriptableMember(ScriptAlias = "altKey")]
+        public bool AltKey { get; set; }
+        [ScriptableMember(ScriptAlias = "shiftKey")]
+        public bool ShiftKey { get; set; }
+        [ScriptableMember(ScriptAlias = "ctrlKey")]
+        public bool CtrlKey { get; set; }
+        [ScriptableMember(ScriptAlias = "metaKey")]
+        public bool MetaKey { get; set; }
+	}
 }

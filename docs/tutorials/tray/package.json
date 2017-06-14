@@ -1,0 +1,14 @@
+{
+    "name": "minimizetotray",
+    "displayName": "MinimizeToTray",
+    "description": "Minimize/Close to Tray with restore",
+    "version": "0.0.1",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}

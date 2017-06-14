@@ -164,15 +164,18 @@ namespace WebSharpJs.Script
 
             var parmType = obj.GetType();
             var success = false;
-
+            
             if (parmType.IsAttributeDefined<ScriptableTypeAttribute>(false))
             {
+                
                 var mappings = GetScriptMemberMappings(parmType, ScriptMemberMappingDirection.ScriptAliasToMember);
 
                 foreach(var key in parm.Keys)
                 {
+                    //Console.WriteLine($"mappings key = {key}");
                     if (mappings.ContainsKey(key))
                     {
+                        //Console.WriteLine($"mappings contains key = {key}");
                         var pi = parmType.GetProperty(mappings[key]);
                         if (pi.SetMethod != null)
                         {
@@ -237,7 +240,7 @@ namespace WebSharpJs.Script
             {
                 return st;
             }
-
+            //Console.WriteLine($"to scriptable = {type}");
             DictionaryToScriptableType(dic, st);
             return st;
 
