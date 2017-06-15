@@ -35,11 +35,10 @@ using WebSharpJs.Script;
                 // already fired.
                 if (await app.IsReady())
                 {
-                    windowId = await CreateWindow(__dirname);
                     await CreateTray(__dirname);
-
+                    windowId = await CreateWindow(__dirname);
+ 
                 }
-
 
                 await console.Log($"Loading: file://{__dirname}/index.html");
             }
@@ -49,7 +48,6 @@ using WebSharpJs.Script;
 
 
         }
-        static int balloonNumber = 0;
         async Task<int> CreateWindow (string __dirname)
         {
             // Create the browser window.
@@ -57,7 +55,7 @@ using WebSharpJs.Script;
                 new BrowserWindowOptions() { 
                     Width = 600, 
                     Height = 400,
-                    IconPath = $"{__dirname}/assets/icons/appicon.ico"
+                    IconPath = $"{__dirname}/assets/icons/appicon.ico",
                 }
             );
 
@@ -68,6 +66,39 @@ using WebSharpJs.Script;
                 {
                     //console.Log("Minimize");
                     await mainWindow.Hide();
+                }
+            ));
+
+            // Listen for window show event
+            await mainWindow.On("show",
+                new ScriptObjectCallback<Event>(async (evt) =>
+                {
+                    //console.Log("Show");
+                    await tray.SetHighlightMode(TrayHighlightMode.Always);
+
+                    // Mac specific
+                    // During development this will not work well.
+                    // The icon will revert back to the Electron icon.  Bug??
+                    var dock = await app.Dock();
+                    if (dock != null)
+                    {
+                        await dock.Show();
+                        await dock.SetIcon($"{__dirname}/assets/icons/appicon.png");
+                    }
+                }
+            ));
+
+            // Listen for window show event
+            await mainWindow.On("hide",
+                new ScriptObjectCallback<Event>(async (evt) =>
+                {
+                    //console.Log("Hide");
+                    await tray.SetHighlightMode(TrayHighlightMode.Never);
+
+                    // Mac specific
+                    var dock = await app.Dock();
+                    if (dock != null)
+                        await dock.Hide();
                 }
             ));
 
@@ -86,14 +117,19 @@ using WebSharpJs.Script;
         
         async Task CreateTray (string __dirname)
         {
-
-            tray = await Tray.Create($"{__dirname}/assets/icons/appicon.ico");
-
+            
+            if (!IsWindows)
+            {
+                tray = await Tray.Create($"{__dirname}/assets/icons/appicon_16x16@2x.png");
+            }
+            else
+                tray = await Tray.Create($"{__dirname}/assets/icons/appicon.ico");
+            
             // Sets the hover text for this tray icon.
             await tray.SetToolTip("MinimizeToTray Sample Program");
 
             // Sets the title displayed aside of the tray icon in the status bar.
-            await tray.SetTitle("MinimizeToTray");
+            //await tray.SetTitle("MinimizeToTray");
 
             // Create a context menu to be displayed on the Tray
             var menuItemOptions = new MenuItemOptions[]
@@ -145,6 +181,14 @@ using WebSharpJs.Script;
                 })
             );
         
+        }
+
+        static bool IsWindows
+        {
+            get {
+                // Mac can also return Unix running under mono.
+                return !(System.Environment.OSVersion.Platform == PlatformID.MacOSX || System.Environment.OSVersion.Platform == PlatformID.Unix);
+            }
         }
     }
 //}

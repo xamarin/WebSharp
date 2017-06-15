@@ -5,7 +5,7 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
-var mainWindowId = 0;
+
 // Set our application icon on Mac
 if (process.platform === 'darwin') {
   app.dock.setIcon(__dirname + '/assets/icons/appicon.png');
@@ -20,7 +20,15 @@ function createWindow () {
         if (error) throw error;
         if (result) {
             mainWindow = BrowserWindow.fromId(result);
-            
+
+           // Emitted when the window is closed.
+            mainWindow.on('closed', function () {
+              // Dereference the window object, usually you would store windows
+              // in an array if your app supports multi windows, this is the time
+              // when you should delete the corresponding element.
+              mainWindow = null
+            })
+
             // Emitted when the window is going to be closed. 
             // It's emitted before the beforeunload and unload event of the DOM. 
             mainWindow.on('close', function (e) {
@@ -42,6 +50,7 @@ function createWindow () {
         }
       });
 }
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -54,6 +63,7 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+  
 })
 
 app.on('activate', function () {
@@ -62,7 +72,18 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
+  else {
+    mainWindow.show();
+  }
 })
+
+// We need this for Mac functionality for Cmd-Q and Quit from app menu.
+
+// 'before-quit' is emitted when Electron receives
+// the signal to exit and wants to start closing windows 
+// placed here instead of managed code so we catch the event in the correct order.
+app.on('before-quit', function () { app.shouldQuit  = true; });
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
