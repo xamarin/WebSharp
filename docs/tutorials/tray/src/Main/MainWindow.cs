@@ -118,12 +118,10 @@ using WebSharpJs.Script;
         async Task CreateTray (string __dirname)
         {
             
-            if (!IsWindows)
-            {
-                tray = await Tray.Create($"{__dirname}/assets/icons/appicon_16x16@2x.png");
-            }
-            else
+            if (IsWindows)
                 tray = await Tray.Create($"{__dirname}/assets/icons/appicon.ico");
+            else
+                tray = await Tray.Create($"{__dirname}/assets/icons/appicon_16x16@2x.png");
             
             // Sets the hover text for this tray icon.
             await tray.SetToolTip("MinimizeToTray Sample Program");
