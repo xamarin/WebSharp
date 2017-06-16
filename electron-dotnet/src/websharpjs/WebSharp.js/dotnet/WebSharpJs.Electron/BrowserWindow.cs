@@ -1076,6 +1076,8 @@ namespace WebSharpJs.Electron
         }
 
         public VibrancyType? Vibrancy { get; set; }
+
+        public WebPreferences WebPreferences { get; set; }
     }
 
     public enum BrowserWindowType
@@ -1128,4 +1130,97 @@ namespace WebSharpJs.Electron
 		 */
 		//postData?: (UploadRawData | UploadFileSystem | UploadBlob)[];
 	}
+
+    [ScriptableType]
+    public struct WebPreferences
+    {
+        [ScriptableMember(ScriptAlias = "devTools")]
+        public bool? DevTools { get; set; }
+
+        [ScriptableMember(ScriptAlias = "nodeIntegration")]
+        public bool? NodeIntegration { get; set; }
+
+        [ScriptableMember(ScriptAlias = "preload")]
+        public string Preload { get; set; }
+
+        //[ScriptableMember(ScriptAlias = "session")]
+        //public Session Session { get; set; }
+
+        [ScriptableMember(ScriptAlias = "partition")]
+        public string Partition { get; set; }
+
+        [ScriptableMember(ScriptAlias = "zoomFactor")]
+        public float? ZoomFactor { get; set; }
+
+        [ScriptableMember(ScriptAlias = "javascript")]
+        public bool? Javascript { get; set; }
+
+        [ScriptableMember(ScriptAlias = "webSecurity")]
+        public bool? WebSecurity { get; set; }
+
+        [ScriptableMember(ScriptAlias = "allowDisplayingInsecureContent")]
+        public bool? AllowDisplayingInsecureContent { get; set; }
+
+        [ScriptableMember(ScriptAlias = "allowRunningInsecureContent")]
+        public bool? AllowRunningInsecureContent { get; set; }
+
+        [ScriptableMember(ScriptAlias = "images")]
+        public bool? Images { get; set; }
+
+        [ScriptableMember(ScriptAlias = "textAreasAreResizable")]
+        public bool? TextAreasAreResizable { get; set; }
+
+        [ScriptableMember(ScriptAlias = "webgl")]
+        public bool? WebGL { get; set; }
+
+        [ScriptableMember(ScriptAlias = "webaudio")]
+        public bool? WebAudio { get; set; }
+
+        [ScriptableMember(ScriptAlias = "plugins")]
+        public bool? Plugins { get; set; }
+
+        [ScriptableMember(ScriptAlias = "experimentalFeatures")]
+        public bool? ExperimentalFeatures { get; set; }
+
+        [ScriptableMember(ScriptAlias = "experimentalCanvasFeatures")]
+        public bool? ExperimentalCanvasFeatures { get; set; }
+
+        [ScriptableMember(ScriptAlias = "directWrite")]
+        public bool? DirectWrite { get; set; }
+
+        [ScriptableMember(ScriptAlias = "scrollBounce")]
+        public bool? ScrollBounce { get; set; }
+
+        [ScriptableMember(ScriptAlias = "blinkFeatures")]
+        public string BlinkFeatures { get; set; }
+
+        [ScriptableMember(ScriptAlias = "disableBlinkFeatures")]
+        public bool? DisableBlinkFeatures { get; set; }
+
+        [ScriptableMember(ScriptAlias = "defaultFontFamily")]
+        public string DefaultFontFamily { get; set; }
+
+        [ScriptableMember(ScriptAlias = "defaultFontSize")]
+        public float? DefaultFontSize { get; set; }
+
+        [ScriptableMember(ScriptAlias = "defaultMonospaceFontSize")]
+        public float? DefaultMonospaceFontSize { get; set; }
+
+        [ScriptableMember(ScriptAlias = "minimumFontSize")]
+        public float? MinimumFontSize { get; set; }
+
+        [ScriptableMember(ScriptAlias = "defaultEncoding")]
+        public string DefaultEncoding { get; set; }
+
+        [ScriptableMember(ScriptAlias = "backgroundThrottling")]
+        public bool? BackgroundThrottling { get; set; }
+
+        [ScriptableMember(ScriptAlias = "offscreen")]
+        public bool? Offscreen { get; set; }
+
+        [ScriptableMember(ScriptAlias = "sandbox")]
+        public bool? Sandbox { get; set; }
+
+
+    }
 }
