@@ -76,6 +76,17 @@ namespace WebSharpJs.Electron
             return await scriptObject.Invoke<BrowserWindow>("fromId", id);
         }
 
+        public static async Task<BrowserWindow> FromWebContents(WebContents webContents)
+        {
+            if (scriptProxy == null)
+                scriptProxy = new NodeObjectProxy(bwScriptProxy, bwRequires);
+
+            await scriptProxy.GetProxyObject("BrowserWindow");
+            var scriptObject = new ScriptObject();
+            scriptObject.ScriptObjectProxy = scriptProxy;
+            return await scriptObject.Invoke<BrowserWindow>("fromWebContents", webContents);
+        }
+
         public static async Task<string> AddDevToolsExtension(string path)
         {
             if (scriptProxy == null)

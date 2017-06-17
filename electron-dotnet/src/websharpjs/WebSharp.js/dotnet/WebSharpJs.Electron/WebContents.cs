@@ -332,61 +332,52 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("unregisterServiceWorker", fullfilled);
         }
 
-        public async Task<object> Print(PrintOptions? options = null)
+        public async Task Print(PrintOptions? options = null)
         {
             if (options != null && options.HasValue)
-                return await Invoke<object>("print", options.Value);
+                await Invoke<object>("print", options.Value);
             else
-                return await Invoke<object>("print");
+                await Invoke<object>("print");
         }
 
         /**
         * Prints windows' web page as PDF with Chromium's preview printing custom settings.
         */
         //printToPDF(options: PrintToPDFOptions, callback: (error: Error, data: Buffer) => void): void;
-
-        public async Task<object> AddWorkSpace(string path)
+        public async Task PrintToPDF(PrintToPDFOptions options, ScriptObjectCallback<Error, byte[]> callback)
         {
-            return await Invoke<object>("addWorkSpace", path);
+            await Invoke<object>("printToPDF", options, callback);
         }
 
-        public async Task<object> RemoveWorkSpace(string path)
+        public async Task AddWorkSpace(string path)
         {
-            return await Invoke<object>("removeWorkSpace", path);
+            await Invoke<object>("addWorkSpace", path);
         }
 
-
-
-
-
-
+        public async Task RemoveWorkSpace(string path)
+        {
+            await Invoke<object>("removeWorkSpace", path);
+        }
 
         // devtools
         /**
 		 * Opens the developer tools.
 		 */
-        //    openDevTools(options?: {
-        //        /**
-        //* Opens the devtools with specified dock state. Defaults to last used dock state.
-        //*/
-        //        mode ?: 'right' | 'bottom' | 'undocked' | 'detach'
-
-        //    }): void;
-        public async Task<object> OpenDevTools (DevToolsMode? mode = null)
+        public async Task OpenDevTools (DevToolsMode? mode = null)
         {
             if (mode != null && mode.HasValue)
-                return await Invoke<object>("openDevTools", new { mode = mode.ToString().ToLower() });
+                await Invoke<object>("openDevTools", new { mode = mode.ToString().ToLower() });
             else
-                return await Invoke<object>("openDevTools");
+                await Invoke<object>("openDevTools");
         }
 
         /**
 		 * Closes the developer tools.
 		 */
         //closeDevTools(): void;
-        public async Task<object> CloseDevTools()
+        public async Task CloseDevTools()
         {
-            return await Invoke<object>("closeDevTools");
+            await Invoke<object>("closeDevTools");
         }
         /**
 		 * Returns whether the developer tools are opened.
@@ -405,34 +396,34 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isDevToolsFocused");
         }
 
-        public async Task<object> ToggleDevTools ()
+        public async Task ToggleDevTools ()
         {
-            return await Invoke<object>("toggleDevTools");
+            await Invoke<object>("toggleDevTools");
         }
 
-        public async Task<object> InspectElement(int x, int y)
+        public async Task InspectElement(int x, int y)
         {
-            return await Invoke<object>("inspectElement", x, y);
+            await Invoke<object>("inspectElement", x, y);
         }
 
-        public async Task<object> InspectServiceWorker()
+        public async Task InspectServiceWorker()
         {
-            return await Invoke<object>("inspectServiceWorker");
+            await Invoke<object>("inspectServiceWorker");
         }
 
-        public async Task<object> Send(string channel, params object[] args )
+        public async Task Send(string channel, params object[] args )
         {
-            return await Invoke<object>("send", channel, args);
+            await Invoke<object>("send", channel, args);
         }
 
-        public async Task<object> EnableDeviceEmulation(DeviceEmulationParameters parameters)
+        public async Task EnableDeviceEmulation(DeviceEmulationParameters parameters)
         {
-            return await Invoke<object>("enableDeviceEmulation", parameters);
+            await Invoke<object>("enableDeviceEmulation", parameters);
         }
 
-        public async Task<object> DisableDeviceEmulation()
+        public async Task DisableDeviceEmulation()
         {
-            return await Invoke<object>("disableDeviceEmulation");
+            await Invoke<object>("disableDeviceEmulation");
         }
 
         public async Task<object> ShowDefinitionForSelection()
@@ -602,4 +593,38 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "scale")]
         public float? Scale { get; set; }
     }
+    [ScriptableType]
+    public struct PrintToPDFOptions
+    {
+        [ScriptableMember(ScriptAlias = "marginsType", EnumValue = ConvertEnum.ToLower)]
+        public MarginsType? MarginsType { get; set; }
+        [ScriptableMember(ScriptAlias = "pageSize", EnumValue = ConvertEnum.Default)]
+        public PageSize? PageSize { get; set; }
+        [ScriptableMember(ScriptAlias = "printBackground")]
+        public bool? PrintBackground { get; set; }
+        [ScriptableMember(ScriptAlias = "printSelectionOnly")]
+        public bool? PrintSelectionOnly { get; set; }
+        [ScriptableMember(ScriptAlias = "landscape")]
+        public bool? Landscape { get; set; }
+
+    }
+
+    public enum MarginsType
+    {
+        Default,
+        None,
+        Minimum
+    }
+
+    public enum PageSize
+    {
+        A3,
+        A4,
+        A5,
+        Legal,
+        Letter,
+        Tabloid
+    }
+
+
 }
