@@ -237,9 +237,10 @@ public class WebSharpCompiler
         // default references
         MetadataReference[] defaultReferences = new MetadataReference[]
         {
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),  // System.dll
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),  // mscorelib.dll
             MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),  // System.Core
             MetadataReference.CreateFromFile(typeof(RuntimeBinderException).Assembly.Location), // Microsoft.CSharp
+            MetadataReference.CreateFromFile(Path.Combine(frameworkPath, "System.dll")) // System.dll
         };
 
         var metadataReferences = new List<MetadataReference>(defaultReferences);
