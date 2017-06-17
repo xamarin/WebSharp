@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>PrintToPdf</title>
+    <!--style>
+      @media print {
+          body {
+            background: none;
+            color: blue !important;
+            font-size: 70%;
+            margin: 0; padding: 0;
+          }
+          h1 {
+            color: red !important;
+          }
+          button {
+            display: none;
+          }
+      }
+    </style-->
+
+  </head>
+  <body>
+    <h1>PrintToPdf</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using node <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+
+    <div>
+      <button id="print-pdf" class="no-prints">Print To Pdf</button>
+      <label id="file-path"></label>
+    </div>
+
+  </body>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+</html>
