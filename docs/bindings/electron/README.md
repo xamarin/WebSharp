@@ -2,7 +2,7 @@
 
 * [app](api/app.md) :running:
 * [autoUpdater](api/auto-updater.md) :exclamation:
-* [BrowserWindow](api/browser-window.md) :exclamation:
+* [BrowserWindow](api/browser-window.md) :running:
 * [contentTracing](api/content-tracing.md) :exclamation:
 * [dialog](api/dialog.md) :running:
 * [globalShortcut](api/global-shortcut.md) :exclamation:
