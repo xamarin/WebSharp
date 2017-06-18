@@ -88,14 +88,14 @@
 - [x] `win.loadURL(url[, options])`
 - [x] `win.reload()`
 - [x] `win.setMenu(menu)` _Linux_ _Windows_
-- [ ] `win.setProgressBar(progress[, options])`
+- [x] `win.setProgressBar(progress[, options])`
 - [x] `win.setOverlayIcon(overlay, description)` _Windows_
 - [x] `win.setHasShadow(hasShadow)` _macOS_
 - [x] `win.hasShadow()` _macOS_
-- [ ] `win.setThumbarButtons(buttons)` _Windows_
+- [x] `win.setThumbarButtons(buttons)` _Windows_
 - [x] `win.setThumbnailClip(region)` _Windows_
 - [x] `win.setThumbnailToolTip(toolTip)` _Windows_
-- [ ] `win.setAppDetails(options)` _Windows_
+- [x] `win.setAppDetails(options)` _Windows_
 - [x] `win.showDefinitionForSelection()` _macOS_
 - [x] `win.setIcon(icon)` _Windows_ _Linux_
 - [x] `win.setAutoHideMenuBar(hide)`

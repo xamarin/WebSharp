@@ -304,5 +304,17 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "touchSupport", EnumValue = ConvertEnum.ToLower)]
         public TouchSupport TouchSupport { get; set; }
     }
+    [ScriptableType]
+    public struct ThumbarButton
+    {
+        [ScriptableMember(ScriptAlias = "click")]
+        public ScriptObjectCallback Click { get; set; }
+        [ScriptableMember(ScriptAlias = "flags")]
+        public string[] Flags { get; set; }
+        [ScriptableMember(ScriptAlias = "icon")]
+        public NativeImage Icon { get; set; }
+        [ScriptableMember(ScriptAlias = "tooltip")]
+        public string Tooltip { get; set; }
+    }
 
 }

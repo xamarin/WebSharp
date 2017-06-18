@@ -141,24 +141,24 @@ namespace WebSharpJs.Electron
             return await GetProperty<int>("id");
         }
 
-        public async Task<object> Destroy()
+        public async Task Destroy()
         {
-            return await Invoke<object>("destroy");
+            await Invoke<object>("destroy");
         }
 
-        public async Task<object> Close()
+        public async Task Close()
         {
-            return await Invoke<object>("close");
+            await Invoke<object>("close");
         }
 
-        public async Task<object> Focus()
+        public async Task Focus()
         {
-            return await Invoke<object>("focus");
+            await Invoke<object>("focus");
         }
 
-        public async Task<object> Blur()
+        public async Task Blur()
         {
-            return await Invoke<object>("blur");
+            await Invoke<object>("blur");
         }
 
         public async Task<bool> IsFocused()
@@ -171,19 +171,19 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isDestroyed");
         }
 
-        public async Task<object> Show()
+        public async Task Show()
         {
-            return await Invoke<object>("show");
+            await Invoke<object>("show");
         }
 
-        public async Task<object> ShowInactive()
+        public async Task ShowInactive()
         {
-            return await Invoke<object>("showInactive");
+            await Invoke<object>("showInactive");
         }
 
-        public async Task<object> Hide()
+        public async Task Hide()
         {
-            return await Invoke<object>("hide");
+            await Invoke<object>("hide");
         }
 
         public async Task<bool> IsVisible()
@@ -196,14 +196,14 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isModal");
         }
 
-        public async Task<object> Maximize()
+        public async Task Maximize()
         {
-            return await Invoke<object>("maximize");
+            await Invoke<object>("maximize");
         }
 
-        public async Task<object> UnMaximize()
+        public async Task UnMaximize()
         {
-            return await Invoke<object>("unmaximize");
+            await Invoke<object>("unmaximize");
         }
 
         public async Task<bool> IsMaximized()
@@ -211,14 +211,14 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isMaximized");
         }
 
-        public async Task<object> Minimize()
+        public async Task Minimize()
         {
-            return await Invoke<object>("minimize");
+            await Invoke<object>("minimize");
         }
 
-        public async Task<object> Restore()
+        public async Task Restore()
         {
-            return await Invoke<object>("restore");
+            await Invoke<object>("restore");
         }
 
         public async Task<bool> IsMinimized()
@@ -226,9 +226,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isMinimized");
         }
 
-        public async Task<object> SetFullScreen(bool flag)
+        public async Task SetFullScreen(bool flag)
         {
-            return await Invoke<object>("setFullScreen", flag);
+            await Invoke<object>("setFullScreen", flag);
         }
 
         public async Task<bool> IsFullScreen()
@@ -236,33 +236,33 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isFullScreen");
         }
 
-        public async Task<object> SetAspectRatio(float aspect, Size size = null)
+        public async Task SetAspectRatio(float aspect, Size size = null)
         {
             if (size != null)
-                return await Invoke<object>("setAspectRatio", aspect, size );
+                await Invoke<object>("setAspectRatio", aspect, size );
             else
-                return await Invoke<object>("setAspectRatio", aspect );
+                await Invoke<object>("setAspectRatio", aspect );
         }
 
-        public async Task<object> PreviewFile(string path, string displayName = null)
+        public async Task PreviewFile(string path, string displayName = null)
         {
             if (displayName != null)
-                return await Invoke<object>("previewFile", path, displayName);
+                await Invoke<object>("previewFile", path, displayName);
             else
-                return await Invoke<object>("previewFile", displayName);
+                await Invoke<object>("previewFile", displayName);
         }
 
-        public async Task<object> CloseFilePreview()
+        public async Task CloseFilePreview()
         {
-            return await Invoke<object>("closeFilePreview");
+            await Invoke<object>("closeFilePreview");
         }
 
-        public async Task<object> SetBounds(Rectangle options, bool? animate = null)
+        public async Task SetBounds(Rectangle options, bool? animate = null)
         {
             if (animate != null && animate.HasValue)
-                return await Invoke<object>("setBounds", options, animate.Value);
+                await Invoke<object>("setBounds", options, animate.Value);
             else
-                return await Invoke<object>("setBounds", options);
+                await Invoke<object>("setBounds", options);
         }
 
         public async Task<Rectangle> GetBounds()
@@ -272,12 +272,12 @@ namespace WebSharpJs.Electron
             
         }
 
-        public async Task<object> SetContentBounds(Rectangle options, bool? animate = null)
+        public async Task SetContentBounds(Rectangle options, bool? animate = null)
         {
             if (animate != null && animate.HasValue)
-                return await Invoke<object>("setContentBounds", options, animate.Value);
+                await Invoke<object>("setContentBounds", options, animate.Value);
             else
-                return await Invoke<object>("setContentBounds", options);
+                await Invoke<object>("setContentBounds", options);
         }
 
         public async Task<Rectangle> GetContentBounds()
@@ -287,17 +287,17 @@ namespace WebSharpJs.Electron
 
         }
 
-        public async Task<object> SetSize(int width, int height, bool? animate = null)
+        public async Task SetSize(int width, int height, bool? animate = null)
         {
             if (animate != null && animate.HasValue)
-                return await Invoke<object>("setSize", width, height, animate.Value);
+                await Invoke<object>("setSize", width, height, animate.Value);
             else
-                return await Invoke<object>("setSize", width, height);
+                await Invoke<object>("setSize", width, height);
         }
 
-        public async Task<object> SetSize(Size size, bool? animate = null)
+        public async Task SetSize(Size size, bool? animate = null)
         {
-            return await SetSize((int)size.Width, (int)size.Height, animate);
+            await SetSize((int)size.Width, (int)size.Height, animate);
         }
 
         public async Task<Size> GetSize()
@@ -307,17 +307,17 @@ namespace WebSharpJs.Electron
 
         }
 
-        public async Task<object> SetContentSize(int width, int height, bool? animate = null)
+        public async Task SetContentSize(int width, int height, bool? animate = null)
         {
             if (animate != null && animate.HasValue)
-                return await Invoke<object>("setContentSize", width, height, animate.Value);
+                await Invoke<object>("setContentSize", width, height, animate.Value);
             else
-                return await Invoke<object>("setContentSize", width, height);
+                await Invoke<object>("setContentSize", width, height);
         }
 
-        public async Task<object> SetContentSize(Size size, bool? animate = null)
+        public async Task SetContentSize(Size size, bool? animate = null)
         {
-            return await SetContentSize((int)size.Width, (int)size.Height, animate);
+            await SetContentSize((int)size.Width, (int)size.Height, animate);
         }
 
         public async Task<Size> GetContentSize()
@@ -327,14 +327,14 @@ namespace WebSharpJs.Electron
 
         }
 
-        public async Task<object> SetMinimumSize(int width, int height)
+        public async Task SetMinimumSize(int width, int height)
         {
-             return await Invoke<object>("setMinimumSize", width, height);
+             await Invoke<object>("setMinimumSize", width, height);
         }
 
-        public async Task<object> SetMinimumSize(Size size)
+        public async Task SetMinimumSize(Size size)
         {
-            return await SetMinimumSize((int)size.Width, (int)size.Height);
+            await SetMinimumSize((int)size.Width, (int)size.Height);
         }
 
         public async Task<Size> GetMinimumSize()
@@ -344,14 +344,14 @@ namespace WebSharpJs.Electron
 
         }
 
-        public async Task<object> SetMaximumSize(int width, int height)
+        public async Task SetMaximumSize(int width, int height)
         {
-            return await Invoke<object>("setMaximumSize", width, height);
+            await Invoke<object>("setMaximumSize", width, height);
         }
 
-        public async Task<object> SetMaximumSize(Size size)
+        public async Task SetMaximumSize(Size size)
         {
-            return await SetMaximumSize((int)size.Width, (int)size.Height);
+            await SetMaximumSize((int)size.Width, (int)size.Height);
         }
 
         public async Task<Size> GetMaximumSize()
@@ -361,9 +361,9 @@ namespace WebSharpJs.Electron
 
         }
 
-        public async Task<object> SetResizable(bool resizable)
+        public async Task SetResizable(bool resizable)
         {
-            return await Invoke<object>("setResizable", resizable);
+            await Invoke<object>("setResizable", resizable);
         }
 
         public async Task<bool> IsResizable()
@@ -371,9 +371,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isResizable");
         }
 
-        public async Task<object> SetMovable(bool movable)
+        public async Task SetMovable(bool movable)
         {
-            return await Invoke<object>("setMovable", movable);
+            await Invoke<object>("setMovable", movable);
         }
 
         public async Task<bool> IsMovable()
@@ -381,9 +381,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isMovable");
         }
 
-        public async Task<object> SetMinimizable(bool minimizable)
+        public async Task SetMinimizable(bool minimizable)
         {
-            return await Invoke<object>("setMinimizable", minimizable);
+            await Invoke<object>("setMinimizable", minimizable);
         }
 
         public async Task<bool> IsMinimizable()
@@ -391,9 +391,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isMinimizable");
         }
 
-        public async Task<object> SetMaximizable(bool maximizable)
+        public async Task SetMaximizable(bool maximizable)
         {
-            return await Invoke<object>("setMaximizable", maximizable);
+            await Invoke<object>("setMaximizable", maximizable);
         }
 
         public async Task<bool> IsMaximizable()
@@ -401,9 +401,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isMaximizable");
         }
 
-        public async Task<object> SetFullScreenable(bool fullScreenable)
+        public async Task SetFullScreenable(bool fullScreenable)
         {
-            return await Invoke<object>("setFullScreenable", fullScreenable);
+            await Invoke<object>("setFullScreenable", fullScreenable);
         }
 
         public async Task<bool> IsFullScreenable()
@@ -411,9 +411,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isFullScreenable");
         }
 
-        public async Task<object> SetClosable(bool closable)
+        public async Task SetClosable(bool closable)
         {
-            return await Invoke<object>("setClosable", closable);
+            await Invoke<object>("setClosable", closable);
         }
 
         public async Task<bool> IsClosable()
@@ -421,7 +421,7 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isClosable");
         }
 
-        public async Task<object> SetAlwaysOnTop(bool flag, WindowLevel? level = null)
+        public async Task SetAlwaysOnTop(bool flag, WindowLevel? level = null)
         {
             if (level != null && level.HasValue)
             {
@@ -449,10 +449,10 @@ namespace WebSharpJs.Electron
                         break;
                 }
 
-                return await Invoke<object>("setAlwaysOnTop", flag, lvl);
+                await Invoke<object>("setAlwaysOnTop", flag, lvl);
             }
             else
-                return await Invoke<object>("setAlwaysOnTop", flag);
+                await Invoke<object>("setAlwaysOnTop", flag);
         }
 
         public async Task<bool> IsAlwaysOnTop()
@@ -460,17 +460,17 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isAlwaysOnTop");
         }
 
-        public async Task<object> Center()
+        public async Task Center()
         {
-            return await Invoke<string>("center");
+            await Invoke<string>("center");
         }
 
-        public async Task<object> SetPosition(int x, int y, bool? animate = null)
+        public async Task SetPosition(int x, int y, bool? animate = null)
         {
             if (animate != null && animate.HasValue)
-                return await Invoke<object>("setPosition", x, y, animate.Value);
+                await Invoke<object>("setPosition", x, y, animate.Value);
             else
-                return await Invoke<object>("setPosition", x, y);
+                await Invoke<object>("setPosition", x, y);
         }
 
         public async Task<Point> GetPosition()
@@ -480,38 +480,46 @@ namespace WebSharpJs.Electron
 
         }
 
+        public async Task SetProgressBar(float progress, ProgressBarMode? mode = null)
+        {
+            if (mode != null && mode.HasValue)
+                await Invoke<object>("setProgressBar", progress, mode.Value);
+            else
+                await Invoke<object>("setProgressBar", progress);
+        }
+
         public async Task<string> GetTitle()
         {
             return await Invoke<string>("getTitle");
         }
-        public async Task<object> SetTitle(string title)
+        public async Task SetTitle(string title)
         {
-            return await Invoke<object>("setTitle", title);
+            await Invoke<object>("setTitle", title);
         }
 
-        public async Task<object> SetSheetOffset(int offsetX, int offsetY)
+        public async Task SetSheetOffset(int offsetX, int offsetY)
         {
-            return await Invoke<object>("setSheetOffset", offsetX, offsetY);
+            await Invoke<object>("setSheetOffset", offsetX, offsetY);
         }
 
-        public async Task<object> SetSheetOffset(Point size)
+        public async Task SetSheetOffset(Point size)
         {
-            return await SetSheetOffset((int)size.X, (int)size.Y);
+            await SetSheetOffset((int)size.X, (int)size.Y);
         }
 
-        public async Task<object> FlashFrame(bool flag)
+        public async Task FlashFrame(bool flag)
         {
-            return await Invoke<object>("flashFrame", flag);
+            await Invoke<object>("flashFrame", flag);
         }
 
-        public async Task<object> SetSkipTaskbar(bool skip)
+        public async Task SetSkipTaskbar(bool skip)
         {
-            return await Invoke<object>("setSkipTaskbar", skip);
+            await Invoke<object>("setSkipTaskbar", skip);
         }
 
-        public async Task<object> SetKiosk(bool flag)
+        public async Task SetKiosk(bool flag)
         {
-            return await Invoke<object>("setKiosk", flag);
+            await Invoke<object>("setKiosk", flag);
         }
 
         public async Task<bool> IsKiosk()
@@ -524,9 +532,9 @@ namespace WebSharpJs.Electron
             return await Invoke<byte[]>("getNativeWindowHandle");
         }
 
-        public async Task<object> HookWindowMessage(int message, ScriptObjectCallback callback)
+        public async Task HookWindowMessage(int message, ScriptObjectCallback callback)
         {
-            return await Invoke<object>("hookWindowMessage", message, callback);
+            await Invoke<object>("hookWindowMessage", message, callback);
         }
 
         public async Task<bool> IsWindowMessageHooked (int message)
@@ -534,14 +542,14 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isWindowMessageHooked", message);
         }
 
-        public async Task<object> UnhookWindowMessage (int message)
+        public async Task UnhookWindowMessage (int message)
         {
-            return await Invoke<object>("unhookWindowMessage", message);
+            await Invoke<object>("unhookWindowMessage", message);
         }
 
-        public async Task<object> UnhookAllWindowMessages ()
+        public async Task UnhookAllWindowMessages ()
         {
-            return await Invoke<object>("unhookAllWindowMessages");
+            await Invoke<object>("unhookAllWindowMessages");
         }
 
         public async Task<string> GetRepresentedFilename()
@@ -549,14 +557,14 @@ namespace WebSharpJs.Electron
             return await Invoke<string>("getRepresentedFilename");
         }
 
-        public async Task<object> SetRepresentedFilename(string filename)
+        public async Task SetRepresentedFilename(string filename)
         {
-            return await Invoke<object>("setRepresentedFilename", filename);
+            await Invoke<object>("setRepresentedFilename", filename);
         }
 
-        public async Task<object> SetDocumentEdited(bool edited)
+        public async Task SetDocumentEdited(bool edited)
         {
-            return await Invoke<object>("setDocumentEdited", edited);
+            await Invoke<object>("setDocumentEdited", edited);
         }
 
         public async Task<bool> IsDocumentEdited()
@@ -564,53 +572,53 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isDocumentEdited");
         }
 
-        public async Task<object> FocusOnWebView()
+        public async Task FocusOnWebView()
         {
-            return await Invoke<object>("focusOnWebView");
+            await Invoke<object>("focusOnWebView");
         }
 
-        public async Task<object> BlurWebView()
+        public async Task BlurWebView()
         {
-            return await Invoke<object>("blurWebView");
+            await Invoke<object>("blurWebView");
         }
 
-        public async Task<object> CapturePage(Rectangle rect = null, ScriptObjectCallback<NativeImage> callback = null)
+        public async Task CapturePage(Rectangle rect = null, ScriptObjectCallback<NativeImage> callback = null)
         {
             if (rect != null)
-                return await Invoke<object>("capturePage", rect, callback);
+                await Invoke<object>("capturePage", rect, callback);
             else
-                return await Invoke<object>("capturePage", callback);
+                await Invoke<object>("capturePage", callback);
         }
 
-        public async Task<object> LoadURL(string url, LoadURLOptions urlOptions = null)
+        public async Task LoadURL(string url, LoadURLOptions urlOptions = null)
         {
             if (urlOptions == null)
-                return await Invoke<object>("loadURL", url);
+                await Invoke<object>("loadURL", url);
             else
-                return await Invoke<object>("loadURL", url, urlOptions);
+                await Invoke<object>("loadURL", url, urlOptions);
         }
 
-        public async Task<object> Reload()
+        public async Task Reload()
         {
-            return await Invoke<object>("reload");
+            await Invoke<object>("reload");
         }
 
-        public async Task<object> SetMenu(Menu menu)
+        public async Task SetMenu(Menu menu)
         {
             if (menu == null)
-                return await Invoke<object>("setMenu", null);
+                await Invoke<object>("setMenu", null);
             else
-                return await Invoke<object>("setMenu", menu);
+                await Invoke<object>("setMenu", menu);
         }
 
-        public async Task<object> SetOverlayIcon(NativeImage overlay, string description)
+        public async Task SetOverlayIcon(NativeImage overlay, string description)
         {
-            return await Invoke<object>("setOverlayIcon", overlay, description ?? string.Empty);
+            await Invoke<object>("setOverlayIcon", overlay, description ?? string.Empty);
         }
 
-        public async Task<object> SetHasShadow(bool hasShadow)
+        public async Task SetHasShadow(bool hasShadow)
         {
-            return await Invoke<object>("setHasShadow", hasShadow);
+            await Invoke<object>("setHasShadow", hasShadow);
         }
 
         public async Task<bool> IsHasShadow()
@@ -618,29 +626,39 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("hasShadow");
         }
 
-        public async Task<object> SetThumbnailClip(Rectangle clip)
+        public async Task<bool> SetThumbarButtons(ThumbarButton[] buttons)
         {
-            return await Invoke<object>("setThumbnailClip", clip);
+            return await Invoke<bool>("setThumbarButtons", buttons);
         }
 
-        public async Task<object> SetThumbnailToolTip(string tooltip)
+        public async Task SetThumbnailClip(Rectangle clip)
         {
-            return await Invoke<object>("setThumbnailToolTip", tooltip);
+            await Invoke<object>("setThumbnailClip", clip);
         }
 
-        public async Task<object> ShowDefinitionForSelection()
+        public async Task SetThumbnailToolTip(string tooltip)
         {
-            return await Invoke<object>("showDefinitionForSelection");
+            await Invoke<object>("setThumbnailToolTip", tooltip);
         }
 
-        public async Task<object> SetIcon(NativeImage icon)
+        public async Task SetAppDetails(AppDetailsOptions options)
         {
-            return await Invoke<object>("setIcon", icon);
+            await Invoke<object>("setAppDetails", options);
         }
 
-        public async Task<object> SetAutoHideMenuBar(bool hide)
+        public async Task ShowDefinitionForSelection()
         {
-            return await Invoke<object>("setAutoHideMenuBar", hide);
+            await Invoke<object>("showDefinitionForSelection");
+        }
+
+        public async Task SetIcon(NativeImage icon)
+        {
+            await Invoke<object>("setIcon", icon);
+        }
+
+        public async Task SetAutoHideMenuBar(bool hide)
+        {
+            await Invoke<object>("setAutoHideMenuBar", hide);
         }
 
         public async Task<bool> IsAutoHideMenuBar()
@@ -648,9 +666,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isAutoHideMenuBar");
         }
 
-        public async Task<object> SetMenuBarVisibility(bool visible)
+        public async Task SetMenuBarVisibility(bool visible)
         {
-            return await Invoke<object>("setMenuBarVisibility", visible);
+            await Invoke<object>("setMenuBarVisibility", visible);
         }
 
         public async Task<bool> IsMenuBarVisible()
@@ -658,9 +676,9 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isMenuBarVisible");
         }
 
-        public async Task<object> SetVisibleOnAllWorkspaces(bool visible)
+        public async Task SetVisibleOnAllWorkspaces(bool visible)
         {
-            return await Invoke<object>("setVisibleOnAllWorkspaces", visible);
+            await Invoke<object>("setVisibleOnAllWorkspaces", visible);
         }
 
         public async Task<bool> IsVisibleOnAllWorkspaces()
@@ -668,25 +686,25 @@ namespace WebSharpJs.Electron
             return await Invoke<bool>("isVisibleOnAllWorkspaces");
         }
 
-        public async Task<object> SetIgnoreMouseEvents(bool ignore)
+        public async Task SetIgnoreMouseEvents(bool ignore)
         {
-            return await Invoke<object>("setIgnoreMouseEvents", ignore);
+            await Invoke<object>("setIgnoreMouseEvents", ignore);
         }
 
-        public async Task<object> SetContentProtection(bool enable)
+        public async Task SetContentProtection(bool enable)
         {
-            return await Invoke<object>("setContentProtection", enable);
+            await Invoke<object>("setContentProtection", enable);
         }
 
-        public async Task<object> SetFocusable(bool focusable)
+        public async Task SetFocusable(bool focusable)
         {
-            return await Invoke<object>("setFocusable", focusable);
+            await Invoke<object>("setFocusable", focusable);
         }
 
  
-        public async Task<object> SetParentWindow(BrowserWindow parent)
+        public async Task SetParentWindow(BrowserWindow parent)
         {
-            return await Invoke<object>("setParentWindow", parent);
+            await Invoke<object>("setParentWindow", parent);
         }
 
         public async Task<BrowserWindow> GetParentWindow()
@@ -699,7 +717,7 @@ namespace WebSharpJs.Electron
             return await Invoke<ScriptObjectCollection<BrowserWindow>>("getChildWindows");
         }
 
-        public async Task<object> SetVibrancyType(VibrancyType type)
+        public async Task SetVibrancyType(VibrancyType type)
         {
             string vType = string.Empty;
 
@@ -719,7 +737,7 @@ namespace WebSharpJs.Electron
                     break;
 
             }
-            return await Invoke<object>("setVibrancy", vType);
+            await Invoke<object>("setVibrancy", vType);
         }
 
     }
@@ -1152,6 +1170,37 @@ namespace WebSharpJs.Electron
 		 */
 		//postData?: (UploadRawData | UploadFileSystem | UploadBlob)[];
 	}
+
+    [ScriptableType]
+    public struct ProgressBarOptions
+    {
+        [ScriptableMember(ScriptAlias = "mode", EnumValue = ConvertEnum.ToLower)]
+        public ProgressBarMode? Mode { get; set; }
+    }
+
+    public enum ProgressBarMode
+    {
+        None,
+        Normal,
+        InDeterminate,
+        Error
+
+    }
+
+    [ScriptableType]
+    public struct AppDetailsOptions
+    {
+        [ScriptableMember(ScriptAlias = "appId")]
+        public string AppId { get; set; }
+        [ScriptableMember(ScriptAlias = "appIconPath")]
+        public string AppIconPath { get; set; }
+        [ScriptableMember(ScriptAlias = "appIconIndex")]
+        public int AppIconIndex { get; set; }
+        [ScriptableMember(ScriptAlias = "relaunchCommand")]
+        public string RelaunchCommand { get; set; }
+        [ScriptableMember(ScriptAlias = "relaunchDisplayName")]
+        public string RelaunchDisplayName { get; set; }
+    }
 
     [ScriptableType]
     public struct WebPreferences
