@@ -1,0 +1,194 @@
+# browser-window
+
+
+## Static Methods
+
+- [x] `BrowserWindow.getAllWindows()`
+- [x] `BrowserWindow.getFocusedWindow()`
+- [x] `BrowserWindow.fromWebContents(webContents)`
+- [x] `BrowserWindow.fromId(id)`
+- [x] `BrowserWindow.addDevToolsExtension(path)`
+- [x] `BrowserWindow.removeDevToolsExtension(name)`
+- [x] `BrowserWindow.getDevToolsExtensions()`
+
+## Methods
+
+- [x] `win.webContents`
+- [x] `win.id`
+- [x] `win.destroy()`
+- [x] `win.close()`
+- [x] `win.focus()`
+- [x] `win.blur()`
+- [x] `win.isFocused()`
+- [x] `win.isDestroyed()`
+- [x] `win.show()`
+- [x] `win.showInactive()`
+- [x] `win.hide()`
+- [x] `win.isVisible()`
+- [x] `win.isModal()`
+- [x] `win.maximize()`
+- [x] `win.unmaximize()`
+- [x] `win.isMaximized()`
+- [x] `win.minimize()`
+- [x] `win.restore()`
+- [x] `win.isMinimized()`
+- [x] `win.setFullScreen(flag)`
+- [x] `win.isFullScreen()`
+- [x] `win.setAspectRatio(aspectRatio[, extraSize])` _macOS_
+- [x] `win.previewFile(path[, displayName])` _macOS_
+- [x] `win.closeFilePreview()` _macOS_
+- [x] `win.setBounds(bounds[, animate])`
+- [x] `win.getBounds()`
+- [x] `win.setContentBounds(bounds[, animate])`
+- [x] `win.getContentBounds()`
+- [x] `win.setSize(width, height[, animate])`
+- [x] `win.getSize()`
+- [x] `win.setContentSize(width, height[, animate])`
+- [x] `win.getContentSize()`
+- [x] `win.setMinimumSize(width, height)`
+- [x] `win.getMinimumSize()`
+- [x] `win.setMaximumSize(width, height)`
+- [x] `win.getMaximumSize()`
+- [x] `win.setResizable(resizable)`
+- [x] `win.isResizable()`
+- [x] `win.setMovable(movable)` _macOS_ _Windows_
+- [x] `win.isMovable()` _macOS_ _Windows_
+- [x] `win.setMinimizable(minimizable)` _macOS_ _Windows_
+- [x] `win.isMinimizable()` _macOS_ _Windows_
+- [x] `win.setMaximizable(maximizable)` _macOS_ _Windows_
+- [x] `win.isMaximizable()` _macOS_ _Windows_
+- [x] `win.setFullScreenable(fullscreenable)`
+- [x] `win.isFullScreenable()`
+- [x] `win.setClosable(closable)` _macOS_ _Windows_
+- [x] `win.isClosable()` _macOS_ _Windows_
+- [x] `win.setAlwaysOnTop(flag[, level][, relativeLevel])`
+- [x] `win.isAlwaysOnTop()`
+- [x] `win.center()`
+- [x] `win.setPosition(x, y[, animate])`
+- [x] `win.getPosition()`
+- [x] `win.setTitle(title)`
+- [x] `win.getTitle()`
+- [x] `win.setSheetOffset(offsetY[, offsetX])` _macOS_
+- [x] `win.flashFrame(flag)`
+- [x] `win.setSkipTaskbar(skip)`
+- [x] `win.setKiosk(flag)`
+- [x] `win.isKiosk()`
+- [x] `win.getNativeWindowHandle()`
+- [x] `win.hookWindowMessage(message, callback)` _Windows_
+- [x] `win.isWindowMessageHooked(message)` _Windows_
+- [x] `win.unhookWindowMessage(message)` _Windows_
+- [x] `win.unhookAllWindowMessages()` _Windows_
+- [x] `win.setRepresentedFilename(filename)` _macOS_
+- [x] `win.getRepresentedFilename()` _macOS_
+- [x] `win.setDocumentEdited(edited)` _macOS_
+- [x] `win.isDocumentEdited()` _macOS_
+- [x] `win.focusOnWebView()`
+- [x] `win.blurWebView()`
+- [x] `win.capturePage([rect, ]callback)`
+- [x] `win.loadURL(url[, options])`
+- [x] `win.reload()`
+- [x] `win.setMenu(menu)` _Linux_ _Windows_
+- [ ] `win.setProgressBar(progress[, options])`
+- [x] `win.setOverlayIcon(overlay, description)` _Windows_
+- [x] `win.setHasShadow(hasShadow)` _macOS_
+- [x] `win.hasShadow()` _macOS_
+- [ ] `win.setThumbarButtons(buttons)` _Windows_
+- [x] `win.setThumbnailClip(region)` _Windows_
+- [x] `win.setThumbnailToolTip(toolTip)` _Windows_
+- [ ] `win.setAppDetails(options)` _Windows_
+- [x] `win.showDefinitionForSelection()` _macOS_
+- [x] `win.setIcon(icon)` _Windows_ _Linux_
+- [x] `win.setAutoHideMenuBar(hide)`
+- [x] `win.isMenuBarAutoHide()`
+- [x] `win.setMenuBarVisibility(visible)` _Windows_ _Linux_
+- [x] `win.isMenuBarVisible()`
+- [x] `win.isVisibleOnAllWorkspaces()`
+- [x] `win.setIgnoreMouseEvents(ignore)`
+- [x] `win.setContentProtection(enable)` _macOS_ _Windows_
+- [x] `win.setFocusable(focusable)` _Windows_
+- [x] `win.setParentWindow(parent)` _Linux_ _macOS_
+- [x] `win.getParentWindow()`
+- [x] `win.getChildWindows()`
+- [ ] `win.setAutoHideCursor(autoHide)` _macOS_
+- [x] `win.setVibrancy(type)` _macOS_
+- [ ] `win.setTouchBar(touchBar)` _macOS_ _Experimental_
+- [ ] `win.setBrowserView(browserView)` _Experimental_
+
+## options
+
+- [x] `width`
+- [x] `height`
+- [x] `x`
+- [x] `y`
+- [x] `useContentSize`
+- [x] `center`
+- [x] `minWidth`
+- [x] `minHeight`
+- [x] `maxWidth`
+- [x] `maxHeight`
+- [x] `resizable`
+- [x] `movable`
+- [x] `minimizable`
+- [x] `maximizable`
+- [x] `closable`
+- [x] `focusable`
+- [x] `alwaysOnTop`
+- [x] `fullscreen`
+- [x] `fullscreenable`
+- [x] `skipTaskbar`
+- [x] `kiosk`
+- [x] `title`
+- [x] `icon`
+- [x] `show`
+- [x] `frame`
+- [x] `parent`
+- [x] `modal`
+- [x] `acceptFirstMouse`
+- [x] `disableAutoHideCursor`
+- [x] `autoHideMenuBar`
+- [x] `enableLargerThanScreen`
+- [x] `backgroundColor`
+- [x] `hasShadow`
+- [x] `darkTheme`
+- [x] `transparent`
+- [x] `type`
+- [x] `titleBarStyle`
+- [x] `thickFrame`
+- [x] `vibrancy`
+- [x] `zoomToPageWidth`
+- [x] `tabbingIdentifier`
+- [x] `webPreferences`
+
+## WebPreferences
+
+- [x] `devTools`
+- [x] `nodeIntegration`
+- [x] `nodeIntegrationInWorker`
+- [x] `preload`
+- [x] `sandbox`
+- [x] `session`
+- [x] `partition`
+- [x] `zoomFactor`
+- [x] `javascript`
+- [x] `webSecurity`
+- [x] `allowRunningInsecureContent`
+- [x] `images`
+- [x] `textAreasAreResizable`
+- [x] `webgl`
+- [x] `webaudio`
+- [x] `plugins`
+- [x] `experimentalFeatures`
+- [x] `experimentalCanvasFeatures`
+- [x] `scrollBounce`
+- [x] `blinkFeatures`
+- [x] `disableBlinkFeatures`
+- [x] `defaultFontFamily`
+- [x] `defaultFontSize`
+- [x] `defaultMonospaceFontSize`
+- [x] `minimumFontSize`
+- [x] `defaultEncoding`
+- [x] `backgroundThrottling`
+- [x] `offscreen`
+- [x] `contextIsolation`
+- [x] `nativeWindowOpen`
+- [x] `webviewTag`

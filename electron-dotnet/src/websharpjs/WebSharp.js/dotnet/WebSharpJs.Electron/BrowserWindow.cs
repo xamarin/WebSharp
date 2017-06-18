@@ -247,9 +247,14 @@ namespace WebSharpJs.Electron
         public async Task<object> PreviewFile(string path, string displayName = null)
         {
             if (displayName != null)
-                return await Invoke<object>("setAspectRatio", path, displayName);
+                return await Invoke<object>("previewFile", path, displayName);
             else
-                return await Invoke<object>("setAspectRatio", displayName);
+                return await Invoke<object>("previewFile", displayName);
+        }
+
+        public async Task<object> CloseFilePreview()
+        {
+            return await Invoke<object>("closeFilePreview");
         }
 
         public async Task<object> SetBounds(Rectangle options, bool? animate = null)
@@ -689,9 +694,9 @@ namespace WebSharpJs.Electron
             return await Invoke<BrowserWindow>("getParentWindow");
         }
 
-        public async Task<BrowserWindow> GetChildWindow()
+        public async Task<ScriptObjectCollection<BrowserWindow>> GetChildWindows()
         {
-            return await Invoke<BrowserWindow>("getChildWindow");
+            return await Invoke<ScriptObjectCollection<BrowserWindow>>("getChildWindows");
         }
 
         public async Task<object> SetVibrancyType(VibrancyType type)
@@ -1088,6 +1093,12 @@ namespace WebSharpJs.Electron
 
         public VibrancyType? Vibrancy { get; set; }
 
+        [ScriptableMember(ScriptAlias = "zoomToPageWidth")]
+        public bool? ZoomToPageWidth { get; set; }
+
+        [ScriptableMember(ScriptAlias = "tabbingIdentifier")]
+        public string TabbingIdentifier { get; set; }
+
         public WebPreferences WebPreferences { get; set; }
     }
 
@@ -1150,6 +1161,9 @@ namespace WebSharpJs.Electron
 
         [ScriptableMember(ScriptAlias = "nodeIntegration")]
         public bool? NodeIntegration { get; set; }
+
+        [ScriptableMember(ScriptAlias = "nodeIntegrationInWorker")]
+        public bool? NodeIntegrationInWorker { get; set; }
 
         [ScriptableMember(ScriptAlias = "preload")]
         public string Preload { get; set; }
@@ -1232,6 +1246,13 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "sandbox")]
         public bool? Sandbox { get; set; }
 
+        [ScriptableMember(ScriptAlias = "contextIsolation")]
+        public bool? ContextIsolation { get; set; }
 
+        [ScriptableMember(ScriptAlias = "nativeWindowOpen")]
+        public bool? NativeWindowOpen { get; set; }
+
+        [ScriptableMember(ScriptAlias = "webviewTag")]
+        public bool? WebviewTag { get; set; }
     }
 }
