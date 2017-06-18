@@ -55,11 +55,11 @@
 - [x] `contents.insertText(text)`
 - [x] `contents.findInPage(text[, options])`
 - [x] `contents.stopFindInPage(action)`
-- [ ] `contents.capturePage([rect, ]callback)`
+- [x] `contents.capturePage([rect, ]callback)`
 - [x] `contents.hasServiceWorker(callback)`
 - [x] `contents.unregisterServiceWorker(callback)`
-- [ ] `contents.print([options])`
-- [ ] `contents.printToPDF(options, callback)`
+- [x] `contents.print([options])`
+- [x] `contents.printToPDF(options, callback)`
 - [x] `contents.addWorkSpace(path)`
 - [x] `contents.removeWorkSpace(path)`
 - [x] `contents.openDevTools([options])`
@@ -78,7 +78,7 @@
 - [ ] `contents.startDrag(item)`
 - [ ] `contents.savePage(fullPath, saveType, callback)`
 - [x] `contents.showDefinitionForSelection()` _macOS_
-- [ ] `contents.setSize(options)`
+- [x] `contents.setSize(options)`
 - [x] `contents.isOffscreen()`
 - [x] `contents.startPainting()`
 - [x] `contents.stopPainting()`

@@ -317,4 +317,37 @@ namespace WebSharpJs.Electron
         public string Tooltip { get; set; }
     }
 
+    [ScriptableType]
+    public class Normal
+    {
+        public static readonly Normal Empty = new Normal();
+
+        [ScriptableMember(ScriptAlias = "width")]
+        public int Width { get; set; }
+        [ScriptableMember(ScriptAlias = "height")]
+        public int Height { get; set; }
+
+        public Normal()
+        { }
+
+        public Normal(int width, int height)
+        {
+            Width = width;
+            Height = height;
+        }
+
+        public Normal(dynamic obj)
+        {
+            var dict = obj as System.Collections.Generic.IDictionary<string, object>;
+            Width = System.Convert.ToInt32(dict["width"]);
+            Height = System.Convert.ToInt32(dict["height"]);
+        }
+
+        public override string ToString()
+        {
+            return $"Normal {{ Width: {Width} Height: {Height} }}";
+        }
+    }
+
+
 }

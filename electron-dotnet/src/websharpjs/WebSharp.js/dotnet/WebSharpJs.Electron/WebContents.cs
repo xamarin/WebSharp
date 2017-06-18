@@ -431,6 +431,11 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("showDefinitionForSelection");
         }
 
+        public async Task SetSize(SizeOptions options)
+        {
+            await Invoke<object>("setSize", options);
+        }
+
         public async Task<bool> IsOffscreen()
         {
             return await Invoke<bool>("isOffscreen");
@@ -625,6 +630,15 @@ namespace WebSharpJs.Electron
         Letter,
         Tabloid
     }
+
+    [ScriptableType]
+    public struct SizeOptions
+    {
+        [ScriptableMember(ScriptAlias = "normal")]
+        public Normal Normal { get; set; }
+
+    }
+
 
 
 }
