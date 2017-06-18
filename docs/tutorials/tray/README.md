@@ -2,7 +2,7 @@
 
 The ability to minimize the application to the system's notification area, `System Tray` on Windows or `Status Menu Area` on a Mac, can be quite useful in keeping a clean work area.  One specific reason to provide this functionality would be when an application needs to run in the background but still be available if the user needs quick access to it.
 
-When we minimize the application's main window we normally will remove it from the `Task Bar` on Windows or the `Dock` on Mac OSX.
+When we minimize the application's main window we normally will remove it from the `Task Bar` on Windows or the `Dock` on Mac OSX.  The same goes for when the window is closed but needs to be handled differently on the two platforms.
 
 `Electron` allow access to these areas by use of the [Tray object](https://github.com/electron/electron/blob/master/docs/api/tray.md). 
 
@@ -125,7 +125,56 @@ To call the `CreateTray` method we will place it right before we create the main
 
 ``` 
 
-That should do it.  If you now run the code your should see that the tray now appears in the `System Menu area` on Mac and in the `System Tray` on windows. 
+That should do it.  If you now run the code your should see that the tray now appears in the `System Menu area` on Mac and in the `System Tray` on windows.
+
+### Context Menu Items
+
+In the above code there was a context menu added to the `Tray` that we created with two menu items.
+
+- `Show App` menu item handles toggling of the window's visibility.
+
+```js
+
+                new MenuItemOptions() { Label = "Show App",
+                    Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event> (
+                            async (ar) =>
+                            {
+                                //await console.Log("Show App");
+                                if (mainWindow != null)
+                                {
+                                    if (await mainWindow.IsMinimized())
+                                        await mainWindow.Restore();
+                                    if (!await mainWindow.IsVisible())
+                                        await mainWindow.Show();
+                                    await mainWindow.Focus();
+                                }
+                            }
+                        )
+                }
+
+```
+
+- `Quit App` quits the application and is not as straight forward.  What should be pointed out in that code is that a specific property will be added on the `app` called `shouldQuit`.  The property will interact with the `close` event processing discussed below and will make a little more sense later.  
+
+```js
+
+                new MenuItemOptions() { Label = "Quit App",
+                    Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event> (
+                            async (ar) =>
+                            {
+                                //await console.Log("Quit App");
+                                // Notify the close event that we will be quitting the app
+                                await app.SetProperty("shouldQuit", true);
+                                mainWindow = null;
+                                await app.Quit();
+                            }
+                        )
+                },
+
+
+```
+
+
 
 ## Window Minimize and Close
 
@@ -214,8 +263,64 @@ The `Dock` object is Mac specific and will return `null` when referenced from ot
 | `bool` IsVisible() | Whether the dock icon is visible. |
 | SetMenu(Menu menu) | Sets the application's [Dock Menu](https://developer.apple.com/macos/human-interface-guidelines/menus/dock-menus/).
 
-### Handling the `close` event
+## Handling the `close` event
 
+Handling the `close` event of the window will need a little extra care.  The termination of the application should only happen when the menu option `Quit App` is selected from the `Tray` or when `Cmd-Q` is executed on Mac.  Any other attempts at quitting the application on either platform will result in the application window being hidden, removal of the app icon from the `Task Bar` or `Dock` which moves the application into the background accessible only from the `Tray`. 
+
+To accomplish this the application needs to use the `PreventDefault` of the `close` event handler.
+
+>  The `Event` interface's `preventDefault()` method tells the user agent that if the event goes unhandled, its default action should not be taken as it normally would be. The event continues to propagate as usual with only the exception that the event does nothing if no event listeners call `stopPropagation()`, which terminates propagation at once.  
+
+
+> :exclamation: **Limitation of Manage Code Interface**: Due to the asynchronous interface provided by the managed code interface it is not be able to execute `Event.PreventDefault`.  By the time the function is executed it is too late to acually cancel the event itself.  This is unfortunately a limitation of the managed code async interface.  This will need to be handled in `JavaScript` code.
+
+So let's open the `main.js` file and add an event listener for `close` in the `createWindow`.
+
+```js
+
+            // Emitted when the window is going to be closed. 
+            // It's emitted before the beforeunload and unload event of the DOM. 
+            mainWindow.on('close', function (e) {
+
+              // Check if we should quit
+              if (app.shouldQuit) {
+                // Dereference the window object, usually you would store windows
+                // in an array if your app supports multi windows, this is the time
+                // when you should delete the corresponding element.
+                mainWindow = null
+              }
+              else {
+                // Calling event.preventDefault() will cancel the close.
+                e.preventDefault();
+                // Then we hide the main window.
+                mainWindow.hide()
+              }
+            })
+
+```
+
+The close handler checks for a specific `shouldQuit` property on the `app` to be `true` and if not then the event's default functionality to close the window is canceled and is instead hidden from view with [Event.preventDefault()](https://developer.mozilla.org/en/docs/Web/API/Event/preventDefault).
+
+This prevents the application from terminating only if specifically requested to do so when the `App Quit` menu option is clicked. 
+
+If the application is run now it should act as expected on both Mac and Windows platforms but one more condition for the `Cmd-Q` situation on Mac needs to be handled.
+
+When `Cmd-Q` is executed the the `before-quit` listener is fired on Mac platforms and will need to be handled in `JavaScript` as well.  
+
+```js
+
+// We need this for Mac functionality for Cmd-Q and Quit from app menu.
+
+// 'before-quit' is emitted when Electron receives
+// the signal to exit and wants to start closing windows 
+// placed here instead of managed code so we catch the event in the correct order.
+app.on('before-quit', function () { app.shouldQuit  = true; });
+
+```
+
+The above code only sets the `shouldQuit` property on `app` to `true` to notify the `close` handling above that it should quit the application instead of preventing the close.
+
+Now when running the application it should work more or less the same on both platforms.
 
 
 ## Summary

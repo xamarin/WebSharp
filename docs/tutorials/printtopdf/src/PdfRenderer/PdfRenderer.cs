@@ -47,16 +47,8 @@ using WebSharpJs.DOM;
                     foreach(var parm in parms)
                         await console.Log(parm); 
                     var pathLabel = await document.GetElementById("file-path");
-                    await pathLabel.SetProperty("innerHTML", parms[0]);
+                    await pathLabel.SetProperty("innerHTML", $"Wrote PDF to: {parms[0]}");
                 }));
-// printPDFBtn.addEventListener('click', function (event) {
-//   ipc.send('print-to-pdf')
-// })
-
-// ipc.on('wrote-pdf', function (event, path) {
-//   const message = `Wrote PDF to: ${path}`
-//   document.getElementById('pdf-path').innerHTML = message
-// })
             }
             catch (Exception exc) { await console.Log($"extension exception:  {exc.Message}"); }
 
