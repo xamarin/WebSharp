@@ -73,10 +73,10 @@
 - [x] `contents.enableDeviceEmulation(parameters)`
 - [x] `contents.disableDeviceEmulation()`
 - [ ] `contents.sendInputEvent(event)`
-- [ ] `contents.beginFrameSubscription([onlyDirty ,]callback)`
-- [ ] `contents.endFrameSubscription()`
-- [ ] `contents.startDrag(item)`
-- [ ] `contents.savePage(fullPath, saveType, callback)`
+- [x] `contents.beginFrameSubscription([onlyDirty ,]callback)`
+- [x] `contents.endFrameSubscription()`
+- [x] `contents.startDrag(item)`
+- [x] `contents.savePage(fullPath, saveType, callback)`
 - [x] `contents.showDefinitionForSelection()` _macOS_
 - [x] `contents.setSize(options)`
 - [x] `contents.isOffscreen()`
@@ -86,8 +86,8 @@
 - [x] `contents.setFrameRate(fps)`
 - [x] `contents.getFrameRate()`
 - [x] `contents.invalidate()`
-- [ ] `contents.getWebRTCIPHandlingPolicy()`
-- [ ] `contents.setWebRTCIPHandlingPolicy(policy)`
+- [x] `contents.getWebRTCIPHandlingPolicy()`
+- [x] `contents.setWebRTCIPHandlingPolicy(policy)`
 - [x] `contents.id`
 - [ ] `contents.session`
 - [x] `contents.hostWebContents`

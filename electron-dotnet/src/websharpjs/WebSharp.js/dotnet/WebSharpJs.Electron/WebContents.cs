@@ -299,7 +299,7 @@ namespace WebSharpJs.Electron
                 return await Invoke<object>("findInPage", text);
         }
 
-        public async Task<object> stopFindInPage(StopFindInPageAction action)
+        public async Task<object> StopFindInPage(StopFindInPageAction action)
         {
             string aType = string.Empty;
             //type StopFindInPageAtion = 'clearSelection' | 'keepSelection' | 'activateSelection';
@@ -426,6 +426,31 @@ namespace WebSharpJs.Electron
             await Invoke<object>("disableDeviceEmulation");
         }
 
+        public async Task beginFrameSubscription(ScriptObjectCallback<byte[], Rectangle> callback)
+        {
+            await Invoke<bool>("beginFrameSubscription", callback);
+        }
+
+        public async Task beginFrameSubscription(bool onlyDirty, ScriptObjectCallback<byte[], Rectangle> callback)
+        {
+            await Invoke<bool>("beginFrameSubscription", onlyDirty, callback);
+        }
+
+        public async Task EndFrameSubscription()
+        {
+            await Invoke<object>("endFrameSubscription");
+        }
+
+        public async Task StartDrag(Item item)
+        {
+            await Invoke<object>("startDrag", item);
+        }
+
+        public async Task<bool> SavePage(string fullpath, SavePageType saveType, ScriptObjectCallback<Error> callback)
+        {
+            return await Invoke<bool>("SavePage", fullpath, saveType.ToString(), callback);
+        }
+
         public async Task<object> ShowDefinitionForSelection()
         {
             return await Invoke<object>("showDefinitionForSelection");
@@ -466,6 +491,57 @@ namespace WebSharpJs.Electron
             return await Invoke<object>("invalidate");
         }
 
+        public async Task<WebRTCIPHandlingPolicy> GetWebRTCIPHandlingPolicy()
+        {
+
+            WebRTCIPHandlingPolicy policy = WebRTCIPHandlingPolicy.Default;
+
+            var stringPolicy = await Invoke<object>("getWebRTCIPHandlingPolicy");
+            switch (stringPolicy)
+            {
+                case "default":
+                    policy = WebRTCIPHandlingPolicy.Default;
+                    break;
+                case "default_public_interface_only":
+                    policy = WebRTCIPHandlingPolicy.DefaultPublicInterfaceOnly;
+                    break;
+                case "default_public_and_private_interfaces":
+                    policy = WebRTCIPHandlingPolicy.DefaultPublicAndPrivateInterfaces;
+                    break;
+                case "disable_non_proxied_udp":
+                    policy = WebRTCIPHandlingPolicy.DisableNonProxiedUdp;
+                    break;
+            }
+
+            return policy;
+
+        }
+
+        public async Task SetWebRTCIPHandlingPolicy(WebRTCIPHandlingPolicy policy)
+        {
+            string stringPolicy = string.Empty;
+
+            switch (policy)
+            {
+                case WebRTCIPHandlingPolicy.Default:
+                    stringPolicy = "default";
+                    break;
+                case WebRTCIPHandlingPolicy.DefaultPublicInterfaceOnly:
+                    stringPolicy = "default_public_interface_only";
+                    break;
+                case WebRTCIPHandlingPolicy.DefaultPublicAndPrivateInterfaces:
+                    stringPolicy = "default_public_and_private_interfaces";
+                    break;
+                case WebRTCIPHandlingPolicy.DisableNonProxiedUdp:
+                    stringPolicy = "disable_non_proxied_udp";
+                    break;
+                default:
+                    stringPolicy = policy.ToString().ToLower();
+                    break;
+
+            }
+            await Invoke<object>("setWebRTCIPHandlingPolicy", stringPolicy);
+        }
 
         public async Task<int> GetId()
         {
@@ -639,6 +715,29 @@ namespace WebSharpJs.Electron
 
     }
 
+    public enum SavePageType
+    {
+        HTMLOnly,
+        HTMLComplete,
+        MHTML
+    }
 
+    [ScriptableType]
+    public struct Item
+    {
+        [ScriptableMember(ScriptAlias = "file")]
+        public string File { get; set; }
+        [ScriptableMember(ScriptAlias = "icon")]
+        public NativeImage Icon { get; set; }
+
+    }
+
+    public enum WebRTCIPHandlingPolicy
+    {
+        Default,
+        DefaultPublicInterfaceOnly,
+        DefaultPublicAndPrivateInterfaces,
+        DisableNonProxiedUdp
+    }
 
 }
