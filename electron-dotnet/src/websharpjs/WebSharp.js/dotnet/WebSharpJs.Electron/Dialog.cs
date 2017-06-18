@@ -55,6 +55,10 @@ namespace WebSharpJs.Electron
 
         }
         public OpenDialogProperties PropertyFlags { get; set; }
+        [ScriptableMember(ScriptAlias = "message")]
+        public string Message { get; set; }
+
+
     }
 
     [ScriptableType]
@@ -68,6 +72,12 @@ namespace WebSharpJs.Electron
         public string ButtonLabel { get; set; }
         [ScriptableMember(ScriptAlias = "filters")]
         public FileFilter[] Filters { get; set; }
+        [ScriptableMember(ScriptAlias = "message")]
+        public string Message { get; set; }
+        [ScriptableMember(ScriptAlias = "nameFieldLabel")]
+        public string NameFieldLabel { get; set; }
+        [ScriptableMember(ScriptAlias = "showsTagField")]
+        public bool? ShowsTagField { get; set; }
     }
 
     public enum MessageBoxType
@@ -94,14 +104,20 @@ namespace WebSharpJs.Electron
         public string Message { get; set; }
         [ScriptableMember(ScriptAlias = "detail")]
         public string Detail { get; set; }
+        [ScriptableMember(ScriptAlias = "checkboxLabel")]
+        public string CheckboxLabel { get; set; }
+        [ScriptableMember(ScriptAlias = "checkboxChecked")]
+        public bool CheckboxChecked { get; set; }
         [ScriptableMember(ScriptAlias = "cancelId")]
         public int CancelId { get; set; }
         [ScriptableMember(ScriptAlias = "noLink")]
         public bool NoLink { get; set; }
         [ScriptableMember(ScriptAlias = "icon")]
         public NativeImage Icon { get; set; }
-        
-        
+        [ScriptableMember(ScriptAlias = "normalizeAccessKeys")]
+        public bool NormalizeAccessKeys { get; set; }
+
+
     }
 
 
@@ -136,6 +152,18 @@ namespace WebSharpJs.Electron
             return new Dialog(sop);
         }
 
+        public async Task<string[]> ShowOpenDialog(BrowserWindow browserWindow, OpenDialogOptions options, ScriptObjectCallback<string[]> callback = null)
+        {
+            object[] result;
+            if (callback == null)
+            {
+                result = await Invoke<object[]>("showOpenDialog", browserWindow, options);
+            }
+            else
+                result = await Invoke<object[]>("showOpenDialog", browserWindow, options, callback);
+            return (result == null ? new string[] { } : Array.ConvertAll(result, item => item.ToString()));
+        }
+
         public async Task<string[]> ShowOpenDialog(OpenDialogOptions options, ScriptObjectCallback<string[]> callback = null)
         {
             object[] result;
@@ -148,6 +176,16 @@ namespace WebSharpJs.Electron
             return (result == null ? new string[] { } : Array.ConvertAll(result, item => item.ToString()));
         }
 
+        public async Task<string> ShowSaveDialog(BrowserWindow browserWindow, SaveDialogOptions options, ScriptObjectCallback<string> callback = null)
+        {
+            if (callback == null)
+            {
+                return await Invoke<string>("showSaveDialog", browserWindow, options);
+            }
+            else
+                return await Invoke<string>("showSaveDialog", browserWindow, options, callback);
+        }
+
         public async Task<string> ShowSaveDialog(SaveDialogOptions options, ScriptObjectCallback<string> callback = null)
         {
             if (callback == null)
@@ -156,6 +194,16 @@ namespace WebSharpJs.Electron
             }
             else
                 return await Invoke<string>("showSaveDialog", options, callback);
+        }
+
+        public async Task<int> ShowMessageBox(BrowserWindow browserWindow, MessageBoxOptions options, ScriptObjectCallback<int> callback = null)
+        {
+            if (callback == null)
+            {
+                return await Invoke<int>("showMessageBox", browserWindow, options);
+            }
+            else
+                return await Invoke<int>("showMessageBox", browserWindow, options, callback);
         }
 
         public async Task<int> ShowMessageBox(MessageBoxOptions options, ScriptObjectCallback<int> callback = null)

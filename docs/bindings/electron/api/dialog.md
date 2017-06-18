@@ -2,7 +2,7 @@
 
 ## Methods
 
-- [ ] `dialog.showOpenDialog([browserWindow, ]options[, callback])`
+- [x] `dialog.showOpenDialog([browserWindow, ]options[, callback])`
 - [x] `dialog.showOpenDialog(options[, callback])`
 * `options`
   - [x]  `title`
@@ -17,8 +17,8 @@
     - [x]  `createDirectory`
     - [ ]  `promptToCreate`
     - [ ] `noResolveAliases`
-  - [ ]  `message`
-- [ ] `dialog.showSaveDialog([browserWindow, ]options[, callback])`
+  - [x]  `message`
+- [x] `dialog.showSaveDialog([browserWindow, ]options[, callback])`
 - [x] `dialog.showSaveDialog(options[, callback])`
 * `options`
   - [x] `title` 
@@ -26,9 +26,9 @@
   - [x] `buttonLabel`
   - [x] `filters` [FileFilter[]]
   - [x] `message`
-  - [ ] `nameFieldLabel`
-  - [ ] `showsTagField`
-- [ ] `dialog.showMessageBox([browserWindow, ]options[, callback])`
+  - [x] `nameFieldLabel`
+  - [x] `showsTagField`
+- [x] `dialog.showMessageBox([browserWindow, ]options[, callback])`
 - [x] `dialog.showMessageBox(options[, callback])`
 * `options`
   - [x] `type`
@@ -37,12 +37,12 @@
   - [x] `title`
   - [x] `message` String - Content of the message box.
   - [x] `detail`
-  - [ ] `checkboxLabel`
+  - [x] `checkboxLabel`
   - [x] `checkboxChecked`
   - [x] `icon`
   - [x] `cancelId`
   - [x] `noLink`
-  - [ ] `normalizeAccessKeys`
+  - [x] `normalizeAccessKeys`
 
 - [x] `dialog.showErrorBox(title, content)`
 - [ ] `dialog.showCertificateTrustDialog([browserWindow, ]options, callback)` _macOS_
