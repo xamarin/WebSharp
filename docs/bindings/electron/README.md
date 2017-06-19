@@ -7,7 +7,7 @@
 * [dialog](api/dialog.md) :running:
 * [globalShortcut](api/global-shortcut.md) :exclamation:
 * [ipcMain](api/ipc-main.md) :muscle:
-* [Menu](api/menu.md) :running:
+* [Menu](api/menu.md) :muscle:
 * [MenuItem](api/menu-item.md) :running:
 * [net](api/net.md) :exclamation:
 * [powerMonitor](api/power-monitor.md) :exclamation:
