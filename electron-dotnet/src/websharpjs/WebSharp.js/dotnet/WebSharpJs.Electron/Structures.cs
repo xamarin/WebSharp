@@ -349,5 +349,23 @@ namespace WebSharpJs.Electron
         }
     }
 
+    [ScriptableType]
+    public class ShortcutDetails
+    {
+        [ScriptableMember(ScriptAlias = "appUserModelId")]
+        public string AppUserModelId { get; set; }
+        [ScriptableMember(ScriptAlias = "args")]
+        public string Args { get; set; }
+        [ScriptableMember(ScriptAlias = "cwd")]
+        public string Cwd { get; set; }
+        [ScriptableMember(ScriptAlias = "description")]
+        public string Description { get; set; }
+        [ScriptableMember(ScriptAlias = "icon")]
+        public string Icon { get; set; }
+        [ScriptableMember(ScriptAlias = "iconIndex")]
+        public int? IconIndex { get; set; }
+        [ScriptableMember(ScriptAlias = "target")]
+        public string Target { get; set; }
+    }
 
 }
