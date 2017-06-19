@@ -23,6 +23,12 @@
 
     var RegisterScriptableObject = function (meta)
     {
+        // if the meta object is null/undefined then just return
+        // fixes errors on static methods like Menu.setApplicationMenu
+        // that will not return back an object.
+        if (typeof meta === 'undefined')
+            return;
+
         let id = v8Util.getHiddenValue(meta, 'websharpId');
         // We indiscriminately replace the object that is there.
         if (id) {
