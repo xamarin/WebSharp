@@ -568,6 +568,15 @@ namespace WebSharpJs.Electron
             return await Invoke<WebContents>("devToolsWebContents");
         }
 
+        public async Task<Session> GetSession()
+        {
+            return await GetProperty<Session>("session");
+        }
+
+        public async Task<bool> SetSession(Session session)
+        {
+            return await SetProperty("session", session);
+        }
         //public async Task<Debugger> Debugger()
         //{
         //    return await Invoke<Debugger>("debugger");
