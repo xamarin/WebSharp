@@ -1,3 +1,11 @@
+# Electron Bindings
+
+## Guide
+
+- :running: - Bindings exist but may be missing some functionality.
+- :muscle: - All known functionality bound.  _Experimental_ is not counted.
+- :exclamation: - No bindings.
+
 ### Modules for the Main Process:
 
 * [app](api/app.md) :running:
@@ -13,7 +21,7 @@
 * [powerMonitor](api/power-monitor.md) :exclamation:
 * [powerSaveBlocker](api/power-save-blocker.md) :exclamation:
 * [protocol](api/protocol.md) :exclamation:
-* [session](api/session.md) :exclamation:
+* [session](api/session.md) :running:
 * [systemPreferences](api/system-preferences.md) :exclamation:
 * [Tray](api/tray.md) :muscle:
 * [webContents](api/web-contents.md) :running:

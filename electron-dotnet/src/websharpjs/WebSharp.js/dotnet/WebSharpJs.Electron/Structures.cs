@@ -368,4 +368,42 @@ namespace WebSharpJs.Electron
         public string Target { get; set; }
     }
 
+    [ScriptableType]
+    public struct RemoveClientCertificate
+    {
+        [ScriptableMember(ScriptAlias = "origin")]
+        public string Origin { get; set; }
+        [ScriptableMember(ScriptAlias = "type")]
+        public string Type { get; set; }
+
+    }
+
+
+    [ScriptableType]
+    public struct RemovePassword
+    {
+        [ScriptableMember(ScriptAlias = "origin")]
+        public string Origin { get; set; }
+        [ScriptableMember(ScriptAlias = "password")]
+        public string Password { get; set; }
+        [ScriptableMember(ScriptAlias = "realm")]
+        public string Realm { get; set; }
+        [ScriptableMember(ScriptAlias = "scheme", EnumValue = ConvertEnum.ToLower)]
+        public AuthScheme Scheme { get; set; }
+        [ScriptableMember(ScriptAlias = "type")]
+        public string Type { get; set; }
+        [ScriptableMember(ScriptAlias = "username")]
+        public string Username { get; set; }
+
+    }
+
+    public enum AuthScheme
+    {
+        Basic,
+        Digest,
+        Ntlm,
+        Negotiate
+    }
+
+
 }
