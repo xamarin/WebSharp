@@ -405,5 +405,49 @@ namespace WebSharpJs.Electron
         Negotiate
     }
 
+    [ScriptableType]
+    public class Certificate
+    {
+        [ScriptableMember(ScriptAlias = "data")]
+        public string Data { get; set; }
+        [ScriptableMember(ScriptAlias = "fingerprint")]
+        public string Fingerprint { get; set; }
+        [ScriptableMember(ScriptAlias = "issuer")]
+        public CertificatePrincipal Issuer { get; set; }
+        [ScriptableMember(ScriptAlias = "issuerCert")]
+        public Certificate IssuerCert { get; set; }
+        [ScriptableMember(ScriptAlias = "issuerName")]
+        public string IssuerName { get; set; }
+        [ScriptableMember(ScriptAlias = "serialNumber")]
+        public string SerialNumber { get; set; }
+        [ScriptableMember(ScriptAlias = "subject")]
+        public CertificatePrincipal Subject { get; set; }
+        [ScriptableMember(ScriptAlias = "subjectName")]
+        public string SubjectName { get; set; }
+        [ScriptableMember(ScriptAlias = "validExpiry")]
+        public double ValidExpiry { get; set; }
+        [ScriptableMember(ScriptAlias = "validStart")]
+        public double ValidStart { get; set; }
+
+    }
+
+    [ScriptableType]
+    public class CertificatePrincipal
+    {
+        [ScriptableMember(ScriptAlias = "commonName")]
+        public string CommonName { get; set; }
+        [ScriptableMember(ScriptAlias = "country")]
+        public string Country { get; set; }
+        [ScriptableMember(ScriptAlias = "locality")]
+        public string Locality { get; set; }
+        [ScriptableMember(ScriptAlias = "organizations")]
+        public object[] Organizations { get; set; }
+        [ScriptableMember(ScriptAlias = "organizationUnits")]
+        public object[] OrganizationUnits { get; set; }
+        [ScriptableMember(ScriptAlias = "state")]
+        public string State { get; set; }
+
+    }
+
 
 }

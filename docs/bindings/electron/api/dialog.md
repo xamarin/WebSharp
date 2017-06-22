@@ -45,4 +45,4 @@
   - [x] `normalizeAccessKeys`
 
 - [x] `dialog.showErrorBox(title, content)`
-- [ ] `dialog.showCertificateTrustDialog([browserWindow, ]options, callback)` _macOS_
+- [x] `dialog.showCertificateTrustDialog([browserWindow, ]options, callback)` _macOS_

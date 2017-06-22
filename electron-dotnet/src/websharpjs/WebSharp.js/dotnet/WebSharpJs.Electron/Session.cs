@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using WebSharpJs.NodeJS;
 using WebSharpJs.Script;
 
@@ -42,13 +43,16 @@ namespace WebSharpJs.Electron
 
         }
 
-        public static async Task<Session> FromPartition(string partition, FromPartitionOptions options)
+        public static async Task<Session> FromPartition(string partition, FromPartitionOptions? options = null)
         {
             var proxy = new Session();
             if (scriptProxy != null)
                 proxy.ScriptObjectProxy = scriptProxy;
 
-            scriptProxy = await proxy.Initialize("session.fromPartition", partition, options);
+            scriptProxy = await proxy.Initialize("session.fromPartition", partition, 
+                            (options != null && options.HasValue) ? options.Value : (object)null
+                );
+
             return proxy;
 
         }
@@ -111,6 +115,17 @@ namespace WebSharpJs.Electron
         {
             await Invoke<object>("disableNetworkEmulation");
         }
+
+        public async Task SetPermissionRequestHandler(ScriptObjectCallback<WebContents, string, Func<object, Task<object>>> handler)
+        {
+            await Invoke<object>("setPermissionRequestHandler", handler);
+        }
+
+        public async Task SetCertificateVerifyProc(ScriptObjectCallback<CertificateVerifyProcRequest, Func<object, Task<object>>> handler)
+        {
+            await Invoke<object>("setCertificateVerifyProc", handler);
+        }
+
 
         public async Task ClearHostResolverCache(ScriptObjectCallback callback = null)
         {
@@ -232,6 +247,50 @@ namespace WebSharpJs.Electron
         public string ETag { get; set; }
         [ScriptableMember(ScriptAlias = "startTime")]
         public int? StartTime { get; set; }
+    }
+
+    [ScriptableType]
+    public class CertificateVerifyProcRequest
+    {
+        [ScriptableMember(ScriptAlias = "hostname")]
+        public string Hostname { get; set; }
+        [ScriptableMember(ScriptAlias = "certificate")]
+        public Certificate Certificate { get; set; }
+        [ScriptableMember(ScriptAlias = "error")]
+        public string Error { get; set; }
+
+    }
+
+    public class CertificateVerifyProcResult : ScriptObjectCallbackResult
+    {
+
+        public CertificateVerifyProcRequest CertificateVerifyProcRequest { get; private set; }
+        public Func<object, Task<object>> Callback { get; private set; }
+
+        public CertificateVerifyProcResult(object state) : base(state)
+        {
+
+            var result = state as object[];
+            if (result != null)
+            {
+                CertificateVerifyProcRequest = result[0] as CertificateVerifyProcRequest;
+                Callback = result[1] as Func<object, Task<object>>;
+            }
+        }
+
+        public CertificateVerifyProcResult(ICallbackResult result) : this(result.CallbackState)
+        { }
+
+        public async Task<bool> SendVerificationResult(int response)
+        {
+            if (Callback == null)
+                return false;
+
+            await Callback(response);
+
+            return true;
+        }
+
     }
 
 }

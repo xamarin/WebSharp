@@ -120,6 +120,14 @@ namespace WebSharpJs.Electron
 
     }
 
+    [ScriptableType]
+    public struct CertificateTrustDialogOptions
+    {
+        [ScriptableMember(ScriptAlias = "certificate")]
+        public Certificate Certificate { get; set; }
+        [ScriptableMember(ScriptAlias = "message")]
+        public string Message { get; set; }
+    }
 
     public class Dialog : NodeJsObject
     {
@@ -220,5 +228,27 @@ namespace WebSharpJs.Electron
         {
             return await Invoke<int>("showErrorBox", title, content);
         }
+
+        public async Task ShowCertificateTrustDialog(BrowserWindow browserWindow, CertificateTrustDialogOptions options, ScriptObjectCallback<object> callback = null)
+        {
+            if (callback == null)
+            {
+                await Invoke<object>("showCertificateTrustDialog", browserWindow, options);
+            }
+            else
+                await Invoke<object>("showCertificateTrustDialog", browserWindow, options, callback);
+        }
+
+        public async Task ShowCertificateTrustDialog(CertificateTrustDialogOptions options, ScriptObjectCallback<object> callback = null)
+        {
+            if (callback == null)
+            {
+                await Invoke<object>("showCertificateTrustDialog", options);
+            }
+            else
+                await Invoke<object>("showCertificateTrustDialog", options, callback);
+        }
+
+
     }
 }

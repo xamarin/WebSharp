@@ -16,8 +16,8 @@
 - [x] `ses.setDownloadPath(path)`
 - [x] `ses.enableNetworkEmulation(options)`
 - [x] `ses.disableNetworkEmulation()`
-- [ ] `ses.setCertificateVerifyProc(proc)`
-- [ ] `ses.setPermissionRequestHandler(handler)`
+- [x] `ses.setCertificateVerifyProc(proc)`
+- [x] `ses.setPermissionRequestHandler(handler)`
 - [x] `ses.clearHostResolverCache([callback])`
 - [x] `ses.allowNTLMCredentialsForDomains(domains)`
 - [x] `ses.setUserAgent(userAgent[, acceptLanguages])`
