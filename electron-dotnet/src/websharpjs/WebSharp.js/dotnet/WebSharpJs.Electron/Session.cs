@@ -293,4 +293,38 @@ namespace WebSharpJs.Electron
 
     }
 
+	public class PermissionRequestResult : ScriptObjectCallbackResult
+	{
+
+		public WebContents WebContents { get; private set; }
+        public string Permission { get; private set; }
+		public Func<object, Task<object>> Callback { get; private set; }
+
+		public PermissionRequestResult(object state) : base(state)
+		{
+
+			var result = state as object[];
+			if (result != null)
+			{
+				WebContents = result[0] as WebContents;
+                Permission = result[1].ToString();
+				Callback = result[2] as Func<object, Task<object>>;
+			}
+		}
+
+		public PermissionRequestResult(ICallbackResult result) : this(result.CallbackState)
+		{ }
+
+		public async Task<bool> GrantPermission(bool granted)
+		{
+			if (Callback == null)
+				return false;
+
+			await Callback(granted);
+
+			return true;
+		}
+
+	}
+
 }
