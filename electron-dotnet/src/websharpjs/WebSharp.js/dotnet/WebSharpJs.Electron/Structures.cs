@@ -449,5 +449,14 @@ namespace WebSharpJs.Electron
 
     }
 
-
+    [ScriptableType]
+    public class UploadData
+    {
+        [ScriptableMember(ScriptAlias = "blobUUID")]
+        public string BlobUUID { get; set; }
+        [ScriptableMember(ScriptAlias = "bytes")]
+        public byte[] Bytes { get; set; }
+        [ScriptableMember(ScriptAlias = "file")]
+        public string File { get; set; }
+    }
 }

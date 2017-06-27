@@ -182,6 +182,15 @@ namespace WebSharpJs.Electron
                 await Invoke<object>("clearAuthCache", options);
         }
 
+        public async Task<WebRequest> GetWebRequest()
+        {
+            return await GetProperty<WebRequest>("webRequest");
+        }
+
+        public async Task SetWebRequest(WebRequest webRequest)
+        {
+            await SetProperty("webRequest", webRequest);
+        }
     }
 
     [ScriptableType]
