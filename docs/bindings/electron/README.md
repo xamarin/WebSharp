@@ -12,7 +12,7 @@
 * [autoUpdater](api/auto-updater.md) :exclamation:
 * [BrowserWindow](api/browser-window.md) :muscle:
 * [contentTracing](api/content-tracing.md) :exclamation:
-* [dialog](api/dialog.md) :running:
+* [dialog](api/dialog.md) :muscle:
 * [globalShortcut](api/global-shortcut.md) :exclamation:
 * [ipcMain](api/ipc-main.md) :muscle:
 * [Menu](api/menu.md) :muscle:
@@ -25,6 +25,7 @@
 * [systemPreferences](api/system-preferences.md) :exclamation:
 * [Tray](api/tray.md) :muscle:
 * [webContents](api/web-contents.md) :running:
+* [webRequest](api/web-request.md) :muscle:
 
 ### Modules for the Renderer Process (Web Page):
 
