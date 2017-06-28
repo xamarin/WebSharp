@@ -68,7 +68,7 @@ The Html Window provides very limited access to the window.  Most of the time us
 To obtain a reference to the `HtmlWindow` object use the following.
 
 ```cs
-    var win = await page.GetWindow();
+    var win = await HtmlPage.GetWindow();
 ```
 
 Let's briefly look at the functionality of the `HtmlWindow` object.
@@ -114,7 +114,7 @@ The function will then update the `innerHTML` of that element with the text that
 Now from your managed code you can call this function by using the `Invoke` method of the `HtmlWindow` object.
 
 ```cs
-            var win = await page.GetWindow();
+            var win = await HtmlPage.GetWindow();
             await win.Invoke<object>("SayHello", " from HtmlWindow.");
 ```
 

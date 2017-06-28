@@ -13,7 +13,7 @@ To show these dialogs we are going to implement a very basic text editor.
     - Obtaining a reference to the underlying `HtmlDocument` using the static `HtmlPage` class.
 
     ``` cs
-           document = await page.GetDocument();
+           document = await HtmlPage.GetDocument();
     ```
     - Using the `HtmlDocument` to obtain references to `HtmlElements` by their `id`
     ``` cs
