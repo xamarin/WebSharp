@@ -1,56 +1,26 @@
-# domtree README
+# HTMLDocument DOM Traversal
 
 Shows the traversal of the page DOM document.
 
-This is the README for your application "domtree". After writing up a brief description, we recommend including the following sections.
-
 ## Features
 
-Describe specific features of your application including screenshots of your application in action. Image paths are relative to this README file.
+* Mac
+![screen shot mac](images/domtraversal.png)
 
-For example if there is an image subfolder under your application project workspace:
+* Windows
+![screen shot windows](images/domtraversal-win.png)
 
-\!\[feature X\]\(images/feature-x.png\)
+More information can be found in the [DOM Overview](../overview.md#htmlpage-gateway-to-dom)
 
-> Tip: Many popular applications utilize animations. This is an excellent way to show off your application! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+   * `electron-dotnet` needs to be built.  The easiest way is to use the provided `make` files available in the WebSharp base directory.  
+   
+      * [See Getting Started on Windows](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md)
+   
+      * [See Getting Started on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md)
+
+> :bulb: Windows users need to make sure [Mono is available](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md#setting-mono-path) in their %PATH%.
 
 ## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your application.
-
-## Release Notes
-
-Users appreciate release notes as you update your application.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

@@ -128,3 +128,78 @@ Now from your managed code you can call this function by using the `Invoke` meth
 If all is defined correctly you should see the `Hello: from HtmlWindow.` text displayed on your screen.
 
 ### HTML Document
+
+The document object represents your web page.
+
+If you want to access any element in an HTML page, you always start with accessing the document object.
+
+| Method | Description |
+| --- | --- |
+| CreateElement | Creates a new HtmlElement object to represent a dynamically created HTML element, which you can then insert into the page.  | 
+| GetBody | Gets an HtmlElement object that represents the `<body>` element in the HTML page. | 
+| GetDocumentUri | Gets a Uniform Resource Identifier (URI) object. | 
+| GetDocumentElement | Gets a reference to the browser's DOCUMENT element. | 
+| GetElementById | Gets a single browser element.  | 
+| GetElementsByTagName | Gets a collection of browser elements.  | 
+| GetLocation | Returns a Location object, which contains information about the URL of the document.  | 
+| GetIsReady | Gets a value that indicates whether the browser has completely loaded the HTML page. | 
+| GetReadyState | Gets the string value that indicates the state of the the HTML page. | 
+| QuerySelector | Returns the first Element within the document that matches the specified CSS selector, or group of CSS selectors.  | 
+| QuerySelectorAll | Returns a collection Elements within the document that matches the specified CSS selector, or group of CSS selectors.  | 
+| Submit | Submits the page, by posting a form and its data back to the server.  | 
+
+The `HTMLDocument` object allows you to traverse the `HTMLElement`s of the document.
+
+The example [domtree](./domtree) shows an example of traversing the page DOM using the `HTMLDocument` class.
+
+* Mac
+
+![dom traversal mac](./domtree/images/domtraversal.png)
+
+* Windows
+
+![dom tranversal windows](./domtree/images/domtraversal-win.png)
+
+The source code for creating the above can be found in the sources [domtree sources](./domtree/src/DOMInfo/DOMInfo.cs)
+
+```cs
+
+
+        var page = new HtmlPage();
+        var document = await page.GetDocument();
+        // Get a reference to the top-level <html> element.
+        var element = await document.GetDocumentElement();
+        // Process the starting element reference
+        await ProcessElement(element, 0);
+
+```
+
+The actual traversal takes place in the `ProcessElement` method.
+
+```cs
+
+        private async Task ProcessElement(HtmlElement element, int indent)
+        {
+            // Ignore comments.
+            if (await element.GetTagName() == "!") return;
+            
+            // Indent the element to help show different levels of nesting.
+            elementTree += new String(' ', indent * 4);
+
+            // Display the tag name.
+            elementTree += "<" + await element.GetTagName();
+            
+            // Only show the id attribute if it's set.
+            if (await element.GetId() != "") elementTree += " id=\"" + await element.GetId() + "\"";
+            elementTree += ">\n";
+
+            // Process all the elements nested inside the current element.
+            foreach (var childElement in await element.GetChildren())
+            {
+                await ProcessElement(childElement, indent + 1);
+            }
+        }
+
+``` 
+
+### HTML Element
