@@ -12,16 +12,10 @@ Inside `Clipper.cs` you will find:
 
 - Accessing the DOM using WebSharpJs.DOM name space.
 
-    - Creating an HtmlPage object that gives us access to the DOM.
+    - Obtaining a reference to the underlying `HtmlDocument` using the static `HtmlPage` class.
 
     ``` cs
-            // Get access to the DOM
-            var page = new HtmlPage();
-    ```
-    - Obtaining a reference to the underlying `HtmlDocument`.
-
-    ``` cs
-           document = await page.GetDocument();
+           document = await HtmlPage.GetDocument();
     ```
     - Using the `HtmlDocument` to obtain references to `HtmlElements` by their `id`
     ``` cs

@@ -31,8 +31,7 @@ public class Startup
             // Obtain a reference to a Dialog instance.
             dialog = await Dialog.Instance();
 
-            var page = new HtmlPage();
-            document = await page.GetDocument();
+            document = await HtmlPage.GetDocument();
 
             // Get the HtmlElement with the id of "openFile"
             var openFile = await document.GetElementById("openFile");

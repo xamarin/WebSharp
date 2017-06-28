@@ -10,12 +10,7 @@ To show these dialogs we are going to implement a very basic text editor.
 
 - Accessing the DOM using WebSharpJs.DOM name space.
 
-    - Creating an HtmlPage object that gives us access to the DOM.
-
-    ``` cs
-            var page = new HtmlPage();
-    ```
-    - Obtaining a reference to the underlying `HtmlDocument`.
+    - Obtaining a reference to the underlying `HtmlDocument` using the static `HtmlPage` class.
 
     ``` cs
            document = await page.GetDocument();

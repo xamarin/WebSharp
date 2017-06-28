@@ -23,8 +23,7 @@ using WebSharpJs.DOM;
 
             try
             {
-                var page = new HtmlPage();
-                var document = await page.GetDocument();
+                var document = await HtmlPage.GetDocument();
                 var info = await page.GetBrowserInformation();
    
                 var infoText = $"Name: {info.Name}<br />Browser Version: {info.BrowserVersion}<br />Platform: {info.Platform}<br />Cookies Enabled: {info.CookiesEnabled}<br />User Agent: {info.UserAgent}";

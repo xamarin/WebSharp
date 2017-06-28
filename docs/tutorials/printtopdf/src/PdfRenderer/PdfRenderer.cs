@@ -25,8 +25,7 @@ using WebSharpJs.DOM;
 
             try
             {
-                var page = new HtmlPage();
-                var document = await page.GetDocument();
+                var document = await HtmlPage.GetDocument();
                 var printPDFBtn = await document.GetElementById("print-pdf");
 
                 var ipcRenderer = await IpcRenderer.Create();

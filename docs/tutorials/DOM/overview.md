@@ -30,27 +30,20 @@ Besides the differences the developer will still work with managed objects in th
 
 ## HTML Page: Gateway to DOM
 
-Whenever you need access to the DOM the first thing you will need to do is create an `HtmlPage`.
-
-```cs
-    var page = new HtmlPage();
-```
-
-It is that simple.  From the page object you then have access to the following methods.
+The static `HtmlPage` class is where one begins to access the DOM.  From the page object you then have access to the following methods.
 
 | Class | How To |
 | --- | --- |
-| HtmlDocument | var document = await page.GetDocument(); |
-| HtmlWindow | var window = await page.GetWindow() |
-| BrowserInformation | var info = await page.GetBrowserInformation() |
+| HtmlDocument | var document = await HtmlPage.GetDocument(); |
+| HtmlWindow | var window = await HtmlPage.GetWindow() |
+| BrowserInformation | var info = await HtmlPage.GetBrowserInformation() |
 
 ### BrowserInformation
 
 So for example we want to get the `BrowserInformation` we would have the following:
 
 ```cs
-    var page = new HtmlPage();
-    var info = await page.GetBrowserInformation();
+    var info = await HtmlPage.GetBrowserInformation();
    
     var infoText = $"Name: {info.Name}<br />Browser Version: {info.BrowserVersion}<br />Platform: {info.Platform}<br />Cookies Enabled: {info.CookiesEnabled}<br />User Agent: {info.UserAgent}";
 
@@ -158,15 +151,14 @@ The example [domtree](./domtree) shows an example of traversing the page DOM usi
 
 * Windows
 
-![dom tranversal windows](./domtree/images/domtraversal-win.png)
+![dom traversal windows](./domtree/images/domtraversal-win.png)
 
 The source code for creating the above can be found in the sources [domtree sources](./domtree/src/DOMInfo/DOMInfo.cs)
 
 ```cs
 
 
-        var page = new HtmlPage();
-        var document = await page.GetDocument();
+        var document = await HtmlPage.GetDocument();
         // Get a reference to the top-level <html> element.
         var element = await document.GetDocumentElement();
         // Process the starting element reference

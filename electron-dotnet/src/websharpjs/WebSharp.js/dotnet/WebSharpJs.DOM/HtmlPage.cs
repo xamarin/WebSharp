@@ -8,29 +8,29 @@ using WebSharpJs.Script;
 
 namespace WebSharpJs.DOM
 {
-    public sealed class HtmlPage 
+    public static class HtmlPage 
     {
-        HtmlDocument htmlDocument;
-        HtmlWindow htmlWindow;
+        static HtmlDocument htmlDocument;
+        static HtmlWindow htmlWindow;
 
         // Used to retrieve browser information
         static Func<object, Task<object>> browserInfoFunction = null;
 
-        public async Task<HtmlDocument> GetDocument()
+        public static async Task<HtmlDocument> GetDocument()
         {
             if (htmlDocument == null)
                 htmlDocument = await HtmlDocument.Instance();
             return htmlDocument;
         }
 
-        public async Task<HtmlWindow> GetWindow()
+        public static async Task<HtmlWindow> GetWindow()
         {
             if (htmlWindow == null)
                 htmlWindow = await HtmlWindow.Instance();
             return htmlWindow;
         }
 
-        public async Task<BrowserInformation> GetBrowserInformation()
+        public static async Task<BrowserInformation> GetBrowserInformation()
         {
             if (browserInfoFunction == null)
                 browserInfoFunction = await WebSharp.CreateJavaScriptFunction(
