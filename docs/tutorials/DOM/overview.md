@@ -206,8 +206,11 @@ When traversing the DOM as described above each element that is traversed is a `
 | Focus | Gives focus to the current element to receive events. |
 | GetAttribute | Retrieves a named attribute on the current element.  |
 | GetCssClass | Retrieves the CSS class name on the current element. |
+| GetId | Retrieves the identifier of the current element. |
+| GetParent | Retrieves a reference to the parent element of the current element. |
 | GetProperty | Retrieves a named property on the current element.  Example:  `await element.GetProperty<string>("innerHtml")`.   |
 | GetStyleAttribute | Retrieves a named CSS style attribute on the current element. |
+| GetTagName | Retrieves the HTML tag name of the current element. |
 | Invoke | Invokes a method on the current element.  Example: `await element.Invoke<object>("blur")` that will remove the focus from the current element. |
 | QuerySelector | Returns the first Element within the document that matches the specified CSS selector, or group of CSS selectors.  | 
 | QuerySelectorAll | Returns a collection Elements within the document that matches the specified CSS selector, or group of CSS selectors.  | 
