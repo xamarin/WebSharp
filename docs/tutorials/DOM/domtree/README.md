@@ -12,6 +12,7 @@ Shows the traversal of the page DOM document.
 
 More information can be found in the [DOM Overview](../overview.md#htmlpage-gateway-to-dom)
 
+The code is based on an example from [Pro Silverligh 5 in CSharp](https://github.com/Apress/pro-silverlight-5-in-csharp/blob/master/Pro%20Silverlight/Chapter17/BrowserInteraction/DissectPage.xaml.cs)
 
 ## Requirements
 

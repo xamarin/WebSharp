@@ -195,3 +195,27 @@ The actual traversal takes place in the `ProcessElement` method.
 ``` 
 
 ### HTML Element
+
+When traversing the DOM as described above each element that is traversed is a `HtmlElement` obtained by using the `GetChildren()` method of the element.  Other methods available from the `HtmlElement` can be found below.
+
+| Method | Description |
+| --- | --- |
+| AppendChild | Appends a child element to the current HTML element's child collection.  Use `HtmlDocument.CreateElement` to create a new element. |
+| AttachEventHandler | Adds a raised `JavaScript` event to managed code `EventHandler` |
+| DetachEventHandler | Removes a managed code `EventHandler` attached to a raised `JavaScript` event. |
+| Focus | Gives focus to the current element to receive events. |
+| GetAttribute | Retrieves a named attribute on the current element.  |
+| GetCssClass | Retrieves the CSS class name on the current element. |
+| GetProperty | Retrieves a named property on the current element.  Example:  `await element.GetProperty<string>("innerHtml")`.   |
+| GetStyleAttribute | Retrieves a named CSS style attribute on the current element. |
+| Invoke | Invokes a method on the current element.  Example: `await element.Invoke<object>("blur")` that will remove the focus from the current element. |
+| QuerySelector | Returns the first Element within the document that matches the specified CSS selector, or group of CSS selectors.  | 
+| QuerySelectorAll | Returns a collection Elements within the document that matches the specified CSS selector, or group of CSS selectors.  | 
+| RemoveAttribute | Removes a named attribute on the current element.  |
+| RemoveStyleAttribute | Removes a named CSS style attribute on the current element. |
+| SetAttribute | Sets a named attribute value on the current element.  |
+| SetCssClass | Sets the CSS class name on the current element. |
+| SetProperty | Sets the value a named property on the current element.  Example:  `await element.SetProperty("innerHtml", "Hello")`.  |
+| SetStyleAttribute | Sets a named CSS style attribute value on the current element.  |
+
+  

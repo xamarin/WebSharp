@@ -272,7 +272,7 @@ To accomplish this the application needs to use the `PreventDefault` of the `clo
 >  The `Event` interface's `preventDefault()` method tells the user agent that if the event goes unhandled, its default action should not be taken as it normally would be. The event continues to propagate as usual with only the exception that the event does nothing if no event listeners call `stopPropagation()`, which terminates propagation at once.  
 
 
-> :exclamation: **Limitation of Manage Code Interface**: Due to the asynchronous interface provided by the managed code interface it is not be able to execute `Event.PreventDefault`.  By the time the function is executed it is too late to acually cancel the event itself.  This is unfortunately a limitation of the managed code async interface.  This will need to be handled in `JavaScript` code.
+> :exclamation: **Limitation of Manage Code Interface**: Due to the asynchronous nature of managed code interface it is not be able to execute `Event.PreventDefault`.  By the time the function is executed it is too late to acually cancel the event itself.  This is unfortunately a limitation of the managed code async interface.  This will need to be handled in `JavaScript` code.
 
 So let's open the `main.js` file and add an event listener for `close` in the `createWindow`.
 
