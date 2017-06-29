@@ -16,6 +16,8 @@ Besides the differences the developer will still work with managed objects in th
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Window](#html-window)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Interaction with script code](#interaction-with-script-code)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Document](#html-document)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Element](#html-element)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Element Sample code](#tinkering-with-html-dom-elements)  
 
 ## The key classes of the WebSharpJs.DOM namespace
 
@@ -221,4 +223,60 @@ When traversing the DOM as described above each element that is traversed is a `
 | SetProperty | Sets the value a named property on the current element.  Example:  `await element.SetProperty("innerHtml", "Hello")`.  |
 | SetStyleAttribute | Sets a named CSS style attribute value on the current element.  |
 
-  
+#### Tinkering with HTML DOM Elements
+
+For a better understanding of how to use the `HtmlElement` methods we will take a look a the following code that can be found in the [domelement sources](./domelement) and more specifically the [ElementTinkerer](./domelement/src/ElementTinkerer/ElementTinkerer.cs) class.
+
+```cs
+
+    // Get a reference to the HTML DOM document.
+    var document = await HtmlPage.GetDocument();
+
+    // Get a reference to the body element.
+    var body = await document.GetElementById("docBody");
+    // Create a <main> type element
+    var mainElement = await document.CreateElement("main");
+    // Append the newly created element to the page DOM
+    await body.AppendChild(mainElement);
+    
+    // Get a collection of all the <main> type element in the page and using
+    // Linq get the first of the collection.
+    var content = (await document.GetElementsByTagName("main")).First();
+
+    // Get a collection of all the <link> elements
+    var links = await document.QuerySelectorAll("link[rel=\"import\"]");
+
+    // Loop through all of the <link> elements found
+    foreach (var link in links)
+    {
+        // Access the contents of the import document by examining the import property of the corresponding <link> element
+        var template = await link.GetProperty<HtmlElement>("import").ContinueWith(
+                async (t) =>
+                {
+                    // For all imported contents obtain a reference to the <template>
+                    return await t.Result?.QuerySelector(".task-template");
+                }
+            ).Result;
+        // Create a clone of the template’s content using the importNode property and
+        // passing in the content of the template
+        var clone = await document.Invoke<HtmlElement>("importNode", await template.GetProperty<HtmlElement>("content"), true);
+
+        // Append the newly created cloned template to the content element.
+        await content.AppendChild(clone);
+    }
+
+```
+
+This above demonstrates a rather contrived example but shows the use of many of the methods available to HtmlElement elements.  The `HtmlElement` class is not limited to only the relatively few methods described above can also access other features such as the HTML 5 Imports features.  Using the `GetProperty`, `SetProperty` and `Invoke` methods that are made available opens up a lot of flexibility.
+
+For more information on HTML 5 Imports see the following links:
+
+* [HTML 5 Imports specs](http://w3c.github.io/webcomponents/spec/imports/)
+
+* Other reference links
+    - [WebComponents.org introduction](https://www.webcomponents.org/community/articles/introduction-to-html-imports)
+    - [html5rocks.com tutorial](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
+    - [teamtreehouse.com introduction](http://blog.teamtreehouse.com/introduction-html-imports)
+
+> :bulb: One aspect of targeting `Electron` and using the built in `Chromium` features is that we do not have to worry about browser compatibility.  Once `Chromium` supports it you can use it within the `Electron` application.
+
