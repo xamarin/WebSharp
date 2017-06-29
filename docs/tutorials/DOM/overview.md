@@ -249,7 +249,8 @@ For a better understanding of how to use the `HtmlElement` methods we will take 
     // Loop through all of the <link> elements found
     foreach (var link in links)
     {
-        // Access the contents of the import document by examining the import property of the corresponding <link> element
+        // Access the contents of the import document by examining the
+        // import property of the corresponding <link> element
         var template = await link.GetProperty<HtmlElement>("import").ContinueWith(
                 async (t) =>
                 {
@@ -259,7 +260,8 @@ For a better understanding of how to use the `HtmlElement` methods we will take 
             ).Result;
         // Create a clone of the template’s content using the importNode property and
         // passing in the content of the template
-        var clone = await document.Invoke<HtmlElement>("importNode", await template.GetProperty<HtmlElement>("content"), true);
+        var clone = await document.Invoke<HtmlElement>("importNode", 
+                    await template.GetProperty<HtmlElement>("content"), true);
 
         // Append the newly created cloned template to the content element.
         await content.AppendChild(clone);
