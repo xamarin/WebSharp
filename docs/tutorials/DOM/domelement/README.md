@@ -4,12 +4,12 @@ Example of tinkering with HTML DOM Elements
 
 ## Features
 
-- [HTML 5 Imports specs](http://w3c.github.io/webcomponents/spec/imports/)
+* [HTML 5 Imports specs](http://w3c.github.io/webcomponents/spec/imports/)
 
-- Other reference links
-[WebComponents.org introduction](https://www.webcomponents.org/community/articles/introduction-to-html-imports)
-[html5rocks.com tutorial](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
-[teamtreehouse.com introduction](http://blog.teamtreehouse.com/introduction-html-imports)
+* Other reference links
+  - [WebComponents.org introduction](https://www.webcomponents.org/community/articles/introduction-to-html-imports)
+  - [html5rocks.com tutorial](https://www.html5rocks.com/en/tutorials/webcomponents/imports/)
+  - [teamtreehouse.com introduction](http://blog.teamtreehouse.com/introduction-html-imports)
 
 * Mac
 
