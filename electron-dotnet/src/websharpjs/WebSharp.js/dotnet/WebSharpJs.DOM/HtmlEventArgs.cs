@@ -117,6 +117,23 @@ namespace WebSharpJs.DOM
 
         }
 
+        [ScriptableMember(ScriptAlias = "movementX")]
+        public int MovementX
+        {
+            get;
+            internal set;
+
+        }
+
+        [ScriptableMember(ScriptAlias = "movementY")]
+        public int MovementY
+        {
+            get;
+            internal set;
+
+        }
+
+
         //public HtmlObject Source
         //{
         //    get;

@@ -491,6 +491,8 @@
         "pointerType",
         "screenX",
         "screenY",
+        "movementX",
+        "movementY",
         "targetTouches",
         "toElement",
         "touches"]
