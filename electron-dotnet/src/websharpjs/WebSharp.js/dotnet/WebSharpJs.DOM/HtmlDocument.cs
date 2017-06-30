@@ -6,7 +6,7 @@ using WebSharpJs.Script;
 
 namespace WebSharpJs.DOM
 {
-    public sealed class HtmlDocument : WebSharpObject
+    public sealed class HtmlDocument : HtmlObject
     {
         static DOMObjectProxy scriptProxy;
 
