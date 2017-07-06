@@ -133,43 +133,28 @@ namespace WebSharpJs.DOM
 
         }
 
-
-        //public HtmlObject Source
-        //{
-        //    get;
-        //}
-
-        public ScriptObject EventObject
+        [ScriptableMember(ScriptAlias = "relatedTarget")]
+        public HtmlElement RelatedTarget
         {
             get;
             internal set;
 
         }
 
-        [ScriptableMember(ScriptAlias = "preventDefault")]
-        public Func<object, Task<object>> preventDefault
-        {
-            get;
-            internal set;
-        }
+        // Set by WebSharpHtmlEvent.cs
+        internal Action PreventDefaultAction { get; set; }
 
         public void PreventDefault()
         {
-            var func = preventDefault;
-            func?.Invoke(null);
+            PreventDefaultAction();
         }
 
-        [ScriptableMember(ScriptAlias = "stopPropogation")]
-        public Func<object, Task<object>> stopPropogation
-        {
-            get;
-            internal set;
-        }
+        // Set by WebSharpHtmlEvent.cs
+        internal Action StopPropagationAction { get; set; }
 
         public void StopPropagation()
         {
-            var func = stopPropogation;
-            func?.Invoke(null);
+            StopPropagationAction();
         }
     }
     

@@ -35,5 +35,9 @@ namespace WebSharpJs
         {
             return await JavaScriptBridge.websharp_addEventListener(eventCallback);
         }
+        public async Task<bool> RemoveEventListener(object eventCallback)
+        {
+            return await JavaScriptBridge.websharp_removeEventListener(eventCallback);
+        }
     }
 }

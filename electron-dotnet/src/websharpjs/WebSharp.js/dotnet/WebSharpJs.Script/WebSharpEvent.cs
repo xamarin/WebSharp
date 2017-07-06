@@ -13,6 +13,7 @@ namespace WebSharpJs.Script
         WebSharpObject Source { get; set; }
 
         string EventName { get; set; }
+        internal int UID { get; private set; }
 
         EventHandler EventHandlers { get; set; }
 
@@ -22,6 +23,7 @@ namespace WebSharpJs.Script
         {
             Source = eventSource;
             EventName = eventName;
+            UID = ScriptObjectUtilities.NextUID;
 
             EventCallbackFunction = (async (evt) =>
             {

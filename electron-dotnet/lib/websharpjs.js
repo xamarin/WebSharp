@@ -26,7 +26,7 @@
         // if the meta object is null/undefined then just return
         // fixes errors on static methods like Menu.setApplicationMenu
         // that will not return back an object.
-        if (typeof meta === 'undefined')
+        if (!meta)
             return;
 
         let id = v8Util.getHiddenValue(meta, 'websharpId');
@@ -416,50 +416,18 @@
             if (so === 'undefined')
                  cb('Invoke error: Object with handle id \'' + parms.handle + '\' may have already been garbage collected.', null);
 
-            //console.log('addEventListener -> ' + eventCallback.onEvent);
-            so.addEventListener(eventCallback.onEvent, 
-                function () {
-                    //console.log('event triggered');
-                    // We need to preserver arity of the function callback parameters.
-                    let callbackData = [];
-                    // we will only attach event information if it was asked for
-                    if (eventCallback.handlerType) {
-                        // If we get called with arguments then we loop over them to create on object to be passed back
-                        // as our callback data.  Func<object, Task<object>>
-                        // We only receive one object in our managed code.
-                        if (arguments) {
-                            var args = Array.from(arguments);
-                            for (var i = 0; i < args.length; i++) {
-                                //console.log(typeof args[i]);
-                                var type = args[i].type;
-                                if (args[i] instanceof Event) {
-                                    //console.log('Event be defined ');
-                                    var event = {};
-                                    event['eventType'] = args[i].type;
-                                    event['preventDefault'] = args[i].preventDefault;
-                                    event['stopPropogation'] = args[i].stopPropogation;
-                                    DOMEventProps.forEach(function (element) {
-                                        event[element] = args[i][element];
-                                    });
-                                    callbackData.push(event);
-                                    
-                                }
-                                else
-                                    callbackData.push(args[i]);
-                            }
-                        }
-                    }
+            //console.log('addEventListener -> ' + eventCallback.onEvent + ' UID ' + eventCallback.uid + ' Handle: ' + eventCallback.handle);
+            cb(null, EventHelper.add(so, eventCallback));
+        }
 
-                    try {
-                        // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
-                        // later.
-                        eventCallback.callback.apply(this, [callbackData]);
-                    }
-                    catch (ex) { ErrorHandler.Exception(ex); }
-                
-                }, false);
-           
-            cb(null, true);
+        bridge.websharp_removeEventListener = function (eventCallback, cb) {
+
+            let so = GetScriptableObject(eventCallback.handle);
+            if (so === 'undefined')
+                 cb('Invoke error: Object with handle id \'' + parms.handle + '\' may have already been garbage collected.', null);
+
+            //console.log('removeEventListener -> ' + eventCallback.onEvent + ' UID: ' + eventCallback.uid + ' Handle: ' + eventCallback.handle);
+            cb(null, EventHelper.remove(so, eventCallback));
         }
 
         return bridge;
@@ -473,30 +441,137 @@
         "detail",
         "eventPhase",
         "metaKey",
-        "pageX",
-        "pageY",
         "shiftKey",
         "view",
 	    "char",
         "charCode",
         "key",
         "keyCode",
+        "pointerId",
+        "pointerType",
+        "screenX",
+        "screenY",
+        "targetTouches",
+        "toElement",
+        "touches"]
+
+    var DOMMouseEventProps = ["pageX",
+        "pageY",
         "button",
         "buttons",
         "clientX",
         "clientY",
         "offsetX",
         "offsetY",
-        "pointerId",
-        "pointerType",
-        "screenX",
-        "screenY",
+        "layerX",
+        "layerY",
         "movementX",
-        "movementY",
-        "targetTouches",
-        "toElement",
-        "touches"]
+        "movementY"]
 
     module.exports = { RegisterScriptableObject, GetScriptableObject, UnRegisterScriptableObject, WrapEvent, UnwrapArgs, ObjectToScriptObject, IsRenderer, BridgeProxy };
 
+    /*
+    * Helper functions for managing events
+    */
+    var EventHelper = {
+
+        add: function( elem, eventCallback ) {
+            var wsevents = v8Util.getHiddenValue(elem, 'ws_events');
+            if (!wsevents)
+            {
+                wsevents = {};
+                v8Util.setHiddenValue(elem, 'ws_events',wsevents);
+            }
+
+            var handler = function () {
+                //console.log('event triggered');
+                // We need to preserver arity of the function callback parameters.
+                let callbackData = [];
+
+                let originalEvent;
+
+                // we will only attach event information if it was asked for
+                if (eventCallback.handlerType) {
+                    // If we get called with arguments then we loop over them to create on object to be passed back
+                    // as our callback data.  Func<object, Task<object>>
+                    // We only receive one object in our managed code.
+                    if (arguments) {
+                        var args = Array.from(arguments);
+                        for (var i = 0; i < args.length; i++) {
+                            if (args[i] instanceof Event) {
+                                if (!originalEvent)
+                                    originalEvent = args[i];
+
+                                var event = {};
+                                var type = args[i].type;
+                                event['eventType'] = type;
+                                // load dom event info
+                                DOMEventProps.forEach(function (element) {
+                                    event[element] = args[i][element];
+                                });
+
+                                // load DOM mouse specific event info
+                                if (args[i] instanceof MouseEvent)
+                                {
+                                    if (args[i].relatedTarget)
+                                        event['relatedTarget'] = ObjectToScriptObject(args[i].relatedTarget);
+                                    DOMMouseEventProps.forEach(function (element) {
+                                        event[element] = args[i][element];
+                                    });
+                                }
+                                
+                                callbackData.push(event);
+                                
+                            }
+                            else
+                                callbackData.push(args[i]);
+                        }
+                    }
+                }
+
+                try {
+                    var eventResult = eventCallback.callback(callbackData);
+                    if (eventResult)
+                    {
+                        if (eventResult['defaultPrevented'])
+                        {
+                            if (typeof originalEvent.preventDefault === 'function')
+                            {
+                                originalEvent.preventDefault();
+                            }
+                        }
+                        if (eventResult['cancelBubble'])
+                        {
+                            if (typeof originalEvent.stopPropagation === 'function')
+                            {
+                                originalEvent.stopPropagation();
+                            }
+                        }
+                    }
+                }
+                catch (ex) { ErrorHandler.Exception(ex); }
+            
+            }
+
+            elem.addEventListener(eventCallback.onEvent, 
+                handler, false);
+            wsevents[eventCallback.uid] = handler;
+            return true;
+        },
+        remove: function( elem, eventCallback ) {
+            var wsevents = v8Util.getHiddenValue(elem, 'ws_events');
+            if (!wsevents)
+            {
+                return false;
+            }
+
+            var handler = wsevents[eventCallback.uid];
+            if (!handler)
+                return false;
+            elem.removeEventListener(eventCallback.onEvent, handler, false);
+            delete wsevents[eventCallback.uid];
+            return true;
+        }
+    }
 })();
+

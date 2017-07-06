@@ -18,6 +18,8 @@ namespace WebSharpJs.Script
         static readonly Type ScriptObjectCallbackType = typeof(IScriptObjectCallback);
         static readonly Type ScriptObject = typeof(ScriptObject);
 
+        private static int nextUID = 0;
+
         #region Reflection extension helper methods
         public static bool IsAttributeDefined<TAttribute>(this MemberInfo memberInfo)
         {
@@ -423,6 +425,18 @@ namespace WebSharpJs.Script
                 default:
                     return toMap;
 
+            }
+        }
+
+        /// <summary>
+        /// This an id that is unique over the lifetime of the process. It changes
+        /// at each access.
+        /// </summary>
+        internal static int NextUID
+        {
+            get
+            {
+                return nextUID++;
             }
         }
 

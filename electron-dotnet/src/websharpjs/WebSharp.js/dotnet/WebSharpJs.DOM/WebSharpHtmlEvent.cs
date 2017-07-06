@@ -16,31 +16,47 @@ namespace WebSharpJs.DOM
         WebSharpObject Source { get; set; }
 
         string EventName { get; set; }
+        internal int UID { get; private set; }
 
         EventHandler<HtmlEventArgs> EventHandlers { get; set; }
 
         internal Func<object, Task<object>> EventCallbackFunction { get; private set; }
+        bool defaultPrevented = false;
+        bool cancelBubble = false;
 
         internal WebSharpHtmlEvent(WebSharpObject eventSource, string eventName)
         {
             Source = eventSource;
             EventName = eventName;
+            UID = ScriptObjectUtilities.NextUID;
 
-            EventCallbackFunction = (async (evt) =>
+            EventCallbackFunction = async (evt) =>
             {
                 Invoke(evt);
-                return null;
-            });
+                return new { defaultPrevented, cancelBubble };
+            };
         }
 
         internal object Invoke(object evt)
         {
-
+            
             var eventArgs = new HtmlEventArgs();
+            defaultPrevented = false;
+            cancelBubble = false;
+            eventArgs.PreventDefaultAction = () => { defaultPrevented = true; }; 
+            eventArgs.StopPropagationAction = () => { cancelBubble = true; };
+
             if (evt != null)
             {
-                var dict = (IDictionary<string, object>)((object[])evt)[0];
-                ScriptObjectHelper.DictionaryToScriptableType(dict, eventArgs);
+                try
+                {
+                    var dict = (IDictionary<string, object>)((object[])evt)[0];
+                    ScriptObjectHelper.DictionaryToScriptableType(dict, eventArgs);
+                }
+                catch (Exception evtExc)
+                {
+                    Console.WriteLine($"Error parsing HtmlEventArgs: {evtExc.Message}");
+                }
             }
 
             EventHandlers?.Invoke(this.Source, eventArgs);
@@ -49,13 +65,14 @@ namespace WebSharpJs.DOM
             {
                 try
                 {
+                    
                     var eventDelegate = (MulticastDelegate)Source.GetType().GetTypeInfo().GetField(EventName, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(Source);
                     eventDelegate.DynamicInvoke(new object[] { Source, EventArgs.Empty });
                 }
                 catch (Exception exc)
                 {
                     // We get an exception if there is nothing to invoke
-                    Console.WriteLine($"exception {exc.Message}");
+                    Console.WriteLine($"WebSharpHtmlEvent Invoke Exception {exc.Message}");
                 }
             }
             return null;

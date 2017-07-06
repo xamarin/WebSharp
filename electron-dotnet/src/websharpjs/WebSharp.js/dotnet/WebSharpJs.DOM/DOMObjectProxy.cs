@@ -21,6 +21,12 @@ namespace WebSharpJs.DOM
                                 }
                             ";
 
+        public DOMObjectProxy(ScriptObjectProxy sop)
+        {
+            JavascriptFunction = sop.JavascriptFunction;
+            JavascriptFunctionProxy = sop.JavascriptFunctionProxy;
+        }
+
         public DOMObjectProxy(dynamic proxy) 
         {
             JavascriptFunctionProxy = proxy;

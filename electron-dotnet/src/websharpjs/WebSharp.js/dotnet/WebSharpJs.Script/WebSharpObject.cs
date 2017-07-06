@@ -137,6 +137,7 @@ namespace WebSharpJs.Script
                     {
                         handle = Handle,
                         onEvent = scriptAlias,
+                        uid = websharpEvent.UID,
                         callback = websharpEvent.EventCallbackFunction
                     };
                     result = await WebSharp.Bridge.AddEventListener(eventCallback);
@@ -177,6 +178,7 @@ namespace WebSharpJs.Script
                     {
                         handle = Handle,
                         onEvent = scriptAlias,
+                        uid = websharpEvent.UID,
                         callback = websharpEvent.EventCallbackFunction
                     };
                     result = await WebSharp.Bridge.AddEventListener(eventCallback);
@@ -185,6 +187,51 @@ namespace WebSharpJs.Script
             }
             return result;
         }
+
+        public async Task<bool> DetachEvent(string eventName, EventHandler handler)
+        {
+            if (string.IsNullOrEmpty(eventName))
+                throw new ArgumentNullException(nameof(eventName));
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            var scriptAlias = eventName;
+            var ei = InstanceType.GetTypeInfo().GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
+
+            if (ei != null)
+            {
+                if (ei.IsDefined(typeof(ScriptableMemberAttribute), false))
+                {
+                    var att = ei.GetCustomAttribute<ScriptableMemberAttribute>(false);
+                    scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                }
+            }
+
+            WebSharpEvent websharpEvent;
+            var result = false;
+            if (!EventHandlers.TryGetValue(scriptAlias, out websharpEvent))
+            {
+
+                if (ScriptObjectProxy != null)
+                {
+                    var eventCallback = new
+                    {
+                        handle = Handle,
+                        onEvent = scriptAlias,
+                        uid = websharpEvent.UID,
+                        callback = websharpEvent.EventCallbackFunction
+                    };
+                    result = await WebSharp.Bridge.RemoveEventListener(eventCallback);
+                }
+                EventHandlers.Remove(eventName);
+            }
+            websharpEvent.RemoveEventHandler(handler);
+            return result;
+        }
+
 
         public override async Task<bool> SetProperty(string name, object value)
         {

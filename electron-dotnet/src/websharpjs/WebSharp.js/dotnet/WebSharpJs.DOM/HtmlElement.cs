@@ -11,6 +11,8 @@ namespace WebSharpJs.DOM
         private HtmlElement() : base() { }
         private HtmlElement(object obj) : base(obj) { }
 
+        public HtmlElement(ScriptObjectProxy scriptObject) : base(scriptObject) { }
+
         public async Task<string> GetId()
         {
             return await GetProperty<string>("id");

@@ -17,6 +17,11 @@ namespace WebSharpJs.DOM
     public class HtmlObject : WebSharpObject
     {
 
+        protected HtmlObject(ScriptObjectProxy scriptObject) : base()
+        {
+            ScriptObjectProxy = new DOMObjectProxy(scriptObject);
+        }
+
         class EventHandlerBag : GrabBag<WebSharpHtmlEvent>
         { }
 
@@ -56,6 +61,7 @@ namespace WebSharpJs.DOM
                     {
                         handle = Handle,
                         onEvent = scriptAlias,
+                        uid = websharpEvent.UID,
                         callback = websharpEvent.EventCallbackFunction,
                         handlerType = "HtmlEventArgs"
                     };
@@ -98,6 +104,7 @@ namespace WebSharpJs.DOM
                     {
                         handle = Handle,
                         onEvent = scriptAlias,
+                        uid = websharpEvent.UID,
                         callback = websharpEvent.EventCallbackFunction,
                         handlerType = "HtmlEventArgs"
                     };
@@ -105,6 +112,51 @@ namespace WebSharpJs.DOM
                 }
                 EventHandlers[eventName] = websharpEvent;
             }
+            return result;
+        }
+
+        public async Task<bool> DetachEvent(string eventName, EventHandler<HtmlEventArgs> handler)
+        {
+            if (string.IsNullOrEmpty(eventName))
+                throw new ArgumentNullException("eventName");
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException("handler");
+            }
+
+            var scriptAlias = eventName;
+            var ei = InstanceType.GetTypeInfo().GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
+
+            if (ei != null)
+            {
+                if (ei.IsDefined(typeof(ScriptableMemberAttribute), false))
+                {
+                    var att = ei.GetCustomAttribute<ScriptableMemberAttribute>(false);
+                    scriptAlias = (att.ScriptAlias ?? scriptAlias);
+                }
+            }
+
+            WebSharpHtmlEvent websharpEvent;
+            var result = false;
+            if (EventHandlers.TryGetValue(scriptAlias, out websharpEvent))
+            {
+
+                if (ScriptObjectProxy != null)
+                {
+                    var eventCallback = new
+                    {
+                        handle = Handle,
+                        onEvent = scriptAlias,
+                        uid = websharpEvent.UID,
+                        callback = websharpEvent.EventCallbackFunction,
+                        handlerType = "HtmlEventArgs"
+                    };
+                    result = await WebSharp.Bridge.RemoveEventListener(eventCallback);
+                }
+                EventHandlers.Remove(scriptAlias);
+            }
+            websharpEvent.RemoveEventHandler(handler);
             return result;
         }
 
