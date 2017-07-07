@@ -480,7 +480,7 @@ namespace WebSharpJs.Electron
 
         }
 
-        public async Task SetProgressBar(float progress, ProgressBarMode? mode = null)
+        public async Task SetProgressBar(float progress, ProgressBarOptions? mode = null)
         {
             if (mode != null && mode.HasValue)
                 await Invoke<object>("setProgressBar", progress, mode.Value);
@@ -1182,8 +1182,9 @@ namespace WebSharpJs.Electron
     {
         None,
         Normal,
-        InDeterminate,
-        Error
+        Indeterminate,
+        Error,
+        Paused
 
     }
 

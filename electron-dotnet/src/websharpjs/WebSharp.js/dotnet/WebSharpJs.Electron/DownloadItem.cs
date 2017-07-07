@@ -52,14 +52,24 @@ namespace WebSharpJs.Electron
             return await Invoke<string>("getFilename");
         }
 
+        public async Task<string> GetLastModifiedTime()
+        {
+            return await Invoke<string>("getLastModifiedTime");
+        }
+
+        public async Task<string> GetMimeType()
+        {
+            return await Invoke<string>("getMimeType");
+        }
+
         public async Task<int> GetReceivedBytes()
         {
             return await Invoke<int>("getReceivedBytes");
         }
 
-        public async Task<DateTime> GetStartTime()
+        public async Task<double> GetStartTime()
         {
-            return await Invoke<DateTime>("getStartTime");
+            return await Invoke<double>("getStartTime");
         }
 
         public async Task<string> GetState()
@@ -72,10 +82,48 @@ namespace WebSharpJs.Electron
             return await Invoke<int>("getTotalBytes");
         }
 
+        public async Task<string> GetURL()
+        {
+            return await Invoke<string>("getURL");
+        }
+
+        public async Task<string[]> GetURLChain()
+        {
+            return await Invoke<string[]>("getURLChain");
+        }
+
+        public async Task<bool> HasUserGesture()
+        {
+            return await Invoke<bool>("hasUserGesture");
+        }
+
+        public async Task<bool> IsPaused()
+        {
+            return await Invoke<bool>("isPaused");
+        }
+
+        public async Task Pause()
+        {
+            await Invoke<object>("pause");
+        }
+
+        public async Task Resume()
+        {
+            await Invoke<object>("resume");
+        }
+
         public async Task SetSavePath(string path)
         {
             await Invoke<object>("setSavePath", path);
         }
 
+    }
+
+    public enum DownloadItemState
+    {
+        Progressing,
+        Interrupted,
+        Completed,
+        Cancelled
     }
 }

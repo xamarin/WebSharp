@@ -336,4 +336,27 @@ namespace WebSharpJs.Electron
 
 	}
 
+    public class WillDownloadResult : ScriptObjectCallbackResult
+    {
+
+        public WebContents WebContents { get; private set; }
+        public Event Event { get; private set; }
+        public DownloadItem DownloadItem { get; private set; }
+
+        public WillDownloadResult(object state) : base(state)
+        {
+
+            var result = state as object[];
+            if (result != null)
+            {
+                Event = result[0] as Event;
+                DownloadItem = result[1] as DownloadItem;
+                WebContents = result[2] as WebContents;
+            }
+        }
+
+        public WillDownloadResult(ICallbackResult result) : this(result.CallbackState)
+        { }
+    }
+
 }
