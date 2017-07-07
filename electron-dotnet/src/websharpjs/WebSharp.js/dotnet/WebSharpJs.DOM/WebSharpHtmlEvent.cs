@@ -33,7 +33,7 @@ namespace WebSharpJs.DOM
             EventCallbackFunction = async (evt) =>
             {
                 Invoke(evt);
-                return new { defaultPrevented, cancelBubble };
+                return new { defaultPrevented, cancelBubble};
             };
         }
 

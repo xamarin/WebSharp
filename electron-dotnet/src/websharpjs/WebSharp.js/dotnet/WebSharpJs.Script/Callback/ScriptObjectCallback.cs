@@ -47,6 +47,9 @@ namespace WebSharpJs.Script
         Type[] argumentTypes;
         Func<object, Task<object>> callbackProxy;
 
+        bool defaultPrevented = false;
+        bool cancelBubble = false;
+
         Func<object, Task<object>> IScriptObjectCallbackProxy.CallbackProxy => callbackProxy;
 
         MetaData[] IScriptObjectCallbackProxy.TypeMappings => mappings;
@@ -65,7 +68,7 @@ namespace WebSharpJs.Script
             callbackProxy = (async (evt) =>
             {
                 Invoke(evt);
-                return null;
+                return new { defaultPrevented, cancelBubble }; ;
             });
         }
 

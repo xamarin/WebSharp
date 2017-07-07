@@ -128,7 +128,7 @@
                 return scriptableType;
             }
 
-            if (arg === Object(arg) && v8Util.getHiddenValue(arg, 'websharpId'))
+            if (arg === Object(arg) && (v8Util.getHiddenValue(arg, 'websharpId') || metaMap.Category === 1))
                 return ObjectToScriptObject(arg);
             else
                 return arg;
@@ -151,9 +151,14 @@
                         callbackData.push(callbackArg(args[i], func.MetaMapping[i]));
                     }
                     try {
-                        // ** Note **: We are using `this` for the scope of the fuction. This may need to be looked at
-                        // later.
-                        func.Value.apply(this, [callbackData]);
+                        // Receive result back from callback.  This will be used in the future.
+                        func.Value(callbackData, 
+                            function (error, eventResult) {
+                                if (error) throw error;
+                                console.log(eventResult);
+                            }
+                        );
+                        
                     }
                     catch (ex) { ErrorHandler.Exception(ex); }
                 }
@@ -530,24 +535,28 @@
                 }
 
                 try {
-                    var eventResult = eventCallback.callback(callbackData);
-                    if (eventResult)
-                    {
-                        if (eventResult['defaultPrevented'])
-                        {
-                            if (typeof originalEvent.preventDefault === 'function')
-                            {
-                                originalEvent.preventDefault();
+                    eventCallback.callback(callbackData, 
+                        function (error, eventResult) {
+                                if (error) throw error;
+                                if (eventResult)
+                                {
+                                    if (eventResult['defaultPrevented'])
+                                    {
+                                        if (typeof originalEvent.preventDefault === 'function')
+                                        {
+                                            originalEvent.preventDefault();
+                                        }
+                                    }
+                                    if (eventResult['cancelBubble'])
+                                    {
+                                        if (typeof originalEvent.stopPropagation === 'function')
+                                        {
+                                            originalEvent.stopPropagation();
+                                        }
+                                    }
+                                }
                             }
-                        }
-                        if (eventResult['cancelBubble'])
-                        {
-                            if (typeof originalEvent.stopPropagation === 'function')
-                            {
-                                originalEvent.stopPropagation();
-                            }
-                        }
-                    }
+                    );
                 }
                 catch (ex) { ErrorHandler.Exception(ex); }
             
