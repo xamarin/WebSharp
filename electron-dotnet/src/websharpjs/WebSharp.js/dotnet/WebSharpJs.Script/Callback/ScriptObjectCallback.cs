@@ -50,6 +50,8 @@ namespace WebSharpJs.Script
         bool defaultPrevented = false;
         bool cancelBubble = false;
 
+        Action PreventDefaultAction;
+
         Func<object, Task<object>> IScriptObjectCallbackProxy.CallbackProxy => callbackProxy;
 
         MetaData[] IScriptObjectCallbackProxy.TypeMappings => mappings;
@@ -65,6 +67,8 @@ namespace WebSharpJs.Script
                 argumentTypes = this.GetType().BaseType.GetGenericArguments();
 
             mappings = ScriptObjectUtilities.GenerateMetaData(argumentTypes, true);
+            PreventDefaultAction = new Action(() => { defaultPrevented = true; });
+
             callbackProxy = (async (evt) =>
             {
                 Invoke(evt);
@@ -85,13 +89,16 @@ namespace WebSharpJs.Script
                     for (int mi = 0; mi < evt.Length; mi++)
                     {
                         if (mi < argumentTypes.Length)
+                        {
                             parms[mi] = ScriptObjectUtilities.MapToType((ScriptParmCategory)(mappings[mi].Category), mappings[mi].IsArray,
-                                evt[mi], argumentTypes[mi]);
+                                evt[mi], argumentTypes[mi], PreventDefaultAction);
+
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Console.WriteLine("exception from MapToType in ScriptObjectCallback:Invoke: " + ex.Message);
+                    System.Console.WriteLine("Exception from MapToType in ScriptObjectCallback:Invoke: " + ex.Message);
                     parms = new object[] { null };
                 }
             }

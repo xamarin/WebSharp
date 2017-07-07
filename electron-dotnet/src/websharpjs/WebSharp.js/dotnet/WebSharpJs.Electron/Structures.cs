@@ -245,11 +245,14 @@ namespace WebSharpJs.Electron
         public string Stack { get; set; }
     }
 
-    [ScriptableType]
+    [ScriptableType(ScriptableType = ScriptableType.Event)]
     public class Event
     {
+        // Set by ScriptObjectCallback to support PreventDefault Event actions.
+        // See code for ScriptObjectCallback.
         [ScriptableMember(ScriptAlias = "preventDefault")]
-        public Func<object, Task<object>> PreventDefault { get; set; }
+        public Action PreventDefault { get; internal set; }
+
         [ScriptableMember(ScriptAlias = "sender")]
         public NodeJS.EventEmitter Sender { get; set; }
 

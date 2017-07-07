@@ -229,13 +229,19 @@ namespace WebSharpJs.Script
 
         }
 
-        public static object AnonymousObjectToScriptableType(Type type, object obj)
+        public static object AnonymousObjectToScriptableType(Type type, object obj, Action preventDefaultAction = null)
         {
             var st = Activator.CreateInstance(type);
             var dic = obj as IDictionary<string, object>;
             if (dic == null)
             {
                 return st;
+            }
+
+            var att = type.GetCustomAttribute<ScriptableTypeAttribute>(false);
+            if (att.ScriptableType == ScriptableType.Event)
+            {
+                dic["preventDefault"] = preventDefaultAction;
             }
 
             DictionaryToScriptableType(dic, st);

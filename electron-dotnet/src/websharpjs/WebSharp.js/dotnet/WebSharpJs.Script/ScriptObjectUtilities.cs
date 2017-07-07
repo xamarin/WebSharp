@@ -394,7 +394,7 @@ namespace WebSharpJs.Script
         }
 
 
-        internal static object MapToType(ScriptParmCategory category, int arrayFlag, object toMap, Type type = null)
+        internal static object MapToType(ScriptParmCategory category, int arrayFlag, object toMap, Type type = null, Action preventDefaultAction = null)
         {
             if (toMap == null)
                 return null;
@@ -402,7 +402,7 @@ namespace WebSharpJs.Script
             switch (category)
             {
                 case ScriptParmCategory.ScriptableType:
-                    return ScriptObjectHelper.AnonymousObjectToScriptableType(type, toMap);
+                    return ScriptObjectHelper.AnonymousObjectToScriptableType(type, toMap, preventDefaultAction);
                 case ScriptParmCategory.ScriptObject:
                     return ScriptObjectHelper.AnonymousObjectToScriptObjectType(type, toMap);
                 case ScriptParmCategory.ScriptableTypeArray:

@@ -73,8 +73,11 @@
 
     var UnwrapArgs = function (args) {
 
-        const callbackArg = function(arg, metaMap = { Category : 3, IsArray : 0 })
+        var originalEvent = null;
+
+        const callbackArg = function (arg, metaMap = { Category: 3, IsArray: 0 })
         {
+
             if (metaMap.Category === 6 && arg != null) // ScriptableTypeArray - an array of ScriptableTypes
             {
                 let arrayElementMeta = metaMap;
@@ -116,6 +119,9 @@
                                     scriptableType[k] = ObjectToScriptObject(arg[k]);
                                 else
                                     scriptableType[k] = arg[k];
+                                if (k == 'preventDefault') {
+                                    originalEvent = arg;
+                                }
                             }
                             else
                                 scriptableType[k] = arg[k];
@@ -151,11 +157,19 @@
                         callbackData.push(callbackArg(args[i], func.MetaMapping[i]));
                     }
                     try {
-                        // Receive result back from callback.  This will be used in the future.
+                        // Receive result back from callback. 
                         func.Value(callbackData, 
                             function (error, eventResult) {
                                 if (error) throw error;
-                                console.log(eventResult);
+                                if (eventResult) {
+                                    //console.log(eventResult);
+                                    if (eventResult['defaultPrevented']) {
+                                        if (originalEvent && typeof originalEvent.preventDefault === 'function') {
+                                            originalEvent.preventDefault();
+                                        }
+                                    }
+
+                                }
                             }
                         );
                         
