@@ -12,6 +12,7 @@
 * [autoUpdater](api/auto-updater.md) :exclamation:
 * [BrowserWindow](api/browser-window.md) :muscle:
 * [contentTracing](api/content-tracing.md) :exclamation:
+* [download-item](api/download-item.md) :muscle:
 * [dialog](api/dialog.md) :muscle:
 * [globalShortcut](api/global-shortcut.md) :exclamation:
 * [ipcMain](api/ipc-main.md) :muscle:

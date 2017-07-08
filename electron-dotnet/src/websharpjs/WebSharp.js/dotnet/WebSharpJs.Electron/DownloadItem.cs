@@ -92,6 +92,11 @@ namespace WebSharpJs.Electron
             return await Invoke<string[]>("getURLChain");
         }
 
+        public async Task<string> GetContentDisposition()
+        {
+            return await Invoke<string>("getContentDisposition");
+        }
+
         public async Task<bool> HasUserGesture()
         {
             return await Invoke<bool>("hasUserGesture");
