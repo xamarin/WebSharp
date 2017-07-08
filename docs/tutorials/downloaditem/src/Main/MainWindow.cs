@@ -38,8 +38,8 @@ using WebSharpJs.DOM;
                 {
                     windowId = await CreateWindow(__dirname);
 
-                    var web = await mainWindow.GetWebContents();
-                    var session = await web.GetSession();
+                    // var web = await mainWindow.GetWebContents();
+                    // var session = await web.GetSession();
 
                     // There are functionality differences between mac and windows.  You will need to try
                     // this to see if it works for you in all scenarios.  For instance this works on a Mac,
@@ -107,10 +107,12 @@ using WebSharpJs.DOM;
         // Attaches a will-download listener to the session and initiates the download
         async Task DownloadFile(string fileURL)
         {
+            // Get a reference to a Session object in this case
+            // from the mainWindow.
             var webContents = await mainWindow.GetWebContents();
             var session = await webContents.GetSession();
-            await session.SetDownloadPath("downloads");
             
+            // Call the DownloadURL() method from the WebContents
             await webContents.DownloadURL(fileURL);
 
             await session.Once("will-download",
