@@ -58,7 +58,7 @@ using WebSharpJs.Script;
         async void updateOutput (object sender, EventArgs args)
         {
             
-            var words = (await area.GetProperty<string>("value")).Split(' ');//, StringSplitOptions.RemoveEmptyEntries);
+            var words = (await area.GetProperty<string>("value")).Split(' ');
             var emoji = await emojiPicker.GetProperty<string>("value");
             var joiner = (await spaces.GetProperty<bool>("checked")) ? " " + emoji + " " : emoji;
             var result = String.Join(joiner, words);

@@ -6,12 +6,26 @@ More information can be found here [Handclaps web page](https://handclaps.io) an
 
 ## Features
 
+### UI
+- Bootstrap dependency used for UI. (source link)[https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/package.json#L15]
+
+### Renderer
+
+- C# DOM Event Handlers to handle `change` events. [source link](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/src/ClapsRenderer/ClapsRenderer.cs#L44-L46)
+- C# DOM Event Handler to handle `click` event for copy button. [source link](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/src/ClapsRenderer/ClapsRenderer.cs#L47)
+- Electron Clipboard interface handle copying to the clipboard. [source link](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/src/ClapsRenderer/ClapsRenderer.cs#L82-L86)
+- Manipulating CSS Class Names to highlight the number of character counter when over 140 characters. [source link](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/src/ClapsRenderer/ClapsRenderer.cs#L82-L86)
+
+### Main
+
+- Use of `will-navigate` event from `WebContents` to capture all external link clicks and open them in the default browser instead of inline in our application. [source link](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/src/Main/MainWindow.cs#L42-L52)
 
 
-![screen shot windows](images/handclaps.png)
+
+![install](images/handclaps-install.gif)
 
 
-![screen shot mac](images/handclaps-windows.png)
+![screen shot windows](images/handclaps.gif)
 
 
 
