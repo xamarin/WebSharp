@@ -7,7 +7,7 @@ More information can be found here [Handclaps web page](https://handclaps.io) an
 ## Features
 
 ### UI
-- Bootstrap dependency used for UI. (source link)[https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/package.json#L15]
+- Bootstrap dependency used for UI. [source link](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/package.json#L15)
 
 ### Renderer
 
