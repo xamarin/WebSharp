@@ -1,0 +1,17 @@
+{
+  "name": "handclaps",
+  "displayName": "HandClaps",
+  "description": "Making generating handclap tweets easy.",
+  "version": "1.0.0",
+  "publisher": "Xamarin",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^1.4.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6"
+  }
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>Handclaps</title>
+
+    <!-- Bootstrap core CSS -->
+    <!--link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+          crossorigin="anonymous"-->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Custom styles for this template -->
+    <link href="assets/narrow-jumbotron.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills float-right">
+                </ul>
+            </nav>
+            <h3 class="text-muted">Handclaps</h3>
+        </div>
+
+        <p>
+            <h4>Make easy handclap tweets.</h4>
+        </p>
+
+        <form>
+            <div class="form-group">
+                <label for="input" class="sr-only">Input text</label>
+                <textarea class="form-control"
+                            id="input"
+                            cols="80"
+                            rows="3"
+                            placeholder="Text goes here"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="input" class="sr-only">Ouptut text</label>
+                <textarea class="form-control"
+                            id="output"
+                            cols="80"
+                            rows="3"
+                            placeholder="Emojis come out here" readonly="readonly"></textarea>
+                <small id="length" class="form-text text-muted text-danger" style="text-align: right;"></small>
+            </div>
+            <div class="form-group">
+                <button type="button"
+                        class="copy btn btn-primary float-right"
+                        style="width: 20%"
+                        data-clipboard-target="#output"
+                        id="copy">Copy</button>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="form-check-label">
+                        <input id="spaced" type="checkbox" checked class="form-check-input">
+                        Include extra spaces?
+                    </label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label for="emoji">Pick an emoji</label>
+                    <select id="emoji" class="form-control-sm">
+                        <option selected value="👏">👏</option>
+                        <option value="👏🏻">👏🏻</option>
+                        <option value="👏🏼">👏🏼</option>
+                        <option value="👏🏽">👏🏽</option>
+                        <option value="👏🏾">👏🏾</option>
+                        <option value="👏🏿">👏🏿</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <div class="row marketing">
+            <div class="col">
+                <h4>Why?</h4>
+                <p>
+                    I saw <a href="https://twitter.com/colinmeloy/status/879555564417810432">a tweet</a>
+                    from Colin Meloy pointing out handclap tweets are "kind of a hassle."
+                </p>
+            </div>
+            <div class="col">
+                <h4>How?</h4>
+                <p>
+                    <a href="https://github.com/bojanrajkovic/handclaps">I'm open source on GitHub!</a>
+                    All contributions are welcome.
+                </p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; <a href="https://twitter.com/bojanrajkovic">Bojan Rajkovic</a> 2017</p>
+        </footer>
+
+    </div>
+    <!-- /container -->
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
+    <!--script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+            integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+            crossorigin="anonymous"></script-->
+    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script-->
+
+    <!--script type="text/javascript">
+        var area = document.getElementById("input");
+        var output = document.getElementById("output");
+        var spaces = document.getElementById("spaced");
+        var emojiPicker = document.getElementById("emoji");
+        var length = document.getElementById("length");
+
+        var clipboard = new Clipboard('.copy');
+
+        area.addEventListener("input", updateOutput);
+        spaces.addEventListener("change", updateOutput);
+        emojiPicker.addEventListener("change", updateOutput);
+
+        function updateOutput() {
+            var words = area.value.split(" ");
+            var emoji = emojiPicker.value;
+            var joiner = spaces.checked ? " " + emoji + " " : emoji;
+            var result = words.join(joiner);
+            output.value = result;
+
+            length.innerHTML = "(" + result.length + "/140)";
+            if (result.length > 140) {
+                // Resort to jQuery because I'm lazy.
+                $(length).addClass("text-danger");
+            } else {
+                $(length).removeClass("text-danger");
+            }
+        }
+    </script-->
+</body>
+</html>
