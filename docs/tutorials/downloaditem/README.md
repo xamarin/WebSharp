@@ -126,7 +126,7 @@ Add a channel listener for `download-file` messages.
 
 The method above retrieves the file url passed from the `Renderer` process and passes it to the `DownloadFile` helper method that we have yet to define.
 
-The `DownloadFile` helper method is the workhorse of our routine.
+The `DownloadFile` helper method is the workhorse of our routine.  Once we get a `will-download` event we will hand that off to `HandleDownload`.
 
 ```cs
 
@@ -153,79 +153,114 @@ The `DownloadFile` helper method is the workhorse of our routine.
 ```
 
 
-
+The `HandleDownload` method takes care of calculating the progress and setting up the UI feedback by using the `SetProgressBar` method of Electron's `BrowserWindow`.
 
 ```cs
 
+    // Handles the file download from a will-download listener attached to a session.
+    async Task HandleDownload(WillDownloadResult cr, string fileURL)
+    {
+        var filename = System.IO.Path.GetFileName(fileURL);
 
-        // Handles the file download from a will-download listener attached to a session.
-        async Task HandleDownload(WillDownloadResult cr, string fileURL)
-        {
-            var filename = System.IO.Path.GetFileName(fileURL);
-            await cr.DownloadItem.SetSavePath($"downloads/{filename}");
-            var size = await cr.DownloadItem.GetTotalBytes();
-            
-            await cr.DownloadItem.On("updated",
-                new ScriptObjectCallback<Event, string>(
-                    async (updatedResult) => 
+        // Set our save path.  If it does not exist it will silently be created.
+        await cr.DownloadItem.SetSavePath($"downloads/{filename}");
+
+        // Get the total size of the file to be downloaded so we can calculate
+        // the percentage progress.
+        var size = await cr.DownloadItem.GetTotalBytes();
+        
+        // Listen for the updated event
+        await cr.DownloadItem.On("updated",
+            new ScriptObjectCallback<Event, string>(
+                async (updatedResult) => 
+                {
+                    var update = updatedResult.CallbackState as object[];
+                    var updateState = update[1].ToString();
+
+                    // calculate the percentage
+                    var percentage = (await cr.DownloadItem.GetReceivedBytes()) / (float)size;
+
+                    // Set the progress bar.
+                    await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Normal});
+
+                    if (updateState == "interrupted")
+                        await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Error});
+                    else if (updateState == "progressing")
                     {
-                        var update = updatedResult.CallbackState as object[];
-                        var updateState = update[1].ToString();
-                        var percentage = (await cr.DownloadItem.GetReceivedBytes()) / (float)size;
-                        await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Normal});
+                        if (await cr.DownloadItem.IsPaused())
+                            await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Paused});
+                        else
+                            await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Normal});                                                                
+                    }
+                }
+            )
+        );
+        
+        // Listen for when the file is finished downloaded.
+        await cr.DownloadItem.Once("done",
+            new ScriptObjectCallback<Event, string>(
+                async (doneResult) => 
+                {
+                    var done = doneResult.CallbackState as object[];
+                    var doneState = done[1].ToString(); 
 
-                        if (updateState == "interrupted")
-                            await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Error});
-                        else if (updateState == "progressing")
+                    // check if the download completed and set the progress bar option 
+                    // accordingly.
+                    if (doneState == "completed")
+                    {
+                        if (IsWindows)
                         {
-                            if (await cr.DownloadItem.IsPaused())
-                                await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Paused});
-                            else
-                                await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Normal});                                                                
+                            // Flash the frame on windows.
+                            await mainWindow.SetProgressBar(1.0f, new ProgressBarOptions() {Mode = ProgressBarMode.None});
+                            await mainWindow.FlashFrame(true);
+                        }
+                        else
+                        {
+                            // Bounce the doc on Mac.
+                            await mainWindow.SetProgressBar(-1.0f);
+                            var dock = await app.Dock();
+                            await dock.Bounce(DockBounceType.Informational);
+                            await dock.DownloadFinished(fileURL);
                         }
                     }
-                )
-            );
-            
-            await cr.DownloadItem.Once("done",
-                new ScriptObjectCallback<Event, string>(
-                    async (doneResult) => 
-                    {
-                        var done = doneResult.CallbackState as object[];
-                        var doneState = done[1].ToString(); 
-                        if (doneState == "completed")
-                        {
-                            if (IsWindows)
-                            {
-                                await mainWindow.SetProgressBar(1.0f, new ProgressBarOptions() {Mode = ProgressBarMode.None});
-                                await mainWindow.FlashFrame(true);
-                            }
-                            else
-                            {
-                                await mainWindow.SetProgressBar(-1.0f);
-                                var dock = await app.Dock();
-                                await dock.Bounce(DockBounceType.Informational);
-                                await dock.DownloadFinished(fileURL);
-                            }
-                        }
-                        else 
-                            await mainWindow.SetProgressBar(1.0f, new ProgressBarOptions() {Mode = ProgressBarMode.Error});
-                    }
-                )
-            );
+                    else 
+                        await mainWindow.SetProgressBar(1.0f, new ProgressBarOptions() {Mode = ProgressBarMode.Error});
+                }
+            )
+        );
 
-        }
+    }
 
 ```
 
+:bulb: The `SetProgressBar` works differently on Windows than on Mac where we can set a `ProgressBarMode` that is only valid on Windows.  See the [SetProgressBar](https://electron.atom.io/docs/api/browser-window/#winsetprogressbarprogress-options) api documentation.
+
+Valid enumeration values for `ProgressBarMode` are as follows:
+
+| Value | Description |
+| --- | --- |
+| None | No progress indicator is displayed in the taskbar button.  |
+| Normal | A green progress indicator is displayed in the taskbar button. Default value. |
+| Indeterminate | A pulsing green indicator is displayed in the taskbar button. |  
+| Error | A red progress indicator is displayed in the taskbar button. |
+| Paused | A yellow progress indicator is displayed in the taskbar button. |
 
 
+- Mac
 
+![progressbar](images/progressbar.gif)
 
- 
+- Windows
 
-
-
+![progressbar](images/progressbar-windows.gif)
 
 
 ## Summary
+
+In this tutorial we saw how to initiate a manual download and provide user feedback of the download progress via the `SetProgressBar` method of the `BrowserWindow`.
+
+The `SetProgressBar` method works differently on Windows and Mac by setting a `ProgressBarMode` that tells Windows to draw the progress bar manually.  On Mac this setting will be ignored.
+
+There is also two different ways to grab the users attention presented in the above code.  On Windows we used the [FlashFrame](https://electron.atom.io/docs/api/browser-window/#winflashframeflag) method where on Mac we used the [Bounce](https://electron.atom.io/docs/api/app/#appdockbouncetype-macos).
+
+

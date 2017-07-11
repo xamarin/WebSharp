@@ -130,16 +130,26 @@ using WebSharpJs.DOM;
         async Task HandleDownload(WillDownloadResult cr, string fileURL)
         {
             var filename = System.IO.Path.GetFileName(fileURL);
+
+            // Set our save path.  If it does not exist it will silently be created.
             await cr.DownloadItem.SetSavePath($"downloads/{filename}");
+
+            // Get the total size of the file to be downloaded so we can calculate
+            // the percentage progress.
             var size = await cr.DownloadItem.GetTotalBytes();
             
+            // Listen for the updated event
             await cr.DownloadItem.On("updated",
                 new ScriptObjectCallback<Event, string>(
                     async (updatedResult) => 
                     {
                         var update = updatedResult.CallbackState as object[];
                         var updateState = update[1].ToString();
+
+                        // calculate the percentage
                         var percentage = (await cr.DownloadItem.GetReceivedBytes()) / (float)size;
+
+                        // Set the progress bar.
                         await mainWindow.SetProgressBar(percentage, new ProgressBarOptions() {Mode = ProgressBarMode.Normal});
 
                         if (updateState == "interrupted")
@@ -155,21 +165,27 @@ using WebSharpJs.DOM;
                 )
             );
             
+            // Listen for when the file is finished downloaded.
             await cr.DownloadItem.Once("done",
                 new ScriptObjectCallback<Event, string>(
                     async (doneResult) => 
                     {
                         var done = doneResult.CallbackState as object[];
                         var doneState = done[1].ToString(); 
+
+                        // check if the download completed and set the progress bar option 
+                        // accordingly.
                         if (doneState == "completed")
                         {
                             if (IsWindows)
                             {
+                                // Flash the frame on windows.
                                 await mainWindow.SetProgressBar(1.0f, new ProgressBarOptions() {Mode = ProgressBarMode.None});
                                 await mainWindow.FlashFrame(true);
                             }
                             else
                             {
+                                // Bounce the doc on Mac.
                                 await mainWindow.SetProgressBar(-1.0f);
                                 var dock = await app.Dock();
                                 await dock.Bounce(DockBounceType.Informational);
