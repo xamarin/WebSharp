@@ -147,7 +147,7 @@
             'VCLinkerTool': {
 			  'AdditionalDependencies' :
 			  [
-				'monosgen-2.0.lib'
+				'mono-2.0-sgen.lib'
 			  ],
 			  'AdditionalLibraryDirectories' :
 			  [
