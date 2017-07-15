@@ -109,6 +109,11 @@ namespace WebSharpJs.Script
             return meta != null && meta.GetType().IsArray && meta.GetType().GetElementType().IsAttributeDefined<ScriptableTypeAttribute>(false);
         }
 
+        internal static bool IsTypeScriptableTypeArray (Type type)
+        {
+            return type.IsArray && type.GetElementType().IsAttributeDefined<ScriptableTypeAttribute>(false);
+        }
+
         /// <summary>
         /// Casts our Func<,Task<object>> to Func<object,Task<object>> for use in the callback bridge pattern
         /// used between JavaScript <> Managed code. 

@@ -461,7 +461,6 @@
         "eventPhase",
         "metaKey",
         "shiftKey",
-        "view",
 	    "char",
         "charCode",
         "key",
@@ -524,10 +523,36 @@
                                 var event = {};
                                 var type = args[i].type;
                                 event['eventType'] = type;
+
                                 // load dom event info
                                 DOMEventProps.forEach(function (element) {
                                     event[element] = args[i][element];
                                 });
+
+                                // load DOM drag specific event info
+                                if (args[i].dataTransfer)
+                                {
+                                    // we need to flatten the dataTransfer information
+                                    event.dataTransfer = {};
+                                    event.dataTransfer.types = args[i].dataTransfer.types;
+
+                                    event.dataTransfer.files = [];
+                                    var files = args[i].dataTransfer.files;
+                                    for (var fi = 0, f; f = files[fi]; fi++) {
+                                        // Read the File objects in this FileList.
+                                        var flattened = {};
+                                        flattened.lastModified = f.lastModified;
+                                        flattened.lastModifiedDate = f.lastModifiedDate;
+                                        flattened.name = f.name;
+                                        flattened.size = f.size;
+                                        flattened.type = f.type;
+                                        flattened.path = f.path; // Electron specific property
+                                        
+                                        event.dataTransfer.files.push(flattened);
+                                    }
+                                    event.dataTransfer.dropEffect = args[i].dataTransfer.dropEffect;
+                                    
+                                }
 
                                 // load DOM mouse specific event info
                                 if (args[i] instanceof MouseEvent)
@@ -554,18 +579,25 @@
                                 if (error) throw error;
                                 if (eventResult)
                                 {
-                                    if (eventResult['defaultPrevented'])
+                                    if (eventResult.defaultPrevented)
                                     {
                                         if (typeof originalEvent.preventDefault === 'function')
                                         {
                                             originalEvent.preventDefault();
                                         }
                                     }
-                                    if (eventResult['cancelBubble'])
+                                    if (eventResult.cancelBubble)
                                     {
                                         if (typeof originalEvent.stopPropagation === 'function')
                                         {
                                             originalEvent.stopPropagation();
+                                        }
+                                    }
+                                    if (eventResult.dropEffect)
+                                    {
+                                        if (originalEvent.dataTransfer)
+                                        {
+                                            originalEvent.dataTransfer.dropEffect = eventResult.dropEffect;
                                         }
                                     }
                                 }

@@ -23,6 +23,7 @@ namespace WebSharpJs.DOM
         internal Func<object, Task<object>> EventCallbackFunction { get; private set; }
         bool defaultPrevented = false;
         bool cancelBubble = false;
+        string dropEffect = "none";
 
         internal WebSharpHtmlEvent(WebSharpObject eventSource, string eventName)
         {
@@ -33,7 +34,7 @@ namespace WebSharpJs.DOM
             EventCallbackFunction = async (evt) =>
             {
                 Invoke(evt);
-                return new { defaultPrevented, cancelBubble};
+                return new { defaultPrevented, cancelBubble, dropEffect};
             };
         }
 
@@ -45,13 +46,19 @@ namespace WebSharpJs.DOM
             cancelBubble = false;
             eventArgs.PreventDefaultAction = () => { defaultPrevented = true; }; 
             eventArgs.StopPropagationAction = () => { cancelBubble = true; };
-
+       
             if (evt != null)
             {
                 try
                 {
                     var dict = (IDictionary<string, object>)((object[])evt)[0];
                     ScriptObjectHelper.DictionaryToScriptableType(dict, eventArgs);
+                    if (eventArgs.DataTransfer != null)
+                    {
+                        dropEffect = eventArgs.DataTransfer.DropEffectValue;
+                        eventArgs.DataTransfer.DropEffectAction = (eff) => { dropEffect = eff; };
+                    }
+
                 }
                 catch (Exception evtExc)
                 {

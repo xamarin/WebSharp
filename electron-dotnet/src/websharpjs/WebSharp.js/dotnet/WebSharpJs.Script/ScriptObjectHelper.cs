@@ -202,7 +202,23 @@ namespace WebSharpJs.Script
                                 }
                                 else
                                 {
-                                    pi.SetValue(obj, parm[key]);
+                                    if (ScriptObjectUtilities.IsTypeScriptableTypeArray(pi.PropertyType))
+                                    {
+                                        var objArray = parm[key] as object[];
+                                        if (objArray != null)
+                                        {
+                                            var arrayType = pi.PropertyType.GetElementType();
+                                            var array = Array.CreateInstance(arrayType, objArray.Length);
+                                            for (int a = 0; a < array.Length; a++)
+                                            {
+                                                array.SetValue(ScriptObjectHelper.AnonymousObjectToScriptableType(arrayType, objArray[a]), a);
+                                            }
+                                            pi.SetValue(obj, array);
+                                        }
+
+                                    }
+                                    else
+                                        pi.SetValue(obj, parm[key]);
                                 }
                             }
                             success = true;

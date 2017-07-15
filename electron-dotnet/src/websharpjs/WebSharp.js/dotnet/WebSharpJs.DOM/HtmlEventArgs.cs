@@ -141,6 +141,14 @@ namespace WebSharpJs.DOM
 
         }
 
+        [ScriptableMember(ScriptAlias = "dataTransfer")]
+        public DataTransfer DataTransfer
+        {
+            get;
+            internal set;
+
+        }
+
         // Set by WebSharpHtmlEvent.cs
         internal Action PreventDefaultAction { get; set; }
 
@@ -156,6 +164,7 @@ namespace WebSharpJs.DOM
         {
             StopPropagationAction();
         }
+
     }
-    
+
 }
