@@ -306,7 +306,7 @@ namespace WebSharpJs.Electron
     {
         Undefined,
         Media,
-        Geolocation,
+        GeoLocation,
         Notifications,
         MidiSysex,
         PointerLock,

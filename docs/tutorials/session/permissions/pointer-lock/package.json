@@ -1,0 +1,14 @@
+{
+    "name": "pointerlock",
+    "displayName": "PointerLock",
+    "description": "Example of using pointer-lock",
+    "version": "0.0.1",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}
