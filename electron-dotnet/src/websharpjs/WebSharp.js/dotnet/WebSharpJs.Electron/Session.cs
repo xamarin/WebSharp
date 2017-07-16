@@ -302,12 +302,24 @@ namespace WebSharpJs.Electron
 
     }
 
+    public enum Permission
+    {
+        Undefined,
+        Media,
+        Geolocation,
+        Notifications,
+        MidiSysex,
+        PointerLock,
+        FullScreen,
+        OpenExternal
+    }
+
 	public class PermissionRequestResult : ScriptObjectCallbackResult
 	{
 
 		public WebContents WebContents { get; private set; }
-        public string Permission { get; private set; }
-		public Func<object, Task<object>> Callback { get; private set; }
+        public string PermissionValue { get; private set; }
+        public Func<object, Task<object>> Callback { get; private set; }
 
 		public PermissionRequestResult(object state) : base(state)
 		{
@@ -316,7 +328,7 @@ namespace WebSharpJs.Electron
 			if (result != null)
 			{
 				WebContents = result[0] as WebContents;
-                Permission = result[1].ToString();
+                PermissionValue = result[1].ToString();
 				Callback = result[2] as Func<object, Task<object>>;
 			}
 		}
@@ -334,7 +346,19 @@ namespace WebSharpJs.Electron
 			return true;
 		}
 
-	}
+        public Permission Permission
+        {
+            get
+            {
+                var permission = Permission.Undefined;
+                Enum.TryParse<Permission>(PermissionValue, true, out permission);
+                return permission;
+            }
+        }
+            
+
+
+    }
 
     public class WillDownloadResult : ScriptObjectCallbackResult
     {
