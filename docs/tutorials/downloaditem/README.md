@@ -4,9 +4,9 @@ In this tutorial we will be looking at downloading a file using the `Session`'s 
 
 There are some differences between the Mac and Windows platforms that may present some problems in how each work.  For instance the `<a>` anchor element link, [which points to a `.mp4` file](https://www.quirksmode.org/html5/videos/big_buck_bunny.mp4), we use in this tutorial is treated differently between platforms.  On Windows it will trigger the `will-download` event but on Mac it will embed the video in and play it.  What we really want to do is download the link to our `downloads` directory no matter what platform we are using.
 
-Another difference that may be seen was how the save dialog of the default event was handled.  On Mac as long as the first command was a `DownloadItem.SavePath` then the save dialog was not presented but on Windows that did not seem to work consistently.
+Another difference that may be seen is how the save dialog of the default event was handled.  On Mac as long as the first command was a `DownloadItem.SavePath` then the save dialog was not presented but on Windows that did not seem to work consistently.
 
-The code below should work with `<a>` anchor elements as well any other download you want to throw at it.
+The code below should work with an `<a>` anchor elements as well any other download you want to throw at it.
 
 [Create a new `WebSharp Electron Application`](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-electron-application.md#generate-a-websharp-electron-application) and open it in you favorite source editor.  
 
@@ -126,7 +126,7 @@ Add a channel listener for `download-file` messages.
 
 The method above retrieves the file url passed from the `Renderer` process and passes it to the `DownloadFile` helper method that we have yet to define.
 
-The `DownloadFile` helper method is the workhorse of our routine.  Once we get a `will-download` event we will hand that off to `HandleDownload`.
+The `DownloadFile` helper method is the workhorse of our routine.  The code below simply watches for a `will-download` event from `Electron` and once we receive the event it will be handed off to the `HandleDownload` method.
 
 ```cs
 
@@ -232,6 +232,12 @@ The `HandleDownload` method takes care of calculating the progress and setting u
     }
 
 ```
+
+The `DownloadItem` object is an event emitter that emits two events `updated`, emitted when the file is download is in progress, and `done`, for when the file is finished downloading.
+
+The `done` event will be triggered even if the download is interrupted or canceled.
+
+On each emitted `updated` event the user is notified visually of the download progress by using the `BrowserWindow`s `SetProgressBar` method.
 
 :bulb: The `SetProgressBar` works differently on Windows than on Mac where we can set a `ProgressBarMode` that is only valid on Windows.  See the [SetProgressBar](https://electron.atom.io/docs/api/browser-window/#winsetprogressbarprogress-options) api documentation.
 
