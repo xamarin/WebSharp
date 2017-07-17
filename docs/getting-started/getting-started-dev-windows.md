@@ -411,6 +411,42 @@ The following options can be used.
      
      > :exclamation: Option 4 is not very flexible
 
+### Cannot find module 'nan'
+
+If you run into the following error make sure you have installed the 'nan' as per the pre-requisites above:
+
+> Error: Cannot find module 'nan'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at [eval]:1:1
+    at ContextifyScript.Script.runInThisContext (vm.js:25:33)
+    at Object.exports.runInThisContext (vm.js:77:17)
+    at Object.<anonymous> ([eval]-wrapper:6:22)
+    at Module._compile (module.js:556:32)
+    at bootstrap_node.js:357:29
+
+The command to run from the `WebSharp` repo directory is:
+
+``` command
+
+WebSharp> cd electron-dotnet        # go into the package directory
+WebSharp\electron-dotnet> npm install nan  # makes NAN available.
+
+```
+
+This will install NAN locally to the project.
+
+To install globally:
+
+``` command
+
+> npm install nan -g  # makes NAN available globally
+
+```
+
+
 ## Building against Mono 4.8
 
 There seems to have been a small regression building with Mono 4.8 and `glib.h`.
