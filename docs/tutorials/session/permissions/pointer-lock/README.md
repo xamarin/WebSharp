@@ -143,7 +143,10 @@ Notice that we pass `MessageBoxType = MessageBoxType.Question` as the type prope
 
 Since this is more a tutorial on permissions, for the `Renderer` code we will refer to the code description and sample walk through of the Html 5 [Pointer Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API) docs from which the code was taken.
 
-You can view the full C# source code of [Pointer]() class which uses the Html 5 `Canvas` element and [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) for the red ball animation.
+You can view the full C# source code of [Pointer](./src/Pointer/Pointer.cs) class which uses the Html 5 `Canvas` element and [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) for the red ball animation.
+
+
+![pointer-lock](images/pointer-lock.gif)
 
 ## Summary
 
