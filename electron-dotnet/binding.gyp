@@ -205,7 +205,7 @@
           {
 			        'conditions': [
                 [
-                  '"<!(node -e \"require(\'./tools/gyp-whereis.js\')(\'mono.exe\')\")"!="null"',
+                  '"<!(node -e \"require(\'./tools/gyp-whereis.js\')(\'csc.exe\')\")"!="null"',
                   {
                  'actions+': [
                     {

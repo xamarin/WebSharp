@@ -33,7 +33,8 @@ echo SUCCESS. Nuget package at %SELF%\build\nuget
 
 echo Building Language Compilers
 cd "%SELF%\..\src\websharp-cs\src\websharp-cs"
-dotnet build websharp-cs.sln /p:Configuration=%FLAVOR% /p:Platform="Any CPU"
+..\..\..\..\tools\build\nuget.exe restore websharp-cs.sln
+msbuild websharp-cs.sln /p:Configuration=%FLAVOR% /p:Platform="Any CPU"
 
 if %ERRORLEVEL% neq 0 (
 	echo Failure building Language Compiler for C-Sharp
