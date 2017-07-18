@@ -43,8 +43,9 @@
     <Compile Include="dotnet\**\*.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="targets\PublishAssemblies.targets" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy /Y $(TargetDir)*.dll $(ProjectDir)..\..\..\lib\bin\</PostBuildEvent>
-  </PropertyGroup>
+  <Import Project="$(MSBuildProjectDirectory)\targets\PublishAssemblies.targets" />  
 </Project>
