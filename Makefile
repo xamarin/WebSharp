@@ -33,7 +33,7 @@ websharpjs:
 	(cp electron-dotnet/src/websharpjs/WebSharp.js/bin/Release/net451/*.dll electron-dotnet/lib/bin/)
 
 websharp-cs:
-	(cd electron-dotnet/src/websharp-cs/src/websharp-cs;mono ../../../../tools/build/nuget.exe restore websharp-cs_macosx.sln)
+	(cd electron-dotnet/src/websharp-cs/src/websharp-cs;mono ../../../../tools/build/nuget.exe restore websharp-cs.sln)
 	(cd electron-dotnet/src/websharp-cs/src/websharp-cs; msbuild websharp-cs.sln /p:Configuration=Release /p:TargeFramework="Any Cpu")
 
 generator:
