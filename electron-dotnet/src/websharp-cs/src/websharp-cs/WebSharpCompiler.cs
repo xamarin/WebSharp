@@ -227,7 +227,7 @@ public class WebSharpCompiler
         if (debuggingSelfEnabled)
             Console.WriteLine($"Adding source path to parse: {srcPath}");
 
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source, path: srcPath, encoding: System.Text.Encoding.UTF8 );
+        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source, path: srcPath, encoding: System.Text.Encoding.ASCII );
 
         string assemblyName = Path.GetRandomFileName();
 
@@ -302,8 +302,9 @@ public class WebSharpCompiler
             options: compilationOptions);
 
         using (var ms = new MemoryStream())
+        using (var mspdb = new System.IO.MemoryStream())
         {
-            EmitResult emitResult = compilation.Emit(ms);
+            EmitResult emitResult = compilation.Emit(ms, mspdb);
 
             if (!emitResult.Success)
             {
@@ -327,7 +328,8 @@ public class WebSharpCompiler
             else
             {
                 ms.Seek(0, SeekOrigin.Begin);
-                assembly = Assembly.Load(ms.ToArray());
+                mspdb.Seek(0, SeekOrigin.Begin);
+                assembly = Assembly.Load(ms.ToArray(), mspdb.ToArray());
                 result = true;
             }
 
