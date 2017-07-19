@@ -10,6 +10,8 @@ using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using System.Diagnostics;
+using System.Collections.Immutable;
 
 public class WebSharpCompiler
 {
@@ -22,6 +24,19 @@ public class WebSharpCompiler
     static Dictionary<string, Func<object, Task<object>>> funcCache = new Dictionary<string, Func<object, Task<object>>>();
     static readonly string websharpLocation = Directory.GetParent(Path.GetDirectoryName(typeof(WebSharpCompiler).Assembly.Location)).FullName + Path.DirectorySeparatorChar + "WebSharpJs.dll";
     static readonly string frameworkPath = Path.GetDirectoryName(typeof(object).Assembly.Location);
+
+    static readonly CSharpCompilationOptions ReleaseDll = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Release);
+    static readonly CSharpCompilationOptions DebugDll = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Debug);
+
+    static readonly Lazy<bool> IsMonoCLRValue = new Lazy<bool>(() =>
+    {
+        return Type.GetType("Mono.Runtime") != null;
+    });
+
+    static bool IsMonoCLR()
+    {
+        return IsMonoCLRValue.Value;
+    }
 
     static WebSharpCompiler()
     {
@@ -58,16 +73,18 @@ public class WebSharpCompiler
             // retain fileName for debugging purposes
             if (debuggingEnabled)
             {
-                fileName = source;
-                Console.WriteLine($"Reading from source file: {Path.GetFullPath(fileName)}");
+                fileName = Path.IsPathRooted(source) ? source : Path.GetFullPath(source);
+                Console.WriteLine($"Reading from source file: {fileName}");
             }
 
             source = File.ReadAllText(source);
+
         }
 
         if (debuggingSelfEnabled)
         {
-            Console.WriteLine("Func cache size: " + funcCache.Count);
+            Console.WriteLine($"Mono CLR?: {IsMonoCLR()}");
+            Console.WriteLine($"Func cache size: {funcCache.Count}");
         }
 
         var originalSource = source;
@@ -125,19 +142,16 @@ public class WebSharpCompiler
             {
                 fileName = (string)jsFileName;
                 lineNumber = (int)parameters["jsLineNumber"];
-            }
-            
-            if (!string.IsNullOrEmpty(fileName)) 
-            {
                 lineDirective = string.Format("#line {0} \"{1}\"\n", lineNumber, fileName);
             }
+
         }
 
         // try to compile source code as a class library
         Assembly assembly;
         string errorsClass;
-        if (!this.TryCompile(lineDirective + source, 
-                            references, 
+        if (!this.TryCompile(lineDirective + source,
+                            references,
                             out errorsClass, out assembly, fileName))
         {
             // try to compile source code as an async lambda expression
@@ -153,7 +167,7 @@ public class WebSharpCompiler
             }
 
             string errorsLambda;
-            source = 
+            source =
                 usings + "using System;\n"
                 + "using System.Threading.Tasks;\n"
                 + "public class Startup {\n"
@@ -198,17 +212,19 @@ public class WebSharpCompiler
         // extract the entry point to a class method
         Type startupType = assembly.GetType((string)parameters["typeName"], true, true);
         object instance = Activator.CreateInstance(startupType, false);
+
         MethodInfo invokeMethod = startupType.GetMethod((string)parameters["methodName"], BindingFlags.Instance | BindingFlags.Public);
+
         if (invokeMethod == null)
         {
             throw new InvalidOperationException("Unable to access CLR method to wrap through reflection. Make sure it is a public instance method.");
         }
 
         // create a Func<object,Task<object>> delegate around the method invocation using reflection
-        Func<object,Task<object>> result = (input) => 
-        {
-            return (Task<object>)invokeMethod.Invoke(instance, new object[] { input });
-        };
+        Func<object, Task<object>> result = (input) =>
+         {
+             return (Task<object>)invokeMethod.Invoke(instance, new object[] { input });
+         };
 
         if (cacheEnabled)
         {
@@ -220,39 +236,55 @@ public class WebSharpCompiler
 
     bool TryCompile(string source, List<string> references, out string errors, out Assembly assembly, string path = null)
     {
-        bool result = false;
         assembly = null;
         errors = null;
         var srcPath = (debuggingEnabled && !string.IsNullOrEmpty(path)) ? Path.GetFullPath(path) : string.Empty;
-        if (debuggingSelfEnabled)
-            Console.WriteLine($"Adding source path to parse: {srcPath}");
-
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source, path: srcPath, encoding: System.Text.Encoding.ASCII );
-
-        string assemblyName = Path.GetRandomFileName();
 
         if (debuggingSelfEnabled)
             Console.WriteLine($"Loading WebSharpJs.dll from {websharpLocation}");
 
-        // default references
-        MetadataReference[] defaultReferences = new MetadataReference[]
-        {
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),  // mscorelib.dll
-            MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),  // System.Core
-            MetadataReference.CreateFromFile(typeof(RuntimeBinderException).Assembly.Location), // Microsoft.CSharp
-            MetadataReference.CreateFromFile(Path.Combine(frameworkPath, "System.dll")) // System.dll
-        };
 
-        var metadataReferences = new List<MetadataReference>(defaultReferences);
+
+        //if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("EDGE_CS_TEMP_DIR")))
+        //{
+        //    parameters.TempFiles = new TempFileCollection(Environment.GetEnvironmentVariable("EDGE_CS_TEMP_DIR"));
+        //}
+        if (debuggingSelfEnabled)
+        {
+            Console.WriteLine($"OptimizationLevel: {((debuggingEnabled) ? OptimizationLevel.Debug : OptimizationLevel.Release)}");
+        }
 
         // Add a reference to WebSharpJs.dll
         references.Add(websharpLocation);
 
+        var metadataReferences = LoadMetaDataReferences(references);
+
+        var compilation = GetCompilationForEmit(source,
+            metadataReferences.ToArray(),
+            (debuggingEnabled) ? DebugDll : ReleaseDll,
+            null,
+            fileName: srcPath);
+
+        if (debuggingEnabled && !IsMonoCLR())
+            return EmitCompilationForDebug(compilation, out errors, out assembly);
+        else
+            return EmitCompilation(compilation, out errors, out assembly);
+
+    }
+
+    IEnumerable<MetadataReference> LoadMetaDataReferences(List<string> references)
+    {
+
+        var metadataReferences = new List<MetadataReference>();
+ 
         foreach (var reference in references)
         {
             try
             {
                 metadataReferences.Add(MetadataReference.CreateFromFile(reference));
+                if (debuggingSelfEnabled)
+                    System.Console.WriteLine($"Loaded: {reference}.");
+
             }
             catch
             {
@@ -263,8 +295,12 @@ public class WebSharpCompiler
                 try
                 {
                     metadataReferences.Add(MetadataReference.CreateFromFile(Assembly.Load(new AssemblyName(reference)).Location));
+                    if (debuggingSelfEnabled)
+                        System.Console.WriteLine($"Loaded from AssemblyName: {reference}.");
+
                 }
-                catch {
+                catch
+                {
                     // Try to load from runtime directory
                     if (debuggingSelfEnabled)
                         System.Console.WriteLine($"Could not find: {reference}.  Trying to load from runtime library.");
@@ -273,6 +309,9 @@ public class WebSharpCompiler
                     {
                         var frameworkLib = Path.Combine(frameworkPath, reference);
                         metadataReferences.Add(MetadataReference.CreateFromFile(frameworkLib));
+                        if (debuggingSelfEnabled)
+                            System.Console.WriteLine($"Loaded from runtime library {frameworkPath}: {reference}.");
+
                     }
                     catch (Exception exc)
                     {
@@ -283,27 +322,79 @@ public class WebSharpCompiler
                 }
             }
         }
+        return metadataReferences;
+    }
+        
+    /// <summary>
+    /// Emit the compilation to a memory stream and load the assembly into the current domain.
+    /// </summary>
+    /// <param name="compilation"></param>
+    /// <param name="errors"></param>
+    /// <param name="assembly"></param>
+    /// <returns></returns>
+    bool EmitCompilation(Compilation compilation, out string errors, out Assembly assembly)
+    {
+        var result = false;
+        errors = null;
+        assembly = null;
 
-        //if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("EDGE_CS_TEMP_DIR")))
-        //{
-        //    parameters.TempFiles = new TempFileCollection(Environment.GetEnvironmentVariable("EDGE_CS_TEMP_DIR"));
-        //}
-        if (debuggingSelfEnabled)
+
+        using (var ms = new MemoryStream())
         {
-            Console.WriteLine($"OptimizationLevel: {((debuggingEnabled) ? OptimizationLevel.Debug : OptimizationLevel.Release)}");
-        }
-        var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
-            .WithOptimizationLevel((debuggingEnabled) ? OptimizationLevel.Debug : OptimizationLevel.Release);
 
-        CSharpCompilation compilation = CSharpCompilation.Create(
-            assemblyName,
-            syntaxTrees: new[] { syntaxTree },
-            references: metadataReferences.ToArray(),
-            options: compilationOptions);
+            EmitResult emitResult = compilation.Emit(ms);
+
+            if (!emitResult.Success)
+            {
+                IEnumerable<Diagnostic> failures = emitResult.Diagnostics.Where(diagnostic =>
+                    diagnostic.IsWarningAsError ||
+                    diagnostic.Severity == DiagnosticSeverity.Error);
+
+                foreach (Diagnostic diagnostic in failures)
+                {
+                    if (errors == null)
+                    {
+                        errors = $"{diagnostic.Id}: {diagnostic.GetMessage()}";
+                        //Console.WriteLine(errors);
+                    }
+                    else
+                    {
+                        errors += "\n" + $"{diagnostic.Id}: {diagnostic.GetMessage()}";
+                    }
+                }
+            }
+            else
+            {
+                ms.Seek(0, SeekOrigin.Begin);
+                assembly = Assembly.Load(ms.ToArray());
+                result = true;
+            }
+
+            return result;
+
+        }
+    }
+
+    /// <summary>
+    /// Emit the compilation to a memory stream and load the assembly into the current domain.
+    /// Right now running through mono this throws the following error:
+    /// CS0041: Unexpected error writing debug information -- 'The version of Windows PDB writer is older than required: 'diasymreader.dll''
+    /// </summary>
+    /// <param name="compilation"></param>
+    /// <param name="errors"></param>
+    /// <param name="assembly"></param>
+    /// <returns></returns>
+    bool EmitCompilationForDebug(Compilation compilation, out string errors, out Assembly assembly)
+    {
+        var result = false;
+        errors = null;
+        assembly = null;
+
 
         using (var ms = new MemoryStream())
         using (var mspdb = new System.IO.MemoryStream())
         {
+
             EmitResult emitResult = compilation.Emit(ms, mspdb);
 
             if (!emitResult.Success)
@@ -334,6 +425,120 @@ public class WebSharpCompiler
             }
 
             return result;
+
         }
     }
+
+
+    static List<MetadataReference> defaultRefs;
+    static List<MetadataReference> DefaultRefs
+    {
+        get
+        {
+            if (defaultRefs == null)
+            {
+                MetadataReference[] defaultReferences = new MetadataReference[]
+                {
+                    MetadataReference.CreateFromFile(typeof(object).Assembly.Location),  // mscorelib.dll
+                    MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),  // System.Core
+                    MetadataReference.CreateFromFile(typeof(RuntimeBinderException).Assembly.Location), // Microsoft.CSharp
+                    MetadataReference.CreateFromFile(Path.Combine(frameworkPath, "System.dll")) // System.dll
+                };
+
+                defaultRefs = new List<MetadataReference>(defaultReferences);
+            }
+
+            return defaultRefs;
+        }
+    }
+
+    static readonly ImmutableArray<MetadataReference> standardRefs = ImmutableArray.Create(DefaultRefs.ToArray());
+
+
+    static string GetUniqueName()
+    {
+        return Guid.NewGuid().ToString("D");
+    }
+
+    Compilation GetCompilationForEmit(
+        string source,
+        IEnumerable<MetadataReference> additionalRefs,
+        CompilationOptions options,
+        ParseOptions parseOptions,
+        string fileName = "")
+    {
+        return CreateStandardCompilation(
+            source,
+            references: additionalRefs,
+            options: (CSharpCompilationOptions)options,
+            parseOptions: (CSharpParseOptions)parseOptions,
+            assemblyName: GetUniqueName(),
+            fileName: fileName);
+    }
+
+    static CSharpCompilation CreateStandardCompilation(
+        string sources,
+        IEnumerable<MetadataReference> references = null,
+        CSharpCompilationOptions options = null,
+        CSharpParseOptions parseOptions = null,
+        string assemblyName = "",
+        string fileName = "")
+    {
+        return CreateStandardCompilation(new SyntaxTree[] { Parse(sources, fileName, parseOptions) }, references, options, assemblyName);
+    }
+
+    static CSharpCompilation CreateStandardCompilation(
+        IEnumerable<SyntaxTree> trees,
+        IEnumerable<MetadataReference> references = null,
+        CSharpCompilationOptions options = null,
+        string assemblyName = "")
+    {
+        return CreateCompilation(trees, (references != null) ? standardRefs.Concat(references) : standardRefs, options, assemblyName);
+    }
+
+    public static CSharpCompilation CreateCompilation(
+        IEnumerable<SyntaxTree> trees,
+        IEnumerable<MetadataReference> references = null,
+        CSharpCompilationOptions options = null,
+        string assemblyName = "")
+    {
+        if (options == null)
+        {
+            options = ReleaseDll;
+        }
+
+        // Using single-threaded build if debugger attached, to simplify debugging.
+        if (Debugger.IsAttached)
+        {
+            options = options.WithConcurrentBuild(false);
+        }
+
+        return CSharpCompilation.Create(
+            assemblyName == "" ? GetUniqueName() : assemblyName,
+            trees,
+            references,
+            options);
+    }
+
+    static SyntaxTree Parse(string text, string filename = "", CSharpParseOptions options = null)
+    {
+        if ((object)options == null)
+        {
+            options = new CSharpParseOptions();
+        }
+
+        return CheckSerializable(SyntaxFactory.ParseSyntaxTree(text, options, filename, encoding: System.Text.Encoding.UTF8));
+    }
+
+
+    static SyntaxTree CheckSerializable(SyntaxTree tree)
+    {
+        var stream = new MemoryStream();
+        var root = tree.GetRoot();
+        root.SerializeTo(stream);
+        stream.Position = 0;
+        var deserializedRoot = CSharpSyntaxNode.DeserializeFrom(stream);
+        return tree;
+    }
+
 }
