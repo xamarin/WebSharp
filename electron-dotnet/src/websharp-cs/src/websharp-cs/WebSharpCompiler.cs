@@ -62,9 +62,41 @@ public class WebSharpCompiler
     public Func<object, Task<object>> CompileFunc(IDictionary<string, object> parameters)
     {
         string source = (string)parameters["source"];
+        List<string> srcGroup = null;
+        object sg;
+        if (parameters.TryGetValue("itemgroup", out sg))
+        {
+            srcGroup = new List<string>();
+            if (debuggingSelfEnabled)
+            {
+                Console.WriteLine($"Additional source items were specified.");
+            }
+
+            foreach (object item in (object[])sg)
+            {
+                if (debuggingSelfEnabled)
+                {
+                    Console.WriteLine($"Adding source : {item} ");
+                }
+                srcGroup.Add((string)item);
+            }
+        }
+
+        string[] preprocessorSymbols = null;
+        if (parameters.TryGetValue("symbols", out sg))
+        {
+            preprocessorSymbols = Array.ConvertAll((object[])sg, x => x.ToString());
+        }
+
         string lineDirective = string.Empty;
         string fileName = null;
         int lineNumber = 1;
+
+        // assembly references
+        var references = new List<string>();
+
+        var itemGroup = new List<string>();
+        var fileGroup = new List<string>();
 
         // read source from file
         if (source.EndsWith(".cs", StringComparison.InvariantCultureIgnoreCase)
@@ -74,11 +106,33 @@ public class WebSharpCompiler
             if (debuggingEnabled)
             {
                 fileName = Path.IsPathRooted(source) ? source : Path.GetFullPath(source);
+                fileGroup.Add(fileName);
                 Console.WriteLine($"Reading from source file: {fileName}");
             }
 
             source = File.ReadAllText(source);
+            itemGroup.Add(source);
 
+            // Extract assembly references provided in code as [//]#r "assemblyname" lines
+            references.AddRange(ExtractReferences(source));
+        }
+
+        if (srcGroup != null)
+        {
+            foreach (var item in srcGroup)
+            {
+                if (debuggingEnabled)
+                {
+                    var groupFileName = Path.IsPathRooted(item) ? item : Path.GetFullPath(item);
+                    fileGroup.Add(groupFileName);
+                    Console.WriteLine($"Reading from source file: {groupFileName}");
+                }
+
+                var itemSource = File.ReadAllText(item);
+                itemGroup.Add(itemSource);
+                // Extract assembly references provided in code as [//]#r "assemblyname" lines
+                references.AddRange(ExtractReferences(source));
+            }
         }
 
         if (debuggingSelfEnabled)
@@ -103,7 +157,6 @@ public class WebSharpCompiler
         }
 
         // add assembly references provided explicitly through parameters
-        List<string> references = new List<string>();
         object v;
         if (parameters.TryGetValue("references", out v))
         {
@@ -122,19 +175,6 @@ public class WebSharpCompiler
             }
         }
 
-        // add assembly references provided in code as [//]#r "assemblyname" lines
-        Match match = referenceRegex.Match(source);
-        if (debuggingSelfEnabled && match.Success)
-            Console.WriteLine($"Assembly references provided in code.");
-        while (match.Success)
-        {
-            if (debuggingSelfEnabled)
-                Console.WriteLine($"Adding reference: {match.Groups[1].Value}");
-            references.Add(match.Groups[1].Value);
-            source = source.Substring(0, match.Index) + source.Substring(match.Index + match.Length);
-            match = referenceRegex.Match(source);
-        }
-
         if (debuggingEnabled)
         {
             object jsFileName;
@@ -150,15 +190,16 @@ public class WebSharpCompiler
         // try to compile source code as a class library
         Assembly assembly;
         string errorsClass;
-        if (!this.TryCompile(lineDirective + source,
+        //lineDirective + source
+        if (!TryCompile(itemGroup,
                             references,
-                            out errorsClass, out assembly, fileName))
+                            out errorsClass, out assembly, fileGroup, preprocessorSymbols))
         {
             // try to compile source code as an async lambda expression
 
             // extract using statements first
             string usings = "";
-            match = usingRegex.Match(source);
+            var match = usingRegex.Match(source);
             while (match.Success)
             {
                 usings += match.Groups[1].Value;
@@ -184,7 +225,7 @@ public class WebSharpCompiler
                 Console.WriteLine("WebSharp-cs trying to compile async lambda expression:");
             }
 
-            if (!TryCompile(source, references, out errorsLambda, out assembly))
+            if (!TryCompile(itemGroup, references, out errorsLambda, out assembly))
             {
                 throw new InvalidOperationException(
                     "Unable to compile C# code.\n----> Errors when compiling as a CLR library:\n"
@@ -234,21 +275,41 @@ public class WebSharpCompiler
         return result;
     }
 
-    bool TryCompile(string source, List<string> references, out string errors, out Assembly assembly, string path = null)
+    /// <summary>
+    /// Extract assembly references provided in code as [//]#r "assemblyname" lines
+    /// </summary>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    List<string> ExtractReferences(string source)
+    {
+        // assembly references
+        List<string> references = new List<string>();
+
+        // add assembly references provided in code as [//]#r "assemblyname" lines
+        Match match = referenceRegex.Match(source);
+
+        if (debuggingSelfEnabled && match.Success)
+            Console.WriteLine($"Assembly references provided in code.");
+        while (match.Success)
+        {
+            if (debuggingSelfEnabled)
+                Console.WriteLine($"Adding reference: {match.Groups[1].Value}");
+            references.Add(match.Groups[1].Value);
+            source = source.Substring(0, match.Index) + source.Substring(match.Index + match.Length);
+            match = referenceRegex.Match(source);
+        }
+
+        return references;
+    }
+
+    bool TryCompile(IEnumerable<string> sources, List<string> references, out string errors, out Assembly assembly, IEnumerable<string> paths = null, string[] preprocessorSymbols = null)
     {
         assembly = null;
         errors = null;
-        var srcPath = (debuggingEnabled && !string.IsNullOrEmpty(path)) ? Path.GetFullPath(path) : string.Empty;
 
         if (debuggingSelfEnabled)
             Console.WriteLine($"Loading WebSharpJs.dll from {websharpLocation}");
 
-
-
-        //if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("EDGE_CS_TEMP_DIR")))
-        //{
-        //    parameters.TempFiles = new TempFileCollection(Environment.GetEnvironmentVariable("EDGE_CS_TEMP_DIR"));
-        //}
         if (debuggingSelfEnabled)
         {
             Console.WriteLine($"OptimizationLevel: {((debuggingEnabled) ? OptimizationLevel.Debug : OptimizationLevel.Release)}");
@@ -256,14 +317,18 @@ public class WebSharpCompiler
 
         // Add a reference to WebSharpJs.dll
         references.Add(websharpLocation);
-
         var metadataReferences = LoadMetaDataReferences(references);
 
-        var compilation = GetCompilationForEmit(source,
+        CSharpParseOptions parseOptions = null;
+
+        if (preprocessorSymbols != null)
+            parseOptions = new CSharpParseOptions(preprocessorSymbols: preprocessorSymbols);
+
+        var compilation = GetCompilationForEmit(sources,
             metadataReferences.ToArray(),
             (debuggingEnabled) ? DebugDll : ReleaseDll,
-            null,
-            fileName: srcPath);
+            parseOptions,
+            srcPaths: paths);
 
         if (debuggingEnabled && !IsMonoCLR())
             return EmitCompilationForDebug(compilation, out errors, out assembly);
@@ -461,30 +526,30 @@ public class WebSharpCompiler
     }
 
     Compilation GetCompilationForEmit(
-        string source,
+        IEnumerable<string> sources,
         IEnumerable<MetadataReference> additionalRefs,
         CompilationOptions options,
         ParseOptions parseOptions,
-        string fileName = "")
+        IEnumerable<string> srcPaths = null)
     {
         return CreateStandardCompilation(
-            source,
+            sources,
             references: additionalRefs,
             options: (CSharpCompilationOptions)options,
             parseOptions: (CSharpParseOptions)parseOptions,
             assemblyName: GetUniqueName(),
-            fileName: fileName);
+            srcPaths: srcPaths);
     }
 
     static CSharpCompilation CreateStandardCompilation(
-        string sources,
+        IEnumerable<string> sources,
         IEnumerable<MetadataReference> references = null,
         CSharpCompilationOptions options = null,
         CSharpParseOptions parseOptions = null,
         string assemblyName = "",
-        string fileName = "")
+        IEnumerable<string> srcPaths = null)
     {
-        return CreateStandardCompilation(new SyntaxTree[] { Parse(sources, fileName, parseOptions) }, references, options, assemblyName);
+        return CreateStandardCompilation(Parse(sources, srcPaths, parseOptions), references, options, assemblyName);
     }
 
     static CSharpCompilation CreateStandardCompilation(
@@ -518,6 +583,36 @@ public class WebSharpCompiler
             trees,
             references,
             options);
+    }
+
+    public static SyntaxTree[] Parse(IEnumerable<string> sources, IEnumerable<string> srcPaths = null, CSharpParseOptions options = null)
+    {
+        if (sources == null || !sources.Any())
+        {
+            return new SyntaxTree[] { };
+        }
+
+        if (debuggingEnabled && srcPaths != null)
+        {
+            var trees = new SyntaxTree[sources.Count()];
+            for (int s = 0; s < sources.Count(); s++)
+            {
+                trees[s] = Parse(sources.ElementAt(s), srcPaths.ElementAt(s), options);
+            }
+            return trees;
+        }
+        else
+            return Parse(options, sources.ToArray());
+    }
+
+    public static SyntaxTree[] Parse(CSharpParseOptions options = null, params string[] sources)
+    {
+        if (sources == null || (sources.Length == 1 && null == sources[0]))
+        {
+            return new SyntaxTree[] { };
+        }
+
+        return sources.Select(src => Parse(src, options: options)).ToArray();
     }
 
     static SyntaxTree Parse(string text, string filename = "", CSharpParseOptions options = null)

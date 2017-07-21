@@ -201,6 +201,30 @@ exports.func = function(language, options) {
         });
     }
 
+    if (options.itemgroup !== undefined) {
+        if (!Array.isArray(options.itemgroup)) {
+            throw new Error('The itemgroup property must be an array of strings.');
+        }
+
+        options.itemgroup.forEach(function (ref) {
+            if (typeof ref !== 'string') {
+                throw new Error('The itemgroup property must be an array of strings.');
+            }
+        });
+    }
+
+    if (options.symbols !== undefined) {
+        if (!Array.isArray(options.symbols)) {
+            throw new Error('The symbols property must be an array of strings.');
+        }
+
+        options.symbols.forEach(function (ref) {
+            if (typeof ref !== 'string') {
+                throw new Error('The symbols property must be an array of strings.');
+            }
+        });
+    }
+
     if (options.assemblyFile) {
         if (!options.typeName) {
             var matched = options.assemblyFile.match(/([^\\\/]+)\.dll$/i);

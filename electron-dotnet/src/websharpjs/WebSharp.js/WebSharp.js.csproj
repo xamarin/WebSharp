@@ -40,12 +40,66 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dotnet\**\*.cs" />
+    <Compile Include="dotnet\WebSharpJs.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\BrowserInformation.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\DOMObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\DragNDropInterface.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlDocument.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlElement.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlEventArgs.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlPage.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HtmlWindow.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HttpUtility.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\MouseButtons.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\WebSharpHtmlEvent.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\App.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\BrowserWindow.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Clipboard.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\DesktopCapturer.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Dialog.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Dock.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\DownloadItem.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\IpcMain.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\IpcRenderer.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Menu.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\MenuItem.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\NativeImage.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Remote.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Screen.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Session.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Shell.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Structures.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Tray.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\WebContents.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\WebRequest.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJS\Console.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJS\EventEmitter.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJS\NodeJsObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJS\NodeObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.NodeJS\Require.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\Callback\ICallbackResult.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\Callback\IScriptObjectCallback.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\Callback\IScriptObjectCallbackProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\Callback\ScriptObjectCallback.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\Callback\ScriptObjectCallbackResult.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\IScriptObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\SciptObjectProxy.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptableMemberAttribute.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptableTypeAttribute.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptObject.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptObjectCollection.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptObjectHelper.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptObjectUtilities.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\ScriptParm.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\WebSharpEvent.cs" />
+    <Compile Include="dotnet\WebSharpJs.Script\WebSharpObject.cs" />
+    <Compile Include="dotnet\WebSharpJsBridge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="targets\PublishAssemblies.targets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildProjectDirectory)\targets\PublishAssemblies.targets" />  
+  <Import Project="$(MSBuildProjectDirectory)\targets\PublishAssemblies.targets" />
 </Project>
