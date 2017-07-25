@@ -131,7 +131,7 @@ public class WebSharpCompiler
                 var itemSource = File.ReadAllText(item);
                 itemGroup.Add(itemSource);
                 // Extract assembly references provided in code as [//]#r "assemblyname" lines
-                references.AddRange(ExtractReferences(source));
+                references.AddRange(ExtractReferences(itemSource));
             }
         }
 

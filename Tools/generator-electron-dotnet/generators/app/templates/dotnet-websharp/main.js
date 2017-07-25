@@ -7,8 +7,8 @@ const {app, BrowserWindow} = require('electron')
 var mainWindow = null;
 
 var dotnet = require('electron-dotnet');
-//var main = dotnet.func("./src/Main/bin/Debug/MainWindow.dll");
-var main = dotnet.func("./src/Main/MainWindow.cs");
+//var main = dotnet.func(__dirname + "/src/Main/bin/Debug/MainWindow.dll");
+var main = dotnet.func__dirname + "/src/Main/MainWindow.cs");
 
 function createWindow () {
     main(__dirname, function (error, result) {

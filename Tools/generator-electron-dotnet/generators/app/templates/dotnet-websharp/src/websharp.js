@@ -1,7 +1,7 @@
 var dotnet = require('electron-dotnet');
 
-//var hello = dotnet.func("./src/<%- wsClassName %>/bin/Debug/<%- wsClassName %>.dll");
-var hello = dotnet.func("./src/<%- wsClassName %>/<%- wsClassName %>.cs");
+//var hello = dotnet.func(__dirname + "/<%- wsClassName %>/bin/Debug/<%- wsClassName %>.dll");
+var hello = dotnet.func(__dirname + "/<%- wsClassName %>/<%- wsClassName %>.cs");
 
 //Make method externaly visible this will be referenced in the renderer.js file
 exports.sayHello = arg => {
