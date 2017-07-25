@@ -80,6 +80,9 @@ namespace WebSharpJs.Script
         {
             object[] parms;
 
+            defaultPrevented = false;
+            cancelBubble = false;
+            
             if (evtParm.GetType().IsArray)
             {
                 try
