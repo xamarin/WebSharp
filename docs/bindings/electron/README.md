@@ -14,10 +14,10 @@
 * [contentTracing](api/content-tracing.md) :exclamation:
 * [download-item](api/download-item.md) :muscle:
 * [dialog](api/dialog.md) :muscle:
-* [globalShortcut](api/global-shortcut.md) :exclamation:
+* [globalShortcut](api/global-shortcut.md) :muscle:
 * [ipcMain](api/ipc-main.md) :muscle:
 * [Menu](api/menu.md) :muscle:
-* [MenuItem](api/menu-item.md) :running:
+* [MenuItem](api/menu-item.md) :muscle:
 * [net](api/net.md) :exclamation:
 * [powerMonitor](api/power-monitor.md) :exclamation:
 * [powerSaveBlocker](api/power-save-blocker.md) :exclamation:

@@ -8,7 +8,7 @@
 - [x] `type`
 - [x] `label`
 - [x] `sublabel`
-- [ ] `accelerator` [Accelerator](accelerator.md)
+- [x] `accelerator` [Accelerator](accelerator.md)
 - [x] `icon` [NativeImage](native-image.md)
 - [x] `enabled
 - [x] `visible`

@@ -147,6 +147,10 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "sublabel")]
         public string SubLabel { get; set; }
 
+        [ScriptableMember(ScriptAlias = "accelerator")]
+        public string Accelerator { get; set; }
+
+
         [ScriptableMember(ScriptAlias = "icon")]
         public object IconPathOrNativeImage
         {
@@ -160,11 +164,9 @@ namespace WebSharpJs.Electron
             }
         }
 
-        //accelerator Accelerator(optional)
         //icon(NativeImage | String) (optional)
         public string IconPath { get; set; }
 
-        //accelerator Accelerator(optional)
         //icon(NativeImage | String) (optional)
         public NativeImage IconImage { get; set; }
 

@@ -60,6 +60,7 @@
     <Compile Include="dotnet\WebSharpJs.Electron\Dialog.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\Dock.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\DownloadItem.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\GlobalShortcut.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\IpcMain.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\IpcRenderer.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\Menu.cs" />
