@@ -133,43 +133,43 @@ In the above code there was a context menu added to the `Tray` that we created w
 
 - `Show App` menu item handles toggling of the window's visibility.
 
-```js
+```cs
 
-                new MenuItemOptions() { Label = "Show App",
-                    Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event> (
-                            async (ar) =>
-                            {
-                                //await console.Log("Show App");
-                                if (mainWindow != null)
-                                {
-                                    if (await mainWindow.IsMinimized())
-                                        await mainWindow.Restore();
-                                    if (!await mainWindow.IsVisible())
-                                        await mainWindow.Show();
-                                    await mainWindow.Focus();
-                                }
-                            }
-                        )
+    new MenuItemOptions() { Label = "Show App",
+        Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event> (
+                async (ar) =>
+                {
+                    //await console.Log("Show App");
+                    if (mainWindow != null)
+                    {
+                        if (await mainWindow.IsMinimized())
+                            await mainWindow.Restore();
+                        if (!await mainWindow.IsVisible())
+                            await mainWindow.Show();
+                        await mainWindow.Focus();
+                    }
                 }
+            )
+    }
 
 ```
 
 - `Quit App` quits the application and is not as straight forward.  What should be pointed out in that code is that a specific property will be added on the `app` called `shouldQuit`.  The property will interact with the `close` event processing discussed below and will make a little more sense later.  
 
-```js
+```cs
 
-                new MenuItemOptions() { Label = "Quit App",
-                    Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event> (
-                            async (ar) =>
-                            {
-                                //await console.Log("Quit App");
-                                // Notify the close event that we will be quitting the app
-                                await app.SetProperty("shouldQuit", true);
-                                mainWindow = null;
-                                await app.Quit();
-                            }
-                        )
-                },
+    new MenuItemOptions() { Label = "Quit App",
+        Click = new ScriptObjectCallback<MenuItem, BrowserWindow, Event> (
+                async (ar) =>
+                {
+                    //await console.Log("Quit App");
+                    // Notify the close event that we will be quitting the app
+                    await app.SetProperty("shouldQuit", true);
+                    mainWindow = null;
+                    await app.Quit();
+                }
+            )
+    },
 
 
 ```
@@ -272,53 +272,61 @@ To accomplish this the application needs to use the `PreventDefault` of the `clo
 >  The `Event` interface's `preventDefault()` method tells the user agent that if the event goes unhandled, its default action should not be taken as it normally would be. The event continues to propagate as usual with only the exception that the event does nothing if no event listeners call `stopPropagation()`, which terminates propagation at once.  
 
 
-> :exclamation: **Limitation of Manage Code Interface**: Due to the asynchronous nature of managed code interface it is not be able to execute `Event.PreventDefault`.  By the time the function is executed it is too late to acually cancel the event itself.  This is unfortunately a limitation of the managed code async interface.  This will need to be handled in `JavaScript` code.
+> :exclamation: **Limitation of Manage Code Interface**: Due to the asynchronous nature of the managed code interface, the `Event.PreventDefault` **has to be called before** any other `await/async` commands.  By the time the function is executed it will be too late to acually cancel the event itself.  This is unfortunately a limitation of the managed code async interface and  will need to be handled in `JavaScript` code.
 
-So let's open the `main.js` file and add an event listener for `close` in the `createWindow`.
+```cs
 
-```js
+        // Emitted when the window is going to be closed. 
+        // It's emitted before the beforeunload and unload event of the DOM. 
+        await mainWindow.On("close",
+            new ScriptObjectCallback<Event>(async (ar) =>
+            {
 
-            // Emitted when the window is going to be closed. 
-            // It's emitted before the beforeunload and unload event of the DOM. 
-            mainWindow.on('close', function (e) {
+                // Check if we should quit
+                if (IsShouldQuit) {
+                    // Dereference the window object, usually you would store windows
+                    // in an array if your app supports multi windows, this is the time
+                    // when you should delete the corresponding element.
+                    mainWindow = null;
+                }
+                else {
+                    // Retrieve our event
+                    var evt = ar.CallbackState as Event;
 
-              // Check if we should quit
-              if (app.shouldQuit) {
-                // Dereference the window object, usually you would store windows
-                // in an array if your app supports multi windows, this is the time
-                // when you should delete the corresponding element.
-                mainWindow = null
-              }
-              else {
-                // Calling event.preventDefault() will cancel the close.
-                e.preventDefault();
-                // Then we hide the main window.
-                mainWindow.hide()
-              }
-            })
+                    // Calling event.PreventDefault() will cancel the close.
+                    evt.PreventDefault();
+                    // Then we hide the main window.
+                    await mainWindow.Hide();
+                }
+            }
+        ));            
 
 ```
 
-The close handler checks for a specific `shouldQuit` property on the `app` to be `true` and if not then the event's default functionality to close the window is canceled and is instead hidden from view with [Event.preventDefault()](https://developer.mozilla.org/en/docs/Web/API/Event/preventDefault).
+The close handler checks for the `IsShouldQuit` property to be `true` and if not then the event's default functionality to close the window is canceled and is instead hidden from view with [Event.preventDefault()](https://developer.mozilla.org/en/docs/Web/API/Event/preventDefault).
 
 This prevents the application from terminating only if specifically requested to do so when the `App Quit` menu option is clicked. 
 
 If the application is run now it should act as expected on both Mac and Windows platforms but one more condition for the `Cmd-Q` situation on Mac needs to be handled.
 
-When `Cmd-Q` is executed the the `before-quit` listener is fired on Mac platforms and will need to be handled in `JavaScript` as well.  
+When `Cmd-Q` is executed the the `before-quit` listener is fired on Mac platforms and will need to be handled as well.
 
-```js
+```cs
 
-// We need this for Mac functionality for Cmd-Q and Quit from app menu.
+        // We need this for Mac functionality for Cmd-Q and Quit from app menu.
 
-// 'before-quit' is emitted when Electron receives
-// the signal to exit and wants to start closing windows 
-// placed here instead of managed code so we catch the event in the correct order.
-app.on('before-quit', function () { app.shouldQuit  = true; });
+        // 'before-quit' is emitted when Electron receives
+        // the signal to exit and wants to start closing windows 
+        await app.On("before-quit",
+            new ScriptObjectCallback<Event>(async (evt) =>
+            {
+                IsShouldQuit = true;
+            }
+        ));
 
 ```
 
-The above code only sets the `shouldQuit` property on `app` to `true` to notify the `close` handling above that it should quit the application instead of preventing the close.
+The above code only sets the `IsShouldQuit` property to `true` to notify the `close` handling above that it should quit the application instead of preventing the close.
 
 Now when running the application it should work more or less the same on both platforms.
 
@@ -326,3 +334,5 @@ Now when running the application it should work more or less the same on both pl
 ## Summary
 
 The trick is to catch the window's `close` and `minimize` events in the correct spots.
+
+Some extra care is taken for Mac OSX applications.
