@@ -16,6 +16,8 @@ using WebSharpJs.Script;
         static int windowId = 0;
         static Tray tray;
 
+        static bool IsShouldQuit {get; set;}
+
         /// <summary>
         /// Default entry into managed code.
         /// </summary>
@@ -29,6 +31,27 @@ using WebSharpJs.Script;
             try
             {
                 app = await App.Instance();
+
+                await app.On("activate",
+                    new ScriptObjectCallback<Event>(async (evt) =>
+                    {
+                        // On OS X we will receive an activate event and if we already
+                        // have a window then we will just show it.
+                        if (mainWindow != null)
+                            await mainWindow.Show();
+                    }
+                ));
+                
+                // We need this for Mac functionality for Cmd-Q and Quit from app menu.
+
+                // 'before-quit' is emitted when Electron receives
+                // the signal to exit and wants to start closing windows 
+                await app.On("before-quit",
+                    new ScriptObjectCallback<Event>(async (evt) =>
+                    {
+                        IsShouldQuit = true;
+                    }
+                ));
 
                 // We use app.IsReady instead of listening for the 'ready'event.
                 // By the time we get here from the main.js module the 'ready' event has
@@ -102,6 +125,31 @@ using WebSharpJs.Script;
                 }
             ));
 
+            // Emitted when the window is going to be closed. 
+            // It's emitted before the beforeunload and unload event of the DOM. 
+            await mainWindow.On("close",
+                new ScriptObjectCallback<Event>(async (ar) =>
+                {
+
+                    // Check if we should quit
+                    if (IsShouldQuit) {
+                        // Dereference the window object, usually you would store windows
+                        // in an array if your app supports multi windows, this is the time
+                        // when you should delete the corresponding element.
+                        mainWindow = null;
+                    }
+                    else {
+                        // Retrieve our event
+                        var evt = ar.CallbackState as Event;
+
+                        // Calling event.PreventDefault() will cancel the close.
+                        evt.PreventDefault();
+                        // Then we hide the main window.
+                        await mainWindow.Hide();
+                    }
+                }
+            ));            
+
             // and load the index.html of the app.
             await mainWindow.LoadURL($"file://{__dirname}/index.html");
 
@@ -154,7 +202,7 @@ using WebSharpJs.Script;
                             {
                                 //await console.Log("Quit App");
                                 // Notify the close event that we will be quitting the app
-                                await app.SetProperty("shouldQuit", true);
+                                IsShouldQuit = true;
                                 mainWindow = null;
                                 await app.Quit();
                             }
