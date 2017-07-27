@@ -66,6 +66,8 @@
     <Compile Include="dotnet\WebSharpJs.Electron\Menu.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\MenuItem.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\NativeImage.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\PowerMonitor.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\PowerSaveBlocker.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\Remote.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\Screen.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\Session.cs" />

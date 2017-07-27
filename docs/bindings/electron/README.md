@@ -19,8 +19,8 @@
 * [Menu](api/menu.md) :muscle:
 * [MenuItem](api/menu-item.md) :muscle:
 * [net](api/net.md) :exclamation:
-* [powerMonitor](api/power-monitor.md) :exclamation:
-* [powerSaveBlocker](api/power-save-blocker.md) :exclamation:
+* [powerMonitor](api/power-monitor.md) :muscle:
+* [powerSaveBlocker](api/power-save-blocker.md) :muscle:
 * [protocol](api/protocol.md) :exclamation:
 * [session](api/session.md) :running:
 * [systemPreferences](api/system-preferences.md) :exclamation:
