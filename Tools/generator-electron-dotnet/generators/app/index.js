@@ -310,12 +310,12 @@ module.exports = yeoman.generators.Base.extend({
         this.template(this.sourceRoot() + '/src/websharp.js', './src/' + context.name + '.js', context);
         this.template(this.sourceRoot() + '/src/websharp.cs', './src/' + context.wsClassName + '/' + context.wsClassName + '.cs', context);
         this.template(this.sourceRoot() + '/src/websharp.csproj', './src/' + context.wsClassName + '/' + context.wsClassName + '.csproj', context);
-        this.template(this.sourceRoot() + '/src/websharp_macosx.csproj', './src/' + context.wsClassName + '/' + context.wsClassName + '_macosx.csproj', context);
+        this.template(this.sourceRoot() + '/src/websharp.sln', './src/' + context.wsClassName + '/' + context.wsClassName + '.sln', context);
         this.template(this.sourceRoot() + '/src/packages.config', './src/' + context.wsClassName + '/' + 'packages.config', context);
         this.template(this.sourceRoot() + '/src/nuget.config', './src/' + context.wsClassName + '/' + 'nuget.config', context);
         this.template(this.sourceRoot() + '/src/websharp_main.cs', './src/Main/MainWindow.cs', context);
         this.template(this.sourceRoot() + '/src/websharp_main.csproj', './src/Main/MainWindow.csproj', context);
-        this.template(this.sourceRoot() + '/src/websharp_main_macosx.csproj', './src/Main/MainWindow_macosx.csproj', context);
+        this.template(this.sourceRoot() + '/src/websharp_main.sln', './src/Main/MainWindow.sln', context);
         this.template(this.sourceRoot() + '/src/packages.config', './src/Main/packages.config', context);
         this.template(this.sourceRoot() + '/src/nuget.config', './src/Main/nuget.config', context);
         this.template(this.sourceRoot() + '/index.html', './index.html', context);

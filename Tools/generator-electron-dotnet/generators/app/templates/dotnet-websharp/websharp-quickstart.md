@@ -26,15 +26,15 @@ This folder contains all of the files necessary for your application.
      |--- Main                             
           |--- nuget.config                 // Configuring NuGet behavior
           |--- packages.config              // Used to track installed packages
-          |--- MainWindow_macosx.csproj     // MacOSX project  
           |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
-          |--- MainWindow.csproj            // Windows project          
+          |--- MainWindow.csproj            // Project          
+          |--- MainWindow.sln               // Solution
      |--- <%- wsClassName %>
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
-          |--- <%- wsClassName %>_macosx.csproj    // MacOSX project  
           |--- <%- wsClassName %>.cs               // Application Implementation
-          |--- <%- wsClassName %>.csproj           // Windows project          
+          |--- <%- wsClassName %>.csproj           // Project          
+          |--- <%- wsClassName %>.sln              // Solution          
 
 ```
 
