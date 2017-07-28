@@ -71,6 +71,20 @@
             console.log(message);
     }
 
+    // Flatten the object hierarchy: 
+    // https://stackoverflow.com/a/37726654 which actually turned out to be
+    // the geolocation object that needed to be returned.
+    function flattenObject(obj) {
+        if (obj === null || !(obj instanceof Object)) {
+            return obj;
+        }
+        var flattened = (obj instanceof Array) ? [] : {};
+        for (var key in obj) {
+            flattened[key] = flattenObject(obj[key]);
+        }
+        return flattened;
+    }
+
     var UnwrapArgs = function (args) {
 
         var originalEvent = null;
@@ -99,6 +113,16 @@
             else if (metaMap.Category === 2 && arg !== null) // ScriptableType
             {
                 let scriptableType = {};
+
+                // NOTE: There are no properties on the object at all as per the
+                // Geoposition implementation, as an example, so what we will try to
+                // do is flatten the object hierarchy so that we actually obtain
+                // properties that can be referenced.  May not be the best solution.
+                if (Object.getOwnPropertyNames(arg).length === 0)
+                {
+                    arg = flattenObject(arg);
+                }
+
                 Object.getOwnPropertyNames(arg).forEach(function (k) {
                     // if the propery for the given key is an object
                     // we need to handle it special.
