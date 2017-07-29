@@ -316,6 +316,7 @@ module.exports = yeoman.generators.Base.extend({
         this.template(this.sourceRoot() + '/src/websharp_main.cs', './src/Main/MainWindow.cs', context);
         this.template(this.sourceRoot() + '/src/websharp_main.csproj', './src/Main/MainWindow.csproj', context);
         this.template(this.sourceRoot() + '/src/websharp_main.sln', './src/Main/MainWindow.sln', context);
+        this.template(this.sourceRoot() + '/src/build.sln', './src/Build.sln', context);
         this.template(this.sourceRoot() + '/src/packages.config', './src/Main/packages.config', context);
         this.template(this.sourceRoot() + '/src/nuget.config', './src/Main/nuget.config', context);
         this.template(this.sourceRoot() + '/index.html', './index.html', context);

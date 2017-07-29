@@ -35,7 +35,7 @@ This folder contains all of the files necessary for your application.
           |--- <%- wsClassName %>.cs               // Application Implementation
           |--- <%- wsClassName %>.csproj           // Project          
           |--- <%- wsClassName %>.sln              // Solution          
-
+     |--- Build.sln                         // Global project build solution
 ```
 
 * This folder contains all of the files necessary for your application
@@ -44,7 +44,10 @@ This folder contains all of the files necessary for your application.
 * `index.html` - this is the web page you want to show.
 * `src/<%- name %>.js` - this src file defines calls the <%- wsClassName %> C# expression that will be printed to the console by default.
 * `src/<%- wsClassName %>/<%- wsClassName %>.cs` - this src file is the C# managed code implementation of the application that prints to the console by default.
+* `src/<%- wsClassName %>/<%- wsClassName %>.sln` and `src/<%- wsClassName %>/<%- wsClassName %>.csproj` - this solution file builds the files that make up the C# managed code implementation of the application.
 * `src/Main/MainWindow.cs` - this src file is the C# managed code implementation of the application that allow the control of the application lifecycle events.
+* `src/Main/MainWindow.sln` and `src/Main/MainWindow.csproj` - this solution file builds the files that make up the C# managed code implementation of the application that allow the control of the application lifecycle events.
+* `src/Build.sln` - this solution file is a solution of solutions to provide a general build of the source projects `src/Main/MainWindow.sln` and `src/<%- wsClassName %>/<%- wsClassName %>.sln`.
 
 ## Get up and running straight away
 * press `F5` to open a new window with your application loaded.

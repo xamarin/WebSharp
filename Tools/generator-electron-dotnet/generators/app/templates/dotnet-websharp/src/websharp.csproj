@@ -7,8 +7,8 @@
     <ProjectGuid>{B82A5728-DB19-401B-B79F-E15EAA17E410}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Location</RootNamespace>
-    <AssemblyName>Location</AssemblyName>
+    <RootNamespace><%- wsClassName %></RootNamespace>
+    <AssemblyName><%- wsClassName %></AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
