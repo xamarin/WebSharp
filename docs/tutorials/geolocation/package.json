@@ -1,0 +1,15 @@
+{
+    "name": "geolocation",
+    "displayName": "GeoLocation",
+    "description": "Example of Scripting the navigator.geolocation functionality",
+    "version": "0.0.1",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    },
+    "GOOGLE_API_KEY": "YOUR_API_KEY_HERE"
+}
