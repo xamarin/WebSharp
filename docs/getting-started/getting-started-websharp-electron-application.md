@@ -229,16 +229,39 @@ When we get to debugging you will see why it is broken up this way.
 
 The generated application's code is in the `src` directory.  Depending on the project template selected there is an implementation of each type of application integration point generated.  When we selected the `WebSharp Electron Application` option we will have a total of one src file:
 
+
+     |--- Main                             
+          |--- nuget.config                 // Configuring NuGet behavior
+          |--- packages.config              // Used to track installed packages
+          |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
+          |--- MainWindow.csproj            // Project          
+          |--- MainWindow.sln               // Solution
+     |--- Location
+          |--- nuget.config           // Configuring NuGet behavior
+          |--- packages.config        // Used to track installed packages
+          |--- Location.cs               // Application Implementation
+          |--- Location.csproj           // Project          
+          |--- Location.sln              // Solution          
+     |--- Build.sln                         // Global project build solution
+
 ```
 .
 |--- src                              // sources
      |--- hello.js                    // javascript code implementation
+     |--- Main                             
+          |--- nuget.config                 // Configuring NuGet behavior
+          |--- packages.config              // Used to track installed packages
+          |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
+          |--- MainWindow.csproj            // Project          
+          |--- MainWindow.sln               // Solution     
      |--- World
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
-          |--- World_macosx.csproj    // MacOSX project  
           |--- World.cs               // Application Implementation
-          |--- World.csproj           // Windows project 
+          |--- World.csproj           // Project 
+          |--- World.sln              // Solution
+     |--- Build.sln                         // Global project build solution
+
 ```
 
 #### WebSharp: .NET and Node.js in-process implementation: hello.js
@@ -246,8 +269,8 @@ The generated application's code is in the `src` directory.  Depending on the pr
 ``` js
 var dotnet = require('electron-dotnet');
 
-//var hello = dotnet.func("./src/World/bin/Debug/World.dll");
-var hello = dotnet.func("./src/World/World.cs");
+//var hello = dotnet.func(__dirname + "/World/bin/Debug/World.dll");
+var hello = dotnet.func(__dirname + "/World/World.cs");
 
 //Make method externaly visible this will be referenced in the renderer.js file
 exports.sayHello = arg => {
@@ -261,6 +284,8 @@ exports.sayHello = arg => {
 The first line enables scripting C# from Node.js.
 
 The next two lines creates a C# `hello` function for us.  By default the first line is commented out with the second line specifying the source code file of the generated class.  This will compile the `.cs` module on the fly.  The commented out first line can be used if on the fly compiling is not desirable allowing a generated assembly of the source to be specified.  More info about [Building Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md).
+
+> :bulb: Note the use of the variable `__dirname` that is prepended to the paths.  This is useful if you are going to packageing your app or the packaged app may not be able to find your sources or assemblies.   
 
 The provided `func` accepts a reference to C# code and returns a `Node.js` function which acts as a JavaScript proxy to the Func<object,Task<object>> .NET delegate
 
@@ -300,9 +325,10 @@ The generator also created a directory with the same name as the class, `World`,
      |--- World
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
-          |--- World_macosx.csproj    // MacOSX project  
           |--- World.cs               // Application Implementation
-          |--- World.csproj           // Windows project 
+          |--- World.csproj           // Project 
+          |--- World.sln              // Solution
+
 ```
 
 This directory contains additional files to help in creating an assembly for the different platforms.  We will go into more detail about these files and their uses in the section [Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) but for now lets just focus on the `World.cs` source file.
