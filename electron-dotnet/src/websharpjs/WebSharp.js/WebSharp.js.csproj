@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="dotnet\WebSharpJs.cs" />
     <Compile Include="dotnet\WebSharpJs.DOM\BrowserInformation.cs" />
+    <Compile Include="dotnet\WebSharpJs.DOM\HTMLEventNames.cs" />
     <Compile Include="dotnet\WebSharpJs.DOM\DOMObjectProxy.cs" />
     <Compile Include="dotnet\WebSharpJs.DOM\DragNDropInterface.cs" />
     <Compile Include="dotnet\WebSharpJs.DOM\HtmlDocument.cs" />
