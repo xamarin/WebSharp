@@ -4,7 +4,7 @@ using System;
 
 namespace WebSharpJs.DOM
 {
-    public static class HTMLEventNames
+    public static class HtmlEventNames
     {
 
         #region MouseEvents
