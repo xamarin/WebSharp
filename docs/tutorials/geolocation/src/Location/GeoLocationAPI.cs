@@ -8,28 +8,37 @@ using WebSharpJs.DOM;
 namespace GeoLocation
 {
     // https://dev.w3.org/geo/api/spec-source.html#navi-geo
-    public sealed class GeoLocationAPI : HtmlObject
+    public class GeoLocationAPI : HtmlObject
     {
         
-        static DOMObjectProxy scriptProxy;
+        // Save off our instance object so that we do not create the
+        // code on every access of Instance().  
+        static GeoLocationAPI instance;
 
-        internal static async Task<GeoLocationAPI> Instance()
+        /// <summary>
+        /// Obtain a reference to the navigation.geolocation JavaScript object
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<GeoLocationAPI> Instance()
         {
-            var proxy = new GeoLocationAPI();
-            await proxy.Initialize();
-            return proxy;
-        }
-
-        private async Task Initialize()
-        {
-            if (scriptProxy == null)
+            if (instance == null)
             {
-                scriptProxy = new DOMObjectProxy("navigator.geolocation");
+                // Create a new GeoLocationAPI proxy object
+                instance = new GeoLocationAPI();
+                
+                // Create a proxy object of the navigator.geolocation 
+                // JavaScript object
+                var scriptProxy = new DOMObjectProxy("navigator.geolocation");
+
+                // Initialize the proxy object.  This will compile the code
+                // to access the native bridge.
+                await scriptProxy.GetProxyObject();
+                
+                // Tell our GeoLocationAPI instance to use the bridge proxy
+                instance.ScriptObjectProxy = scriptProxy;
+
             }
-
-            await scriptProxy.GetProxyObject();
-            ScriptObjectProxy = scriptProxy;
-
+            return instance;
         }
 
         public async Task GetCurrentPosition(ScriptObjectCallback<GeoPosition> success,

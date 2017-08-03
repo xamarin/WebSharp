@@ -2,15 +2,22 @@
 
 This set of tutorials will be presented in muliple short parts.  
 
-At this time WebSharp only includes a very lightweight DOM Interface `[place link here to DOM overview]`.  That does not mean that you can not access other HTML or HTML 5 functionality.  In this series of multiple short tutorials we will show how you can tap into the other functionality using `ScriptObject`'s and modeling those other API interfaces.  By wrapping the HTML functionality in higher-level custom classes we can create a strongly typed interface to build a custom library.
+At this time WebSharp only includes a very lightweight [DOM Interface](https://github.com/xamarin/WebSharp/tree/master/docs/tutorials/DOM) .  That does not mean that you can not access other HTML or HTML 5 functionality.  In this series of multiple short tutorials we will show how you can tap into the other functionality using `ScriptObject`'s and modeling those other API interfaces.  By wrapping the HTML functionality in higher-level custom classes we can create a strongly typed interface to build a custom library.
 
 `Part 1` - The document you are reading now, will focus on quickly generating the application and creating the structure of the application for scripting the `navigator.geolocation` functionality.  Adding code to interface with the DOM Html Elements and handling the button `click` event.  Since the focus of this set of tutorials is the scripting interface, the application interface itself will be very minimal.
 
-[Part 2](./part2) - Adding a new source module to the project that contains the scripting for `navigator.geolocation` using the documentation from the [Geolocation API Specification](https://dev.w3.org/geo/api/spec-source.html#navi-geo).  We will then focus on incorporating that new source module in our application. 
+[Part 2](./GeolocationAPI.md) - Continuation from `Part 1` with the following:
 
-[Part 3](./part3) - By default when creating a `WebSharp Electron Application`, on-the-fly compiling is used so we will cover compiling these modules into actual assemblies.  [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md).
+* High level view of the Bridge interface that is used by `WebSharp`.
+* Adding a new source module to the project.
+* Incorporating the new source module in our application.
+* Creating the basic singleton code to reference the `navigator,geolocation` object.
 
-[Part 4](./part4) - Packaging our application using `electron-packager` so that we have an actual application to execute.
+[Part 3](./part3.md) using the documentation from the [Geolocation API Specification](https://dev.w3.org/geo/api/spec-source.html#navi-geo) we will then focus on the implementation details of our new module. 
+
+[Part 4](./part4md) - By default when creating a `WebSharp Electron Application`, on-the-fly compiling is used so we will cover compiling these modules into actual assemblies.  [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md).
+
+[Part 5](./part5md) - Packaging our application using `electron-packager` so that we have an actual application to execute.
 
 
 ## End Goal
@@ -117,9 +124,15 @@ The first thing we will want to do is setup `index.html` file to create the elem
 
 * Our image area used to display the map image returned back from the geolocation api on succesful call.
 
+```javascript
+    <div id="out">
+      <img id="map"></img>
+    </div>
+```
+
 ## Renderer process `Location.cs`
 
-For right now let's set up the application to interact with our DOM elements defined in the `index.html` definition above.  This will only be preparation until we have the API defined in Part 2.  You can find out more about interacting the DOM by reading the [DOM Overview](https://github.com/xamarin/WebSharp/blob/master/docs/tutorials/DOM/overview.md).
+For right now let's set up the application to interact with our DOM elements defined in the `index.html` definition above.  This will only be preparation until we have the API defined in Part 2.  You can find out more about interacting with the DOM by reading the [DOM Overview](https://github.com/xamarin/WebSharp/blob/master/docs/tutorials/DOM/overview.md).
 
 > :bulb: The `navigation.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigation` object not being defined.  For that reason we will be focusing all of our attention in this module.
 
@@ -192,11 +205,13 @@ Now if the application is run you will see the following:
 
 ## Summary
 
-In this tutorial we went through creating a application and modifying the source to reference the DOM elements that will be needed in the next parts when we start implementing the GeoLocation interface.
+In this tutorial we went through creating a application and modifying the source to reference the DOM elements that will be needed in the following parts when we start implementing the `GeoLocation` interface.
 
 We also saw how to interfact with DOM events by listening to the `click` event of the button tag `<button>`.
 
-In the next part, [Part 2](./part2), of the tutorial we will start the `Scripting` of the `navigation.geolocation` HTML interface.
+In the next part, [Part 2](./GeolocationAPI.md), of the tutorial we will start the `Scripting` of the `navigation.geolocation` HTML interface.
+
+> :bulb: The `navigation.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigation` object not being defined.
 
 For more information see the following:
 
