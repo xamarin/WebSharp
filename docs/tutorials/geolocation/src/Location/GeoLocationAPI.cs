@@ -16,7 +16,7 @@ namespace GeoLocation
         static GeoLocationAPI instance;
 
         /// <summary>
-        /// Obtain a reference to the navigation.geolocation JavaScript object
+        /// Obtain a reference to the navigatior.geolocation JavaScript object
         /// </summary>
         /// <returns></returns>
         public static async Task<GeoLocationAPI> Instance()

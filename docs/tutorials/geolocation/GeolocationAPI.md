@@ -131,7 +131,7 @@ namespace GeoLocation
         static GeoLocationAPI instance;
 
         /// <summary>
-        /// Obtain a reference to the navigation.geolocation JavaScript object
+        /// Obtain a reference to the navigator.geolocation JavaScript object
         /// </summary>
         /// <returns></returns>
         public static async Task<GeoLocationAPI> Instance()
@@ -190,7 +190,7 @@ Looking a little more into the implementation we have a static `Instance()` meth
     static GeoLocationAPI instance;
 
     /// <summary>
-    /// Obtain a reference to the navigation.geolocation JavaScript object
+    /// Obtain a reference to the navigator.geolocation JavaScript object
     /// </summary>
     /// <returns></returns>
     public static async Task<GeoLocationAPI> Instance()
@@ -263,7 +263,7 @@ We finished up by looking at defining a singleton instance implementation that a
 
 In the next part we will look at the actual implementation of the `GeoLocationAPI` module and integrating it within our managed code.
 
-> :bulb: The `navigation.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigation` object not being defined.
+> :bulb: The `navigator.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigator` object not being defined.
 
 For more information see the following:
 

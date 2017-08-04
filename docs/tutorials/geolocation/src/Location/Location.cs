@@ -33,7 +33,7 @@ using GeoLocation;
                 var location = await document.GetElementById("location");
                 var error = false;
 
-                await findMe.AttachEvent("click",
+                await findMe.AttachEvent(HtmlEventNames.Click,
                     new EventHandler(
                         async (sender, evt) => {
 

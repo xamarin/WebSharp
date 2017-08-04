@@ -22,7 +22,7 @@ At this time WebSharp only includes a very lightweight [DOM Interface](https://g
 
 ## End Goal
 
-At the end of the series we will have created a simple application with a button that will call out to a strongly typed C# `navigation.geolocation` api to retrieve the current location and display a map image of that position.
+At the end of the series we will have created a simple application with a button that will call out to a strongly typed C# `navigator.geolocation` api to retrieve the current location and display a map image of that position.
 
 ![map](./images/map.png)
 
@@ -134,7 +134,7 @@ The first thing we will want to do is setup `index.html` file to create the elem
 
 For right now let's set up the application to interact with our DOM elements defined in the `index.html` definition above.  This will only be preparation until we have the API defined in Part 2.  You can find out more about interacting with the DOM by reading the [DOM Overview](https://github.com/xamarin/WebSharp/blob/master/docs/tutorials/DOM/overview.md).
 
-> :bulb: The `navigation.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigation` object not being defined.  For that reason we will be focusing all of our attention in this module.
+> :bulb: The `navigator.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigator` object not being defined.  For that reason we will be focusing all of our attention in this module.
 
 Open the `Location.cs` source file and let's add the following code.
 
@@ -180,7 +180,7 @@ When the `findMe` button is clicked is where the geolocation api will be called.
 
 ```cs
 
-    await findMe.AttachEvent("click",
+    await findMe.AttachEvent(HtmlEventNames.Click,
         new EventHandler(
             async (sender, evt) => {
 
@@ -192,7 +192,7 @@ When the `findMe` button is clicked is where the geolocation api will be called.
 
 ```
 
-When we get a `click` from the button we will set our status area to `Locating...` by setting the `innerText` property of our HtmlElement `findeMe`.
+When we get a `HtmlEventNames.Click` - `"click"` - event from the button we will set our status area to `Locating...` by setting the `innerText` property of our HtmlElement `findeMe`.
 
 ```cs
     await location.SetProperty("innerText", "Locating ...");
@@ -209,9 +209,9 @@ In this tutorial we went through creating a application and modifying the source
 
 We also saw how to interfact with DOM events by listening to the `click` event of the button tag `<button>`.
 
-In the next part, [Part 2](./GeolocationAPI.md), of the tutorial we will start the `Scripting` of the `navigation.geolocation` HTML interface.
+In the next part, [Part 2](./GeolocationAPI.md), of the tutorial we will start the `Scripting` of the `navigator.geolocation` HTML interface.
 
-> :bulb: The `navigation.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigation` object not being defined.
+> :bulb: The `navigator.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigation` object not being defined.
 
 For more information see the following:
 
