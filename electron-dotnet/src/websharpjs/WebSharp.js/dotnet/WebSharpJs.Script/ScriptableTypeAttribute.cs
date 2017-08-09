@@ -10,7 +10,8 @@ namespace WebSharpJs.Script
     public enum ScriptableType
     {
         Default,
-        Event
+        Event,
+        DomNoInterfaceObjectAttribute  // it indicates that an interface object will not exist for the interface in the ECMAScript binding
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]

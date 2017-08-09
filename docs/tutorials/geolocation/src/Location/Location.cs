@@ -42,29 +42,40 @@ using GeoLocation;
                             await location.SetProperty("innerText", "Locating ...");
                             var geo = await GeoLocationAPI.Instance();
                             await geo.GetCurrentPosition(
-                                new ScriptObjectCallback<GeoPosition>(
+                                new ScriptObjectCallback<Position>(
                                     async (cr) =>
                                     {
-                                        var position = cr.CallbackState as GeoPosition;
+                                        // Obtain our position from the CallbackState
+                                        var position = cr.CallbackState as Position;
+                                        // Reference the Coordinates class
                                         var coords = position.Coordinates;
+                                        // Create our location information string
                                         var posString = $"Your current position is:\nLatitude : {coords.Latitude}\nLongitude : {coords.Longitude}\nMore or less {coords.Accuracy} Meters.";
+                                        // Set the location status text
                                         await location.SetProperty("innerText", posString);
+                                        // Retrieve the image of the location using the longitude and latitude
+                                        // properties of the Coordinates class. 
                                         var imageURL = $"https://maps.googleapis.com/maps/api/staticmap?center={coords.Latitude},{coords.Longitude}&zoom=13&size=300x300&sensor=false";
+                                        // Set the src property of the <image> tag
                                         await map.SetProperty("src", imageURL);
                                     }
                                 ),
                                 new ScriptObjectCallback<PositionError>(
                                     async (cr) =>
                                     {
-
+                                        // Obtain the error from CallbackState
                                         var err = cr.CallbackState as PositionError;
+                                        // Format a string with the error
                                         var errString = $"ERROR({err.ErrorCode}): {err.Message}";
+                                        // If we already have an error then we will want to append
+                                        // the error to the already existing error(s) that exist.
                                         if (error)
                                         {
                                             var errorText = await location.GetProperty<string>("innerText");
                                             errString = $"{errorText}\n{errString}"; 
                                         }
                                         error = true;
+                                        // Set the status area text for feedback to the user
                                         await location.SetProperty("innerText", errString);
                                     }
                                 ),

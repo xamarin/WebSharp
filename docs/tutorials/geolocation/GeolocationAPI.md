@@ -255,13 +255,13 @@ Right after setting our location text we can add a reference to our new class.
 
 ## Summary
 
-In the part of the tutorials we looked very briefly at the how we can access the bridge interface via the `ScriptObject` class.
+In this part of the tutorials we looked very briefly at the how we can access the bridge interface via the `ScriptObject` class.
 
 We then went on to define and include another source file.  When using the On-The-Fly compiling option we have to make a few changes how the C# code is defined to JavaScript.  By using the `itemgroup` option key we can pass in a list of extra source modules that will be included when building the main module function.
 
 We finished up by looking at defining a singleton instance implementation that allows us to access the `navigator.geolocation` JavaScript object from managed code.
 
-In the next part we will look at the actual implementation of the `GeoLocationAPI` module and integrating it within our managed code.
+In the [next part](./GeolocationAPI_1.md) we will look at the actual implementation of the `GeoLocationAPI` module and integrating it within our managed code.
 
 > :bulb: The `navigator.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigator` object not being defined.
 

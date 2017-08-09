@@ -41,16 +41,16 @@ namespace GeoLocation
             return instance;
         }
 
-        public async Task GetCurrentPosition(ScriptObjectCallback<GeoPosition> success,
-              ScriptObjectCallback<PositionError> error = null,
+        public async Task GetCurrentPosition(ScriptObjectCallback<Position> successCallback,
+              ScriptObjectCallback<PositionError> errorCallback = null,
               PositionOptions options = null      )
         {
-            await Invoke<GeoPosition>("getCurrentPosition", success, error, options);
+            await Invoke<object>("getCurrentPosition", successCallback, errorCallback, options);
         }
     }
 
     [ScriptableType]
-    public class GeoPosition
+    public class Position
     {
         [ScriptableMember(ScriptAlias = "coords")]
         public Coordinates Coordinates { get; private set; }
