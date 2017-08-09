@@ -13,7 +13,7 @@ At this time WebSharp only includes a very lightweight [DOM Interface](https://g
 * Incorporating the new source module in our application.
 * Creating the basic singleton code to reference the `navigator,geolocation` object.
 
-[Part 3](./part3.md) using the documentation from the [Geolocation API Specification](https://dev.w3.org/geo/api/spec-source.html#navi-geo) we will then focus on the implementation details of our new module. 
+[Part 3](./GeolocationAPI_1.md) using the documentation from the [Geolocation API Specification](https://dev.w3.org/geo/api/spec-source.html#navi-geo) we will then focus on the implementation details of our new module. 
 
 [Part 4](./part4md) - By default when creating a `WebSharp Electron Application`, on-the-fly compiling is used so we will cover compiling these modules into actual assemblies.  [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md).
 
