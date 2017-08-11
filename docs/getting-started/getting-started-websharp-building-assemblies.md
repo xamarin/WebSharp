@@ -18,11 +18,10 @@ If you already have a pre-compiled assembly that will not need `Node.js` scripti
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on Windows](#building-on-windows)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[msbuild](#windows-msbuild)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#windows-visual-studio-ide)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[.Net Core](#windows-net-core)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building on MacOSX](#building-on-macosx)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[xbuild](#macosx-xbuild)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#macosx-visual-studio-ide)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[msbuild](#macosx-msbuild)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Visual Studio IDE](#macosx-visual-studio-ide)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Using Build.sln](#using-buildsln)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Referencing Assembly](#referencing-assembly-worlddll)  
 
 ## Requirements
@@ -45,12 +44,19 @@ In the previous section we mentioned that there was a directory generated with a
 
 ```
 |--- src                              // sources
+     |--- Main                             
+          |--- nuget.config                 // Configuring NuGet behavior
+          |--- packages.config              // Used to track installed packages
+          |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
+          |--- MainWindow.csproj            // Project          
+          |--- MainWindow.sln               // Solution
      |--- World
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
-          |--- World_macosx.csproj    // MacOSX project  
           |--- World.cs               // Application Implementation
-          |--- World.csproj           // Windows project 
+          |--- World.csproj           // Project          
+          |--- World.sln              // Solution          
+     |--- Build.sln                         // Global project build solution
 ```
 
 Let's take a brief look at them.
@@ -82,7 +88,7 @@ replace the `value` with your specific path to the WebSharp repository that you 
 
 ```
 
-We are assuming that you cloned the `WebSharp` repository to `c:\projects\`.
+We are assuming that you cloned the `WebSharp` repository to `c:\projects\` or `~\projects\`.
 
 ### Track installed packages: packages.config
 
@@ -90,21 +96,23 @@ Package Restore uses the information in packages.config to reinstall all depende
 
 More information can be found at [Consume Packages](https://docs.microsoft.com/en-us/nuget/consume-packages/overview-and-workflow)
 
-### Windows project: World.csproj
+### Project files: World.csproj and MainWindow.csproj
 
-Defines a windows specific project that creates a .net library assembly.
+Defines the `Main` and `Renderer` Visual Studio .NET C# Project file.  More information can be found [Projects](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/projects)
 
-### MacOSX project: World_macosx.csproj
+### Solution files: World.sln and MainWindow.sln
 
-Defines a Mac OSX specific project that creates a .net library assembly.
+Defines the `Main` and `Renderer` Visual Studio .Net C# Solution file.  More information can be found [Solution (.Sln) File](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/solution-dot-sln-file)
 
 ## Preparing Code: World.cs
 
-The first thing we will need to do is modify the `World.cs` source to make sure it conforms to how asseblies are referenced.
+The first thing we will need to do is modify the `World.cs` and `MainWindow.cs§ source to make sure it conforms to how assemblies are referenced.
 
 As was mentioned when compiling the source code on the fly the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature. 
 
 When compiling to an assembly a `namespace` is required.  Edit the file and make sure the `namespace` is uncommented and saved before moving on to the building the assembly sections following.
+
+Here is the source file for `World.cs` after the `namespace` has been uncommented.
 
 ``` cs
     namespace World
@@ -139,13 +147,82 @@ When compiling to an assembly a `namespace` is required.  Edit the file and make
 
 ```
 
-Once the source is saved we can then move on to building the assembly.
+Here is the source file for `MainWindow.cs` after the `namespace` has been uncommented.
+
+```csharp
+
+namespace MainWindow
+{
+    public class Startup
+    {
+
+        static WebSharpJs.NodeJS.Console console;
+
+        static App app;
+        static BrowserWindow mainWindow;
+        static int windowId = 0;
+
+        /// <summary>
+        /// Default entry into managed code.
+        /// </summary>
+        /// <param name="__dirname">The directory name of the current module. This the same as the path.dirname() of the __filename.</param>
+        /// <returns></returns>
+        public async Task<object> Invoke(string __dirname)
+        {
+            if (console == null)
+                console = await WebSharpJs.NodeJS.Console.Instance();
+
+            try
+            {
+                app = await App.Instance();
+
+                // We use app.IsReady instead of listening for the 'ready'event.
+                // By the time we get here from the main.js module the 'ready' event has
+                // already fired.
+                if (await app.IsReady())
+                {
+                    windowId = await CreateWindow(__dirname);
+                }
 
 
+                await console.Log($"Loading: file://{__dirname}/index.html");
+            }
+            catch (Exception exc) { await console.Log($"extension exception:  {exc.Message}"); }
 
-## Building on Windows
+            return windowId;
+
+
+        }
+
+        async Task<int> CreateWindow (string __dirname)
+        {
+            // Create the browser window.
+            mainWindow = await BrowserWindow.Create(new BrowserWindowOptions() { Width = 600, Height = 400 });
+
+            // and load the index.html of the app.
+            await mainWindow.LoadURL($"file://{__dirname}/index.html");
+
+            // Open the DevTools
+            //await mainWindow.GetWebContents().ContinueWith(
+            //        (t) => { t.Result?.OpenDevTools(DevToolsMode.Bottom); }
+            //);
+
+            return await mainWindow.GetId();
+
+        }
+    }
+}
+
+```
+
+Once the source is saved we can then move on to building the assemblies.
+
+## Building on Windows 
 
 This section will show multiple ways to use the extra files to create an assembly on windows.
+
+In the following commands we will only show the commands using `World.sln` but the same applies for the `MainWindow.sln` file.  Just replace `World.sln` with `MainWindow.sln` in the following commands.
+
 
 ### Windows: MSBuild
 
@@ -160,7 +237,7 @@ Once opened you will need to change into `Hello`'s src directory.
 Do a restore of the NuGet packages.
 
 ```
-\src\World> msbuild World.csproj /t:restore
+\src\World> msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:restore
 ```
 
 The following is a sample of the output after the restore.
@@ -206,7 +283,7 @@ Time Elapsed 00:00:01.02
 Then we build with the `msbuild` command.
 
 ```
-\src\World>msbuild World.csproj /p:Configuration=Debug /p:Platform="Any CPU"
+\src\World>msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU"
 ```
 
 The assembly should now be found in in the `bin\Debug\` folder.
@@ -215,114 +292,16 @@ The assembly should now be found in in the `bin\Debug\` folder.
 
 You will need to have `Visual Studio 2015 or greater` installed.  Community Editions work fine.
 
-This is probably the easiest way to build the assembly.  From Visual Studio click on *File > Open > Project/Solution*, once the dialog shows up navigate to the project source, select the `World.csproj` file and click `Open`.  This will add a new solution as well as the project file.
+This is probably the easiest way to build the assembly.  From Visual Studio click on *File > Open > Project/Solution*, once the dialog shows up navigate to the project source, select the `World.sln` file and click `Open`.  This will add a new solution as well as the project file.
 
 Compile the solution to create the assembly.  This will also restore the `WebSharp.js` package automatically before compiling.
 
-### Windows: .Net Core
-
-To compile with `.Net Core` you will need to have it installed.
-
-This is almost the same the `msbuild` scenario described above except you can do this from a normal command line.
-
-Open a windows command line and change into the application source directory.
-
-``` 
-> cd Path-to-application\src\World
-```
-
-Do a restore of the NuGet packages.
-
-```
-\src\World>dotnet restore World.csproj
-```
-
-The following is a sample of the output after the restore.
-
-```
-\src\World>dotnet restore World.csproj
-  Restoring packages for c:\projects\HelloWorldApplication\src\World\World.csproj...
-  Generating MSBuild file c:\projects\HelloWorldApplication\src\World\obj\World.csproj.nuget.g.props.
-  Generating MSBuild file c:\projects\HelloWorldApplication\src\World\obj\World.csproj.nuget.g.targets.
-  Writing lock file to disk. Path: c:\projects\HelloWorldApplication\src\World\obj\project.assets.json
-  Restore completed in 132.07 ms for c:\projects\HelloWorldApplication\src\World\World.csproj.
-
-  NuGet Config files used:
-      c:\projects\HelloWorldApplication\src\World\NuGet.Config
-      C:\Users\kenne\AppData\Roaming\NuGet\NuGet.Config
-      C:\Program Files (x86)\NuGet\Config\Microsoft.VisualStudio.Offline.config
-
-  Feeds used:
-      https://nuget.org/api/v2/
-      https://api.nuget.org/v3/index.json
-      C:\projects\WebSharp\electron-dotnet\tools\build\nuget
-      C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\
-```
-
-Then we build with the `dotnet build` command.
-
-```
-\src\World>dotnet build World.csproj /p:Configuration=Debug
-```
-
-The assembly should now be found in in the `bin\Debug\` folder. 
 
 ## Building on MacOSX
 
 This section will show multiple ways to use the extra files to create an assembly on windows.
 
-### MacOSX: XBuild
-
-You will need to have a terminal open and positioned to the application `src\World` directory. 
-
-Once opened you will need to change into `Hello`'s src directory. 
-
-``` bash
-$ cd Path-to-application/src/World
-```
-
-Do a restore of the NuGet packages.
-
-``` bash
-/src/World> nuget restore World_macosx.csproj
-```
-
-The following is a sample of the output after the restore.
-
-```
-HelloWorldApplication/src/World/packages'
-
-NuGet Config files used:
-    /projects/WebSharp/websharpjs/HelloWorldApplication/src/World/nuget.config
-    /Users/Jimmy/.config/NuGet/NuGet.Config
-
-Feeds used:
-    /Users/Jimmy/.nuget/packages/
-    https://nuget.org/api/v2/
-    https://www.nuget.org/api/v2/
-    /projects/WebSharp/electron-dotnet/tools/build/nuget
-
-Installed:
-    1 package(s) to packages.config projects
-```
-
-> :bulb: If the `WebSharp.js` package is not restored take a look at [Configuring NuGet behavior](#configuring-nuget-behavior-nugetconfig).
-
-Then we build with the `xbuild` command.
-
-```
-/src/World$ xbuild World_macosx.csproj 
-```
-
-The assembly should now be found in in the `bin\Debug\` folder.
-
-### MacOSX: Visual Studio IDE
-
-You will need to have `Visual Studio for Mac` installed.
-
-This is probably the easiest way to build the assembly.  From Visual Studio click on *File > Open*, once the dialog shows up navigate to the project source, select the `World_macosx.csproj` file and click `Open`.  This will add a new solution as well as the project file.
-
-Compile the solution to create the assembly.  This will also restore the `WebSharp.js` package automatically before compiling.
+In the following commands we will only show the commands using `World.sln` but the same applies for the `MainWindow.sln` file.  Just replace `World.sln` with `MainWindow.sln` in the following commands.
 
 ### MacOSX: MSBuild
 
@@ -336,27 +315,44 @@ $ cd Path-to-application/src/World
 
 Do a restore of the NuGet packages.
 
-``` bash
-/src/World> nuget restore World_macosx.csproj
+```bash
+/src/World$ msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:restore
 ```
 
 The following is a sample of the output after the restore.
 
 ```
-HelloWorldApplication/src/World/packages'
+Microsoft (R) Build Engine version 15.2.0.0 (xplat-2017-02/c2edfeb Thu May 18 13:58:03 EDT 2017)
+Copyright (C) Microsoft Corporation. All rights reserved.
 
-NuGet Config files used:
-    /projects/WebSharp/websharpjs/HelloWorldApplication/src/World/nuget.config
-    /Users/Jimmy/.config/NuGet/NuGet.Config
+Build started 8/11/2017 7:40:56 AM.
+Project "/Users/Jimmy/websharp/projects/hello/src/World/World.sln" on node 1 (restore target(s)).
+ValidateSolutionConfiguration:
+  Building solution configuration "Debug|Any CPU".
+Restore:
+  Restoring packages for /Users/Jimmy/websharp/projects/hello/src/World/World.csproj...
+  Committing restore...
+  Generating MSBuild file /Users/Jimmy/websharp/projects/hello/src/World/obj/World.csproj.nuget.g.props.
+  Generating MSBuild file /Users/Jimmy/websharp/projects/hello/src/World/obj/World.csproj.nuget.g.targets.
+  Writing lock file to disk. Path: /Users/Jimmy/websharp/projects/hello/src/World/obj/project.assets.json
+  Restore completed in 161.01 ms for /Users/Jimmy/websharp/projects/hello/src/World/World.csproj.
+  
+  NuGet Config files used:
+      /Users/Jimmy/websharp/projects/hello/src/World/nuget.config
+      /Users/Jimmy/.config/NuGet/NuGet.Config
+  
+  Feeds used:
+      https://nuget.org/api/v2/
+      https://www.nuget.org/api/v2/
+      /Users/Jimmy/Public/Share/MonoMacSource/kjpgit/xamarin/WebSharp/WebSharp/electron-dotnet/tools/build/nuget
+Done Building Project "/Users/Jimmy/websharp/projects/hello/src/World/World.sln" (restore target(s)).
 
-Feeds used:
-    /Users/Jimmy/.nuget/packages/
-    https://nuget.org/api/v2/
-    https://www.nuget.org/api/v2/
-    /projects/WebSharp/electron-dotnet/tools/build/nuget
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
 
-Installed:
-    1 package(s) to packages.config projects
+Time Elapsed 00:00:01.42
+
 ```
 
 > :bulb: If the `WebSharp.js` package is not restored take a look at [Configuring NuGet behavior](#configuring-nuget-behavior-nugetconfig).
@@ -364,10 +360,60 @@ Installed:
 Then we build with the `msbuild` command.
 
 ```
-/src/World$ msbuild World_macosx.csproj 
+/src/World$ msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU"
 ```
 
 The assembly should now be found in in the `bin\Debug\` folder.
+
+
+### MacOSX: Visual Studio IDE
+
+You will need to have `Visual Studio for Mac` installed.
+
+This is probably the easiest way to build the assembly.  From Visual Studio click on *File > Open*, once the dialog shows up navigate to the project source, select the `World.sln` file and click `Open`.  This will add a new solution as well as the project file.
+
+Compile the solution to create the assembly.  This will also restore the `WebSharp.js` package automatically before compiling.
+
+## Using Build.sln
+
+When an application is generated there is also a common solution file generated called `Build.sln` in the source directory.
+
+Instead of building each project separately, this solution file allows the developer to build all projects with a single common command.
+
+### Build.sln: Restore packages
+
+Do a restore of the NuGet packages.
+
+* Windows
+
+```
+\src> msbuild Build.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:restore
+```
+
+* Mac
+
+```bash
+/src$ msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:restore
+```
+
+### Build.sln: Build
+
+* Windows
+
+```
+\src> msbuild Build.sln /p:Configuration=Debug /p:Platform="Any CPU"
+```
+
+* Mac
+
+```bash
+/src$ msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU"
+```
+
+### Visual Studio IDE
+
+The `Build.sln` file can also be opened in `Visual Studio` on either Windows or Mac.
+
 
 ## Referencing Assembly: World.dll
 
@@ -379,8 +425,8 @@ Open the `hello.js` file in the `src` directory.
 
 var dotnet = require('electron-dotnet');
 
-//var hello = dotnet.func("./src/World/bin/Debug/World.dll");
-var hello = dotnet.func("./src/World/World.cs");
+//var hello = dotnet.func(__dirname + "/World/bin/Debug/World.dll");
+var hello = dotnet.func(__dirname + "/World/World.cs");
 
 //Make method externaly visible this will be referenced in the renderer.js file
 exports.sayHello = arg => {
@@ -398,8 +444,8 @@ By default the line that specifies the assembly reference is commented out so we
 
 var dotnet = require('electron-dotnet');
 
-var hello = dotnet.func("./src/World/bin/Debug/World.dll");
-//var hello = dotnet.func("./src/World/World.cs");
+var hello = dotnet.func(__dirname + "/World/bin/Debug/World.dll");
+//var hello = dotnet.func(__dirname + "/World/World.cs");
 
 //Make method externaly visible this will be referenced in the renderer.js file
 exports.sayHello = arg => {
@@ -413,4 +459,29 @@ exports.sayHello = arg => {
 
 Everything should be setup to run with the assembly and you can start the application again to see it in action.
 
+## Referencing Assembly: MainWindow.dll
+
+Now that the assembly is built we need to reference the assembly.
+
+Open the `main.js` file in the project's main directory.  Near the top of the file you will see the following lines.
+
+``` javascript
+
+var dotnet = require('electron-dotnet');
+//var main = dotnet.func(__dirname + "/src/Main/bin/Debug/MainWindow.dll");
+var main = dotnet.func(__dirname + "/src/Main/MainWindow.cs");
+
+```
+
+By default the line that specifies the assembly reference is commented out so we will need to switch out the line that specifies the source file with the assembly reference.
+
+``` javascript
+
+var dotnet = require('electron-dotnet');
+var main = dotnet.func(__dirname + "/src/Main/bin/Debug/MainWindow.dll");
+//var main = dotnet.func(__dirname + "/src/Main/MainWindow.cs");
+
+```
+
+Everything should be setup to run with the assembly and you can start the application again to see it in action.
 

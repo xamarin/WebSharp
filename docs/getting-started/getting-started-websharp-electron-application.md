@@ -253,13 +253,13 @@ The generated application's code is in the `src` directory.  Depending on the pr
           |--- packages.config              // Used to track installed packages
           |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
           |--- MainWindow.csproj            // Project          
-          |--- MainWindow.sln               // Solution     
+          |--- MainWindow.sln               // Solution
      |--- World
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
           |--- World.cs               // Application Implementation
-          |--- World.csproj           // Project 
-          |--- World.sln              // Solution
+          |--- World.csproj           // Project          
+          |--- World.sln              // Solution          
      |--- Build.sln                         // Global project build solution
 
 ```
