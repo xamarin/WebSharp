@@ -7,8 +7,10 @@ using WebSharpJs.Script;
 
 using GeoLocation;
 
-//namespace Location
-//{
+#if !DEV
+namespace Location
+{
+#endif
     public class Startup
     {
 
@@ -32,7 +34,11 @@ using GeoLocation;
                 var map = await document.GetElementById("map");
                 var location = await document.GetElementById("location");
                 var error = false;
-
+                #if DEV
+                    await location.SetProperty("innerText", "OTH");
+                #else
+                    await location.SetProperty("innerText", "DLL");
+                #endif
                 await findMe.AttachEvent(HtmlEventNames.Click,
                     new EventHandler(
                         async (sender, evt) => {
@@ -95,4 +101,6 @@ using GeoLocation;
 
         }
     }
-//}
+#if !DEV
+}
+#endif

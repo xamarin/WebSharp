@@ -11,8 +11,11 @@ process.env.GOOGLE_API_KEY = package.GOOGLE_API_KEY;
 var mainWindow = null;
 
 var dotnet = require('electron-dotnet');
-//var main = dotnet.func(__dirname + "/src/Main/bin/Debug/MainWindow.dll");
-var main = dotnet.func(__dirname + "/src/Main/MainWindow.cs");
+
+if (!require('electron-is-dev'))
+  var main = dotnet.func(__dirname + "/src/Main/bin/Debug/MainWindow.dll");
+else
+  var main = dotnet.func({source : __dirname + "/src/Main/MainWindow.cs", symbols: ["DEV"]});
 
 function createWindow () {
     main(__dirname, function (error, result) {

@@ -533,8 +533,7 @@ When incorporating the code we briefly went over the `ScriptObjectCallback`, def
 Worth mentioning is that in the examples here there was only one parameter that was returned in the `CallbackState` but if their are multiple parameters returned to the callback method then they can be accessed as an `object[]` array.
 
 
-In the [next part](./Geolocation_package.md) we will look at packaging the application, using `electron-packager`, into an actual executable program for Mac.
-
+In the [next part](./Geolocation_assemblies.md) we will look at creating assemblies from our managed code as well as one way that the `development` and `production` execution environment can be managed.
 
 > **Warning:**  There are some objects that have their values implemented directly on the object itself like the geolocation objects Position and Coordinates.  That means they can not be persisted with the likes of the javascript JSON.stringify().  The bridge interface works on the same principle of being able to enumerate those properties.  If there are no properties then what we attempt to do is flatten that object by iterating through the object keys that creates a proxy object with properties so that we can pass it back through the bridge interface.  This may change in the future and require a specific interface to tell the bridge that the object needs to be flattened.
 

@@ -53,7 +53,7 @@ After running, the generated application should have the following structure:
      |--- launch.json                  // Launch Configurations
      |--- settings.json
 |--- .vscodeignore
-|--- scriptingjs-quickstart.md
+|--- hello-quickstart.md        // The document you are reading now
 |--- index.html                       // Html to be displayed in the app window
 |--- jsconfig.json
 |--- main.js                          // Defines the electron main process
@@ -67,16 +67,16 @@ After running, the generated application should have the following structure:
      |--- Main                             
           |--- nuget.config                 // Configuring NuGet behavior
           |--- packages.config              // Used to track installed packages
-          |--- MainWindow_macosx.csproj     // MacOSX project  
           |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
-          |--- MainWindow.csproj            // Windows project     
+          |--- MainWindow.csproj            // Project          
+          |--- MainWindow.sln               // Solution
      |--- World
           |--- nuget.config           // Configuring NuGet behavior
           |--- packages.config        // Used to track installed packages
-          |--- World_macosx.csproj    // MacOSX project  
           |--- World.cs               // Application Implementation
-          |--- World.csproj           // Windows project          
-
+          |--- World.csproj           // Project          
+          |--- World.sln              // Solution          
+     |--- Build.sln                         // Global project build solution
 ```
 
 Let's go through the purpose of some of these files and explain what they do:
@@ -124,23 +124,25 @@ const {app, BrowserWindow} = require('electron')
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
 
+var dotnet = require('electron-dotnet');
+//var main = dotnet.func(__dirname + "/src/Main/bin/Debug/MainWindow.dll");
+var main = dotnet.func(__dirname + "/src/Main/MainWindow.cs");
+
 function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 600, height: 400})
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`)
-
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
+    main(__dirname, function (error, result) {
+        if (error) throw error;
+        if (result) {
+            mainWindow = BrowserWindow.fromId(result);
+            // Emitted when the window is closed.
+            mainWindow.on('closed', function () {
+              // Dereference the window object, usually you would store windows
+              // in an array if your app supports multi windows, this is the time
+              // when you should delete the corresponding element.
+              mainWindow = null
+            })
+            
+        }
+      });
 }
 
 // This method will be called when Electron has finished
@@ -228,21 +230,6 @@ When we get to debugging you will see why it is broken up this way.
 ### Generated Code
 
 The generated application's code is in the `src` directory.  Depending on the project template selected there is an implementation of each type of application integration point generated.  When we selected the `WebSharp Electron Application` option we will have a total of one src file:
-
-
-     |--- Main                             
-          |--- nuget.config                 // Configuring NuGet behavior
-          |--- packages.config              // Used to track installed packages
-          |--- MainWindow.cs                // Controls the applications main event lifecycle via managed code
-          |--- MainWindow.csproj            // Project          
-          |--- MainWindow.sln               // Solution
-     |--- Location
-          |--- nuget.config           // Configuring NuGet behavior
-          |--- packages.config        // Used to track installed packages
-          |--- Location.cs               // Application Implementation
-          |--- Location.csproj           // Project          
-          |--- Location.sln              // Solution          
-     |--- Build.sln                         // Global project build solution
 
 ```
 .

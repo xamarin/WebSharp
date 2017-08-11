@@ -106,7 +106,7 @@ Defines the `Main` and `Renderer` Visual Studio .Net C# Solution file.  More inf
 
 ## Preparing Code: World.cs
 
-The first thing we will need to do is modify the `World.cs` and `MainWindow.cs§ source to make sure it conforms to how assemblies are referenced.
+The first thing we will need to do is modify the `World.cs` and `MainWindow.cs` source to make sure it conforms to how assemblies are referenced.
 
 As was mentioned when compiling the source code on the fly the class must be named `Startup` and it must have an `Invoke` method that matches the `Func<object,Task<object>>` delegate signature. 
 
@@ -393,7 +393,7 @@ Do a restore of the NuGet packages.
 * Mac
 
 ```bash
-/src$ msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:restore
+/src$ msbuild Build.sln /p:Configuration=Debug /p:Platform="Any CPU" /t:restore
 ```
 
 ### Build.sln: Build
@@ -407,7 +407,7 @@ Do a restore of the NuGet packages.
 * Mac
 
 ```bash
-/src$ msbuild World.sln /p:Configuration=Debug /p:Platform="Any CPU"
+/src$ msbuild Build.sln /p:Configuration=Debug /p:Platform="Any CPU"
 ```
 
 ### Visual Studio IDE

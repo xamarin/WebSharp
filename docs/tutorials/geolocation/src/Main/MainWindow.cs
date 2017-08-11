@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using WebSharpJs.Electron;
 using WebSharpJs.Script;
 
-//namespace MainWindow
-//{
+#if !DEV
+namespace MainWindow
+{
+#endif    
     public class Startup
     {
 
@@ -64,4 +66,6 @@ using WebSharpJs.Script;
 
         }
     }
-//}
+#if !DEV
+}
+#endif
