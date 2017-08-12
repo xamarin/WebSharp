@@ -239,12 +239,13 @@ To use `build.bat` in the scenario above one would issue the command as follows:
 WebSharp\electron-dotnet\tools>build.bat release 1.5.0 7.0.0 7.4.0
 ```
 
-Starting with 1.4.0 - 1.6.0 of Electron here are the following commands:
+Starting with 1.4.0 - 1.7.0 of Electron here are the following commands:
 
 ```
 WebSharp\electron-dotnet\tools>build.bat release 1.4.0 6.5
 WebSharp\electron-dotnet\tools>build.bat release 1.5.0 7.0.0 7.4.0
 WebSharp\electron-dotnet\tools>build.bat release 1.6.0 7.4.0
+WebSharp\electron-dotnet\tools>build.bat release 1.7.0 7.9.0
 ```
 
 The `electron-dotnet.js` source also needs to be updated so that the correct native `Nodejs` node module version can be looked up and loaded.
@@ -255,7 +256,8 @@ The `targetMap` needs to be modified for the supported `Electron` targets.
 var targetMap = [
     [ /^1\.4/, '1.4.0' ],
     [ /^1\.5/, '1.5.0' ],
-    [ /^1\.6/, '1.6.0' ],    
+    [ /^1\.6/, '1.6.0' ],
+    [ /^1\.7/, '1.7.0' ],    
 ];
 ``` 
 
@@ -266,6 +268,7 @@ var versionMap = [
     [ /^6\./, '6.5.0' ],
     [ /^7\.[0-3]/, '7.0.0' ],
     [ /^7\.4/, '7.4.0' ],
+    [ /^7\.9/, '7.9.0' ],
 ];
 ```
 
