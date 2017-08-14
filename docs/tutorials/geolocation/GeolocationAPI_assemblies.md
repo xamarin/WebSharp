@@ -233,7 +233,7 @@ The solution presented here is what was chosen for this simple project and may n
 
 A benefit of using assemblies is the execution speed.  A noticable difference can be seen on startup.
 
-In the [next tutorial](./Geolocation_package.md) we will be looking at using `electron-packager` to package our application into an executable that can be executed on the targeting platform.
+In the [next tutorial](./GeolocationAPI_packager.md) we will be looking at using `electron-packager` to package our application into an executable that can be executed on the targeting platform.
 
 For more information see the following:
 
