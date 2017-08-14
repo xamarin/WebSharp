@@ -17,7 +17,7 @@ At this time WebSharp only includes a very lightweight [DOM Interface](https://g
 
 [Part 4](./GeolocationAPI_assemblies.md) - By default when creating a `WebSharp Electron Application`, `On-The-Fly` compiling is used so we will cover compiling these modules into actual assemblies.  [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) as well as one way that the `development` and `production` execution environment can be managed.
 
-[Part 5](./part5md) - Packaging our application using `electron-packager` so that we have an actual application to execute.
+[Part 5](./GeolocationAPI_packager.md) - Packaging our application using `electron-packager` so that we have an actual application to execute.
 
 
 ## End Goal
