@@ -494,7 +494,7 @@ Now when the application is run we should have some errors displayed to the scre
 
 ## Providing the Google API Key
 
-At the beginning of the tutorials, a list of requirements was presented with one of them being a [Google API Key](./README#api-keys).  If you have not done that now would be a good time so we can get this working.
+At the beginning of the tutorials, a list of requirements was presented with one of them being a [Google API Key](./README.md#api-keys).  If you have not done that now would be a good time so we can get this working.
 
 To provide the key we will need to set the [GOOGLE_API_KEY](https://github.com/electron/electron/blob/master/docs/api/environment-variables.md#google_api_key) environment variable before the application is run.
 
