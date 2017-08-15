@@ -52,7 +52,12 @@ namespace MainWindow
         async Task<int> CreateWindow (string __dirname)
         {
             // Create the browser window.
-            mainWindow = await BrowserWindow.Create(new BrowserWindowOptions() { Width = 600, Height = 400 });
+            mainWindow = await BrowserWindow.Create(new BrowserWindowOptions() 
+            { 
+                Width = 600, 
+                Height = 400,
+                IconPath = $"{__dirname}/images/icons/appicon.ico"
+            });
 
             // and load the index.html of the app.
             await mainWindow.LoadURL($"file://{__dirname}/index.html");
