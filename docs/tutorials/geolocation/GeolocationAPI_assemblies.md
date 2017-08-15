@@ -2,11 +2,11 @@
 
 In the previous parts we setup our application and now we are almost ready to start packaging our application.  One thing to consider though is that by default the managed code is compiled each time the application is run.  For a small application like this it may be fine but for larger ones these delays, while the source code is being compiled, may not be what you are looking for.
 
-In this tutorial we will be looking at compiling our source files that make up our application into libraries that can be loaded without the use of the `On-The-Fly` compiling.  If you read through [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) you may find that is all you need.  If so then you can go ahead and skip the rest of this tutorial.
+In this tutorial, we will be looking at compiling our source files that make up our application into libraries that can be loaded without the use of the `On-The-Fly` compiling.  If you read through [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) you may find that is all you need.  If so then you can go ahead and skip the rest of this tutorial.
 
 What we are going to focus on is how we can modify the application to run with both generated assemblies when packaged and use the `On-The-Fly` option while developing.
 
-Electron does not offer any built in way to determine whether the app is being run in development or is packaged and running on an end-user's machine.
+`Electron` does not offer any built in way to determine whether the app is being run in development or is packaged and running on an end user's machine.
 
 There is a complete discussion of this found in the issue [Distinguishing "development" from "production"](https://github.com/electron/electron/issues/7714).
 
@@ -26,7 +26,7 @@ $ npm install --save electron-is-dev
 
 ## Preparing the sources
 
-First we will start by modifying the source files as outlined in [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) which basically says that if we want to use the built assemblies then we need to make sure we have a `namespace` specified.
+First, we will start by modifying the source files as outlined in [Getting Started Building Websharp Electron Application Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) which basically says that if we want to use the built assemblies then we need to make sure we have a `namespace` specified.
 
 ### Main process
 
@@ -60,7 +60,7 @@ else
 
 Now just one more little tweak.  We have now determined which process to run depending on development or production.
 
-Above we mentioned that when loading from an assembly then we need to make sure we have a `namespace` specified.  That seems to be a real pain if everytime we want to change from one to the other then we have keep modifying the sources.  One way to ease this is to use the `conditional compile symbols` parameter `symbols` when defining our source options.  When we added the extra source file into our `Location` by using the `itemgroup` parameter we also saw an option in the list for symbols.
+Above we mentioned that when loading from an assembly then we need to make sure we have a `namespace` specified.  That seems to be a real pain every time we want to change from one to the other then we have to keep modifying the sources.  One way to ease this is to use the `conditional compile symbols` parameter `symbols` when defining our source options.  When we added the extra source file into our `Location` by using the `itemgroup` parameter we also saw an option in the list for symbols.
 
 The `.func` also takes a `<key,value>` options object:
 
@@ -71,7 +71,7 @@ The `.func` also takes a `<key,value>` options object:
 | itemgroup | A string array of additional sources that should be compiled. |
 | symbols | A string array of conditional compile symbols that can be used in the sources. |
 
-Define a `DEV` symbol to be passed so that we can wrap the `namespace` with it.  Of course you can add as many as you would like.
+Define a `DEV` symbol to be passed so that we can wrap the `namespace` with it.  Of course, you can add as many as you would like.
 
 ```javascript
 
@@ -120,19 +120,19 @@ Also, change the last commented out `//}` as well.
 
 ### Renderer process
 
-The `Renderer` files will need to changed as well.  We will just present the code instead of stepping through the changes as with the `Main` process files.
+The `Renderer` files will need to change as well.  We will just present the code instead of stepping through the changes as with the `Main` process files.
 
 #### Renderer: /src/Location/geolocation.js
 
 ```javascript
 
 if (!require('electron-is-dev'))
-	var hello = dotnet.func(__dirname + "/Location/bin/Debug/Location.dll");
+    var hello = dotnet.func(__dirname + "/Location/bin/Debug/Location.dll");
 else
-	var hello = dotnet.func({ source: __dirname + "/Location/Location.cs", 
- 						references: [], 
- 						itemgroup: [__dirname + "/Location/GeoLocationAPI.cs"], 
- 						symbols: ["DEV"] });
+    var hello = dotnet.func({ source: __dirname + "/Location/Location.cs", 
+                         references: [], 
+                         itemgroup: [__dirname + "/Location/GeoLocationAPI.cs"], 
+                         symbols: ["DEV"] });
 
 
 ```
@@ -209,7 +209,7 @@ The `Build.sln` file can also be opened in `Visual Studio` on either Windows or 
 
 If you run the application again we will still get the `On-The-Fly` compiled version since we have not packaged it.  To test this it can be overridden by setting the `ELECTRON_IS_DEV` environment variable to `1`.
 
-Somewhere in the `MainWindow.cs` source file add the following lines and view the `console`.
+Somewhere in the `MainWindow.cs` source file the following lines can be added and when run can be viewed in the `console`.
 
 ```csharp
 
@@ -231,7 +231,7 @@ By using the `conditional compile symbols` option when defining the managed code
 
 The solution presented here is what was chosen for this simple project and may not meet all the requirements for your next application.  Make sure to look through the [Distinguishing "development" from "production"](https://github.com/electron/electron/issues/7714) issue.  They may implement something in the future.
 
-A benefit of using assemblies is the execution speed.  A noticable difference can be seen on startup.
+A benefit of using assemblies is the execution speed.  A noticeable difference can be seen on startup.
 
 In the [next tutorial](./GeolocationAPI_packager.md) we will be looking at using `electron-packager` to package our application into an executable that can be executed on the targeting platform.
 

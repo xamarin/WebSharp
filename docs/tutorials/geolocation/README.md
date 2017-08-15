@@ -1,17 +1,17 @@
 # Tutorial overview
 
-This set of tutorials will be presented in muliple short parts.  
+This set of tutorials will be presented in multiple short parts.  
 
-At this time WebSharp only includes a very lightweight [DOM Interface](https://github.com/xamarin/WebSharp/tree/master/docs/tutorials/DOM) .  That does not mean that you can not access other HTML or HTML 5 functionality.  In this series of multiple short tutorials we will show how you can tap into the other functionality using `ScriptObject`'s and modeling those other API interfaces.  By wrapping the HTML functionality in higher-level custom classes we can create a strongly typed interface to build a custom library.
+At this time WebSharp only includes a very lightweight [DOM Interface](https://github.com/xamarin/WebSharp/tree/master/docs/tutorials/DOM) .  That does not mean that you can not access other HTML or HTML 5 functionality.  In this series of multiple short tutorials, we will show how you can tap into the other functionality using `ScriptObject`'s and modeling those other API interfaces.  By wrapping the HTML functionality in higher-level custom classes we can create a strongly typed interface to build a custom library.
 
 `Part 1` - The document you are reading now, will focus on quickly generating the application and creating the structure of the application for scripting the `navigator.geolocation` functionality.  Adding code to interface with the DOM Html Elements and handling the button `click` event.  Since the focus of this set of tutorials is the scripting interface, the application interface itself will be very minimal.
 
 [Part 2](./GeolocationAPI.md) - Continuation from `Part 1` with the following:
 
-* High level view of the Bridge interface that is used by `WebSharp`.
+* High-level view of the Bridge interface that is used by `WebSharp`.
 * Adding a new source module to the project.
 * Incorporating the new source module in our application.
-* Creating the basic singleton code to reference the `navigator,geolocation` object.
+* Creating the basic singleton code to reference the `navigator.geolocation` object.
 
 [Part 3](./GeolocationAPI_1.md) using the documentation from the [Geolocation API Specification](https://dev.w3.org/geo/api/spec-source.html#navi-geo) we will then focus on the implementation details of our new module. 
 
@@ -22,11 +22,11 @@ At this time WebSharp only includes a very lightweight [DOM Interface](https://g
 
 ## End Goal
 
-At the end of the series we will have created a simple application with a button that will call out to a strongly typed C# `navigator.geolocation` api to retrieve the current location and display a map image of that position.
+At the end of the series, we will have created a simple application with a button that will call out to a strongly typed C# `navigator.geolocation` API to retrieve the current location and display a map image of that position.
 
 ![map](./images/map.png)
 
-If there are errors accessing the api then we will display them as well.
+If there are errors accessing the API then we will display them as well.
 
 ![map](./images/error.png)
 
@@ -42,7 +42,7 @@ If there are errors accessing the api then we will display them as well.
 
 1. Optional icons used for your application.  These will be used when packaging the application later in the tutorial.  If not provided then the `Electron` default icons will be used.  See [Setting Application Icon - Mac and Windows](https://github.com/xamarin/WebSharp/tree/master/docs/tutorials/appicon#setting-application-icon---mac-and-windows)
 
-1. To begin using the `navigator.geolocation` api provided by Google you will need to have an API Key.
+1. To begin using the `navigator.geolocation` API provided by Google you will need to have an API Key.
 
 ### API keys
 
@@ -68,9 +68,9 @@ To generate a server key for your project:
  1. If you'd like to restrict requests to a specific IP address, do so now.
  1. Click **Create**.
 
-Your API key should be 40 characters long, and begin with `AIza`.
+Your API key should be 40 characters long and begin with `AIza`.
 
-**Important:** This key should be kept secret on your server.
+**Important:** This key should be kept a secret on your server.
 
 ## Creating the application
 
@@ -116,13 +116,13 @@ The first thing we will want to do is setup `index.html` file to create the elem
 <p><button id="findMe">Show my location</button></p>
 ```
 
-* An output area with the `id` of `location` that will display the location longitude and latitude on successful call to the geolocation api or the error(s) returned if the api was not able to complete successfully.
+* An output area with the `id` of `location` that will display the location longitude and latitude on a successful call to the geolocation API or the error(s) returned if the API was not able to complete successfully.
 
 ```javascript
 <p id="location"></p>
 ```
 
-* Our image area used to display the map image returned back from the geolocation api on succesful call.
+* Our image area used to display the map image returned back from the geolocation API on a successful call.
 
 ```javascript
     <div id="out">
@@ -134,7 +134,7 @@ The first thing we will want to do is setup `index.html` file to create the elem
 
 For right now let's set up the application to interact with our DOM elements defined in the `index.html` definition above.  This will only be preparation until we have the API defined in Part 2.  You can find out more about interacting with the DOM by reading the [DOM Overview](https://github.com/xamarin/WebSharp/blob/master/docs/tutorials/DOM/overview.md).
 
-> :bulb: The `navigator.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigator` object not being defined.  For that reason we will be focusing all of our attention in this module.
+> :bulb: The `navigator.geolocation` can only be referenced in the `Renderer` process.  If you try referencing from the Main process you will get an error about the `navigator` object not being defined.  For that reason, we will be focusing all of our attention in this module.
 
 Open the `Location.cs` source file and let's add the following code.
 
@@ -176,7 +176,7 @@ var location = await document.GetElementById("map");
 
 ### Button click event listener
 
-When the `findMe` button is clicked is where the geolocation api will be called. To do this we will need to listen to the button's `click` event.
+When the `findMe` button is clicked is where the geolocation API will be called. To do this we will need to listen to the button's `click` event.
 
 ```cs
 
@@ -205,9 +205,9 @@ Now if the application is run you will see the following:
 
 ## Summary
 
-In this tutorial we went through creating a application and modifying the source to reference the DOM elements that will be needed in the following parts when we start implementing the `GeoLocation` interface.
+In this tutorial, we went through creating an application and modifying the source to reference the DOM elements that will be needed in the following parts when we start implementing the `GeoLocation` interface.
 
-We also saw how to interfact with DOM events by listening to the `click` event of the button tag `<button>`.
+We also saw how to interact with DOM events by listening to the `click` event of the button tag `<button>`.
 
 In the next part, [Part 2](./GeolocationAPI.md), of the tutorial we will start the `Scripting` of the `navigator.geolocation` HTML interface.
 
