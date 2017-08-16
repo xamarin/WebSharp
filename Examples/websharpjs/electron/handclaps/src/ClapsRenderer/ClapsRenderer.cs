@@ -41,10 +41,10 @@ using WebSharpJs.Script;
                 length = await document.GetElementById("length");
                 copy = await document.GetElementById("copy");
 
-                await area.AttachEvent("input", updateOutput);
-                await spaces.AttachEvent("change", updateOutput);
-                await emojiPicker.AttachEvent("change", updateOutput);
-                await copy.AttachEvent("click", copyClicked);
+                await area.AttachEvent(HtmlEventNames.Input, updateOutput);
+                await spaces.AttachEvent(HtmlEventNames.Change, updateOutput);
+                await emojiPicker.AttachEvent(HtmlEventNames.Change, updateOutput);
+                await copy.AttachEvent(HtmlEventNames.Click, copyClicked);
 
                 await console.Log($"Hello:  {input}");
             }

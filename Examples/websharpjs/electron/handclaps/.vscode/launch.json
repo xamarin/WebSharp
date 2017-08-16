@@ -22,7 +22,7 @@
           "WEBSHARP_CS_CACHE": ""
       },
       "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
-      "protocol": "legacy"
+      "protocol": "inspector"
     }
   ]
 }
