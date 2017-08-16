@@ -385,7 +385,7 @@
                  cb('Get Attribute error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
 
             //console.log('attribute -> ' + prop + ' [ ' + objToWrap.getAttribute(prop) + ' ]');
-            cb(null, so.getAttribute(prop));
+            cb(null, so.getAttribute(prop.attribute));
         }
 
         bridge.websharp_set_attribute = function (prop, cb) {
@@ -394,7 +394,7 @@
                  cb('Set Attribute error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
 
             //console.log('set attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
-            so.setAttribute(prop.name, prop.value);
+            so.setAttribute(prop.attribute, prop.value);
             cb(null, true);
         }
 
@@ -413,7 +413,7 @@
                  cb('Set Style error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
 
             //console.log('set style attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
-            so.style[prop.name] = prop.value;
+            so.style[prop.attribute] = prop.value;
             cb(null, true);
         }
 
@@ -552,6 +552,8 @@
                                 DOMEventProps.forEach(function (element) {
                                     event[element] = args[i][element];
                                 });
+                                if (args[i].target)
+                                    event['target'] = ObjectToScriptObject(args[i].target);
 
                                 // load DOM drag specific event info
                                 if (args[i].dataTransfer)

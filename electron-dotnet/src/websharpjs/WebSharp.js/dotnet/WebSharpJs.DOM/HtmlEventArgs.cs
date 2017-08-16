@@ -141,6 +141,14 @@ namespace WebSharpJs.DOM
 
         }
 
+        [ScriptableMember(ScriptAlias = "target")]
+        public HtmlElement Target
+        {
+            get;
+            internal set;
+
+        }
+
         [ScriptableMember(ScriptAlias = "dataTransfer")]
         public DataTransfer DataTransfer
         {

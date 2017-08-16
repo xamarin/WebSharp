@@ -66,7 +66,13 @@ namespace WebSharpJs.DOM
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            return await WebSharp.Bridge.JavaScriptBridge.websharp_get_attribute(name);
+            var parm = new
+            {   
+                handle = Handle,
+                attribute = name,
+            };
+
+            return await WebSharp.Bridge.JavaScriptBridge.websharp_get_attribute(parm);
         }
 
         public async Task<bool> SetAttribute(string name, string value)
@@ -75,10 +81,12 @@ namespace WebSharpJs.DOM
                 throw new ArgumentNullException(nameof(name));
 
             var parm = new
-            {
-                name = name,
+            {   
+                handle = Handle,
+                attribute = name,
                 value = value
             };
+
             return await WebSharp.Bridge.JavaScriptBridge.websharp_set_attribute(parm);
         }
 
@@ -87,7 +95,13 @@ namespace WebSharpJs.DOM
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            return await WebSharp.Bridge.JavaScriptBridge.websharp_get_style_attribute(name);
+            var parm = new
+            {   
+                handle = Handle,
+                attribute = name,
+            };
+
+            return await WebSharp.Bridge.JavaScriptBridge.websharp_get_style_attribute(parm);
         }
 
         public async Task<bool> SetStyleAttribute(string name, string value)
@@ -97,9 +111,11 @@ namespace WebSharpJs.DOM
 
             var parm = new
             {
-                name = name,
+                handle = Handle,
+                attribute = name,
                 value = value
             };
+
             return await WebSharp.Bridge.JavaScriptBridge.websharp_set_style_attribute(parm);
         }
 
