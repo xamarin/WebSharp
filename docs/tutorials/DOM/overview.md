@@ -282,3 +282,193 @@ For more information on HTML 5 Imports see the following links:
 
 > :bulb: One aspect of targeting `Electron` and using the built in `Chromium` features is that we do not have to worry about browser compatibility.  Once `Chromium` supports it you can use it within the `Electron` application.
 
+#### Listening to JavaScript Events
+
+We can also listen too and handle the DOM events that are associated.  There exists a static class of predefined events, [WebSharpJs.DOM.HtmlEventNames](https://github.com/xamarin/WebSharp/blob/master/electron-dotnet/src/websharpjs/WebSharp.js/dotnet/WebSharpJs.DOM/HtmlEventNames.cs), that you may find useful instead of trying to remember the exact spelling of the event that can be listened for.
+
+Some of the more common predefined events are listed below:
+
+##### UI Events
+
+| HtmlEventName | DOM | Fired When |
+| --- | --- | --- |
+| Change | change | The change event is fired for `<input>`,` <select>`, and `<textarea>` elements when a change to the element's value is committed by the user. |
+| Select | select | Some text is being selected. |
+
+##### Resource Events
+
+| HtmlEventName | DOM | Fired When |
+| --- | --- | --- |
+| Abort | abort | The loading of a resource has been aborted. |
+| Error | error | A resource failed to load. |
+| Load | load | A resource and its dependent resources have finished loading. | 
+| UnLoad | unload | The document or a dependent resource is being unloaded. |
+
+##### Keyboard Events
+
+| HtmlEventName | DOM | Fired When |
+| --- | --- | --- |
+| KeyDown | keydown | ANY key is pressed |
+| KeyPress | keypress | ANY key except Shift, Fn, CapsLock is in pressed position. (Fired continously.) |
+| KeyUp | keyup | ANY key is released |
+
+##### Mouse Events
+
+| HtmlEventName | DOM | Fired When |
+| --- | --- | --- |
+| Click | click | A pointing device button has been pressed and released on an element. |
+| MouseOver | mouseover | A pointing device is moved onto the element that has the listener attached or onto one of its children. | 
+| MouseOut | mouseout | A pointing device is moved off the element that has the listener attached or off one of its children. |
+| MouseEnter | mouseenter | A pointing device is moved onto the element that has the listener attached. |
+| ContextMenu | contextmenu | The right button of the mouse is clicked (before the context menu is displayed). |
+
+##### Focus Events
+
+| HtmlEventName | DOM | Fired When |
+| --- | --- | --- |
+| Focus | focus | An element has received focus (does not bubble). |
+| Blur | blur | An element has lost focus (does not bubble). |
+
+##### Drag and Drop
+
+| HtmlEventName | DOM | Fired When |
+| --- | --- | --- |
+| DragEnter | dragenter | A dragged element or text selection enters a valid drop target. |
+| DragEnd | dragend | A drag operation is being ended (by releasing a mouse button or hitting the escape key). |
+| DragLeave | dragleave | A dragged element or text selection leaves a valid drop target. |
+| DragOver | dragover | An element or text selection is being dragged over a valid drop target (every 350ms). |
+| Drop | drop | An element is dropped on a valid drop target. |
+
+> :bulb: Notice that the events are not prepended with `on`.  For more events take a look at the [Event reference](https://developer.mozilla.org/en-US/docs/Web/Events) documenation.
+
+To listen to and react to an event you use the `AttachEvent` of an instance of `HtmlElement`, `HtmlDocument` and `HtmlWindow`.
+
+A good code example can be found in the [HandClaps example](https://github.com/xamarin/WebSharp/tree/master/Examples/websharpjs/electron/handclaps)
+
+In the [ClapsRenderer.cs](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/src/ClapsRenderer/ClapsRenderer.cs) source code we find examples of retrieving `HtmlElement`'s by using the `GetElementById` method as well as attaching event listeners to those elements.
+
+```csharp
+
+    var document = await HtmlPage.GetDocument();
+    area = await document.GetElementById("input");
+    output = await document.GetElementById("output");
+    spaces = await document.GetElementById("spaced");
+    emojiPicker = await document.GetElementById("emoji");
+    length = await document.GetElementById("length");
+    copy = await document.GetElementById("copy");
+
+    await area.AttachEvent(HtmlEventNames.Input, updateOutput);
+    await spaces.AttachEvent(HtmlEventNames.Change, updateOutput);
+    await emojiPicker.AttachEvent(HtmlEventNames.Change, updateOutput);
+    await copy.AttachEvent(HtmlEventNames.Click, copyClicked);
+
+```
+
+#### Dealing with element's attributes
+
+An element's style can also be manipulated by using the following methods of the `HtmlElement`.
+
+| Method | Description |
+| --- | --- |
+| GetAttribute | Retrieves a named attribute on the current element.  |
+| GetStyleAttribute | Retrieves a named CSS style attribute on the current element. |
+| RemoveAttribute | Removes a named attribute on the current element.  |
+| RemoveStyleAttribute | Removes a named CSS style attribute on the current element. |
+| SetAttribute | Sets a named attribute value on the current element.  |
+| SetStyleAttribute | Sets a named CSS style attribute value on the current element.  |
+
+To set the `style` attribute of an `HtmlElement` all at once you can use the following:
+
+```csharp
+
+    area = await document.GetElementById("input");
+    await area.SetAttribute("style", "border: medium dashed green; background-color: yellow; width: 135px; height: 35px")
+
+``` 
+
+<input style="border: medium dashed green; background-color: yellow; width: 135px; height: 35px; color: blue">
+
+Although it is possible to set the `style` attribute with `SetAttribute`, it is recommended that you use properties of the `Style` object so that already existing `CSS`` are not overwritten.:
+
+```csharp
+
+    await area.SetStyleAttribute("backgroundColor", "yellow");
+    await area.SetStyleAttribute("borderStyle", "medium dashed green");
+    await area.SetStyleAttribute("width", "135px");
+    await area.SetStyleAttribute("height", "35px");
+
+```
+
+#### Working with Element's CSS classes
+
+There are also methods that allow working with the Css classes of an element.
+
+
+| Method | Description |
+| --- | --- |
+| GetCssClass | Retrieves the CSS class name on the current element. |
+| SetCssClass | Sets the CSS class name on the current element. |
+
+For example code of working with Css classes again look at the [HandClaps example](https://github.com/xamarin/WebSharp/tree/master/Examples/websharpjs/electron/handclaps)
+
+In the [ClapsRenderer.cs](https://github.com/xamarin/WebSharp/blob/master/Examples/websharpjs/electron/handclaps/src/ClapsRenderer/ClapsRenderer.cs) source code uses the following code to work with the Css classes of the elements.  The code is modeled after `JQuery`'s routines.
+
+```csharp
+
+    static readonly char[] rnothtmlwhite = new char[] {' ','\r','\n','\t','\f' };
+    bool IsHasClass(string elementClass, string className)
+    {
+        if (string.IsNullOrEmpty(elementClass) || string.IsNullOrEmpty(className))
+            return false;
+        return elementClass.Split(rnothtmlwhite, StringSplitOptions.RemoveEmptyEntries).Contains(className);
+    }
+
+    async Task<string> addClass(HtmlElement element, string klass, string elementClass = null)
+    {
+        if (string.IsNullOrEmpty(elementClass))
+        {
+            elementClass = await length.GetCssClass();
+        }
+
+        if (!IsHasClass(elementClass, klass))
+        {
+            elementClass += $" {klass} ";
+            await element.SetCssClass(elementClass);
+        }
+        return elementClass;
+    }
+    async Task<bool> removeClass(HtmlElement element, string klass, string elementClass = null)
+    {
+        if (string.IsNullOrEmpty(elementClass))
+        {
+            elementClass = await length.GetCssClass();
+        }
+
+        if (IsHasClass(elementClass, klass))
+        {
+            var classList = elementClass.Split(rnothtmlwhite, StringSplitOptions.RemoveEmptyEntries).ToList();
+            classList.Remove(klass);
+            await element.SetCssClass(string.Join(" ",classList));
+            return true;
+        }
+        return false;
+    }
+
+```
+
+Example usage of the above methods.
+
+```csharp
+
+    if (result.Length > 140)
+    {
+        await addClass(length, "text-danger");
+    }
+    else 
+    {
+        await removeClass(length, "text-danger");
+    }
+
+```
+
+
