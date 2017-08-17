@@ -275,7 +275,7 @@ To use `npm install` do the following from a terminal inside of the project dire
 
 ``` bash
 ~$ cd some-other-project     # go into some other package directory.
-some-other-project$ npm install --save-dev path-to-WebSharp/electron-dotnet/      # install 'electron-dotnet'
+some-other-project$ npm install --save path-to-WebSharp/electron-dotnet/      # install 'electron-dotnet'
 ```
 
 During the install into the project the native modules of `WebSharp` will automatically be rebuilt.
@@ -308,8 +308,8 @@ You have two choices here.
 * Uninstall `electron-dotnet` and then reinstall it.  This will rebuild the modules against the Electron version you have installed.
 
     ``` bash
-    some-other-project$ npm uninstall electron-dotner    # uninstall electron-rebuild
-    some-other-project$ npm install --save-dev path-to-WebSharp/electron-dotnet/      # install 'electron-dotnet'
+    some-other-project$ npm uninstall electron-dotnet    # uninstall electron-rebuild
+    some-other-project$ npm install --save path-to-WebSharp/electron-dotnet/      # install 'electron-dotnet'
     ```
 
     During the install you will see the module rebuilding the `electron-dotnet` native modules.

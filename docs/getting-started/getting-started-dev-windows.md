@@ -332,7 +332,7 @@ To use `npm install` do the following from a terminal inside of the project dire
 
 ``` bash
 > cd some-other-project     # go into some other package directory.
-some-other-project> npm install --save-dev path-to-WebSharp/electron-dotnet/      # install 'electron-dotnet'
+some-other-project> npm install --save path-to-WebSharp/electron-dotnet/      # install 'electron-dotnet'
 ```
 
 > :bulb: When installed into the project the only native modules of `WebSharp` that will be available are those that have been built in the build step above.

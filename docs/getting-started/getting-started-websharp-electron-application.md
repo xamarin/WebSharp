@@ -15,7 +15,30 @@ You need [node.js](https://nodejs.org/en/) installed and available in your $PATH
       * [See Getting Started on Windows](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md)
    
       * [See Getting Started on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md)
-    
+
+## Create an application directory
+
+First thing to do is create a directory for the new application.
+
+```powershell
+
+# Windows command line
+
+C:\projects> mkdir hello
+C:\projects> cd hello
+C:\projects\hello> _
+
+```
+
+```bash
+# Mac terminal
+
+/projects$ mkdir hello
+/projects$ cd hello
+/projects/hello$ _
+
+```
+
 ## Generate a `WebSharp Electron` Application
 The simplest way to add a new `WebSharp Electron` application for consumption is through adding a project. A project will have all the boot strap files available to run the `Electron` application.  For more details you can look at the [Electron Quick Start](https://github.com/electron/electron-quick-start).
 
@@ -40,6 +63,32 @@ Hit enter to start generating the application structure.
 This will install the dependencies automatically and when done you will have the application generated.
 
 ![The electron-dotnet generator finish](./screenshots/yogen-wsa-mac-finish.PNG)
+
+## Referencing WebSharp's `electron-dotnet`
+
+During the install process of the application `Electron` should already be installed but you will also need to reference `electron-dotnet` as well.
+
+WebSharp is going through development and is still in transition so unfortunately no npm package exists yet so will need to be referenced from a local build.
+
+There are two ways:
+
+* Symlink
+
+```bash
+npm link electron-dotnet # link-install the `electron-dotnet` package
+```
+
+* npm install
+
+```bash
+npm install --save path-to-WebSharp/electron-dotnet/      # install 'electron-dotnet'
+```
+
+For a list of pros and cons take a look at the following from the `Getting Started` documentation listed in the prerequisites at the beginning of this document:
+
+* [Referencing `electron-dotnet` on Windows](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md#referencing-electron-dotnet)
+   
+* [Referencing `electron-dotnet` on Mac](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-mac.md#referencing-electron-dotnet)
 
 
 ## The Structure of an application
