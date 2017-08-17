@@ -1,0 +1,14 @@
+{
+    "name": "dragndrop",
+    "displayName": "DragNDrop",
+    "description": "Example of Drag And Drop events",
+    "version": "0.0.1",
+    "publisher": "Xamarin",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^1.4.0"
+    }
+}

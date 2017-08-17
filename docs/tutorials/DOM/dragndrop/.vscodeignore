@@ -1,0 +1,7 @@
+.vscode/**
+.vscode-test/**
+test/**
+.gitignore
+jsconfig.json
+electron-dotnet-quickstart.md
+.eslintrc.json
