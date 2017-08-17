@@ -56,9 +56,9 @@ using WebSharpJs.Script;
             await mainWindow.LoadURL($"file://{__dirname}/index.html");
 
             // Open the DevTools
-            await mainWindow.GetWebContents().ContinueWith(
-                    (t) => { t.Result?.OpenDevTools(DevToolsMode.Bottom); }
-            );
+            // await mainWindow.GetWebContents().ContinueWith(
+            //         (t) => { t.Result?.OpenDevTools(DevToolsMode.Bottom); }
+            // );
 
             return await mainWindow.GetId();
 
