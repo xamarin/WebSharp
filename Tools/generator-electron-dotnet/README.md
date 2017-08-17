@@ -10,6 +10,26 @@ Install Yeoman and the Electron DotNet generator:
 npm install -g yo generator-electron-dotnet
 ```
 
+You can also install with a symlink instead of installing globally.
+
+* Mac
+
+```bash
+WebSharp$ cd Tools/generator-electron-dotnet
+WebSharp/Tools/generator-electron-dotnet$ npm link  # link-install the `electron-dotnet` generator package
+```
+
+* Windows
+
+```bash
+WebSharp> cd Tools\generator-electron-dotnet
+WebSharp\Tools\generator-electron-dotnet> npm link  # link-install the `electron-dotnet` generator package
+```
+
+
+
+The previous command will setup a symbolic link to the Yeoman generator so any changes that are pulled in from development will automatically be made available to the template generation.
+
 ## Run Yo Code
 The Yeoman generator will walk you through the steps required to create your Electron DotNet application prompting for the required information.
 
@@ -19,15 +39,11 @@ To launch the generator simply type:
 yo electron-dotnet
 ```
 
-![The command generator](yoelectrondotnet.png)
+![The electron-dotnet generator](./../../docs/getting-started/screenshots/yogen-wsa-mac.png)
 
 ## Generator Output
 
-These templates will
-* Create a base folder structure
-* Template out a rough `package.json`
-* Import any assets required for your extension e.g. tmBundles or the VS Code Library
-* Set-up `launch.json` for running your Electron DotNet application
+See [Getting Started WebSharp Electron Application](./../../docs/getting-started/getting-started-websharp-electron-application.md) documentation.
 
 ## History
 

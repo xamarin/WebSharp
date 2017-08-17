@@ -42,7 +42,7 @@ C:\projects\hello> _
 ## Generate a `WebSharp Electron` Application
 The simplest way to add a new `WebSharp Electron` application for consumption is through adding a project. A project will have all the boot strap files available to run the `Electron` application.  For more details you can look at the [Electron Quick Start](https://github.com/electron/electron-quick-start).
 
-We have written a Yeoman generator to help get you started. Install Yeoman and the Yeoman Electron Dotnet generator that provides different templates for creating new applications:
+We have written a [Yeoman generator](./../../Tools/generator-electron-dotnet/README.md) to help get you started. Install Yeoman and the Yeoman Electron Dotnet generator that provides different templates for creating new applications:
 
 ``` bash
 npm install -g yo path-to-WebSharp-directory\Tools\generator-electron-dotnet
