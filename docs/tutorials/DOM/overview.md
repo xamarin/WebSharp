@@ -333,7 +333,7 @@ Some of the more common predefined events are listed below:
 | Focus | focus | An element has received focus (does not bubble). |
 | Blur | blur | An element has lost focus (does not bubble). |
 
-##### Drag and Drop
+##### Drag and Drop Events
 
 | HtmlEventName | DOM | Fired When |
 | --- | --- | --- |

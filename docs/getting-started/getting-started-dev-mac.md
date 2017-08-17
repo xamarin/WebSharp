@@ -199,7 +199,7 @@ Warning: This will overwrite any modifications you have made within this directo
 The command to run from the `WebSharp` repo directory is:
 
 ``` bash
-..\nacl_sdk\naclsdk.bat update pepper_canary --force
+../nacl_sdk/naclsdk update pepper_canary --force
 ```
 
 ## Referencing `electron-dotnet`
