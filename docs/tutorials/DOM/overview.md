@@ -18,6 +18,10 @@ Besides the differences the developer will still work with managed objects in th
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Document](#html-document)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Element](#html-element)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[HTML Element Sample code](#tinkering-with-html-dom-elements)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[JavaScript Events](#listening-to-javascript-events)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Element's Attributes](#dealing-with-elements-attributes)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Element's CSS classes](#working-with-elements-css-classes)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Drag and Drop](#drag-and-drop)  
 
 ## The key classes of the WebSharpJs.DOM namespace
 
@@ -329,7 +333,7 @@ Some of the more common predefined events are listed below:
 | Focus | focus | An element has received focus (does not bubble). |
 | Blur | blur | An element has lost focus (does not bubble). |
 
-##### Drag and Drop
+##### Drag and Drop Events
 
 | HtmlEventName | DOM | Fired When |
 | --- | --- | --- |
@@ -468,6 +472,59 @@ Example usage of the above methods.
     {
         await removeClass(length, "text-danger");
     }
+
+```
+
+### Drag and Drop
+
+Drag and Drop can be a little confusing on what needs to be overridden, where it needs to be overridden and how to enable `Drop`.
+
+From the JavaScript events section above we will be interested in the following events.
+
+| HtmlEventName | DOM | Fired When |
+| --- | --- | --- |
+| DragEnter | dragenter | A dragged element or text selection enters a valid drop target. |
+| DragEnd | dragend | A drag operation is being ended (by releasing a mouse button or hitting the escape key). |
+| DragLeave | dragleave | A dragged element or text selection leaves a valid drop target. |
+| DragOver | dragover | An element or text selection is being dragged over a valid drop target (every 350ms). |
+| Drop | drop | An element is dropped on a valid drop target. |
+
+From the example code of the [DragNDrop example](./dragndrop) we will take a look at the implementation of the [Dragger.cs](./dragndrop/src/Dragger/Dragger.cs) source.
+
+The steps to activate Drag and Drop are as follows:
+
+1. The `WebSharpJs.DOM.HtmlEventNames.DragOver`, **_dragover_**, event needs to be handled.
+
+1. The `DragOver` event handler needs to call the event's PreventDefault() method.
+
+1. A `DropEffect` must be set.  `DropEffect` controls the feedback (typically visual) the user is given during a drag and drop operation. It will affect which cursor is displayed while dragging.  The default is `None` which indicates the `Drop` event will not be fired.
+
+| DropEffect | Descriptions |
+| --- | --- |
+| Copy | A copy of the source item is made at the new location. |
+| Move | An item is moved to a new location. |
+| Link | A link is established to the source at the new location. |
+| None | The item may not be dropped. |
+
+Example code from [Dragger.cs](./dragndrop/src/Dragger/Dragger.cs) follows:
+
+```csharp
+
+    // Events fired on the drop targets
+    await document.AttachEvent(HtmlEventNames.DragOver,
+        new EventHandler<HtmlEventArgs> (
+            async (sender, evt) =>
+            {
+                // prevent default to allow drop
+                evt.PreventDefault();
+                evt.StopPropagation();
+
+                // A DropEffect must be set
+                evt.DataTransfer.DropEffect = DropEffect.Link;
+            }
+        )
+
+    );
 
 ```
 
