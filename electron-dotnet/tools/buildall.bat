@@ -1,2 +1,5 @@
 @echo off
-"%~dp0\build.bat" release 0.8.22 0.10.0 0.12.0 4.1.1 5.1.0 6.4.0
+call %~dp0\build.bat release 1.4.0 6.5.0
+call %~dp0\build.bat release 1.5.0 7.0.0 7.4.0
+call %~dp0\build.bat release 1.6.0 7.4.0
+call %~dp0\build.bat release 1.7.0 7.9.0

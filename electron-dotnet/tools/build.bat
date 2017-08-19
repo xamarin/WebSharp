@@ -58,6 +58,9 @@ if "%1" neq "" (
 if "%VERSIONS%" equ "" set VERSIONS=6.5.0
 pushd %SELF%\..
 
+echo Make sure nan is available
+call npm install nan
+
 if not exist %MONO_ROOT_X86% (
     echo Skipping build of websharp.node %FLAVOR% for node.js ia32 x86.  Path %MONO_ROOT_X86% can not be found. 
 ) else (
