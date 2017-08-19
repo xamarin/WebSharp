@@ -5,9 +5,14 @@ for %%x in (%*) do Set /A argc+=1
 
 if /I "%argc%" LSS "2" (
     echo Usage: build.bat debug^|release target "{version} {version}" ...
+    echo Where:
+    echo    target is Electron version
+    echo    {version} is Node version
+    echo Examples:
     echo e.g. build.bat release 1.4.0 6.5.0
-    echo e.g. build.bat release 1.5.0 7.0.0
+    echo e.g. build.bat release 1.5.0 7.0.0 7.4.0
     echo e.g. build.bat release 1.6.0 7.4.0
+    echo e.g. build.bat release 1.7.0 7.9.0
     exit /b -1
 )
 

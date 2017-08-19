@@ -20,6 +20,7 @@ We will not be discussing installing any of the `Requirements` here only getting
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Gotchas using install method](#gotchas-using-symlink-method)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Potential Issues](#potential-issues)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Setting mono path](#setting-mono-path)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Cannot find module 'nan'](#cannot-find-module-nan)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building against Mono 4.8](#building-against-mono-48)  
 
 ## Requirements
@@ -27,7 +28,7 @@ We will not be discussing installing any of the `Requirements` here only getting
 - [Visual Studio 2015 or greater](https://www.visualstudio.com/downloads/) community editions work just fine.
 - [node-gyp windows install](https://github.com/nodejs/node-gyp#installation) Node.js native addon build tool.
 - [nodejs](http://nodejs.org/).  Head over to [http://nodejs.org/](http://nodejs.org/) and click the install button to download the latest package.
-- [Native Abstractions for Node.js](https://github.com/nodejs/nan)
+- [Native Abstractions for Node.js](https://github.com/nodejs/nan) for install instructions see [Cannot find module 'nan'](#cannot-find-module-nan)
 - [mono embedding](http://www.mono-project.com/docs/advanced/embedding/) is being used so an installation of [mono](http://www.mono-project.com/download/) will need to be installed and available in your path.  For now you will need both a 32 bit and a 64 bit version of mono installed for building.
 - [Native Client SDK](https://developer.chrome.com/native-client).  Native Client is a sandbox for running compiled C and C++ code in the browser efficiently and securely, independent of the user’s operating system.  No need to do anything here as it will be installed during the [Environment Setup](#environment-setup) step below. 
 
@@ -194,7 +195,11 @@ The command to run from the `WebSharp` repo directory is:
 
 #### Build electron-dotnet
 
-electron-dotnet is WebSharp's interface allowing scripting of Node.js and Electron api's from managed.  Each version requires a separate build. 
+`electron-dotnet` is `WebSharp`'s interface allowing scripting of `Node.js` and `Electron` APIs from managed code.  Each version requires a separate build.
+
+You can find the version by visiting the [Electron](https://electron.atom.io) website where they display the current version of both `Electron` and `Node`.  
+
+`Electron: 1.7.5	Node: 7.9.0	Chromium: 58.0.3029.110	V8: 5.8.283.38`
 
 To build one of the versions of `Node.js` officially released by [Node.js](http://nodejs.org/dist), targeting a version of `Electron`, do the following:
 
@@ -204,15 +209,22 @@ WebSharp> cd electron-dotnet\tools
 WebSharp\electron-dotnet\tools> build.bat
 ```
 
+You will see usage text displayed:
+
 ```
 # Visual Studio Command Prompt
 Usage: build.bat debug|release target "{version} {version}" ...
+Where:
+   target is Electron version
+   {version} is Node version
+Examples:
 e.g. build.bat release 1.4.0 6.5.0
-e.g. build.bat release 1.5.0 7.0.0
+e.g. build.bat release 1.5.0 7.0.0 7.4.0
 e.g. build.bat release 1.6.0 7.4.0
+e.g. build.bat release 1.7.0 7.9.0
 ```
 
-> :bulb: the `Node.js` version number you provide must be a version number corresponding to one of the subdirectories of http://nodejs.org/dist. The command will build both `x32/ia32` and `x64` architectures (assuming you use a `x64` machine). The command will also copy the `websharp\_\*.node` executables to appropriate locations under `lib\native` directory where they are looked up from at runtime. The `npm install` step copies the C standard library shared DLL to the location of the `websharp\_\*.node` files for the component to be ready to go.
+> :bulb: the `Node.js` version number you provide must be a version number corresponding to one of the subdirectories of http://nodejs.org/dist. The command will build both `x32/ia32` and `x64` architectures (assuming you use a `x64` machine). The command will also copy the `websharp\_\*.node` executables to appropriate locations under `lib\native` directory where they are looked up at runtime. The `npm install` step copies the C standard library shared DLL to the location of the `websharp\_\*.node` files for the component to be ready to go.
 
 #### Windows Build Example
 

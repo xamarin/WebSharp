@@ -1,6 +1,9 @@
 Edge.js: .NET and Node.js in-process [![Build Status](https://travis-ci.org/tjanczuk/edge.svg)](https://travis-ci.org/tjanczuk/edge)
 ====
 
+**NOTE** The build instructions here are out of date and are only for building `Edge.js` please use the build instructions at [Getting Started on Windows](../docs/getting-started/getting-started-dev-windows.md). 
+
+
 **NEW** Edge.js is now on Slack at https://edgejs.slack.com. Join [here](https://webtask.it.auth0.com/api/run/tjanczuk/edgejs-slack-invite). 
  
 An edge connects two nodes. This edge connects Node.js and .NET. V8 and CLR/.NET Core/Mono - in process. On Windows, MacOS, and Linux. 
@@ -1206,6 +1209,9 @@ Read more about [performance of Edge.js on the wiki](https://github.com/tjanczuk
 ![edgejs-performance1](https://f.cloud.github.com/assets/822369/486393/645f696a-b920-11e2-8a20-9fa6932bb092.png)
 
 ### Building on Windows
+
+**NOTE** The build instructions here are out of date and are only for building `Edge.js` please use the build instructions at [Getting Started on Windows](../docs/getting-started/getting-started-dev-windows.md). 
+
 
 You must have Visual Studio 2015 toolset, Python 2.7.x, and node-gyp installed for building.  [node-gyp windows install](https://github.com/nodejs/node-gyp#installation)
 
