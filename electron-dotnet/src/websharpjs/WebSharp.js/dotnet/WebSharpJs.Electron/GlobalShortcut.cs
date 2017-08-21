@@ -12,6 +12,11 @@ namespace WebSharpJs.Electron
         protected override string Requires => @"const {globalShortcut} = require('electron');";
 
         static GlobalShortcut proxy;
+        
+        public static new async Task<GlobalShortcut> Create()
+        {
+            throw new NotSupportedException("Create() is not valid.  Use Instance() to obtain a reference to GlobalShortcut.");
+        }
 
         public static async Task<GlobalShortcut> Instance()
         {
@@ -39,7 +44,7 @@ namespace WebSharpJs.Electron
 
         public async Task Register(string accelerator, ScriptObjectCallback callback)
         {
-            await Invoke<object>("register", callback);
+            await Invoke<object>("register", accelerator, callback);
         }
 
         public async Task<bool> IsRegistered(string accelerator)
