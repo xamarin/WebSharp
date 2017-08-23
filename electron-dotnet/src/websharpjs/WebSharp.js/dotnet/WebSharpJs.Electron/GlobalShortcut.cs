@@ -42,19 +42,19 @@ namespace WebSharpJs.Electron
             return new GlobalShortcut(sop);
         }
 
-        public async Task Register(string accelerator, ScriptObjectCallback callback)
+        public async Task Register(Accelerator accelerator, ScriptObjectCallback callback)
         {
-            await Invoke<object>("register", accelerator, callback);
+            await Invoke<object>("register", accelerator.ToString(), callback);
         }
 
-        public async Task<bool> IsRegistered(string accelerator)
+        public async Task<bool> IsRegistered(Accelerator accelerator)
         {
-            return await Invoke<bool>("isRegistered", accelerator);
+            return await Invoke<bool>("isRegistered", accelerator.ToString());
         }
 
-        public async Task UnRegister(string accelerator)
+        public async Task UnRegister(Accelerator accelerator)
         {
-            await Invoke<object>("unregister", accelerator);
+            await Invoke<object>("unregister", accelerator.ToString());
         }
 
         public async Task UnRegisterAll()
