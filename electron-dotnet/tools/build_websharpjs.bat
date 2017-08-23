@@ -17,7 +17,7 @@ if not exist "%SELF%\build\nuget.exe" (
 )
 
 cd "%SELF%\..\src\websharpjs\WebSharp.js"
-msbuild WebSharp.js.sln /p:Configuration=Release /p:Platform="Any Cpu"
+msbuild WebSharp.js.sln /p:Configuration=Release /p:Platform="Any Cpu" /t:restore,build
 if %ERRORLEVEL% neq 0 exit /b -1
 "%SELF%\build\nuget.exe" pack WebSharp.js.nuspec -OutputDirectory ./bin/%FLAVOR%
 
