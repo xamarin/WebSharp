@@ -629,3 +629,91 @@ There are several ways to integrate C# code
 To finish off we then ran the electron application and saw that it was possible to reference the console log from managed code.
 
 If you prefer to pre-compile your C# sources to a CLR assembly then the section on [Building Assemblies](https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-websharp-building-assemblies.md) will interest you.
+
+## Potential Issues
+
+When using windows the user may get the following error:
+
+>Uncaught Error: The websharp module for using mono embedding has been specified but mono can not be found. You must build a custom version of websharp.node for using mono embedding or make sure that mono is in your %PATH%. Please refer to https://github.com/xamarin/WebSharp/blob/master/docs/getting-started/getting-started-dev-windows.md for building instructions.
+
+To get around this the user may need to add `Mono` to their %PATH%
+
+### Setting mono path
+
+`Mono` must be in the developers %PATH% for mono support to be built and also in the users %PATH% during the application execution.
+
+The following options can be used.
+
+  * Option 1:
+
+    * Use Mono's ```setmonopath.bat``` batch command before starting the electron application:
+
+      * x64
+        ```
+        > "c:\Program Files\Mono\bin\setmonopath.bat"
+        ```
+
+      * x86
+        ```
+        > "c:\Program Files (x86)\Mono\bin\setmonopath.bat"
+        ```
+
+  * Option 2:
+    * Custom path environment variable set to the correct mono before starting the electron application.
+    ```
+    SET PATH=%PATH%;c:\path\to\mono
+    ```
+
+  * Option 3:
+    * Set the path in the ```main.js``` before calling any ```electron-dotnet``` functions.
+    
+      ```js
+        if (process.platform === 'win32')
+        {
+            if (process.arch === 'x64')
+                process.env.PATH = "c:\\Program Files\\Mono\\bin;" + process.env.PATH;
+            else
+                process.env.PATH = "c:\\\Program Files (x86)\\\Mono\\bin;" + process.env.PATH;
+        }
+      ```
+  * Option 4: 
+    * Set the path on Windows 10 and Windows 8
+      * In Search, search for and then select: System (Control Panel)
+      * Click the Advanced system settings link.
+      * Click Environment Variables. ...
+      * In the Edit System Variable (or New System Variable) window, specify the value of the PATH environment variable.
+        * x64
+          ```
+          "c:\Program Files\Mono\bin;"
+          ```
+        * x86
+          ```  
+          "c:\Program Files (x86)\Mono\bin;"
+          ```
+     
+     > :exclamation: Option 4 is not very flexible
+
+### Not a valid Win32 application
+
+You may obtain an error resembling those outlined below when trying to start your application.
+
+This is usually caused by having the wrong mono platform in your path see [Setting mono path](#setting-mono-path) above.   
+
+![Win32 application](./screenshots/mono-path-win32.png)
+
+```powershell
+App threw an error during load
+Error: %1 is not a valid Win32 application.
+\\?\c:\projects\WebSharp\electron-dotnet\lib\native\win32\x64\1.7.0\7.9.0\websharp_monoclr.node
+    at process.module.(anonymous function) [as dlopen] (ELECTRON_ASAR.js:173:20)
+    at Object.Module._extensions..node (module.js:598:18)
+    at Object.module.(anonymous function) [as .node] (ELECTRON_ASAR.js:173:20)
+    at Module.load (module.js:488:32)
+    at tryModuleLoad (module.js:447:12)
+    at Function.Module._load (module.js:439:3)
+    at Module.require (module.js:498:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (c:\projects\WebSharp\electron-dotnet\lib\electron-dotnet.js:95:12)
+    at Object.<anonymous> (c:\projects\WebSharp\electron-dotnet\lib\electron-dotnet.js:299:3)
+
+```

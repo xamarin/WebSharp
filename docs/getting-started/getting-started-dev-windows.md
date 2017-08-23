@@ -20,6 +20,7 @@ We will not be discussing installing any of the `Requirements` here only getting
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Gotchas using install method](#gotchas-using-symlink-method)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Potential Issues](#potential-issues)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Setting mono path](#setting-mono-path)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Not a valid Win32 application](#not-a-valid-win32-application)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Cannot find module 'nan'](#cannot-find-module-nan)  
 &nbsp;&nbsp;&nbsp;&nbsp;[Building against Mono 4.8](#building-against-mono-48)  
 
@@ -426,9 +427,36 @@ The following options can be used.
      
      > :exclamation: Option 4 is not very flexible
 
+### Not a valid Win32 application
+
+You may obtain an error resembling those outlined below when trying to start your application.
+
+This is usually caused by having the wrong mono platform in your path see [Setting mono path](#setting-mono-path) above.   
+
+![Win32 application](./screenshots/mono-path-win32.png)
+
+```powershell
+App threw an error during load
+Error: %1 is not a valid Win32 application.
+\\?\c:\projects\WebSharp\electron-dotnet\lib\native\win32\x64\1.7.0\7.9.0\websharp_monoclr.node
+    at process.module.(anonymous function) [as dlopen] (ELECTRON_ASAR.js:173:20)
+    at Object.Module._extensions..node (module.js:598:18)
+    at Object.module.(anonymous function) [as .node] (ELECTRON_ASAR.js:173:20)
+    at Module.load (module.js:488:32)
+    at tryModuleLoad (module.js:447:12)
+    at Function.Module._load (module.js:439:3)
+    at Module.require (module.js:498:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (c:\projects\WebSharp\electron-dotnet\lib\electron-dotnet.js:95:12)
+    at Object.<anonymous> (c:\projects\WebSharp\electron-dotnet\lib\electron-dotnet.js:299:3)
+
+```
+
 ### Cannot find module 'nan'
 
 If you run into the following error make sure you have installed the 'nan' as per the pre-requisites above:
+
+```powershell
 
 > Error: Cannot find module 'nan'
     at Function.Module._resolveFilename (module.js:455:15)
@@ -442,9 +470,11 @@ If you run into the following error make sure you have installed the 'nan' as pe
     at Module._compile (module.js:556:32)
     at bootstrap_node.js:357:29
 
+```
+
 The command to run from the `WebSharp` repo directory is:
 
-``` command
+```powershell
 
 WebSharp> cd electron-dotnet        # go into the package directory
 WebSharp\electron-dotnet> npm install nan  # makes NAN available.
@@ -455,7 +485,7 @@ This will install NAN locally to the project.
 
 To install globally:
 
-``` command
+```powershell
 
 > npm install nan -g  # makes NAN available globally
 
