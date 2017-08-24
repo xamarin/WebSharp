@@ -144,6 +144,8 @@ namespace WebSharpJs.Electron
         public string SubLabel { get; set; }
 
         [ScriptableMember(ScriptAlias = "accelerator")]
+        public string ShortCut { get { return (Accelerator != null) ? Accelerator.ToString() : null; } }
+
         public Accelerator Accelerator { get; set; }
 
         [ScriptableMember(ScriptAlias = "icon")]
