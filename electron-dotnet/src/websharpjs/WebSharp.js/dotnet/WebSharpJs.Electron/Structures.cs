@@ -462,4 +462,13 @@ namespace WebSharpJs.Electron
         [ScriptableMember(ScriptAlias = "file")]
         public string File { get; set; }
     }
+
+    [ScriptableType]
+    public class CrashReport
+    {
+        [ScriptableMember(ScriptAlias = "date")]
+        public string Date { get; private set; }
+        [ScriptableMember(ScriptAlias = "ID")]
+        public long ID { get; private set; }
+  }
 }
