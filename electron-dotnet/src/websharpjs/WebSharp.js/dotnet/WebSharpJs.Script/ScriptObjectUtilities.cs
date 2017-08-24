@@ -318,11 +318,12 @@ namespace WebSharpJs.Script
             {
                 var gt = metaTypes[gi];
                 mappings[cm].IsArray = gt.IsArray ? 1 : 0;
+                
                 if (gt.IsGenericType && typeof(ScriptObjectCollection<>).IsAssignableFrom(gt.GetGenericTypeDefinition()))
                 {
                     mappings[cm].Category = (int)ScriptParmCategory.ScriptObjectCollection;
                 }
-                if (gt.IsSubclassOf(typeof(ScriptObject)))
+                else if (gt.IsSubclassOf(typeof(ScriptObject)))
                 {
                     mappings[cm].Category = (int)ScriptParmCategory.ScriptObject;
                 }

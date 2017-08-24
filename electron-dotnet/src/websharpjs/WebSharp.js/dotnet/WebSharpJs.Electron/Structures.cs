@@ -470,5 +470,30 @@ namespace WebSharpJs.Electron
         public string Date { get; private set; }
         [ScriptableMember(ScriptAlias = "ID")]
         public long ID { get; private set; }
-  }
+    }
+
+    [ScriptableType]
+    public class Cookie
+    {
+
+        [ScriptableMember(ScriptAlias = "domain")]
+        public string Domain { get; set; }
+        [ScriptableMember(ScriptAlias = "expirationDate")]
+        public double expirationDate { get; set; }
+        [ScriptableMember(ScriptAlias = "hostOnly")]
+        public bool? HostOnly { get; set; }
+        [ScriptableMember(ScriptAlias = "httpOnly")]
+        public bool? HttpOnly { get; set; }
+        [ScriptableMember(ScriptAlias = "name")]
+        public string Name { get; set; }
+        [ScriptableMember(ScriptAlias = "path")]
+        public string Path { get; set; }
+        [ScriptableMember(ScriptAlias = "secure")]
+        public bool? Secure { get; set; }
+        [ScriptableMember(ScriptAlias = "session")]
+        public bool? Session { get; set; }
+        [ScriptableMember(ScriptAlias = "value")]
+        public string Value { get; set; }
+    }
+
 }

@@ -191,6 +191,11 @@ namespace WebSharpJs.Electron
         {
             await SetProperty("webRequest", webRequest);
         }
+
+        public async Task<Cookies> Cookies()
+        {
+            return await GetProperty<Cookies>("cookies");
+        }
     }
 
     [ScriptableType]

@@ -61,6 +61,7 @@
     <Compile Include="dotnet\WebSharpJs.Electron\App.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\BrowserWindow.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\Clipboard.cs" />
+    <Compile Include="dotnet\WebSharpJs.Electron\Cookies.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\CrashReporter.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\DesktopCapturer.cs" />
     <Compile Include="dotnet\WebSharpJs.Electron\Dialog.cs" />

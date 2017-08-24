@@ -28,6 +28,6 @@
 
 ## Instance Properties
 
-- [ ] `ses.cookies`
+- [x] `ses.cookies`
 - [x] `ses.webRequest`
 - [ ] `ses.protocol`
