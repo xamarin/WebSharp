@@ -32,13 +32,13 @@
 
 * [desktopCapturer](api/desktop-capturer.md)  :muscle:
 * [ipcRenderer](api/ipc-renderer.md) :muscle:
-* [remote](api/remote.md) :exclamation:
+* [remote](api/remote.md) :running:
 * [webFrame](api/web-frame.md) :exclamation:
 
 ### Modules for Both Processes:
 
 * [clipboard](api/clipboard.md) :muscle:
-* [crashReporter](api/crash-reporter.md) :exclamation:
+* [crashReporter](api/crash-reporter.md) :muscle:
 * [nativeImage](api/native-image.md) :muscle:
 * [screen](api/screen.md) :muscle:
 * [shell](api/shell.md) :muscle:
