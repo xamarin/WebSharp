@@ -426,12 +426,12 @@ namespace WebSharpJs.Electron
             await Invoke<object>("disableDeviceEmulation");
         }
 
-        public async Task beginFrameSubscription(ScriptObjectCallback<byte[], Rectangle> callback)
+        public async Task BeginFrameSubscription(ScriptObjectCallback<byte[], Rectangle> callback)
         {
             await Invoke<bool>("beginFrameSubscription", callback);
         }
 
-        public async Task beginFrameSubscription(bool onlyDirty, ScriptObjectCallback<byte[], Rectangle> callback)
+        public async Task BeginFrameSubscription(bool onlyDirty, ScriptObjectCallback<byte[], Rectangle> callback)
         {
             await Invoke<bool>("beginFrameSubscription", onlyDirty, callback);
         }
@@ -439,6 +439,11 @@ namespace WebSharpJs.Electron
         public async Task EndFrameSubscription()
         {
             await Invoke<object>("endFrameSubscription");
+        }
+
+        public async Task<object> ExecuteJavaScript(string code, bool userGesture = false, ScriptObjectCallback<object> callback = null)
+        {
+            return await Invoke<object>("executeJavaScript", code, userGesture, callback);
         }
 
         public async Task StartDrag(Item item)

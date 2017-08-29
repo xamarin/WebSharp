@@ -30,7 +30,7 @@
 - [x] `contents.setUserAgent(userAgent)`
 - [x] `contents.getUserAgent()`
 - [x] `contents.insertCSS(css)`
-- [] `contents.executeJavaScript(code[, userGesture, callback])`
+- [x] `contents.executeJavaScript(code[, userGesture, callback])`
 - [x] `contents.setAudioMuted(muted)`
 - [x] `contents.isAudioMuted()`
 - [x] `contents.setZoomFactor(factor)`
@@ -89,7 +89,7 @@
 - [x] `contents.getWebRTCIPHandlingPolicy()`
 - [x] `contents.setWebRTCIPHandlingPolicy(policy)`
 - [x] `contents.id`
-- [ ] `contents.session`
+- [x] `contents.session`
 - [x] `contents.hostWebContents`
 - [x] `contents.devToolsWebContents`
 - [ ] `contents.debugger`
