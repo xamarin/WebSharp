@@ -394,7 +394,11 @@
                  cb('Set Attribute error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
 
             //console.log('set attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
-            so.setAttribute(prop.attribute, prop.value);
+            if (typeof(prop.value) !== "undefined")
+                so.setAttribute(prop.attribute, prop.value);
+            else
+                so.removeAttribute(prop.attribute);
+
             cb(null, true);
         }
 
@@ -413,7 +417,11 @@
                  cb('Set Style error: Object with handle id \'' + prop.handle + '\' may have already been garbage collected.', null);
 
             //console.log('set style attribute -> ' + prop.name + ' [ ' + prop.value + ' ]');
-            so.style[prop.attribute] = prop.value;
+            if (typeof(prop.value) !== "undefined")
+                so.style[prop.attribute] = prop.value;
+            else
+                so.style[prop.attribute] = null;
+
             cb(null, true);
         }
 
