@@ -158,6 +158,21 @@ namespace WebSharpJs.DOM
 
             return await Invoke<HtmlElement>("createElement", tagName);
         }
+
+        public async Task<bool> DispatchEvent(Events.Event evt)
+        {
+            if (evt == null)
+                throw new ArgumentNullException(nameof(evt));
+
+            var parm = new
+            {
+                handle = Handle,
+                eventArg = ScriptObjectHelper.ScriptableTypeToDictionary(evt)
+            };
+
+            return await WebSharp.Bridge.JavaScriptBridge.websharp_dispatchEvent(parm);
+        }
+
     }
 
     [ScriptableType]

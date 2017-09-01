@@ -481,6 +481,26 @@
             cb(null, EventHelper.remove(so, eventCallback));
         }
 
+        bridge.websharp_dispatchEvent = function (eventInfo, cb) {
+
+            let so = GetScriptableObject(eventInfo.handle);
+            if (so === 'undefined')
+                cb('Invoke error: Object with handle id \'' + parms.handle + '\' may have already been garbage collected.', null);
+
+            // console.log('dispatchEvent -> ' + eventInfo.eventArg.type 
+            //     + ', { bubbles: ' + eventInfo.eventArg.bubbles + ', cancelable : ' + eventInfo.eventArg.cancelable 
+            //     + '} , Handle: ' + eventInfo.handle);
+
+            var event = new Event(eventInfo.eventArg.type,
+                {
+                    bubbles: eventInfo.eventArg.bubbles,
+                    cancelable: eventInfo.eventArg.cancelable
+                }
+            );
+            var cancelled = so.dispatchEvent(event);
+            cb(null, cancelled);
+        }
+
         return bridge;
     }
 
