@@ -1,0 +1,28 @@
+// A launch configuration that launches the electron application inside a new window
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Electron Main",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+      },
+      "program": "${workspaceRoot}/main.js",
+      "runtimeArgs": [
+        "--enable-logging"
+      ],
+      "env": {
+          "NODE_ENV": "development",
+          //"WEBSHARP_DEBUG": "",
+          "WEBSHARP_CS_DEBUG": "",
+          "WEBSHARP_CS_DEBUG_SELF": "",
+          "WEBSHARP_CS_CACHE": ""
+      },
+      "console": "integratedTerminal",  // internalConsole, integratedTerminal, externalTerminal
+      "protocol": "auto"
+    }
+  ]
+}

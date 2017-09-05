@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Convert</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  <body>
+    <div class="container">
+    <form>
+      <div class="row">
+          <div class="col">
+              <label style="width: 100%">
+                Source:
+                <div class="input-group">
+                  <input type="text" class="form-control" name="source" placeholder="File" readonly>
+                  <span class="input-group-btn">
+                      <button class="btn btn-primary" id="chooseSource" type="button">Choose File</button>
+                    </span>
+                </div>
+              </label>
+            </div>
+      </div>
+      <div class="row">
+          <div class="col" >
+              <label style="width: 100%">
+                Destination
+                <div class="input-group" >
+                  <input type="text" class="form-control" name="destination" placeholder="/path/to/destination/directory">
+                  <span class="input-group-btn">
+                      <button class="btn btn-primary" id="chooseDestination" type="button">Browse...</button>
+                    </span>
+                </div>
+              </label>
+            </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <label>
+                  Name
+              </label>
+              <input style="width: 50%" type="text" name="name" placeholder="file name" class="form-control">              
+              
+          </div>
+      </div>
+        <hr />
+
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-outline-primary btn-block" disabled type="submit">Convert</button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header card-primary card-inverse">
+                        Duration
+                    </div>
+                    <div class="card-block" style="font-size: small;">
+                        <p id="duration" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header card-primary card-inverse">
+                        Video
+                    </div>
+                    <div class="card-block" style="font-size: small;">
+                        <p id="videoFormat" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header card-primary card-inverse">
+                        Audio
+                    </div>
+                    <div class="card-block" style="font-size: small;">
+                        <p id="audioFormat" class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  </form>
+  </div>
+
+      <!--script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script-->
+      <script>
+          // You can also require other files to run in this process
+          require('./renderer.js')
+        </script>
+  
+        
+  </body>
+
+ 
+</html>
