@@ -2,6 +2,8 @@
 // BrowserWindow is the Module to create native browser window.
 const {app, BrowserWindow} = require('electron')
 
+app.dock.setIcon(__dirname + "/assets/icons/images/appicon_256x256.png");
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;

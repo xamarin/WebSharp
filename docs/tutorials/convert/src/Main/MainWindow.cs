@@ -198,13 +198,8 @@ namespace MainWindow
             var ffMpegPath = await app.GetPath(AppPathName.UserData);
 #endif
 
-            if (IsWindows)
-                // Now append the ffmpeg to complete the path
-                ffMpegPath = System.IO.Path.Combine(ffMpegPath, FFMPegWindows);
-            else
-                // Now append the ffmpeg to complete the path
-                ffMpegPath = System.IO.Path.Combine(ffMpegPath, FFMPegMac);
-
+            // Now append the ffmpeg to complete the path
+            ffMpegPath = System.IO.Path.Combine(ffMpegPath, IsWindows ? FFMPegWindows : FFMPegMac);
 
             //await console.Log($"app name: {await app.GetName()}  temppath: {ffMpegPath}");
 
