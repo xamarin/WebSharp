@@ -246,11 +246,20 @@ exports.func = function(language, options) {
         options.methodName = 'Invoke';
     }
 
-    return websharp.initializeClrFunc(options);
+    try
+    {
+        return websharp.initializeClrFunc(options);
+    }
+    catch (e)
+    {
+        throw new Error(
+            "--- WebSharp: electron-dotnet.js -- Loading assembly " + JSON.stringify(options) + "/n" + e.name + ': ' + e.message
+        );
+    }
 };
 
 var initialize = exports.func({
-    assemblyFile: __dirname + '/bin/WebSharpJs.dll',
+    assemblyFile: path.join(__dirname, '/bin/WebSharpJs.dll').replace('app.asar', 'app.asar.unpacked'),
     typeName: 'WebSharpJs.WebSharp',
     methodName: 'InitializeInternal'
 });
@@ -272,7 +281,7 @@ initialize(compileFunc, function (error, data) {
 });
 
 var initializeBridge = exports.func({
-   assemblyFile: __dirname + '/bin/WebSharpJs.dll',
+   assemblyFile: path.join(__dirname, '/bin/WebSharpJs.dll').replace('app.asar', 'app.asar.unpacked'),
    typeName: 'WebSharpJs.WebSharp',
    methodName: 'InitializeBridge'
 });
