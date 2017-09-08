@@ -4,16 +4,52 @@
   "description": "Example application incorporating custom .dll, Dialog and CLI wrapper.",
   "version": "1.0.0",
   "publisher": "Xamarin",
+  "author": {
+    "name": "Xamarin",
+    "email": "hello@xamarin.com",
+    "url": "www.xamarin.com"
+  },
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "pack-nosign": "export CSC_IDENTITY_AUTO_DISCOVERY=false; electron-builder --dir",
+    "dist": "electron-builder"
   },
   "devDependencies": {
-    "electron": "^1.4.0"
+    "electron": "^1.4.0",
+    "electron-builder": "^19.27.7"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
     "electron-is-dev": "^0.3.0",
     "font-awesome": "^4.7.0"
+  },
+  "build": {
+    "extraResources": [
+      {
+        "from": "./node_modules/electron-dotnet/build/Release/",
+        "to": "./app.asar.unpacked/node_modules/electron-dotnet/build/Release/",
+        "filter": [
+          "*.exe"
+        ]
+      },
+      {
+        "from": "./node_modules/electron-dotnet/lib/bin/",
+        "to": "./app.asar.unpacked/node_modules/electron-dotnet/lib/bin/",
+        "filter": [
+          "**/*.dll"
+        ]
+      }
+    ],
+    "appId": "com.xamarin.convert",
+    "mac": {
+      "category": "com.company.app.type",
+      "asar": true,
+      "asarUnpack": [
+        "./node_modules/electron-dotnet/",
+        "src/**/*.dll"
+      ]
+    }
   }
 }

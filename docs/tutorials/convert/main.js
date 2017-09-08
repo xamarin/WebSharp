@@ -2,7 +2,10 @@
 // BrowserWindow is the Module to create native browser window.
 const {app, BrowserWindow} = require('electron')
 
-app.dock.setIcon(__dirname + "/assets/icons/images/appicon_256x256.png");
+
+// Set our icon on mac when we are in development
+if (require('electron-is-dev'))
+  app.dock.setIcon(__dirname + "/assets/icons/images/appicon_256x256.png");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -16,8 +19,9 @@ if (process.platform === 'win32') {
 }
 
 var dotnet = require('electron-dotnet');
+
 if (!require('electron-is-dev'))
-  var main = dotnet.func(__dirname + "/src/Main/bin/Debug/MainWindow.dll");
+  var main = dotnet.func(require('path').join(__dirname, "/src/Main/bin/Debug/MainWindow.dll").replace('app.asar', 'app.asar.unpacked'));
 else
 
   var main = dotnet.func({source : __dirname + "/src/Main/MainWindow.cs", 

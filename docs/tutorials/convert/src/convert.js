@@ -1,7 +1,7 @@
 var dotnet = require('electron-dotnet');
 
 if (!require('electron-is-dev'))
-	var hello = dotnet.func(__dirname + "/ConvertUI/bin/Debug/ConvertUI.dll");
+	var hello = dotnet.func(require('path').join(__dirname, "/ConvertUI/bin/Debug/ConvertUI.dll").replace('app.asar', 'app.asar.unpacked'));
 else
 	var hello = dotnet.func({source : __dirname + "/ConvertUI/ConvertUI.cs", symbols: ["DEV"]});
 
