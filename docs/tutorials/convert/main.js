@@ -4,7 +4,7 @@ const {app, BrowserWindow} = require('electron')
 
 
 // Set our icon on mac when we are in development
-if (require('electron-is-dev'))
+if (require('electron-is-dev') && process.platform === 'darwin')
   app.dock.setIcon(__dirname + "/assets/icons/images/appicon_256x256.png");
 
 // Keep a global reference of the window object, if you don't, the window will

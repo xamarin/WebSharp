@@ -50,6 +50,13 @@
         "./node_modules/electron-dotnet/",
         "src/**/*.dll"
       ]
+    },
+    "win" : {
+      "asar": true,
+      "asarUnpack": [
+        "./node_modules/electron-dotnet/",
+        "src/**/*.dll"
+      ]
     }
   }
 }
