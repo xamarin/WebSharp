@@ -27,6 +27,9 @@ Edge.Tests.*
 node.exe
 Sample105.*
 
+/src/websharpwasm/emsdk
+/lib/native
+
 .DS_Store
 *.sublime-project
 *.sublime-workspace
