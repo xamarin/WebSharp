@@ -36,10 +36,10 @@ if not exist ".\emsdk\emsdk.bat" (
     call .\emsdk\emsdk install latest
 
     @rem Make the "latest" SDK "active" for the current user. (writes ~/.emscripten file)
-    .\emsdk\emsdk activate latest
+    call .\emsdk\emsdk activate latest
 
     @rem Activate PATH and other environment variables in the current terminal
-    @rem .\emsdk\emsdk_env.bat
+    @rem call .\emsdk\emsdk_env.bat
 )
 
 SETLOCAL
@@ -72,6 +72,23 @@ if %ERRORLEVEL% neq 0 (
 
 ENDLOCAL
 
+
+echo Fixing up websharpwasm.js file
+
+rem Fix up generated wasm file so it can be loaded from a node module.
+echo.var Module = module.parent.exports.Module; > wasmtemp
+type .\build\websharpwasm.js >> wasmtemp
+move /y wasmtemp .\build\websharpwasm.js
+
+set DESTDIR= "..\..\lib\wasm\"
+
+if not exist %DESTDIR%\NUL mkdir %DESTDIR%
+
+echo Copying Generated files to %DESTDIR%
+copy /y .\build\websharpwasm.js %DESTDIR%
+copy /y .\build\websharpwasm.wasm* %DESTDIR%
+copy /y .\build\websharpwasm.wast %DESTDIR%
+
 @rem Building WebSharp Wasm C# interface
 echo Building WebSharp Wasm C# interface
 
@@ -82,6 +99,8 @@ if %ERRORLEVEL% neq 0 (
 	exit /b -1
 )
 
+echo Copying WebSharp Wasm C# interface
+copy /y .\build\websharpwasm.exe %DESTDIR%
 
 cd "%SELF%"
 echo SUCCESS. WebSharp Wasm interface build.
