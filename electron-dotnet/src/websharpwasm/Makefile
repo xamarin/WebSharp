@@ -35,12 +35,15 @@ websharpwasm.js: monoembedding.o library_mono.js $(TOP)/libmonosgen-2.0.a
 	$(EMCC) -g4 -Os -s WASM=1 -s FORCE_FILESYSTEM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=$(EXTRA_EXPORTED_RUNTIME_METHODS)" -s ALLOW_MEMORY_GROWTH=1 -s BINARYEN=1 -s "BINARYEN_TRAP_MODE='clamp'" -s TOTAL_MEMORY=134217728 -s ALIASING_FUNCTION_POINTERS=0 -s ASSERTIONS=2 --js-library library_mono.js $(TOP)/build/monoembedding.o libmonosgen-2.0.a -o $(TOP)/build/websharpwasm.js
 
 build-native: websharpwasm.js
-
-#$(patsubst %,managed/%,$(BCL_ASSEMBLIES)): managed/%: $(WASM_BCL_DIR)/% | managed/
-#	cp $< $@
+	# Fix up generated wasm file so it can be loaded from a node module.
+	echo 'var Module = module.parent.exports.Module;\n' | cat - $(TOP)/build/websharpwasm.js > wasmtemp && mv wasmtemp $(TOP)/build/websharpwasm.js
+	cp $(TOP)/build/websharpwasm.js $(TOP)/../../lib/wasm
+	cp $(TOP)/build/websharpwasm.wasm* $(TOP)/../../lib/wasm
+	cp $(TOP)/build/websharpwasm.wast* $(TOP)/../../lib/wasm
 
 websharpwasm.exe: $(APP_SOURCES) | out/
 	csc /nostdlib /unsafe -out:$(TOP)/build/$@ /reference:mscorlib.dll $(APP_SOURCES)
+	cp $(TOP)/build/$@ $(TOP)/../../lib/wasm
 
 build-managed: websharpwasm.exe
 

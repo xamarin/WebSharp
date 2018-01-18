@@ -61,6 +61,8 @@ function whereis () {
     return null;
 }
 
+var isUseWasm = process.env.WEBSHARP_WASM;
+
 var websharpNative;
 if (process.platform === 'win32') {
     if (!whereis("mono.exe"))
@@ -96,6 +98,9 @@ websharp = require(websharpNative);
 exports.Register = require("./register.js")
 exports.Embed = require("./embed.js")
 exports.WebSharpJs = require("./websharpjs.js")
+if (isUseWasm === "1")
+    exports.WebSharpWasm = require("./websharpwasm.js");
+    
 exports.func = function(language, options) {
     if (!options) {
         options = language;

@@ -29,6 +29,8 @@ Sample105.*
 
 /src/websharpwasm/emsdk
 /lib/native
+/lib/wasm
+/src/websharpwasm/.stamp-wasm-toolchain
 
 .DS_Store
 *.sublime-project
