@@ -45,7 +45,11 @@ websharpwasm.exe: $(APP_SOURCES) | out/
 	csc /nostdlib /unsafe -out:$(TOP)/build/$@ /reference:mscorlib.dll $(APP_SOURCES)
 	cp $(TOP)/build/$@ $(TOP)/../../lib/wasm
 
-build-managed: websharpwasm.exe
+monoembedding.exe: monoembedding.cs | out/
+	csc /nostdlib /unsafe -out:$(TOP)/build/$@ /reference:mscorlib.dll monoembedding.cs
+	cp $(TOP)/build/$@ $(TOP)/../../lib/wasm	
+
+build-managed: websharpwasm.exe monoembedding.exe
 
 build: toolchain build-native build-managed
 

@@ -41,7 +41,10 @@ typedef struct MonoImage_ MonoImage;
 typedef struct MonoObject_ MonoObject;
 typedef struct MonoThread_ MonoThread;
 typedef struct _MonoAssemblyName MonoAssemblyName;
+typedef struct MonoArray_ MonoArray;
+
 extern "C" {
+
 void mono_jit_set_aot_mode (MonoAotMode mode);
 MonoDomain*  mono_jit_init_version (const char *root_domain_name, const char *runtime_version);
 MonoAssembly* mono_assembly_open (const char *filename, MonoImageOpenStatus *status);
@@ -66,8 +69,13 @@ const char* mono_image_get_name (MonoImage *image);
 const char* mono_class_get_name (MonoClass *klass);
 void mono_add_internal_call (const char *name, const void* method);
 MonoString * mono_string_from_utf16 (char *data);
+MonoArray* mono_array_new (MonoDomain *domain, MonoClass *eclass, int n);
+MonoClass* mono_get_string_class (void);
+int mono_runtime_exec_main (MonoMethod *method, MonoArray *args, MonoObject **exc);
+MonoAssembly* mono_domain_assembly_open  (MonoDomain *domain, const char *name);
 
 static MonoDomain *root_domain;
+static MonoAssembly *assembly = NULL;
 
 // static char*
 // m_strdup (const char *str)
@@ -128,6 +136,17 @@ static MonoDomain *root_domain;
  	mono_set_assemblies_path (managed_path);
  	root_domain = mono_jit_init_version ("mono", "v4.0.30319");
 
+   	MonoImageOpenStatus status;
+	MonoAssemblyName* aname = mono_assembly_name_new ("monoembedding");
+	assembly = mono_assembly_load (aname, NULL, &status);
+	mono_assembly_name_free (aname);
+    MonoClass* klass = mono_class_from_name(mono_assembly_get_image(assembly), "", "MonoEmbedding");
+    MonoMethod* main = mono_class_get_method_from_name(klass, "Main", -1);
+    MonoException* exc;
+    MonoArray* args = mono_array_new(mono_domain_get(), mono_get_string_class(), 0);
+    mono_runtime_exec_main(main, args, (MonoObject**)&exc);	 
+
+
  	mono_add_internal_call ("WebAssembly.Runtime::InvokeJS", (const void*)&mono_wasm_invoke_js);
 }
 
@@ -148,6 +167,16 @@ EMSCRIPTEN_KEEPALIVE void
  	mono_jit_set_aot_mode (MONO_AOT_MODE_INTERP_LLVMONLY);
 	mono_set_assemblies_path (mount_point);
  	root_domain = mono_jit_init_version ("mono", "v4.0.30319");
+
+   	MonoImageOpenStatus status;
+	MonoAssemblyName* aname = mono_assembly_name_new ("monoembedding");
+	assembly = mono_assembly_load (aname, NULL, &status);
+	mono_assembly_name_free (aname);
+    MonoClass* klass = mono_class_from_name(mono_assembly_get_image(assembly), "", "MonoEmbedding");
+    MonoMethod* main = mono_class_get_method_from_name(klass, "Main", -1);
+    MonoException* exc;
+    MonoArray* args = mono_array_new(mono_domain_get(), mono_get_string_class(), 0);
+    mono_runtime_exec_main(main, args, (MonoObject**)&exc);	 
 
  	mono_add_internal_call ("WebAssembly.Runtime::InvokeJS", (const void*)&mono_wasm_invoke_js);
 }
