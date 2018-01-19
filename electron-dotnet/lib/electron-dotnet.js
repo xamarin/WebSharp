@@ -298,14 +298,16 @@ var compileBridge = function (data, callback) {
     return func;
 };
 
-initializeBridge(compileBridge("return function (data, callback) { \
-const dotnet = require('./electron-dotnet'); \
-const websharpjs = dotnet.WebSharpJs; \
-let wsObj = {}; \
-let bridge = websharpjs.BridgeProxy(wsObj); \
-callback(null, bridge); \
-\
-}"), function (error, data) {
-    if (error) throw error;
-});
-
+if (isUseWasm !== "1")
+{
+    initializeBridge(compileBridge("return function (data, callback) { \
+    const dotnet = require('./electron-dotnet'); \
+    const websharpjs = dotnet.WebSharpJs; \
+    let wsObj = {}; \
+    let bridge = websharpjs.BridgeProxy(wsObj); \
+    callback(null, bridge); \
+    \
+    }"), function (error, data) {
+        if (error) throw error;
+    });
+}

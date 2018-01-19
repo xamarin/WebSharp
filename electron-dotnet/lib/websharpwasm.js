@@ -14,6 +14,9 @@
         process.env.MONO_PATH = path.resolve(__dirname, './wasm/');
     }
 
+    var onWebSharpWASMInitialized = [];
+    var onWebSharpWASMStarted = [];
+
     var Module = {
 
         print: function(x) { console.log ("WASM: " + x) },
@@ -24,6 +27,15 @@
             var pathtomodule = path.resolve(__dirname, './wasm/',module);
             return pathtomodule;
         },
+        onRuntimeInitialized: function ()
+        {
+            if (onWebSharpWASMInitialized) {
+                if (typeof onWebSharpWASMInitialized == 'function') onWebSharpWASMInitialized = [onWebSharpWASMInitialized];
+                while (onWebSharpWASMInitialized.length) {
+                    onWebSharpWASMInitialized.shift()();
+                }
+            }           
+        }
     };
 
     Module["preRun"] = [];
@@ -57,13 +69,24 @@
         main_module = assembly_load ("websharpwasm")
         if (!main_module)
           throw 1;
+
+        if (onWebSharpWASMStarted) {
+            if (typeof onWebSharpWASMStarted == 'function') onWebSharpWASMStarted = [onWebSharpWASMStarted];
+            while (onWebSharpWASMStarted.length) {
+                onWebSharpWASMStarted.shift()();
+            }
+        }                  
+
+
     });
 
     exports.Module = Module;
     
     var WebSharpWASMModule = require('./wasm/websharpwasm.js');
 
-    module.exports = { WebSharpWASMModule };
+    
+
+    module.exports = { WebSharpWASMModule, onWebSharpWASMInitialized, onWebSharpWASMStarted };
 
 })();
 

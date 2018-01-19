@@ -43,6 +43,20 @@ typedef struct MonoThread_ MonoThread;
 typedef struct _MonoAssemblyName MonoAssemblyName;
 typedef struct MonoArray_ MonoArray;
 
+#ifdef FALSE
+#undef FALSE
+#endif
+#define FALSE 0
+#ifdef TRUE
+#undef TRUE
+#endif
+#define TRUE  1
+typedef int BOOL;
+
+BOOL debugMode = TRUE;
+
+#define DBG(...) if (debugMode) { printf(__VA_ARGS__); printf("\n"); }
+
 extern "C" {
 
 void mono_jit_set_aot_mode (MonoAotMode mode);
@@ -130,29 +144,34 @@ static MonoAssembly *assembly = NULL;
  EMSCRIPTEN_KEEPALIVE void
  mono_wasm_load_runtime (const char *managed_path)
  {
- 	monoeg_g_setenv ("MONO_LOG_LEVEL", "debug", 1);
- 	monoeg_g_setenv ("MONO_LOG_MASK", "gc", 1);
- 	mono_jit_set_aot_mode (MONO_AOT_MODE_INTERP_LLVMONLY);
- 	mono_set_assemblies_path (managed_path);
- 	root_domain = mono_jit_init_version ("mono", "v4.0.30319");
+	DBG("mono_wasm_load_runtime");
 
-   	MonoImageOpenStatus status;
+	monoeg_g_setenv ("MONO_LOG_LEVEL", "debug", 1);
+	monoeg_g_setenv ("MONO_LOG_MASK", "gc", 1);
+	mono_jit_set_aot_mode (MONO_AOT_MODE_INTERP_LLVMONLY);
+	mono_set_assemblies_path (managed_path);
+	root_domain = mono_jit_init_version ("mono", "v4.0.30319");
+
+	MonoImageOpenStatus status;
 	MonoAssemblyName* aname = mono_assembly_name_new ("monoembedding");
 	assembly = mono_assembly_load (aname, NULL, &status);
 	mono_assembly_name_free (aname);
-    MonoClass* klass = mono_class_from_name(mono_assembly_get_image(assembly), "", "MonoEmbedding");
-    MonoMethod* main = mono_class_get_method_from_name(klass, "Main", -1);
-    MonoException* exc;
-    MonoArray* args = mono_array_new(mono_domain_get(), mono_get_string_class(), 0);
-    mono_runtime_exec_main(main, args, (MonoObject**)&exc);	 
+	MonoClass* klass = mono_class_from_name(mono_assembly_get_image(assembly), "", "MonoEmbedding");
+	MonoMethod* main = mono_class_get_method_from_name(klass, "Main", -1);
+	MonoException* exc;
+	MonoArray* args = mono_array_new(mono_domain_get(), mono_get_string_class(), 0);
+	mono_runtime_exec_main(main, args, (MonoObject**)&exc);	 
 
 
- 	mono_add_internal_call ("WebAssembly.Runtime::InvokeJS", (const void*)&mono_wasm_invoke_js);
+	mono_add_internal_call ("WebAssembly.Runtime::InvokeJS", (const void*)&mono_wasm_invoke_js);
 }
 
 EMSCRIPTEN_KEEPALIVE void
  mono_wasm_mount_runtime (const char *assemblies_path, const char *mount_point )
  {
+	DBG("mono_wasm_mount_runtime");
+	
+	DBG("Trying to mount MONO Assemblies path");
 	// mount the mono_path folder as a NODEFS instance
 	// inside of emscripten
 	EM_ASM({
@@ -161,6 +180,8 @@ EMSCRIPTEN_KEEPALIVE void
 		FS.mkdir(mountPoint);
 		FS.mount(NODEFS, { root: mapToPath }, mountPoint);
 	},(int)assemblies_path, (int)mount_point);
+
+	DBG("Done mounting MONO Assemblies path");
 
  	monoeg_g_setenv ("MONO_LOG_LEVEL", "debug", 1);
  	monoeg_g_setenv ("MONO_LOG_MASK", "gc", 1);
