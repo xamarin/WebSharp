@@ -99,8 +99,16 @@ if %ERRORLEVEL% neq 0 (
 	exit /b -1
 )
 
+csc /nostdlib /unsafe -out:build/monoembedding.exe /reference:mscorlib.dll monoembedding.cs
+if %ERRORLEVEL% neq 0 (
+	echo Failure building monoembedding C# interface
+	cd "%SELF%"
+	exit /b -1
+)
+
 echo Copying WebSharp Wasm C# interface
 copy /y .\build\websharpwasm.exe %DESTDIR%
+copy /y .\build\monoembedding.exe %DESTDIR%
 
 cd "%SELF%"
 echo SUCCESS. WebSharp Wasm interface build.
