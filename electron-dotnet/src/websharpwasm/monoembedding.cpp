@@ -70,6 +70,7 @@ MonoString* mono_string_new (MonoDomain *domain, const char *text);
 MonoDomain* mono_domain_get (void);
 MonoClass* mono_class_from_name (MonoImage *image, const char* name_space, const char *name);
 MonoMethod* mono_class_get_method_from_name (MonoClass *klass, const char *name, int param_count);
+MonoClass* mono_object_get_class (MonoObject *obj);
 
 MonoString* mono_object_to_string (MonoObject *obj, MonoObject **exc);//FIXME Use MonoError variant
 char* mono_string_to_utf8 (MonoString *string_obj);
@@ -87,6 +88,9 @@ MonoArray* mono_array_new (MonoDomain *domain, MonoClass *eclass, int n);
 MonoClass* mono_get_string_class (void);
 int mono_runtime_exec_main (MonoMethod *method, MonoArray *args, MonoObject **exc);
 MonoAssembly* mono_domain_assembly_open  (MonoDomain *domain, const char *name);
+
+MonoImage* GetImage();
+MonoClass* GetClass();
 
 static MonoDomain *root_domain;
 static MonoAssembly *assembly = NULL;
@@ -163,7 +167,7 @@ static MonoAssembly *assembly = NULL;
 	mono_runtime_exec_main(main, args, (MonoObject**)&exc);	 
 
 
-	mono_add_internal_call ("WebAssembly.Runtime::InvokeJS", (const void*)&mono_wasm_invoke_js);
+	mono_add_internal_call ("WebAssembly.Runtime::ExecuteJavaScript", (const void*)&mono_wasm_invoke_js);
 }
 
 EMSCRIPTEN_KEEPALIVE void
@@ -205,6 +209,8 @@ EMSCRIPTEN_KEEPALIVE void
 EMSCRIPTEN_KEEPALIVE MonoAssembly*
 mono_wasm_assembly_load (const char *name)
 {
+	DBG("mono_wasm_assembly_load");
+
 	MonoImageOpenStatus status;
 	MonoAssemblyName* aname = mono_assembly_name_new (name);
 	if (!name)
@@ -219,18 +225,21 @@ mono_wasm_assembly_load (const char *name)
 EMSCRIPTEN_KEEPALIVE MonoClass*
 mono_wasm_assembly_find_class (MonoAssembly *assembly, const char *name_space, const char *name)
 {
+	DBG("mono_wasm_assembly_find_class");
 	return mono_class_from_name (mono_assembly_get_image (assembly), name_space, name);
 }
 
 EMSCRIPTEN_KEEPALIVE MonoMethod*
 mono_wasm_assembly_find_method (MonoClass *klass, const char *name, int arguments)
 {
+	DBG("mono_wasm_assembly_find_method");
 	return mono_class_get_method_from_name (klass, name, arguments);
 }
 
 EMSCRIPTEN_KEEPALIVE MonoObject*
 mono_wasm_invoke_method (MonoMethod *method, MonoObject *this_arg, void *params[], int* got_exception)
 {
+	DBG("mono_wasm_invoke_method");
 	MonoObject *exc = NULL;
 	MonoObject *res = mono_runtime_invoke (method, this_arg, params, &exc);
 	*got_exception = 0;
@@ -246,6 +255,64 @@ mono_wasm_invoke_method (MonoMethod *method, MonoObject *this_arg, void *params[
 	}
 
 	return res;
+}
+
+MonoImage* GetImage()
+{
+	DBG("GetImage");
+    return mono_assembly_get_image(assembly);
+}
+
+MonoClass* GetClass()
+{
+	DBG("GetClass");
+    static MonoClass* klass;
+
+    if (!klass)
+        klass = mono_class_from_name(GetImage(), "", "MonoEmbedding");
+
+    return klass;
+}
+
+EMSCRIPTEN_KEEPALIVE MonoObject*
+mono_wasm_get_clr_func_reflection_wrap_func(const char* assemblyFile, const char* typeName, const char* methodName, MonoException ** exc)
+{
+	DBG("GetClrFuncReflectionWrapFunc");
+    static MonoMethod* method;
+    void* params[3];
+
+    if (!method)
+    {
+        method = mono_class_get_method_from_name(GetClass(), "GetFunc", 3);
+    }
+
+    params[0] = mono_string_new(mono_domain_get(), assemblyFile);
+    params[1] = mono_string_new(mono_domain_get(), typeName);
+    params[2] = mono_string_new(mono_domain_get(), methodName);
+    MonoObject* action = mono_runtime_invoke(method, NULL, params, (MonoObject**)exc);
+
+    return action;
+}
+
+EMSCRIPTEN_KEEPALIVE MonoObject*
+mono_wasm_invoke_clr_wrapped_func(MonoObject *func, void *params[], int* got_exception)
+{
+	DBG("mono_wasm_invoke_clr_wrapped_func");
+
+	MonoClass* klass = mono_object_get_class(func);
+	if (!klass)
+		DBG("mono_wasm_invoke_clr_wrapped_func::Error - no class for func");
+    
+	MonoMethod* method;
+	method = mono_class_get_method_from_name(klass, "Invoke", -1);
+	if (!method)
+		DBG("mono_wasm_invoke_clr_wrapped_func::Error - Invoke method not found.");
+
+	MonoObject *exc = NULL;
+
+	MonoObject* invocationResult = mono_runtime_invoke(method, func, params, (MonoObject**)exc);
+
+	return invocationResult;
 }
 
 EMSCRIPTEN_KEEPALIVE char *

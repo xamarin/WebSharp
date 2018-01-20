@@ -3,7 +3,7 @@ TOP=$(realpath $(CURDIR))
 EMCC=source $(TOP)/emsdk/emsdk_env.sh && emcc
 EMPLUSPLUS=source $(TOP)/emsdk/emsdk_env.sh && em++
 WASM_BCL_DIR=$(TOP)/bcl/wasm
-EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']
+EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'setValue', 'getValue']
 #, 'intArrayFromString', 'intArrayToString', 'setValue', 'getValue', 'allocate', 'Pointer_stringify', 'AsciiToString', 'stringToAscii', 'UTF8ArrayToString', 'UTF8ToString', 'stringToUTF8Array', 'stringToUTF8', 'UTF16ToString', 'stringToUTF16', 'lengthBytesUTF16', 'UTF32ToString', 'stringToUTF32', 'lengthBytesUTF32', 'allocateUTF8', 'stackTrace', 'writeStringToMemory', 'writeArrayToMemory', 'writeAsciiToMemory' ]
 
 BCL_ASSEMBLIES= \
@@ -12,7 +12,7 @@ BCL_ASSEMBLIES= \
         System.Core.dll
 
 APP_SOURCES = \
-	websharpwasm.cs	
+	./Mono.WebAssembly/Runtime.cs	
 
 $(TOP)/emsdk:
 	git clone https://github.com/juj/emsdk.git $(TOP)/emsdk
@@ -41,15 +41,15 @@ build-native: websharpwasm.js
 	cp $(TOP)/build/websharpwasm.wasm* $(TOP)/../../lib/wasm
 	cp $(TOP)/build/websharpwasm.wast* $(TOP)/../../lib/wasm
 
-websharpwasm.exe: $(APP_SOURCES) | out/
-	csc /nostdlib /unsafe -out:$(TOP)/build/$@ /reference:mscorlib.dll $(APP_SOURCES)
+websharpwasm.dll: $(APP_SOURCES) | out/
+	csc /nostdlib /unsafe /target:library -out:$(TOP)/build/$@ /reference:mscorlib.dll $(APP_SOURCES)
 	cp $(TOP)/build/$@ $(TOP)/../../lib/wasm
 
 monoembedding.exe: monoembedding.cs | out/
-	csc /nostdlib /unsafe -out:$(TOP)/build/$@ /reference:mscorlib.dll monoembedding.cs
+	csc /nostdlib /unsafe -out:$(TOP)/build/$@ /reference:mscorlib.dll clrfuncreflectionwrap.cs monoembedding.cs
 	cp $(TOP)/build/$@ $(TOP)/../../lib/wasm	
 
-build-managed: websharpwasm.exe monoembedding.exe
+build-managed: websharpwasm.dll monoembedding.exe
 
 build: toolchain build-native build-managed
 

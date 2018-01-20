@@ -34,6 +34,24 @@ public static class MonoEmbedding
         return new DateTime((Int64)ticks * 10000 + MinDateTimeTicks, DateTimeKind.Utc);
     }
 
+    static public Func<Object, Object> GetFunc(string assemblyFile, string typeName, string methodName)
+    {
+        Console.WriteLine($"CS::GetFunc: AssemblyFile: {assemblyFile} | TypeName: {typeName} | MethodName: {methodName} ");
+        try {
+            var assembly = Assembly.Load(assemblyFile);
+            var wrap = ClrFuncReflectionWrap.Create(assembly, typeName, methodName);
+            Console.WriteLine("CS::GetFunc::End");
+            return new Func<Object, Object>(wrap.Call);
+        }
+        catch (Exception exc)
+        {
+            Console.WriteLine($"CS::GetFunc::Exception - {exc.Message}");
+            throw exc;
+        }
+
+    }
+    
+
     static public string ObjectToString(object o)
     {
         return o.ToString();

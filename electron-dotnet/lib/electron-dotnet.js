@@ -98,8 +98,13 @@ websharp = require(websharpNative);
 exports.Register = require("./register.js")
 exports.Embed = require("./embed.js")
 exports.WebSharpJs = require("./websharpjs.js")
+
+var websharpwasm;
 if (isUseWasm === "1")
-    exports.WebSharpWasm = require("./websharpwasm.js");
+{
+    websharpwasm = require("./websharpwasm.js");
+    exports.WebSharpWasm = websharpwasm;
+}
     
 exports.func = function(language, options) {
     if (!options) {
@@ -254,6 +259,168 @@ exports.func = function(language, options) {
     try
     {
         return websharp.initializeClrFunc(options);
+    }
+    catch (e)
+    {
+        throw new Error(
+            "--- WebSharp: electron-dotnet.js -- Loading assembly " + JSON.stringify(options) + "/n" + e.name + ': ' + e.message
+        );
+    }
+};
+
+exports.wasmFunc = function(language, options) {
+    if (!options) {
+        options = language;
+        language = 'cs';
+    }
+
+    if (typeof options === 'string') {
+        if (options.match(/\.dll$/i)) {
+            options = { assemblyFile: options };
+        }
+        else {
+            options = { source: options };
+        }
+    }
+    else if (typeof options === 'function') {
+        var originalPrepareStackTrace = Error.prepareStackTrace;
+        var stack;
+        try {
+            Error.prepareStackTrace = function(error, stack) {
+                return stack;
+            };
+            stack = new Error().stack;
+        }
+        finally
+        {
+            Error.prepareStackTrace = originalPrepareStackTrace;
+        }
+        
+        options = { source: options, jsFileName: stack[1].getFileName(), jsLineNumber: stack[1].getLineNumber() };
+    }
+    else if (typeof options !== 'object') {
+        throw new Error('Specify the source code as string or provide an options object.');
+    }
+
+    if (typeof language !== 'string') {
+        throw new Error('The first argument must be a string identifying the language compiler to use.');
+    }
+    else if (!options.assemblyFile) {
+        
+        // use the internal websharp-cs module for C# modules.
+        if (language !== 'cs' || !fs.existsSync(path.resolve(__dirname, '../lib/bin/websharp-cs/websharp-cs.dll')))
+        {
+            var compilerName = 'edge-' + language.toLowerCase();
+            var compiler;
+            try {
+                compiler = require(compilerName);
+            }
+            catch (e) {
+                throw new Error("Unsupported language '" + language + "'. To compile script in language '" + language +
+                    "' an npm module '" + compilerName + "' must be installed.");
+            }
+
+            try {
+                options.compiler = compiler.getCompiler();
+            }
+            catch (e) {
+                throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
+                    "does not contain getCompiler() function.");
+            }
+        
+            if (typeof options.compiler !== 'string') {
+                throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
+                    "did not specify correct compiler package name or assembly.");
+            }
+
+            // Set the Class name to load from the compiler assembly
+            options.compilerClass = 'EdgeCompiler'
+        }
+        else {
+            // We set the compiler to our internal websharp-cs.dll
+            options.compiler = path.resolve(__dirname, '../lib/bin/websharp-cs/websharp-cs.dll');
+            // Set the Class name to load from the compiler assembly
+            options.compilerClass = 'WebSharpCompiler';
+        }
+
+    }
+
+    if (!options.assemblyFile && !options.source) {
+        throw new Error('Provide DLL or source file name or .NET script literal as a string parmeter, or specify an options object '+
+            'with assemblyFile or source string property.');
+    }
+    else if (options.assemblyFile && options.source) {
+        throw new Error('Provide either an asseblyFile or source property, but not both.');
+    }
+
+    if (typeof options.source === 'function') {
+        var match = options.source.toString().match(/[^]*\/\*([^]*)\*\/\s*\}$/);
+        if (match) {
+            options.source = match[1];
+        }
+        else {
+            throw new Error('If .NET source is provided as JavaScript function, function body must be a /* ... */ comment.');
+        }
+    }
+
+    if (options.references !== undefined) {
+        if (!Array.isArray(options.references)) {
+            throw new Error('The references property must be an array of strings.');
+        }
+
+        options.references.forEach(function (ref) {
+            if (typeof ref !== 'string') {
+                throw new Error('The references property must be an array of strings.');
+            }
+        });
+    }
+
+    if (options.itemgroup !== undefined) {
+        if (!Array.isArray(options.itemgroup)) {
+            throw new Error('The itemgroup property must be an array of strings.');
+        }
+
+        options.itemgroup.forEach(function (ref) {
+            if (typeof ref !== 'string') {
+                throw new Error('The itemgroup property must be an array of strings.');
+            }
+        });
+    }
+
+    if (options.symbols !== undefined) {
+        if (!Array.isArray(options.symbols)) {
+            throw new Error('The symbols property must be an array of strings.');
+        }
+
+        options.symbols.forEach(function (ref) {
+            if (typeof ref !== 'string') {
+                throw new Error('The symbols property must be an array of strings.');
+            }
+        });
+    }
+
+    if (options.assemblyFile) {
+        if (!options.typeName) {
+            var matched = options.assemblyFile.match(/([^\\\/]+)\.dll$/i);
+            if (!matched) {
+                throw new Error('Unable to determine the namespace name based on assembly file name. ' +
+                    'Specify typeName parameter as a namespace qualified CLR type name of the application class.');
+            }
+
+            options.typeName = matched[1] + '.Startup';
+        }
+    }
+    else if (!options.typeName) {
+        options.typeName = "Startup";
+    }
+
+    if (!options.methodName) {
+        options.methodName = 'Invoke';
+    }
+
+    try
+    {
+        return websharpwasm.initializeClrFunc(options);
     }
     catch (e)
     {

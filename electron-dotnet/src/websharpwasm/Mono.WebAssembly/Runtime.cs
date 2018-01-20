@@ -8,7 +8,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
-namespace WebAssembly {
+namespace Mono.WebAssembly
+{
 
 	public sealed class Runtime {
 		
@@ -28,35 +29,4 @@ namespace WebAssembly {
 	public class JSException : Exception {
 		public JSException (string msg) : base (msg) {}
 	}
-}
-
-public class Driver {
-	static void Main () {
-		Console.WriteLine ("hello");
-		//Send ("run", "mini");
-	}
-
-	public static string Send (string key, string val) {
-
-		if (key == "sayHello")
-		{
-
-			Console.WriteLine($"Hello from {val}");
-			WebAssembly.Runtime.InvokeJS("sayHello2()");
-			return null;
-		}
-
-
-		if (key == "eval")
-		{
-			var aa = WebAssembly.Runtime.InvokeJS(val);
-			return aa;
-		}
-
-		return "INVALID-KEY is returned";
-
-
-	}
-
-
 }
