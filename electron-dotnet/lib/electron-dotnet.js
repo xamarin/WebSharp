@@ -263,7 +263,7 @@ exports.func = function(language, options) {
     catch (e)
     {
         throw new Error(
-            "--- WebSharp: electron-dotnet.js -- Loading assembly " + JSON.stringify(options) + "/n" + e.name + ': ' + e.message
+            "--- WebSharp: electron-dotnet.js -- Loading assembly " + JSON.stringify(options) + "\n" + e.name + ': ' + e.message
         );
     }
 };
@@ -425,7 +425,7 @@ exports.wasmFunc = function(language, options) {
     catch (e)
     {
         throw new Error(
-            "--- WebSharp: electron-dotnet.js -- Loading assembly " + JSON.stringify(options) + "/n" + e.name + ': ' + e.message
+            "--- WebSharp: electron-dotnet.js -- Loading assembly " + JSON.stringify(options) + "\n" + e.name + ': ' + e.message
         );
     }
 };

@@ -119,17 +119,41 @@
         
     }
     
+    var linkModule = function (options)
+    {
+        var fileNameWithExt  = path.basename(options.assemblyFile);
+        var fileName = path.basename(options.assemblyFile, path.extname(options.assemblyFile));
+
+        //Note: This should probably be rethought as it will actually write the class to 
+        //our implementation directory so it can be loaded from our mono_path.
+        try
+        {
+            // Make sure we use the "/" to create the path for unlinking.
+            // If not the there are problems on Windows environments.
+            // Not sure if this is a bug and needs reporting.
+            var normalized = mount_point + "/" + fileNameWithExt;
+            Module.FS_unlink(normalized);
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+
+        try {
+            // Then we copy the module to our mount point
+            var asm = fs.readFileSync(options.assemblyFile);
+            Module.FS_createDataFile (mount_point, fileNameWithExt, asm, true, true, true);	
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+    }
 
     var initializeClrFunc = function (options) 
     {
         var fileNameWithExt  = path.basename(options.assemblyFile);
         var fileName = path.basename(options.assemblyFile, path.extname(options.assemblyFile));
 
-        // Note: This should probably be rethought as it will actually write the class to 
-        // our implementation directory so it can be loaded from our mono_path.
-        Module.FS_unlink(path.join(mount_point, fileNameWithExt));
-        var asm = fs.readFileSync(options.assemblyFile);
-        Module.FS_createDataFile (mount_point,fileNameWithExt, asm, true, true, true);	
+        linkModule(options);
 
         var func = getClrFuncReflectionWrapFunc(fileName, options.typeName, options.methodName);
 

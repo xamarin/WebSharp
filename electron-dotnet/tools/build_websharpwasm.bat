@@ -6,7 +6,7 @@ if not exist "%SELF%\build\downloadX.exe" (
 	csc /out:"%SELF%\build\downloadX.exe" "%SELF%\download.cs"
 )
 
-set EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']
+set EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap', 'setValue', 'getValue']
 
 @rem , 'intArrayFromString', 'intArrayToString', 'setValue', 'getValue', 'allocate', 'Pointer_stringify', 'AsciiToString', 'stringToAscii', 'UTF8ArrayToString', 'UTF8ToString', 'stringToUTF8Array', 'stringToUTF8', 'UTF16ToString', 'stringToUTF16', 'lengthBytesUTF16', 'UTF32ToString', 'stringToUTF32', 'lengthBytesUTF32', 'allocateUTF8', 'stackTrace', 'writeStringToMemory', 'writeArrayToMemory', 'writeAsciiToMemory' ]
 
@@ -92,14 +92,14 @@ copy /y .\build\websharpwasm.wast %DESTDIR%
 @rem Building WebSharp Wasm C# interface
 echo Building WebSharp Wasm C# interface
 
-csc /nostdlib /unsafe -out:build/websharpwasm.exe /reference:mscorlib.dll websharpwasm.cs
+csc /nostdlib /unsafe /target:library -out:build/websharpwasm.dll /reference:mscorlib.dll ./Mono.WebAssembly/Runtime.cs
 if %ERRORLEVEL% neq 0 (
 	echo Failure building websharpwasm C# interface
 	cd "%SELF%"
 	exit /b -1
 )
 
-csc /nostdlib /unsafe -out:build/monoembedding.exe /reference:mscorlib.dll monoembedding.cs
+csc /nostdlib /unsafe -out:build/monoembedding.exe /reference:mscorlib.dll clrfuncreflectionwrap.cs monoembedding.cs
 if %ERRORLEVEL% neq 0 (
 	echo Failure building monoembedding C# interface
 	cd "%SELF%"
@@ -107,7 +107,7 @@ if %ERRORLEVEL% neq 0 (
 )
 
 echo Copying WebSharp Wasm C# interface
-copy /y .\build\websharpwasm.exe %DESTDIR%
+copy /y .\build\websharpwasm.dll %DESTDIR%
 copy /y .\build\monoembedding.exe %DESTDIR%
 
 cd "%SELF%"
