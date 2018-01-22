@@ -112,6 +112,8 @@ static MonoAssembly *assembly = NULL;
  static MonoString*
  mono_wasm_invoke_js (MonoString *str, int *is_exception)
  {
+	DBG("mono_wasm_invoke_js");
+
  	if (str == NULL)
  		return NULL;
 
@@ -145,9 +147,26 @@ static MonoAssembly *assembly = NULL;
  	return res;
  }
 
+bool HasEnvironmentVariable(const char* variableName)
+{
+    return getenv(variableName) != NULL;
+}
+
+
+void add_internal_calls()
+{
+	mono_add_internal_call ("Mono.WebAssembly.Runtime::ExecuteJavaScript", (const void*)&mono_wasm_invoke_js);
+
+}
+
  EMSCRIPTEN_KEEPALIVE void
  mono_wasm_load_runtime (const char *managed_path)
  {
+	if (HasEnvironmentVariable("WEBSHARP_WASM_DEBUG"))
+	{
+		debugMode = TRUE;
+	}
+
 	DBG("mono_wasm_load_runtime");
 
 	monoeg_g_setenv ("MONO_LOG_LEVEL", "debug", 1);
@@ -166,13 +185,17 @@ static MonoAssembly *assembly = NULL;
 	MonoArray* args = mono_array_new(mono_domain_get(), mono_get_string_class(), 0);
 	mono_runtime_exec_main(main, args, (MonoObject**)&exc);	 
 
-
-	mono_add_internal_call ("WebAssembly.Runtime::ExecuteJavaScript", (const void*)&mono_wasm_invoke_js);
+	add_internal_calls();
 }
 
 EMSCRIPTEN_KEEPALIVE void
  mono_wasm_mount_runtime (const char *assemblies_path, const char *mount_point )
  {
+ 	if (HasEnvironmentVariable("WEBSHARP_WASM_DEBUG"))
+	{
+		debugMode = TRUE;
+	}
+
 	DBG("mono_wasm_mount_runtime");
 	
 	DBG("Trying to mount MONO Assemblies path");
@@ -203,7 +226,7 @@ EMSCRIPTEN_KEEPALIVE void
     MonoArray* args = mono_array_new(mono_domain_get(), mono_get_string_class(), 0);
     mono_runtime_exec_main(main, args, (MonoObject**)&exc);	 
 
- 	mono_add_internal_call ("WebAssembly.Runtime::InvokeJS", (const void*)&mono_wasm_invoke_js);
+ 	add_internal_calls();
 }
 
 EMSCRIPTEN_KEEPALIVE MonoAssembly*

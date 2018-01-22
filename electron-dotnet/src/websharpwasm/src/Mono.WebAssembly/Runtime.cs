@@ -1,11 +1,4 @@
 using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
 namespace Mono.WebAssembly
@@ -18,6 +11,7 @@ namespace Mono.WebAssembly
 
 		public static string ExecuteJavaScript (string str)
 		{
+			Console.WriteLine($"CS::Mono.WebAssembly.Runtime::ExecuteJavaScript {str}");
 			int exception = 0;
 			var res = ExecuteJavaScript (str, out exception);
 			if (exception != 0)
