@@ -12,7 +12,14 @@ BCL_ASSEMBLIES= \
         System.Core.dll
 
 APP_SOURCES = \
-	./Mono.WebAssembly/Runtime.cs	
+	./src/Mono.WebAssembly/Runtime.cs	
+
+EMBEDDING_SOURCES = \
+    ./src/Mono/clrfuncreflectionwrap.cs  \
+	./src/Mono/monoembedding.cs	
+
+NATIVE_EMBEDDING_SOURCES = \
+	./src/Mono/monoembedding.cpp	
 
 $(TOP)/emsdk:
 	git clone https://github.com/juj/emsdk.git $(TOP)/emsdk
@@ -28,8 +35,8 @@ toolchain: .stamp-wasm-toolchain
 out/:
 	mkdir -p $(TOP)/build
 
-monoembedding.o: monoembedding.cpp | out/
-	$(EMPLUSPLUS) -g -Os -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s BINARYEN=1 -s "BINARYEN_TRAP_MODE='clamp'" -s TOTAL_MEMORY=134217728 -s ALIASING_FUNCTION_POINTERS=0 -std=c++11 monoembedding.cpp -c -o $(TOP)/build/monoembedding.o
+monoembedding.o: $(NATIVE_EMBEDDING_SOURCES) | out/
+	$(EMPLUSPLUS) -g -Os -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s BINARYEN=1 -s "BINARYEN_TRAP_MODE='clamp'" -s TOTAL_MEMORY=134217728 -s ALIASING_FUNCTION_POINTERS=0 -std=c++11 $(NATIVE_EMBEDDING_SOURCES) -c -o $(TOP)/build/monoembedding.o
 
 websharpwasm.js: monoembedding.o library_mono.js $(TOP)/libmonosgen-2.0.a
 	$(EMCC) -g4 -Os -s WASM=1 -s FORCE_FILESYSTEM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=$(EXTRA_EXPORTED_RUNTIME_METHODS)" -s ALLOW_MEMORY_GROWTH=1 -s BINARYEN=1 -s "BINARYEN_TRAP_MODE='clamp'" -s TOTAL_MEMORY=134217728 -s ALIASING_FUNCTION_POINTERS=0 -s ASSERTIONS=2 --js-library library_mono.js $(TOP)/build/monoembedding.o libmonosgen-2.0.a -o $(TOP)/build/websharpwasm.js
@@ -42,14 +49,14 @@ build-native: websharpwasm.js
 	cp $(TOP)/build/websharpwasm.wast* $(TOP)/../../lib/wasm
 
 websharpwasm.dll: $(APP_SOURCES) | out/
-	csc /nostdlib /unsafe /target:library -out:$(TOP)/build/$@ /reference:mscorlib.dll $(APP_SOURCES)
+	csc /noconfig /unsafe+ /nowarn:1701,1702,2008 /nostdlib+ /target:library -out:$(TOP)/build/$@ /reference:mscorlib.dll /reference:System.Core.dll /reference:System.dll $(APP_SOURCES)
 	cp $(TOP)/build/$@ $(TOP)/../../lib/wasm
 
-monoembedding.exe: monoembedding.cs | out/
-	csc /nostdlib /unsafe -out:$(TOP)/build/$@ /reference:mscorlib.dll clrfuncreflectionwrap.cs monoembedding.cs
+MonoEmbedding.exe: $(EMBEDDING_SOURCES) | out/
+	csc /noconfig /unsafe+ /nowarn:1701,1702,2008 /nostdlib+ -out:$(TOP)/build/$@ /reference:mscorlib.dll /reference:System.Core.dll /reference:System.dll $(EMBEDDING_SOURCES)
 	cp $(TOP)/build/$@ $(TOP)/../../lib/wasm	
 
-build-managed: websharpwasm.dll monoembedding.exe
+build-managed: websharpwasm.dll MonoEmbedding.exe
 
 build: toolchain build-native build-managed
 

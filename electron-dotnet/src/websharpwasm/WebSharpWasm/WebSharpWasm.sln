@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSharpWasm", "WebSharpWasm.csproj", "{7B0C8800-B951-440B-A70D-B0F7BAC854E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoEmbedding", "..\MonoEmbedding\MonoEmbedding.csproj", "{F99380CA-D80D-483A-914D-DDE6FF6F959D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B0C8800-B951-440B-A70D-B0F7BAC854E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B0C8800-B951-440B-A70D-B0F7BAC854E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B0C8800-B951-440B-A70D-B0F7BAC854E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B0C8800-B951-440B-A70D-B0F7BAC854E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99380CA-D80D-483A-914D-DDE6FF6F959D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99380CA-D80D-483A-914D-DDE6FF6F959D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99380CA-D80D-483A-914D-DDE6FF6F959D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99380CA-D80D-483A-914D-DDE6FF6F959D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
