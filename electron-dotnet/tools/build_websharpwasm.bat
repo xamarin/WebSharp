@@ -51,7 +51,7 @@ call .\emsdk\emsdk_env.bat
 @rem Build MonoEmbedding module
 echo Building monoembedding module
 
-call em++ -g -Os -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s BINARYEN=1 -s "BINARYEN_TRAP_MODE='clamp'" -s TOTAL_MEMORY=134217728 -s ALIASING_FUNCTION_POINTERS=0 -std=c++11 monoembedding.cpp -c -o build/monoembedding.o
+call em++ -g -Os -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s BINARYEN=1 -s "BINARYEN_TRAP_MODE='clamp'" -s TOTAL_MEMORY=134217728 -s ALIASING_FUNCTION_POINTERS=0 -std=c++11 ./src/Mono/monoembedding.cpp -c -o build/monoembedding.o
 
 if %ERRORLEVEL% neq 0 (
 	echo Failure building monoembedding module
@@ -92,14 +92,14 @@ copy /y .\build\websharpwasm.wast %DESTDIR%
 @rem Building WebSharp Wasm C# interface
 echo Building WebSharp Wasm C# interface
 
-csc /nostdlib /unsafe /target:library -out:build/websharpwasm.dll /reference:mscorlib.dll ./Mono.WebAssembly/Runtime.cs
+csc /nostdlib /unsafe /target:library -out:build/websharpwasm.dll /reference:mscorlib.dll /reference:System.Core.dll /reference:System.dll ./src/Mono.WebAssembly/Runtime.cs
 if %ERRORLEVEL% neq 0 (
 	echo Failure building websharpwasm C# interface
 	cd "%SELF%"
 	exit /b -1
 )
 
-csc /nostdlib /unsafe -out:build/monoembedding.exe /reference:mscorlib.dll clrfuncreflectionwrap.cs monoembedding.cs
+csc /nostdlib /unsafe -out:build/MonoEmbedding.exe /reference:mscorlib.dll /reference:System.Core.dll /reference:System.dll ./src/Mono/clrfuncreflectionwrap.cs ./src/Mono/monoembedding.cs
 if %ERRORLEVEL% neq 0 (
 	echo Failure building monoembedding C# interface
 	cd "%SELF%"
@@ -108,7 +108,7 @@ if %ERRORLEVEL% neq 0 (
 
 echo Copying WebSharp Wasm C# interface
 copy /y .\build\websharpwasm.dll %DESTDIR%
-copy /y .\build\monoembedding.exe %DESTDIR%
+copy /y .\build\MonoEmbedding.exe %DESTDIR%
 
 cd "%SELF%"
 echo SUCCESS. WebSharp Wasm interface build.
