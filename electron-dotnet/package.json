@@ -18,7 +18,8 @@
     "managed",
     ".net"
   ],
-  "main": "./lib/electron-dotnet.js",
+  "oldmain": "./lib/electron-dotnet.js",
+  "main": "./lib/websharpwasm.js",
   "engines": {
     "node": ">= 0.8"
   },
@@ -44,7 +45,7 @@
     "url": "http://github.com/tjanczuk/edge/issues"
   },
   "scripts": {
-    "install": "node tools/install.js",
+    "oldinstall": "node tools/install.js",
     "test": "node tools/test.js",
     "jshint": "node ./tools/runJsHint.js"
   },
