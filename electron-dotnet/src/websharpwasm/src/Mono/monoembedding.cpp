@@ -88,6 +88,9 @@ MonoArray* mono_array_new (MonoDomain *domain, MonoClass *eclass, int n);
 MonoClass* mono_get_string_class (void);
 int mono_runtime_exec_main (MonoMethod *method, MonoArray *args, MonoObject **exc);
 MonoAssembly* mono_domain_assembly_open  (MonoDomain *domain, const char *name);
+int mono_gchandle_new (MonoObject *obj, bool pinned);
+MonoObject* mono_gchandle_get_target (int *gchandle);
+void mono_gchandle_free (int *gchandle);
 
 MonoImage* GetImage();
 MonoClass* GetClass();
@@ -297,7 +300,7 @@ MonoClass* GetClass()
     return klass;
 }
 
-EMSCRIPTEN_KEEPALIVE MonoObject*
+EMSCRIPTEN_KEEPALIVE int
 mono_wasm_get_clr_func_reflection_wrap_func(const char* assemblyFile, const char* typeName, const char* methodName, MonoException ** exc)
 {
 	DBG("GetClrFuncReflectionWrapFunc");
@@ -314,13 +317,17 @@ mono_wasm_get_clr_func_reflection_wrap_func(const char* assemblyFile, const char
     params[2] = mono_string_new(mono_domain_get(), methodName);
     MonoObject* action = mono_runtime_invoke(method, NULL, params, (MonoObject**)exc);
 
-    return action;
+	auto handle = mono_gchandle_new(action, FALSE); // released in Complete
+
+    return handle;
 }
 
 EMSCRIPTEN_KEEPALIVE MonoObject*
-mono_wasm_invoke_clr_wrapped_func(MonoObject *func, void *params[], int* got_exception)
+mono_wasm_invoke_clr_wrapped_func(int *handle, void *params[], int* got_exception)
 {
 	DBG("mono_wasm_invoke_clr_wrapped_func");
+
+	MonoObject* func = mono_gchandle_get_target(handle);
 
 	MonoClass* klass = mono_object_get_class(func);
 	if (!klass)
@@ -336,6 +343,16 @@ mono_wasm_invoke_clr_wrapped_func(MonoObject *func, void *params[], int* got_exc
 	MonoObject* invocationResult = mono_runtime_invoke(method, func, params, (MonoObject**)exc);
 
 	return invocationResult;
+}
+
+EMSCRIPTEN_KEEPALIVE void
+mono_wasm_dispose_clr_func(int *handle)
+{
+	DBG("DisposeClrFunc");
+
+	mono_gchandle_free(handle);
+
+    return;
 }
 
 EMSCRIPTEN_KEEPALIVE char *

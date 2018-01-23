@@ -268,7 +268,7 @@ exports.func = function(language, options) {
     }
 };
 
-exports.wasmFunc = function(language, options) {
+exports.createClass = function(language, options) {
     if (!options) {
         options = language;
         language = 'cs';

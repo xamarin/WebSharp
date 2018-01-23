@@ -10,6 +10,7 @@
     var mono_string_get_utf8;
     var mono_string;
     var getClrFuncReflectionWrapFunc;
+    var freeClrFuncHandle;
 
     var fs = require("fs");
     var path = require("path");
@@ -61,6 +62,7 @@
         find_method = Module.cwrap ('mono_wasm_assembly_find_method', 'number', ['number', 'string', 'number'])
         invoke_method = Module.cwrap ('mono_wasm_invoke_method', 'number', ['number', 'number', 'number'])
         getClrFuncReflectionWrapFunc = Module.cwrap ('mono_wasm_get_clr_func_reflection_wrap_func', 'number', ['string', 'string', 'string'] )
+        freeClrFuncHandle = Module.cwrap ('mono_wasm_dispose_clr_func', null, ['number']);
         invokeClrWrappedFunc = Module.cwrap ('mono_wasm_invoke_clr_wrapped_func', 'number', ['number', 'number', 'number'] )
         mono_string_get_utf8 = Module.cwrap ('mono_wasm_string_get_utf8', 'number', ['number'])
         mono_string = Module.cwrap ('mono_wasm_string_from_js', 'number', ['string'])
@@ -148,18 +150,31 @@
         }
     }
 
-    var initializeClrFunc = function (options) 
+    class ClrWrappedFunc
     {
-        var fileNameWithExt  = path.basename(options.assemblyFile);
-        var fileName = path.basename(options.assemblyFile, path.extname(options.assemblyFile));
-
-        linkModule(options);
-
-        var func = getClrFuncReflectionWrapFunc(fileName, options.typeName, options.methodName);
-
-        var jsClrWrapFunc = function (args) 
+        constructor(handle)
         {
-            console.log('function pointer - ' + func);
+            this._handle = handle;
+            this._isDisposed = false;
+        }
+
+        get handle()
+        {
+            return this._handle;
+        }
+
+        get isDisposed()
+        {
+            return this._isDisposed;
+        }
+
+        invoke(args)
+        {
+            if (this._isDisposed)
+            {
+                throw "The object referenced by handle <" + this.handle + "> has been disposed.";
+            }
+            console.log("we are invoking handle < " + this._handle + ">");
             if (typeof args === 'undefined')
             {
                 args = [0];
@@ -169,9 +184,28 @@
                 args = [mono_string(JSON.stringify(args))];
             }
 
-            invokeCLRFunction(func, args);
+            invokeCLRFunction(this._handle, args);
         }
 
+        dispose()
+        {
+            console.log("Disposing object that is referenced by handle <" + this._handle + ">");
+            freeClrFuncHandle(this._handle);
+            this._isDisposed = true;
+        }
+
+    }
+
+    var initializeClrFunc = function (options) 
+    {
+        var fileNameWithExt  = path.basename(options.assemblyFile);
+        var fileName = path.basename(options.assemblyFile, path.extname(options.assemblyFile));
+
+        linkModule(options);
+
+        var func = getClrFuncReflectionWrapFunc(fileName, options.typeName, options.methodName);
+
+        var jsClrWrapFunc = new ClrWrappedFunc(func);
         return jsClrWrapFunc;
     }
 
