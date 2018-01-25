@@ -37,6 +37,9 @@
     <Compile Include="..\src\Mono.WebAssembly\Runtime.cs">
       <Link>Mono.WebAssembly\Runtime.cs</Link>
     </Compile>
+    <Compile Include="..\src\Mono.WebAssembly\MiniJSON.cs">
+      <Link>Mono.WebAssembly\MiniJSONcs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

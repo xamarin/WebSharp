@@ -92,25 +92,13 @@ int mono_gchandle_new (MonoObject *obj, bool pinned);
 MonoObject* mono_gchandle_get_target (int *gchandle);
 void mono_gchandle_free (int *gchandle);
 
+extern int nodeEval(int data, int is_exception);
+
 MonoImage* GetImage();
 MonoClass* GetClass();
 
 static MonoDomain *root_domain;
 static MonoAssembly *assembly = NULL;
-
-// static char*
-// m_strdup (const char *str)
-// {
-// 	if (!str)
-// 		return NULL;
-
-// 	int len = strlen (str) + 1;
-// 	char *res = malloc (len);
-// 	memcpy (res, str, len);
-// 	return res;
-// }
-
-
 
  static MonoString*
  mono_wasm_invoke_js (MonoString *str, int *is_exception)
@@ -121,24 +109,7 @@ static MonoAssembly *assembly = NULL;
  		return NULL;
 
  	char *native_val = mono_string_to_utf8 (str);
- 	char *native_res = (char*)EM_ASM_INT ({
-		var str = UTF8ToString ($0);
-		try {
-			var res = eval (str);
-			if (res === null)
-				return 0;
-			res = res.toString ();
-			setValue ($1, 0, "i32");
-		} catch (e) {
-			res = e.toString ();
-			setValue ($1, 1, "i32");
-			if (res === null)
-				res = "unknown exception";
-		}
-		var buff = Module._malloc((res.length + 1) * 2);
-		stringToUTF16 (res, buff, (res.length + 1) * 2);
-		return buff;
- 	}, (int)native_val, is_exception);
+	char *native_res = (char*)nodeEval((int)native_val, (int)is_exception);
 
  	mono_free (native_val);
 

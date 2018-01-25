@@ -12,7 +12,8 @@ BCL_ASSEMBLIES= \
         System.Core.dll
 
 APP_SOURCES = \
-	./src/Mono.WebAssembly/Runtime.cs	
+	./src/Mono.WebAssembly/Runtime.cs  \
+	./src/Mono.WebAssembly/MiniJSON.cs
 
 EMBEDDING_SOURCES = \
     ./src/Mono/clrfuncreflectionwrap.cs  \

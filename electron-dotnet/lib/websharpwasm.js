@@ -41,6 +41,18 @@
                     onWebSharpWASMInitialized.shift()();
                 }
             }           
+        },
+        globalEval: eval,
+        compile: function (data) {
+            var wrapper = '(function () { ' + data + ' })';
+            var funcFactory = this.globalEval(wrapper);
+            var func = funcFactory();
+            if (typeof func !== 'function') {
+                throw new Error('Node.js code must return an instance of a JavaScript function. '
+                    + 'Please use `return` statement to return a function.');
+            }
+        
+            return func;
         }
     };
 
@@ -150,6 +162,7 @@
         }
     }
 
+    // Some of the options may not be valid anymore
     var parseCreateOptions = function(language, options) {
         if (!options) {
             options = language;
@@ -189,41 +202,10 @@
         }
         else if (!options.assemblyFile) {
             
-            // use the internal websharp-cs module for C# modules.
-            if (language !== 'cs' || !fs.existsSync(path.resolve(__dirname, '../lib/bin/websharp-cs/websharp-cs.dll')))
-            {
-                var compilerName = 'edge-' + language.toLowerCase();
-                var compiler;
-                try {
-                    compiler = require(compilerName);
-                }
-                catch (e) {
-                    throw new Error("Unsupported language '" + language + "'. To compile script in language '" + language +
-                        "' an npm module '" + compilerName + "' must be installed.");
-                }
-    
-                try {
-                    options.compiler = compiler.getCompiler();
-                }
-                catch (e) {
-                    throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
-                        "does not contain getCompiler() function.");
-                }
-            
-                if (typeof options.compiler !== 'string') {
-                    throw new Error("The '" + compilerName + "' module required to compile the '" + language + "' language " +
-                        "did not specify correct compiler package name or assembly.");
-                }
-    
-                // Set the Class name to load from the compiler assembly
-                options.compilerClass = 'EdgeCompiler'
-            }
-            else {
-                // We set the compiler to our internal websharp-cs.dll
-                options.compiler = path.resolve(__dirname, '../lib/bin/websharp-cs/websharp-cs.dll');
-                // Set the Class name to load from the compiler assembly
-                options.compilerClass = 'WebSharpCompiler';
-            }
+            // We set the compiler to our internal websharp-cs.dll
+            options.compiler = path.resolve(__dirname, '../lib/bin/websharp-cs/websharp-cs.dll');
+            // Set the Class name to load from the compiler assembly
+            options.compilerClass = 'WebSharpCompiler';
     
         }
     
@@ -358,7 +340,14 @@
             }
             else
             {
-                args = [mono_string(JSON.stringify(args))];
+                var tempArgs;
+                if (typeof args === 'string' || args instanceof String)
+                    tempArgs = args;
+                else
+                {
+                    tempArgs = JSON.stringify(args);
+                }
+                args = [mono_string(tempArgs)];
             }
 
             invokeCLRFunction(this._handle, args);

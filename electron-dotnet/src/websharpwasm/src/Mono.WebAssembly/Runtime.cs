@@ -18,6 +18,17 @@ namespace Mono.WebAssembly
 				throw new JSException (res);
 			return res;
 		}
+
+		public static object DeserializeJSON (string str)
+		{
+			return MiniJSON.Json.Deserialize(str);
+		}
+
+		public static string SerializeJSON (object obj)
+		{
+			return MiniJSON.Json.Serialize(obj);
+		}
+		
 	}
 
 	public class JSException : Exception {
