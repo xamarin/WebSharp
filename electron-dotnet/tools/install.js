@@ -106,12 +106,12 @@ else {
 				console.error("Unable to find electron-prebuilt's version number, either install it or specify an explicit version");
 			}
 		}
-		if (version !== null)
-		{
-			spawn('node-gyp', ['configure', 'build', '--target='+version, '--disturl=https://atom.io/download/atom-shell'], { stdio: 'inherit' });
-		}
-		else
-			spawn('node-gyp', ['configure', 'build'], { stdio: 'inherit' });
+		// if (version !== null)
+		// {
+		// 	spawn('node-gyp', ['configure', 'build', '--target='+version, '--disturl=https://atom.io/download/atom-shell'], { stdio: 'inherit' });
+		// }
+		// else
+		// 	spawn('node-gyp', ['configure', 'build'], { stdio: 'inherit' });
    		
 	}
 	else {
