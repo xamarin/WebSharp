@@ -35,6 +35,8 @@ toolchain: .stamp-wasm-toolchain
 
 out/:
 	mkdir -p $(TOP)/build
+	mkdir -p $(TOP)/../../lib/wasm
+
 
 monoembedding.o: $(NATIVE_EMBEDDING_SOURCES) | out/
 	$(EMPLUSPLUS) -g -Os -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s BINARYEN=1 -s "BINARYEN_TRAP_MODE='clamp'" -s TOTAL_MEMORY=134217728 -s ALIASING_FUNCTION_POINTERS=0 -std=c++11 $(NATIVE_EMBEDDING_SOURCES) -c -o $(TOP)/build/monoembedding.o
@@ -48,6 +50,8 @@ build-native: websharpwasm.js
 	cp $(TOP)/build/websharpwasm.js $(TOP)/../../lib/wasm
 	cp $(TOP)/build/websharpwasm.wasm* $(TOP)/../../lib/wasm
 	cp $(TOP)/build/websharpwasm.wast* $(TOP)/../../lib/wasm
+	# Copy assemblies to lib/wasm
+	cp $(TOP)/bcl/wasm/*.dll $(TOP)/../../lib/wasm
 
 websharpwasm.dll: $(APP_SOURCES) | out/
 	csc /noconfig /unsafe+ /nowarn:1701,1702,2008 /nostdlib+ /target:library -out:$(TOP)/build/$@ /reference:mscorlib.dll /reference:System.Core.dll /reference:System.dll $(APP_SOURCES)
